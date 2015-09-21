@@ -1,0 +1,24 @@
+{
+    "name": "tg/dependency-tracker",
+    "require": {
+        "nikic/php-parser": "~1.4",
+        "phpdocumentor/graphviz": "~1.0",
+        "symfony/console": "~2.7",
+        "symfony/filesystem": "~2.7",
+        "symfony/finder": "~2.7",
+        "graphp/graphviz": "0.2.*",
+        "symfony/yaml": "^2.7"
+    },
+    "authors": [
+        {
+            "name": "timglabisch",
+            "email": "tim@ainfach.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DependencyTracker\\": "src/"
+        }
+    }
+
+}

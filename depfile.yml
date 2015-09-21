@@ -1,0 +1,16 @@
+deps:
+  paths:
+    - ./vendors
+  layer:
+    -
+      color: '#ccc'
+      collectors:
+        -
+          type: NamespaceLayerCollector
+          namespace: Vinostore
+  rulseset:
+    layerA:
+      - LayerB
+    layerB:
+      - LayerC
+      - LayerD
