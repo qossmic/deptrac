@@ -5,8 +5,9 @@ namespace DependencyTracker\Command;
 
 use DependencyTracker\CollectionMap;
 use DependencyTracker\Collectors\BasicCollectorVisitor;
-use DependencyTracker\Configuration;
-use DependencyTracker\GraphDrawer;
+use phpDocumentor\GraphViz\Edge;
+use phpDocumentor\GraphViz\Graph;
+use phpDocumentor\GraphViz\Node;
 use PhpParser\NodeVisitor\NameResolver;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -38,36 +39,63 @@ class AnalyzeCommand extends Command
         $parser = new \PhpParser\Parser(new \PhpParser\Lexer\Emulative);
         $traverser = new \PhpParser\NodeTraverser;
 
-        $config = new Configuration();
-
         $traverser->addVisitor(new NameResolver());
         $traverser->addVisitor(
-            new BasicCollectorVisitor($map = new CollectionMap(
-                $config->
-            ))
+            new BasicCollectorVisitor($map = new CollectionMap())
         );
 
+        $f = new Filesystem();
 
+        foreach ((new Finder)->in(
+                     __DIR__ . '/../../' . $input->getArgument('dir')
+                 )->files() as $file) {
 
-
-        foreach ((new Finder)->in($config->getDirs())->files() as $file) {
-
-            /** @var $file SplFileInfo: */
+            /**
+             * @var $file SplFileInfo:
+             */
 
             try {
                 $code = file_get_contents($file->getPathname());
+
+                // parse
                 $stmts = $parser->parse($code);
+
+                // traverse
                 $stmts = $traverser->traverse($stmts);
 
             } catch (\PhpParser\Error $e) {
                 $output->writeln(
-                    '<error>Parse Error: ' . $file->getPathname() . ' - ' . $e->getMessage() . '</error>'
+                    '<error>Parse Error: ' . $file->getPathname().' - '. $e->getMessage(
+                    ) . '</error>'
                 );
             }
         }
 
 
-        (new GraphDrawer())->draw($map);
+        $graph = new \Fhaculty\Graph\Graph();
+        $vertices = [];
+
+        foreach ($map->getDependencies() as $from => $t) {
+
+            foreach ($t as $to) {
+                if (!isset($vertices[$to])) {
+                    $vertices[$to] = $graph->createVertex($to);
+                }
+            }
+
+            if (!isset($vertices[$from])) {
+                $vertices[$from] = $graph->createVertex($from);
+            }
+        }
+
+        foreach ($map->getDependencies() as $from => $t) {
+            foreach ($t as $to) {
+                $vertices[$from]->createEdgeTo($vertices[$to]);
+            }
+        }
+
+        $graphviz = new \Graphp\GraphViz\GraphViz();
+        $graphviz->display($graph);
 
         #var_dump($map->getDependencies());
     }

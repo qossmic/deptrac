@@ -6,6 +6,7 @@ namespace DependencyTracker\Collectors;
 use DependencyTracker\CollectionMap;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Use_;
 
 class BasicCollectorVisitor extends \PhpParser\NodeVisitorAbstract
 {
@@ -44,10 +45,6 @@ class BasicCollectorVisitor extends \PhpParser\NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Expr\Instanceof_) {
-            $this->collectedUseStmts[] = $node->class->toString();
-        }
-
-        if ($node instanceof Node\Expr\New_) {
             $this->collectedUseStmts[] = $node->class->toString();
         }
 
