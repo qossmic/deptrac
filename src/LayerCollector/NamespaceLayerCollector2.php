@@ -10,7 +10,7 @@ namespace DependencyTracker\LayerCollector;
 
 use DependencyTracker\CollectionMap;
 
-class NamespaceLayerCollector implements LayerCollectorInterface
+class NamespaceLayerCollector
 {
     protected $config;
 

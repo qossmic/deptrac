@@ -3,58 +3,51 @@
 namespace DependencyTracker;
 
 
+use DependencyTracker\LayerCollector\LayerCollectorInterface;
+
 class CollectionMap
 {
     protected $depdendencyMap = [];
 
-    protected function normalize($name)
+    /** @var LayerCollectorInterface[] */
+    protected $layers = [];
+
+    /**
+     * CollectionMap constructor.
+     * @param array $layerCollectors
+     */
+    public function __construct(array $layers)
     {
-        $name = str_replace(['\\', '//'], ['/', '/'], $name);
-
-
-        if (stripos($name, 'Vinostore') === false) {
-            return null;
-        }
-
-        if (stripos($name, 'import')) {
-            return null;
-        }
-
-        if (stripos($name, 'export')) {
-            return null;
-        }
-
-        $e = explode('/', $name);
-
-        if (isset($e[2])) {
-            return $e[0].'/'.$e[1].'/'.$e[2];
-        }
-
-        if (isset($e[1])) {
-            return $e[0].'/'.$e[1];
-        }
-
-        return null;
+        $this->layers = $layers;
     }
 
     public function addDependency($klass, $depdendency)
     {
-        if ((stripos($klass, 'test') || stripos($depdendency, 'test'))) {
-            return;
+        foreach ($this->layers as $layer) {
+            foreach ($layer->getCollectors() as $layerCollector) {
+                if (!$layerCollector->supports($klass, $depdendency)) {
+                    continue;
+                }
+
+                $layerCollector->handle($this, $klass, $depdendency);
+                break;
+            }
+        }
+    }
+
+    public function add($layerFrom, $layerTo)
+    {
+        if(!isset($this->depdendencyMap[$layerFrom])) {
+            $this->depdendencyMap[$layerFrom] = [];
         }
 
-        $klass = $this->normalize($klass);
-        $depdendency = $this->normalize($depdendency);
-
-        if (!$klass || !$depdendency) {
-            return;
+        if(!isset($this->depdendencyMap[$layerFrom][$layerTo])) {
+            $this->depdendencyMap[$layerFrom][$layerTo] = [
+                'count' => 0
+            ];
         }
 
-        if (!isset($this->depdendencyMap[$klass])) {
-            $this->depdendencyMap[$klass] = [];
-        }
-
-        $this->depdendencyMap[$klass][$depdendency] = $depdendency;
+        $this->depdendencyMap[$layerFrom][$layerTo]['count']++;
     }
 
     public function getDependencies()

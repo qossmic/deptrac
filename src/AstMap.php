@@ -6,17 +6,20 @@ use DependencyTracker\AstHint\AstHintInterface;
 
 class AstMap
 {
-    protected $fileAstMap = [];
-
-    protected $fileAstHint = [];
+    protected $fileAstMap;
 
     /**
      * AstMap constructor.
      * @param array $fileAstMap
      */
-    public function __construct(array $fileAstMap)
+    public function __construct(array $fileAstMap = [])
     {
         $this->fileAstMap = $fileAstMap;
+    }
+
+    public function add($filePathname, $ast)
+    {
+        $this->fileAstMap[$filePathname] = $ast;
     }
 
     /**
@@ -25,35 +28,6 @@ class AstMap
     public function getAsts()
     {
         return $this->fileAstMap;
-    }
-
-    public function addHintForFile($filePath, AstHintInterface $astHint)
-    {
-        if (!isset($this->fileAstHint[$filePath])) {
-            $this->fileAstHint[$filePath] = [];
-        }
-
-        $this->fileAstHint[$filePath][] = $astHint;
-    }
-
-    /**
-     * @param $filePath
-     * @param null $filterByClass
-     * @return AstHintInterface{}
-     */
-    public function getAstHintsForFile($filePath, $filterByClass = null)
-    {
-        if (!isset($this->fileAstHint[$filePath])) {
-            return [];
-        }
-
-        if (!$filterByClass) {
-            return $this->fileAstHint[$filePath];
-        }
-
-        return array_filter($this->fileAstHint[$filePath], function($v) use ($filterByClass) {
-            return is_a($v, $filterByClass, true);
-        });
     }
 
 }

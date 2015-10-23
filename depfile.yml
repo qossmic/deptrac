@@ -1,16 +1,19 @@
-deps:
-  paths:
-    - ./vendors
-  layer:
-    -
-      color: '#ccc'
-      collectors:
-        -
-          type: NamespaceLayerCollector
-          namespace: Vinostore
-  rulseset:
-    layerA:
-      - LayerB
-    layerB:
-      - LayerC
-      - LayerD
+paths:
+  - ./../../hawesko/hawesko/src
+views:
+  -
+    name: Basic View
+    layers:
+      -
+        color: '#ccc'
+        collectors:
+          -
+            type: debug
+            args:
+              namespace: Vinostore
+    ruleset:
+      layerA:
+        - LayerB
+      layerB:
+        - LayerC
+        - LayerD

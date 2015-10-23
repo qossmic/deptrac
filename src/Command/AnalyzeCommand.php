@@ -4,8 +4,9 @@ namespace DependencyTracker\Command;
 
 
 use DependencyTracker\AstMap;
-use DependencyTracker\CollectionMap;
+use DependencyTracker\Collector\CollectorInterface;
 use DependencyTracker\Collector\DebugCollector;
+use DependencyTracker\Configuration;
 use DependencyTracker\Event\AstFileAnalyzedEvent;
 use DependencyTracker\Event\AstFileSyntaxErrorEvent;
 use DependencyTracker\Event\PostCreateAstMapEvent;
@@ -20,6 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Yaml\Yaml;
 
 class AnalyzeCommand extends Command
 {
@@ -48,25 +50,62 @@ class AnalyzeCommand extends Command
     ) {
         ini_set('memory_limit', -1);
 
-        $files = iterator_to_array((new Finder)->in(
-            __DIR__ . '/../../' . $input->getArgument('dir')
-        )->files());
+        $config = Configuration::fromArray(
+            Yaml::parse(file_get_contents(__DIR__.'/../../depfile.yml'))
+        );
 
         new ConsoleFormatter($this->dispatcher, $output);
 
+
         // Step1
+        $files = [];
+        foreach($config->getPaths() as $path) {
+            $files = array_merge(iterator_to_array(
+                (new Finder)->in(__DIR__ . '/../../' . $path)
+                    ->name('*.php')
+                    ->files()
+            ), $files);
+        }
+
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
-        $astMap = $this->createAstMapByFiles($files);
+        $this->createAstMapByFiles($astMap = new AstMap(), $files);
         $this->dispatcher->dispatch(PostCreateAstMapEvent::class, new PostCreateAstMapEvent($astMap));
 
-        // Step2
-        new DebugCollector($this->dispatcher);
+
+        // Step2 Register Collectors
+        /** @var $collectors CollectorInterface[] */
+        $collectors = [];
+        foreach($config->getViews() as $configurationView) {
+            foreach($configurationView->getLayers() as $configurationLayer) {
+                foreach($configurationLayer->getCollectors() as $configurationCollector) {
+
+                    if($configurationCollector->getType() == "debug") {
+                         $collectors[] = new DebugCollector(
+                            $this->dispatcher,
+                            $configurationLayer,
+                            $configurationCollector->getArgs()
+                        );
+
+                        continue;
+                    }
+
+                    throw new \LogicException(sprintf(
+                        "Unknown Collector %s",
+                        $configurationCollector->getType()
+                    ));
+
+                }
+            }
+        }
+
+        // Step3
         (new BasicDependencyVisitor($this->dispatcher))->analyze($astMap);
+
+
     }
 
-    private function createAstMapByFiles(array $files)
+    private function createAstMapByFiles(AstMap $astMap, array $files)
     {
-        $map = [];
         $parser = new \PhpParser\Parser(new \PhpParser\Lexer\Emulative);
         $traverser = new \PhpParser\NodeTraverser;
         $traverser->addVisitor(new NameResolver());
@@ -77,7 +116,7 @@ class AnalyzeCommand extends Command
 
             try {
                 $code = file_get_contents($file->getPathname());
-                $map[$file->getPathname()] = $ast = $traverser->traverse($parser->parse($code));
+                $astMap->add($file->getPathname(), $ast = $traverser->traverse($parser->parse($code)));
                 $this->dispatcher->dispatch(
                     AstFileAnalyzedEvent::class,
                     new AstFileAnalyzedEvent(
@@ -94,75 +133,6 @@ class AnalyzeCommand extends Command
                 );
             }
         }
-
-        return new AstMap($map);
     }
-
-    /*
-
-    protected function execute2(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
-        $parser = new \PhpParser\Parser(new \PhpParser\Lexer\Emulative);
-        $traverser = new \PhpParser\NodeTraverser;
-
-        $traverser->addVisitor(new NameResolver());
-        $traverser->addVisitor(
-            new BasicCollectorVisitor()
-        );
-
-        $f = new Filesystem();
-
-        foreach ((new Finder)->in(__DIR__ . '/../../' . $input->getArgument('dir'))->files() as $file) {
-
-
-
-            try {
-                $code = file_get_contents($file->getPathname());
-
-                // parse
-                $stmts = $parser->parse($code);
-
-                // traverse
-                $stmts = $traverser->traverse($stmts);
-
-            } catch (\PhpParser\Error $e) {
-                $output->writeln(
-                    '<error>Parse Error: ' . $file->getPathname().' - '. $e->getMessage(
-                    ) . '</error>'
-                );
-            }
-        }
-
-
-        $graph = new \Fhaculty\Graph\Graph();
-        $vertices = [];
-
-        foreach ($map->getDependencies() as $from => $t) {
-
-            foreach ($t as $to) {
-                if (!isset($vertices[$to])) {
-                    $vertices[$to] = $graph->createVertex($to);
-                }
-            }
-
-            if (!isset($vertices[$from])) {
-                $vertices[$from] = $graph->createVertex($from);
-            }
-        }
-
-        foreach ($map->getDependencies() as $from => $t) {
-            foreach ($t as $to) {
-                $vertices[$from]->createEdgeTo($vertices[$to]);
-            }
-        }
-
-        $graphviz = new \Graphp\GraphViz\GraphViz();
-        $graphviz->display($graph);
-
-        #var_dump($map->getDependencies());
-    }
-    */
 
 } 

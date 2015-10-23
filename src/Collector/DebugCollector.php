@@ -2,16 +2,29 @@
 
 namespace DependencyTracker\Collector;
 
+use DependencyTracker\Configuration\ConfigurationLayer;
 use DependencyTracker\Event\Visitor\FoundDependencyEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class DebugCollector
+class DebugCollector implements CollectorInterface
 {
     protected $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    protected $layerConfigurtion;
+
+    public function getType()
+    {
+        return 'debug';
+    }
+
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher,
+        ConfigurationLayer $layer,
+        array $args
+    )
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->layerConfigurtion = $layer;
         $eventDispatcher->addListener(FoundDependencyEvent::class, [$this, 'onFoundDepdendencyEvent']);
     }
 
