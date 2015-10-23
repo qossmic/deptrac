@@ -5,11 +5,13 @@ namespace DependencyTracker\Command;
 
 use DependencyTracker\AstMap;
 use DependencyTracker\CollectionMap;
+use DependencyTracker\Collector\DebugCollector;
 use DependencyTracker\Event\AstFileAnalyzedEvent;
 use DependencyTracker\Event\AstFileSyntaxErrorEvent;
 use DependencyTracker\Event\PostCreateAstMapEvent;
 use DependencyTracker\Event\PreCreateAstMapEvent;
 use DependencyTracker\Formatter\ConsoleFormatter;
+use DependencyTracker\Visitor\BasicDependencyVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -44,15 +46,22 @@ class AnalyzeCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
+        ini_set('memory_limit', -1);
+
         $files = iterator_to_array((new Finder)->in(
             __DIR__ . '/../../' . $input->getArgument('dir')
         )->files());
 
         new ConsoleFormatter($this->dispatcher, $output);
 
+        // Step1
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
         $astMap = $this->createAstMapByFiles($files);
         $this->dispatcher->dispatch(PostCreateAstMapEvent::class, new PostCreateAstMapEvent($astMap));
+
+        // Step2
+        new DebugCollector($this->dispatcher);
+        (new BasicDependencyVisitor($this->dispatcher))->analyze($astMap);
     }
 
     private function createAstMapByFiles(array $files)
@@ -80,7 +89,7 @@ class AnalyzeCommand extends Command
                 $this->dispatcher->dispatch(
                     AstFileSyntaxErrorEvent::class,
                     new AstFileSyntaxErrorEvent(
-                        $file,$e->getMessage()
+                        $file, $e->getMessage()
                     )
                 );
             }

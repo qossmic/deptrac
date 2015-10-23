@@ -2,27 +2,28 @@
 
 namespace DependencyTracker\Visitor;
 
-
+use DependencyTracker\AstMap;
+use DependencyTracker\Event\Visitor\FoundDependencyEvent;
+use PhpParser\NodeVisitor;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use DependencyTracker\CollectionMap;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 
-class BasicDependencyVisitor extends \PhpParser\NodeVisitorAbstract
+class BasicDependencyVisitor implements NodeVisitor
 {
-    protected $collectionMap;
-    protected $currentKlass;
-    protected $currentNamespace;
+    protected $eventDispatcher;
 
-    protected $collectedUseStmts = [];
-
-    public function __construct(CollectionMap $collectionMap)
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
-        $this->collectionMap = $collectionMap;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function leaveNode(Node $node)
+    public function analyze(AstMap $astMap)
     {
-
+        $traverser = new \PhpParser\NodeTraverser;
+        $traverser->addVisitor($this);
+        $traverser->traverse($astMap->getAsts());
     }
 
     public function enterNode(Node $node)
@@ -35,31 +36,52 @@ class BasicDependencyVisitor extends \PhpParser\NodeVisitorAbstract
             $this->currentKlass = $node->name;
 
             if ($node->extends) {
-                $this->collectedUseStmts[] = $node->extends->toString();
+                $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
+                    $node->name,
+                    $node->getLine(),
+                    $node->extends->toString()
+                ));
             }
 
             foreach ($node->implements as $impl) {
-                $this->collectedUseStmts[] = $impl->toString();
+                $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
+                    $node->name,
+                    $node->getLine(),
+                    $impl->toString()
+                ));
             }
         }
 
         if ($node instanceof Node\Expr\Instanceof_) {
-            $this->collectedUseStmts[] = $node->class->toString();
+            $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
+                $node->class->toString(),
+                $node->getLine(),
+                $node->class->toString()
+            ));
         }
 
         if ($node instanceof Node\Stmt\UseUse) {
-            $this->collectedUseStmts[] = $node->name->toString();
+            $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
+                $node->name,
+                $node->getLine(),
+                $node->name->toString()
+            ));
         }
     }
 
     public function afterTraverse(array $nodes)
     {
-        foreach ($this->collectedUseStmts as $use) {
-            $this->collectionMap->addDependency($this->currentNamespace.'\\'.$this->currentKlass, $use);
-        }
 
-        $this->collectedUseStmts = [];
     }
 
+    public function leaveNode(Node $node)
+    {
+
+    }
+
+    public function beforeTraverse(array $nodes)
+    {
+
+    }
 
 }
