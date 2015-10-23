@@ -7,7 +7,9 @@
         "symfony/filesystem": "~2.7",
         "symfony/finder": "~2.7",
         "graphp/graphviz": "0.2.*",
-        "symfony/yaml": "^2.7"
+        "symfony/yaml": "^2.7",
+        "symfony/dependency-injection": "^2.7",
+        "symfony/config": "^2.7"
     },
     "authors": [
         {

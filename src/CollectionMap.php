@@ -11,7 +11,24 @@ class CollectionMap
     {
         $name = str_replace(['\\', '//'], ['/', '/'], $name);
 
+
+        if (stripos($name, 'Vinostore') === false) {
+            return null;
+        }
+
+        if (stripos($name, 'import')) {
+            return null;
+        }
+
+        if (stripos($name, 'export')) {
+            return null;
+        }
+
         $e = explode('/', $name);
+
+        if (isset($e[2])) {
+            return $e[0].'/'.$e[1].'/'.$e[2];
+        }
 
         if (isset($e[1])) {
             return $e[0].'/'.$e[1];
