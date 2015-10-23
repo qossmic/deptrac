@@ -5,7 +5,10 @@
 
     <services>
 
+        <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
+
         <service id="command_analyze" class="DependencyTracker\Command\AnalyzeCommand">
+            <argument type="service" id="dispatcher"/>
         </service>
 
     </services>

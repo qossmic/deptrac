@@ -1,14 +1,13 @@
 <?php
 
-namespace DependencyTracker\Collectors;
+namespace DependencyTracker\Visitor;
 
 
 use DependencyTracker\CollectionMap;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\Use_;
 
-class BasicCollectorVisitor extends \PhpParser\NodeVisitorAbstract
+class BasicDependencyVisitor extends \PhpParser\NodeVisitorAbstract
 {
     protected $collectionMap;
     protected $currentKlass;
