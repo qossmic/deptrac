@@ -4,6 +4,8 @@ namespace DependencyTracker\Command;
 
 
 use DependencyTracker\AstMap;
+use DependencyTracker\ClassLayerMap;
+use DependencyTracker\Collector\ClassNameCollector;
 use DependencyTracker\Collector\CollectorInterface;
 use DependencyTracker\Collector\DebugCollector;
 use DependencyTracker\Configuration;
@@ -11,7 +13,10 @@ use DependencyTracker\Event\AstFileAnalyzedEvent;
 use DependencyTracker\Event\AstFileSyntaxErrorEvent;
 use DependencyTracker\Event\PostCreateAstMapEvent;
 use DependencyTracker\Event\PreCreateAstMapEvent;
+use DependencyTracker\FileLayerMap;
 use DependencyTracker\Formatter\ConsoleFormatter;
+use DependencyTracker\LayerMap;
+use DependencyTracker\OutputFormatter\GraphVizOutputFormatter;
 use DependencyTracker\Visitor\BasicDependencyVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use Symfony\Component\Console\Command\Command;
@@ -73,18 +78,30 @@ class AnalyzeCommand extends Command
 
 
         // Step2 Register Collectors
-        /** @var $collectors CollectorInterface[] */
-        $collectors = [];
+        $formatters = [];
+        /** @var $layerMaps = LayerMap[] */
+        $layerMaps = [];
+        $fileLayerMaps = [];
         foreach($config->getViews() as $configurationView) {
+
+            $layerMap = new LayerMap($configurationView);
+            $classLayerMap = new ClassLayerMap();
+
+            $formatters[] = new GraphVizOutputFormatter(
+                $this->dispatcher,
+                $classLayerMap
+            );
+
             foreach($configurationView->getLayers() as $configurationLayer) {
                 foreach($configurationLayer->getCollectors() as $configurationCollector) {
-
-                    if($configurationCollector->getType() == "debug") {
-                         $collectors[] = new DebugCollector(
-                            $this->dispatcher,
+                    if($configurationCollector->getType() == "className") {
+                        $classNameCollector = new ClassNameCollector(
                             $configurationLayer,
+                            $classLayerMap,
                             $configurationCollector->getArgs()
                         );
+
+                        $classNameCollector->applyAstFile($astMap);
 
                         continue;
                     }
@@ -100,6 +117,10 @@ class AnalyzeCommand extends Command
 
         // Step3
         (new BasicDependencyVisitor($this->dispatcher))->analyze($astMap);
+
+        foreach ($formatters as $formatter) {
+            $formatter->finish();
+        }
 
 
     }

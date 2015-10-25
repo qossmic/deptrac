@@ -2,8 +2,6 @@
 
 namespace DependencyTracker;
 
-use DependencyTracker\AstHint\AstHintInterface;
-
 class AstMap
 {
     protected $fileAstMap;
@@ -28,6 +26,15 @@ class AstMap
     public function getAsts()
     {
         return $this->fileAstMap;
+    }
+
+    public function getAstByFilePathname($filePathname)
+    {
+        if (!isset($this->fileAstMap[$filePathname])) {
+            return null;
+        }
+
+        return $this->fileAstMap[$filePathname];
     }
 
 }

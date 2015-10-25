@@ -12,16 +12,20 @@ class ConfigurationLayer
     /** @var ConfigurationCollector[] */
     private $collectors;
 
+    private $name;
+
     public static function fromArray(array $arr)
     {
         $options = (new OptionsResolver())->setRequired([
+            'name',
             'color',
             'collectors'
         ])->resolve($arr);
 
         return new static(
             $options['color'],
-            array_map(function($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors'])
+            array_map(function($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
+            $options['name']
         );
     }
 
@@ -30,10 +34,11 @@ class ConfigurationLayer
      * @param $color
      * @param $collectors
      */
-    public function __construct($color, $collectors)
+    public function __construct($color, $collectors, $name)
     {
         $this->color = $color;
         $this->collectors = $collectors;
+        $this->name = $name;
     }
 
 
@@ -52,6 +57,14 @@ class ConfigurationLayer
     public function getColor()
     {
         return $this->color;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
 }

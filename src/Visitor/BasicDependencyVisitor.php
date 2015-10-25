@@ -14,6 +14,12 @@ class BasicDependencyVisitor implements NodeVisitor
 {
     protected $eventDispatcher;
 
+    protected $currentKlass = '';
+
+    protected $currentNamespace = '';
+
+    protected $collectedUseStmts = [];
+
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
@@ -26,6 +32,20 @@ class BasicDependencyVisitor implements NodeVisitor
         $traverser->traverse($astMap->getAsts());
     }
 
+    private function dispatchFoundDependency($className, $line)
+    {
+
+        if (!$this->currentKlass) {
+            return;
+        }
+
+        $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
+            $this->currentNamespace.'\\'.$this->currentKlass,
+            $line,
+            $className
+        ));
+    }
+
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Stmt\Namespace_) {
@@ -36,42 +56,41 @@ class BasicDependencyVisitor implements NodeVisitor
             $this->currentKlass = $node->name;
 
             if ($node->extends) {
-                $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
-                    $node->name,
-                    $node->getLine(),
-                    $node->extends->toString()
-                ));
+                $this->dispatchFoundDependency(
+                    $node->extends->toString(),
+                    $node->getLine()
+                );
             }
 
             foreach ($node->implements as $impl) {
-                $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
-                    $node->name,
-                    $node->getLine(),
-                    $impl->toString()
-                ));
+                $this->dispatchFoundDependency(
+                    $impl->toString(),
+                    $node->getLine()
+                );
             }
         }
 
         if ($node instanceof Node\Expr\Instanceof_) {
-            $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
+            $this->dispatchFoundDependency(
                 $node->class->toString(),
-                $node->getLine(),
-                $node->class->toString()
-            ));
+                $node->getLine()
+            );
         }
 
         if ($node instanceof Node\Stmt\UseUse) {
-            $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
-                $node->name,
-                $node->getLine(),
-                $node->name->toString()
-            ));
+            $this->collectedUseStmts[] = $node;
         }
     }
 
     public function afterTraverse(array $nodes)
     {
+        foreach ($this->collectedUseStmts as $use) {
+            $this->dispatchFoundDependency($use->name->toString(), $use->getLine());
+        }
 
+        $this->collectedUseStmts = [];
+        $this->currentKlass = '';
+        $this->currentNamespace = '';
     }
 
     public function leaveNode(Node $node)

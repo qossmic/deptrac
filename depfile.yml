@@ -5,12 +5,21 @@ views:
     name: Basic View
     layers:
       -
+        name: controllers
         color: '#ccc'
         collectors:
           -
-            type: debug
+            type: className
             args:
-              namespace: Vinostore
+              regex: .*controller.*
+      -
+        name: services
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*service.*
     ruleset:
       layerA:
         - LayerB
