@@ -13,4 +13,5 @@ $container->compile();
 
 $application = new Application();
 $application->add($container->get('command_analyze'));
+$application->setDefaultCommand('analyze');
 $application->run();

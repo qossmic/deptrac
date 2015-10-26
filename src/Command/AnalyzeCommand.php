@@ -6,16 +6,12 @@ namespace DependencyTracker\Command;
 use DependencyTracker\AstMap;
 use DependencyTracker\ClassLayerMap;
 use DependencyTracker\Collector\ClassNameCollector;
-use DependencyTracker\Collector\CollectorInterface;
-use DependencyTracker\Collector\DebugCollector;
 use DependencyTracker\Configuration;
 use DependencyTracker\Event\AstFileAnalyzedEvent;
 use DependencyTracker\Event\AstFileSyntaxErrorEvent;
 use DependencyTracker\Event\PostCreateAstMapEvent;
 use DependencyTracker\Event\PreCreateAstMapEvent;
-use DependencyTracker\FileLayerMap;
 use DependencyTracker\Formatter\ConsoleFormatter;
-use DependencyTracker\LayerMap;
 use DependencyTracker\OutputFormatter\GraphVizOutputFormatter;
 use DependencyTracker\Visitor\BasicDependencyVisitor;
 use PhpParser\NodeVisitor\NameResolver;
@@ -56,35 +52,63 @@ class AnalyzeCommand extends Command
         ini_set('memory_limit', -1);
 
         $config = Configuration::fromArray(
-            Yaml::parse(file_get_contents(__DIR__.'/../../depfile.yml'))
+            Yaml::parse(file_get_contents(getcwd().'/depfile.yml'))
         );
 
         new ConsoleFormatter($this->dispatcher, $output);
 
 
         // Step1
-        $files = [];
-        foreach($config->getPaths() as $path) {
-            $files = array_merge(iterator_to_array(
-                (new Finder)->in(__DIR__ . '/../../' . $path)
-                    ->name('*.php')
-                    ->files()
-            ), $files);
-        }
+        $files = iterator_to_array(
+            (new Finder)
+                ->in($config->getPaths())
+                ->name('*.php')
+                ->files()
+                ->followLinks()
+                ->ignoreUnreadableDirs(true)
+                ->ignoreVCS(true)
+        );
+
+        $files = array_filter($files, function(\SplFileInfo $fileInfo) use ($config) {
+            foreach ($config->getExcludeFiles() as $excludeFiles) {
+                if(preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        $a = 0;
+
+        $cacheKey = sha1(array_reduce(
+            array_map(function(\SplFileInfo $fileInfo) {
+                return md5_file($fileInfo->getPathname());
+            }, $files),
+            function($a, $b) { return $a + $b; }
+        ));
+
+        $cacheFile = sys_get_temp_dir().'/astmap.cache.'.$cacheKey;
 
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
-        $this->createAstMapByFiles($astMap = new AstMap(), $files);
+
+        if (file_exists($cacheFile)) {
+            $output->writeln("reading cachefile <info>".$cacheFile."</info>");
+            $astMap = unserialize(file_get_contents($cacheFile));
+        } else {
+            $output->writeln("writing cachefile <info>".$cacheFile."</info>");
+            $this->createAstMapByFiles($astMap = new AstMap(), $files);
+            file_put_contents($cacheFile, serialize($astMap));
+        }
+
         $this->dispatcher->dispatch(PostCreateAstMapEvent::class, new PostCreateAstMapEvent($astMap));
 
 
         // Step2 Register Collectors
         $formatters = [];
-        /** @var $layerMaps = LayerMap[] */
-        $layerMaps = [];
-        $fileLayerMaps = [];
+
         foreach($config->getViews() as $configurationView) {
 
-            $layerMap = new LayerMap($configurationView);
             $classLayerMap = new ClassLayerMap();
 
             $formatters[] = new GraphVizOutputFormatter(

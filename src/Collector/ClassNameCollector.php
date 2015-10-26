@@ -44,7 +44,7 @@ class ClassNameCollector implements CollectorInterface
 
             foreach ($classes as $klass) {
 
-                if (preg_match('/'.$this->regex.'/i', $klass->namespacedName->toString())) {
+                if (!preg_match('/'.$this->regex.'/i', $klass->namespacedName->toString())) {
                     continue;
                 }
 

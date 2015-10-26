@@ -1,0 +1,12 @@
+{
+  "directories": [
+    "src",
+    "vendor"
+  ],
+  "files": [
+    "services.xml"
+  ],
+  "main": "dependencyTracker.php",
+  "output": "dtrac.phar",
+  "stub": true
+}

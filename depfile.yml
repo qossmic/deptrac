@@ -1,25 +1,135 @@
 paths:
   - ./../../hawesko/hawesko/src
+exclude_files:
+  - .*test.*
+  - .*FixtureBundle.*
+  - .*SuccessorBundle.*
+  - .*Migration.*
+  - .*PhpUnit.*
 views:
   -
     name: Basic View
     layers:
       -
-        name: controllers
+        name: MainBundle
         color: '#ccc'
         collectors:
           -
             type: className
             args:
-              regex: .*controller.*
+              regex: .*MainBundle.*
       -
-        name: services
+        name: CockpitBundle
         color: '#ccc'
         collectors:
           -
             type: className
             args:
-              regex: .*service.*
+              regex: .*CockpitBundle.*
+      -
+        name: BasketBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*BasketBundle.*
+      -
+        name: CategoryBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*CategoryBundle.*
+      -
+        name: CustomerBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Core\/Domain.*
+      -
+        name: FactFinderBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Core\/FactFinderBundle.*
+      -
+        name: GiveawayBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*GiveawayBundle.*
+      -
+        name: MailerBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*MailerBundle.*
+      -
+        name: MenuBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*MenuBundle.*
+      -
+        name: MySqlLocalImporterBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*MySqlLocalImporterBundle.*
+      -
+        name: OrderBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*OrderBundle.*
+      -
+        name: ProductBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*ProductBundle.*
+      -
+        name: SapExporterBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*SapExporterBundle.*
+      -
+        name: TeaserBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*TeaserBundle.*
+      -
+        name: VoucherBundle
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*VoucherBundle.*
     ruleset:
       layerA:
         - LayerB
