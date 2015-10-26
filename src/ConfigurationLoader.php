@@ -11,6 +11,7 @@ class ConfigurationLoader
         return getcwd().'/depfile.yml';
     }
 
+    /** @return Configuration */
     public function loadConfiguration()
     {
         return Configuration::fromArray(

@@ -22,9 +22,7 @@ class InitCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setName('init')
-        ;
+        $this->setName('init');
     }
 
     protected function execute(
