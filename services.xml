@@ -7,8 +7,20 @@
 
         <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
+        <service id="configuration_loader" class="DependencyTracker\ConfigurationLoader"/>
+
+        <service id="ast_map_generator" class="DependencyTracker\AstMapGenerator">
+            <argument type="service" id="dispatcher"/>
+        </service>
+
+        <service id="command_init" class="DependencyTracker\Command\InitCommand">
+            <argument type="service" id="configuration_loader"/>
+        </service>
+
         <service id="command_analyze" class="DependencyTracker\Command\AnalyzeCommand">
             <argument type="service" id="dispatcher"/>
+            <argument type="service" id="ast_map_generator"/>
+            <argument type="service" id="configuration_loader"/>
         </service>
 
     </services>

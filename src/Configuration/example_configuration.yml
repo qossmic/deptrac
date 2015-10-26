@@ -1,0 +1,30 @@
+paths:
+  - ./src
+exclude_files:
+  - .*test.*
+views:
+  -
+    name: Basic
+    layers:
+      -
+        name: Controller
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*controller.*
+      -
+        name: Service
+        color: '#ccc'
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*service.*
+    ruleset:
+      layerA:
+        - LayerB
+      layerB:
+        - LayerC
+        - LayerD
