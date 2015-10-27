@@ -1,10 +1,26 @@
-<?php
+<?php 
 
 namespace DependencyTracker;
 
-class ClassLayerMap
+use DependencyTracker\DependencyResult\Dependency;
+
+class DependencyResult
 {
+
     private $classLayerMap = [];
+
+    private $dependencies = [];
+
+    public function addDependency(Dependency $dependency)
+    {
+        $this->dependencies[] = $dependency;
+    }
+
+    /** @return Dependency[] */
+    public function getDependencies()
+    {
+        return $this->dependencies;
+    }
 
     public function addClassToLayer($klass, $layer)
     {

@@ -6,10 +6,13 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-
+use DependencyTracker\CompilerPass\OutputFormatterPass;
 
 (new XmlFileLoader($container = new ContainerBuilder(), new FileLocator(__DIR__)))->load(__DIR__. '/services.xml');
-$container->compile();
+$container
+    ->addCompilerPass(new OutputFormatterPass())
+    ->compile()
+;
 
 $application = new Application();
 $application->add($container->get('command_init'));

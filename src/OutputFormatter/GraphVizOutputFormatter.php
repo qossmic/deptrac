@@ -3,50 +3,51 @@
 namespace DependencyTracker\OutputFormatter;
 
 use DependencyTracker\ClassLayerMap;
+use DependencyTracker\DependencyResult;
 use DependencyTracker\Event\Visitor\FoundDependencyEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class GraphVizOutputFormatter
+class GraphVizOutputFormatter implements OutputFormatterInterface
 {
     protected $eventDispatcher;
 
-    protected $classLayerMap;
-
-    protected $layersDependOnLayers = [];
-
-
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher,
-        ClassLayerMap $classLayerMap
-    )
+    public function getName()
     {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->classLayerMap = $classLayerMap;
-        $eventDispatcher->addListener(FoundDependencyEvent::class, [$this, 'onFoundDepdendencyEvent']);
+        return 'graphviz';
     }
 
-    public function onFoundDepdendencyEvent(FoundDependencyEvent $dependencyEvent)
+    public function finish(DependencyResult $dependencyResult)
     {
-        $layersA = $this->classLayerMap->getLayersByClassName($dependencyEvent->getClassA());
-        $layersB = $this->classLayerMap->getLayersByClassName($dependencyEvent->getClassB());
+        $layersDependOnLayers = [];
 
-        foreach ($layersA as $layerA) {
+        foreach ($dependencyResult->getDependencies() as $dependency) {
 
-            if (!isset($this->layersDependOnLayers[$layerA])) {
-                $this->layersDependOnLayers[$layerA] = [];
+            $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
+            $layersB = $dependencyResult->getLayersByClassName($dependency->getClassB());
+
+            if (empty($layersB)) {
+                continue;
             }
 
-            $this->layersDependOnLayers[$layerA] = array_values(array_unique(array_merge($layersB, $this->layersDependOnLayers[$layerA])));
-        }
-    }
+            foreach ($layersA as $layerA) {
 
-    public function finish()
-    {
+                if (!isset($layersDependOnLayers[$layerA])) {
+                    $layersDependOnLayers[$layerA] = [];
+                }
+
+                $layersDependOnLayers[$layerA] = array_values(
+                    array_unique(array_merge($layersB, $layersDependOnLayers[$layerA]))
+                );
+            }
+        }
+
+        // refactor to multiple methods
+
         $graph = new \Fhaculty\Graph\Graph();
         $vertices = [];
 
         // create a vertice for every layer
-        foreach ($this->layersDependOnLayers as $layer => $layersDependOn) {
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
 
             if (!isset($vertices[$layer])) {
                 $vertices[$layer] = $graph->createVertex($layer);
@@ -61,7 +62,7 @@ class GraphVizOutputFormatter
         }
 
         // createEdges
-        foreach ($this->layersDependOnLayers as $layer => $layersDependOn) {
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn) {
                 $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
             }

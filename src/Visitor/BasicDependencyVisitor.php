@@ -3,10 +3,9 @@
 namespace DependencyTracker\Visitor;
 
 use DependencyTracker\AstMap;
-use DependencyTracker\Event\Visitor\FoundDependencyEvent;
+use DependencyTracker\DependencyResult\Dependency;
+use DependencyTracker\DependencyResult;
 use PhpParser\NodeVisitor;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use DependencyTracker\CollectionMap;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 
@@ -20,9 +19,11 @@ class BasicDependencyVisitor implements NodeVisitor
 
     protected $collectedUseStmts = [];
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    protected $dependencyResult;
+
+    public function __construct(DependencyResult $dependencyResult)
     {
-        $this->eventDispatcher = $eventDispatcher;
+        $this->dependencyResult = $dependencyResult;
     }
 
     public function analyze(AstMap $astMap)
@@ -39,10 +40,14 @@ class BasicDependencyVisitor implements NodeVisitor
             return;
         }
 
-        $this->eventDispatcher->dispatch(FoundDependencyEvent::class, new FoundDependencyEvent(
-            $this->currentNamespace.'\\'.$this->currentKlass,
-            $line,
-            $className
+        if ($this->currentNamespace.'\\'.$this->currentKlass == 'Vinostore\Hawesko\MainBundle\VinostoreHaweskoMainBundle') {
+            $a = 0;
+        }
+
+        $this->dependencyResult->addDependency(new Dependency(
+                $this->currentNamespace.'\\'.$this->currentKlass,
+                $line,
+                $className
         ));
     }
 
@@ -84,6 +89,16 @@ class BasicDependencyVisitor implements NodeVisitor
 
     public function afterTraverse(array $nodes)
     {
+
+    }
+
+    public function leaveNode(Node $node)
+    {
+
+        if (!$node instanceof Class_) {
+            return;
+        }
+
         foreach ($this->collectedUseStmts as $use) {
             $this->dispatchFoundDependency($use->name->toString(), $use->getLine());
         }
@@ -91,10 +106,6 @@ class BasicDependencyVisitor implements NodeVisitor
         $this->collectedUseStmts = [];
         $this->currentKlass = '';
         $this->currentNamespace = '';
-    }
-
-    public function leaveNode(Node $node)
-    {
 
     }
 

@@ -14,18 +14,24 @@ class Configuration
 
     private $exclude_files;
 
+    private $formatter;
+
     public static function fromArray(array $arr)
     {
         $options = (new OptionsResolver())->setRequired([
             'views',
             'paths',
             'exclude_files'
-        ])->resolve($arr);
+        ])->setDefaults([
+            'formatter' => 'graphviz'
+        ])
+        ->resolve($arr);
 
         return new static(
             array_map(function($v) { return ConfigurationView::fromArray($v); }, $options['views']),
             $options['paths'],
-            $options['exclude_files']
+            $options['exclude_files'],
+            $options['formatter']
         );
     }
 
@@ -33,11 +39,12 @@ class Configuration
      * @param $views
      * @param $paths
      */
-    public function __construct($views, $paths, $exclude_files)
+    public function __construct($views, $paths, $exclude_files, $formatter)
     {
         $this->views = $views;
         $this->paths = $paths;
         $this->exclude_files = $exclude_files;
+        $this->formatter = $formatter;
     }
 
     /**
@@ -62,6 +69,14 @@ class Configuration
     public function getExcludeFiles()
     {
         return $this->exclude_files;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormatter()
+    {
+        return $this->formatter;
     }
 
 }

@@ -3,54 +3,40 @@
 namespace DependencyTracker;
 
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitor;
 
-class AstHelper implements NodeVisitor
+class AstHelper
 {
-    public static function findAstNodesOfType($ast, array $types) {
-        $traverser = new \PhpParser\NodeTraverser;
-        $collectedNodes = new \ArrayObject();
-        $traverser->addVisitor(new static(function(Node $node) use ($collectedNodes) {
-            $collectedNodes[] = $node;
-        }, $types));
-        $traverser->traverse($ast);
-
-        return $collectedNodes->getArrayCopy();
-    }
-
-    private $cb;
-
-    private $types;
-
-    protected function __construct($cb, array $types)
+    public static function findClassLikeNodes($nodes)
     {
-        $this->cb = [$cb];
-        $this->types = $types;
-    }
+        $collectedNodes = [];
 
-    public function beforeTraverse(array $nodes)
-    {
-        // TODO: Implement beforeTraverse() method.
-    }
-
-    public function enterNode(Node $node)
-    {
-        foreach ($this->types as $type) {
-            if (is_a($node, $type, true)) {
-                $this->cb[0]($node);
+        foreach ($nodes as $i => &$node) {
+            if ($node instanceof Node\Stmt\ClassLike) {
+                $collectedNodes[] = $node;
+            } elseif ($node instanceof Use_) {
+                continue;
+            } elseif (is_array($node)) {
+                $collectedNodes = array_merge(static::findClassLikeNodes($node), $collectedNodes);
+            } elseif ($node instanceof Node) {
+                $collectedNodes = array_merge(static::findClassLikeNodes(
+                    static::getSubNodes($node)
+                ), $collectedNodes);
             }
         }
+
+        return $collectedNodes;
     }
 
-    public function leaveNode(Node $node)
+    private static function getSubNodes(Node $node)
     {
-        // TODO: Implement leaveNode() method.
+        $subnodes = [];
+        foreach ($node->getSubNodeNames() as $name) {
+            $subnodes[] =& $node->$name;
+        }
+        return $subnodes;
     }
-
-    public function afterTraverse(array $nodes)
-    {
-        // TODO: Implement afterTraverse() method.
-    }
-
-
 }

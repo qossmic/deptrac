@@ -13,6 +13,14 @@
             <argument type="service" id="dispatcher"/>
         </service>
 
+        <service id="output_formatter_factory" class="DependencyTracker\OutputFormatterFactory">
+            <argument/>
+        </service>
+
+        <service id="output_formatter_graphviz" class="DependencyTracker\OutputFormatter\GraphVizOutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
         <service id="command_init" class="DependencyTracker\Command\InitCommand">
             <argument type="service" id="configuration_loader"/>
         </service>
@@ -21,6 +29,7 @@
             <argument type="service" id="dispatcher"/>
             <argument type="service" id="ast_map_generator"/>
             <argument type="service" id="configuration_loader"/>
+            <argument type="service" id="output_formatter_factory"/>
         </service>
 
     </services>

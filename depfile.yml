@@ -6,6 +6,7 @@ exclude_files:
   - .*SuccessorBundle.*
   - .*Migration.*
   - .*PhpUnit.*
+  - .*behat.*
 views:
   -
     name: Basic View
@@ -43,13 +44,13 @@ views:
             args:
               regex: .*CategoryBundle.*
       -
-        name: CustomerBundle
+        name: Domain
         color: '#ccc'
         collectors:
           -
             type: className
             args:
-              regex: .*Core\/Domain.*
+              regex: .*Domain.*
       -
         name: FactFinderBundle
         color: '#ccc'
@@ -57,7 +58,7 @@ views:
           -
             type: className
             args:
-              regex: .*Core\/FactFinderBundle.*
+              regex: .*FactFinderBundle.*
       -
         name: GiveawayBundle
         color: '#ccc'

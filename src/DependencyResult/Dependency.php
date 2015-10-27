@@ -1,10 +1,8 @@
 <?php
 
-namespace DependencyTracker\Event\Visitor;
+namespace DependencyTracker\DependencyResult;
 
-use Symfony\Component\EventDispatcher\Event;
-
-class FoundDependencyEvent extends Event
+class Dependency
 {
     protected $classA;
 
@@ -13,7 +11,7 @@ class FoundDependencyEvent extends Event
     protected $classB;
 
     /**
-     * FoundDependencyEvent constructor.
+     * Dependency constructor.
      * @param $classA
      * @param $classALine
      * @param $classB
