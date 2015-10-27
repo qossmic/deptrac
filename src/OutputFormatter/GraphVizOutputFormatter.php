@@ -5,6 +5,8 @@ namespace DependencyTracker\OutputFormatter;
 use DependencyTracker\ClassLayerMap;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\Event\Visitor\FoundDependencyEvent;
+use Fhaculty\Graph\Vertex;
+use phpDocumentor\GraphViz\Edge;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
@@ -44,6 +46,8 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         // refactor to multiple methods
 
         $graph = new \Fhaculty\Graph\Graph();
+
+        /** @var $vertices Vertex[] */
         $vertices = [];
 
         // create a vertice for every layer
@@ -56,6 +60,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             foreach($layersDependOn as $layerDependOn) {
                 if (!isset($vertices[$layerDependOn])) {
                     $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
+                    $vertices[$layerDependOn]->setAttribute('graphviz.color', 'blue');
                 }
             }
 
@@ -65,6 +70,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn) {
                 $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
+                $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst()->setAttribute('graphviz.label', "foo");
             }
         }
 
