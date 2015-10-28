@@ -7,6 +7,6 @@
     "services.xml"
   ],
   "main": "dependencyTracker.php",
-  "output": "dtrac.phar",
+  "output": "deptrac.phar",
   "stub": true
 }
