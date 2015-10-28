@@ -24,7 +24,7 @@ class ConfigurationView
         return new static(
             $options['name'],
             array_map(function($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
-            null
+            new ConfigurationRuleset($options['ruleset'])
         );
     }
 
@@ -59,7 +59,7 @@ class ConfigurationView
     }
 
     /**
-     * @return mixed
+     * @return ConfigurationRuleset
      */
     public function getRuleset()
     {

@@ -36,14 +36,14 @@ class AstMapGenerator
 
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
 
-        if (file_exists($cacheFile)) {
-            $output->writeln("reading cachefile <info>".$cacheFile."</info>");
-            $astMap = unserialize(file_get_contents($cacheFile));
-        } else {
+        #if (file_exists($cacheFile)) {
+        #    $output->writeln("reading cachefile <info>".$cacheFile."</info>");
+        #    $astMap = unserialize(file_get_contents($cacheFile));
+        #} else {
             $output->writeln("writing cachefile <info>".$cacheFile."</info>");
             $this->createAstMapByFiles($astMap = new AstMap(), $files);
             file_put_contents($cacheFile, serialize($astMap));
-        }
+        #}
 
         $this->dispatcher->dispatch(PostCreateAstMapEvent::class, new PostCreateAstMapEvent($astMap));
 

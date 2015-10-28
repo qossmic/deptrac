@@ -60,7 +60,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             foreach($layersDependOn as $layerDependOn) {
                 if (!isset($vertices[$layerDependOn])) {
                     $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
-                    $vertices[$layerDependOn]->setAttribute('graphviz.color', 'blue');
+                    //$vertices[$layerDependOn]->setAttribute('graphviz.color', 'blue');
                 }
             }
 
@@ -70,7 +70,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn) {
                 $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
-                $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst()->setAttribute('graphviz.label', "foo");
+                //$vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst()->setAttribute('graphviz.label', "foo");
             }
         }
 

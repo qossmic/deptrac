@@ -132,8 +132,31 @@ views:
             args:
               regex: .*VoucherBundle.*
     ruleset:
-      layerA:
-        - LayerB
-      layerB:
-        - LayerC
-        - LayerD
+      MainBundle:
+        - Domain
+      CockpitBundle:
+        - Domain
+      BasketBundle:
+        - Domain
+      CategoryBundle:
+        - Domain
+      FactFinderBundle:
+        - Domain
+      GiveawayBundle:
+        - Domain
+      MailerBundle:
+        - Domain
+      OrderBundle:
+        - Domain
+      MySqlLocalImporterBundle:
+        - Domain
+      ProductBundle:
+        - Domain
+      SapExporterBundle:
+        - Domain
+      TeaserBundle:
+        - Domain
+      VoucherBundle:
+        - Domain
+      MenuBundle:
+        - Domain

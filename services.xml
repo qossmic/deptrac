@@ -25,11 +25,14 @@
             <argument type="service" id="configuration_loader"/>
         </service>
 
+        <service id="ruleset_engine" class="DependencyTracker\RulesetEngine"/>
+
         <service id="command_analyze" class="DependencyTracker\Command\AnalyzeCommand">
             <argument type="service" id="dispatcher"/>
             <argument type="service" id="ast_map_generator"/>
             <argument type="service" id="configuration_loader"/>
             <argument type="service" id="output_formatter_factory"/>
+            <argument type="service" id="ruleset_engine"/>
         </service>
 
     </services>

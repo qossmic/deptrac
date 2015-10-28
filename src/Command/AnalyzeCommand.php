@@ -12,6 +12,7 @@ use DependencyTracker\DependencyResult;
 use DependencyTracker\Formatter\ConsoleFormatter;
 use DependencyTracker\OutputFormatter\GraphVizOutputFormatter;
 use DependencyTracker\OutputFormatterFactory;
+use DependencyTracker\RulesetEngine;
 use DependencyTracker\Visitor\BasicDependencyVisitor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,11 +29,14 @@ class AnalyzeCommand extends Command
 
     protected $formatterFactory;
 
+    protected $rulesetEngine;
+
     public function __construct(
         EventDispatcherInterface $dispatcher,
         AstMapGenerator $astMapGenerator,
         ConfigurationLoader $configurationLoader,
-        OutputFormatterFactory $formatterFactory
+        OutputFormatterFactory $formatterFactory,
+        RulesetEngine $rulesetEngine
     )
     {
         parent::__construct();
@@ -40,6 +44,7 @@ class AnalyzeCommand extends Command
         $this->astMapGenerator = $astMapGenerator;
         $this->configurationLoader = $configurationLoader;
         $this->formatterFactory = $formatterFactory;
+        $this->rulesetEngine = $rulesetEngine;
     }
 
     protected function configure()
@@ -95,6 +100,7 @@ class AnalyzeCommand extends Command
         $output->writeln("formatting dependencies.");
         $formatter->finish($dependencyResult);
 
+        /*
         foreach ($dependencyResult->getDependencies() as $dependency) {
             $output->writeln(sprintf("%s::%s depends on %s", $dependency->getClassA(), $dependency->getClassALine(), $dependency->getClassB()));
         }
@@ -102,6 +108,37 @@ class AnalyzeCommand extends Command
         foreach ($dependencyResult->getClassLayerMap() as $klass => $layers) {
             $output->writeln(sprintf("%s is in layers [%s]", $klass, implode(' ,',$layers)));
         }
+        $output->writeln("-------");
+        $output->writeln("-------");
+        */
+
+        # collect violations
+        /** @var $violations RulesetEngine\RulesetViolation[] */
+        $violations = [];
+        foreach($config->getViews() as $configurationView) {
+            $violations = array_merge(
+                $this->rulesetEngine->getViolations($dependencyResult, $configurationView->getRuleset()),
+                $violations
+            );
+        }
+
+        foreach ($violations as $violation) {
+            $output->writeln(sprintf(
+                "class <info>%s</info>::%s must not depend on class <info>%s</info> (%s on %s)",
+                $violation->getDependeny()->getClassA(),
+                $violation->getDependeny()->getClassALine(),
+                $violation->getDependeny()->getClassB(),
+                $violation->getLayerA(),
+                $violation->getLayerB()
+            ));
+        }
+
+        $output->writeln(sprintf(
+            "\nFound <error>%s Violations</error>",
+            count($violations)
+        ));
+
+        return !count($violations);
     }
 
     private function getCollectorByType($type, $config, Configuration\ConfigurationLayer $configurationLayer)
