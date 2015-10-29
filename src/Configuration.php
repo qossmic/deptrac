@@ -2,13 +2,14 @@
 
 namespace DependencyTracker;
 
-use DependencyTracker\Configuration\ConfigurationView;
+use DependencyTracker\Configuration\ConfigurationLayer;
+use DependencyTracker\Configuration\ConfigurationRuleset;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Configuration
 {
 
-    private $views;
+    private $layers;
 
     private $paths;
 
@@ -16,19 +17,23 @@ class Configuration
 
     private $formatter;
 
+    private $ruleset;
+
     public static function fromArray(array $arr)
     {
         $options = (new OptionsResolver())->setRequired([
-            'views',
+            'layers',
             'paths',
-            'exclude_files'
+            'exclude_files',
+            'ruleset'
         ])->setDefaults([
             'formatter' => 'graphviz'
         ])
         ->resolve($arr);
 
         return new static(
-            array_map(function($v) { return ConfigurationView::fromArray($v); }, $options['views']),
+            array_map(function($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
+            new ConfigurationRuleset($options['ruleset']),
             $options['paths'],
             $options['exclude_files'],
             $options['formatter']
@@ -36,23 +41,26 @@ class Configuration
     }
 
     /**
-     * @param $views
+     * @param $layers
      * @param $paths
+     * @param $exclude_files
+     * @param $formatter
      */
-    public function __construct($views, $paths, $exclude_files, $formatter)
+    public function __construct($layers, $ruleset, $paths, $exclude_files, $formatter)
     {
-        $this->views = $views;
+        $this->layers = $layers;
+        $this->ruleset = $ruleset;
         $this->paths = $paths;
         $this->exclude_files = $exclude_files;
         $this->formatter = $formatter;
     }
 
     /**
-     * @return ConfigurationView[]
+     * @return ConfigurationLayer
      */
-    public function getViews()
+    public function getLayers()
     {
-        return $this->views;
+        return $this->layers;
     }
 
     /**
@@ -77,6 +85,14 @@ class Configuration
     public function getFormatter()
     {
         return $this->formatter;
+    }
+
+    /**
+     * @return ConfigurationRuleset
+     */
+    public function getRuleset()
+    {
+        return $this->ruleset;
     }
 
 }

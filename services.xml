@@ -27,12 +27,21 @@
 
         <service id="ruleset_engine" class="DependencyTracker\RulesetEngine"/>
 
+        <service id="collector_factory" class="DependencyTracker\CollectorFactory">
+            <argument/>
+        </service>
+
+        <service id="collector_className" class="DependencyTracker\Collector\ClassNameCollector">
+            <tag name="collector"/>
+        </service>
+
         <service id="command_analyze" class="DependencyTracker\Command\AnalyzeCommand">
             <argument type="service" id="dispatcher"/>
             <argument type="service" id="ast_map_generator"/>
             <argument type="service" id="configuration_loader"/>
             <argument type="service" id="output_formatter_factory"/>
             <argument type="service" id="ruleset_engine"/>
+            <argument type="service" id="collector_factory"/>
         </service>
 
     </services>

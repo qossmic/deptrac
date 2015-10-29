@@ -35,13 +35,8 @@ class BasicDependencyVisitor implements NodeVisitor
 
     private function dispatchFoundDependency($className, $line)
     {
-
         if (!$this->currentKlass) {
             return;
-        }
-
-        if ($this->currentNamespace.'\\'.$this->currentKlass == 'Vinostore\Hawesko\MainBundle\VinostoreHaweskoMainBundle') {
-            $a = 0;
         }
 
         $this->dependencyResult->addDependency(new Dependency(
@@ -75,7 +70,7 @@ class BasicDependencyVisitor implements NodeVisitor
             }
         }
 
-        if ($node instanceof Node\Expr\Instanceof_) {
+        if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
             $this->dispatchFoundDependency(
                 $node->class->toString(),
                 $node->getLine()

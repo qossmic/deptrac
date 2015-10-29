@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace DependencyTracker;
 
@@ -13,18 +13,39 @@ class DependencyResult
 
     public function addDependency(Dependency $dependency)
     {
-        $this->dependencies[] = $dependency;
+        if (!isset($this->dependencies[$dependency->getClassA()])) {
+            $this->dependencies[$dependency->getClassA()] = [];
+        }
+
+        $this->dependencies[$dependency->getClassA()][] = $dependency;
+    }
+
+    public function getDependenciesByClass($klass)
+    {
+        if (!isset($this->dependencies[$klass])) {
+            return [];
+        }
+
+        return $this->dependencies[$klass];
     }
 
     /** @return Dependency[] */
     public function getDependencies()
     {
-        return $this->dependencies;
+        $buffer = [];
+
+        foreach ($this->dependencies as $deps) {
+            foreach($deps as $dependency) {
+                $buffer[] = $dependency;
+            }
+        }
+
+        return $buffer;
     }
 
     public function addClassToLayer($klass, $layer)
     {
-        if(!isset($this->classLayerMap[$klass])) {
+        if (!isset($this->classLayerMap[$klass])) {
             $this->classLayerMap[$klass] = [];
         }
 

@@ -6,7 +6,7 @@
   "files": [
     "services.xml"
   ],
-  "main": "dependencyTracker.php",
+  "main": "deptrac.php",
   "output": "deptrac.phar",
   "stub": true
 }

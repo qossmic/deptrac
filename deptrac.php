@@ -7,10 +7,12 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use DependencyTracker\CompilerPass\OutputFormatterPass;
+use DependencyTracker\CompilerPass\CollectorPass;
 
 (new XmlFileLoader($container = new ContainerBuilder(), new FileLocator(__DIR__)))->load(__DIR__. '/services.xml');
 $container
     ->addCompilerPass(new OutputFormatterPass())
+    ->addCompilerPass(new CollectorPass())
     ->compile()
 ;
 

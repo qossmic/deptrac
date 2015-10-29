@@ -1,30 +1,261 @@
 paths:
-  - ./src
+  - ./vendor/symfony
 exclude_files:
   - .*test.*
 views:
   -
-    name: Basic
+    name: Basic View
     layers:
       -
-        name: Controller
-        color: '#ccc'
+        name: Asset
         collectors:
           -
             type: className
             args:
-              regex: .*controller.*
+              regex: .*Component\\Asset.*
       -
-        name: Service
-        color: '#ccc'
+        name: BrowserKit
         collectors:
           -
             type: className
             args:
-              regex: .*service.*
+              regex: .*Component\\BrowserKit.*
+      -
+        name: ClassLoader
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\ClassLoader.*
+      -
+        name: Config
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Config.*
+      -
+        name: Console
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Console.*
+      -
+        name: CssSelector
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\CssSelector.*
+      -
+        name: Debug
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Debug.*
+      -
+        name: DependencyInjection
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\DependencyInjection.*
+      -
+        name: DomCrawler
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\DomCrawler.*
+      -
+        name: EventDispatcher
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\EventDispatcher.*
+      -
+        name: ExpressionLanguage
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\ExpressionLanguage.*
+      -
+        name: Filesystem
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Filesystem.*
+      -
+        name: Finder
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Finder.*
+      -
+        name: Form
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Form.*
+      -
+        name: HttpFoundation
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\HttpFoundation.*
+      -
+        name: HttpKernel
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\HttpKernel.*
+      -
+        name: Intl
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Intl.*
+      -
+        name: Ldap
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Ldap.*
+      -
+        name: Locale
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Locale.*
+      -
+        name: OptionsResolver
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\OptionsResolver.*
+      -
+        name: Process
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Process.*
+      -
+        name: PropertyAccess
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\PropertyAccess.*
+      -
+        name: PropertyInfo
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\PropertyInfo.*
+      -
+        name: Routing
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Routing.*
+      -
+        name: Security
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Security.*
+      -
+        name: Serializer
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Serializer.*
+      -
+        name: Stopwatch
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Stopwatch.*
+      -
+        name: Templating
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Templating.*
+      -
+        name: Translation
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Translation.*
+      -
+        name: Validator
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Validator.*
+      -
+        name: VarDumper
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\VarDumper.*
+      -
+        name: Yaml
+        collectors:
+          -
+            type: className
+            args:
+              regex: .*Component\\Yaml.*
     ruleset:
-      layerA:
-        - LayerB
-      layerB:
-        - LayerC
-        - LayerD
+      MainBundle:
+        - Domain
+      CockpitBundle:
+        - Domain
+      BasketBundle:
+        - Domain
+      CategoryBundle:
+        - Domain
+      FactFinderBundle:
+        - Domain
+      GiveawayBundle:
+        - Domain
+      MailerBundle:
+        - Domain
+      OrderBundle:
+        - Domain
+      MySqlLocalImporterBundle:
+        - Domain
+      ProductBundle:
+        - Domain
+      SapExporterBundle:
+        - Domain
+      TeaserBundle:
+        - Domain
+      VoucherBundle:
+        - Domain
+      MenuBundle:
+        - Domain

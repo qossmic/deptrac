@@ -1,162 +1,259 @@
 paths:
   - ./../../hawesko/hawesko/src
+  #- ./../../hawesko/hawesko/vendor/symfony
 exclude_files:
   - .*test.*
-  - .*FixtureBundle.*
-  - .*SuccessorBundle.*
-  - .*Migration.*
-  - .*PhpUnit.*
-  - .*behat.*
-views:
+layers:
   -
-    name: Basic View
-    layers:
+    name: Asset
+    collectors:
       -
-        name: MainBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*MainBundle.*
+        type: className
+        args:
+          regex: .*Component\\Asset.*
+  -
+    name: BrowserKit
+    collectors:
       -
-        name: CockpitBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*CockpitBundle.*
+        type: className
+        args:
+          regex: .*Component\\BrowserKit.*
+  -
+    name: ClassLoader
+    collectors:
       -
-        name: BasketBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*BasketBundle.*
+        type: className
+        args:
+          regex: .*Component\\ClassLoader.*
+  -
+    name: Config
+    collectors:
       -
-        name: CategoryBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*CategoryBundle.*
+        type: className
+        args:
+          regex: .*Component\\Config.*
+  -
+    name: Console
+    collectors:
       -
-        name: Domain
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*Domain.*
+        type: className
+        args:
+          regex: .*Component\\Console.*
+  -
+    name: CssSelector
+    collectors:
       -
-        name: FactFinderBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*FactFinderBundle.*
+        type: className
+        args:
+          regex: .*Component\\CssSelector.*
+  -
+    name: Debug
+    collectors:
       -
-        name: GiveawayBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*GiveawayBundle.*
+        type: className
+        args:
+          regex: .*Component\\Debug.*
+  -
+    name: DependencyInjection
+    collectors:
       -
-        name: MailerBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*MailerBundle.*
+        type: className
+        args:
+          regex: .*Component\\DependencyInjection.*
+  -
+    name: DomCrawler
+    collectors:
       -
-        name: MenuBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*MenuBundle.*
+        type: className
+        args:
+          regex: .*Component\\DomCrawler.*
+  -
+    name: EventDispatcher
+    collectors:
       -
-        name: MySqlLocalImporterBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*MySqlLocalImporterBundle.*
+        type: className
+        args:
+          regex: .*Component\\EventDispatcher.*
+  -
+    name: ExpressionLanguage
+    collectors:
       -
-        name: OrderBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*OrderBundle.*
+        type: className
+        args:
+          regex: .*Component\\ExpressionLanguage.*
+  -
+    name: Filesystem
+    collectors:
       -
-        name: ProductBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*ProductBundle.*
+        type: className
+        args:
+          regex: .*Component\\Filesystem.*
+  -
+    name: Finder
+    collectors:
       -
-        name: SapExporterBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*SapExporterBundle.*
+        type: className
+        args:
+          regex: .*Component\\Finder.*
+  -
+    name: Form
+    collectors:
       -
-        name: TeaserBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*TeaserBundle.*
+        type: className
+        args:
+          regex: .*Component\\Form.*
+  -
+    name: HttpFoundation
+    collectors:
       -
-        name: VoucherBundle
-        color: '#ccc'
-        collectors:
-          -
-            type: className
-            args:
-              regex: .*VoucherBundle.*
-    ruleset:
-      MainBundle:
-        - Domain
-      CockpitBundle:
-        - Domain
-      BasketBundle:
-        - Domain
-      CategoryBundle:
-        - Domain
-      FactFinderBundle:
-        - Domain
-      GiveawayBundle:
-        - Domain
-      MailerBundle:
-        - Domain
-      OrderBundle:
-        - Domain
-      MySqlLocalImporterBundle:
-        - Domain
-      ProductBundle:
-        - Domain
-      SapExporterBundle:
-        - Domain
-      TeaserBundle:
-        - Domain
-      VoucherBundle:
-        - Domain
-      MenuBundle:
-        - Domain
+        type: className
+        args:
+          regex: .*Component\\HttpFoundation.*
+  -
+    name: HttpKernel
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\HttpKernel.*
+  -
+    name: Intl
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Intl.*
+  -
+    name: Ldap
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Ldap.*
+  -
+    name: Locale
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Locale.*
+  -
+    name: OptionsResolver
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\OptionsResolver.*
+  -
+    name: Process
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Process.*
+  -
+    name: PropertyAccess
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\PropertyAccess.*
+  -
+    name: PropertyInfo
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\PropertyInfo.*
+  -
+    name: Routing
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Routing.*
+  -
+    name: Security
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Security.*
+  -
+    name: Serializer
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Serializer.*
+  -
+    name: Stopwatch
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Stopwatch.*
+  -
+    name: Templating
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Templating.*
+  -
+    name: Translation
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Translation.*
+  -
+    name: Validator
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Validator.*
+  -
+    name: VarDumper
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\VarDumper.*
+  -
+    name: Yaml
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Component\\Yaml.*
+ruleset:
+  MainBundle:
+    - Domain
+  CockpitBundle:
+    - Domain
+  BasketBundle:
+    - Domain
+  CategoryBundle:
+    - Domain
+  FactFinderBundle:
+    - Domain
+  GiveawayBundle:
+    - Domain
+  MailerBundle:
+    - Domain
+  OrderBundle:
+    - Domain
+  MySqlLocalImporterBundle:
+    - Domain
+  ProductBundle:
+    - Domain
+  SapExporterBundle:
+    - Domain
+  TeaserBundle:
+    - Domain
+  VoucherBundle:
+    - Domain
+  MenuBundle:
+    - Domain

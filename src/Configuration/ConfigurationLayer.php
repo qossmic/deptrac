@@ -7,8 +7,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ConfigurationLayer
 {
 
-    private $color;
-
     /** @var ConfigurationCollector[] */
     private $collectors;
 
@@ -18,12 +16,10 @@ class ConfigurationLayer
     {
         $options = (new OptionsResolver())->setRequired([
             'name',
-            'color',
             'collectors'
         ])->resolve($arr);
 
         return new static(
-            $options['color'],
             array_map(function($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
             $options['name']
         );
@@ -34,9 +30,8 @@ class ConfigurationLayer
      * @param $color
      * @param $collectors
      */
-    public function __construct($color, $collectors, $name)
+    public function __construct($collectors, $name)
     {
-        $this->color = $color;
         $this->collectors = $collectors;
         $this->name = $name;
     }
@@ -50,14 +45,6 @@ class ConfigurationLayer
         return $this->collectors;
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function getColor()
-    {
-        return $this->color;
-    }
 
     /**
      * @return mixed

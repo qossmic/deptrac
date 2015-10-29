@@ -4,16 +4,15 @@ namespace DependencyTracker\Command;
 
 
 use DependencyTracker\AstMapGenerator;
-use DependencyTracker\ClassLayerMap;
-use DependencyTracker\Collector\ClassNameCollector;
+use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration;
 use DependencyTracker\ConfigurationLoader;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\Formatter\ConsoleFormatter;
-use DependencyTracker\OutputFormatter\GraphVizOutputFormatter;
 use DependencyTracker\OutputFormatterFactory;
 use DependencyTracker\RulesetEngine;
 use DependencyTracker\Visitor\BasicDependencyVisitor;
+use DependencyTracker\Visitor\InheritanceDependencyVisitor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,12 +30,15 @@ class AnalyzeCommand extends Command
 
     protected $rulesetEngine;
 
+    protected $collectorFactory;
+
     public function __construct(
         EventDispatcherInterface $dispatcher,
         AstMapGenerator $astMapGenerator,
         ConfigurationLoader $configurationLoader,
         OutputFormatterFactory $formatterFactory,
-        RulesetEngine $rulesetEngine
+        RulesetEngine $rulesetEngine,
+        CollectorFactory $collectorFactory
     )
     {
         parent::__construct();
@@ -45,6 +47,7 @@ class AnalyzeCommand extends Command
         $this->configurationLoader = $configurationLoader;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
+        $this->collectorFactory = $collectorFactory;
     }
 
     protected function configure()
@@ -60,11 +63,10 @@ class AnalyzeCommand extends Command
 
         if (!$this->configurationLoader->hasConfiguration()) {
             $output->writeln("depfile.yml not found, run dtrac init to create one.");
-            return;
+            return 1;
         }
 
         $config = $this->configurationLoader->loadConfiguration();
-
 
         new ConsoleFormatter($this->dispatcher, $output);
 
@@ -79,49 +81,44 @@ class AnalyzeCommand extends Command
         $output->writeln("analyzing dependencies");
         (new BasicDependencyVisitor($dependencyResult))->analyze($astMap);
         $output->writeln("end analyzing dependencies");
+        $output->writeln("flatten dependencies");
+        (new InheritanceDependencyVisitor())->flattenInheritanceDependencies($astMap, $dependencyResult);
+        $output->writeln("end flatten dependencies");
 
-        foreach($config->getViews() as $configurationView) {
-            foreach($configurationView->getLayers() as $configurationLayer) {
-                foreach($configurationLayer->getCollectors() as $configurationCollector) {
+        foreach($config->getLayers() as $configurationLayer) {
+            foreach($configurationLayer->getCollectors() as $configurationCollector) {
 
-                    $collector = $this->getCollectorByType(
-                        $configurationCollector->getType(),
-                        $configurationCollector->getArgs(),
-                        $configurationLayer
-                    );
+                $output->writeln(sprintf(
+                    'collecting <info>"%s"</info> dependencies for layer <info>"%s"</info>',
+                    $configurationCollector->getType(),
+                    $configurationLayer->getName()
+                ));
 
-                    $output->writeln("collecting dependencies...");
-                    $collector->applyAstFile($astMap, $dependencyResult);
-
-                }
+                $this->collectorFactory->getCollector(
+                    $configurationCollector->getType()
+                )->applyAstFile(
+                    $astMap,
+                    $dependencyResult,
+                    $configurationLayer,
+                    $configurationCollector->getArgs()
+                );
             }
         }
 
         $output->writeln("formatting dependencies.");
         $formatter->finish($dependencyResult);
 
-        /*
-        foreach ($dependencyResult->getDependencies() as $dependency) {
-            $output->writeln(sprintf("%s::%s depends on %s", $dependency->getClassA(), $dependency->getClassALine(), $dependency->getClassB()));
-        }
-        $output->writeln("-------");
-        foreach ($dependencyResult->getClassLayerMap() as $klass => $layers) {
-            $output->writeln(sprintf("%s is in layers [%s]", $klass, implode(' ,',$layers)));
-        }
-        $output->writeln("-------");
-        $output->writeln("-------");
-        */
 
         # collect violations
         /** @var $violations RulesetEngine\RulesetViolation[] */
-        $violations = [];
-        foreach($config->getViews() as $configurationView) {
-            $violations = array_merge(
-                $this->rulesetEngine->getViolations($dependencyResult, $configurationView->getRuleset()),
-                $violations
-            );
-        }
+        $violations = $this->rulesetEngine->getViolations($dependencyResult, $config->getRuleset());
+        $this->displayViolations($violations, $output);
 
+        return !count($violations);
+    }
+
+    private function displayViolations(array $violations, OutputInterface $output)
+    {
         foreach ($violations as $violation) {
             $output->writeln(sprintf(
                 "class <info>%s</info>::%s must not depend on class <info>%s</info> (%s on %s)",
@@ -136,25 +133,6 @@ class AnalyzeCommand extends Command
         $output->writeln(sprintf(
             "\nFound <error>%s Violations</error>",
             count($violations)
-        ));
-
-        return !count($violations);
-    }
-
-    private function getCollectorByType($type, $config, Configuration\ConfigurationLayer $configurationLayer)
-    {
-        if($type == "className") {
-            $classNameCollector = new ClassNameCollector(
-                $configurationLayer,
-                $config
-            );
-
-            return $classNameCollector;
-        }
-
-        throw new \LogicException(sprintf(
-            "Unknown Collector %s",
-            $type
         ));
     }
 
