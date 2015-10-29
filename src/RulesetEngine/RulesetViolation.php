@@ -3,6 +3,7 @@
 namespace DependencyTracker\RulesetEngine;
 
 use DependencyTracker\DependencyResult\Dependency;
+use DependencyTracker\DependencyResult\InheritDependency;
 
 class RulesetViolation
 {
@@ -29,7 +30,7 @@ class RulesetViolation
     }
 
     /**
-     * @return Dependency
+     * @return Dependency|InheritDependency
      */
     public function getDependeny()
     {

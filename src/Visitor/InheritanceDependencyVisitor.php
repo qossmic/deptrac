@@ -58,12 +58,20 @@ class InheritanceDependencyVisitor
                     isset($dependencies[$dependency]) ? $dependencies[$dependency] : []
                 )));
             }
+
+            if (empty($flattenDependencies[$klass])) {
+                unset($flattenDependencies[$klass]);
+            }
         }
 
         foreach ($flattenDependencies as $klass => $deps) {
             foreach ($deps as $dependency) {
                 foreach ($dependencyResult->getDependenciesByClass($dependency) as $dependencyOfDependency) {
-                    $dependencyResult->addDependency(InheritDependency::fromDependency($dependencyOfDependency));
+                    if ($klass == $dependencyOfDependency->getClassA()) {
+                        continue;
+                    }
+
+                    $dependencyResult->addInheritDependency(InheritDependency::fromDependency($klass, 0, $dependencyOfDependency));
                 }
             }
         }

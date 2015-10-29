@@ -93,6 +93,8 @@ class AstMapGenerator
         $traverser = new \PhpParser\NodeTraverser;
         $traverser->addVisitor(new NameResolver());
 
+        gc_disable();
+
         foreach ($files as $file) {
 
             try {
@@ -114,6 +116,8 @@ class AstMapGenerator
                 );
             }
         }
+
+        gc_enable();
     }
 
 }

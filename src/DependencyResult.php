@@ -11,6 +11,8 @@ class DependencyResult
 
     private $dependencies = [];
 
+    private $inheritDependencies = [];
+
     public function addDependency(Dependency $dependency)
     {
         if (!isset($this->dependencies[$dependency->getClassA()])) {
@@ -20,6 +22,19 @@ class DependencyResult
         $this->dependencies[$dependency->getClassA()][] = $dependency;
     }
 
+    public function addInheritDependency(Dependency $dependency)
+    {
+        if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
+            $this->inheritDependencies[$dependency->getClassA()] = [];
+        }
+
+        $this->inheritDependencies[$dependency->getClassA()][] = $dependency;
+    }
+
+    /**
+     * @param $klass
+     * @return Dependency[]
+     */
     public function getDependenciesByClass($klass)
     {
         if (!isset($this->dependencies[$klass])) {
@@ -34,7 +49,7 @@ class DependencyResult
     {
         $buffer = [];
 
-        foreach ($this->dependencies as $deps) {
+        foreach (array_merge($this->dependencies, $this->inheritDependencies) as $deps) {
             foreach($deps as $dependency) {
                 $buffer[] = $dependency;
             }

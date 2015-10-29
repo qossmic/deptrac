@@ -1,6 +1,6 @@
 paths:
-  - ./../../hawesko/hawesko/src
-  #- ./../../hawesko/hawesko/vendor/symfony
+  #- ./../../hawesko/hawesko/src
+  - ./../../hawesko/hawesko/vendor/symfony
 exclude_files:
   - .*test.*
 layers:

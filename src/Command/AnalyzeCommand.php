@@ -117,17 +117,35 @@ class AnalyzeCommand extends Command
         return !count($violations);
     }
 
+    /**
+     * @param RulesetEngine\RulesetViolation[] $violations
+     * @param OutputInterface $output
+     */
     private function displayViolations(array $violations, OutputInterface $output)
     {
         foreach ($violations as $violation) {
-            $output->writeln(sprintf(
-                "class <info>%s</info>::%s must not depend on class <info>%s</info> (%s on %s)",
-                $violation->getDependeny()->getClassA(),
-                $violation->getDependeny()->getClassALine(),
-                $violation->getDependeny()->getClassB(),
-                $violation->getLayerA(),
-                $violation->getLayerB()
-            ));
+
+            if ($violation->getDependeny() instanceof DependencyResult\InheritDependency) {
+                $output->writeln(sprintf(
+                    "class <info>%s</info>::%s inherits <info>%s</info>::%s which must not depend on class <info>%s</info> (%s on %s)",
+                    $violation->getDependeny()->getClassInheritedOver(),
+                    $violation->getDependeny()->getClassInheritedOverLine(),
+                    $violation->getDependeny()->getClassA(),
+                    $violation->getDependeny()->getClassALine(),
+                    $violation->getDependeny()->getClassB(),
+                    $violation->getLayerA(),
+                    $violation->getLayerB()
+                ));
+            } else {
+                $output->writeln(sprintf(
+                    "class <info>%s</info>::%s must not depend on class <info>%s</info> (%s on %s)",
+                    $violation->getDependeny()->getClassA(),
+                    $violation->getDependeny()->getClassALine(),
+                    $violation->getDependeny()->getClassB(),
+                    $violation->getLayerA(),
+                    $violation->getLayerB()
+                ));
+            }
         }
 
         $output->writeln(sprintf(
