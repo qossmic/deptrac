@@ -4,6 +4,7 @@ namespace DependencyTracker\OutputFormatter;
 
 use DependencyTracker\ClassLayerMap;
 use DependencyTracker\DependencyResult;
+use DependencyTracker\DependencyResult\InheritDependency;
 use DependencyTracker\Event\Visitor\FoundDependencyEvent;
 use Fhaculty\Graph\Vertex;
 use phpDocumentor\GraphViz\Edge;
@@ -24,7 +25,12 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
         foreach ($dependencyResult->getDependencies() as $dependency) {
 
-            $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
+            if ($dependency instanceof InheritDependency) {
+                $layersA = $dependencyResult->getLayersByClassName($dependency->getClassInheritedOver());
+            } else {
+                $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
+            }
+
             $layersB = $dependencyResult->getLayersByClassName($dependency->getClassB());
 
             if (empty($layersB)) {

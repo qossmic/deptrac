@@ -3,6 +3,7 @@
 namespace DependencyTracker;
 
 use DependencyTracker\Configuration\ConfigurationRuleset;
+use DependencyTracker\DependencyResult\InheritDependency;
 use DependencyTracker\RulesetEngine\RulesetViolation;
 
 class RulesetEngine
@@ -13,7 +14,12 @@ class RulesetEngine
 
         foreach ($dependencyResult->getDependencies() as $dependency) {
 
-            $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassA());
+            if ($dependency instanceof InheritDependency) {
+                $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassInheritedOver());
+            } else {
+                $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassA());
+            }
+
             foreach ($layerNames as $layerName) {
                 foreach ($dependencyResult->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
 

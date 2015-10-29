@@ -228,6 +228,83 @@ layers:
         type: className
         args:
           regex: .*Component\\Yaml.*
+  -
+    name: FrameworkBundle
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bundle\\FrameworkBundle.*
+  -
+    name: DebugBundle
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bundle\\DebugBundle.*
+  -
+    name: SecurityBundle
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bundle\\SecurityBundle.*
+  -
+    name: TwigBundle
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bundle\\TwigBundle.*
+  -
+    name: WebProfilerBundle
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bundle\\WebProfilerBundle.*
+  -
+    name: DoctrineBridge
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bridge\\Doctrine.*
+  -
+    name: MonologBridge
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bridge\\Monolog.*
+  -
+    name: PhpUnitBridge
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bridge\\PhpUnit.*
+  -
+    name: ProxyManagerBridge
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bridge\\ProxyManager.*
+  -
+    name: SwiftmailerBridge
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bridge\\Swiftmailer.*
+  -
+    name: TwigBridge
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Bridge\\Twig.*
 ruleset:
   MainBundle:
     - Domain
@@ -256,4 +333,6 @@ ruleset:
   VoucherBundle:
     - Domain
   MenuBundle:
+    - Domain
+  FrameworkBundle:
     - Domain
