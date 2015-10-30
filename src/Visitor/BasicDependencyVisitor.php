@@ -102,7 +102,7 @@ class BasicDependencyVisitor implements NodeVisitor
     public function leaveNode(Node $node)
     {
 
-        if (!$node instanceof Class_) {
+        if (!$node instanceof Class_ && !$node instanceof Interface_) {
             return;
         }
 

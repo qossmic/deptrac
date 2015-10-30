@@ -10,7 +10,6 @@ class RulesetEngine
 {
     public function getViolations(DependencyResult $dependencyResult, ConfigurationRuleset $configurationRuleset)
     {
-        $violations = [];
 
         foreach ($dependencyResult->getDependencies() as $dependency) {
 

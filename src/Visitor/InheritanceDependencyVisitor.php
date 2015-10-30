@@ -32,7 +32,6 @@ class InheritanceDependencyVisitor
         }
 
         foreach ($flattenDependencies as $klass => $deps) {
-            $buffer = [];
             foreach ($deps as $dependency) {
 
                 foreach ($dependencyResult->getDependenciesByClass($dependency) as $dependencyOfDependency) {
@@ -45,29 +44,33 @@ class InheritanceDependencyVisitor
                         continue;
                     }
 
-                    $buffer[spl_object_hash($dependencyOfDependency)] = InheritDependency::fromDependency($klass, 0, $dependencyOfDependency);
+                    $dependencyResult->addInheritDependency(InheritDependency::fromDependency($klass, 0, $dependencyOfDependency));
                 }
             }
-
-            foreach ($buffer as $v) {
-                $dependencyResult->addInheritDependency($v);
-            }
         }
-
-
     }
 
-    private function resolveDepsRecursive($class, array &$deps)
+    private function resolveDepsRecursive($class, array &$deps, \ArrayObject $alreadyResolved = null)
     {
+        if ($alreadyResolved == null) {
+            $alreadyResolved = new \ArrayObject();
+        }
+
+        // recursion detected
+        if (isset($alreadyResolved[$class])) {
+            return [];
+        }
+
+        $alreadyResolved[$class] = true;
+
         $buffer = [];
         foreach ($deps[$class] as $dep) {
 
             if (isset($deps[$dep])) {
-                $buffer = array_merge($buffer, $this->resolveDepsRecursive($dep, $deps));
+                $buffer = array_merge($buffer, $this->resolveDepsRecursive($dep, $deps, $alreadyResolved));
             }
 
             $buffer[] = $dep;
-
         }
 
         return array_values(array_unique($buffer));

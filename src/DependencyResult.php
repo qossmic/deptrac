@@ -49,7 +49,12 @@ class DependencyResult
     {
         $buffer = [];
 
-        foreach (array_merge($this->dependencies, $this->inheritDependencies) as $deps) {
+        foreach ($this->dependencies as $deps) {
+            foreach($deps as $dependency) {
+                $buffer[] = $dependency;
+            }
+        }
+        foreach ($this->inheritDependencies as $deps) {
             foreach($deps as $dependency) {
                 $buffer[] = $dependency;
             }
