@@ -18,12 +18,21 @@ class InheritanceDependencyVisitor
 
         $dependencies = [];
 
-        foreach ($dependencyResult->getDependencies() as $dependency) {
-            if (!isset($dependencies[$dependency->getClassA()])) {
-                $dependencies[$dependency->getClassA()] = [];
-            }
+        foreach ($astMap->getAsts() as $ast) {
+            foreach (AstHelper::findClassLikeNodes($ast) as $classLike) {
+                foreach (AstHelper::findInheritances($classLike) as $classLikesInheritance) {
 
-            $dependencies[$dependency->getClassA()] = array_values(array_unique(array_merge($dependencies[$dependency->getClassA()], [$dependency->getClassB()])));
+                    if (!$classLike->namespacedName instanceof Name) {
+                        continue;
+                    }
+
+                    if (!isset($dependencies[$classLike->namespacedName->toString()])) {
+                        $dependencies[$classLike->namespacedName->toString()] = [];
+                    }
+
+                    $dependencies[$classLike->namespacedName->toString()][] = $classLikesInheritance;
+                }
+            }
         }
 
         $flattenDependencies = [];

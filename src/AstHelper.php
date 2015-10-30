@@ -3,8 +3,9 @@
 namespace DependencyTracker;
 
 use PhpParser\Node;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitor;
 
@@ -29,6 +30,41 @@ class AstHelper
         }
 
         return $collectedNodes;
+    }
+
+    /**
+     * @param Node\Stmt\ClassLike $klass
+     * @return array string
+     */
+    public static function findInheritances(Node\Stmt\ClassLike $klass)
+    {
+        $buffer = [];
+
+        if ($klass instanceof Class_ && $klass->namespacedName instanceof Name) {
+
+            if ($klass->extends instanceof Name) {
+                $buffer[] = $klass->extends->toString();
+            }
+
+            if (!empty($klass->implements)) {
+                foreach ($klass->implements as $impl) {
+
+                    if (!$impl instanceof Name) {
+                        continue;
+                    }
+
+                    $buffer[] = $impl->toString();
+                }
+            }
+        }
+
+        if ($klass instanceof Interface_ && $klass->namespacedName instanceof Name) {
+            foreach ($klass->extends as $extends) {
+                $buffer[] = $extends->toString();
+            }
+        }
+
+        return $buffer;
     }
 
     private static function getSubNodes(Node $node)
