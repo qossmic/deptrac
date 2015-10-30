@@ -1,10 +1,9 @@
 # Deptrac
 
 ## Todos
-- Rename Collectors to ClassLayerMapper
+- Rename Collectors to LayerCollector
 - Testcoverage
 - Support for multiple depfiles
-- wie gehen wir mit geerbten abhängigkeiten um? Integrieren?
 
 ## What is Deptrac
 Deptrac is a static code analysis tool that helps to manage dependencies in php code.

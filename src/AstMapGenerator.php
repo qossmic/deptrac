@@ -87,7 +87,7 @@ class AstMapGenerator
      * @param AstMap $astMap
      * @param SplFileInfo[] $files
      */
-    private function createAstMapByFiles(AstMap $astMap, array $files)
+    public function createAstMapByFiles(AstMap $astMap, array $files)
     {
         $parser = new \PhpParser\Parser(new \PhpParser\Lexer\Emulative);
         $traverser = new \PhpParser\NodeTraverser;

@@ -5,6 +5,7 @@ namespace DependencyTracker\Visitor;
 use DependencyTracker\AstMap;
 use DependencyTracker\DependencyResult\Dependency;
 use DependencyTracker\DependencyResult;
+use PhpParser\Node\Stmt\Interface_;
 use PhpParser\NodeVisitor;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -70,6 +71,17 @@ class BasicDependencyVisitor implements NodeVisitor
             }
         }
 
+        if ($node instanceof Interface_) {
+            $this->currentKlass = $node->name;
+
+            foreach ($node->extends as $extends) {
+                $this->dispatchFoundDependency(
+                    $extends->toString(),
+                    $node->getLine()
+                );
+            }
+        }
+
         if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
             $this->dispatchFoundDependency(
                 $node->class->toString(),
@@ -100,7 +112,6 @@ class BasicDependencyVisitor implements NodeVisitor
 
         $this->collectedUseStmts = [];
         $this->currentKlass = '';
-        $this->currentNamespace = '';
 
     }
 
