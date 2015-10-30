@@ -42,7 +42,6 @@ class InheritanceDependencyVisitor
 
         foreach ($flattenDependencies as $klass => $deps) {
             foreach ($deps as $dependency) {
-
                 foreach ($dependencyResult->getDependenciesByClass($dependency) as $dependencyOfDependency) {
                     if ($klass == $dependencyOfDependency->getClassA()) {
                         continue;
