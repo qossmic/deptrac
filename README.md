@@ -19,3 +19,9 @@ For this example we want to enforce that
 ## Installation
 
 download the .phar (TODO URL).
+
+
+## Running using HHVM
+add this line to your php.ini hhvm.libxml.ext_entity_whitelist = file,http
+run hhvm -c /usr/local/etc/php/5.6/php.ini deptrac.php
+or for the phar version: hhvm -c /usr/local/etc/php/5.6/php.ini deptrac.phar
