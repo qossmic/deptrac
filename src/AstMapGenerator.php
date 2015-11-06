@@ -34,32 +34,13 @@ class AstMapGenerator
     {
         $files = $this->collectFiles($configuration);
 
-        $cacheFile = sys_get_temp_dir().'/astmap.cache.'.$this->calculateCacheKey($files);
-
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
 
-        #if (file_exists($cacheFile)) {
-        #    $output->writeln("reading cachefile <info>".$cacheFile."</info>");
-        #    $astMap = unserialize(file_get_contents($cacheFile));
-        #} else {
-            $output->writeln("writing cachefile <info>".$cacheFile."</info>");
-            $this->createAstMapByFiles($astMap = new AstMap(), $files);
-            file_put_contents($cacheFile, serialize($astMap));
-        #}
+        $this->createAstMapByFiles($astMap = new AstMap(), $files);
 
         $this->dispatcher->dispatch(PostCreateAstMapEvent::class, new PostCreateAstMapEvent($astMap));
 
         return $astMap;
-    }
-
-    private function calculateCacheKey(array $files)
-    {
-        return $cacheKey = sha1(array_reduce(
-            array_map(function(\SplFileInfo $fileInfo) {
-                return md5_file($fileInfo->getPathname());
-            }, $files),
-            function($a, $b) { return $a + $b; }
-        ));
     }
 
     private function collectFiles(Configuration $configuration)
