@@ -4,7 +4,6 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-
         <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
         <service id="configuration_loader" class="DependencyTracker\ConfigurationLoader"/>
@@ -21,9 +20,7 @@
             <tag name="output_formatter"/>
         </service>
 
-        <service id="command_init" class="DependencyTracker\Command\InitCommand">
-            <argument type="service" id="configuration_loader"/>
-        </service>
+        <service id="command_init" class="DependencyTracker\Command\InitCommand" />
 
         <service id="ruleset_engine" class="DependencyTracker\RulesetEngine"/>
 

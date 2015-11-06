@@ -2,40 +2,52 @@
 
 namespace DependencyTracker\Command;
 
-use DependencyTracker\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class InitCommand extends Command
 {
-
-    protected $configurationLoader;
-
-    public function __construct(
-        ConfigurationLoader $configurationLoader
-    )
-    {
-        parent::__construct();
-        $this->configurationLoader = $configurationLoader;
-    }
-
     protected function configure()
     {
         $this->setName('init');
     }
 
-    protected function execute(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $file = getcwd().'/depfile.yml';
 
-        if ($this->configurationLoader->hasConfiguration()) {
+        if (is_file($file)) {
             $output->writeln('<error>depfile already exists</error>');
             return 1;
         }
 
-        $this->configurationLoader->dumpConfiguration();
+        $config = <<<EOF
+paths:
+  - ./src
+exclude_files:
+  - .*test.*
+layers:
+  -
+    name: LayerA
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Acme\\LayerA.*
+  -
+    name: LayerB
+    collectors:
+      -
+        type: className
+        args:
+          regex: .*Acme\\LayerB.*
+ruleset:
+  LayerA:
+    - LayerB
+EOF;
+
+        file_put_contents($file, $config);
         $output->writeln("depfile <info>dumped.</info>");
     }
 }

@@ -39,8 +39,7 @@ class AnalyzeCommand extends Command
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
         CollectorFactory $collectorFactory
-    )
-    {
+    ) {
         parent::__construct();
         $this->dispatcher = $dispatcher;
         $this->astMapGenerator = $astMapGenerator;
@@ -55,21 +54,20 @@ class AnalyzeCommand extends Command
         $this->setName('analyze');
     }
 
-    protected function execute(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         ini_set('memory_limit', -1);
 
-        if (!$this->configurationLoader->hasConfiguration()) {
-            $output->writeln("depfile.yml not found, run dtrac init to create one.");
+        $file = getcwd().'/depfile.yml';
+
+        if (!is_file($file)) {
+            $output->writeln('depfile.yml not found, run dtrac init to create one.');
             return 1;
         }
 
-        $config = $this->configurationLoader->loadConfiguration();
+        $config = $this->configurationLoader->load($file);
 
         new ConsoleFormatter($this->dispatcher, $output);
-
 
         $formatter = $this->formatterFactory->getFormatterByName($config->getFormatter());
 
