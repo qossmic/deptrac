@@ -20,7 +20,7 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
                 /** @var AstMap\AstInherit $inherit */
                 $dependencyResult->addDependency(
                     new DependencyResult\Dependency(
-                        $class, '?', $inherit->getClassName(), $inherit->getLine(), '?'
+                        $class, $inherit->getLine(), $inherit->getClassName(), 0, '?'
                     )
                 );
             }
@@ -31,7 +31,7 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
                 $dependencyResult->addDependency(
                     /** @var AstMap\AstInherit $inherit */
                     new Dependency(
-                        $class, '?', $inherit->getClassName(), $inherit->getLine(), '?'
+                        $class, $inherit->getLine(), $inherit->getClassName(), 0, '?'
                     )
                 );
             }

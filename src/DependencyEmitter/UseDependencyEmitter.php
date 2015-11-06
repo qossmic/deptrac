@@ -34,7 +34,7 @@ class UseDependencyEmitter implements DependencyEmitterInterface
                     }
 
                     foreach ($useNodes->uses as $useNode) {
-                        $uses[] = $useNode->name->toString();
+                        $uses[$useNode->name->toString()] = $useNode->name->getLine();
                     }
                 }
 
@@ -42,10 +42,10 @@ class UseDependencyEmitter implements DependencyEmitterInterface
 
 
             foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNodes) {
-                foreach ($uses as $use) {
+                foreach ($uses as $use => $useLine) {
                     $dependencyResult->addDependency(
                         new Dependency(
-                            $classLikeNodes->namespacedName->toString(), '?', $use, '?', '?'
+                            $classLikeNodes->namespacedName->toString(), $useLine, $use, '?', '?'
                         )
                     );
                 }
