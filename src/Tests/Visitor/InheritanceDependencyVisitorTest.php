@@ -17,6 +17,9 @@ use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB;
 use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC;
 use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD;
 use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceE;
+use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseA;
+use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseB;
+use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseC;
 use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA;
 use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA1;
 use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA2;
@@ -144,6 +147,27 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
             $this->getInheritDepsForClass(MultipleInteritanceC::class, $dependencyResult)
         );
 
+
+    }
+
+    public function testBasicMultipleInheritanceWithNoise()
+    {
+        $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritanceWithNoise');
+
+        $this->assertEquals(
+            [],
+            $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseA::class, $dependencyResult)
+        );
+
+        $this->assertEquals(
+            [],
+            $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseB::class, $dependencyResult)
+        );
+
+        $this->assertEquals(
+            [FixtureBasicInheritanceWithNoiseA::class],
+            $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseC::class, $dependencyResult)
+        );
 
     }
 

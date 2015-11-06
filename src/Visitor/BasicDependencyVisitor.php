@@ -89,6 +89,9 @@ class BasicDependencyVisitor implements NodeVisitor
             );
         }
 
+        // @todo new is missing
+        // @todo function argument is missing
+
         if ($node instanceof Node\Stmt\UseUse) {
             $this->collectedUseStmts[] = $node;
         }
