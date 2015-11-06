@@ -2,6 +2,7 @@
 
 namespace DependencyTracker;
 
+use DependencyTracker\AstMap\AstInherit;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
@@ -48,7 +49,10 @@ class AstHelper
         if ($klass instanceof Class_ && $klass->namespacedName instanceof Name) {
 
             if ($klass->extends instanceof Name) {
-                $buffer[] = $klass->extends->toString();
+                $buffer[] = AstInherit::newExtends(
+                    $klass->extends->toString(),
+                    $klass->extends->getLine()
+                );
             }
 
             if (!empty($klass->implements)) {
@@ -58,7 +62,10 @@ class AstHelper
                         continue;
                     }
 
-                    $buffer[] = $impl->toString();
+                    $buffer[] = AstInherit::newImplements(
+                        $impl->toString(),
+                        $impl->getLine()
+                    );
                 }
             }
         }
@@ -74,14 +81,20 @@ class AstHelper
                         continue;
                     }
 
-                    $buffer[] = $traitUsage->toString();
+                    $buffer[] = AstInherit::newUses(
+                        $traitUsage->toString(),
+                        $traitUsage->getLine()
+                    );
                 }
             }
         }
 
         if ($klass instanceof Interface_ && isset($klass->namespacedName) && $klass->namespacedName instanceof Name) {
             foreach ($klass->extends as $extends) {
-                $buffer[] = $extends->toString();
+                $buffer[] = AstInherit::newExtends(
+                    $extends->toString(),
+                    $extends->getLine()
+                );
             }
         }
 

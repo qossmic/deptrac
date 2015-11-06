@@ -48,12 +48,18 @@ class AstMapGeneratorTest extends \PHPUnit_Framework_TestCase
         $astMap = $this->getAstMap('BasicDependencyClass');
 
         $this->assertArrayValuesEquals(
-            [BasicDependencyClassA::class, BasicDependencyClassInterfaceA::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyClassA::9 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::9 (Implements)'
+            ],
             $astMap->getClassInherits(BasicDependencyClassB::class, $astMap)
         );
 
         $this->assertArrayValuesEquals(
-            [BasicDependencyClassInterfaceA::class, BasicDependencyClassInterfaceB::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::13 (Implements)',
+                'DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceB::13 (Implements)'
+            ],
             $astMap->getClassInherits(BasicDependencyClassC::class, $astMap)
         );
     }
@@ -73,17 +79,20 @@ class AstMapGeneratorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [BasicDependencyTraitB::class],
+            ['DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::7 (Uses)'],
             $astMap->getClassInherits(BasicDependencyTraitC::class)
         );
 
         $this->assertArrayValuesEquals(
-            [BasicDependencyTraitA::class, BasicDependencyTraitB::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::10 (Uses)',
+                'DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::11 (Uses)'
+            ],
             $astMap->getClassInherits(BasicDependencyTraitD::class)
         );
 
         $this->assertArrayValuesEquals(
-            [BasicDependencyTraitA::class],
+            ['DependencyTracker\Tests\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::15 (Uses)'],
             $astMap->getClassInherits(BasicDependencyTraitClass::class)
         );
     }

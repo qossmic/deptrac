@@ -67,17 +67,24 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceA::class],
+            ['DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceA::6 (Extends)'],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceC::class)
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceA::class, FixtureBasicInheritanceB::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceA::6 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends)'
+            ],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceD::class)
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceA::class, FixtureBasicInheritanceB::class, FixtureBasicInheritanceC::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceA::6 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceC::8 (Extends)'
+            ],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceE::class)
         );
 
@@ -98,20 +105,23 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceInterfaceA::class],
+            ['DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Extends)'],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceC::class)
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceInterfaceA::class, FixtureBasicInheritanceInterfaceB::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends)'
+            ],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceD::class)
         );
 
         $this->assertArrayValuesEquals(
             [
-                FixtureBasicInheritanceInterfaceA::class,
-                FixtureBasicInheritanceInterfaceB::class,
-                FixtureBasicInheritanceInterfaceC::class
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Extends)'
             ],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceE::class)
         );
@@ -138,12 +148,20 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [MultipleInteritanceA2::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA1::7 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA2::7 (Extends)'
+            ],
             $astMap->getFlattenClassInherits(MultipleInteritanceB::class)
         );
 
         $this->assertArrayValuesEquals(
-            [MultipleInteritanceA2::class, MultipleInteritanceA::class, MultipleInteritanceA1::class],
+            [
+                'DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA1::7 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA1::8 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA2::7 (Extends)',
+                'DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA::8 (Extends)'
+            ],
             $astMap->getFlattenClassInherits(MultipleInteritanceC::class)
         );
 
@@ -165,7 +183,7 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceWithNoiseA::class],
+            ['DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseA::18 (Extends)'],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceWithNoiseC::class)
         );
 

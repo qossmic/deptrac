@@ -2,6 +2,8 @@
 
 namespace DependencyTracker;
 
+use DependencyTracker\AstMap\AstInherit;
+use DependencyTracker\AstMap\InheritDependency;
 use DependencyTracker\Event\AstFileAnalyzedEvent;
 use DependencyTracker\Event\AstFileSyntaxErrorEvent;
 use DependencyTracker\Event\PostCreateAstMapEvent;
@@ -125,31 +127,28 @@ class AstMapGenerator
                 $inerhitInerhits =  array_merge($inerhitInerhits, $this->resolveDepsRecursive($inherit, $astMap));
             }
 
-
             $astMap->setFlattenClassInherit(
                 $klass,
-                array_values(array_unique(array_filter($inerhitInerhits, function($v) use ($astMap, $klass) {
-                    return !in_array($v, $astMap->getClassInherits($klass));
-                })))
+                $inerhitInerhits
             );
         }
     }
 
-    private function resolveDepsRecursive($class, AstMap $astMap, \ArrayObject $alreadyResolved = null)
+    private function resolveDepsRecursive(AstInherit $inheritDependency, AstMap $astMap, \ArrayObject $alreadyResolved = null)
     {
         if ($alreadyResolved == null) {
             $alreadyResolved = new \ArrayObject();
         }
 
         // recursion detected
-        if (isset($alreadyResolved[$class])) {
+        if (isset($alreadyResolved[$inheritDependency->getClassName()])) {
             return [];
         }
 
-        $alreadyResolved[$class] = true;
+        $alreadyResolved[$inheritDependency->getClassName()] = true;
 
         $buffer = [];
-        foreach ($astMap->getClassInherits($class) as $dep) {
+        foreach ($astMap->getClassInherits($inheritDependency->getClassName()) as $dep) {
             $buffer = array_merge($buffer, $this->resolveDepsRecursive($dep, $astMap, $alreadyResolved));
             $buffer[] = $dep;
         }

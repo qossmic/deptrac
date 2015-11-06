@@ -17,9 +17,10 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
     {
         foreach ($astMap->getAllInherits() as $class => $inherits) {
             foreach ($inherits as $inherit) {
+                /** @var AstMap\AstInherit $inherit */
                 $dependencyResult->addDependency(
                     new DependencyResult\Dependency(
-                        $class, '?', $inherit, '?', '?'
+                        $class, '?', $inherit->getClassName(), $inherit->getLine(), '?'
                     )
                 );
             }
@@ -28,8 +29,9 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
         foreach ($astMap->getAllFlattenClassInherits() as $class => $inherits) {
             foreach ($inherits as $inherit) {
                 $dependencyResult->addDependency(
+                    /** @var AstMap\AstInherit $inherit */
                     new Dependency(
-                        $class, '?', $inherit, '?', '?'
+                        $class, '?', $inherit->getClassName(), $inherit->getLine(), '?'
                     )
                 );
             }
