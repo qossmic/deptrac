@@ -13,7 +13,9 @@ use PhpParser\NodeVisitor;
 
 class AstHelper
 {
-    public static function findClassLikeNodes($nodes)
+    static $cacheFindClassLikeNodes = [];
+
+    public static function findClassLikeNodes($nodes, $cache = true)
     {
         $collectedNodes = [];
 
@@ -23,10 +25,11 @@ class AstHelper
             } elseif ($node instanceof Use_) {
                 continue;
             } elseif (is_array($node)) {
-                $collectedNodes = array_merge(static::findClassLikeNodes($node), $collectedNodes);
+                $collectedNodes = array_merge(static::findClassLikeNodes($node, false), $collectedNodes);
             } elseif ($node instanceof Node) {
                 $collectedNodes = array_merge(static::findClassLikeNodes(
-                    static::getSubNodes($node)
+                    static::getSubNodes($node),
+                    false
                 ), $collectedNodes);
             }
         }

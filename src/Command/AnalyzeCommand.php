@@ -7,11 +7,13 @@ use DependencyTracker\AstMapGenerator;
 use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration;
 use DependencyTracker\ConfigurationLoader;
+use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
+use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
+use DependencyTracker\DependencyEmitter\UseDependencyEmitter;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\Formatter\ConsoleFormatter;
 use DependencyTracker\OutputFormatterFactory;
 use DependencyTracker\RulesetEngine;
-use DependencyTracker\Visitor\BasicDependencyVisitor;
 use DependencyTracker\Visitor\InheritanceDependencyVisitor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,8 +41,7 @@ class AnalyzeCommand extends Command
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
         CollectorFactory $collectorFactory
-    )
-    {
+    ) {
         parent::__construct();
         $this->dispatcher = $dispatcher;
         $this->astMapGenerator = $astMapGenerator;
@@ -63,6 +64,7 @@ class AnalyzeCommand extends Command
 
         if (!$this->configurationLoader->hasConfiguration()) {
             $output->writeln("depfile.yml not found, run dtrac init to create one.");
+
             return 1;
         }
 
@@ -78,21 +80,28 @@ class AnalyzeCommand extends Command
 
         $dependencyResult = new DependencyResult();
 
-        $output->writeln("analyzing dependencies");
-        (new BasicDependencyVisitor($dependencyResult))->analyze($astMap);
-        $output->writeln("end analyzing dependencies");
-        $output->writeln("flatten dependencies");
-        (new InheritanceDependencyVisitor())->flattenInheritanceDependencies($astMap, $dependencyResult);
-        $output->writeln("end flatten dependencies");
+        /** @var $dependencyEmitters DependencyEmitterInterface[] */
+        $dependencyEmitters = [
+            new InheritanceDependencyEmitter(),
+            new UseDependencyEmitter()
+        ];
 
-        foreach($config->getLayers() as $configurationLayer) {
-            foreach($configurationLayer->getCollectors() as $configurationCollector) {
+        foreach ($dependencyEmitters as $dependencyEmitter) {
+            $output->writeln(sprintf('start flatten dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
+            $dependencyEmitter->applyDependencies($astMap, $dependencyResult);
+        }
+        $output->writeln("end flatten");
 
-                $output->writeln(sprintf(
-                    'collecting <info>"%s"</info> dependencies for layer <info>"%s"</info>',
-                    $configurationCollector->getType(),
-                    $configurationLayer->getName()
-                ));
+        foreach ($config->getLayers() as $configurationLayer) {
+            foreach ($configurationLayer->getCollectors() as $configurationCollector) {
+
+                $output->writeln(
+                    sprintf(
+                        'collecting <info>"%s"</info> dependencies for layer <info>"%s"</info>',
+                        $configurationCollector->getType(),
+                        $configurationLayer->getName()
+                    )
+                );
 
                 $this->collectorFactory->getCollector(
                     $configurationCollector->getType()
@@ -126,31 +135,37 @@ class AnalyzeCommand extends Command
         foreach ($violations as $violation) {
 
             if ($violation->getDependeny() instanceof DependencyResult\InheritDependency) {
-                $output->writeln(sprintf(
-                    "<info>%s</info> inherits <info>%s</info>::%s which must not depend on <info>%s</info> (%s on %s)",
-                    $violation->getDependeny()->getClassInheritedOver(),
-                    $violation->getDependeny()->getClassA(),
-                    $violation->getDependeny()->getClassALine(),
-                    $violation->getDependeny()->getClassB(),
-                    $violation->getLayerA(),
-                    $violation->getLayerB()
-                ));
+                $output->writeln(
+                    sprintf(
+                        "<info>%s</info> inherits <info>%s</info>::%s which must not depend on <info>%s</info> (%s on %s)",
+                        $violation->getDependeny()->getClassInheritedOver(),
+                        $violation->getDependeny()->getClassA(),
+                        $violation->getDependeny()->getClassALine(),
+                        $violation->getDependeny()->getClassB(),
+                        $violation->getLayerA(),
+                        $violation->getLayerB()
+                    )
+                );
             } else {
-                $output->writeln(sprintf(
-                    "<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)",
-                    $violation->getDependeny()->getClassA(),
-                    $violation->getDependeny()->getClassALine(),
-                    $violation->getDependeny()->getClassB(),
-                    $violation->getLayerA(),
-                    $violation->getLayerB()
-                ));
+                $output->writeln(
+                    sprintf(
+                        "<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)",
+                        $violation->getDependeny()->getClassA(),
+                        $violation->getDependeny()->getClassALine(),
+                        $violation->getDependeny()->getClassB(),
+                        $violation->getLayerA(),
+                        $violation->getLayerB()
+                    )
+                );
             }
         }
 
-        $output->writeln(sprintf(
-            "\nFound <error>%s Violations</error>",
-            count($violations)
-        ));
+        $output->writeln(
+            sprintf(
+                "\nFound <error>%s Violations</error>",
+                count($violations)
+            )
+        );
     }
 
 } 
