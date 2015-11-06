@@ -38,12 +38,10 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $fixture
-     * @return DependencyResult
+     * @return AstMap
      */
-    private function getDependencyResultForFixture($fixture)
+    private function getAstMap($fixture)
     {
-        $dependencyResult = new DependencyResult();
-
         $files = iterator_to_array(
             (new Finder())->in(__DIR__.'/Fixtures')->name($fixture.'.php')->files()
         );
@@ -53,101 +51,98 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
             $files
         );
 
-        (new BasicDependencyVisitor($dependencyResult))->analyze($astMap);
-        (new InheritanceDependencyVisitor())->flattenInheritanceDependencies($astMap, $dependencyResult);
-
-        return $dependencyResult;
+        return $astMap;
     }
 
     public function testBasicInheritance()
     {
-        $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritance');
+        $astMap = $this->getAstMap('FixtureBasicInheritance');
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceA::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceA::class)
         );
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceB::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceB::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceA::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceC::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceC::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceA::class, FixtureBasicInheritanceB::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceD::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceD::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceA::class, FixtureBasicInheritanceB::class, FixtureBasicInheritanceC::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceE::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceE::class)
         );
 
     }
 
     public function testBasicInheritanceInterfaces()
     {
-        $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritanceInterfaces');
+        $astMap = $this->getAstMap('FixtureBasicInheritanceInterfaces');
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceA::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceA::class)
         );
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceB::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceB::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceInterfaceA::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceC::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceC::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceInterfaceA::class, FixtureBasicInheritanceInterfaceB::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceD::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceD::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceInterfaceA::class, FixtureBasicInheritanceInterfaceB::class, FixtureBasicInheritanceInterfaceC::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceE::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceE::class)
         );
 
     }
 
     public function testBasicMultipleInheritanceInterfaces()
     {
-        $dependencyResult = $this->getDependencyResultForFixture('MultipleInheritanceInterfaces');
+        $astMap = $this->getAstMap('MultipleInheritanceInterfaces');
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(MultipleInteritanceA1::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(MultipleInteritanceA1::class)
         );
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(MultipleInteritanceA2::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(MultipleInteritanceA2::class)
         );
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(MultipleInteritanceA::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(MultipleInteritanceA::class)
         );
 
         $this->assertArrayValuesEquals(
             [MultipleInteritanceA2::class],
-            $this->getInheritDepsForClass(MultipleInteritanceB::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(MultipleInteritanceB::class)
         );
 
         $this->assertArrayValuesEquals(
             [ MultipleInteritanceA2::class, MultipleInteritanceA::class, MultipleInteritanceA1::class],
-            $this->getInheritDepsForClass(MultipleInteritanceC::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(MultipleInteritanceC::class)
         );
 
 
@@ -155,37 +150,23 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
 
     public function testBasicMultipleInheritanceWithNoise()
     {
-        $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritanceWithNoise');
+        $astMap = $this->getAstMap('FixtureBasicInheritanceWithNoise');
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseA::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceWithNoiseA::class)
         );
 
         $this->assertArrayValuesEquals(
             [],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseB::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceWithNoiseB::class)
         );
 
         $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceWithNoiseA::class],
-            $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseC::class, $dependencyResult)
+            $astMap->getFlattenClassInherits(FixtureBasicInheritanceWithNoiseC::class)
         );
 
-    }
-
-    private function getInheritDepsForClass($class, DependencyResult $dependencyResult) {
-        $inheritDeps = array_filter($dependencyResult->getDependencies(), function(DependencyResult\Dependency $v) use ($class) {
-            if ($class !== $v->getClassA()) {
-                return false;
-            }
-
-            return $v instanceof DependencyResult\InheritDependency;
-        });
-
-        return array_values(array_map(function(DependencyResult\Dependency $dependency) {
-            return $dependency->getClassB();
-        }, $inheritDeps));
     }
 
 }

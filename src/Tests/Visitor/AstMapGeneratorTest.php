@@ -29,7 +29,7 @@ class AstMapGeneratorTest extends \PHPUnit_Framework_TestCase
      * @param $fixture
      * @return AstMap
      */
-    private function getDependencyResultForFixture($fixture)
+    private function getAstMap($fixture)
     {
         $files = iterator_to_array(
             (new Finder())->in(__DIR__.'/Fixtures/BasicDependency/')->name($fixture.'.php')->files()
@@ -45,7 +45,7 @@ class AstMapGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testBasicDependencyClass()
     {
-        $astMap = $this->getDependencyResultForFixture('BasicDependencyClass');
+        $astMap = $this->getAstMap('BasicDependencyClass');
 
         $this->assertArrayValuesEquals(
             [BasicDependencyClassA::class, BasicDependencyClassInterfaceA::class],
@@ -60,7 +60,7 @@ class AstMapGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testBasicTraitsClass()
     {
-        $astMap = $this->getDependencyResultForFixture('BasicDependencyTraits');
+        $astMap = $this->getAstMap('BasicDependencyTraits');
 
         $this->assertArrayValuesEquals(
             [],
