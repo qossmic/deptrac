@@ -4,8 +4,10 @@ namespace DependencyTracker;
 
 use PhpParser\Node;
 use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Interface_;
+use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitor;
 
@@ -58,7 +60,23 @@ class AstHelper
             }
         }
 
-        if ($klass instanceof Interface_ && $klass->namespacedName instanceof Name) {
+        if ($klass instanceof Trait_ || $klass instanceof Class_) {
+            foreach ($klass->stmts as $traitUses) {
+                if (!$traitUses instanceof Node\Stmt\TraitUse) {
+                    continue;
+                }
+
+                foreach ($traitUses->traits as $traitUsage) {
+                    if (!$traitUsage instanceof FullyQualified) {
+                        continue;
+                    }
+
+                    $buffer[] = $traitUsage->toString();
+                }
+            }
+        }
+
+        if ($klass instanceof Interface_ && isset($klass->namespacedName) && $klass->namespacedName instanceof Name) {
             foreach ($klass->extends as $extends) {
                 $buffer[] = $extends->toString();
             }

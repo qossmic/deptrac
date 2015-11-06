@@ -7,6 +7,7 @@ namespace DependencyTracker\Tests\Visitor;
 use DependencyTracker\AstMap;
 use DependencyTracker\AstMapGenerator;
 use DependencyTracker\DependencyResult;
+use DependencyTracker\Tests\ArrayAsserts;
 use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceA;
 use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceB;
 use DependencyTracker\Tests\Visitor\Fixtures\FixtureBasicInheritanceC;
@@ -32,6 +33,8 @@ use Symfony\Component\Finder\Finder;
 
 class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
 {
+
+    use ArrayAsserts;
 
     /**
      * @param $fixture
@@ -60,27 +63,27 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritance');
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceA::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceB::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceA::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceC::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceA::class, FixtureBasicInheritanceB::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceD::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceA::class, FixtureBasicInheritanceB::class, FixtureBasicInheritanceC::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceE::class, $dependencyResult)
         );
@@ -91,27 +94,27 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritanceInterfaces');
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceA::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceB::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceInterfaceA::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceC::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceInterfaceA::class, FixtureBasicInheritanceInterfaceB::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceD::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceInterfaceA::class, FixtureBasicInheritanceInterfaceB::class, FixtureBasicInheritanceInterfaceC::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceInterfaceE::class, $dependencyResult)
         );
@@ -122,28 +125,28 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $dependencyResult = $this->getDependencyResultForFixture('MultipleInheritanceInterfaces');
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(MultipleInteritanceA1::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(MultipleInteritanceA2::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(MultipleInteritanceA::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [MultipleInteritanceA2::class],
             $this->getInheritDepsForClass(MultipleInteritanceB::class, $dependencyResult)
         );
 
-        $this->assertEquals(
-            [MultipleInteritanceA1::class,  MultipleInteritanceA2::class, MultipleInteritanceA::class, MultipleInteritanceA1::class],
+        $this->assertArrayValuesEquals(
+            [ MultipleInteritanceA2::class, MultipleInteritanceA::class, MultipleInteritanceA1::class],
             $this->getInheritDepsForClass(MultipleInteritanceC::class, $dependencyResult)
         );
 
@@ -154,17 +157,17 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
     {
         $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritanceWithNoise');
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseA::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseB::class, $dependencyResult)
         );
 
-        $this->assertEquals(
+        $this->assertArrayValuesEquals(
             [FixtureBasicInheritanceWithNoiseA::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseC::class, $dependencyResult)
         );

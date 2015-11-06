@@ -2,6 +2,7 @@
 
 namespace DependencyTracker\Visitor;
 
+use DependencyTracker\AstHelper;
 use DependencyTracker\AstMap;
 use DependencyTracker\DependencyResult\Dependency;
 use DependencyTracker\DependencyResult;
@@ -57,48 +58,11 @@ class BasicDependencyVisitor implements NodeVisitor
 
         if ($node instanceof Node\Stmt\ClassLike) {
             $this->currentKlass = $node->name;
-        }
 
-        if ($node instanceof Trait_ || $node instanceof Class_) {
-            foreach ($node->stmts as $traitUses) {
-                if (!$traitUses instanceof Node\Stmt\TraitUse) {
-                    continue;
-                }
-
-                foreach ($traitUses->traits as $traitUsage) {
-                    if (!$traitUsage instanceof FullyQualified) {
-                        continue;
-                    }
-
-                    $this->dispatchFoundDependency(
-                        $traitUsage->toString(),
-                        $traitUsage->getLine()
-                    );
-                }
-            }
-        }
-
-        if ($node instanceof Class_) {
-            foreach ($node->implements as $impl) {
+            foreach (AstHelper::findInheritances($node) as $inherit) {
                 $this->dispatchFoundDependency(
-                    $impl->toString(),
-                    $node->getLine()
-                );
-            }
-
-            if ($node->extends) {
-                $this->dispatchFoundDependency(
-                    $node->extends->toString(),
-                    $node->getLine()
-                );
-            }
-        }
-
-        if ($node instanceof Interface_) {
-            foreach ($node->extends as $extends) {
-                $this->dispatchFoundDependency(
-                    $extends->toString(),
-                    $node->getLine()
+                    $inherit,
+                    0
                 );
             }
         }
@@ -116,6 +80,8 @@ class BasicDependencyVisitor implements NodeVisitor
         if ($node instanceof Node\Stmt\UseUse) {
             $this->collectedUseStmts[] = $node;
         }
+
+        $a = 0;
     }
 
     public function afterTraverse(array $nodes)
