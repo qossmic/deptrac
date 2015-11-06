@@ -5,7 +5,9 @@ namespace DependencyTracker\Visitor;
 use DependencyTracker\AstMap;
 use DependencyTracker\DependencyResult\Dependency;
 use DependencyTracker\DependencyResult;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Interface_;
+use PhpParser\Node\Stmt\Trait_;
 use PhpParser\NodeVisitor;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
@@ -53,8 +55,36 @@ class BasicDependencyVisitor implements NodeVisitor
             $this->currentNamespace = $node->name;
         }
 
-        if ($node instanceof Class_) {
+        if ($node instanceof Node\Stmt\ClassLike) {
             $this->currentKlass = $node->name;
+        }
+
+        if ($node instanceof Trait_ || $node instanceof Class_) {
+            foreach ($node->stmts as $traitUses) {
+                if (!$traitUses instanceof Node\Stmt\TraitUse) {
+                    continue;
+                }
+
+                foreach ($traitUses->traits as $traitUsage) {
+                    if (!$traitUsage instanceof FullyQualified) {
+                        continue;
+                    }
+
+                    $this->dispatchFoundDependency(
+                        $traitUsage->toString(),
+                        $traitUsage->getLine()
+                    );
+                }
+            }
+        }
+
+        if ($node instanceof Class_) {
+            foreach ($node->implements as $impl) {
+                $this->dispatchFoundDependency(
+                    $impl->toString(),
+                    $node->getLine()
+                );
+            }
 
             if ($node->extends) {
                 $this->dispatchFoundDependency(
@@ -62,18 +92,9 @@ class BasicDependencyVisitor implements NodeVisitor
                     $node->getLine()
                 );
             }
-
-            foreach ($node->implements as $impl) {
-                $this->dispatchFoundDependency(
-                    $impl->toString(),
-                    $node->getLine()
-                );
-            }
         }
 
         if ($node instanceof Interface_) {
-            $this->currentKlass = $node->name;
-
             foreach ($node->extends as $extends) {
                 $this->dispatchFoundDependency(
                     $extends->toString(),

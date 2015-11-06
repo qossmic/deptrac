@@ -2,11 +2,15 @@
 
 namespace DependencyTracker\Tests\Visitor\Fixtures\BasicDependency;
 
-trait BasicDependencyClassA {}
-trait BasicDependencyClassB {}
-trait BasicDependencyClassC { use BasicDependencyClassB; }
+trait BasicDependencyTraitA {}
+trait BasicDependencyTraitB {}
+trait BasicDependencyTraitC { use BasicDependencyTraitB; }
 
-class BasicDependencyClassD {
-    use BasicDependencyClassA;
-    use BasicDependencyClassB;
+trait BasicDependencyTraitD {
+    use BasicDependencyTraitA;
+    use BasicDependencyTraitB;
+}
+
+class BasicDependencyTraitClass {
+    use BasicDependencyTraitA;
 }
