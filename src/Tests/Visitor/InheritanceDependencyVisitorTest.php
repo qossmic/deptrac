@@ -153,7 +153,7 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
     public function testBasicMultipleInheritanceWithNoise()
     {
         $dependencyResult = $this->getDependencyResultForFixture('FixtureBasicInheritanceWithNoise');
-/*
+
         $this->assertEquals(
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseA::class, $dependencyResult)
@@ -163,7 +163,7 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
             [],
             $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseB::class, $dependencyResult)
         );
-*/
+
         $this->assertEquals(
             [FixtureBasicInheritanceWithNoiseA::class],
             $this->getInheritDepsForClass(FixtureBasicInheritanceWithNoiseC::class, $dependencyResult)
