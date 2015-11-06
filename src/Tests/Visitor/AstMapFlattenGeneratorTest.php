@@ -26,8 +26,6 @@ use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA1;
 use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceA2;
 use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceB;
 use DependencyTracker\Tests\Visitor\Fixtures\MultipleInteritanceC;
-use DependencyTracker\Visitor\BasicDependencyVisitor;
-use DependencyTracker\Visitor\InheritanceDependencyVisitor;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Finder\Finder;
 
@@ -43,7 +41,7 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
     private function getAstMap($fixture)
     {
         $files = iterator_to_array(
-            (new Finder())->in(__DIR__.'/Fixtures')->name($fixture.'.php')->files()
+            (new Finder())->in(__DIR__ . '/Fixtures')->name($fixture . '.php')->files()
         );
 
         (new AstMapGenerator(new EventDispatcher()))->createAstMapByFiles(
@@ -110,7 +108,11 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [FixtureBasicInheritanceInterfaceA::class, FixtureBasicInheritanceInterfaceB::class, FixtureBasicInheritanceInterfaceC::class],
+            [
+                FixtureBasicInheritanceInterfaceA::class,
+                FixtureBasicInheritanceInterfaceB::class,
+                FixtureBasicInheritanceInterfaceC::class
+            ],
             $astMap->getFlattenClassInherits(FixtureBasicInheritanceInterfaceE::class)
         );
 
@@ -141,7 +143,7 @@ class InheritanceDependencyVisitorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertArrayValuesEquals(
-            [ MultipleInteritanceA2::class, MultipleInteritanceA::class, MultipleInteritanceA1::class],
+            [MultipleInteritanceA2::class, MultipleInteritanceA::class, MultipleInteritanceA1::class],
             $astMap->getFlattenClassInherits(MultipleInteritanceC::class)
         );
 
