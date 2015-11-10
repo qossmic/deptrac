@@ -130,6 +130,8 @@ class AstMapGenerator
                 $inerhitInerhits =  new FlattenAstInherit($this->resolveDepsRecursive($inherit, $astMap));
             }
 
+            $a = 0;
+
             $astMap->setFlattenClassInherit(
                 $klass,
                 $inerhitInerhits
@@ -137,10 +139,13 @@ class AstMapGenerator
         }
     }
 
-    private function resolveDepsRecursive(AstInherit $inheritDependency, AstMap $astMap, \ArrayObject $alreadyResolved = null)
+    private function resolveDepsRecursive(AstInherit $inheritDependency, AstMap $astMap, \ArrayObject $alreadyResolved = null, \ArrayObject $path)
     {
         if ($alreadyResolved == null) {
             $alreadyResolved = new \ArrayObject();
+        }
+        if ($path == null) {
+            $path = new \ArrayObject();
         }
 
         // recursion detected
@@ -152,6 +157,7 @@ class AstMapGenerator
 
         $buffer = [];
         foreach ($astMap->getClassInherits($inheritDependency->getClassName()) as $dep) {
+            $path->append($inheritDependency->getClassName());
             $buffer = array_merge($buffer, $this->resolveDepsRecursive($dep, $astMap, $alreadyResolved));
             $buffer[] = $dep;
         }

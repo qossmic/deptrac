@@ -27,16 +27,25 @@ class FlattenDependencyEmitter implements DependencyEmitterInterface
             /** @var AstMap\FlattenAstInherit[] $inherits */
             foreach ($inherits as $inherit) {
 
+                foreach ($inherit->all() as $foo) {
 
-                $dependencyResult->addDependency(
-                /** @var AstMap\FlattenAstInherit $inherit */
-                    new DependencyResult\InheritDependency(
-                        $class,
-                        $inherit->first()->getLine(),
-                        $inherit->last()->getClassName(),
-                        array_map(function(){}, $inherit->all())
-                    )
-                );
+                    foreach ($dependencyResult->getDependenciesByClass($foo) as $dep) {
+
+                        $dependencyResult->addDependency(
+                        /** @var AstMap\FlattenAstInherit $inherit */
+                            new DependencyResult\InheritDependency(
+                                $class,
+                                0,
+                                $dep->getClassB(),
+                                $dep->,
+                                array_map(function($classes){
+
+                                }, $inherit->all())
+                            )
+                        );
+
+                    }
+                }
             }
         }
     }

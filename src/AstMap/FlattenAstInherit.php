@@ -33,4 +33,9 @@ class FlattenAstInherit
         return $this->inheritDependencies[count($this->inheritDependencies) - 1];
     }
 
+    public function all()
+    {
+        return $this->inheritDependencies;
+    }
+
 }
