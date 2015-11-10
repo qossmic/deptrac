@@ -3,6 +3,7 @@
 namespace DependencyTracker;
 
 use DependencyTracker\AstMap\AstInherit;
+use DependencyTracker\AstMap\FlattenAstInherit;
 use DependencyTracker\AstMap\InheritDependency;
 use DependencyTracker\Event\AstFileAnalyzedEvent;
 use DependencyTracker\Event\AstFileSyntaxErrorEvent;
@@ -124,7 +125,9 @@ class AstMapGenerator
             $inerhitInerhits = [];
 
             foreach ($inherits as $inherit) {
-                $inerhitInerhits =  array_merge($inerhitInerhits, $this->resolveDepsRecursive($inherit, $astMap));
+
+                // todo, dass ist falsch, jeder pfad muss zu einem FlattenAstInherit werden!
+                $inerhitInerhits =  new FlattenAstInherit($this->resolveDepsRecursive($inherit, $astMap));
             }
 
             $astMap->setFlattenClassInherit(

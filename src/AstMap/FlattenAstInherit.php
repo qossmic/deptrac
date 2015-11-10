@@ -2,9 +2,9 @@
 
 namespace DependencyTracker\AstMap;
 
-class FlattenInheritDependency
+class FlattenAstInherit
 {
-    /** @var InheritDependency[] */
+    /** @var AstInherit[] */
     protected $inheritDependencies;
 
     public function __construct(array $inheritDependencies)
@@ -21,13 +21,13 @@ class FlattenInheritDependency
         return $buffer;
     }
 
-    /** @return InheritDependency */
+    /** @return AstInherit */
     public function first()
     {
         return $this->inheritDependencies[0];
     }
 
-    /** @return InheritDependency */
+    /** @return InhAstInheriteritDependency */
     public function last()
     {
         return $this->inheritDependencies[count($this->inheritDependencies) - 1];

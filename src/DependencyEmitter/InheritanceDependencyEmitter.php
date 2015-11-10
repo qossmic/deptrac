@@ -19,17 +19,6 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
             foreach ($inherits as $inherit) {
                 /** @var AstMap\AstInherit $inherit */
                 $dependencyResult->addDependency(
-                    new DependencyResult\Dependency(
-                        $class, $inherit->getLine(), $inherit->getClassName(), 0, '?'
-                    )
-                );
-            }
-        }
-
-        foreach ($astMap->getAllFlattenClassInherits() as $class => $inherits) {
-            foreach ($inherits as $inherit) {
-                $dependencyResult->addDependency(
-                    /** @var AstMap\AstInherit $inherit */
                     new Dependency(
                         $class, $inherit->getLine(), $inherit->getClassName(), 0, '?'
                     )

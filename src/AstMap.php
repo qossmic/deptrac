@@ -3,6 +3,7 @@
 namespace DependencyTracker;
 
 use DependencyTracker\AstMap\AstInherit;
+use DependencyTracker\AstMap\FlattenAstInherit;
 use DependencyTracker\DependencyResult\InheritDependency;
 
 class AstMap
@@ -58,9 +59,9 @@ class AstMap
 
     /**
      * @param $classA
-     * @param array $inheritClasses
+     * @param FlattenAstInherit $inheritClasses
      */
-    public function setFlattenClassInherit($classA, array $inheritClasses)
+    public function setFlattenClassInherit($classA, FlattenAstInherit $inheritClasses)
     {
         if (empty($inheritClasses)) {
             return;
@@ -69,11 +70,18 @@ class AstMap
         $this->flattenClassInheritMap[$classA] = $inheritClasses;
     }
 
+    /**
+     * @return array
+     */
     public function getAllFlattenClassInherits()
     {
         return $this->flattenClassInheritMap;
     }
 
+    /**
+     * @param $classA
+     * @return FlattenAstInherit[]
+     */
     public function getFlattenClassInherits($classA)
     {
         if (!isset($this->flattenClassInheritMap[$classA])) {
