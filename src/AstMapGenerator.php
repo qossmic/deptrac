@@ -127,10 +127,12 @@ class AstMapGenerator
             foreach ($inherits as $inherit) {
 
                 // todo, dass ist falsch, jeder pfad muss zu einem FlattenAstInherit werden!
-                $inerhitInerhits =  new FlattenAstInherit($this->resolveDepsRecursive($inherit, $astMap));
+                $inerhitInerhits =  array_merge($inerhitInerhits, $this->resolveDepsRecursive($inherit, $astMap));
             }
 
-            $a = 0;
+            if (empty($inerhitInerhits)) {
+                continue;
+            }
 
             $astMap->setFlattenClassInherit(
                 $klass,
@@ -139,30 +141,40 @@ class AstMapGenerator
         }
     }
 
-    private function resolveDepsRecursive(AstInherit $inheritDependency, AstMap $astMap, \ArrayObject $alreadyResolved = null, \ArrayObject $path)
+    private function resolveDepsRecursive(
+        AstInherit $inheritDependency,
+        AstMap $astMap,
+        \ArrayObject $alreadyResolved = null,
+        \SplStack $path = null
+    )
     {
         if ($alreadyResolved == null) {
             $alreadyResolved = new \ArrayObject();
         }
         if ($path == null) {
-            $path = new \ArrayObject();
+            $path = new \SplStack();
+            $path->push($inheritDependency);
         }
 
         // recursion detected
         if (isset($alreadyResolved[$inheritDependency->getClassName()])) {
+            $path->pop();
             return [];
         }
 
-        $alreadyResolved[$inheritDependency->getClassName()] = true;
 
         $buffer = [];
-        foreach ($astMap->getClassInherits($inheritDependency->getClassName()) as $dep) {
-            $path->append($inheritDependency->getClassName());
-            $buffer = array_merge($buffer, $this->resolveDepsRecursive($dep, $astMap, $alreadyResolved));
-            $buffer[] = $dep;
+        foreach ($astMap->getClassInherits($inheritDependency->getClassName()) as $inherit) {
+            $alreadyResolved[$inheritDependency->getClassName()] = true;
+            $path->push($inherit);
+            $buffer = array_merge($buffer, $this->resolveDepsRecursive($inherit, $astMap, $alreadyResolved, $path));
+            unset($alreadyResolved[$inheritDependency->getClassName()]);
+
+            $buffer[] = new FlattenAstInherit(iterator_to_array($path));
+            $path->pop();
         }
 
-        return array_values(array_unique($buffer));
+        return $buffer;
     }
 
 

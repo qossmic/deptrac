@@ -59,9 +59,9 @@ class AstMap
 
     /**
      * @param $classA
-     * @param FlattenAstInherit $inheritClasses
+     * @param array $inheritClasses
      */
-    public function setFlattenClassInherit($classA, FlattenAstInherit $inheritClasses)
+    public function setFlattenClassInherit($classA, array $inheritClasses)
     {
         if (empty($inheritClasses)) {
             return;
