@@ -2,13 +2,14 @@
 
 namespace DependencyTracker\DependencyEmitter;
 
-use DependencyTracker\AstHelper;
-use DependencyTracker\AstMap;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\DependencyResult\Dependency;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\UseUse;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstFileReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class UseDependencyEmitter implements DependencyEmitterInterface
 {
@@ -17,35 +18,48 @@ class UseDependencyEmitter implements DependencyEmitterInterface
         return 'UseDependencyEmitter';
     }
 
-    public function applyDependencies(AstMap $astMap, DependencyResult $dependencyResult)
+    public function supportsParser(AstParserInterface $astParser)
     {
+        return $astParser instanceof NikicPhpParser;
+    }
 
-        foreach ($astMap->getAsts() as $ast) {
-            $uses = [];
+    private function getUseStatements(NikicPhpParser $astParser, AstFileReferenceInterface $fileReference) {
 
-            foreach ($ast as $namespaceNode) {
-                if (!$namespaceNode instanceof Namespace_ || !$namespaceNode->stmts) {
+        $uses = [];
+
+        foreach ($astParser->getAstByFile($fileReference) as $namespaceNode) {
+            if (!$namespaceNode instanceof Namespace_ || !$namespaceNode->stmts) {
+                continue;
+            }
+
+            foreach ($namespaceNode->stmts as $useNodes) {
+                if (!$useNodes instanceof Use_) {
                     continue;
                 }
 
-                foreach ($namespaceNode->stmts as $useNodes) {
-                    if (!$useNodes instanceof Use_) {
-                        continue;
-                    }
-
-                    foreach ($useNodes->uses as $useNode) {
-                        $uses[$useNode->name->toString()] = $useNode->name->getLine();
-                    }
+                foreach ($useNodes->uses as $useNode) {
+                    $uses[$useNode->name->toString()] = $useNode->name->getLine();
                 }
-
             }
+        }
 
+        return $uses;
+    }
 
-            foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNodes) {
+    public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, DependencyResult $dependencyResult)
+    {
+        /** @var $astParser NikicPhpParser */
+        assert ($astParser instanceof NikicPhpParser === true);
+
+        foreach ($astMap->getAstFileReferences() as $fileReference) {
+
+            $uses = $this->getUseStatements($astParser, $fileReference);
+
+            foreach ($fileReference->getAstClassReferences() as $astClassReference) {
                 foreach ($uses as $use => $useLine) {
                     $dependencyResult->addDependency(
                         new Dependency(
-                            $classLikeNodes->namespacedName->toString(), $useLine, $use, '?', '?'
+                            $astClassReference->getClassName(), $useLine, $use, '?', '?'
                         )
                     );
                 }

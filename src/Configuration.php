@@ -56,7 +56,7 @@ class Configuration
     }
 
     /**
-     * @return ConfigurationLayer
+     * @return ConfigurationLayer[]
      */
     public function getLayers()
     {

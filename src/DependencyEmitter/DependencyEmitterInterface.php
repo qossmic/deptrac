@@ -2,8 +2,9 @@
 
 namespace DependencyTracker\DependencyEmitter;
 
-use DependencyTracker\AstMap;
 use DependencyTracker\DependencyResult;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 
 interface DependencyEmitterInterface
 {
@@ -14,10 +15,11 @@ interface DependencyEmitterInterface
     public function getName();
 
     /**
+     * @param AstParserInterface $astParser
      * @param AstMap $astMap
      * @param DependencyResult $dependencyResult
-     * @return void
+     * @return mixed
      */
-    public function applyDependencies(AstMap $astMap, DependencyResult $dependencyResult);
+    public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, DependencyResult $dependencyResult);
 
 }

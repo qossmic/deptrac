@@ -2,8 +2,6 @@
 
 namespace DependencyTracker\Configuration;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class ConfigurationCollector
 {
     private $type;
@@ -12,13 +10,11 @@ class ConfigurationCollector
 
     public static function fromArray(array $arr)
     {
-        $options = (new OptionsResolver())->setRequired([
-            'type',
-        ])->setDefaults([
-            'args' => []
-        ])->resolve($arr);
+        if (!isset($arr['type'])) {
+            throw new \InvalidArgumentException('Collector needs a type.');
+        }
 
-        return new static($options['type'], $options['args']);
+        return new static($arr['type'], $arr);
     }
 
     /**

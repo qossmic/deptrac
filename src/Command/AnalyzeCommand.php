@@ -15,16 +15,19 @@ use DependencyTracker\Formatter\ConsoleFormatter;
 use DependencyTracker\OutputFormatterFactory;
 use DependencyTracker\RulesetEngine;
 use DependencyTracker\Visitor\InheritanceDependencyVisitor;
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Finder\Finder;
 
 class AnalyzeCommand extends Command
 {
     protected $dispatcher;
 
-    protected $astMapGenerator;
+    protected $astRunner;
 
     protected $configurationLoader;
 
@@ -36,7 +39,7 @@ class AnalyzeCommand extends Command
 
     public function __construct(
         EventDispatcherInterface $dispatcher,
-        AstMapGenerator $astMapGenerator,
+        AstRunner $astRunner,
         ConfigurationLoader $configurationLoader,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
@@ -44,7 +47,7 @@ class AnalyzeCommand extends Command
     ) {
         parent::__construct();
         $this->dispatcher = $dispatcher;
-        $this->astMapGenerator = $astMapGenerator;
+        $this->astRunner = $astRunner;
         $this->configurationLoader = $configurationLoader;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
@@ -68,32 +71,39 @@ class AnalyzeCommand extends Command
             return 1;
         }
 
-        $config = $this->configurationLoader->loadConfiguration();
+        $configuration = $this->configurationLoader->loadConfiguration();
 
         new ConsoleFormatter($this->dispatcher, $output);
 
 
-        $formatter = $this->formatterFactory->getFormatterByName($config->getFormatter());
+        $formatter = $this->formatterFactory->getFormatterByName($configuration->getFormatter());
 
-        // generate astMap
-        $astMap = $this->astMapGenerator->generateAstMap($config, $output);
+        $parser = new NikicPhpParser();
+        $astMap = $this->astRunner->createAstMapByFiles($parser, $this->dispatcher, $this->collectFiles($configuration));
 
         $dependencyResult = new DependencyResult();
 
         /** @var $dependencyEmitters DependencyEmitterInterface[] */
+
         $dependencyEmitters = [
-            new InheritanceDependencyEmitter(),
+        #    new InheritanceDependencyEmitter(),
             new UseDependencyEmitter()
         ];
 
         foreach ($dependencyEmitters as $dependencyEmitter) {
             $output->writeln(sprintf('start flatten dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
-            $dependencyEmitter->applyDependencies($astMap, $dependencyResult);
+            $dependencyEmitter->applyDependencies(
+                $parser,
+                $astMap,
+                $dependencyResult
+            );
         }
         $output->writeln("end flatten");
 
-        foreach ($config->getLayers() as $configurationLayer) {
+        foreach ($configuration->getLayers() as $configurationLayer) {
             foreach ($configurationLayer->getCollectors() as $configurationCollector) {
+
+                $collector = $this->collectorFactory->getCollector($configurationCollector->getType());
 
                 $output->writeln(
                     sprintf(
@@ -103,14 +113,19 @@ class AnalyzeCommand extends Command
                     )
                 );
 
-                $this->collectorFactory->getCollector(
-                    $configurationCollector->getType()
-                )->applyAstFile(
-                    $astMap,
-                    $dependencyResult,
-                    $configurationLayer,
-                    $configurationCollector->getArgs()
-                );
+                foreach ($astMap->getAstClassReferences() as $astClassReference) {
+
+                    if ($collector->satisfy(
+                        $configurationCollector->getArgs(),
+                        $astClassReference,
+                        $this->collectorFactory
+                    )) {
+                        $dependencyResult->addClassToLayer(
+                            $astClassReference->getClassName(),
+                            $configurationLayer->getName()
+                        );
+                    }
+                }
             }
         }
 
@@ -120,7 +135,7 @@ class AnalyzeCommand extends Command
 
         # collect violations
         /** @var $violations RulesetEngine\RulesetViolation[] */
-        $violations = $this->rulesetEngine->getViolations($dependencyResult, $config->getRuleset());
+        $violations = $this->rulesetEngine->getViolations($dependencyResult, $configuration->getRuleset());
         $this->displayViolations($violations, $output);
 
         return !count($violations);
@@ -166,6 +181,28 @@ class AnalyzeCommand extends Command
                 count($violations)
             )
         );
+    }
+
+
+    private function collectFiles(Configuration $configuration)
+    {
+        $files = iterator_to_array(
+            (new Finder)
+                ->in($configuration->getPaths())
+                ->name('*.php')
+                ->files()
+                ->followLinks()
+                ->ignoreUnreadableDirs(true)
+                ->ignoreVCS(true)
+        );
+        return array_filter($files, function(\SplFileInfo $fileInfo) use ($configuration) {
+            foreach ($configuration->getExcludeFiles() as $excludeFiles) {
+                if(preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
+                    return false;
+                }
+            }
+            return true;
+        });
     }
 
 } 

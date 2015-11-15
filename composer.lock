@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "78c73e1e323b9c82477075d6f88f35d8",
-    "content-hash": "2dfe3248e84920b6b6216d5dce6dae94",
+    "hash": "2bba4cf5d633b8a6e7f091fa4bfdd6ed",
+    "content-hash": "13a2776d862fbc845c099cd23db17e38",
     "packages": [
         {
             "name": "clue/graph",
@@ -229,6 +229,38 @@
                 }
             ],
             "time": "2014-07-19 06:52:59"
+        },
+        {
+            "name": "sensiolabs-de/astrunner",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:sensiolabs-de/astrunner.git",
+                "reference": "874f136bf20374f9de4c1fb3f4153946e68a34a5"
+            },
+            "require": {
+                "nikic/php-parser": "~1.4",
+                "symfony/event-dispatcher": "^2.7"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SensioLabs\\AstRunner\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "timglabisch",
+                    "email": "astrunner+tim.glabisch@sensiolabs.de"
+                }
+            ],
+            "time": "2015-11-15 20:00:39"
         },
         {
             "name": "symfony/config",
@@ -1563,7 +1595,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "sensiolabs-de/astrunner": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
