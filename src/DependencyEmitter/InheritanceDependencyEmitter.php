@@ -2,9 +2,11 @@
 
 namespace DependencyTracker\DependencyEmitter;
 
-use DependencyTracker\AstMap;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\DependencyResult\Dependency;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {
@@ -13,14 +15,26 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
         return 'InheritanceDependencyEmitter';
     }
 
-    public function applyDependencies(AstMap $astMap, DependencyResult $dependencyResult)
-    {
-        foreach ($astMap->getAllInherits() as $class => $inherits) {
-            foreach ($inherits as $inherit) {
-                /** @var AstMap\AstInherit $inherit */
+    public function applyDependencies(
+        AstParserInterface $astParser,
+        AstMap $astMap,
+        DependencyResult $dependencyResult
+    ) {
+        foreach ($astMap->getAstClassReferences() as $classReference) {
+            foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
+
+                // for now we just care about direct inheritance
+                if ($inherit instanceof FlattenAstInherit) {
+                    continue;
+                }
+
                 $dependencyResult->addDependency(
                     new Dependency(
-                        $class, $inherit->getLine(), $inherit->getClassName(), 0, '?'
+                        $classReference->getClassName(),
+                        $inherit->getLine(),
+                        $inherit->getClassName(),
+                        0,
+                        '?'
                     )
                 );
             }

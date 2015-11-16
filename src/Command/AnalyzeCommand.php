@@ -7,6 +7,7 @@ use DependencyTracker\AstMapGenerator;
 use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration;
 use DependencyTracker\ConfigurationLoader;
+use DependencyTracker\DependencyEmitter\BasicDependencyEmitter;
 use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
 use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
 use DependencyTracker\DependencyEmitter\UseDependencyEmitter;
@@ -86,8 +87,8 @@ class AnalyzeCommand extends Command
         /** @var $dependencyEmitters DependencyEmitterInterface[] */
 
         $dependencyEmitters = [
-        #    new InheritanceDependencyEmitter(),
-            new UseDependencyEmitter()
+            new InheritanceDependencyEmitter(),
+            new BasicDependencyEmitter()
         ];
 
         foreach ($dependencyEmitters as $dependencyEmitter) {
