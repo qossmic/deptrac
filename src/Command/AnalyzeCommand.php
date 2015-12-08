@@ -11,6 +11,7 @@ use DependencyTracker\DependencyEmitter\BasicDependencyEmitter;
 use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
 use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
 use DependencyTracker\DependencyEmitter\UseDependencyEmitter;
+use DependencyTracker\DependencyInheritanceFlatter;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\Formatter\ConsoleFormatter;
 use DependencyTracker\OutputFormatterFactory;
@@ -92,14 +93,19 @@ class AnalyzeCommand extends Command
         ];
 
         foreach ($dependencyEmitters as $dependencyEmitter) {
-            $output->writeln(sprintf('start flatten dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
+            $output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
             $dependencyEmitter->applyDependencies(
                 $parser,
                 $astMap,
                 $dependencyResult
             );
         }
-        $output->writeln("end flatten");
+        $output->writeln("end emitting dependencies");
+        $output->writeln("start flatten dependencies");
+
+        (new DependencyInheritanceFlatter())->flattenDependencies($astMap, $dependencyResult);
+
+        $output->writeln("end flatten dependencies");
 
         foreach ($configuration->getLayers() as $configurationLayer) {
             foreach ($configurationLayer->getCollectors() as $configurationCollector) {
@@ -153,13 +159,14 @@ class AnalyzeCommand extends Command
             if ($violation->getDependeny() instanceof DependencyResult\InheritDependency) {
                 $output->writeln(
                     sprintf(
-                        "<info>%s</info> inherits <info>%s</info>::%s which must not depend on <info>%s</info> (%s on %s)",
+                        "<info>%s</info> inherits <info>%s</info>::%s which must not depend on <info>%s</info> (%s on %s) \n\t(path: %s)",
                         $violation->getDependeny()->getClassInheritedOver(),
                         $violation->getDependeny()->getClassA(),
                         $violation->getDependeny()->getClassALine(),
                         $violation->getDependeny()->getClassB(),
                         $violation->getLayerA(),
-                        $violation->getLayerB()
+                        $violation->getLayerB(),
+                        $violation->getDependeny()->getPath()->__toString()
                     )
                 );
             } else {

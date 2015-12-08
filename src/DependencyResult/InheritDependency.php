@@ -2,63 +2,58 @@
 
 namespace DependencyTracker\DependencyResult;
 
-class InheritDependency
+use SensioLabs\AstRunner\AstMap\AstInheritInterface;
+
+class InheritDependency implements DependencyInterface
 {
-    protected $classA;
+    private $classA;
 
-    protected $classALine;
+    private $classALine;
 
-    protected $classB;
+    /** @var Dependency */
+    private $dependency;
 
-    protected $dependencies = [];
+    /** @var AstInheritInterface */
+    private $path;
 
     /**
      * InheritDependency constructor.
      * @param $classA
      * @param $classALine
-     * @param $classB
-     * @param array $dependencies
+     * @param Dependency $dependency
+     * @param AstInheritInterface $path
      */
-    public function __construct($classA, $classALine, $classB, array $dependencies)
+    public function __construct($classA, $classALine, DependencyInterface $dependency, AstInheritInterface $path)
     {
         $this->classA = $classA;
         $this->classALine = $classALine;
-        $this->classB = $classB;
-        $this->dependencies = $dependencies;
+        $this->dependency = $dependency;
+        $this->path = $path;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getClassA()
     {
         return $this->classA;
     }
 
-    /**
-     * @return mixed
-     */
     public function getClassALine()
     {
         return $this->classALine;
     }
 
-    /**
-     * @return mixed
-     */
     public function getClassB()
     {
-        return $this->classB;
+        return $this->path->getClassName();
     }
 
     /**
-     * @return Dependency[]
+     * @return AstInheritInterface
      */
-    public function getDependencies()
+    public function getPath()
     {
-        return $this->dependencies;
+        return $this->path;
     }
-
 
 
 }

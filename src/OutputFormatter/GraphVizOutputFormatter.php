@@ -25,12 +25,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
         foreach ($dependencyResult->getDependencies() as $dependency) {
 
-            if ($dependency instanceof InheritDependency) {
-                $layersA = $dependencyResult->getLayersByClassName($dependency->getClassInheritedOver());
-            } else {
-                $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
-            }
-
+            $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
             $layersB = $dependencyResult->getLayersByClassName($dependency->getClassB());
 
             if (empty($layersB)) {

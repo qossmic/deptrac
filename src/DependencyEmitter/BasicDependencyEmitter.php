@@ -20,7 +20,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
 {
     public function getName()
     {
-        return 'UseDependencyEmitter';
+        return 'BasicDependencyEmitter';
     }
 
     public function supportsParser(AstParserInterface $astParser)

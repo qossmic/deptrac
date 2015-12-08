@@ -3,6 +3,7 @@
 namespace DependencyTracker;
 
 use DependencyTracker\DependencyResult\Dependency;
+use DependencyTracker\DependencyResult\DependencyInterface;
 
 class DependencyResult
 {
@@ -13,7 +14,7 @@ class DependencyResult
 
     private $inheritDependencies = [];
 
-    public function addDependency(Dependency $dependency)
+    public function addDependency(DependencyInterface $dependency)
     {
         if (!isset($this->dependencies[$dependency->getClassA()])) {
             $this->dependencies[$dependency->getClassA()] = [];
@@ -22,7 +23,7 @@ class DependencyResult
         $this->dependencies[$dependency->getClassA()][] = $dependency;
     }
 
-    public function addInheritDependency(Dependency $dependency)
+    public function addInheritDependency(DependencyInterface $dependency)
     {
         if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
             $this->inheritDependencies[$dependency->getClassA()] = [];
