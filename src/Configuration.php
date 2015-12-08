@@ -42,11 +42,12 @@ class Configuration
 
     /**
      * @param $layers
+     * @param $ruleset
      * @param $paths
      * @param $exclude_files
      * @param $formatter
      */
-    public function __construct($layers, $ruleset, $paths, $exclude_files, $formatter)
+    private function __construct($layers, $ruleset, $paths, $exclude_files, $formatter)
     {
         $this->layers = $layers;
         $this->ruleset = $ruleset;
