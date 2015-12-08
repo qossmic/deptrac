@@ -22,7 +22,7 @@ class ConfigurationCollector
      * @param $type
      * @param $args
      */
-    public function __construct($type, $args)
+    private function __construct($type, $args)
     {
         $this->type = $type;
         $this->args = $args;

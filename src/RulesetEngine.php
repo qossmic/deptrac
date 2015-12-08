@@ -27,7 +27,7 @@ class RulesetEngine
                         continue;
                     }
 
-                    if (in_array($layerNameOfDependency, $configurationRuleset->getAllowedDependenvies($layerName))) {
+                    if (in_array($layerNameOfDependency, $configurationRuleset->getAllowedDependendencies($layerName))) {
                         continue;
                     }
 
