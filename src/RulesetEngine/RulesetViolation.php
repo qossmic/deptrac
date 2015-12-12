@@ -9,8 +9,6 @@ class RulesetViolation
 {
     private $dependeny;
 
-    private $codeSnippet;
-
     private $layerA;
 
     private $layerB;
@@ -19,12 +17,10 @@ class RulesetViolation
      * @param Dependency $dependency
      * @param $layerA
      * @param $layerB
-     * @param null $codeSnippet
      */
-    public function __construct(Dependency $dependency, $layerA, $layerB, $codeSnippet = null)
+    public function __construct(Dependency $dependency, $layerA, $layerB)
     {
         $this->dependeny = $dependency;
-        $this->codeSnippet = $codeSnippet;
         $this->layerA = $layerA;
         $this->layerB = $layerB;
     }
@@ -35,14 +31,6 @@ class RulesetViolation
     public function getDependeny()
     {
         return $this->dependeny;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCodeSnippet()
-    {
-        return $this->codeSnippet;
     }
 
     /**
