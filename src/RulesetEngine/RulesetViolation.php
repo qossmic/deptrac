@@ -3,6 +3,7 @@
 namespace DependencyTracker\RulesetEngine;
 
 use DependencyTracker\DependencyResult\Dependency;
+use DependencyTracker\DependencyResult\DependencyInterface;
 use DependencyTracker\DependencyResult\InheritDependency;
 
 class RulesetViolation
@@ -14,11 +15,11 @@ class RulesetViolation
     private $layerB;
 
     /**
-     * @param Dependency $dependency
+     * @param DependencyInterface $dependency
      * @param $layerA
      * @param $layerB
      */
-    public function __construct(Dependency $dependency, $layerA, $layerB)
+    public function __construct(DependencyInterface $dependency, $layerA, $layerB)
     {
         $this->dependeny = $dependency;
         $this->layerA = $layerA;
@@ -28,7 +29,7 @@ class RulesetViolation
     /**
      * @return Dependency|InheritDependency
      */
-    public function getDependeny()
+    public function getDependency()
     {
         return $this->dependeny;
     }

@@ -3,22 +3,22 @@
 namespace DependencyTracker;
 
 use DependencyTracker\Configuration\ConfigurationRuleset;
-use DependencyTracker\DependencyResult\InheritDependency;
 use DependencyTracker\RulesetEngine\RulesetViolation;
 
 class RulesetEngine
 {
+    /**
+     * @param DependencyResult $dependencyResult
+     * @param ConfigurationRuleset $configurationRuleset
+     * @return RulesetViolation[]
+     */
     public function getViolations(DependencyResult $dependencyResult, ConfigurationRuleset $configurationRuleset)
     {
         $violations = [];
 
         foreach ($dependencyResult->getDependencies() as $dependency) {
 
-            if ($dependency instanceof InheritDependency) {
-                $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassInheritedOver());
-            } else {
-                $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassA());
-            }
+            $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassA());
 
             foreach ($layerNames as $layerName) {
                 foreach ($dependencyResult->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
@@ -27,7 +27,10 @@ class RulesetEngine
                         continue;
                     }
 
-                    if (in_array($layerNameOfDependency, $configurationRuleset->getAllowedDependendencies($layerName))) {
+                    if (in_array(
+                        $layerNameOfDependency,
+                        $configurationRuleset->getAllowedDependendencies($layerName)
+                    )) {
                         continue;
                     }
 

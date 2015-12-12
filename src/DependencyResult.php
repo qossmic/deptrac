@@ -14,6 +14,10 @@ class DependencyResult
 
     private $inheritDependencies = [];
 
+    /**
+     * @param DependencyInterface $dependency
+     * @return $this
+     */
     public function addDependency(DependencyInterface $dependency)
     {
         if (!isset($this->dependencies[$dependency->getClassA()])) {
@@ -21,8 +25,14 @@ class DependencyResult
         }
 
         $this->dependencies[$dependency->getClassA()][] = $dependency;
+
+        return $this;
     }
 
+    /**
+     * @param DependencyInterface $dependency
+     * @return $this
+     */
     public function addInheritDependency(DependencyInterface $dependency)
     {
         if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
@@ -30,6 +40,8 @@ class DependencyResult
         }
 
         $this->inheritDependencies[$dependency->getClassA()][] = $dependency;
+
+        return $this;
     }
 
     /**
@@ -64,6 +76,11 @@ class DependencyResult
         return $buffer;
     }
 
+    /**
+     * @param $klass
+     * @param $layer
+     * @return $this
+     */
     public function addClassToLayer($klass, $layer)
     {
         if (!isset($this->classLayerMap[$klass])) {
@@ -71,6 +88,8 @@ class DependencyResult
         }
 
         $this->classLayerMap[$klass][] = $layer;
+
+        return $this;
     }
 
     public function getClassLayerMap()

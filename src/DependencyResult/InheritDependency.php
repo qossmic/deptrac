@@ -23,11 +23,10 @@ class InheritDependency implements DependencyInterface
      * @param Dependency $dependency
      * @param AstInheritInterface $path
      */
-    public function __construct($classA, $classALine, DependencyInterface $dependency, AstInheritInterface $path)
+    public function __construct($classA, $classALine, AstInheritInterface $path)
     {
         $this->classA = $classA;
         $this->classALine = $classALine;
-        $this->dependency = $dependency;
         $this->path = $path;
     }
 

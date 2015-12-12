@@ -156,26 +156,26 @@ class AnalyzeCommand extends Command
     {
         foreach ($violations as $violation) {
 
-            if ($violation->getDependeny() instanceof DependencyResult\InheritDependency) {
+            if ($violation->getDependency() instanceof DependencyResult\InheritDependency) {
                 $output->writeln(
                     sprintf(
                         "<info>%s</info> inherits <info>%s</info>::%s which must not depend on <info>%s</info> (%s on %s) \n\t(path: %s)",
-                        $violation->getDependeny()->getClassInheritedOver(),
-                        $violation->getDependeny()->getClassA(),
-                        $violation->getDependeny()->getClassALine(),
-                        $violation->getDependeny()->getClassB(),
+                        $violation->getDependency()->getClassInheritedOver(),
+                        $violation->getDependency()->getClassA(),
+                        $violation->getDependency()->getClassALine(),
+                        $violation->getDependency()->getClassB(),
                         $violation->getLayerA(),
                         $violation->getLayerB(),
-                        $violation->getDependeny()->getPath()->__toString()
+                        $violation->getDependency()->getPath()->__toString()
                     )
                 );
             } else {
                 $output->writeln(
                     sprintf(
                         "<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)",
-                        $violation->getDependeny()->getClassA(),
-                        $violation->getDependeny()->getClassALine(),
-                        $violation->getDependeny()->getClassB(),
+                        $violation->getDependency()->getClassA(),
+                        $violation->getDependency()->getClassALine(),
+                        $violation->getDependency()->getClassB(),
                         $violation->getLayerA(),
                         $violation->getLayerB()
                     )

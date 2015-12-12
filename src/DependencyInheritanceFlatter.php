@@ -26,7 +26,6 @@ class DependencyInheritanceFlatter
                         new InheritDependency(
                             $classReference->getClassName(),
                             $inheritDep->getClassALine(),
-                            $inheritDep,
                             $inherit
                         )
                     );
