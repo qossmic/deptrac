@@ -16,7 +16,7 @@ class RulesetEngine
     {
         $violations = [];
 
-        foreach ($dependencyResult->getDependencies() as $dependency) {
+        foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
 
             $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassA());
 

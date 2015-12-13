@@ -58,7 +58,7 @@ class DependencyResult
     }
 
     /** @return Dependency[] */
-    public function getDependencies()
+    public function getDependenciesAndInheritDependencies()
     {
         $buffer = [];
 

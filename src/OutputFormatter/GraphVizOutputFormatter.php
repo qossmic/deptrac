@@ -23,7 +23,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     {
         $layersDependOnLayers = [];
 
-        foreach ($dependencyResult->getDependencies() as $dependency) {
+        foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
 
             $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
             $layersB = $dependencyResult->getLayersByClassName($dependency->getClassB());

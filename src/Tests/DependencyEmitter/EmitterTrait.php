@@ -28,7 +28,7 @@ trait EmitterTrait
 
         return array_map(function(Dependency $d) {
             return $d->getClassA().':'.$d->getClassALine().' on '.$d->getClassB();
-        }, $result->getDependencies());
+        }, $result->getDependenciesAndInheritDependencies());
     }
 
 }
