@@ -5,8 +5,7 @@ paths:
 exclude_files:
   - .*test.*
 layers:
-  -
-    name: Asset
+  - name: Asset
     collectors:
       - type: bool
         must:
@@ -15,17 +14,14 @@ layers:
         must_not:
           - type: className
             regex: .*Assetic.*
-  -
-    name: BrowserKit
+  - name: BrowserKit
     collectors:
-      -
-        type: className
+      - type: className
         regex: .*Component\\BrowserKit.*
   -
     name: ClassLoader
     collectors:
-      -
-        type: className
+      - type: className
         regex: .*Component\\ClassLoader.*
   -
     name: Config

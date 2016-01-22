@@ -159,8 +159,7 @@ class AnalyzeCommand extends Command
             if ($violation->getDependency() instanceof DependencyResult\InheritDependency) {
                 $output->writeln(
                     sprintf(
-                        "<info>%s</info> inherits <info>%s</info>::%s which must not depend on <info>%s</info> (%s on %s) \n\t(path: %s)",
-                        $violation->getDependency()->getClassInheritedOver(),
+                        "<info>%s::%s</info> must not depend on <info>%s</info> (%s on %s) path: %s",
                         $violation->getDependency()->getClassA(),
                         $violation->getDependency()->getClassALine(),
                         $violation->getDependency()->getClassB(),
@@ -172,7 +171,7 @@ class AnalyzeCommand extends Command
             } else {
                 $output->writeln(
                     sprintf(
-                        "<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)",
+                        '<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
                         $violation->getDependency()->getClassA(),
                         $violation->getDependency()->getClassALine(),
                         $violation->getDependency()->getClassB(),
