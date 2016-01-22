@@ -236,7 +236,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:sensiolabs-de/astrunner.git",
-                "reference": "e372b65dc16e02301e39050e46f9c6943fd59d51"
+                "reference": "4ee74ea0afa4c7a054c47f57dc780c66f480d4d5"
             },
             "require": {
                 "nikic/php-parser": "~1.4",
@@ -260,7 +260,7 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2016-01-22 11:31:33"
+            "time": "2016-01-22 13:26:52"
         },
         {
             "name": "symfony/config",
