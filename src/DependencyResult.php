@@ -76,34 +76,9 @@ class DependencyResult
         return $buffer;
     }
 
-    /**
-     * @param $klass
-     * @param $layer
-     * @return $this
-     */
-    public function addClassToLayer($klass, $layer)
-    {
-        if (!isset($this->classLayerMap[$klass])) {
-            $this->classLayerMap[$klass] = [];
-        }
-
-        $this->classLayerMap[$klass][] = $layer;
-
-        return $this;
-    }
-
     public function getClassLayerMap()
     {
         return $this->classLayerMap;
-    }
-
-    public function getLayersByClassName($className)
-    {
-        if (!isset($this->classLayerMap[$className])) {
-            return [];
-        }
-
-        return $this->classLayerMap[$className];
     }
 
 }

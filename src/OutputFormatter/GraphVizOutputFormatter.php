@@ -3,6 +3,7 @@
 namespace DependencyTracker\OutputFormatter;
 
 use DependencyTracker\ClassLayerMap;
+use DependencyTracker\ClassNameLayerResolver;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\DependencyResult\InheritDependency;
 use DependencyTracker\Event\Visitor\FoundDependencyEvent;
@@ -19,14 +20,14 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         return 'graphviz';
     }
 
-    public function finish(DependencyResult $dependencyResult)
+    public function finish(DependencyResult $dependencyResult, ClassNameLayerResolver $classNameLayerResolver)
     {
         $layersDependOnLayers = [];
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
 
-            $layersA = $dependencyResult->getLayersByClassName($dependency->getClassA());
-            $layersB = $dependencyResult->getLayersByClassName($dependency->getClassB());
+            $layersA = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
+            $layersB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
 
             if (empty($layersB)) {
                 continue;

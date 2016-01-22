@@ -4,6 +4,7 @@ namespace DependencyTracker\Command;
 
 
 use DependencyTracker\AstMapGenerator;
+use DependencyTracker\ClassNameLayerResolver;
 use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration;
 use DependencyTracker\ConfigurationLoader;
@@ -107,42 +108,15 @@ class AnalyzeCommand extends Command
 
         $output->writeln("end flatten dependencies");
 
-        foreach ($configuration->getLayers() as $configurationLayer) {
-            foreach ($configurationLayer->getCollectors() as $configurationCollector) {
-
-                $collector = $this->collectorFactory->getCollector($configurationCollector->getType());
-
-                $output->writeln(
-                    sprintf(
-                        'collecting <info>"%s"</info> dependencies for layer <info>"%s"</info>',
-                        $configurationCollector->getType(),
-                        $configurationLayer->getName()
-                    )
-                );
-
-                foreach ($astMap->getAstClassReferences() as $astClassReference) {
-
-                    if ($collector->satisfy(
-                        $configurationCollector->getArgs(),
-                        $astClassReference,
-                        $this->collectorFactory
-                    )) {
-                        $dependencyResult->addClassToLayer(
-                            $astClassReference->getClassName(),
-                            $configurationLayer->getName()
-                        );
-                    }
-                }
-            }
-        }
+        $classNameLayerResolver = new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory);
 
         $output->writeln("formatting dependencies.");
-        $formatter->finish($dependencyResult);
+        $formatter->finish($dependencyResult, $classNameLayerResolver);
 
 
         # collect violations
         /** @var $violations RulesetEngine\RulesetViolation[] */
-        $violations = $this->rulesetEngine->getViolations($dependencyResult, $configuration->getRuleset());
+        $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
         $this->displayViolations($violations, $output);
 
         return !count($violations);

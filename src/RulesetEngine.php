@@ -12,16 +12,16 @@ class RulesetEngine
      * @param ConfigurationRuleset $configurationRuleset
      * @return RulesetViolation[]
      */
-    public function getViolations(DependencyResult $dependencyResult, ConfigurationRuleset $configurationRuleset)
+    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolver $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
     {
         $violations = [];
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
 
-            $layerNames = $dependencyResult->getLayersByClassName($dependency->getClassA());
+            $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
 
             foreach ($layerNames as $layerName) {
-                foreach ($dependencyResult->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
+                foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
 
                     if ($layerName == $layerNameOfDependency) {
                         continue;
