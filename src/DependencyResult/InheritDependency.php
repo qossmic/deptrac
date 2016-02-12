@@ -8,8 +8,6 @@ class InheritDependency implements DependencyInterface
 {
     private $classA;
 
-    private $classALine;
-
     /** @var AstInheritInterface */
     private $path;
 

@@ -13,12 +13,10 @@ class InheritDependencyTest extends \PHPUnit_Framework_TestCase
     {
         $dependency = new InheritDependency(
             'a',
-            23,
             $astInherit = $this->prophesize(AstInheritInterface::class)->reveal()
         );
 
         $this->assertEquals('a', $dependency->getClassA());
-        $this->assertEquals(23, $dependency->getClassALine());
         $this->assertSame($astInherit, $dependency->getPath());
     }
 }

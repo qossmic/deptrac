@@ -76,9 +76,4 @@ class DependencyResult
         return $buffer;
     }
 
-    public function getClassLayerMap()
-    {
-        return $this->classLayerMap;
-    }
-
 }
