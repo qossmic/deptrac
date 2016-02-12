@@ -10,35 +10,30 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class InheritanceLevelCollectorTest extends  \PHPUnit_Framework_TestCase
 {
-    public function testSatisfy()
+    public function dataTests()
     {
-        $classInherit = $this->prophesize(AstMap\AstInheritInterface::class);
-        $classInherit->getPath()
-            ->willReturn([1, 1])
-        ;
-
-        $astMap = $this->prophesize(AstMap::class);
-        $astMap->getClassInherits(Argument::any())
-            ->willReturn([$classInherit->reveal()])
-        ;
-
-        $stat = (new InheritanceLevelCollector())
-            ->satisfy(
-                ['level' => 1],
-                $this->prophesize(AstClassReferenceInterface::class)->reveal(),
-                $astMap->reveal(),
-                $this->prophesize(CollectorFactory::class)->reveal()
-            )
-        ;
-
-        $this->assertTrue($stat);
+        return [
+            [1, 1, true],
+            [2, 1, true],
+            [3, 2, true],
+            [1, 2, false],
+            [2, 3, false],
+            [3, 4, false],
+        ];
     }
 
-    public function testNegativeSatisfy()
+    /**
+     * @param $pathLevel
+     * @param $levelConfig
+     * @param $expected
+     *
+     * @dataProvider dataTests
+     */
+    public function testSatisfy($pathLevel, $levelConfig, $expected)
     {
         $classInherit = $this->prophesize(AstMap\AstInheritInterface::class);
         $classInherit->getPath()
-            ->willReturn([])
+            ->willReturn(array_fill(0, $pathLevel, 1))
         ;
 
         $astMap = $this->prophesize(AstMap::class);
@@ -48,13 +43,13 @@ class InheritanceLevelCollectorTest extends  \PHPUnit_Framework_TestCase
 
         $stat = (new InheritanceLevelCollector())
             ->satisfy(
-                ['level' => 1],
+                ['level' => $levelConfig],
                 $this->prophesize(AstClassReferenceInterface::class)->reveal(),
                 $astMap->reveal(),
                 $this->prophesize(CollectorFactory::class)->reveal()
             )
         ;
 
-        $this->assertFalse($stat);
+        $this->assertEquals($expected, $stat);
     }
 }
