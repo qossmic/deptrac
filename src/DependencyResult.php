@@ -3,6 +3,7 @@
 namespace DependencyTracker;
 
 use DependencyTracker\DependencyResult\Dependency;
+use DependencyTracker\DependencyResult\DependencyInterface;
 
 class DependencyResult
 {
@@ -13,22 +14,34 @@ class DependencyResult
 
     private $inheritDependencies = [];
 
-    public function addDependency(Dependency $dependency)
+    /**
+     * @param DependencyInterface $dependency
+     * @return $this
+     */
+    public function addDependency(DependencyInterface $dependency)
     {
         if (!isset($this->dependencies[$dependency->getClassA()])) {
             $this->dependencies[$dependency->getClassA()] = [];
         }
 
         $this->dependencies[$dependency->getClassA()][] = $dependency;
+
+        return $this;
     }
 
-    public function addInheritDependency(Dependency $dependency)
+    /**
+     * @param DependencyInterface $dependency
+     * @return $this
+     */
+    public function addInheritDependency(DependencyInterface $dependency)
     {
         if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
             $this->inheritDependencies[$dependency->getClassA()] = [];
         }
 
         $this->inheritDependencies[$dependency->getClassA()][] = $dependency;
+
+        return $this;
     }
 
     /**
@@ -45,7 +58,7 @@ class DependencyResult
     }
 
     /** @return Dependency[] */
-    public function getDependencies()
+    public function getDependenciesAndInheritDependencies()
     {
         $buffer = [];
 
@@ -61,29 +74,6 @@ class DependencyResult
         }
 
         return $buffer;
-    }
-
-    public function addClassToLayer($klass, $layer)
-    {
-        if (!isset($this->classLayerMap[$klass])) {
-            $this->classLayerMap[$klass] = [];
-        }
-
-        $this->classLayerMap[$klass][] = $layer;
-    }
-
-    public function getClassLayerMap()
-    {
-        return $this->classLayerMap;
-    }
-
-    public function getLayersByClassName($className)
-    {
-        if (!isset($this->classLayerMap[$className])) {
-            return [];
-        }
-
-        return $this->classLayerMap[$className];
     }
 
 }

@@ -9,9 +9,7 @@
 
         <service id="configuration_loader" class="DependencyTracker\ConfigurationLoader"/>
 
-        <service id="ast_map_generator" class="DependencyTracker\AstMapGenerator">
-            <argument type="service" id="dispatcher"/>
-        </service>
+        <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
 
         <service id="output_formatter_factory" class="DependencyTracker\OutputFormatterFactory">
             <argument/>
@@ -35,9 +33,13 @@
             <tag name="collector"/>
         </service>
 
+        <service id="collector_bool" class="DependencyTracker\Collector\BoolCollector">
+            <tag name="collector"/>
+        </service>
+
         <service id="command_analyze" class="DependencyTracker\Command\AnalyzeCommand">
             <argument type="service" id="dispatcher"/>
-            <argument type="service" id="ast_map_generator"/>
+            <argument type="service" id="astrunner"/>
             <argument type="service" id="configuration_loader"/>
             <argument type="service" id="output_formatter_factory"/>
             <argument type="service" id="ruleset_engine"/>

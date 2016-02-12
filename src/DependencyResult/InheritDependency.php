@@ -2,12 +2,48 @@
 
 namespace DependencyTracker\DependencyResult;
 
-class InheritDependency extends Dependency
-{
+use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 
-    public static function fromDependency($inheritedByClass, $inheritedByLine, Dependency $dependency)
+class InheritDependency implements DependencyInterface
+{
+    private $classA;
+
+    /** @var AstInheritInterface */
+    private $path;
+
+    /**
+     * @param $classA
+     * @param AstInheritInterface $path
+     */
+    public function __construct($classA, AstInheritInterface $path)
     {
-        return new static($inheritedByClass, $inheritedByLine, $dependency->getClassB(), $dependency->getClassA(), $dependency->getClassALine());
+        $this->classA = $classA;
+        $this->path = $path;
     }
+
+
+    public function getClassA()
+    {
+        return $this->classA;
+    }
+
+    public function getClassALine()
+    {
+        return $this->path->getLine();
+    }
+
+    public function getClassB()
+    {
+        return $this->path->getClassName();
+    }
+
+    /**
+     * @return AstInheritInterface
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
 
 }

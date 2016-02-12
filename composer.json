@@ -11,7 +11,8 @@
         "symfony/dependency-injection": "^2.7",
         "symfony/config": "^2.7",
         "symfony/event-dispatcher": "^2.7",
-        "symfony/options-resolver": "^2.7"
+        "symfony/options-resolver": "^2.7",
+        "sensiolabs-de/astrunner": "dev-master"
     },
     "authors": [
         {
@@ -26,6 +27,12 @@
         "psr-4": {
             "DependencyTracker\\": "src/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "url": "git@github.com:sensiolabs-de/astrunner.git",
+            "type": "git"
+        }
+    ]
 
 }

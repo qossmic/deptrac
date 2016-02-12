@@ -2,18 +2,16 @@
 
 namespace DependencyTracker\Collector;
 
-use DependencyTracker\AstMap;
-use DependencyTracker\Configuration\ConfigurationLayer;
-use DependencyTracker\DependencyResult;
+use DependencyTracker\CollectorFactory;
+use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 interface CollectorInterface
 {
     public function getType();
 
-    public function applyAstFile(
-        AstMap $astMap,
-        DependencyResult $dependencyResult,
-        ConfigurationLayer $layer,
-        array $configuration
+    public function satisfy(
+        array $configuration,
+        AstClassReferenceInterface $abstractClassReference,
+        CollectorFactory $collectorFactory
     );
 }

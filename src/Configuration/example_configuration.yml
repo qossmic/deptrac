@@ -6,11 +6,10 @@ views:
   -
     name: Basic View
     layers:
-      -
+-
         name: Asset
         collectors:
-          -
-            type: className
+          - type: className
             args:
               regex: .*Component\\Asset.*
       -
