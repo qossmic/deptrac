@@ -29,15 +29,4 @@ class DependencyResultTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
     }
 
-    public function testAddClassToLayer()
-    {
-        $dependencyResult = new DependencyResult();
-        $dependencyResult->addClassToLayer('A', 'LayerA1');
-        $dependencyResult->addClassToLayer('A', 'LayerA2');
-        $dependencyResult->addClassToLayer('B', 'LayerB');
-
-        $this->assertEquals(['LayerA1', 'LayerA2'], $dependencyResult->getClassLayerMap()['A']);
-        $this->assertEquals(['LayerB'], $dependencyResult->getClassLayerMap()['B']);
-    }
-
 }

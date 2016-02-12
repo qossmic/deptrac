@@ -9,6 +9,7 @@ class RulesetEngine
 {
     /**
      * @param DependencyResult $dependencyResult
+     * @param ClassNameLayerResolver $classNameLayerResolver
      * @param ConfigurationRuleset $configurationRuleset
      * @return RulesetViolation[]
      */
