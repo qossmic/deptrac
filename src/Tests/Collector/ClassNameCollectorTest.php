@@ -28,6 +28,7 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
         $stat = (new ClassNameCollector())->satisfy(
             $configuration,
             $astClassReference->reveal(),
+            $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(CollectorFactory::class)->reveal()
         );
 
