@@ -4,6 +4,7 @@ namespace DependencyTracker\Collector;
 
 use DependencyTracker\CollectorFactory;
 use DependencyTracker\DependencyResult;
+use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
@@ -26,6 +27,7 @@ class ClassNameCollector implements CollectorInterface
     public function satisfy(
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
+        AstMap $astMap,
         CollectorFactory $collectorFactory
     ) {
         return preg_match(

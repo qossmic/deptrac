@@ -33,5 +33,4 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $stat);
     }
-
 }

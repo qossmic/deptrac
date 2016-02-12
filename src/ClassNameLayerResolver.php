@@ -54,6 +54,7 @@ class ClassNameLayerResolver
                 if ($collector->satisfy(
                     $configurationCollector->getArgs(),
                     $astClassReference,
+                    $this->astMap,
                     $this->collectorFactory
                 )) {
                     $this->addCacheClassToLayer(
