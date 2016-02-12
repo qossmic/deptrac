@@ -2,10 +2,10 @@
 
 namespace DependencyTracker\Formatter;
 
-use DependencyTracker\Event\AstFileAnalyzedEvent;
-use DependencyTracker\Event\AstFileSyntaxErrorEvent;
-use DependencyTracker\Event\PostCreateAstMapEvent;
-use DependencyTracker\Event\PreCreateAstMapEvent;
+use SensioLabs\AstRunner\Event\AstFileAnalyzedEvent;
+use SensioLabs\AstRunner\Event\AstFileSyntaxErrorEvent;
+use SensioLabs\AstRunner\Event\PostCreateAstMapEvent;
+use SensioLabs\AstRunner\Event\PreCreateAstMapEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

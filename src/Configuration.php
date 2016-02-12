@@ -33,7 +33,7 @@ class Configuration
 
         return new static(
             array_map(function($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
-            new ConfigurationRuleset($options['ruleset']),
+            ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
             $options['exclude_files'],
             $options['formatter']
@@ -42,11 +42,12 @@ class Configuration
 
     /**
      * @param $layers
+     * @param $ruleset
      * @param $paths
      * @param $exclude_files
      * @param $formatter
      */
-    public function __construct($layers, $ruleset, $paths, $exclude_files, $formatter)
+    private function __construct($layers, $ruleset, $paths, $exclude_files, $formatter)
     {
         $this->layers = $layers;
         $this->ruleset = $ruleset;
@@ -56,7 +57,7 @@ class Configuration
     }
 
     /**
-     * @return ConfigurationLayer
+     * @return ConfigurationLayer[]
      */
     public function getLayers()
     {

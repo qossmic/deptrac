@@ -2,7 +2,7 @@
 
 namespace DependencyTracker\DependencyResult;
 
-class Dependency
+class Dependency implements DependencyInterface
 {
     protected $classA;
 
@@ -10,9 +10,6 @@ class Dependency
 
     protected $classB;
 
-    protected $classInheritedOver;
-
-    protected $classInheritedOverLine;
 
     /**
      * Dependency constructor.
@@ -20,13 +17,11 @@ class Dependency
      * @param $classALine
      * @param $classB
      */
-    public function __construct($classA, $classALine, $classB, $classInheritedOver = null, $classInheritedOverLine = null)
+    public function __construct($classA, $classALine, $classB)
     {
         $this->classA = $classA;
         $this->classALine = $classALine;
         $this->classB = $classB;
-        $this->classInheritedOver = $classInheritedOver;
-        $this->classInheritedOverLine = $classInheritedOverLine;
     }
 
     /**
@@ -51,22 +46,6 @@ class Dependency
     public function getClassB()
     {
         return $this->classB;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClassInheritedOver()
-    {
-        return $this->classInheritedOver;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClassInheritedOverLine()
-    {
-        return $this->classInheritedOverLine;
     }
 
 }

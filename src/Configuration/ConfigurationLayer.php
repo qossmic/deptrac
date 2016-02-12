@@ -26,11 +26,10 @@ class ConfigurationLayer
     }
 
     /**
-     * ConfigurationLayer constructor.
      * @param $color
      * @param $collectors
      */
-    public function __construct($collectors, $name)
+    private function __construct($collectors, $name)
     {
         $this->collectors = $collectors;
         $this->name = $name;

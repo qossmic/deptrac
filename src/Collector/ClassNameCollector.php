@@ -2,17 +2,13 @@
 
 namespace DependencyTracker\Collector;
 
-use DependencyTracker\AstHelper;
-use DependencyTracker\AstMap;
-use DependencyTracker\Configuration\ConfigurationLayer;
+use DependencyTracker\CollectorFactory;
 use DependencyTracker\DependencyResult;
-use PhpParser\Node\Stmt\ClassLike;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
 {
-    protected $layerConfiguration;
-
-    protected $regex;
 
     public function getType()
     {
@@ -28,30 +24,17 @@ class ClassNameCollector implements CollectorInterface
         return $configuration['regex'];
     }
 
-    public function applyAstFile(
+    public function satisfy(
+        array $configuration,
+        AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        DependencyResult $dependencyResult,
-        ConfigurationLayer $layer,
-        array $configuration
-    )
-    {
-
-        $regex = $this->getRegexByConfiguration($configuration);
-
-        foreach($astMap->getAsts() as $filePathName => $ast) {
-
-            /** @var $classes ClassLike[] */
-            $classes = AstHelper::findClassLikeNodes($ast);
-
-            foreach ($classes as $klass) {
-
-                if (!preg_match('/'.$regex.'/i', $klass->namespacedName->toString())) {
-                    continue;
-                }
-
-                $dependencyResult->addClassToLayer($klass->namespacedName->toString(), $layer->getName());
-            }
-        }
+        CollectorFactory $collectorFactory
+    ) {
+        return preg_match(
+            '/' . $this->getRegexByConfiguration($configuration) . '/i',
+            $abstractClassReference->getClassName(),
+            $collectorFactory
+        );
     }
 
 }
