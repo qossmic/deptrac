@@ -5,11 +5,7 @@ namespace DependencyTracker\Tests;
 
 
 use DependencyTracker\ClassNameLayerResolver;
-use DependencyTracker\Collector\CollectorInterface;
-use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration;
-use DependencyTracker\Configuration\ConfigurationCollector;
-use DependencyTracker\Configuration\ConfigurationLayer;
 use DependencyTracker\Configuration\ConfigurationRuleset;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\DependencyResult\Dependency;
@@ -17,115 +13,150 @@ use DependencyTracker\RulesetEngine;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 
-/**
- * @TODO: WTF
- */
 class RulesetEngineTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testGetViolationsButNoViolations()
+    private function createDependencies(array $fromTo)
     {
-        $engine = new RulesetEngine();
+        foreach ($fromTo as $from => $to) {
+            yield new Dependency($from, 0, $to);
+        }
+    }
 
-        $dependencyResult = (new DependencyResult())
-            ->addDependency(new Dependency('A', 23, 'B'));
-
-        $classNameLayerResolver = $this->getClassNameLayerResolver();
-
-        $configurationRuleset = ConfigurationRuleset::fromArray([
-            'LayerA' => [
-                'LayerB',
-                'LayerC'
+    public function dependencyProvider()
+    {
+        yield [
+            [
+                // ClassA has a Dependency on ClassB
+                'ClassA' => 'ClassB'
             ],
-            'LayerD' => []
-        ]);
+            [
+                // ClassA is in LayerA, ClassB is in LayerB
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB']
+            ],
+            [
+                'LayerA' => [
+                    'LayerB'
+                ],
+                'LayerC' => []
+            ],
+            0
 
-        $this->assertCount(
-            0,
-            $engine->getViolations($dependencyResult, $classNameLayerResolver, $configurationRuleset)
-        );
-    }
+        ];
 
-    public function testGetViolationsWithUnknownLayer()
-    {
-        $engine = new RulesetEngine();
+        yield [
+            [
+                'ClassA' => 'ClassB'
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB']
+            ],
+            [
+                'LayerA' => [],
+                'LayerB' => []
+            ],
+            1
 
-        $dependencyResult = (new DependencyResult())
-            ->addDependency($dependency = new Dependency('A', 23, 'B'));
+        ];
 
-        $classNameLayerResolver = $this->getClassNameLayerResolver();
+        yield [
+            [
+                'ClassA' => 'ClassB'
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB']
+            ],
+            [],
+            1
 
-        $configurationRuleset = ConfigurationRuleset::fromArray([]);
+        ];
 
-        $violations = $engine->getViolations($dependencyResult, $classNameLayerResolver, $configurationRuleset);
+        yield [
+            [
+                'ClassA' => 'ClassB'
+            ],
+            [
+                'ClassA' => [],
+                'ClassB' => []
+            ],
+            [],
+            0
+        ];
 
-        $this->assertCount(1, $violations);
-        $this->assertEquals('LayerA', $violations[0]->getLayerA());
-        $this->assertEquals('LayerB', $violations[0]->getLayerB());
-        $this->assertSame($dependency, $violations[0]->getDependency());
-    }
+        yield [
+            [
+                'ClassA' => 'ClassB'
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB']
+            ],
+            [
+                'LayerA' => ['LayerB']
+            ],
+            0
+        ];
 
-    public function testGetViolationLayer()
-    {
-        $engine = new RulesetEngine();
+        yield [
+            [
+                'ClassA' => 'ClassB'
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB']
+            ],
+            [
+                'LayerB' => ['LayerA']
+            ],
+            1
+        ];
 
-        $dependencyResult = (new DependencyResult())
-            ->addDependency($dependency = new Dependency('A', 23, 'B'));
-
-        $classNameLayerResolver = $this->getClassNameLayerResolver();
-
-        $configurationRuleset = ConfigurationRuleset::fromArray([
-            'LayerA' => ['LayerB']
-        ]);
-
-        $violations = $engine->getViolations($dependencyResult, $classNameLayerResolver, $configurationRuleset);
-
-        $this->assertCount(0, $violations);
-    }
-
-    public function testGetViolationsWithLayerDecl()
-    {
-        $engine = new RulesetEngine();
-
-        $dependencyResult = (new DependencyResult())
-            ->addDependency($dependency = new Dependency('A', 23, 'B'));
-
-        $classNameLayerResolver = $this->getClassNameLayerResolver();
-
-        $configurationRuleset = ConfigurationRuleset::fromArray([
-            'LayerA' => ['LayerD']
-        ]);
-
-        $violations = $engine->getViolations($dependencyResult, $classNameLayerResolver, $configurationRuleset);
-
-        $this->assertCount(1, $violations);
-        $this->assertEquals('LayerA', $violations[0]->getLayerA());
-        $this->assertEquals('LayerB', $violations[0]->getLayerB());
-        $this->assertSame($dependency, $violations[0]->getDependency());
+        yield [
+            [
+                'ClassA' => 'ClassB',
+                'ClassB' => 'ClassA',
+                'ClassC' => 'ClassD'
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB'],
+                'ClassC' => ['LayerC'],
+                'ClassD' => ['LayerD']
+            ],
+            [],
+            3
+        ];
     }
 
     /**
-     * @return ClassNameLayerResolver
+     * @param array $dependenciesAsArray
+     * @param array $classesInLayers
+     * @param array $rulesetConfiguration
+     * @param $expectedCount
+     * @dataProvider dependencyProvider
      */
-    private function getClassNameLayerResolver()
+    public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, $expectedCount)
     {
-        $configurationCollector = $this->prophesize(ConfigurationCollector::class);
-        $configurationCollector->getType()->willReturn('');
-        $configurationCollector->getArgs()->willReturn([]);
+        $dependencyResult = (new DependencyResult());
+        foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
+            $dependencyResult->addDependency($dep);
+        }
 
-        $configurationLayer = $this->prophesize(ConfigurationLayer::class);
-        $configurationLayer->getCollectors()->willReturn([$configurationCollector->reveal()]);
+        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolver::class);
+        foreach ($classesInLayers as $classInLayer => $layers) {
+            $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
+        }
 
-        $configuration = $this->prophesize(Configuration::class);
-        $configuration->getLayers()->willReturn([$configurationLayer->reveal()]);
-
-        $collectorFactory = $this->prophesize(CollectorFactory::class);
-        $collectorFactory->getCollector(Argument::any())->willReturn($this->prophesize(CollectorInterface::class)->reveal());
-
-        return new ClassNameLayerResolver(
-            $configuration->reveal(),
-            $this->prophesize(AstMap::class)->reveal(),
-            $collectorFactory->reveal()
+        $this->assertCount(
+            $expectedCount,
+            (new RulesetEngine())->getViolations(
+                $dependencyResult,
+                $classNameLayerResolver->reveal(),
+                ConfigurationRuleset::fromArray($rulesetConfiguration)
+            )
         );
     }
 
