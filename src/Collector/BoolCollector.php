@@ -4,6 +4,7 @@ namespace DependencyTracker\Collector;
 
 use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration\ConfigurationCollector;
+use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class BoolCollector implements CollectorInterface
@@ -17,6 +18,7 @@ class BoolCollector implements CollectorInterface
     public function satisfy(
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
+        AstMap $astMap,
         CollectorFactory $collectorFactory
     )
     {
@@ -38,6 +40,7 @@ class BoolCollector implements CollectorInterface
             if (!$collectorFactory->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
                 $abstractClassReference,
+                $astMap,
                 $collectorFactory
             )) {
                 return false;
@@ -50,6 +53,7 @@ class BoolCollector implements CollectorInterface
             if ($collectorFactory->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
                 $abstractClassReference,
+                $astMap,
                 $collectorFactory
             )) {
                 return false;
