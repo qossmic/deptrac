@@ -3,7 +3,6 @@
 namespace DependencyTracker\Command;
 
 
-use DependencyTracker\AstMapGenerator;
 use DependencyTracker\ClassNameLayerResolver;
 use DependencyTracker\ClassNameLayerResolverCacheDecorator;
 use DependencyTracker\CollectorFactory;
@@ -12,13 +11,11 @@ use DependencyTracker\ConfigurationLoader;
 use DependencyTracker\DependencyEmitter\BasicDependencyEmitter;
 use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
 use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
-use DependencyTracker\DependencyEmitter\UseDependencyEmitter;
 use DependencyTracker\DependencyInheritanceFlatter;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\Formatter\ConsoleFormatter;
 use DependencyTracker\OutputFormatterFactory;
 use DependencyTracker\RulesetEngine;
-use DependencyTracker\Visitor\InheritanceDependencyVisitor;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
