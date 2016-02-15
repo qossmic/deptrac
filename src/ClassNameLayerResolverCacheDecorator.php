@@ -7,7 +7,7 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
     /** @var ClassNameLayerResolver */
     private $classNameLayerResolver;
 
-    protected $classLayerCache = [];
+    private $classLayerCache = [];
 
     /**
      * ClassNameLayerResolverCacheDecorator constructor.
