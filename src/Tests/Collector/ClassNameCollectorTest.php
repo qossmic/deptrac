@@ -17,6 +17,11 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
         yield [['regex' => 'a'], 'foo\bbr', false];
     }
 
+    public function testType()
+    {
+        $this->assertEquals('className', (new ClassNameCollector())->getType());
+    }
+
     /**
      * @dataProvider dataProviderStatisfy
      */
@@ -34,5 +39,18 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expected, $stat);
+    }
+
+    /**
+     * @expectedException \LogicException
+     */
+    public function testWrongRegexParam()
+    {
+        (new ClassNameCollector())->satisfy(
+            ['Foo' => 'a'],
+            $this->prophesize(AstClassReferenceInterface::class)->reveal(),
+            $this->prophesize(AstMap::class)->reveal(),
+            $this->prophesize(CollectorFactory::class)->reveal()
+        );
     }
 }

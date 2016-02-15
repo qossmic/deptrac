@@ -52,4 +52,9 @@ class InheritanceLevelCollectorTest extends  \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $stat);
     }
+
+    public function testType()
+    {
+        $this->assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
+    }
 }

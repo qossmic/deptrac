@@ -28,6 +28,11 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $stat);
     }
 
+    public function testType()
+    {
+        $this->assertEquals('bool', (new BoolCollector())->getType());
+    }
+
     public function getCalculatorMock($returns)
     {
         $collector = $this->prophesize(CollectorInterface::class);
