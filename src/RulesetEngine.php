@@ -9,11 +9,11 @@ class RulesetEngine
 {
     /**
      * @param DependencyResult $dependencyResult
-     * @param ClassNameLayerResolver $classNameLayerResolver
+     * @param ClassNameLayerResolverInterface $classNameLayerResolver
      * @param ConfigurationRuleset $configurationRuleset
      * @return RulesetViolation[]
      */
-    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolver $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
+    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
     {
         $violations = [];
 

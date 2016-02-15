@@ -5,6 +5,7 @@ namespace DependencyTracker\Command;
 
 use DependencyTracker\AstMapGenerator;
 use DependencyTracker\ClassNameLayerResolver;
+use DependencyTracker\ClassNameLayerResolverCacheDecorator;
 use DependencyTracker\CollectorFactory;
 use DependencyTracker\Configuration;
 use DependencyTracker\ConfigurationLoader;
@@ -108,7 +109,9 @@ class AnalyzeCommand extends Command
 
         $output->writeln("end flatten dependencies");
 
-        $classNameLayerResolver = new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory);
+        $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
+            new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory)
+        );
 
         $output->writeln("formatting dependencies.");
         $formatter->finish($dependencyResult, $classNameLayerResolver);

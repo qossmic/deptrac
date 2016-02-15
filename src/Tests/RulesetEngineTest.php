@@ -3,8 +3,7 @@
 
 namespace DependencyTracker\Tests;
 
-
-use DependencyTracker\ClassNameLayerResolver;
+use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\Configuration;
 use DependencyTracker\Configuration\ConfigurationRuleset;
 use DependencyTracker\DependencyResult;
@@ -145,7 +144,7 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolver::class);
+        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
             $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
         }

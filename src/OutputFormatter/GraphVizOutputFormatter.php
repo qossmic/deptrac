@@ -3,13 +3,9 @@
 namespace DependencyTracker\OutputFormatter;
 
 use DependencyTracker\ClassLayerMap;
-use DependencyTracker\ClassNameLayerResolver;
+use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\InheritDependency;
-use DependencyTracker\Event\Visitor\FoundDependencyEvent;
 use Fhaculty\Graph\Vertex;
-use phpDocumentor\GraphViz\Edge;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {
@@ -20,7 +16,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         return 'graphviz';
     }
 
-    public function finish(DependencyResult $dependencyResult, ClassNameLayerResolver $classNameLayerResolver)
+    public function finish(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver)
     {
         $layersDependOnLayers = [];
 

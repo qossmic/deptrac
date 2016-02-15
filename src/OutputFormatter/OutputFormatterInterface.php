@@ -2,12 +2,12 @@
 
 namespace DependencyTracker\OutputFormatter;
 
-use DependencyTracker\ClassNameLayerResolver;
+use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
 
 interface OutputFormatterInterface
 {
     public function getName();
 
-    public function finish(DependencyResult $dependencyResult, ClassNameLayerResolver $classNameLayerResolver);
+    public function finish(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver);
 }
