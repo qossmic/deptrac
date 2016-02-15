@@ -6,6 +6,7 @@ namespace DependencyTracker\Tests\Collector;
 
 use DependencyTracker\Collector\ClassNameCollector;
 use DependencyTracker\CollectorFactory;
+use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase

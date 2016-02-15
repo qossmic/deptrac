@@ -34,6 +34,7 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
         $collector->satisfy(
             ['type' => $returns, 'foo' => 'bar'],
             Argument::type(AstClassReferenceInterface::class),
+            Argument::type(AstMap::class),
             Argument::type(CollectorFactory::class)
         )->willReturn($returns);
         return $collector->reveal();
@@ -167,6 +168,7 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
         $stat = (new BoolCollector())->satisfy(
             $configuration,
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
+            $this->prophesize(AstMap::class)->reveal(),
             $collectorFactory->reveal()
         );
 
