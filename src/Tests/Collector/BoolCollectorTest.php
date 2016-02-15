@@ -8,6 +8,7 @@ use DependencyTracker\Collector\BoolCollector;
 use DependencyTracker\Collector\CollectorInterface;
 use DependencyTracker\CollectorFactory;
 use Prophecy\Argument;
+use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class BoolCollectorTest extends \PHPUnit_Framework_TestCase
@@ -20,6 +21,7 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
         $stat = (new BoolCollector())->satisfy(
             [],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
+            $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(CollectorFactory::class)->reveal()
         );
 
