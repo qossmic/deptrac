@@ -21,7 +21,7 @@ class InheritDependency implements DependencyInterface
      * @param $classA
      * @param AstInheritInterface $path
      */
-    public function __construct($classA, $classB, Dependency $originalDependency, AstInheritInterface $path)
+    public function __construct($classA, $classB, DependencyInterface $originalDependency, AstInheritInterface $path)
     {
         $this->classA = $classA;
         $this->classB = $classB;

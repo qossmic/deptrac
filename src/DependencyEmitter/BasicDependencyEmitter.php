@@ -41,7 +41,11 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 }
 
                 foreach ($useNodes->uses as $useNode) {
-                    $uses[$useNode->name->toString()] = $useNode->name->getLine();
+                    $uses[] = new EmittedDependency(
+                        $useNode->name->toString(),
+                        $useNode->name->getLine(),
+                        'use'
+                    );
                 }
             }
         }
@@ -58,7 +62,11 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 continue;
             }
 
-            $buffer[$instanceOf->class->toString()] = $instanceOf->getLine();
+            $buffer[] = new EmittedDependency(
+                $instanceOf->class->toString(),
+                $instanceOf->getLine(),
+                'instanceof'
+            );
         }
 
         return $buffer;
@@ -73,7 +81,11 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 continue;
             }
 
-            $buffer[$node->type->toString()] = $node->type->getLine();
+            $buffer[] = new EmittedDependency(
+                $node->type->toString(),
+                $node->type->getLine(),
+                'parameter'
+            );
         }
 
         return $buffer;
@@ -88,7 +100,11 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 continue;
             }
 
-            $buffer[$node->class->toString()] = $node->class->getLine();
+            $buffer[] = new EmittedDependency(
+                $node->class->toString(),
+                $node->class->getLine(),
+                'new'
+            );
         }
 
         return $buffer;
@@ -110,6 +126,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
 
+                /** @var $uses EmittedDependency[] */
                 $uses = array_merge(
                     $uses,
                     $this->getInstanceOfStatements($astParser, $astClassReference),
@@ -117,10 +134,10 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                     $this->getNewStatements($astParser, $astClassReference)
                 );
 
-                foreach ($uses as $use => $useLine) {
+                foreach ($uses as $emittedDependency) {
                     $dependencyResult->addDependency(
                         new Dependency(
-                            $astClassReference->getClassName(), $useLine, $use
+                            $astClassReference->getClassName(), $emittedDependency->getLine(), $emittedDependency->getClass()
                         )
                     );
                 }
