@@ -1,7 +1,5 @@
 paths:
-  #- ./../../hawesko/hawesko/src
-  #- ./../../hawesko/hawesko/vendor/symfony/symfony/src/Symfony/Component/Console/
-  - ./../../hawesko/hawesko/vendor/symfony/
+  - ./../../hawesko/hawesko/vendor/symfony/symfony/src/Symfony/Component/
 exclude_files:
   - .*test.*
 layers:

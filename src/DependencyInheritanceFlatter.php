@@ -14,24 +14,31 @@ class DependencyInheritanceFlatter
     ) {
         foreach ($astMap->getAstClassReferences() as $classReference) {
 
-            foreach ($dependencyResult->getDependenciesByClass($classReference->getClassName()) as $dep) {
+            $class = $classReference->getClassName();
 
-                foreach ($astMap->getClassInherits($dep->getClassA()) as $inherit) {
+            $dependenciesToInherit = [];
 
-                    // for now we just care about direct inheritance
-                    if (!$inherit instanceof FlattenAstInherit) {
-                        continue;
-                    }
+            foreach ($astMap->getClassInherits($class) as $inherit) {
 
-                    $dependencyResult->addInheritDependency(
-                        new InheritDependency(
-                            $classReference->getClassName(),
-                            $inherit
-                        )
-                    );
-
+                if (!$inherit instanceof FlattenAstInherit) {
+                    continue;
                 }
+
+                $dependenciesForClass = $dependencyResult->getDependenciesByClass($inherit->getClassName());
+
+
+                foreach ($dependenciesForClass as $dep) {
+
+                    $dependencyResult->addInheritDependency(new InheritDependency(
+                        $class,
+                        $dep->getClassB(),
+                        $dep,
+                        $inherit
+                    ));
+                }
+
             }
         }
+
     }
 }

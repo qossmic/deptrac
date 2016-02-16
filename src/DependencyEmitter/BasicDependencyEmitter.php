@@ -120,7 +120,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 foreach ($uses as $use => $useLine) {
                     $dependencyResult->addDependency(
                         new Dependency(
-                            $astClassReference->getClassName(), $useLine, $use, '?', '?'
+                            $astClassReference->getClassName(), $useLine, $use
                         )
                     );
                 }

@@ -8,16 +8,24 @@ class InheritDependency implements DependencyInterface
 {
     private $classA;
 
+    /** @var Dependency */
+    private $classB;
+
     /** @var AstInheritInterface */
     private $path;
+
+    /** @var Dependency */
+    private $originalDependency;
 
     /**
      * @param $classA
      * @param AstInheritInterface $path
      */
-    public function __construct($classA, AstInheritInterface $path)
+    public function __construct($classA, $classB, Dependency $originalDependency, AstInheritInterface $path)
     {
         $this->classA = $classA;
+        $this->classB = $classB;
+        $this->originalDependency = $originalDependency;
         $this->path = $path;
     }
 
@@ -29,12 +37,12 @@ class InheritDependency implements DependencyInterface
 
     public function getClassALine()
     {
-        return $this->path->getLine();
+        return '';
     }
 
     public function getClassB()
     {
-        return $this->path->getClassName();
+        return $this->classB;
     }
 
     /**
@@ -45,5 +53,12 @@ class InheritDependency implements DependencyInterface
         return $this->path;
     }
 
+    /**
+     * @return Dependency
+     */
+    public function getOriginalDependency()
+    {
+        return $this->originalDependency;
+    }
 
 }

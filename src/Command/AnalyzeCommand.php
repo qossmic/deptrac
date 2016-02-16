@@ -13,9 +13,11 @@ use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
 use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
 use DependencyTracker\DependencyInheritanceFlatter;
 use DependencyTracker\DependencyResult;
+use DependencyTracker\DependencyResult\InheritDependency;
 use DependencyTracker\Formatter\ConsoleFormatter;
 use DependencyTracker\OutputFormatterFactory;
 use DependencyTracker\RulesetEngine;
+use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
@@ -122,6 +124,19 @@ class AnalyzeCommand extends Command
         return !count($violations);
     }
 
+    private function formatPath(AstInheritInterface $astInherit, InheritDependency $dependency) {
+        $buffer = [];
+        foreach ($astInherit->getPath() as $p) {
+            array_unshift($buffer, "\t".$p->getClassName() .'::'. $p->getLine());
+        }
+
+        $buffer[] = "\t".$astInherit->getClassName() .'::'. $astInherit->getLine();
+
+        $buffer[] = "\t".$dependency->getOriginalDependency()->getClassB().'::'.$dependency->getOriginalDependency()->getClassALine();
+
+        return implode(" -> \n", $buffer);
+    }
+
     /**
      * @param RulesetEngine\RulesetViolation[] $violations
      * @param OutputInterface $output
@@ -130,16 +145,15 @@ class AnalyzeCommand extends Command
     {
         foreach ($violations as $violation) {
 
-            if ($violation->getDependency() instanceof DependencyResult\InheritDependency) {
+            if ($violation->getDependency() instanceof InheritDependency) {
                 $output->writeln(
                     sprintf(
-                        "<info>%s::%s</info> must not depend on <info>%s</info> (%s on %s) path: %s",
+                        "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
                         $violation->getDependency()->getClassA(),
-                        $violation->getDependency()->getClassALine(),
                         $violation->getDependency()->getClassB(),
                         $violation->getLayerA(),
                         $violation->getLayerB(),
-                        $violation->getDependency()->getPath()->__toString()
+                        $this->formatPath($violation->getDependency()->getPath(), $violation->getDependency())
                     )
                 );
             } else {
