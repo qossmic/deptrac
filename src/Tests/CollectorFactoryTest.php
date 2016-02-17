@@ -9,14 +9,17 @@ use DependencyTracker\CollectorFactory;
 
 class CollectorFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function getCollectorTest()
+    public function testGetCollector()
     {
-        $fooCollector = $this->prophesize(CollectorInterface::class)->reveal();
+        $fooCollector = $this->prophesize(CollectorInterface::class);
+        $fooCollector->getType()->willReturn('foo');
+        $fooCollector = $fooCollector->reveal();
+
 
         $this->assertSame(
             $fooCollector,
             (new CollectorFactory([
-                'foo' => $fooCollector
+                $fooCollector
             ]))->getCollector('foo')
         );
     }
