@@ -10,6 +10,7 @@ use DependencyTracker\DependencyResult\Dependency;
 use DependencyTracker\DependencyResult\InheritDependency;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 
@@ -28,31 +29,47 @@ class DependencyInheritanceFlatterTest extends \PHPUnit_Framework_TestCase
     {
         $dep = $this->prophesize(Dependency::class);
         $dep->getClassA()->willReturn($className);
+        $dep->getClassB()->willReturn($className.'_b');
         return $dep->reveal();
     }
 
     public function testFlattenDependencies()
     {
-        $this->markTestIncomplete('check test');
-
         $astMap = $this->prophesize(AstMap::class);
+
         $astMap->getAstClassReferences()->willReturn([
-            $astRef1 = $this->getAstReference('A'),
+            $this->getAstReference('classA'),
+            $this->getAstReference('classB'),
+            $this->getAstReference('classBaum'),
+            $this->getAstReference('classWeihnachtsbaum'),
+            $this->getAstReference('classGeschmückterWeihnachtsbaum')
         ]);
-        $astMap->getClassInherits('C')->willReturn([
-            $inherit1 = $this->prophesize(FlattenAstInherit::class)->reveal()
+
+        $dependencyResult = new DependencyResult();
+        $dependencyResult->addDependency($classADep = $this->getDependency('classA'));
+        $dependencyResult->addDependency($classBDep = $this->getDependency('classB'));
+        $dependencyResult->addDependency($classBaumDep = $this->getDependency('classBaum'));
+        $dependencyResult->addDependency($classWeihnachtsbaumsDep = $this->getDependency('classWeihnachtsbaumsA'));
+
+        $astMap->getClassInherits('classA')->willReturn([]);
+        $astMap->getClassInherits('classB')->willReturn([]);
+        $astMap->getClassInherits('classBaum')->willReturn([]);
+        $astMap->getClassInherits('classWeihnachtsbaum')->willReturn([
+            AstInherit::newUses('classBaum', 3)
+        ]);
+        $astMap->getClassInherits('classGeschmückterWeihnachtsbaum')->willReturn([
+            new FlattenAstInherit(AstMap\AstInherit::newExtends('classBaum', 3), [
+                AstInherit::newUses('classWeihnachtsbaum', 3)
+            ])
         ]);
 
-        $inheritDependency = new InheritDependency('A', $inherit1);
+        (new DependencyInheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);
 
-        $result = $this->prophesize(DependencyResult::class);
-        $result->getDependenciesByClass('A')->willReturn([
-            $dependency1 = $this->getDependency('C')
-        ]);
-        $result->addInheritDependency($inheritDependency)->shouldBeCalled();
+        $inheritDeps = array_filter($dependencyResult->getDependenciesAndInheritDependencies(), function($v) {
+            return $v instanceof InheritDependency;
+        });
 
-        (new DependencyInheritanceFlatter())->flattenDependencies($astMap->reveal(), $result->reveal());
-
+        $this->assertCount(1, $inheritDeps);
     }
 
 }
