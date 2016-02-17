@@ -11,9 +11,9 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
 
     /**
      * ClassNameLayerResolverCacheDecorator constructor.
-     * @param ClassNameLayerResolver $classNameLayerResolver
+     * @param ClassNameLayerResolverInterface $classNameLayerResolver
      */
-    public function __construct(ClassNameLayerResolver $classNameLayerResolver)
+    public function __construct(ClassNameLayerResolverInterface $classNameLayerResolver)
     {
         $this->classNameLayerResolver = $classNameLayerResolver;
     }
