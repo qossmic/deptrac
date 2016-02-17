@@ -15,11 +15,14 @@ class InheritDependencyTest extends \PHPUnit_Framework_TestCase
         $dependency = new InheritDependency(
             'a',
             'b',
-            $astInherit = $this->prophesize(DependencyInterface::class)->reveal(),
+            $dep = $this->prophesize(DependencyInterface::class)->reveal(),
             $astInherit = $this->prophesize(AstInheritInterface::class)->reveal()
         );
 
         $this->assertEquals('a', $dependency->getClassA());
+        $this->assertEquals('b', $dependency->getClassB());
+        $this->assertEquals('', $dependency->getClassALine());
+        $this->assertEquals($dep, $dependency->getOriginalDependency());
         $this->assertSame($astInherit, $dependency->getPath());
     }
 }
