@@ -32,7 +32,7 @@ class ConsoleFormatter
         $dispatcher->addListener(PreCreateAstMapEvent::class, array($this, 'onPreCreateAstMapEvent'));
         $dispatcher->addListener(PostCreateAstMapEvent::class, array($this, 'onPostCreateAstMapEvent'));
         $dispatcher->addListener(AstFileAnalyzedEvent::class, array($this, 'onAstFileAnalyzedEvent'));
-        $dispatcher->addListener(AstFileSyntaxErrorEvent::class, array($this, 'AstFileSyntaxErrorEvent'));
+        $dispatcher->addListener(AstFileSyntaxErrorEvent::class, array($this, 'onAstFileSyntaxErrorEvent'));
     }
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
