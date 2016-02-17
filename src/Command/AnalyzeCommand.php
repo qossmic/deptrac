@@ -112,13 +112,15 @@ class AnalyzeCommand extends Command
             new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory)
         );
 
-        $output->writeln("formatting dependencies.");
-        $formatter->finish($dependencyResult, $classNameLayerResolver);
+        $output->writeln("collecting violations.");
 
-
-        # collect violations
         /** @var $violations RulesetEngine\RulesetViolation[] */
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
+
+        $output->writeln("formatting dependencies.");
+        $formatter->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver);
+
+
         $this->displayViolations($violations, $output);
 
         return !count($violations);

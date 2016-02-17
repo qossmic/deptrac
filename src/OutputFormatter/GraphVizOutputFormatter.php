@@ -5,7 +5,9 @@ namespace DependencyTracker\OutputFormatter;
 use DependencyTracker\ClassLayerMap;
 use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
+use DependencyTracker\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
+use SensioLabs\AstRunner\AstMap;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {
@@ -16,9 +18,29 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         return 'graphviz';
     }
 
-    public function finish(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver)
+    /**
+     * @param AstMap $astMap
+     * @param RulesetViolation[] $violations
+     * @param DependencyResult $dependencyResult
+     * @param ClassNameLayerResolverInterface $classNameLayerResolver
+     */
+    public function finish(AstMap $astMap, array $violations, DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver)
     {
         $layersDependOnLayers = [];
+
+
+        $layerViolations = [];
+        foreach ($violations as $violation) {
+            if (!isset($layerViolations[$violation->getLayerA()])) {
+                $layerViolations[$violation->getLayerA()] = [];
+            }
+
+            if (!isset($layerViolations[$violation->getLayerA()][$violation->getLayerB()])) {
+                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = 1;
+            } else {
+                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
+            }
+        }
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
 
@@ -58,7 +80,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             foreach($layersDependOn as $layerDependOn) {
                 if (!isset($vertices[$layerDependOn])) {
                     $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
-                    //$vertices[$layerDependOn]->setAttribute('graphviz.color', 'blue');
                 }
             }
 
@@ -67,8 +88,14 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         // createEdges
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn) {
+
                 $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
-                //$vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst()->setAttribute('graphviz.label', "foo");
+                if (isset($layerViolations[$layer], $layerViolations[$layer][$layerDependOn])) {
+                    $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
+                    $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
+                    $edge->setAttribute('graphviz.color', 'red');
+                }
+
             }
         }
 
