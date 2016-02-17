@@ -32,12 +32,12 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         $uses = [];
         foreach ($astParser->getAstByFile($fileReference) as $namespaceNode) {
             if (!$namespaceNode instanceof Namespace_ || !$namespaceNode->stmts) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             foreach ($namespaceNode->stmts as $useNodes) {
                 if (!$useNodes instanceof Use_) {
-                    continue;
+                    continue; // @codeCoverageIgnore
                 }
 
                 foreach ($useNodes->uses as $useNode) {
@@ -59,7 +59,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         foreach ($astParser->findNodesOfType($ast, Instanceof_::class) as $instanceOf) {
             /** @var $instanceOf Instanceof_ */
             if (!$instanceOf->class instanceOf Name) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $buffer[] = new EmittedDependency(
@@ -78,7 +78,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         foreach ($astParser->findNodesOfType($ast, Param::class) as $node) {
             /** @var $node Param */
             if (!$node->type instanceOf Name) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $buffer[] = new EmittedDependency(
@@ -97,7 +97,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         foreach ($astParser->findNodesOfType($ast, New_::class) as $node) {
             /** @var $node New_ */
             if (!$node->class instanceOf Name) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $buffer[] = new EmittedDependency(

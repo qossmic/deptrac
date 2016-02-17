@@ -5,11 +5,22 @@ namespace DependencyTracker\Tests\DependencyEmitter;
 
 
 use DependencyTracker\DependencyEmitter\BasicDependencyEmitter;
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
 {
 
     use EmitterTrait;
+
+    public function testGetName()
+    {
+        $this->assertEquals('BasicDependencyEmitter', (new BasicDependencyEmitter())->getName());
+    }
+
+    public function testSupportsParser()
+    {
+        $this->assertTrue((new BasicDependencyEmitter())->supportsParser($this->prophesize(NikicPhpParser::class)->reveal()));
+    }
 
     public function testApplyDependencies()
     {

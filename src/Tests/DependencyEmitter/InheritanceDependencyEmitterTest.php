@@ -5,10 +5,22 @@ namespace DependencyTracker\Tests\DependencyEmitter;
 
 
 use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase
 {
     use EmitterTrait;
+
+
+    public function testGetName()
+    {
+        $this->assertEquals('InheritanceDependencyEmitter', (new InheritanceDependencyEmitter())->getName());
+    }
+
+    public function testSupportsParser()
+    {
+        $this->assertTrue((new InheritanceDependencyEmitter())->supportsParser($this->prophesize(NikicPhpParser::class)->reveal()));
+    }
 
     public function testApplyDependencies()
     {
