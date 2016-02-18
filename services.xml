@@ -19,6 +19,10 @@
             <tag name="output_formatter"/>
         </service>
 
+        <service id="output_formatter_console" class="DependencyTracker\OutputFormatter\ConsoleOutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
         <service id="command_init" class="DependencyTracker\Command\InitCommand">
             <argument type="service" id="configuration_loader"/>
         </service>

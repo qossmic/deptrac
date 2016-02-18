@@ -27,7 +27,7 @@ class Configuration
             'exclude_files',
             'ruleset'
         ])->setDefaults([
-            'formatter' => 'graphviz'
+            'formatter' => 'graphviz, console'
         ])
         ->resolve($arr);
 

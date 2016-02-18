@@ -70,16 +70,12 @@ class AnalyzeCommand extends Command
 
         if (!$this->configurationLoader->hasConfiguration()) {
             $output->writeln("depfile.yml not found, run dtrac init to create one.");
-
             return 1;
         }
 
         $configuration = $this->configurationLoader->loadConfiguration();
 
         new ConsoleFormatter($this->dispatcher, $output);
-
-
-        $formatter = $this->formatterFactory->getFormatterByName($configuration->getFormatter());
 
         $parser = new NikicPhpParser();
         $astMap = $this->astRunner->createAstMapByFiles($parser, $this->dispatcher, $this->collectFiles($configuration));
@@ -118,68 +114,16 @@ class AnalyzeCommand extends Command
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
 
         $output->writeln("formatting dependencies.");
-        $formatter->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver);
 
-
-        $this->displayViolations($violations, $output);
+        foreach (explode(',', $configuration->getFormatter()) as $formatterName) {
+            $this->formatterFactory
+                ->getFormatterByName(trim($formatterName))
+                ->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver, $output)
+            ;
+        }
 
         return !count($violations);
     }
-
-    private function formatPath(AstInheritInterface $astInherit, InheritDependency $dependency) {
-        $buffer = [];
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, "\t".$p->getClassName() .'::'. $p->getLine());
-        }
-
-        $buffer[] = "\t".$astInherit->getClassName() .'::'. $astInherit->getLine();
-
-        $buffer[] = "\t".$dependency->getOriginalDependency()->getClassB().'::'.$dependency->getOriginalDependency()->getClassALine();
-
-        return implode(" -> \n", $buffer);
-    }
-
-    /**
-     * @param RulesetEngine\RulesetViolation[] $violations
-     * @param OutputInterface $output
-     */
-    private function displayViolations(array $violations, OutputInterface $output)
-    {
-        foreach ($violations as $violation) {
-
-            if ($violation->getDependency() instanceof InheritDependency) {
-                $output->writeln(
-                    sprintf(
-                        "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
-                        $violation->getDependency()->getClassA(),
-                        $violation->getDependency()->getClassB(),
-                        $violation->getLayerA(),
-                        $violation->getLayerB(),
-                        $this->formatPath($violation->getDependency()->getPath(), $violation->getDependency())
-                    )
-                );
-            } else {
-                $output->writeln(
-                    sprintf(
-                        '<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
-                        $violation->getDependency()->getClassA(),
-                        $violation->getDependency()->getClassALine(),
-                        $violation->getDependency()->getClassB(),
-                        $violation->getLayerA(),
-                        $violation->getLayerB()
-                    )
-                );
-            }
-        }
-
-        $output->writeln(
-            sprintf(
-                "\nFound <error>%s Violations</error>",
-                count($violations)
-            )
-        );
-    }
-
 
     private function collectFiles(Configuration $configuration)
     {

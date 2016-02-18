@@ -8,6 +8,7 @@ use DependencyTracker\DependencyResult;
 use DependencyTracker\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {
@@ -20,14 +21,20 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     /**
      * @param AstMap $astMap
-     * @param RulesetViolation[] $violations
+     * @param array $violations
      * @param DependencyResult $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
+     * @param OutputInterface $output
      */
-    public function finish(AstMap $astMap, array $violations, DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver)
+    public function finish(
+        AstMap $astMap,
+        array $violations,
+        DependencyResult $dependencyResult,
+        ClassNameLayerResolverInterface $classNameLayerResolver,
+        OutputInterface $output
+    )
     {
         $layersDependOnLayers = [];
-
 
         $layerViolations = [];
         foreach ($violations as $violation) {
