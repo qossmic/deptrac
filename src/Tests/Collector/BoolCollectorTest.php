@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\Collector;
-
 
 use DependencyTracker\Collector\BoolCollector;
 use DependencyTracker\Collector\CollectorInterface;
@@ -42,6 +40,7 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
             Argument::type(AstMap::class),
             Argument::type(CollectorFactory::class)
         )->willReturn($returns);
+
         return $collector->reveal();
     }
 
@@ -51,49 +50,49 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
         yield [
             [
                 'must' => [
-                    ['type' => true]
-                ]
+                    ['type' => true],
+                ],
             ],
-            true
+            true,
         ];
 
         yield [
             [
                 'must' => [
                     ['type' => true],
-                    ['type' => true]
-                ]
+                    ['type' => true],
+                ],
             ],
-            true
+            true,
         ];
 
         yield [
             [
                 'must' => [
                     ['type' => true],
-                    ['type' => false]
-                ]
+                    ['type' => false],
+                ],
             ],
-            false
+            false,
         ];
 
         yield [
             [
                 'must' => [
                     ['type' => false],
-                    ['type' => true]
-                ]
+                    ['type' => true],
+                ],
             ],
-            false
+            false,
         ];
 
         yield [
             [
                 'must' => [
-                    ['type' => false]
-                ]
+                    ['type' => false],
+                ],
             ],
-            false
+            false,
         ];
 
         # must not
@@ -101,18 +100,18 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
             [
                 'must_not' => [
                     ['type' => false],
-                ]
+                ],
             ],
-            true
+            true,
         ];
 
         yield [
             [
                 'must_not' => [
                     ['type' => true],
-                ]
+                ],
             ],
-            false
+            false,
         ];
 
         yield [
@@ -120,9 +119,9 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
                 'must_not' => [
                     ['type' => true],
                     ['type' => false],
-                ]
+                ],
             ],
-            false
+            false,
         ];
 
         yield [
@@ -130,9 +129,9 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
                 'must_not' => [
                     ['type' => false],
                     ['type' => false],
-                ]
+                ],
             ],
-            true
+            true,
         ];
 
         yield [
@@ -140,9 +139,9 @@ class BoolCollectorTest extends \PHPUnit_Framework_TestCase
                 'must_not' => [
                     ['type' => true],
                     ['type' => true],
-                ]
+                ],
             ],
-            false
+            false,
         ];
     }
 

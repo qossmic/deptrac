@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\DependencyResult;
-
 
 use DependencyTracker\DependencyResult\DependencyInterface;
 use DependencyTracker\DependencyResult\InheritDependency;

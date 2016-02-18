@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\DependencyEmitter;
-
 
 use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
 use DependencyTracker\DependencyResult;
@@ -13,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
 {
-
     public function getDeps(DependencyEmitterInterface $emitter, \SplFileInfo $fileInfo)
     {
         $parser = new NikicPhpParser();
@@ -26,9 +23,8 @@ trait EmitterTrait
 
         $emitter->applyDependencies($parser, $astMap, $result);
 
-        return array_map(function(Dependency $d) {
+        return array_map(function (Dependency $d) {
             return $d->getClassA().':'.$d->getClassALine().' on '.$d->getClassB();
         }, $result->getDependenciesAndInheritDependencies());
     }
-
 }

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker;
 
@@ -10,6 +11,7 @@ class ConfigurationLoader
 
     /**
      * ConfigurationLoader constructor.
+     *
      * @param $configFilePathname
      */
     public function __construct($configFilePathname)

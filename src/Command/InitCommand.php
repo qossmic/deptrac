@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker\Command;
 
@@ -9,8 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InitCommand extends Command
 {
-
-
     protected function configure()
     {
         $this->setName('init');
@@ -20,15 +19,15 @@ class InitCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
-
         $configurationLoader = new ConfigurationLoader('depfile.yml');
 
         if ($configurationLoader->hasConfiguration()) {
             $output->writeln('<error>depfile.yml already exists</error>');
+
             return 1;
         }
 
         $configurationLoader->dumpConfiguration();
-        $output->writeln("depfile <info>dumped.</info>");
+        $output->writeln('depfile <info>dumped.</info>');
     }
 }

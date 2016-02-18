@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\OutputFormatter;
-
 
 use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
@@ -17,7 +15,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testGetName()
     {
         $this->assertEquals('console', (new ConsoleOutputFormatter())->getName());
@@ -36,13 +33,13 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
                             AstInherit::newExtends('ClassInheritA', 3), [
                                 AstInherit::newExtends('ClassInheritB', 4),
                                 AstInherit::newExtends('ClassInheritC', 5),
-                                AstInherit::newExtends('ClassInheritD', 6)
+                                AstInherit::newExtends('ClassInheritD', 6),
                             ]
                         )
                     ),
                     'LayerA',
                     'LayerB'
-                )
+                ),
             ],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
@@ -53,7 +50,7 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
                 OriginalB::12
 
                 Found 1 Violations
-            '
+            ',
         ];
 
         yield [
@@ -62,13 +59,13 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
                     new Dependency('OriginalA', 12, 'OriginalB'),
                     'LayerA',
                     'LayerB'
-                )
+                ),
             ],
             '
                 OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
 
                 Found 1 Violations
-            '
+            ',
         ];
     }
 
@@ -90,7 +87,6 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
             $output
         );
 
-
         $o = $output->fetch();
         $this->assertEquals(
             $this->normalize($expectedOutput),
@@ -98,8 +94,8 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    private function normalize($str) {
-        return str_replace(["\t", "\n", " "], '', $str);
+    private function normalize($str)
+    {
+        return str_replace(["\t", "\n", ' '], '', $str);
     }
-
 }

@@ -1,15 +1,12 @@
 <?php
 
-
 namespace DependencyTracker\Tests\DependencyEmitter;
-
 
 use DependencyTracker\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
 {
-
     use EmitterTrait;
 
     public function testGetName()
@@ -37,5 +34,4 @@ class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Foo\Bar:15 on Foo\SomeOtherParam', $deps);
         $this->assertContains('Foo\Bar:19 on Foo\SomeInstanceOf', $deps);
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace DependencyTracker\Command;
 
-
 use DependencyTracker\ClassNameLayerResolver;
 use DependencyTracker\ClassNameLayerResolverCacheDecorator;
 use DependencyTracker\CollectorFactory;
@@ -68,6 +67,7 @@ class AnalyzeCommand extends Command
 
         if (!$configurationLoader->hasConfiguration()) {
             $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
+
             return 1;
         }
 
@@ -83,7 +83,7 @@ class AnalyzeCommand extends Command
         /** @var $dependencyEmitters DependencyEmitterInterface[] */
         $dependencyEmitters = [
             new InheritanceDependencyEmitter(),
-            new BasicDependencyEmitter()
+            new BasicDependencyEmitter(),
         ];
 
         foreach ($dependencyEmitters as $dependencyEmitter) {
@@ -94,23 +94,23 @@ class AnalyzeCommand extends Command
                 $dependencyResult
             );
         }
-        $output->writeln("end emitting dependencies");
-        $output->writeln("start flatten dependencies");
+        $output->writeln('end emitting dependencies');
+        $output->writeln('start flatten dependencies');
 
         (new DependencyInheritanceFlatter())->flattenDependencies($astMap, $dependencyResult);
 
-        $output->writeln("end flatten dependencies");
+        $output->writeln('end flatten dependencies');
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
             new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory)
         );
 
-        $output->writeln("collecting violations.");
+        $output->writeln('collecting violations.');
 
         /** @var $violations RulesetEngine\RulesetViolation[] */
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
 
-        $output->writeln("formatting dependencies.");
+        $output->writeln('formatting dependencies.');
 
         foreach (explode(',', $configuration->getFormatter()) as $formatterName) {
             $this->formatterFactory
@@ -125,7 +125,7 @@ class AnalyzeCommand extends Command
     private function collectFiles(Configuration $configuration)
     {
         $files = iterator_to_array(
-            (new Finder)
+            (new Finder())
                 ->in($configuration->getPaths())
                 ->name('*.php')
                 ->files()
@@ -133,14 +133,15 @@ class AnalyzeCommand extends Command
                 ->ignoreUnreadableDirs(true)
                 ->ignoreVCS(true)
         );
-        return array_filter($files, function(\SplFileInfo $fileInfo) use ($configuration) {
+
+        return array_filter($files, function (\SplFileInfo $fileInfo) use ($configuration) {
             foreach ($configuration->getExcludeFiles() as $excludeFiles) {
-                if(preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
+                if (preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
                     return false;
                 }
             }
+
             return true;
         });
     }
-
-} 
+}

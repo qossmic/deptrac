@@ -2,10 +2,8 @@
 
 namespace DependencyTracker\OutputFormatter;
 
-use DependencyTracker\ClassLayerMap;
 use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
-use DependencyTracker\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,11 +18,11 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param AstMap $astMap
-     * @param array $violations
-     * @param DependencyResult $dependencyResult
+     * @param AstMap                          $astMap
+     * @param array                           $violations
+     * @param DependencyResult                $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param OutputInterface $output
+     * @param OutputInterface                 $output
      */
     public function finish(
         AstMap $astMap,
@@ -32,8 +30,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         DependencyResult $dependencyResult,
         ClassNameLayerResolverInterface $classNameLayerResolver,
         OutputInterface $output
-    )
-    {
+    ) {
         $layersDependOnLayers = [];
 
         $layerViolations = [];
@@ -50,7 +47,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-
             $layersA = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
             $layersB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
 
@@ -59,7 +55,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
 
             foreach ($layersA as $layerA) {
-
                 if (!isset($layersDependOnLayers[$layerA])) {
                     $layersDependOnLayers[$layerA] = [];
                 }
@@ -79,35 +74,30 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
         // create a vertice for every layer
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-
             if (!isset($vertices[$layer])) {
                 $vertices[$layer] = $graph->createVertex($layer);
             }
 
-            foreach($layersDependOn as $layerDependOn) {
+            foreach ($layersDependOn as $layerDependOn) {
                 if (!isset($vertices[$layerDependOn])) {
                     $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
                 }
             }
-
         }
 
         // createEdges
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn) {
-
                 $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
                 if (isset($layerViolations[$layer], $layerViolations[$layer][$layerDependOn])) {
                     $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
                     $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
                     $edge->setAttribute('graphviz.color', 'red');
                 }
-
             }
         }
 
         $graphviz = new \Graphp\GraphViz\GraphViz();
         $graphviz->display($graph);
     }
-
 }

@@ -3,13 +3,11 @@
 namespace DependencyTracker\Collector;
 
 use DependencyTracker\CollectorFactory;
-use DependencyTracker\DependencyResult;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class InheritanceLevelCollector implements CollectorInterface
 {
-
     public function getType()
     {
         return 'inheritanceLevel';

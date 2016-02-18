@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\Collector;
-
 
 use DependencyTracker\Collector\ClassNameCollector;
 use DependencyTracker\CollectorFactory;
@@ -29,7 +27,6 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $astClassReference = $this->prophesize(AstClassReferenceInterface::class);
         $astClassReference->getClassName()->willReturn($className);
-
 
         $stat = (new ClassNameCollector())->satisfy(
             $configuration,

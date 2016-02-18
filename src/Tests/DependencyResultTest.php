@@ -1,14 +1,11 @@
 <?php
 
-
 namespace DependencyTracker\Tests;
-
 
 use DependencyTracker\DependencyResult;
 
 class DependencyResultTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testAddDependency()
     {
         $dependencyResult = new DependencyResult();
@@ -28,5 +25,4 @@ class DependencyResultTest extends \PHPUnit_Framework_TestCase
         $dependencyResult->addInheritDependency($dep2 = new DependencyResult\Dependency('A', 12, 'B'));
         $this->assertEquals([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
     }
-
 }

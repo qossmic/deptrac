@@ -19,13 +19,13 @@ class ConsoleFormatter
 
     /**
      * ConsoleFormatter constructor.
+     *
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(
         EventDispatcherInterface $dispatcher,
         OutputInterface $output
-    )
-    {
+    ) {
         $this->dispatcher = $dispatcher;
         $this->output = $output;
 
@@ -38,19 +38,19 @@ class ConsoleFormatter
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
     {
         $this->output->writeln(sprintf(
-            "Start to create an AstMap for <info>%s</info> Files.",
+            'Start to create an AstMap for <info>%s</info> Files.',
             $preCreateAstMapEvent->getExpectedFileCount()
         ));
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent)
     {
-        $this->output->writeln("AstMap created.");
+        $this->output->writeln('AstMap created.');
     }
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent)
     {
-        $this->output->writeln(sprintf("Parsing File %s", $analyzedEvent->getFile()->getRelativePathname()));
+        $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getRelativePathname()));
     }
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
@@ -61,5 +61,4 @@ class ConsoleFormatter
             $astFileSyntaxErrorEvent->getSyntaxError()
         ));
     }
-
 }

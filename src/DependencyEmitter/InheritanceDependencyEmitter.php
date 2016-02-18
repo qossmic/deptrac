@@ -28,7 +28,6 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
     ) {
         foreach ($astMap->getAstClassReferences() as $classReference) {
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
-
                 if ($inherit instanceof FlattenAstInherit) {
                     continue;
                 }
@@ -43,5 +42,4 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
             }
         }
     }
-
 }

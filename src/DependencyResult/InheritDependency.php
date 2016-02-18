@@ -29,7 +29,6 @@ class InheritDependency implements DependencyInterface
         $this->path = $path;
     }
 
-
     public function getClassA()
     {
         return $this->classA;
@@ -60,5 +59,4 @@ class InheritDependency implements DependencyInterface
     {
         return $this->originalDependency;
     }
-
 }

@@ -7,7 +7,6 @@ use DependencyTracker\DependencyResult\DependencyInterface;
 
 class DependencyResult
 {
-
     private $classLayerMap = [];
 
     private $dependencies = [];
@@ -16,6 +15,7 @@ class DependencyResult
 
     /**
      * @param DependencyInterface $dependency
+     *
      * @return $this
      */
     public function addDependency(DependencyInterface $dependency)
@@ -31,6 +31,7 @@ class DependencyResult
 
     /**
      * @param DependencyInterface $dependency
+     *
      * @return $this
      */
     public function addInheritDependency(DependencyInterface $dependency)
@@ -46,6 +47,7 @@ class DependencyResult
 
     /**
      * @param $klass
+     *
      * @return Dependency[]
      */
     public function getDependenciesByClass($klass)
@@ -63,17 +65,16 @@ class DependencyResult
         $buffer = [];
 
         foreach ($this->dependencies as $deps) {
-            foreach($deps as $dependency) {
+            foreach ($deps as $dependency) {
                 $buffer[] = $dependency;
             }
         }
         foreach ($this->inheritDependencies as $deps) {
-            foreach($deps as $dependency) {
+            foreach ($deps as $dependency) {
                 $buffer[] = $dependency;
             }
         }
 
         return $buffer;
     }
-
 }

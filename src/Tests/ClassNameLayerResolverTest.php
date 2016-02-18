@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests;
-
 
 use DependencyTracker\ClassNameLayerResolver;
 use DependencyTracker\Collector\CollectorInterface;
@@ -13,7 +11,6 @@ use DependencyTracker\Configuration\ConfigurationLayer;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 
 class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,6 +18,7 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
     {
         $collectorConfiguration = $this->prophesize(ConfigurationCollector::class);
         $collectorConfiguration->getType()->willReturn($type);
+
         return $collectorConfiguration->reveal();
     }
 
@@ -40,28 +38,27 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
     public function provideGetLayersByClassName()
     {
         yield [
-            1, 1, 1, ['LayerA', 'LayerB']
+            1, 1, 1, ['LayerA', 'LayerB'],
         ];
 
         yield [
-            1, 0, 1, ['LayerA', 'LayerB']
+            1, 0, 1, ['LayerA', 'LayerB'],
         ];
 
         yield [
-            0, 0, 1, ['LayerB']
+            0, 0, 1, ['LayerB'],
         ];
 
         yield [
-            1, 1, 0, ['LayerA', 'LayerB']
+            1, 1, 0, ['LayerA', 'LayerB'],
         ];
 
         yield [
-            1, 0, 0, ['LayerA']
+            1, 0, 0, ['LayerA'],
         ];
 
-
         yield [
-            0, 0, 0, []
+            0, 0, 0, [],
         ];
     }
 
@@ -79,15 +76,15 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
             ConfigurationLayer::fromArray([
                 'name' => 'LayerA',
                 'collectors' => [
-                    ['type' => 'CollectorA']
-                ]
+                    ['type' => 'CollectorA'],
+                ],
             ]),
             ConfigurationLayer::fromArray([
                 'name' => 'LayerB',
                 'collectors' => [
                     ['type' => 'CollectorB1'],
-                    ['type' => 'CollectorB2']
-                ]
+                    ['type' => 'CollectorB2'],
+                ],
             ]),
         ]);
 

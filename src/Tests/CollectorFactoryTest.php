@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests;
-
 
 use DependencyTracker\Collector\CollectorInterface;
 use DependencyTracker\CollectorFactory;
@@ -15,11 +13,10 @@ class CollectorFactoryTest extends \PHPUnit_Framework_TestCase
         $fooCollector->getType()->willReturn('foo');
         $fooCollector = $fooCollector->reveal();
 
-
         $this->assertSame(
             $fooCollector,
             (new CollectorFactory([
-                $fooCollector
+                $fooCollector,
             ]))->getCollector('foo')
         );
     }
@@ -31,5 +28,4 @@ class CollectorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         (new CollectorFactory([]))->getCollector('foo');
     }
-
 }

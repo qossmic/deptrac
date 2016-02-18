@@ -9,7 +9,6 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class BoolCollector implements CollectorInterface
 {
-
     public function getType()
     {
         return 'bool';
@@ -20,8 +19,7 @@ class BoolCollector implements CollectorInterface
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
         CollectorFactory $collectorFactory
-    )
-    {
+    ) {
         if (!isset($configuration['must'])) {
             $configuration['must'] = [];
         }
@@ -31,7 +29,7 @@ class BoolCollector implements CollectorInterface
         }
 
         if (!$configuration['must'] && !$configuration['must_not']) {
-            throw new \InvalidArgumentException("bool collector must have a must or a must_not attribute");
+            throw new \InvalidArgumentException('bool collector must have a must or a must_not attribute');
         }
 
         foreach ($configuration['must'] as $v) {
@@ -62,5 +60,4 @@ class BoolCollector implements CollectorInterface
 
         return true;
     }
-
 }

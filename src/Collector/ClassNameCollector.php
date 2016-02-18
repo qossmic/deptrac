@@ -3,13 +3,11 @@
 namespace DependencyTracker\Collector;
 
 use DependencyTracker\CollectorFactory;
-use DependencyTracker\DependencyResult;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
 {
-
     public function getType()
     {
         return 'className';
@@ -31,10 +29,9 @@ class ClassNameCollector implements CollectorInterface
         CollectorFactory $collectorFactory
     ) {
         return preg_match(
-            '/' . $this->getRegexByConfiguration($configuration) . '/i',
+            '/'.$this->getRegexByConfiguration($configuration).'/i',
             $abstractClassReference->getClassName(),
             $collectorFactory
         );
     }
-
 }

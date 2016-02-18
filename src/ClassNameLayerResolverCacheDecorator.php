@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker;
 
@@ -11,6 +12,7 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
 
     /**
      * ClassNameLayerResolverCacheDecorator constructor.
+     *
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
      */
     public function __construct(ClassNameLayerResolverInterface $classNameLayerResolver)

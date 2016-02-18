@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker\Configuration;
 
@@ -13,6 +14,7 @@ class ConfigurationRuleset
 
     /**
      * ConfigurationRuleset constructor.
+     *
      * @param array $layerMap
      */
     private function __construct(array $layerMap)

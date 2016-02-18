@@ -1,38 +1,35 @@
 <?php
 
-
 namespace DependencyTracker\Tests;
-
 
 use DependencyTracker\Configuration;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testFromArray()
     {
         $configuration = Configuration::fromArray([
             'layers' => [
                 [
                    'name' => 'some_name',
-                   'collectors' => []
+                   'collectors' => [],
                 ],
                 [
                    'name' => 'some_name',
-                   'collectors' => []
-                ]
+                   'collectors' => [],
+                ],
             ],
             'paths' => [
                 'foo',
-                'bar'
+                'bar',
             ],
             'exclude_files' => [
                 'foo2',
-                'bar2'
+                'bar2',
             ],
             'ruleset' => [
-                'lala' => ['xx', 'yy']
-            ]
+                'lala' => ['xx', 'yy'],
+            ],
         ]);
 
         $this->assertCount(2, $configuration->getLayers());
@@ -42,5 +39,4 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('graphviz, console', $configuration->getFormatter());
         $this->assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependendencies('lala'));
     }
-
 }

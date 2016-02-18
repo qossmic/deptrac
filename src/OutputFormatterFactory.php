@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker;
 
@@ -17,12 +18,12 @@ class OutputFormatterFactory
 
     /**
      * @param $name
+     *
      * @return OutputFormatterInterface
      */
     public function getFormatterByName($name)
     {
         foreach ($this->formatters as $formatter) {
-
             if (strtolower($name) != strtolower($formatter->getName())) {
                 continue;
             }
@@ -31,10 +32,10 @@ class OutputFormatterFactory
         }
 
         throw new \LogicException(sprintf(
-            "Formatter %s does not exists, did you mean %s?",
+            'Formatter %s does not exists, did you mean %s?',
             $name,
             implode(', ',
-                array_map(function(OutputFormatterInterface $f) { return $f->getName(); }, $this->formatters)
+                array_map(function (OutputFormatterInterface $f) { return $f->getName(); }, $this->formatters)
             )
         ));
     }

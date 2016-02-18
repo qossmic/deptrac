@@ -8,7 +8,6 @@ use SensioLabs\AstRunner\AstParser\AstParserInterface;
 
 interface DependencyEmitterInterface
 {
-
     /**
      * @return string
      */
@@ -16,16 +15,17 @@ interface DependencyEmitterInterface
 
     /**
      * @param AstParserInterface $astParser
+     *
      * @return bool
      */
     public function supportsParser(AstParserInterface $astParser);
 
     /**
      * @param AstParserInterface $astParser
-     * @param AstMap $astMap
-     * @param DependencyResult $dependencyResult
+     * @param AstMap             $astMap
+     * @param DependencyResult   $dependencyResult
+     *
      * @return mixed
      */
     public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, DependencyResult $dependencyResult);
-
 }

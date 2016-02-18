@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker;
 
@@ -7,7 +8,6 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
-
     /** @var Configuration */
     protected $configuration;
 
@@ -19,8 +19,9 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
     /**
      * ClassNameLayerResolver constructor.
-     * @param Configuration $configuration
-     * @param AstMap $astMap
+     *
+     * @param Configuration    $configuration
+     * @param AstMap           $astMap
      * @param CollectorFactory $collectorFactory
      */
     public function __construct(
@@ -39,7 +40,6 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
         foreach ($this->configuration->getLayers() as $configurationLayer) {
             foreach ($configurationLayer->getCollectors() as $configurationCollector) {
-
                 $collector = $this->collectorFactory->getCollector($configurationCollector->getType());
 
                 if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
@@ -59,7 +59,4 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
         return array_keys($layers);
     }
-
-
-
 }

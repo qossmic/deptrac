@@ -28,7 +28,8 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $astParser instanceof NikicPhpParser;
     }
 
-    private function getUseStatements(NikicPhpParser $astParser, AstFileReferenceInterface $fileReference) {
+    private function getUseStatements(NikicPhpParser $astParser, AstFileReferenceInterface $fileReference)
+    {
         $uses = [];
         foreach ($astParser->getAstByFile($fileReference) as $namespaceNode) {
             if (!$namespaceNode instanceof Namespace_ || !$namespaceNode->stmts) {
@@ -53,12 +54,13 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $uses;
     }
 
-    private function getInstanceOfStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference) {
+    private function getInstanceOfStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
+    {
         $buffer = [];
         $ast = $astParser->getAstForClassname($classReference->getClassName());
         foreach ($astParser->findNodesOfType($ast, Instanceof_::class) as $instanceOf) {
             /** @var $instanceOf Instanceof_ */
-            if (!$instanceOf->class instanceOf Name) {
+            if (!$instanceOf->class instanceof Name) {
                 continue; // @codeCoverageIgnore
             }
 
@@ -72,12 +74,13 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $buffer;
     }
 
-    private function getParamStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference) {
+    private function getParamStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
+    {
         $buffer = [];
         $ast = $astParser->getAstForClassname($classReference->getClassName());
         foreach ($astParser->findNodesOfType($ast, Param::class) as $node) {
             /** @var $node Param */
-            if (!$node->type instanceOf Name) {
+            if (!$node->type instanceof Name) {
                 continue; // @codeCoverageIgnore
             }
 
@@ -91,12 +94,13 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $buffer;
     }
 
-    private function getNewStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference) {
+    private function getNewStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
+    {
         $buffer = [];
         $ast = $astParser->getAstForClassname($classReference->getClassName());
         foreach ($astParser->findNodesOfType($ast, New_::class) as $node) {
             /** @var $node New_ */
-            if (!$node->class instanceOf Name) {
+            if (!$node->class instanceof Name) {
                 continue; // @codeCoverageIgnore
             }
 
@@ -110,18 +114,15 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $buffer;
     }
 
-
     public function applyDependencies(
         AstParserInterface $astParser,
         AstMap $astMap,
         DependencyResult $dependencyResult
-    )
-    {
-        /** @var $astParser NikicPhpParser */
-        assert ($astParser instanceof NikicPhpParser === true);
+    ) {
+        /* @var $astParser NikicPhpParser */
+        assert($astParser instanceof NikicPhpParser === true);
 
         foreach ($astMap->getAstFileReferences() as $fileReference) {
-
             $uses = $this->getUseStatements($astParser, $fileReference);
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
@@ -144,5 +145,4 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             }
         }
     }
-
 }

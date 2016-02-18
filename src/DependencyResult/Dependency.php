@@ -10,9 +10,9 @@ class Dependency implements DependencyInterface
 
     protected $classB;
 
-
     /**
      * Dependency constructor.
+     *
      * @param $classA
      * @param $classALine
      * @param $classB
@@ -47,5 +47,4 @@ class Dependency implements DependencyInterface
     {
         return $this->classB;
     }
-
 }

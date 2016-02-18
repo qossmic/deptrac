@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\DependencyEmitter;
-
 
 use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
@@ -10,7 +8,6 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase
 {
     use EmitterTrait;
-
 
     public function testGetName()
     {
@@ -26,7 +23,7 @@ class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase
     {
         $deps = $this->getDeps(
             new InheritanceDependencyEmitter(),
-            new \SplFileInfo(__DIR__ . '/Fixtures/Foo.php')
+            new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
         $this->assertCount(4, $deps);
@@ -34,7 +31,5 @@ class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
         $this->assertContains('Foo\Bar:6 on BarInterface2', $deps);
         $this->assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
-
     }
-
 }

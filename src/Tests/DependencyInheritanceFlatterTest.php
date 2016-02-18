@@ -1,14 +1,11 @@
 <?php
 
-
 namespace DependencyTracker\Tests;
-
 
 use DependencyTracker\DependencyInheritanceFlatter;
 use DependencyTracker\DependencyResult;
 use DependencyTracker\DependencyResult\Dependency;
 use DependencyTracker\DependencyResult\InheritDependency;
-use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
@@ -16,7 +13,6 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 
 class DependencyInheritanceFlatterTest extends \PHPUnit_Framework_TestCase
 {
-
     private function getAstReference($className)
     {
         $astClass = $this->prophesize(AstClassReference::class);
@@ -30,6 +26,7 @@ class DependencyInheritanceFlatterTest extends \PHPUnit_Framework_TestCase
         $dep = $this->prophesize(Dependency::class);
         $dep->getClassA()->willReturn($className);
         $dep->getClassB()->willReturn($className.'_b');
+
         return $dep->reveal();
     }
 
@@ -42,7 +39,7 @@ class DependencyInheritanceFlatterTest extends \PHPUnit_Framework_TestCase
             $this->getAstReference('classB'),
             $this->getAstReference('classBaum'),
             $this->getAstReference('classWeihnachtsbaum'),
-            $this->getAstReference('classGeschmückterWeihnachtsbaum')
+            $this->getAstReference('classGeschmückterWeihnachtsbaum'),
         ]);
 
         $dependencyResult = new DependencyResult();
@@ -55,21 +52,20 @@ class DependencyInheritanceFlatterTest extends \PHPUnit_Framework_TestCase
         $astMap->getClassInherits('classB')->willReturn([]);
         $astMap->getClassInherits('classBaum')->willReturn([]);
         $astMap->getClassInherits('classWeihnachtsbaum')->willReturn([
-            AstInherit::newUses('classBaum', 3)
+            AstInherit::newUses('classBaum', 3),
         ]);
         $astMap->getClassInherits('classGeschmückterWeihnachtsbaum')->willReturn([
             new FlattenAstInherit(AstMap\AstInherit::newExtends('classBaum', 3), [
-                AstInherit::newUses('classWeihnachtsbaum', 3)
-            ])
+                AstInherit::newUses('classWeihnachtsbaum', 3),
+            ]),
         ]);
 
         (new DependencyInheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);
 
-        $inheritDeps = array_filter($dependencyResult->getDependenciesAndInheritDependencies(), function($v) {
+        $inheritDeps = array_filter($dependencyResult->getDependenciesAndInheritDependencies(), function ($v) {
             return $v instanceof InheritDependency;
         });
 
         $this->assertCount(1, $inheritDeps);
     }
-
 }

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker\DependencyEmitter;
 
@@ -12,6 +13,7 @@ class EmittedDependency
 
     /**
      * EmittedDependency constructor.
+     *
      * @param $class
      * @param $line
      * @param $type
@@ -46,5 +48,4 @@ class EmittedDependency
     {
         return $this->type;
     }
-
 }

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker\OutputFormatter;
 
@@ -18,11 +19,11 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param AstMap $astMap
-     * @param RulesetViolation[] $violations
-     * @param DependencyResult $dependencyResult
+     * @param AstMap                          $astMap
+     * @param RulesetViolation[]              $violations
+     * @param DependencyResult                $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param OutputInterface $output
+     * @param OutputInterface                 $output
      */
     public function finish(
         AstMap $astMap,
@@ -31,7 +32,6 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         ClassNameLayerResolverInterface $classNameLayerResolver,
         OutputInterface $output
     ) {
-
         foreach ($violations as $violation) {
             if ($violation->getDependency() instanceof InheritDependency) {
                 $this->handleInheritDependency($violation, $output);
@@ -44,7 +44,8 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($violations)));
     }
 
-    private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output) {
+    private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output)
+    {
         $output->writeln(
             sprintf(
                 "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
@@ -71,16 +72,16 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function formatPath(AstInheritInterface $astInherit, InheritDependency $dependency) {
+    private function formatPath(AstInheritInterface $astInherit, InheritDependency $dependency)
+    {
         $buffer = [];
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, "\t".$p->getClassName() .'::'. $p->getLine());
+            array_unshift($buffer, "\t".$p->getClassName().'::'.$p->getLine());
         }
 
-        $buffer[] = "\t".$astInherit->getClassName() .'::'. $astInherit->getLine();
+        $buffer[] = "\t".$astInherit->getClassName().'::'.$astInherit->getLine();
         $buffer[] = "\t".$dependency->getOriginalDependency()->getClassB().'::'.$dependency->getOriginalDependency()->getClassALine();
 
         return implode(" -> \n", $buffer);
     }
-
 }

@@ -19,6 +19,7 @@ class ConfigurationCollector
 
     /**
      * ConfigurationCollector constructor.
+     *
      * @param $type
      * @param $args
      */
@@ -43,6 +44,4 @@ class ConfigurationCollector
     {
         return $this->args;
     }
-
-
 }

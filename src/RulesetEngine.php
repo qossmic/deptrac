@@ -8,9 +8,10 @@ use DependencyTracker\RulesetEngine\RulesetViolation;
 class RulesetEngine
 {
     /**
-     * @param DependencyResult $dependencyResult
+     * @param DependencyResult                $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param ConfigurationRuleset $configurationRuleset
+     * @param ConfigurationRuleset            $configurationRuleset
+     *
      * @return RulesetViolation[]
      */
     public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
@@ -18,12 +19,10 @@ class RulesetEngine
         $violations = [];
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-
             $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
 
             foreach ($layerNames as $layerName) {
                 foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
-
                     if ($layerName == $layerNameOfDependency) {
                         continue;
                     }
@@ -43,10 +42,8 @@ class RulesetEngine
                     );
                 }
             }
-
         }
 
         return $violations;
     }
-
 }

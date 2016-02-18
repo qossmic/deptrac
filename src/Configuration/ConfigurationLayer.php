@@ -6,7 +6,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConfigurationLayer
 {
-
     /** @var ConfigurationCollector[] */
     private $collectors;
 
@@ -16,11 +15,11 @@ class ConfigurationLayer
     {
         $options = (new OptionsResolver())->setRequired([
             'name',
-            'collectors'
+            'collectors',
         ])->resolve($arr);
 
         return new static(
-            array_map(function($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
+            array_map(function ($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
             $options['name']
         );
     }
@@ -35,7 +34,6 @@ class ConfigurationLayer
         $this->name = $name;
     }
 
-
     /**
      * @return ConfigurationCollector[]
      */
@@ -44,7 +42,6 @@ class ConfigurationLayer
         return $this->collectors;
     }
 
-
     /**
      * @return mixed
      */
@@ -52,5 +49,4 @@ class ConfigurationLayer
     {
         return $this->name;
     }
-
 }

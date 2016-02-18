@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker;
 
@@ -12,13 +13,14 @@ class CollectorFactory
     /** @param CollectorInterface[] $collectors */
     public function __construct(array $collectors)
     {
-        foreach($collectors as $collector) {
+        foreach ($collectors as $collector) {
             $this->collectors[$collector->getType()] = $collector;
         }
     }
 
     /**
      * @param $type
+     *
      * @return CollectorInterface
      */
     public function getCollector($type)
@@ -34,5 +36,4 @@ class CollectorFactory
 
         return $this->collectors[$type];
     }
-
 }

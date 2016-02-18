@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace DependencyTracker\RulesetEngine;
 
@@ -49,5 +50,4 @@ class RulesetViolation
     {
         return $this->layerB;
     }
-
 }

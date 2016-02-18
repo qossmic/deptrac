@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\RuleEngine;
-
 
 use DependencyTracker\DependencyResult\DependencyInterface;
 use DependencyTracker\RulesetEngine\RulesetViolation;

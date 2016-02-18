@@ -1,8 +1,6 @@
 <?php
 
-
 namespace DependencyTracker\Tests\OutputFormatter;
-
 
 use DependencyTracker\OutputFormatter\GraphVizOutputFormatter;
 

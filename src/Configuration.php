@@ -8,7 +8,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Configuration
 {
-
     private $layers;
 
     private $paths;
@@ -25,14 +24,14 @@ class Configuration
             'layers',
             'paths',
             'exclude_files',
-            'ruleset'
+            'ruleset',
         ])->setDefaults([
-            'formatter' => 'graphviz, console'
+            'formatter' => 'graphviz, console',
         ])
         ->resolve($arr);
 
         return new static(
-            array_map(function($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
+            array_map(function ($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
             $options['exclude_files'],
@@ -95,5 +94,4 @@ class Configuration
     {
         return $this->ruleset;
     }
-
 }
