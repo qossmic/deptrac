@@ -18,6 +18,11 @@ use Symfony\Component\Console\Output\BufferedOutput;
 class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
 {
 
+    public function testGetName()
+    {
+        $this->assertEquals('console', (new ConsoleOutputFormatter())->getName());
+    }
+
     public function basicDataProvider()
     {
         yield [
