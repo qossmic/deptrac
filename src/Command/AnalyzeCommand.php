@@ -83,7 +83,6 @@ class AnalyzeCommand extends Command
         $dependencyResult = new DependencyResult();
 
         /** @var $dependencyEmitters DependencyEmitterInterface[] */
-
         $dependencyEmitters = [
             new InheritanceDependencyEmitter(),
             new BasicDependencyEmitter()
