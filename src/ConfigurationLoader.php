@@ -25,14 +25,13 @@ class ConfigurationLoader
         );
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function getConfigFilePathname()
     {
         return $this->configFilePathname;
     }
 
+    /** @return bool */
     public function hasConfiguration()
     {
         return file_exists($this->configFilePathname);
