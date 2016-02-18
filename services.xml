@@ -7,8 +7,6 @@
 
         <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
-        <service id="configuration_loader" class="DependencyTracker\ConfigurationLoader"/>
-
         <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
 
         <service id="output_formatter_factory" class="DependencyTracker\OutputFormatterFactory">
@@ -23,9 +21,7 @@
             <tag name="output_formatter"/>
         </service>
 
-        <service id="command_init" class="DependencyTracker\Command\InitCommand">
-            <argument type="service" id="configuration_loader"/>
-        </service>
+        <service id="command_init" class="DependencyTracker\Command\InitCommand"/>
 
         <service id="ruleset_engine" class="DependencyTracker\RulesetEngine"/>
 
@@ -48,7 +44,6 @@
         <service id="command_analyze" class="DependencyTracker\Command\AnalyzeCommand">
             <argument type="service" id="dispatcher"/>
             <argument type="service" id="astrunner"/>
-            <argument type="service" id="configuration_loader"/>
             <argument type="service" id="output_formatter_factory"/>
             <argument type="service" id="ruleset_engine"/>
             <argument type="service" id="collector_factory"/>

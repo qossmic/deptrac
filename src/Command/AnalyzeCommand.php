@@ -21,6 +21,7 @@ use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -32,8 +33,6 @@ class AnalyzeCommand extends Command
 
     protected $astRunner;
 
-    protected $configurationLoader;
-
     protected $formatterFactory;
 
     protected $rulesetEngine;
@@ -43,7 +42,6 @@ class AnalyzeCommand extends Command
     public function __construct(
         EventDispatcherInterface $dispatcher,
         AstRunner $astRunner,
-        ConfigurationLoader $configurationLoader,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
         CollectorFactory $collectorFactory
@@ -51,7 +49,6 @@ class AnalyzeCommand extends Command
         parent::__construct();
         $this->dispatcher = $dispatcher;
         $this->astRunner = $astRunner;
-        $this->configurationLoader = $configurationLoader;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
         $this->collectorFactory = $collectorFactory;
@@ -60,6 +57,7 @@ class AnalyzeCommand extends Command
     protected function configure()
     {
         $this->setName('analyze');
+        $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
     }
 
     protected function execute(
@@ -68,12 +66,14 @@ class AnalyzeCommand extends Command
     ) {
         ini_set('memory_limit', -1);
 
-        if (!$this->configurationLoader->hasConfiguration()) {
-            $output->writeln("depfile.yml not found, run dtrac init to create one.");
+        $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
+
+        if (!$configurationLoader->hasConfiguration()) {
+            $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
             return 1;
         }
 
-        $configuration = $this->configurationLoader->loadConfiguration();
+        $configuration = $configurationLoader->loadConfiguration();
 
         new ConsoleFormatter($this->dispatcher, $output);
 

@@ -10,15 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class InitCommand extends Command
 {
 
-    protected $configurationLoader;
-
-    public function __construct(
-        ConfigurationLoader $configurationLoader
-    )
-    {
-        parent::__construct();
-        $this->configurationLoader = $configurationLoader;
-    }
 
     protected function configure()
     {
@@ -30,12 +21,14 @@ class InitCommand extends Command
         OutputInterface $output
     ) {
 
-        if ($this->configurationLoader->hasConfiguration()) {
-            $output->writeln('<error>depfile already exists</error>');
+        $configurationLoader = new ConfigurationLoader('depfile.yml');
+
+        if ($configurationLoader->hasConfiguration()) {
+            $output->writeln('<error>depfile.yml already exists</error>');
             return 1;
         }
 
-        $this->configurationLoader->dumpConfiguration();
+        $configurationLoader->dumpConfiguration();
         $output->writeln("depfile <info>dumped.</info>");
     }
 }

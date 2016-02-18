@@ -6,22 +6,36 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationLoader
 {
-    private function getPathname()
+    private $configFilePathname;
+
+    /**
+     * ConfigurationLoader constructor.
+     * @param $configFilePathname
+     */
+    public function __construct($configFilePathname)
     {
-        return getcwd().'/depfile.yml';
+        $this->configFilePathname = $configFilePathname;
     }
 
     /** @return Configuration */
     public function loadConfiguration()
     {
         return Configuration::fromArray(
-            Yaml::parse(file_get_contents($this->getPathname()))
+            Yaml::parse(file_get_contents($this->configFilePathname))
         );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConfigFilePathname()
+    {
+        return $this->configFilePathname;
     }
 
     public function hasConfiguration()
     {
-        return file_exists($this->getPathname());
+        return file_exists($this->configFilePathname);
     }
 
     public function dumpConfiguration()
@@ -31,7 +45,7 @@ class ConfigurationLoader
         }
 
         file_put_contents(
-            $this->getPathname(),
+            $this->configFilePathname,
             file_get_contents(__DIR__.'/Configuration/example_configuration.yml')
         );
     }
