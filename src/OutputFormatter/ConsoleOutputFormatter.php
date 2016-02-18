@@ -33,39 +33,42 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     ) {
 
         foreach ($violations as $violation) {
-
             if ($violation->getDependency() instanceof InheritDependency) {
-                $output->writeln(
-                    sprintf(
-                        "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
-                        $violation->getDependency()->getClassA(),
-                        $violation->getDependency()->getClassB(),
-                        $violation->getLayerA(),
-                        $violation->getLayerB(),
-                        $this->formatPath($violation->getDependency()->getPath(), $violation->getDependency())
-                    )
-                );
-            } else {
-                $output->writeln(
-                    sprintf(
-                        '<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
-                        $violation->getDependency()->getClassA(),
-                        $violation->getDependency()->getClassALine(),
-                        $violation->getDependency()->getClassB(),
-                        $violation->getLayerA(),
-                        $violation->getLayerB()
-                    )
-                );
+                $this->handleInheritDependency($violation, $output);
+                continue;
             }
+
+            $this->handleDependeny($violation, $output);
         }
 
+        $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($violations)));
+    }
+
+    private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output) {
         $output->writeln(
             sprintf(
-                "\nFound <error>%s Violations</error>",
-                count($violations)
+                "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
+                $violation->getDependency()->getClassA(),
+                $violation->getDependency()->getClassB(),
+                $violation->getLayerA(),
+                $violation->getLayerB(),
+                $this->formatPath($violation->getDependency()->getPath(), $violation->getDependency())
             )
         );
+    }
 
+    private function handleDependeny(RulesetViolation $violation, OutputInterface $output)
+    {
+        $output->writeln(
+            sprintf(
+                '<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
+                $violation->getDependency()->getClassA(),
+                $violation->getDependency()->getClassALine(),
+                $violation->getDependency()->getClassB(),
+                $violation->getLayerA(),
+                $violation->getLayerB()
+            )
+        );
     }
 
     private function formatPath(AstInheritInterface $astInherit, InheritDependency $dependency) {
@@ -75,7 +78,6 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         }
 
         $buffer[] = "\t".$astInherit->getClassName() .'::'. $astInherit->getLine();
-
         $buffer[] = "\t".$dependency->getOriginalDependency()->getClassB().'::'.$dependency->getOriginalDependency()->getClassALine();
 
         return implode(" -> \n", $buffer);
