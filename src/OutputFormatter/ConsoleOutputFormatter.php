@@ -4,6 +4,7 @@ namespace DependencyTracker\OutputFormatter;
 
 use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
+use DependencyTracker\DependencyResult\InheritDependency;
 use DependencyTracker\RulesetEngine\RulesetViolation;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInheritInterface;
