@@ -75,10 +75,77 @@ after deptrac finished the final png should be open:
 
 ![ModelController1](examples/ModelController1.png)
 
+and deptrac will produce this output:
 
+```
+Start to create an AstMap for 2 Files.
+Parsing File SomeController.php
+Parsing File SomeModel.php
+AstMap created.
+start emitting dependencies "InheritanceDependencyEmitter"
+start emitting dependencies "BasicDependencyEmitter"
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
 
+Found 0 Violations
+```
 
+the output shows us that deptrac is parsing 2 files and found 0 violations.
+by default every dependency between layers are violations.
 
+## Violations
+if we've 2 layers (Models, Controller) and one layer is using the other deptrac will raise a violation by default.
+for example our controller is using the Model layer:
 
+```php
+// see the example in examples/ModelController2
+namespace exmaples\MyNamespace\Controllers;
+
+use exmaples\MyNamespace\Models\SomeModel;
+
+class SomeController
+{
+    public function foo(SomeModel $m) {
+        return $m;
+    }
+}
+
+```
+
+after running deptrac using:
+
+```
+php deptrac.php analyze examples/ModelController2.depfile.yml
+```
+
+we will get this output:
+
+```
+Start to create an AstMap for 2 Files.
+Parsing File SomeController.php
+Parsing File SomeModel.php
+AstMap created.
+start emitting dependencies "InheritanceDependencyEmitter"
+start emitting dependencies "BasicDependencyEmitter"
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+exmaples\MyNamespace\Controllers\SomeController::5 must not depend on exmaples\MyNamespace\Models\SomeModel (Controller on Models)
+exmaples\MyNamespace\Controllers\SomeController::9 must not depend on exmaples\MyNamespace\Models\SomeModel (Controller on Models)
+
+Found 2 Violations
+```
+
+![ModelController1](examples/ModelController2.png)
+
+deptrac is now finding 2 violations because we didn't whitelist the relation from the controller layer to models.
+the console output shows exacly the lines deptrac found.
+
+## Ruleset
 
 
