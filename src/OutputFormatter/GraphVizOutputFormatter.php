@@ -75,10 +75,10 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array $violations
+     * @param RulesetViolation[] $violations
      * @return array
      */
-    protected function calculateViolations(array $violations)
+    private function calculateViolations(array $violations)
     {
         $layerViolations = [];
         foreach ($violations as $violation) {
@@ -103,7 +103,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
      * @return array
      */
-    protected function calculateLayerDependencies(
+    private function calculateLayerDependencies(
         AstMap $astMap,
         DependencyResult $dependencyResult,
         ClassNameLayerResolverInterface $classNameLayerResolver
