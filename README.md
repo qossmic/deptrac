@@ -73,7 +73,7 @@ sudo apt-get install graphviz // ubuntu
 
 after deptrac finished the final png should be open:
 
-![ModelController1][/sensiolabs-de/deptrac/blob/master/examples/ModelController1.png]
+![ModelController1](/sensiolabs-de/deptrac/blob/master/examples/ModelController1.png)
 
 
 
