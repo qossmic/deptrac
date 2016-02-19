@@ -95,9 +95,11 @@ Found 0 Violations
 
 the output shows us that deptrac is parsing 2 files and found 0 violations.
 by default every dependency between layers are violations.
+in out case there are (for now) no dependencies between our classes (layers).
+so it's fine that deptrac will show us 2 independent layers without any relationship.
 
 ## Violations
-if we've 2 layers (Models, Controller) and one layer is using the other deptrac will raise a violation by default.
+if we've 2 layers (Models, Controller) and one layer is using the other, deptrac will raise a violation by default.
 for example our controller is using the Model layer:
 
 ```php
@@ -143,9 +145,80 @@ Found 2 Violations
 
 ![ModelController1](examples/ModelController2.png)
 
-deptrac is now finding 2 violations because we didn't whitelist the relation from the controller layer to models.
+deptrac is now finding 2 violations because the relation from the controller to models layer isn't defined as allowed.
 the console output shows exacly the lines deptrac found.
 
-## Ruleset
+## Ruleset (Allowing Dependencies)
+by default deptrac will raise a violation for every dependency between layers.
+in real software you want to allow dependencies between different kind of layers.
+
+for example a lot of teams decide that they want to use *Controllers*, *Services* and *Repositories*.
+a natural approach would be allowing:
+
+- controllers to access service, but not repositories
+- services to access repositories, but not controllers
+- repositories neither services nor controllers.
+
+we can define this using such a depfile:
+
+```
+paths: ["./examples/ControllerServiceRepository1/"]
+exclude_files: []
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*MyNamespace\\.*Controller.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*MyNamespace\\.*Repository.*
+  - name: Service
+    collectors:
+      - type: className
+        regex: .*MyNamespace\\.*Service.*
+ruleset:
+  Controller:
+    - Service
+  Service:
+    - Repository
+  Repository:
+```
+
+take a closer look t the rulset, here we whitelist that controller can access service and service can access repository.
+
+after running deptrac we'll get this result:
+
+```
+Start to create an AstMap for 3 Files.
+Parsing File SomeController.php
+Parsing File SomeRepository.php
+Parsing File SomeService.php
+AstMap created.
+start emitting dependencies "InheritanceDependencyEmitter"
+start emitting dependencies "BasicDependencyEmitter"
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+exmaples\MyNamespace\Repository\SomeRepository::5 must not depend on exmaples\MyNamespace\Controllers\SomeController (Repository on Controller)
+```
+
+![ModelController1](examples/ControllerServiceRepository1.png)
+
+deptrac is finding a violation, if we take a closer look at the "SomeRepository" on line 5,
+we'll see an unused use statement to a controller:
+
+```
+
+namespace exmaples\MyNamespace\Repository;
+
+use exmaples\MyNamespace\Controllers\SomeController;
+
+class SomeRepository { }
+```
+
+now we can remove the use statement and rerun deptrac - now without any violation.
 
 
