@@ -3,13 +3,6 @@
 ## What is Deptrac
 deptrac is a static code analysis tool that helps to enforce dependencies between software layers in php code.
 
-## Example Configuration
-
-```yml
-
-
-```
-
 ## Layers
 deptrac allows you to group different classes in "layers".
 technically layers are nothing more than collection of classes.
@@ -210,8 +203,7 @@ exmaples\MyNamespace\Repository\SomeRepository::5 must not depend on exmaples\My
 deptrac is finding a violation, if we take a closer look at the "SomeRepository" on line 5,
 we'll see an unused use statement to a controller:
 
-```
-
+```php
 namespace exmaples\MyNamespace\Repository;
 
 use exmaples\MyNamespace\Controllers\SomeController;
