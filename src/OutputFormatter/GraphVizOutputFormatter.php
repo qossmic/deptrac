@@ -4,6 +4,7 @@ namespace DependencyTracker\OutputFormatter;
 
 use DependencyTracker\ClassNameLayerResolverInterface;
 use DependencyTracker\DependencyResult;
+use DependencyTracker\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,7 +20,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     /**
      * @param AstMap                          $astMap
-     * @param array                           $violations
+     * @param RulesetViolation[]              $violations
      * @param DependencyResult                $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
      * @param OutputInterface                 $output
@@ -31,8 +32,54 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         ClassNameLayerResolverInterface $classNameLayerResolver,
         OutputInterface $output
     ) {
-        $layersDependOnLayers = [];
 
+        $layerViolations = $this->calculateViolations($violations);
+
+        $layersDependOnLayers = $this->calculateLayerDependencies($astMap, $dependencyResult, $classNameLayerResolver);
+
+        // refactor to multiple methods
+
+        $graph = new \Fhaculty\Graph\Graph();
+
+        /** @var $vertices Vertex[] */
+        $vertices = [];
+
+        // create a vertices
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
+            if (!isset($vertices[$layer])) {
+                $vertices[$layer] = $graph->createVertex($layer);
+            }
+
+            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
+                if (!isset($vertices[$layerDependOn])) {
+                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
+                }
+            }
+        }
+
+        // createEdges
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
+            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
+                $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
+
+                if (isset($layerViolations[$layer], $layerViolations[$layer][$layerDependOn])) {
+                    $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
+                    $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
+                    $edge->setAttribute('graphviz.color', 'red');
+                }
+            }
+        }
+
+        $graphviz = new \Graphp\GraphViz\GraphViz();
+        $graphviz->display($graph);
+    }
+
+    /**
+     * @param array $violations
+     * @return array
+     */
+    protected function calculateViolations(array $violations)
+    {
         $layerViolations = [];
         foreach ($violations as $violation) {
             if (!isset($layerViolations[$violation->getLayerA()])) {
@@ -42,10 +89,37 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             if (!isset($layerViolations[$violation->getLayerA()][$violation->getLayerB()])) {
                 $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = 1;
             } else {
-                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
+                $layerViolations[$violation->getLayerA()][$violation->getLayerB(
+                )] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
             }
         }
 
+        return $layerViolations;
+    }
+
+    /**
+     * @param AstMap $astMap
+     * @param DependencyResult $dependencyResult
+     * @param ClassNameLayerResolverInterface $classNameLayerResolver
+     * @return array
+     */
+    protected function calculateLayerDependencies(
+        AstMap $astMap,
+        DependencyResult $dependencyResult,
+        ClassNameLayerResolverInterface $classNameLayerResolver
+    ) {
+        $layersDependOnLayers = [];
+
+        // all classes
+        foreach ($astMap->getAstClassReferences() as $classReferences) {
+            foreach ($classNameLayerResolver->getLayersByClassName(
+                $classReferences->getClassName()
+            ) as $classReferenceLayer) {
+                $layersDependOnLayers[$classReferenceLayer] = [];
+            }
+        }
+
+        // dependencies
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
             $layersA = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
             $layersB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
@@ -59,45 +133,22 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
                     $layersDependOnLayers[$layerA] = [];
                 }
 
-                $layersDependOnLayers[$layerA] = array_values(
-                    array_unique(array_merge($layersB, $layersDependOnLayers[$layerA]))
-                );
-            }
-        }
+                foreach ($layersB as $layerB) {
+                    if ($layerA == $layerB) {
+                        continue;
+                    }
 
-        // refactor to multiple methods
+                    if (!isset($layersDependOnLayers[$layerA][$layerB])) {
+                        $layersDependOnLayers[$layerA][$layerB] = 1;
+                        continue;
+                    }
 
-        $graph = new \Fhaculty\Graph\Graph();
-
-        /** @var $vertices Vertex[] */
-        $vertices = [];
-
-        // create a vertice for every layer
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (!isset($vertices[$layer])) {
-                $vertices[$layer] = $graph->createVertex($layer);
-            }
-
-            foreach ($layersDependOn as $layerDependOn) {
-                if (!isset($vertices[$layerDependOn])) {
-                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
+                    $layersDependOnLayers[$layerA][$layerB] = $layersDependOnLayers[$layerA][$layerB] + 1;
                 }
+
             }
         }
 
-        // createEdges
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            foreach ($layersDependOn as $layerDependOn) {
-                $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
-                if (isset($layerViolations[$layer], $layerViolations[$layer][$layerDependOn])) {
-                    $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
-                    $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
-                    $edge->setAttribute('graphviz.color', 'red');
-                }
-            }
-        }
-
-        $graphviz = new \Graphp\GraphViz\GraphViz();
-        $graphviz->display($graph);
+        return $layersDependOnLayers;
     }
 }
