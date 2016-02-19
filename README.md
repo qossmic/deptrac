@@ -57,6 +57,26 @@ in this example we define that everyClass that starts with MyNamespace\Models\ w
 
 every class that is in *\MyNamespace\* and contains the word controller will become a part of the "Controller" layer.
 
+we can generate a dependency graph for the example configuration using:
+
+```
+php deptrac.php analyze examples/ModelController1.depfile.yml
+```
+
+make sure that *graphviz* (dot) is installed on your system and you run php from your local system (for generating images).
+you can install graphviz using:
+
+```
+brew install graphviz // osx + brew
+sudo apt-get install graphviz // ubuntu
+```
+
+after deptrac finished the final png should be open:
+
+![ModelController1][/sensiolabs-de/deptrac/blob/master/examples/ModelController1.png]
+
+
+
 
 
 
