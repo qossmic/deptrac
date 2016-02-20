@@ -7,7 +7,7 @@ deptrac is a static code analysis tool that helps to enforce dependencies betwee
 todo
 
 ### Installation
-todo 
+todo
 
 ## Layers
 deptrac allows you to group different classes in "layers".
@@ -240,5 +240,15 @@ of a software.
 ## Collectors
 todo
 
-### className
+### "className" Collector
+todo
+
+## Formatters
+todo
+
+
+### graphviz
+todo
+
+### console
 todo
