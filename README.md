@@ -213,4 +213,22 @@ class SomeRepository { }
 
 now we can remove the use statement and rerun deptrac - now without any violation.
 
+## Different Layers And Different Views
+in the example above we defined 3 different layers (controller, repository and service).
+deptrac gives architects the power to define what kind of layers exists.
+
+it's totally fine to define multiple depfiles (views of the architecure) for different purposes.
+typically usecases are:
+
+- caring about layers in different architectures (tier, hexagonal, ddd, ...)
+- caring about dependencies between different kinds of services (infrastructure services / domain services / entities / dto's / ...)
+- caring about coupling to third party code like composer vendors, frameworks, ...
+- enforcing naming conventions
+- ...
+
+typically software has more than just one view,
+it's totally fine to use multiple depfiles to take care about different views (most time zoom levels) the architecure
+of a software.
+
+
 
