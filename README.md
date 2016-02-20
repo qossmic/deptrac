@@ -3,6 +3,12 @@
 ## What is Deptrac
 deptrac is a static code analysis tool that helps to enforce dependencies between software layers in php code.
 
+### Cli Arguments
+todo
+
+### Installation
+todo 
+
 ## Layers
 deptrac allows you to group different classes in "layers".
 technically layers are nothing more than collection of classes.
@@ -231,4 +237,8 @@ it's totally fine to use multiple depfiles to take care about different views (m
 of a software.
 
 
+## Collectors
+todo
 
+### className
+todo
