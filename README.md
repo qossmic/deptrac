@@ -23,7 +23,7 @@ for example, by adopting MVC, most time you don't want your models to access con
 to access models. deptrac allows you to enforce and visualize such dependencies / rules.
 
 ### Collecting Layers
-for example if your application has controllers and models (MVC) deptrac allows you to
+for example if your application has controllers and models, deptrac allows you to
 group them in layers.
 
 ```yml
@@ -41,7 +41,7 @@ layers:
 ruleset: []
 ```
 
-in first line we define (paths) the directory deptrac should analyze.
+in the first line we define (paths) the directory deptrac should analyze.
 using exclude_files we would be able to exclude some directories (by regex).
 
 things become more interesting in the layer part.
@@ -99,7 +99,7 @@ so it's fine that deptrac will show us 2 independent layers without any relation
 
 ## Violations
 if we've 2 layers (Models, Controller) and one layer is using the other, deptrac will raise a violation by default.
-for example our controller is using the Model layer:
+for example a controller could try to use is the Model layer:
 
 ```php
 // see the example in examples/ModelController2
@@ -144,14 +144,14 @@ Found 2 Violations
 
 ![ModelController1](examples/ModelController2.png)
 
-deptrac is now finding 2 violations because the relation from the controller to models layer isn't defined as allowed.
+deptrac is now finding 2 violations because the relation from the controller to models layer isn't allowed by default.
 the console output shows exacly the lines deptrac found.
 
 ## Ruleset (Allowing Dependencies)
 by default deptrac will raise a violation for every dependency between layers.
 in real software you want to allow dependencies between different kind of layers.
 
-for example a lot of teams decide that they want to use *Controllers*, *Services* and *Repositories*.
+for example a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*.
 a natural approach would be allowing:
 
 - controllers to access service, but not repositories
@@ -206,7 +206,7 @@ exmaples\MyNamespace\Repository\SomeRepository::5 must not depend on exmaples\My
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
-deptrac is finding a violation, if we take a closer look at the "SomeRepository" on line 5,
+deptrac now finds a violation, if we take a closer look at the "SomeRepository" on line 5,
 we'll see an unused use statement to a controller:
 
 ```php
@@ -233,17 +233,15 @@ typically usecases are:
 - ...
 
 typically software has more than just one view,
-it's totally fine to use multiple depfiles to take care about different views (most time zoom levels) the architecure
-of a software.
+it's totally fine to use multiple depfiles, to take care about different architectural views.
 
 
 ## Collectors
 deptrac groups nodes in the ast to different layers.
-collectors are responsible to decide if a node (class) is part of a layer.
+collectors decides if a node (class) is part of a layer.
 from time to time deptrac will support more collectors out of the box and will provide an
 easy way to extend deptrac with custom collectors.
 
-it is possible to define more than one collector (OR).
 
 ### "className" Collector
 most examples are using the className collector.
