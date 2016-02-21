@@ -238,17 +238,48 @@ of a software.
 
 
 ## Collectors
-todo
+deptrac groups nodes in the ast to different layers.
+collectors are responsible to decide if a node (class) is part of a layer.
+from time to time deptrac will support more collectors out of the box and will provide an
+easy way to extend deptrac with custom collectors.
+
+it is possible to define more than one collector (OR).
 
 ### "className" Collector
-todo
+most examples are using the className collector.
+the className collector allows collecting classes by the full qualified name (namespace + class).
 
-## Formatters
-todo
+example:
 
+```yml
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
 
-### graphviz
-todo
+```
 
-### console
-todo
+every class (including namespace) that match the regex `.*Controller.*` becomes a part of the controller layer.
+
+### "bool" Collector
+the bool collector allows defining a collector based on other collectors.
+
+```
+layers:
+  - name: Asset
+    collectors:
+      - type: bool
+        must:
+          - type: className
+            regex: .*Foo\\Asset.*
+          - type: className
+            regex: .*Bar\\Asset.*
+        must_not:
+          - type: className
+            regex: .*Assetic.*
+```
+
+the example shows an example of the bool collector.
+every class that contains (Foo\Asset OR Bar\Asset) and NOT Assetic will become a part of the asset layer.
+
