@@ -176,7 +176,7 @@ a natural approach would be allowing:
 
 we can define this using such a depfile:
 
-```
+```yml
 paths: ["./examples/ControllerServiceRepository1/"]
 exclude_files: []
 layers:
@@ -279,7 +279,7 @@ every class (including namespace) that match the regex `.*Controller.*` becomes 
 ### "bool" Collector
 the bool collector allows defining a collector based on other collectors.
 
-```
+```yml
 layers:
   - name: Asset
     collectors:
