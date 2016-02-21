@@ -63,6 +63,8 @@ class AnalyzeCommand extends Command
     ) {
         ini_set('memory_limit', -1);
 
+        $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
+
         $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
 
         if (!$configurationLoader->hasConfiguration()) {
