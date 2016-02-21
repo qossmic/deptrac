@@ -1,7 +1,7 @@
 # deptrac
 
 ## What is Deptrac
-deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
+Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
 
 ### Cli Arguments
 
@@ -26,20 +26,20 @@ download the depfile.phar and run it using `php deptrac.phar`.
 
 
 ## Layers
-deptrac allows you to group different classes in "layers".
-technically layers are nothing more than collection of classes.
-every class can be in zero or more layers.
+Deptrac allows you to group different classes in "layers".
+Technically layers are nothing more than collection of classes.
+Every class can be in zero or more layers.
 
-(hopefully) most software is written with some kind of layers in mind.
-for example a typically MVC application has at least contollers, models and views.
+(Hopefully) most software is written with some kind of layers in mind.
+For example a typically MVC application has at least controllers, models and views.
 
-deptrac allows you to visualize and enforce some kind of ruleset, based on such layer informations.
+Deptrac allows you to visualize and enforce some kind of ruleset, based on such layer informations.
 
-for example, by adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
-to access models. deptrac allows you to enforce and visualize such dependencies / rules.
+For example, by adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
+to access models. Deptrac allows you to enforce and visualize such dependencies / rules.
 
 ### Collecting Layers
-for example if your application has controllers and models, deptrac allows you to
+For example if your application has controllers and models, deptrac allows you to
 group them in layers.
 
 ```yml
@@ -57,36 +57,36 @@ layers:
 ruleset: []
 ```
 
-in the first line we define (paths) the directory deptrac should analyze.
-using exclude_files we would be able to exclude some directories (by regex).
+In the first line we define (paths) the directory deptrac should analyze.
+Using exclude_files we would be able to exclude some directories (by regex).
 
-things become more interesting in the layer part.
-at first lets take a closer look at the first layer (with the name "Models").
+Things become more interesting in the layer part.
+At first lets take a closer look at the first layer (with the name "Models").
 
-we decided that our software has some kind of layer called "Models".
-every layer can have collectors.
-collectors are responsible for taking a closer look at your code and decide if a class is part of a layer.
-for example by using the className collector you can define a regex for a classname.
-every classname (including namespace) that matchs this regex is collected by the className collector and becomes a part of the layer.
-in this example we define that everyClass that starts with MyNamespace\Models\ will be a part of the "Model" layer.
+We decided that our software has some kind of layer called "Models".
+Every layer can have collectors.
+Collectors are responsible for taking a closer look at your code and decide if a class is part of a layer.
+For example by using the className collector you can define a regex for a classname.
+Every classname (including namespace) that matches this regex is collected by the className collector and becomes a part of the layer.
+In this example we define that everyClass that starts with MyNamespace\Models\ will be a part of the "Model" layer.
 
-every class that is in *\MyNamespace\* and contains the word controller will become a part of the "Controller" layer.
+Every class that is in *\MyNamespace\* and contains the word controller will become a part of the "Controller" layer.
 
-we can generate a dependency graph for the example configuration using:
+We can generate a dependency graph for the example configuration using:
 
 ```
 php deptrac.php analyze examples/ModelController1.depfile.yml
 ```
 
-make sure that *graphviz* (dot) is installed on your system and you run php from your local system (for generating images).
-you can install graphviz using:
+Make sure that *graphviz* (dot) is installed on your system and you run php from your local system (for generating images).
+You can install graphviz using:
 
 ```
 brew install graphviz // osx + brew
 sudo apt-get install graphviz // ubuntu
 ```
 
-after deptrac finished the final png should be open:
+After deptrac finished the final png should be open:
 
 ![ModelController1](examples/ModelController1.png)
 
@@ -108,13 +108,13 @@ formatting dependencies.
 Found 0 Violations
 ```
 
-the output shows us that deptrac is parsing 2 files and found 0 violations.
-by default every dependency between layers are violations.
-in out case there are (for now) no dependencies between our classes (layers).
-so it's fine that deptrac will show us 2 independent layers without any relationship.
+The output shows us that deptrac is parsing 2 files and found 0 violations.
+By default every dependency between layers are violations.
+In our case there are (for now) no dependencies between our classes (layers).
+So it's fine that deptrac will show us 2 independent layers without any relationship.
 
 ## Violations
-if we've 2 layers (Models, Controller) and one layer is using the other, deptrac will raise a violation by default.
+If we've 2 layers (Models, Controller) and one layer is using the other, deptrac will raise a violation by default.
 for example a controller could try to use is the Model layer:
 
 ```php
@@ -132,7 +132,7 @@ class SomeController
 
 ```
 
-after running deptrac using:
+After running deptrac using:
 
 ```
 php deptrac.php analyze examples/ModelController2.depfile.yml
@@ -160,21 +160,21 @@ Found 2 Violations
 
 ![ModelController1](examples/ModelController2.png)
 
-deptrac is now finding 2 violations because the relation from the controller to models layer isn't allowed by default.
-the console output shows exacly the lines deptrac found.
+Deptrac is now finding 2 violations because the relation from the controller to models layer isn't allowed by default.
+The console output shows exactly the lines deptrac found.
 
 ## Ruleset (Allowing Dependencies)
-by default deptrac will raise a violation for every dependency between layers.
-in real software you want to allow dependencies between different kind of layers.
+By default deptrac will raise a violation for every dependency between layers.
+In real software you want to allow dependencies between different kind of layers.
 
-for example a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*.
-a natural approach would be allowing:
+For example a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*.
+A natural approach would be allowing:
 
 - controllers to access service, but not repositories
 - services to access repositories, but not controllers
 - repositories neither services nor controllers.
 
-we can define this using such a depfile:
+We can define this using such a depfile:
 
 ```yml
 paths: ["./examples/ControllerServiceRepository1/"]
@@ -200,9 +200,9 @@ ruleset:
   Repository:
 ```
 
-take a closer look t the rulset, here we whitelist that controller can access service and service can access repository.
+Take a closer look t the rulset, here we whitelist that controller can access service and service can access repository.
 
-after running deptrac we'll get this result:
+After running deptrac we'll get this result:
 
 ```
 Start to create an AstMap for 3 Files.
@@ -222,7 +222,7 @@ exmaples\MyNamespace\Repository\SomeRepository::5 must not depend on exmaples\My
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
-deptrac now finds a violation, if we take a closer look at the "SomeRepository" on line 5,
+Deptrac now finds a violation, if we take a closer look at the "SomeRepository" on line 5,
 we'll see an unused use statement to a controller:
 
 ```php
@@ -233,14 +233,14 @@ use exmaples\MyNamespace\Controllers\SomeController;
 class SomeRepository { }
 ```
 
-now we can remove the use statement and rerun deptrac - now without any violation.
+Now we can remove the use statement and rerun deptrac - now without any violation.
 
 ## Different Layers And Different Views
-in the example above we defined 3 different layers (controller, repository and service).
-deptrac gives architects the power to define what kind of layers exists.
+In the example above we defined 3 different layers (controller, repository and service).
+Deptrac gives architects the power to define what kind of layers exists.
 
 it's totally fine to define multiple depfiles (views of the architecure) for different purposes.
-typically usecases are:
+Typically usecases are:
 
 - caring about layers in different architectures (tier, hexagonal, ddd, ...)
 - caring about dependencies between different kinds of services (infrastructure services / domain services / entities / dto's / ...)
@@ -248,20 +248,20 @@ typically usecases are:
 - enforcing naming conventions
 - ...
 
-typically software has more than just one view,
+Typically software has more than just one view,
 it's totally fine to use multiple depfiles, to take care about different architectural views.
 
 
 ## Collectors
-deptrac groups nodes in the ast to different layers.
-collectors decides if a node (class) is part of a layer.
-from time to time deptrac will support more collectors out of the box and will provide an
+Deptrac groups nodes in the ast to different layers.
+Collectors decides if a node (class) is part of a layer.
+From time to time deptrac will support more collectors out of the box and will provide an
 easy way to extend deptrac with custom collectors.
 
 
 ### "className" Collector
-most examples are using the className collector.
-the className collector allows collecting classes by the full qualified name (namespace + class).
+Most examples are using the className collector.
+The className collector allows collecting classes by the full qualified name (namespace + class).
 
 example:
 
@@ -274,10 +274,10 @@ layers:
 
 ```
 
-every class (including namespace) that match the regex `.*Controller.*` becomes a part of the controller layer.
+Every class (including namespace) that match the regex `.*Controller.*` becomes a part of the controller layer.
 
 ### "bool" Collector
-the bool collector allows defining a collector based on other collectors.
+The bool collector allows defining a collector based on other collectors.
 
 ```yml
 layers:
@@ -294,6 +294,6 @@ layers:
             regex: .*Assetic.*
 ```
 
-the example shows an example of the bool collector.
-every class that contains (Foo\Asset OR Bar\Asset) and NOT Assetic will become a part of the asset layer.
+The example shows an example of the bool collector.
+Every class that contains (Foo\Asset OR Bar\Asset) and NOT Assetic will become a part of the asset layer.
 
