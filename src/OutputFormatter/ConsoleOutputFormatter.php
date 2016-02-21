@@ -41,7 +41,11 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
             $this->handleDependeny($violation, $output);
         }
 
-        $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($violations)));
+        if (count($violations)) {
+            $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($violations)));
+        } else {
+            $output->writeln(sprintf("\nFound <info>%s Violations</info>", count($violations)));
+        }
     }
 
     private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output)
