@@ -12,14 +12,14 @@ todo
 ## Layers
 deptrac allows you to group different classes in "layers".
 technically layers are nothing more than collection of classes.
-classes can be in zero or more layers.
+every class can be in zero or more layers.
 
 (hopefully) most software is written with some kind of layers in mind.
 for example a typically MVC application has at least contollers, models and views.
 
 deptrac allows you to visualize and enforce some kind of ruleset, based on such layer informations.
 
-by adopting MVC most time you don't want your models to access controllers, but it's fine for controllers
+for example, by adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
 to access models. deptrac allows you to enforce and visualize such dependencies / rules.
 
 ### Collecting Layers
