@@ -1,7 +1,7 @@
 # deptrac
 
 ## What is Deptrac
-deptrac is a static code analysis tool that helps to enforce dependencies between software layers in php code.
+deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
 
 ### Cli Arguments
 
