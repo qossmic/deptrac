@@ -1,5 +1,5 @@
 {
-    "name": "tg/dependency-tracker",
+    "name": "sensiolabs-de/deptrac",
     "require": {
         "nikic/php-parser": "~2.0",
         "phpdocumentor/graphviz": "~1.0",
@@ -17,7 +17,7 @@
     "authors": [
         {
             "name": "timglabisch",
-            "email": "tim@ainfach.de"
+            "email": "tim.glabisch@sensiolabs.de"
         }
     ],
     "require-dev": {
