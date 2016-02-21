@@ -4,10 +4,26 @@
 deptrac is a static code analysis tool that helps to enforce dependencies between software layers in php code.
 
 ### Cli Arguments
-todo
+
+#### php deptrac.phar init
+creates a dummy depfile in the current directory
+
+#### php deptrac.phar
+runs deptrac in the current directory
+
+#### php deptrac.phar analyze [depfile]
+runs deptrac from the current directory using the depfile [depfile]
 
 ### Installation
-todo
+make sure that the `dot` command is available on your system.
+
+```
+brew install graphviz // osx + brew
+sudo apt-get install graphviz // ubuntu
+```
+
+download the depfile.phar and run it using `php deptrac.phar`.
+
 
 ## Layers
 deptrac allows you to group different classes in "layers".
