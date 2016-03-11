@@ -53,8 +53,11 @@ class AnalyzeCommand extends Command
 
     protected function configure()
     {
-        $this->setName('analyze');
-        $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
+        $this
+            ->setName('analyze')
+            ->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml')
+            ->addArgument('formatter', InputArgument::OPTIONAL, 'Comma separated list of output formatters to be used', 'console,graphviz')
+        ;
     }
 
     protected function execute(
@@ -63,12 +66,12 @@ class AnalyzeCommand extends Command
     ) {
         ini_set('memory_limit', -1);
 
-        $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
+        $this->printBanner($output);
 
         $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
 
         if (!$configurationLoader->hasConfiguration()) {
-            $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
+            $this->printConfigMissingError($output, $configurationLoader);
 
             return 1;
         }
@@ -89,36 +92,41 @@ class AnalyzeCommand extends Command
         ];
 
         foreach ($dependencyEmitters as $dependencyEmitter) {
-            $output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
+            $this->printEmitStart($output, $dependencyEmitter);
             $dependencyEmitter->applyDependencies(
                 $parser,
                 $astMap,
                 $dependencyResult
             );
         }
-        $output->writeln('end emitting dependencies');
-        $output->writeln('start flatten dependencies');
+        $this->printEmitEnd($output);
+        $this->printFlattenStart($output);
 
         (new DependencyInheritanceFlatter())->flattenDependencies($astMap, $dependencyResult);
 
-        $output->writeln('end flatten dependencies');
+        $this->printFlattenEnd($output);
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
             new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory)
         );
 
-        $output->writeln('collecting violations.');
+        $this->printCollectViolations($output);
 
         /** @var $violations RulesetEngine\RulesetViolation[] */
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
 
-        $output->writeln('formatting dependencies.');
+        $this->printFormattingStart($output);
 
-        foreach (explode(',', $configuration->getFormatter()) as $formatterName) {
-            $this->formatterFactory
-                ->getFormatterByName(trim($formatterName))
-                ->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver, $output)
-            ;
+        foreach (explode(',', $input->getArgument('formatter')) as $formatterName) {
+            $formatterName = trim($formatterName);
+            try {
+                $this->formatterFactory
+                    ->getFormatterByName($formatterName)
+                    ->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver, $output)
+                ;
+            } catch (\Exception $ex) {
+                $this->printFormatterException($output, $formatterName, $ex);
+            }
         }
 
         return !count($violations);
@@ -145,5 +153,89 @@ class AnalyzeCommand extends Command
 
             return true;
         });
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    protected function printBanner(OutputInterface $output)
+    {
+        $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param $configurationLoader
+     */
+    protected function printConfigMissingError(OutputInterface $output, $configurationLoader)
+    {
+        $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param $dependencyEmitter
+     */
+    protected function printEmitStart(OutputInterface $output, $dependencyEmitter)
+    {
+        $output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    protected function printEmitEnd(OutputInterface $output)
+    {
+        $output->writeln('<info>end emitting dependencies</info>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    protected function printFlattenStart(OutputInterface $output)
+    {
+        $output->writeln('<info>start flatten dependencies</info>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    protected function printFlattenEnd(OutputInterface $output)
+    {
+        $output->writeln('<info>end flatten dependencies</info>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    protected function printCollectViolations(OutputInterface $output)
+    {
+        $output->writeln('<info>collecting violations.</info>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    protected function printFormattingStart(OutputInterface $output)
+    {
+        $output->writeln('<info>formatting dependencies.</info>');
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param $formatterName
+     * @param \Exception $exception
+     */
+    protected function printFormatterException(OutputInterface $output, $formatterName, \Exception $exception)
+    {
+        $output->writeln('');
+        $errorMessages = [
+            '',
+            sprintf('Output formatter %s threw an Exception:', $formatterName),
+            sprintf('Message: %s', $exception->getMessage()),
+            '',
+        ];
+        $output->writeln($this->getHelper('formatter')->formatBlock($errorMessages, 'error'));
+        $output->writeln('');
     }
 }
