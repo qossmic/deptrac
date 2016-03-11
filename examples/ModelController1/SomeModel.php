@@ -1,6 +1,6 @@
 <?php 
 
-namespace exmaples\MyNamespace\Models;
+namespace examples\MyNamespace\Models;
 
 class SomeModel
 {

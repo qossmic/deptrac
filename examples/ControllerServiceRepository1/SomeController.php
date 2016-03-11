@@ -1,8 +1,8 @@
 <?php 
 
-namespace exmaples\MyNamespace\Controllers;
+namespace examples\MyNamespace\Controllers;
 
-use exmaples\MyNamespace\Service\SomeService;
+use examples\MyNamespace\Service\SomeService;
 
 class SomeController
 {

@@ -1,6 +1,6 @@
 <?php 
 
-namespace exmaples\MyNamespace\Controllers;
+namespace examples\MyNamespace\Controllers;
 
 class SomeController
 {

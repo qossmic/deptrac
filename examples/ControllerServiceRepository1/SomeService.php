@@ -1,8 +1,8 @@
 <?php
 
-namespace exmaples\MyNamespace\Service;
+namespace examples\MyNamespace\Service;
 
-use exmaples\MyNamespace\Repository\SomeRepository;
+use examples\MyNamespace\Repository\SomeRepository;
 
 class SomeService
 {
