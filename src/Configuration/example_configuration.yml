@@ -1,23 +1,23 @@
 paths:
-  - ./
+  - ./src
 exclude_files:
   - .*test.*
 layers:
-  - name: Asset
-    collectors:
-      - type: bool
-        must:
-          - type: className
-            regex: .*Asset.*
-        must_not:
-          - type: className
-            regex: .*Assetic.*
-  - name: BrowserKit
+  - name: Controller
     collectors:
       - type: className
-        regex: .*Component\\BrowserKit.*
+        regex: .*Controller.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*Repository.*
+  - name: Service
+    collectors:
+      - type: className
+        regex: .*Service.*
 ruleset:
-  MainBundle:
-    - Domain
-  CockpitBundle:
-    - Domain
+  Controller:
+    - Service
+  Service:
+    - Repository
+  Repository:
