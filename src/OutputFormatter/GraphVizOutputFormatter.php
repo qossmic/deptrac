@@ -2,11 +2,13 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
@@ -17,6 +19,17 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     {
         return 'graphviz';
     }
+
+    /**
+     * @return OutputFormatterOption[]
+     */
+    public function configureOptions()
+    {
+        return [
+            OutputFormatterOption::newValueOption('foo1', 'gib mir foo1', 'bar1')
+        ];
+    }
+
 
     /**
      * @param AstMap                          $astMap
