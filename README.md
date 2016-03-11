@@ -32,8 +32,8 @@ make build
 
 This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
-If you want to create graphical diagrams with your layer dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
-There are packages for the usual package managers for example:
+If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
+There are packages for the usual package managers, for example:
 
 ```bash
 brew install graphviz // osx + brew
@@ -44,9 +44,9 @@ sudo apt-get install graphviz // ubuntu
 
 At first, you need a depfile (written in YAML), that declares mainly three things:
 
-1. The location oy your sourcecode.
+1. The location of your sourcecode.
 2. The layers of you application.
-3. The allowed dependecies between your layers.
+3. The allowed dependencies between your layers.
 
 You can generate a bootstrapped `depfile.yml` with
 
@@ -87,7 +87,7 @@ ruleset:
 
 #### Location of your code
 
-At first, in section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
+In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
 
 With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
 
@@ -97,10 +97,10 @@ Layers are groups of classes.
 Each layer has a unique name and a list of collectors, that will look for classes, that should be assigned to this layer
 (and yes, classes can be in more than one layer).
 
-With the `className` collector you define a regular expression, that will put matching classnames (with namespace) into the containing layer.
+With the `className` collector you define a regular expression, that will put matching classnames (with namespace) into the layer.
 
 For example, you can define, that every class, that ends with `Controller` will be assigned to the "Controller"-layer, and
-every class, that has a `\Model\` in its namespace will be in the "Model"-layer.
+every class, that has a `\Model\` in its namespace will be added to the "Model"-layer.
 
 **Per default, any dependencies between layers are forbidden!**
 
@@ -108,13 +108,16 @@ every class, that has a `\Model\` in its namespace will be in the "Model"-layer.
 
 Allowed dependencies between layers are configured in rulesets.
 
-Rulesets are a collection of layers assigned to a layer.
+A ruleset is a collection of layers assigned to a layer.
 Each layer in this collection may be a dependency of the assigned layer.
 
 So, in our example we defined, that every class of the "Controller"-layer may depend on classes that lives in the "Service"-layer,
 and classes in the "Service"-layer may depend on classes in the "Repository"-layer.
 Classes in the "Repository"-layer my not depend on any classes in different layers. This line could be omitted,
 but this is more declarative.
+
+If a class in the "Repository"-layer use a class in the "Service"-layer, deptrac wil recognize this and throw a violation for this case.
+The same, if a "Service"-layer-class uses a "Controller"-layer-class.
 
 ## Run deptrac
 
