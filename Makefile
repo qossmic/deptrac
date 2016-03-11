@@ -1,5 +1,4 @@
 tests:
-	composer install --dev --optimize-autoloader
 	./vendor/phpunit/phpunit/phpunit -c .
 
 build: tests
