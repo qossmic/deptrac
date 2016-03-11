@@ -17,6 +17,7 @@ $container
 ;
 
 $application = new Application();
+$application->add($container->get('command_self_check'));
 $application->add($container->get('command_init'));
 $application->add($container->get('command_analyze'));
 $application->setDefaultCommand('analyze');

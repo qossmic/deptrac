@@ -18,6 +18,7 @@ use SensioLabs\Deptrac\RulesetEngine;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,6 +65,11 @@ class AnalyzeCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
+        $command = $this->getApplication()->find('self-check');
+        if ($command->run(new ArrayInput([]), $output) != 0) {
+            return 1;
+        }
+
         ini_set('memory_limit', -1);
 
         $this->printBanner($output);

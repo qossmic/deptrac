@@ -49,5 +49,11 @@
             <argument type="service" id="collector_factory"/>
         </service>
 
+        <service id="requirement_checker" class="SensioLabs\Deptrac\Requirement\RequirementChecker"/>
+
+        <service id="command_self_check" class="SensioLabs\Deptrac\Command\SelfCheckCommand">
+            <argument type="service" id="requirement_checker"/>
+        </service>
+
     </services>
 </container>
