@@ -36,7 +36,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('some_name', $configuration->getLayers()[0]->getName());
         $this->assertEquals(['foo', 'bar'], $configuration->getPaths());
         $this->assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
-        $this->assertEquals('graphviz, console', $configuration->getFormatter());
         $this->assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependendencies('lala'));
     }
 }

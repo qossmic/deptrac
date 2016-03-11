@@ -18,7 +18,6 @@ use SensioLabs\Deptrac\RulesetEngine;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -67,7 +66,7 @@ class AnalyzeCommand extends Command
     ) {
         ini_set('memory_limit', -1);
 
-       $this->printBanner($output);
+        $this->printBanner($output);
 
         $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
 
@@ -126,7 +125,7 @@ class AnalyzeCommand extends Command
                     ->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver, $output)
                 ;
             } catch (\Exception $ex) {
-                $this->printFormatterException($input, $output, $formatterName, $ex);
+                $this->printFormatterException($output, $formatterName, $ex);
             }
         }
 
@@ -224,11 +223,10 @@ class AnalyzeCommand extends Command
 
     /**
      * @param OutputInterface $output
-     * @param InputInterface $input
      * @param $formatterName
      * @param \Exception $exception
      */
-    protected function printFormatterException(InputInterface $input, OutputInterface $output, $formatterName, \Exception $exception)
+    protected function printFormatterException(OutputInterface $output, $formatterName, \Exception $exception)
     {
         $output->writeln('');
         $errorMessages = [
