@@ -1,5 +1,5 @@
 paths:
-  - ./../../foo/vendor/symfony/
+  - ./
 exclude_files:
   - .*test.*
 layers:
