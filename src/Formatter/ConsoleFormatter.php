@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyTracker\Formatter;
+namespace SensioLabs\Deptrac\Formatter;
 
 use SensioLabs\AstRunner\Event\AstFileAnalyzedEvent;
 use SensioLabs\AstRunner\Event\AstFileSyntaxErrorEvent;

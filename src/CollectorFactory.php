@@ -1,9 +1,9 @@
 <?php
 
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
-use DependencyTracker\Collector\CollectorInterface;
+use SensioLabs\Deptrac\Collector\CollectorInterface;
 
 class CollectorFactory
 {

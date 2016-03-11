@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyTracker\Configuration;
+namespace SensioLabs\Deptrac\Configuration;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

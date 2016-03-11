@@ -1,9 +1,9 @@
 <?php
 
 
-namespace DependencyTracker\Command;
+namespace SensioLabs\Deptrac\Command;
 
-use DependencyTracker\ConfigurationLoader;
+use SensioLabs\Deptrac\ConfigurationLoader;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

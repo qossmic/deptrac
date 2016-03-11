@@ -1,10 +1,10 @@
 <?php
 
-namespace DependencyTracker\Tests\DependencyEmitter;
+namespace SensioLabs\Deptrac\Tests\DependencyEmitter;
 
-use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\EventDispatcher\EventDispatcher;

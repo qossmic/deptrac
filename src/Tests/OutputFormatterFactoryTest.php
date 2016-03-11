@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
 
-use DependencyTracker\OutputFormatterFactory;
-use DependencyTracker\OutputFormatter\OutputFormatterInterface;
+use SensioLabs\Deptrac\OutputFormatterFactory;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 
 class OutputFormatterFactoryTest extends \PHPUnit_Framework_TestCase
 {

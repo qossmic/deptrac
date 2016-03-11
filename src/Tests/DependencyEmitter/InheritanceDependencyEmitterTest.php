@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests\DependencyEmitter;
+namespace SensioLabs\Deptrac\Tests\DependencyEmitter;
 
-use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
+use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase

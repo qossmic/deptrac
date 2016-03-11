@@ -1,12 +1,12 @@
 <?php
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
-use DependencyTracker\ClassNameLayerResolverInterface;
-use DependencyTracker\Configuration\ConfigurationRuleset;
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\Dependency;
-use DependencyTracker\RulesetEngine;
+use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\RulesetEngine;
 
 class RulesetEngineTest extends \PHPUnit_Framework_TestCase
 {

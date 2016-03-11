@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\DependencyEmitter;
+namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;

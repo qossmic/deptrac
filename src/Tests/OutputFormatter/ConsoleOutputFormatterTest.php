@@ -1,13 +1,13 @@
 <?php
 
-namespace DependencyTracker\Tests\OutputFormatter;
+namespace SensioLabs\Deptrac\Tests\OutputFormatter;
 
-use DependencyTracker\ClassNameLayerResolverInterface;
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\Dependency;
-use DependencyTracker\DependencyResult\InheritDependency;
-use DependencyTracker\OutputFormatter\ConsoleOutputFormatter;
-use DependencyTracker\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
+use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;

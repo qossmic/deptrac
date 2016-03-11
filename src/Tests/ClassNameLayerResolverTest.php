@@ -1,13 +1,13 @@
 <?php
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
-use DependencyTracker\ClassNameLayerResolver;
-use DependencyTracker\Collector\CollectorInterface;
-use DependencyTracker\CollectorFactory;
-use DependencyTracker\Configuration;
-use DependencyTracker\Configuration\ConfigurationCollector;
-use DependencyTracker\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\ClassNameLayerResolver;
+use SensioLabs\Deptrac\Collector\CollectorInterface;
+use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Configuration;
+use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;

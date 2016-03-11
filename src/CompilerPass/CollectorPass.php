@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyTracker\CompilerPass;
+namespace SensioLabs\Deptrac\CompilerPass;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

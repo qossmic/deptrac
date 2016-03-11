@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DependencyTracker\RulesetEngine;
+namespace SensioLabs\Deptrac\RulesetEngine;
 
-use DependencyTracker\DependencyResult\Dependency;
-use DependencyTracker\DependencyResult\DependencyInterface;
-use DependencyTracker\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
 class RulesetViolation
 {

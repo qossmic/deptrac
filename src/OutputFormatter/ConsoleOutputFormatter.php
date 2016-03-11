@@ -1,12 +1,12 @@
 <?php
 
 
-namespace DependencyTracker\OutputFormatter;
+namespace SensioLabs\Deptrac\OutputFormatter;
 
-use DependencyTracker\ClassNameLayerResolverInterface;
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\InheritDependency;
-use DependencyTracker\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use Symfony\Component\Console\Output\OutputInterface;

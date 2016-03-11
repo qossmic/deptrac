@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests\OutputFormatter;
+namespace SensioLabs\Deptrac\Tests\OutputFormatter;
 
-use DependencyTracker\OutputFormatter\GraphVizOutputFormatter;
+use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 
 class GraphVizOutputFormatterTest extends \PHPUnit_Framework_TestCase
 {

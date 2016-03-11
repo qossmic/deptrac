@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
-use DependencyTracker\Configuration\ConfigurationLayer;
-use DependencyTracker\Configuration\ConfigurationRuleset;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Configuration

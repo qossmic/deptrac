@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests\Formatter;
+namespace SensioLabs\Deptrac\Tests\Formatter;
 
-use DependencyTracker\Formatter\ConsoleFormatter;
+use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use SensioLabs\AstRunner\Event\PreCreateAstMapEvent;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\EventDispatcher\EventDispatcher;

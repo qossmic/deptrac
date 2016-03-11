@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
-use DependencyTracker\Collector\CollectorInterface;
-use DependencyTracker\CollectorFactory;
+use SensioLabs\Deptrac\Collector\CollectorInterface;
+use SensioLabs\Deptrac\CollectorFactory;
 
 class CollectorFactoryTest extends \PHPUnit_Framework_TestCase
 {

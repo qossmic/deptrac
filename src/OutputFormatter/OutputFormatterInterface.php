@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\OutputFormatter;
+namespace SensioLabs\Deptrac\OutputFormatter;
 
-use DependencyTracker\ClassNameLayerResolverInterface;
-use DependencyTracker\DependencyResult;
+use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\AstRunner\AstMap;
 use Symfony\Component\Console\Output\OutputInterface;
 

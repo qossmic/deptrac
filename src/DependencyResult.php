@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
-use DependencyTracker\DependencyResult\Dependency;
-use DependencyTracker\DependencyResult\DependencyInterface;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 
 class DependencyResult
 {

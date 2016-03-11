@@ -1,20 +1,20 @@
 <?php
 
-namespace DependencyTracker\Command;
+namespace SensioLabs\Deptrac\Command;
 
-use DependencyTracker\ClassNameLayerResolver;
-use DependencyTracker\ClassNameLayerResolverCacheDecorator;
-use DependencyTracker\CollectorFactory;
-use DependencyTracker\Configuration;
-use DependencyTracker\ConfigurationLoader;
-use DependencyTracker\DependencyEmitter\BasicDependencyEmitter;
-use DependencyTracker\DependencyEmitter\DependencyEmitterInterface;
-use DependencyTracker\DependencyEmitter\InheritanceDependencyEmitter;
-use DependencyTracker\DependencyInheritanceFlatter;
-use DependencyTracker\DependencyResult;
-use DependencyTracker\Formatter\ConsoleFormatter;
-use DependencyTracker\OutputFormatterFactory;
-use DependencyTracker\RulesetEngine;
+use SensioLabs\Deptrac\ClassNameLayerResolver;
+use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
+use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Configuration;
+use SensioLabs\Deptrac\ConfigurationLoader;
+use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
+use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
+use SensioLabs\Deptrac\DependencyInheritanceFlatter;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
+use SensioLabs\Deptrac\OutputFormatterFactory;
+use SensioLabs\Deptrac\RulesetEngine;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;

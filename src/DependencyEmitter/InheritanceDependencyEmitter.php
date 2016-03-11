@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\DependencyEmitter;
+namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;

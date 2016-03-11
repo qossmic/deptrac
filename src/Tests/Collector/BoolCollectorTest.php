@@ -1,10 +1,10 @@
 <?php
 
-namespace DependencyTracker\Tests\Collector;
+namespace SensioLabs\Deptrac\Tests\Collector;
 
-use DependencyTracker\Collector\BoolCollector;
-use DependencyTracker\Collector\CollectorInterface;
-use DependencyTracker\CollectorFactory;
+use SensioLabs\Deptrac\Collector\BoolCollector;
+use SensioLabs\Deptrac\Collector\CollectorInterface;
+use SensioLabs\Deptrac\CollectorFactory;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;

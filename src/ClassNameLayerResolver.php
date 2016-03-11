@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;

@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\DependencyEmitter;
+namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use DependencyTracker\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 

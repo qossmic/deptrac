@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\Tests\DependencyResult;
+namespace SensioLabs\Deptrac\Tests\DependencyResult;
 
-use DependencyTracker\DependencyResult\DependencyInterface;
-use DependencyTracker\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 
 class InheritDependencyTest extends \PHPUnit_Framework_TestCase
