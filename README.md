@@ -3,6 +3,133 @@
 ## What is Deptrac
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
 
+For example, you can define a rule like "controllers may not depend on models".
+To ensure this, deptrac reads your code and find any usages of models in your controllers and will show you, where
+this rule was violated. 
+
+
+## Installation
+
+### Build
+
+For now, you have to build deptrac on your own.
+To do this, you need the following software installed on your machine:
+
+- PHP in version 5.5.9 or above
+- [Composer](https://getcomposer.org/)
+- [Box](http://box-project.github.io/box2/)
+- make
+
+Clone this repository, cd into it and run the make target:
+
+```bash
+git clone https://github.com/sensiolabs-de/deptrac.git
+
+cd deptrac
+
+make build
+```
+
+This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
+
+If you want to create graphical diagrams with your layer dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
+There are packages for the usual package managers for example:
+
+```bash
+brew install graphviz // osx + brew
+sudo apt-get install graphviz // ubuntu
+```
+
+## Getting started
+
+At first, you need a depfile (written in YAML), that declares mainly three things:
+
+1. The location oy your sourcecode.
+2. The layers of you application.
+3. The allowed dependecies between your layers.
+
+You can generate a bootstrapped `depfile.yml` with
+
+```bash
+php deptrac.phar init
+```
+
+### The depfile
+
+Let's have a look at the generated file:
+
+```yaml
+# depfile.yml 
+paths:
+  - ./src
+exclude_files:
+  - .*test.*
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*Repository.*
+  - name: Service
+    collectors:
+      - type: className
+        regex: .*Service.*
+ruleset:
+  Controller:
+    - Service
+  Service:
+    - Repository
+  Repository:
+```
+
+#### Location of your code
+
+At first, in section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
+
+With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
+
+#### Layers
+
+Layers are groups of classes.
+Each layer has a unique name and a list of collectors, that will look for classes, that should be assigned to this layer
+(and yes, classes can be in more than one layer).
+
+With the `className` collector you define a regular expression, that will put matching classnames (with namespace) into the containing layer.
+
+For example, you can define, that every class, that ends with `Controller` will be assigned to the "Controller"-layer, and
+every class, that has a `\Model\` in its namespace will be in the "Model"-layer.
+
+**Per default, any dependencies between layers are forbidden!**
+
+#### Rulesets
+
+Allowed dependencies between layers are configured in rulesets.
+
+Rulesets are a collection of layers assigned to a layer.
+Each layer in this collection may be a dependency of the assigned layer.
+
+So, in our example we defined, that every class of the "Controller"-layer may depend on classes that lives in the "Service"-layer,
+and classes in the "Service"-layer may depend on classes in the "Repository"-layer.
+Classes in the "Repository"-layer my not depend on any classes in different layers. This line could be omitted,
+but this is more declarative.
+
+## Run deptrac
+
+To execute deptrac, run
+
+```bash
+php deptrac.phar analyze depfile.yml
+
+# what es equivalent to
+php deptrac.phar 
+```
+
+
+## In detail
+
 ### Cli Arguments
 
 #### php deptrac.phar init
