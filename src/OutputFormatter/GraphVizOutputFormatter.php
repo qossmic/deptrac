@@ -2,7 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
@@ -32,25 +32,21 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
 
     /**
-     * @param AstMap                          $astMap
-     * @param RulesetViolation[]              $violations
-     * @param DependencyResult                $dependencyResult
-     * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param OutputInterface                 $output
+     * @param DependencyContext $dependencyContext
+     * @param OutputInterface $output
      */
     public function finish(
-        AstMap $astMap,
-        array $violations,
-        DependencyResult $dependencyResult,
-        ClassNameLayerResolverInterface $classNameLayerResolver,
+        DependencyContext $dependencyContext,
         OutputInterface $output
     ) {
 
-        $layerViolations = $this->calculateViolations($violations);
+        $layerViolations = $this->calculateViolations($dependencyContext->getViolations());
 
-        $layersDependOnLayers = $this->calculateLayerDependencies($astMap, $dependencyResult, $classNameLayerResolver);
-
-        // refactor to multiple methods
+        $layersDependOnLayers = $this->calculateLayerDependencies(
+            $dependencyContext->getAstMap(),
+            $dependencyContext->getDependencyResult(),
+            $dependencyContext->getClassNameLayerResolver()
+        );
 
         $graph = new \Fhaculty\Graph\Graph();
 

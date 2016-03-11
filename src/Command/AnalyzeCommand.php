@@ -7,6 +7,7 @@ use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration;
 use SensioLabs\Deptrac\ConfigurationLoader;
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
@@ -122,7 +123,10 @@ class AnalyzeCommand extends Command
 
         foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
             try {
-                $formatter->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver, $output);
+                $formatter->finish(
+                    new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver),
+                    $output
+                );
             } catch (\Exception $ex) {
                 $this->printFormatterException($output, $formatter->getName(), $ex);
             }
