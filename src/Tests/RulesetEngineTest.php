@@ -123,6 +123,17 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
             [],
             3,
         ];
+
+        yield [
+            [
+                'ClassA' => 'ClassA'
+            ],
+            [
+                'ClassA' => ['LayerA']
+            ],
+            [],
+            0,
+        ];
     }
 
     /**
