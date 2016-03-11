@@ -42,17 +42,20 @@ sudo apt-get install graphviz // ubuntu
 
 ## Getting started
 
-At first, you need a depfile (written in YAML), that declares mainly three things:
-
-1. The location of your sourcecode.
-2. The layers of you application.
-3. The allowed dependencies between your layers.
+At first, you need a depfile (written in YAML).
 
 You can generate a bootstrapped `depfile.yml` with
 
 ```bash
 php deptrac.phar init
 ```
+
+In this file you define (mainly) three things:
+
+1. The location of your sourcecode.
+2. The layers of you application.
+3. The allowed dependencies between your layers.
+
 
 ### The depfile
 
