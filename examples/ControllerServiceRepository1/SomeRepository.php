@@ -1,7 +1,7 @@
 <?php
 
-namespace exmaples\MyNamespace\Repository;
+namespace examples\MyNamespace\Repository;
 
-use exmaples\MyNamespace\Controllers\SomeController;
+use examples\MyNamespace\Controllers\SomeController;
 
 class SomeRepository { }
