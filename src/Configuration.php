@@ -14,8 +14,6 @@ class Configuration
 
     private $exclude_files;
 
-    private $formatter;
-
     private $ruleset;
 
     public static function fromArray(array $arr)
@@ -25,8 +23,6 @@ class Configuration
             'paths',
             'exclude_files',
             'ruleset',
-        ])->setDefaults([
-            'formatter' => 'graphviz, console',
         ])
         ->resolve($arr);
 
@@ -34,8 +30,7 @@ class Configuration
             array_map(function ($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
-            $options['exclude_files'],
-            $options['formatter']
+            $options['exclude_files']
         );
     }
 
@@ -44,15 +39,13 @@ class Configuration
      * @param $ruleset
      * @param $paths
      * @param $exclude_files
-     * @param $formatter
      */
-    private function __construct($layers, $ruleset, $paths, $exclude_files, $formatter)
+    private function __construct($layers, $ruleset, $paths, $exclude_files)
     {
         $this->layers = $layers;
         $this->ruleset = $ruleset;
         $this->paths = $paths;
         $this->exclude_files = $exclude_files;
-        $this->formatter = $formatter;
     }
 
     /**
@@ -77,14 +70,6 @@ class Configuration
     public function getExcludeFiles()
     {
         return $this->exclude_files;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFormatter()
-    {
-        return $this->formatter;
     }
 
     /**
