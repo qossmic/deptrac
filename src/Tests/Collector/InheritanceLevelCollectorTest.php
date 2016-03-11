@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\Tests\Collector;
+namespace SensioLabs\Deptrac\Tests\Collector;
 
-use DependencyTracker\Collector\InheritanceLevelCollector;
-use DependencyTracker\CollectorFactory;
+use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
+use SensioLabs\Deptrac\CollectorFactory;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;

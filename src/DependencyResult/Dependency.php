@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyTracker\DependencyResult;
+namespace SensioLabs\Deptrac\DependencyResult;
 
 class Dependency implements DependencyInterface
 {

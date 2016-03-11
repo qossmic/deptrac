@@ -1,6 +1,6 @@
 <?php
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
 interface ClassNameLayerResolverInterface
 {

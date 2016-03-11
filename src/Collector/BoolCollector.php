@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\Collector;
+namespace SensioLabs\Deptrac\Collector;
 
-use DependencyTracker\CollectorFactory;
-use DependencyTracker\Configuration\ConfigurationCollector;
+use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 

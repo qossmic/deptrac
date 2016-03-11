@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DependencyTracker\Configuration;
+namespace SensioLabs\Deptrac\Configuration;
 
 class ConfigurationRuleset
 {

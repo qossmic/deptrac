@@ -1,11 +1,11 @@
 <?php
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
-use DependencyTracker\DependencyInheritanceFlatter;
-use DependencyTracker\DependencyResult;
-use DependencyTracker\DependencyResult\Dependency;
-use DependencyTracker\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\DependencyInheritanceFlatter;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;

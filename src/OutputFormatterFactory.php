@@ -1,9 +1,9 @@
 <?php
 
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
-use DependencyTracker\OutputFormatter\OutputFormatterInterface;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 
 class OutputFormatterFactory
 {

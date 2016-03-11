@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
-use DependencyTracker\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult;
 
 class DependencyResultTest extends \PHPUnit_Framework_TestCase
 {

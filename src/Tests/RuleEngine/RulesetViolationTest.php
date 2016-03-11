@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\Tests\RuleEngine;
+namespace SensioLabs\Deptrac\Tests\RuleEngine;
 
-use DependencyTracker\DependencyResult\DependencyInterface;
-use DependencyTracker\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
+use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class RulesetViolationTest extends \PHPUnit_Framework_TestCase
 {

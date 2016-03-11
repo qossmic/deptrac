@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
-use DependencyTracker\Configuration\ConfigurationRuleset;
-use DependencyTracker\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
+use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class RulesetEngine
 {

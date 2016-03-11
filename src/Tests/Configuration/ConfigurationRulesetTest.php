@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests\Configuration;
+namespace SensioLabs\Deptrac\Tests\Configuration;
 
-use DependencyTracker\Configuration\ConfigurationRuleset;
+use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
 
 class ConfigurationRulesetTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace DependencyTracker\Tests;
+namespace SensioLabs\Deptrac\Tests;
 
-use DependencyTracker\ClassNameLayerResolverCacheDecorator;
-use DependencyTracker\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
+use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 
 class ClassNameLayerResolverCacheDecoratorTest extends \PHPUnit_Framework_TestCase
 {

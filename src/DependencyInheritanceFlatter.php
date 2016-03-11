@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
-use DependencyTracker\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 

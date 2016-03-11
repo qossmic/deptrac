@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests\Configuration;
+namespace SensioLabs\Deptrac\Tests\Configuration;
 
-use DependencyTracker\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ConfigurationLayerTest extends \PHPUnit_Framework_TestCase
 {

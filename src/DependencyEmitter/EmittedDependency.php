@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DependencyTracker\DependencyEmitter;
+namespace SensioLabs\Deptrac\DependencyEmitter;
 
 class EmittedDependency
 {

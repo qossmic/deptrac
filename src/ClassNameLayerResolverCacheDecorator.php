@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DependencyTracker;
+namespace SensioLabs\Deptrac;
 
 class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace DependencyTracker\Tests\DependencyEmitter;
+namespace SensioLabs\Deptrac\Tests\DependencyEmitter;
 
-use DependencyTracker\DependencyEmitter\EmittedDependency;
+use SensioLabs\Deptrac\DependencyEmitter\EmittedDependency;
 
 class EmittedDependencyTest extends \PHPUnit_Framework_TestCase
 {
