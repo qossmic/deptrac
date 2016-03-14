@@ -57,8 +57,7 @@ class AnalyzeCommand extends Command
         $this->setName('analyze');
 
         $this->getDefinition()->setArguments([
-            new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml'),
-            new InputArgument('formatter', InputArgument::OPTIONAL, 'Comma separated list of output formatters to be used', 'console,graphviz')
+            new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml')
         ]);
 
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
