@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace SensioLabs\Deptrac;
 
@@ -7,7 +8,6 @@ use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class DependencyContext
 {
-
     /** @var AstMap */
     private $astMap;
 
@@ -22,10 +22,11 @@ class DependencyContext
 
     /**
      * DependencyContext constructor.
-     * @param AstMap $astMap
+     *
+     * @param AstMap                           $astMap
      * @param RulesetEngine\RulesetViolation[] $violations
-     * @param DependencyResult $dependencyResult
-     * @param ClassNameLayerResolverInterface $classNameLayerResolver
+     * @param DependencyResult                 $dependencyResult
+     * @param ClassNameLayerResolverInterface  $classNameLayerResolver
      */
     public function __construct(
         AstMap $astMap,
@@ -38,7 +39,6 @@ class DependencyContext
         $this->dependencyResult = $dependencyResult;
         $this->classNameLayerResolver = $classNameLayerResolver;
     }
-
 
     /** @return AstMap */
     public function getAstMap()
@@ -63,5 +63,4 @@ class DependencyContext
     {
         return $this->classNameLayerResolver;
     }
-
 }

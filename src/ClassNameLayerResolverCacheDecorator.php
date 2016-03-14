@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac;
 
 class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInterface

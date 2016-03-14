@@ -126,10 +126,10 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
 
         yield [
             [
-                'ClassA' => 'ClassA'
+                'ClassA' => 'ClassA',
             ],
             [
-                'ClassA' => ['LayerA']
+                'ClassA' => ['LayerA'],
             ],
             [],
             0,

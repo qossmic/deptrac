@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\Configuration;
 
 class ConfigurationRuleset

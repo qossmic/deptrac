@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\Command;
 
 use SensioLabs\Deptrac\ConfigurationLoader;

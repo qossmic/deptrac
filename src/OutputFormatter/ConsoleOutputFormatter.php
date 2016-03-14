@@ -1,16 +1,11 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
-use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInheritInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutputFormatter implements OutputFormatterInterface
@@ -25,10 +20,9 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         return [];
     }
 
-
     /**
-     * @param DependencyContext $dependencyContext
-     * @param OutputInterface $output
+     * @param DependencyContext    $dependencyContext
+     * @param OutputInterface      $output
      * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(

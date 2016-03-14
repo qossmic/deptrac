@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac;
 
 use Symfony\Component\Yaml\Yaml;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\Collector\CollectorInterface;

@@ -8,7 +8,6 @@ use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
@@ -37,14 +36,13 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
             OutputFormatterOption::newValueOption(static::$argument_dump_image, 'path to a dumped png file', ''),
             OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'path to a dumped dot file', ''),
-            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', '')
+            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', ''),
         ];
     }
 
-
     /**
-     * @param DependencyContext $dependencyContext
-     * @param OutputInterface $output
+     * @param DependencyContext    $dependencyContext
+     * @param OutputInterface      $output
      * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
@@ -52,7 +50,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ) {
-
         $layerViolations = $this->calculateViolations($dependencyContext->getViolations());
 
         $layersDependOnLayers = $this->calculateLayerDependencies(
@@ -109,11 +106,11 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html)) {
             file_put_contents($dumpHtmlPath, (new \Graphp\GraphViz\GraphViz())->createImageHtml($graph));
         }
-
     }
 
     /**
      * @param RulesetViolation[] $violations
+     *
      * @return array
      */
     private function calculateViolations(array $violations)
@@ -136,9 +133,10 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param AstMap $astMap
-     * @param DependencyResult $dependencyResult
+     * @param AstMap                          $astMap
+     * @param DependencyResult                $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
+     *
      * @return array
      */
     private function calculateLayerDependencies(
@@ -183,7 +181,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
                     $layersDependOnLayers[$layerA][$layerB] = $layersDependOnLayers[$layerA][$layerB] + 1;
                 }
-
             }
         }
 

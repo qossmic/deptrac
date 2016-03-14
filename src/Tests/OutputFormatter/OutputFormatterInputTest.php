@@ -1,8 +1,6 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\Tests\OutputFormatter;
-
 
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 

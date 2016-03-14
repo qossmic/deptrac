@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\RulesetEngine;
 
 use SensioLabs\Deptrac\DependencyResult\Dependency;

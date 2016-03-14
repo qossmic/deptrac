@@ -118,5 +118,4 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
     {
         return str_replace(["\t", "\n", ' '], '', $str);
     }
-
 }

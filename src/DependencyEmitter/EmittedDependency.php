@@ -1,6 +1,5 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
 class EmittedDependency

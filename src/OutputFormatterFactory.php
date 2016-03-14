@@ -1,11 +1,9 @@
 <?php
 
-
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -28,7 +26,6 @@ class OutputFormatterFactory
         $arguments = [];
 
         foreach ($this->formatters as $formatter) {
-
             $formatterArguments = $formatter->configureOptions();
 
             $arguments[] = new InputOption(
@@ -41,14 +38,13 @@ class OutputFormatterFactory
 
             foreach ($formatterArguments as $formatterArgument) {
                 $arguments[] = new InputOption(
-                    'formatter-'.$formatter->getName() . '-' . $formatterArgument->getName(),
+                    'formatter-'.$formatter->getName().'-'.$formatterArgument->getName(),
                     null,
                     $formatterArgument->getMode(),
                     $formatterArgument->getDescription(),
                     $formatterArgument->getDefault()
                 );
             }
-
         }
 
         return $arguments;
@@ -56,36 +52,37 @@ class OutputFormatterFactory
 
     /**
      * @param OutputFormatterInterface $formatter
-     * @param InputInterface $input
+     * @param InputInterface           $input
+     *
      * @return bool
      */
     private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input)
     {
-        return !!$input->getOption('formatter-'.$formatter->getName());
+        return (bool) $input->getOption('formatter-'.$formatter->getName());
     }
 
     /**
      * @param InputInterface $input
+     *
      * @return OutputFormatterInterface[]
      */
     public function getActiveFormatters(InputInterface $input)
     {
-        return array_values(array_filter($this->formatters, function(OutputFormatterInterface $formatter) use ($input) {
+        return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input) {
             return $this->isFormatterActive($formatter, $input);
         }));
     }
 
     /**
      * @param OutputFormatterInterface $outputFormatter
-     * @param InputInterface $input
+     * @param InputInterface           $input
+     *
      * @return OutputFormatterInput
      */
     public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input)
     {
         $buffer = [];
         foreach ($input->getOptions() as $k => $v) {
-
-
             if (strpos($k, 'formatter-'.$outputFormatter->getName().'-') !== 0) {
                 continue;
             }

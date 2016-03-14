@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\DependencyResult;
 
 class DependencyContextTest extends \PHPUnit_Framework_TestCase
 {
-   public function testGetSet()
+    public function testGetSet()
     {
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
@@ -22,6 +22,5 @@ class DependencyContextTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([1, 2, 3], $context->getViolations());
         $this->assertSame($dependencyResult, $context->getDependencyResult());
         $this->assertSame($classNameLayerResolver, $context->getClassNameLayerResolver());
-
     }
 }

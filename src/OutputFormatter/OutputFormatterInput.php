@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
@@ -17,7 +18,6 @@ class OutputFormatterInput
     /**
      * @param $name
      * @param null $default
-     * @return null
      */
     public function getOption($name)
     {
@@ -27,6 +27,4 @@ class OutputFormatterInput
 
         return $this->options[$name];
     }
-
-
 }

@@ -2,12 +2,10 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterOption
 {
-
     private $name;
 
     private $mode;
@@ -58,5 +56,4 @@ class OutputFormatterOption
     {
         return $this->default;
     }
-
 }
