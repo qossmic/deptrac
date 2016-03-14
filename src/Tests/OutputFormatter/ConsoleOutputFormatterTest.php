@@ -3,10 +3,12 @@
 namespace SensioLabs\Deptrac\Tests\OutputFormatter;
 
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
@@ -80,11 +82,14 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            $this->prophesize(AstMap::class)->reveal(),
-            $violations,
-            $this->prophesize(DependencyResult::class)->reveal(),
-            $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
-            $output
+            new DependencyContext(
+                $this->prophesize(AstMap::class)->reveal(),
+                $violations,
+                $this->prophesize(DependencyResult::class)->reveal(),
+                $this->prophesize(ClassNameLayerResolverInterface::class)->reveal()
+            ),
+            $output,
+            new OutputFormatterInput([])
         );
 
         $o = $output->fetch();
