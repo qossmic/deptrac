@@ -69,6 +69,16 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
                 Found 1 Violations
             ',
         ];
+
+        yield [
+            [
+
+            ],
+            '
+
+                Found 0 Violations
+            ',
+        ];
     }
 
     /**
@@ -99,8 +109,14 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetOptions()
+    {
+        $this->assertCount(0, (new ConsoleOutputFormatter())->configureOptions());
+    }
+
     private function normalize($str)
     {
         return str_replace(["\t", "\n", ' '], '', $str);
     }
+
 }
