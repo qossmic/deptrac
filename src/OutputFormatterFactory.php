@@ -3,6 +3,7 @@
 
 namespace SensioLabs\Deptrac;
 
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -77,17 +78,28 @@ class OutputFormatterFactory
     /**
      * @param OutputFormatterInterface $outputFormatter
      * @param InputInterface $input
+     * @return array
      */
     public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input)
     {
         $buffer = [];
-        foreach ($input->getOptions() as $option) {
+        foreach ($input->getOptions() as $k => $v) {
 
-            /**
-             * @var $option InputOption
-             */
-            $a = 0;
+
+            if (strpos($k, 'formatter-'.$outputFormatter->getName().'-') !== 0) {
+                continue;
+            }
+
+            $option = substr($k, strlen('formatter-'.$outputFormatter->getName().'-'));
+
+            if($option === false || strlen($option) === 0) {
+                continue;
+            }
+
+            $buffer[$option] = $v;
         }
+
+        return new OutputFormatterInput($buffer);
     }
 
     /**

@@ -4,14 +4,14 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 
 class OutputFormatterInput
 {
-    private $arguments;
+    private $options;
 
     /**
      * @param $arguments
      */
     public function __construct($arguments)
     {
-        $this->arguments = $arguments;
+        $this->options = $arguments;
     }
 
     /**
@@ -19,13 +19,13 @@ class OutputFormatterInput
      * @param null $default
      * @return null
      */
-    public function getArgument($name, $default = null)
+    public function getOption($name, $default = null)
     {
-        if (!isset($this->arguments[$name])) {
+        if (!isset($this->options[$name])) {
             return $default;
         }
 
-        return $this->arguments[$name];
+        return $this->options[$name];
     }
 
 

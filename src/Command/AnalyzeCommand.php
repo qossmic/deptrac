@@ -125,7 +125,8 @@ class AnalyzeCommand extends Command
             try {
                 $formatter->finish(
                     new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver),
-                    $output
+                    $output,
+                    $this->formatterFactory->getOutputFormatterInput($formatter, $input)
                 );
             } catch (\Exception $ex) {
                 $this->printFormatterException($output, $formatter->getName(), $ex);

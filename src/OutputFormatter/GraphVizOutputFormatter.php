@@ -15,6 +15,14 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 {
     protected $eventDispatcher;
 
+    private static $argument_display = 'display';
+
+    private static $argument_dump_image = 'dump-image';
+
+    private static $argument_dump_dot = 'dump-dot';
+
+    private static $argument_dump_html = 'dump-html';
+
     public function getName()
     {
         return 'graphviz';
@@ -26,7 +34,10 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     public function configureOptions()
     {
         return [
-            OutputFormatterOption::newValueOption('foo1', 'gib mir foo1', 'bar1')
+            OutputFormatterOption::newValueOption(static::$argument_display, 'gib mir foo1', 'bar1'),
+            OutputFormatterOption::newValueOption(static::$argument_dump_image, 'gib mir foo1', 'bar1'),
+            OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'gib mir foo1', 'bar1'),
+            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'gib mir foo1', 'bar1')
         ];
     }
 
@@ -81,8 +92,24 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        $graphviz = new \Graphp\GraphViz\GraphViz();
-        $graphviz->display($graph);
+        if ($outputFormatterInput->getOption(static::$argument_display, 1)) {
+            (new \Graphp\GraphViz\GraphViz())->display($graph);
+        }
+
+        if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image, 0)) {
+            $imagePath = (new \Graphp\GraphViz\GraphViz())->createImageFile($graph);
+            rename($imagePath, $dumpImagePath);
+            $output->write('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+        }
+
+        if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot, 0)) {
+            file_put_contents($dumpDotPath, (new \Graphp\GraphViz\GraphViz())->createScript($graph));
+        }
+
+        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html, 0)) {
+            file_put_contents($dumpHtmlPath, (new \Graphp\GraphViz\GraphViz())->createImageHtml($graph));
+        }
+
     }
 
     /**
