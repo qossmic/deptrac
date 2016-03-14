@@ -78,7 +78,7 @@ class OutputFormatterFactory
     /**
      * @param OutputFormatterInterface $outputFormatter
      * @param InputInterface $input
-     * @return array
+     * @return OutputFormatterInput
      */
     public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input)
     {
@@ -91,10 +91,6 @@ class OutputFormatterFactory
             }
 
             $option = substr($k, strlen('formatter-'.$outputFormatter->getName().'-'));
-
-            if($option === false || strlen($option) === 0) {
-                continue;
-            }
 
             $buffer[$option] = $v;
         }

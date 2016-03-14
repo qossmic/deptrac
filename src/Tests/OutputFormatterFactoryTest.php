@@ -8,6 +8,7 @@ use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 
 class OutputFormatterFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,6 +79,44 @@ class OutputFormatterFactoryTest extends \PHPUnit_Framework_TestCase
 
 
         $this->assertCount(6, $arguments);
+    }
+
+    public function testIsFormatterActive()
+    {
+        $formatter = (new OutputFormatterFactory([
+            $this->createNamedFormatter('f1'),
+            $this->createNamedFormatter('f2'),
+            $this->createNamedFormatter('f3')
+        ]));
+
+        $input = $this->prophesize(InputInterface::class);
+        $input->getOption('formatter-f1')->willReturn(true);
+        $input->getOption('formatter-f2')->willReturn(true);
+        $input->getOption('formatter-f3')->willReturn(false);
+
+        $this->assertCount(2, $formatter->getActiveFormatters($input->reveal()));
+    }
+
+    public function testGetOutputFormatterInput()
+    {
+        $formatter = (new OutputFormatterFactory([
+            $f1 = $this->createNamedFormatter('f1'),
+            $f2 = $this->createNamedFormatter('f2'),
+            $f3 = $this->createNamedFormatter('f3')
+        ]));
+
+        $input = $this->prophesize(InputInterface::class);
+        $input->getOptions()->willReturn([
+            'formatter-f1-lalelu' => 'jupp',
+            'formatter-f3' => ''
+        ]);
+
+        $this->assertEquals('jupp', $formatter->getOutputFormatterInput($f1, $input->reveal())->getOption('lalelu'));
+
+        try {
+            $formatter->getOutputFormatterInput($f2, $input->reveal())->getOption('lalelu');
+            $this->fail('expected exception');
+        } catch (\InvalidArgumentException $e) {}
     }
 
     /**
