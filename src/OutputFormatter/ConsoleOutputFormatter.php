@@ -4,11 +4,13 @@
 namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInheritInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutputFormatter implements OutputFormatterInterface
@@ -18,21 +20,23 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         return 'console';
     }
 
+    public function configureOptions()
+    {
+        return [];
+    }
+
+
     /**
-     * @param AstMap                          $astMap
-     * @param RulesetViolation[]              $violations
-     * @param DependencyResult                $dependencyResult
-     * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param OutputInterface                 $output
+     * @param DependencyContext $dependencyContext
+     * @param OutputInterface $output
+     * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
-        AstMap $astMap,
-        array $violations,
-        DependencyResult $dependencyResult,
-        ClassNameLayerResolverInterface $classNameLayerResolver,
-        OutputInterface $output
+        DependencyContext $dependencyContext,
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
     ) {
-        foreach ($violations as $violation) {
+        foreach ($dependencyContext->getViolations() as $violation) {
             if ($violation->getDependency() instanceof InheritDependency) {
                 $this->handleInheritDependency($violation, $output);
                 continue;
@@ -41,10 +45,10 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
             $this->handleDependeny($violation, $output);
         }
 
-        if (count($violations)) {
-            $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($violations)));
+        if (count($dependencyContext->getViolations())) {
+            $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($dependencyContext->getViolations())));
         } else {
-            $output->writeln(sprintf("\nFound <info>%s Violations</info>", count($violations)));
+            $output->writeln(sprintf("\nFound <info>%s Violations</info>", count($dependencyContext->getViolations())));
         }
     }
 

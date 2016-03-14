@@ -2,20 +2,28 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\AstRunner\AstMap;
+use SensioLabs\Deptrac\DependencyContext;
+use SensioLabs\Deptrac\DependencyResult;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface OutputFormatterInterface
 {
     public function getName();
 
+    /** @return OutputFormatterOption[] */
+    public function configureOptions();
+
+    /**
+     * @param DependencyContext $dependencyContext
+     * @param OutputInterface $output
+     * @param OutputFormatterInput $outputFormatterInput
+     * @return mixed
+     */
     public function finish(
-        AstMap $astMap,
-        array $violations,
-        DependencyResult $dependencyResult,
-        ClassNameLayerResolverInterface $classNameLayerResolver,
-        OutputInterface $output
+        DependencyContext $dependencyContext,
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
     );
 }

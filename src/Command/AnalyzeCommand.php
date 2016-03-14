@@ -7,6 +7,7 @@ use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration;
 use SensioLabs\Deptrac\ConfigurationLoader;
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
@@ -43,21 +44,23 @@ class AnalyzeCommand extends Command
         RulesetEngine $rulesetEngine,
         CollectorFactory $collectorFactory
     ) {
-        parent::__construct();
         $this->dispatcher = $dispatcher;
         $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
         $this->collectorFactory = $collectorFactory;
+        parent::__construct();
     }
 
     protected function configure()
     {
-        $this
-            ->setName('analyze')
-            ->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml')
-            ->addArgument('formatter', InputArgument::OPTIONAL, 'Comma separated list of output formatters to be used', 'console,graphviz')
-        ;
+        $this->setName('analyze');
+
+        $this->getDefinition()->setArguments([
+            new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml')
+        ]);
+
+        $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
     protected function execute(
@@ -117,15 +120,15 @@ class AnalyzeCommand extends Command
 
         $this->printFormattingStart($output);
 
-        foreach (explode(',', $input->getArgument('formatter')) as $formatterName) {
-            $formatterName = trim($formatterName);
+        foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
             try {
-                $this->formatterFactory
-                    ->getFormatterByName($formatterName)
-                    ->finish($astMap, $violations, $dependencyResult, $classNameLayerResolver, $output)
-                ;
+                $formatter->finish(
+                    new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver),
+                    $output,
+                    $this->formatterFactory->getOutputFormatterInput($formatter, $input)
+                );
             } catch (\Exception $ex) {
-                $this->printFormatterException($output, $formatterName, $ex);
+                $this->printFormatterException($output, $formatter->getName(), $ex);
             }
         }
 

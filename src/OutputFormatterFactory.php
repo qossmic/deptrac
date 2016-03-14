@@ -3,7 +3,11 @@
 
 namespace SensioLabs\Deptrac;
 
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterFactory
 {
@@ -14,6 +18,88 @@ class OutputFormatterFactory
     public function __construct(array $formatters)
     {
         $this->formatters = $formatters;
+    }
+
+    /**
+     * @return InputOption[]
+     */
+    public function getFormatterOptions()
+    {
+        $arguments = [];
+
+        foreach ($this->formatters as $formatter) {
+
+            $formatterArguments = $formatter->configureOptions();
+
+            $arguments[] = new InputOption(
+                'formatter-'.$formatter->getName(),
+                null,
+                InputOption::VALUE_OPTIONAL,
+                'to disable the '.$formatter->getName().' fomatter, set this argument to 0',
+                1
+            );
+
+            foreach ($formatterArguments as $formatterArgument) {
+                $arguments[] = new InputOption(
+                    'formatter-'.$formatter->getName() . '-' . $formatterArgument->getName(),
+                    null,
+                    $formatterArgument->getMode(),
+                    $formatterArgument->getDescription(),
+                    $formatterArgument->getDefault()
+                );
+            }
+
+        }
+
+        return $arguments;
+    }
+
+    /**
+     * @param OutputFormatterInterface $formatter
+     * @param InputInterface $input
+     * @return bool
+     */
+    private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input)
+    {
+        return !!$input->getOption('formatter-'.$formatter->getName());
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return OutputFormatterInterface[]
+     */
+    public function getActiveFormatters(InputInterface $input)
+    {
+        return array_values(array_filter($this->formatters, function(OutputFormatterInterface $formatter) use ($input) {
+            return $this->isFormatterActive($formatter, $input);
+        }));
+    }
+
+    /**
+     * @param OutputFormatterInterface $outputFormatter
+     * @param InputInterface $input
+     * @return array
+     */
+    public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input)
+    {
+        $buffer = [];
+        foreach ($input->getOptions() as $k => $v) {
+
+
+            if (strpos($k, 'formatter-'.$outputFormatter->getName().'-') !== 0) {
+                continue;
+            }
+
+            $option = substr($k, strlen('formatter-'.$outputFormatter->getName().'-'));
+
+            if($option === false || strlen($option) === 0) {
+                continue;
+            }
+
+            $buffer[$option] = $v;
+        }
+
+        return new OutputFormatterInput($buffer);
     }
 
     /**

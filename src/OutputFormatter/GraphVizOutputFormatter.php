@@ -2,16 +2,26 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {
     protected $eventDispatcher;
+
+    private static $argument_display = 'display';
+
+    private static $argument_dump_image = 'dump-image';
+
+    private static $argument_dump_dot = 'dump-dot';
+
+    private static $argument_dump_html = 'dump-html';
 
     public function getName()
     {
@@ -19,25 +29,37 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param AstMap                          $astMap
-     * @param RulesetViolation[]              $violations
-     * @param DependencyResult                $dependencyResult
-     * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param OutputInterface                 $output
+     * @return OutputFormatterOption[]
+     */
+    public function configureOptions()
+    {
+        return [
+            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
+            OutputFormatterOption::newValueOption(static::$argument_dump_image, 'path to a dumped png file', ''),
+            OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'path to a dumped dot file', ''),
+            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', '')
+        ];
+    }
+
+
+    /**
+     * @param DependencyContext $dependencyContext
+     * @param OutputInterface $output
+     * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
-        AstMap $astMap,
-        array $violations,
-        DependencyResult $dependencyResult,
-        ClassNameLayerResolverInterface $classNameLayerResolver,
-        OutputInterface $output
+        DependencyContext $dependencyContext,
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
     ) {
 
-        $layerViolations = $this->calculateViolations($violations);
+        $layerViolations = $this->calculateViolations($dependencyContext->getViolations());
 
-        $layersDependOnLayers = $this->calculateLayerDependencies($astMap, $dependencyResult, $classNameLayerResolver);
-
-        // refactor to multiple methods
+        $layersDependOnLayers = $this->calculateLayerDependencies(
+            $dependencyContext->getAstMap(),
+            $dependencyContext->getDependencyResult(),
+            $dependencyContext->getClassNameLayerResolver()
+        );
 
         $graph = new \Fhaculty\Graph\Graph();
 
@@ -70,8 +92,24 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        $graphviz = new \Graphp\GraphViz\GraphViz();
-        $graphviz->display($graph);
+        if ($outputFormatterInput->getOption(static::$argument_display)) {
+            (new \Graphp\GraphViz\GraphViz())->display($graph);
+        }
+
+        if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image)) {
+            $imagePath = (new \Graphp\GraphViz\GraphViz())->createImageFile($graph);
+            rename($imagePath, $dumpImagePath);
+            $output->write('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+        }
+
+        if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot)) {
+            file_put_contents($dumpDotPath, (new \Graphp\GraphViz\GraphViz())->createScript($graph));
+        }
+
+        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html)) {
+            file_put_contents($dumpHtmlPath, (new \Graphp\GraphViz\GraphViz())->createImageHtml($graph));
+        }
+
     }
 
     /**
