@@ -15,8 +15,15 @@ interface OutputFormatterInterface
     /** @return OutputFormatterOption[] */
     public function configureOptions();
 
+    /**
+     * @param DependencyContext $dependencyContext
+     * @param OutputInterface $output
+     * @param OutputFormatterInput $outputFormatterInput
+     * @return mixed
+     */
     public function finish(
         DependencyContext $dependencyContext,
-        OutputInterface $output
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
     );
 }

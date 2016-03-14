@@ -34,10 +34,12 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     /**
      * @param DependencyContext $dependencyContext
      * @param OutputInterface $output
+     * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
         DependencyContext $dependencyContext,
-        OutputInterface $output
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
     ) {
 
         $layerViolations = $this->calculateViolations($dependencyContext->getViolations());

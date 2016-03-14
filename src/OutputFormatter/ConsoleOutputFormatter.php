@@ -29,10 +29,12 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     /**
      * @param DependencyContext $dependencyContext
      * @param OutputInterface $output
+     * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
         DependencyContext $dependencyContext,
-        OutputInterface $output
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
     ) {
         foreach ($dependencyContext->getViolations() as $violation) {
             if ($violation->getDependency() instanceof InheritDependency) {
