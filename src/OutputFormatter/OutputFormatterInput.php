@@ -19,10 +19,10 @@ class OutputFormatterInput
      * @param null $default
      * @return null
      */
-    public function getOption($name, $default = null)
+    public function getOption($name)
     {
         if (!isset($this->options[$name])) {
-            return $default;
+            throw new \InvalidArgumentException('option '.$name.' is not configured.');
         }
 
         return $this->options[$name];

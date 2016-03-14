@@ -34,10 +34,10 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     public function configureOptions()
     {
         return [
-            OutputFormatterOption::newValueOption(static::$argument_display, 'gib mir foo1', 'bar1'),
-            OutputFormatterOption::newValueOption(static::$argument_dump_image, 'gib mir foo1', 'bar1'),
-            OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'gib mir foo1', 'bar1'),
-            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'gib mir foo1', 'bar1')
+            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
+            OutputFormatterOption::newValueOption(static::$argument_dump_image, 'path to a dumped png file', ''),
+            OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'path to a dumped dot file', ''),
+            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', '')
         ];
     }
 
@@ -92,21 +92,21 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        if ($outputFormatterInput->getOption(static::$argument_display, 1)) {
+        if ($outputFormatterInput->getOption(static::$argument_display)) {
             (new \Graphp\GraphViz\GraphViz())->display($graph);
         }
 
-        if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image, 0)) {
+        if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image)) {
             $imagePath = (new \Graphp\GraphViz\GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
             $output->write('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
-        if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot, 0)) {
+        if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot)) {
             file_put_contents($dumpDotPath, (new \Graphp\GraphViz\GraphViz())->createScript($graph));
         }
 
-        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html, 0)) {
+        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html)) {
             file_put_contents($dumpHtmlPath, (new \Graphp\GraphViz\GraphViz())->createImageHtml($graph));
         }
 
