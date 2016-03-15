@@ -7,6 +7,8 @@ For example, you can define a rule like "controllers may not depend on models".
 To ensure this, deptrac reads your code and find any usages of models in your controllers and will show you, where
 this rule was violated. 
 
+![ModelController1](examples/ControllerServiceRepository1.png)
+
 
 ## Getting Started
 
