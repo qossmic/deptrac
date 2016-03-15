@@ -96,15 +96,17 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image)) {
             $imagePath = (new \Graphp\GraphViz\GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
-            $output->write('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+            $output->writeln('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot)) {
             file_put_contents($dumpDotPath, (new \Graphp\GraphViz\GraphViz())->createScript($graph));
+            $output->writeln('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html)) {
             file_put_contents($dumpHtmlPath, (new \Graphp\GraphViz\GraphViz())->createImageHtml($graph));
+            $output->writeln('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
     }
 

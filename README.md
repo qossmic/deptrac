@@ -419,3 +419,47 @@ layers:
 The example shows an example of the bool collector.
 Every class that contains (Foo\Asset OR Bar\Asset) and NOT Assetic will become a part of the asset layer.
 
+
+## Formatters
+
+Deptrac has support for different formatters with different options.
+
+by running
+
+```
+php deptrac.php analyze --help
+```
+
+you can get a list of available formatters.
+
+
+
+### Console Formatter
+The console formatter is activated by default.
+The Formatter dumps basic informations to stdout, example:
+
+```
+examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
+```
+
+Supported Arguments:
+
+```
+--formatter-console=         to disable the console fomatter, set this argument to 0 [default: 1]
+```
+
+### Graphviz Formatter
+
+The graphviz formatter is activated by default.
+After running deptrac by default the `--formatter-graphviz-display` is enabled, and deptrac tries to open the generated image.
+For example on CI-Servers you can disable this using `--formatter-graphviz-display=0`.
+
+```
+--formatter-graphviz=                   to disable the graphviz fomatter, set this argument to 0 [default: 1]
+--formatter-graphviz-display=           should try to open graphviz image [default: true]
+--formatter-graphviz-dump-image=        path to a dumped png file [default: ""]
+--formatter-graphviz-dump-dot=          path to a dumped dot file [default: ""]
+--formatter-graphviz-dump-html=         path to a dumped html file [default: ""]
+```
+
+You can create an image, a dotfile and a htmlfile at the same time.
