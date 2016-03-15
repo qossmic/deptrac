@@ -1,4 +1,4 @@
-# deptrac
+# Deptrac
 
 ## What is Deptrac
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
@@ -8,42 +8,11 @@ To ensure this, deptrac reads your code and find any usages of models in your co
 this rule was violated. 
 
 
-## Installation
+## Getting Started
 
-### Build
-
-For now, you have to build deptrac on your own.
-To do this, you need the following software installed on your machine:
-
-- PHP in version 5.5.9 or above
-- [Composer](https://getcomposer.org/)
-- [Box](http://box-project.github.io/box2/)
-- make
-
-Clone this repository, cd into it and run the make target:
-
-```bash
-git clone https://github.com/sensiolabs-de/deptrac.git
-
-cd deptrac
-
-make build
-```
-
-This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
-
-If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
-There are packages for the usual package managers, for example:
-
-```bash
-brew install graphviz // osx + brew
-sudo apt-get install graphviz // ubuntu
-```
-
-## Getting started
+The easiert way to get started is to download the depfile.par.
 
 At first, you need a depfile (written in YAML).
-
 You can generate a bootstrapped `depfile.yml` with
 
 ```bash
@@ -57,7 +26,7 @@ In this file you define (mainly) three things:
 3. The allowed dependencies between your layers.
 
 
-### The depfile
+### The Depfile
 
 Let's have a look at the generated file:
 
@@ -88,33 +57,14 @@ ruleset:
   Repository:
 ```
 
-#### Location of your code
 
-In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
+#### Quick Intro
+Using the `paths` section you can tell Deptrac where to find the your code.
 
-With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
+In our example we defined 3 Different Layers `Controller`, `Controller` and `Service` in the `layers` section.
+Deptrac is using collectors to group different Classes (in this case by the name of the class) together.
 
-#### Layers
-
-Layers are groups of classes.
-Each layer has a unique name and a list of collectors, that will look for classes, that should be assigned to this layer
-(and yes, classes can be in more than one layer).
-
-With the `className` collector you define a regular expression, that will put matching classnames (with namespace) into the layer.
-
-For example, you can define, that every class, that ends with `Controller` will be assigned to the "Controller"-layer, and
-every class, that has a `\Model\` in its namespace will be added to the "Model"-layer.
-
-**Per default, any dependencies between layers are forbidden!**
-
-#### Rulesets
-
-Allowed dependencies between layers are configured in rulesets.
-
-A ruleset is a collection of layers assigned to a layer.
-Each layer in this collection may be a dependency of the assigned layer.
-
-So, in our example we defined, that every class of the "Controller"-layer may depend on classes that lives in the "Service"-layer,
+The `ruleset` section defines that every class of the "Controller"-layer may depend on classes that lives in the "Service"-layer,
 and classes in the "Service"-layer may depend on classes in the "Repository"-layer.
 Classes in the "Repository"-layer my not depend on any classes in different layers. This line could be omitted,
 but this is more declarative.
@@ -122,54 +72,88 @@ but this is more declarative.
 If a class in the "Repository"-layer use a class in the "Service"-layer, deptrac wil recognize this and throw a violation for this case.
 The same, if a "Service"-layer-class uses a "Controller"-layer-class.
 
-## Run deptrac
+## Run Deptrac
 
 To execute deptrac, run
 
 ```bash
-php deptrac.phar analyze depfile.yml
+php deptrac.phar
 
 # what es equivalent to
-php deptrac.phar 
+php deptrac.phar analyze depfile.yml
 ```
 
-
-## In detail
 
 ### Cli Arguments
 
-#### php deptrac.phar init
+##### php deptrac.phar init
 creates a dummy depfile in the current directory
 
-#### php deptrac.phar
+##### php deptrac.phar
 runs deptrac in the current directory
 
-#### php deptrac.phar analyze [depfile]
+##### php deptrac.phar analyze [depfile]
 runs deptrac from the current directory using the depfile [depfile]
 
 ### Installation
-make sure that the `dot` command is available on your system.
 
-```
+### Graphviz
+If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
+There are packages for the usual package managers, for example:
+
+```bash
 brew install graphviz // osx + brew
 sudo apt-get install graphviz // ubuntu
 ```
 
+### Phar
 download the depfile.phar and run it using `php deptrac.phar`.
+
+### Build
+
+For now, you have to build deptrac on your own.
+To do this, you need the following software installed on your machine:
+
+- PHP in version 5.5.9 or above
+- [Composer](https://getcomposer.org/)
+- [Box](http://box-project.github.io/box2/)
+- make
+
+Clone this repository, cd into it and run the make target:
+
+```bash
+git clone https://github.com/sensiolabs-de/deptrac.git && cd deptrac && make build
+```
+
+This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
+
+## Location Of Your Code
+
+In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
+
+With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
 
 
 ## Layers
 Deptrac allows you to group different classes in "layers".
 Technically layers are nothing more than collection of classes.
-Every class can be in zero or more layers.
+
+Each layer has a unique name and a list of collectors, that will look for classes, that should be assigned to this layer
+(and yes, classes can be in more than one layer).
 
 (Hopefully) most software is written with some kind of layers in mind.
 For example a typically MVC application has at least controllers, models and views.
 
 Deptrac allows you to visualize and enforce some kind of ruleset, based on such layer informations.
 
+For example, you can define, that every class, that ends with `Controller` will be assigned to the "Controller"-layer, and
+every class, that has a `\Model\` in its namespace will be added to the "Model"-layer.
+
 For example, by adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
 to access models. Deptrac allows you to enforce and visualize such dependencies / rules.
+
+
+**Per default, any dependencies between layers are forbidden!**
 
 ### Collecting Layers
 For example if your application has controllers and models, deptrac allows you to
@@ -297,6 +281,9 @@ Deptrac is now finding 2 violations because the relation from the controller to 
 The console output shows exactly the lines deptrac found.
 
 ## Ruleset (Allowing Dependencies)
+
+Allowed dependencies between layers are configured in rulesets.
+
 By default deptrac will raise a violation for every dependency between layers.
 In real software you want to allow dependencies between different kind of layers.
 
