@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "47dfdf8652bca60d1fb4ea5e2ae68090",
-    "content-hash": "310da6733ed16a015ac47329b3f21cf4",
+    "hash": "898d700a7f4dbd7ab56fa88a8d6574cd",
+    "content-hash": "53483614a137c2234993e20b38f21664",
     "packages": [
         {
             "name": "clue/graph",
@@ -242,7 +242,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:sensiolabs-de/astrunner.git",
-                "reference": "40382d3df69aadaf8738377246bff06e44d0ae1a"
+                "reference": "1746afa4f57523c696fb855d944765a39fa770c0"
             },
             "require": {
                 "nikic/php-parser": "~2.0",
@@ -266,7 +266,7 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2016-02-17 22:14:18"
+            "time": "2016-04-08 09:23:52"
         },
         {
             "name": "symfony/config",
@@ -1677,6 +1677,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.5.9"
+    },
     "platform-dev": []
 }
