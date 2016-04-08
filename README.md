@@ -1,6 +1,7 @@
 # Deptrac
 
 ## What is Deptrac
+
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
 
 For example, you can define a rule like "controllers may not depend on models".
@@ -12,9 +13,9 @@ this rule was violated.
 
 ## Getting Started
 
-The easiert way to get started is to download the depfile.par.
+The easiest way to get started is to download the depfile.phar.
 
-At first, you need a depfile (written in YAML).
+At first, you need a so called "depfile", which is written in YAML.
 You can generate a bootstrapped `depfile.yml` with
 
 ```bash
@@ -28,7 +29,7 @@ In this file you define (mainly) three things:
 3. The allowed dependencies between your layers.
 
 
-### The Depfile
+### The depfile
 
 Let's have a look at the generated file:
 
@@ -60,48 +61,39 @@ ruleset:
 ```
 
 
-#### Quick Intro
-In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
+#### Explanation
+In section `paths`, you declare, where deptrac should look for your code.
 
 With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
 
-In the `layers` section we defined 3 Different Layers `Controller`, `Repository` and `Service` for example.
-Deptrac is using collectors to group different Classes (in this case by the name of the class) together.
+In our example we defined three different layers *Controller*, *Repository* and *Service* in the `layers` section.
+Deptrac is using so called `collectors` to group classes into `layers` (in this case by the name of the class).
 
-The `ruleset` section defines that every class of the "Controller"-layer may depend on classes that lives in the "Service"-layer,
-and classes in the "Service"-layer may depend on classes in the "Repository"-layer.
-Classes in the "Repository"-layer my not depend on any classes in different layers. This line could be omitted,
-but this is more declarative.
+The `ruleset` section defines, how these layers may depend on other layers.
+In the example every class of the *Controller*-layer may depend on classes that lives in the *Service*-layer,
+and classes in the *Service*-layer may depend on classes in the *Repository*-layer.
 
-If a class in the "Repository"-layer use a class in the "Service"-layer, deptrac wil recognize this and throw a violation for this case.
-The same, if a "Service"-layer-class uses a "Controller"-layer-class.
+Classes in the *Repository*-layer my NOT depend on any classes in different layers.
+As the `ruleset` works like a whitelist, this line could be omitted, but this is more declarative.
 
-## Run Deptrac
+If a class in the *Repository*-layer use a class in the *Service*-layer, deptrac wil recognize this and throw a violation for this case.
+The same, if a *Service*-layer-class uses a *Controller*-layer-class.
 
-To execute deptrac, run
+
+## Installation
+
+### download the phar (recommended)
+Download the [depfile.phar](https://get.sensiolans.de/deptrac.phar) and run it using `php deptrac.phar`.
+Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
 ```bash
-php deptrac.phar
-
-# what es equivalent to
-php deptrac.phar analyze depfile.yml
+curl -LS https://get.sensiolans.de/deptrac.phar -o deptract.phar
+sudo chmod +x deptrac.phar
+sudo mv deptract.phar /usr/bin/local/deptrac
 ```
 
 
-### Cli Arguments
-
-##### php deptrac.phar init
-creates a dummy depfile in the current directory
-
-##### php deptrac.phar
-runs deptrac in the current directory
-
-##### php deptrac.phar analyze [depfile]
-runs deptrac from the current directory using the depfile [depfile]
-
-### Installation
-
-### Graphviz
+#### Optional dependency: Graphviz
 If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
 There are packages for the usual package managers, for example:
 
@@ -110,10 +102,8 @@ brew install graphviz // osx + brew
 sudo apt-get install graphviz // ubuntu
 ```
 
-### Phar
-download the depfile.phar and run it using `php deptrac.phar`.
 
-### Build
+### Build @todo moove down
 
 For now, you have to build deptrac on your own.
 To do this, you need the following software installed on your machine:
@@ -126,11 +116,25 @@ To do this, you need the following software installed on your machine:
 Clone this repository, cd into it and run the make target:
 
 ```bash
-git clone https://github.com/sensiolabs-de/deptrac.git && cd deptrac && make build
+git clone https://github.com/sensiolabs-de/deptrac.git 
+cd deptrac 
+composer install
+make build
 ```
 
 This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
+
+## Run Deptrac
+
+To execute deptrac, run
+
+```bash
+php deptrac.phar
+
+# what es equivalent to
+php deptrac.phar analyze depfile.yml
+```
 
 ## Layers
 Deptrac allows you to group different classes in "layers".
