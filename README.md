@@ -62,6 +62,7 @@ ruleset:
 
 
 #### Explanation
+
 In the first section, `paths`, you declare, where deptrac should look for your code.
 As this is an array of directories, you can specify multiple locations.
 
@@ -85,8 +86,8 @@ The same counts for if a *Service*-layer-class uses a *Controller*-layer-class.
 
 ## Installation
 
-
 ### Download the phar (recommended)
+
 Download the [depfile.phar](https://get.sensiolans.de/deptrac.phar) and run it using `php deptrac.phar`.
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
@@ -388,7 +389,7 @@ layers:
 Every classname that match the regular expression `.*Controller.*` becomes a part of the controller layer.
 
 
-### `bool` Collector
+### `bool` collector
 
 The `bool` collector allows combining other collectors with or without negation.
 
@@ -409,6 +410,10 @@ layers:
 
 Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will become a part of the *Asset*-layer.
 
+
+### More collectors
+
+As deptrac ist in a very early state, feel free to contribute your own collector.
 
 ## Formatters
 
@@ -473,5 +478,9 @@ make build
 ```
 
 This will create an executable file `debtrac.phar` file in the current directory.
-In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`)
+In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`).
+
+## Contribute
+
+Deptrac is in a very early state
 
