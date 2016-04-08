@@ -181,13 +181,13 @@ As we defined our layers, we can generate a dependency graph for the example con
 php deptrac.php analyze examples/ModelController1.depfile.yml
 ```
 
-After deptrac finished an image should be opened:
+After deptrac has finished, an image should be opened:
 
 ![ModelController1](examples/ModelController1.png)
 
-on your command line deptrac will produce this output:
+On your command line deptrac will produce this output:
 
-```
+```bash
 Start to create an AstMap for 2 Files.
 Parsing File SomeController.php
 Parsing File SomeModel.php
@@ -203,20 +203,19 @@ formatting dependencies.
 Found 0 Violations
 ```
 
-The output shows us that deptrac is parsing 2 files and found 0 violations.
+The output shows, that deptrac is parsing 2 files and found 0 violations.
 By default every dependency between layers are violations.
 In our case there are (for now) no dependencies between our classes (layers).
 So it's fine that deptrac will show us 2 independent layers without any relationship.
 
 ## Violations
-If we've 2 layers (Models, Controller) and one layer is using the other, deptrac will raise a violation by default.
-for example a controller could try to use is the Model layer:
+If we've 2 layers (*Models*, *Controller*) and one layer is using the other, deptrac will raise a violation by default:
 
 ```php
 // see the example in examples/ModelController2
-namespace exmaples\MyNamespace\Controllers;
+namespace examples\MyNamespace\Controllers;
 
-use exmaples\MyNamespace\Models\SomeModel;
+use examples\MyNamespace\Models\SomeModel;
 
 class SomeController
 {
@@ -227,15 +226,15 @@ class SomeController
 
 ```
 
-After running deptrac using:
+After running deptrac for this example
 
-```
+```bash
 php deptrac.php analyze examples/ModelController2.depfile.yml
 ```
 
 we will get this output:
 
-```
+```bash
 Start to create an AstMap for 2 Files.
 Parsing File SomeController.php
 Parsing File SomeModel.php
@@ -247,20 +246,21 @@ start flatten dependencies
 end flatten dependencies
 collecting violations.
 formatting dependencies.
-exmaples\MyNamespace\Controllers\SomeController::5 must not depend on exmaples\MyNamespace\Models\SomeModel (Controller on Models)
-exmaples\MyNamespace\Controllers\SomeController::9 must not depend on exmaples\MyNamespace\Models\SomeModel (Controller on Models)
+examples\MyNamespace\Controllers\SomeController::5 must not depend on examples\MyNamespace\Models\SomeModel (Controller on Models)
+examples\MyNamespace\Controllers\SomeController::9 must not depend on examples\MyNamespace\Models\SomeModel (Controller on Models)
 
 Found 2 Violations
 ```
 
 ![ModelController1](examples/ModelController2.png)
 
-Deptrac is now finding 2 violations because the relation from the controller to models layer isn't allowed by default.
+Deptrac has found two violations because the relation from the controller to models layer isn't allowed.
 The console output shows exactly the lines deptrac found.
 
-## Ruleset (Allowing Dependencies)
 
-Allowed dependencies between layers are configured in rulesets.
+## Ruleset (allowing dependencies)
+
+Allowed dependencies between layers are configured in *rulesets*.
 
 By default deptrac will raise a violation for every dependency between layers.
 In real software you want to allow dependencies between different kind of layers.
@@ -268,9 +268,9 @@ In real software you want to allow dependencies between different kind of layers
 For example a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*.
 A natural approach would be allowing:
 
-- controllers to access service, but not repositories
-- services to access repositories, but not controllers
-- repositories neither services nor controllers.
+- controllers may access service, but not repositories
+- services may access repositories, but not controllers
+- repositories neither may access services nor controllers.
 
 We can define this using such a depfile:
 
@@ -316,7 +316,7 @@ start flatten dependencies
 end flatten dependencies
 collecting violations.
 formatting dependencies.
-exmaples\MyNamespace\Repository\SomeRepository::5 must not depend on exmaples\MyNamespace\Controllers\SomeController (Repository on Controller)
+examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
 ```
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
@@ -325,9 +325,9 @@ Deptrac now finds a violation, if we take a closer look at the "SomeRepository" 
 we'll see an unused use statement to a controller:
 
 ```php
-namespace exmaples\MyNamespace\Repository;
+namespace examples\MyNamespace\Repository;
 
-use exmaples\MyNamespace\Controllers\SomeController;
+use examples\MyNamespace\Controllers\SomeController;
 
 class SomeRepository { }
 ```
