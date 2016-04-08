@@ -466,8 +466,7 @@ To build deptrac, clone this repository and ensure you have the build dependenci
 
 ```bash
 git clone https://github.com/sensiolabs-de/deptrac.git 
-cd deptrac 
-composer install
+cd deptrac
 make build
 ```
 
