@@ -5,8 +5,8 @@
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
 
 For example, you can define a rule like "controllers may not depend on models".
-To ensure this, deptrac reads your code and find any usages of models in your controllers and will show you, where
-this rule was violated. 
+To ensure this, deptrac analyses your code to find any usages of models in your controllers and will show you where
+this rule was violated.
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
@@ -15,7 +15,7 @@ this rule was violated.
 
 The easiest way to get started is to download the depfile.phar.
 
-At first, you need a so called "depfile", which is written in YAML.
+At first, you need a so called *depfile*, which is written in YAML.
 You can generate a bootstrapped `depfile.yml` with
 
 ```bash
@@ -62,22 +62,25 @@ ruleset:
 
 
 #### Explanation
-In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
+In the first section, `paths`, you declare, where deptrac should look for your code.
+As this is an array of directories, you can specify multiple locations.
 
-With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
+With the `exclude_files` section, you can specify one or more regular expression for files, that should be excludes,
+the most common being probably anything containing the "test" word in the path.
 
 In our example we defined three different layers *Controller*, *Repository* and *Service* in the `layers` section.
 Deptrac is using so called `collectors` to group classes into `layers` (in this case by the name of the class).
 
-The `ruleset` section defines, how these layers may depend on other layers.
-In the example every class of the *Controller*-layer may depend on classes that lives in the *Service*-layer,
+The `ruleset` section defines, how these layers may or may not depend on other layers.
+In the example every class of the *Controller*-layer may depend on classes that reside in the *Service*-layer,
 and classes in the *Service*-layer may depend on classes in the *Repository*-layer.
 
-Classes in the *Repository*-layer my NOT depend on any classes in different layers.
-As the `ruleset` works like a whitelist, this line could be omitted, but this is more declarative.
+Classes in the *Repository*-layer my NOT depend on any classes in other layers.
+The `ruleset` acts as a whitelist, therefore the *Repository*-layer rules may be omitted, however
+explicitly stating that the layer may not depend on other layers is more declarative.
 
-If a class in the *Repository*-layer use a class in the *Service*-layer, deptrac wil recognize this and throw a violation for this case.
-The same, if a *Service*-layer-class uses a *Controller*-layer-class.
+If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac wil recognize the dependency and throw a violation for this case.
+The same counts for if a *Service*-layer-class uses a *Controller*-layer-class.
 
 
 ## Installation
