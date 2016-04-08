@@ -175,7 +175,7 @@ In this example we define that every class that contains `MyNamespace\Models\` w
 Every class that matches `.*MyNamespace\\.*Controller.*` will become a part of the *Controller* layer.
 
 As we defined our layers, we can generate a dependency graph for the example configuration:
-(Make sure that [*graphviz*](### Optional dependency: Graphviz) (dot) is installed on your system)
+(Make sure that *[graphviz](### Optional dependency: Graphviz)* (dot) is installed on your system)
 
 ```bash
 php deptrac.php analyze examples/ModelController1.depfile.yml
