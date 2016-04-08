@@ -157,6 +157,7 @@ group them in layers.
 ```yaml
 paths:
   - ./examples/ModelController
+exclude_files: ~
 layers:
   - name: Models
     collectors:
@@ -215,7 +216,9 @@ By default every dependency between layers are violations.
 In our case there are (for now) no dependencies between our classes (layers).
 So it's fine that deptrac will show us 2 independent layers without any relationship.
 
+
 ## Violations
+
 If we've 2 layers (*Models*, *Controller*) and one layer is using the other, deptrac will raise a violation by default:
 
 ```php
@@ -272,12 +275,11 @@ Allowed dependencies between layers are configured in *rulesets*.
 By default deptrac will raise a violation for every dependency between layers.
 In real software you want to allow dependencies between different kind of layers.
 
-For example a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*.
-A natural approach would be allowing:
+As a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*, a natural approach for this would be allowing:
 
-- controllers may access service, but not repositories
-- services may access repositories, but not controllers
-- repositories neither may access services nor controllers.
+- *controllers* may access *service*, but not *repositories*
+- *services* may access *repositories*, but not *controllers*
+- *repositories* neither may access services nor *controllers*.
 
 We can define this using such a depfile:
 
@@ -306,11 +308,14 @@ ruleset:
   Repository: ~
 ```
 
-Take a closer look to the rulset, here we whitelist that controller can access service and service can access repository.
+Take a closer look to the rulset.
+We whitelist that *controller* can access *service* and *service* can access *repository*.
 
 After running deptrac we'll get this result:
 
-```
+![ModelController1](examples/ControllerServiceRepository1.png)
+
+```bash
 Start to create an AstMap for 3 Files.
 Parsing File SomeController.php
 Parsing File SomeRepository.php
@@ -326,10 +331,8 @@ formatting dependencies.
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
 ```
 
-![ModelController1](examples/ControllerServiceRepository1.png)
-
-Deptrac now finds a violation, if we take a closer look at the "SomeRepository" on line 5,
-we'll see an unused use statement to a controller:
+Deptrac now finds a violation.
+If we take a closer look at the "SomeRepository" on line 5, we'll see an unused use statement for a controller:
 
 ```php
 namespace examples\MyNamespace\Repository;
@@ -339,10 +342,12 @@ use examples\MyNamespace\Controllers\SomeController;
 class SomeRepository { }
 ```
 
-Now we can remove the use statement and rerun deptrac - now without any violation.
+If we remove the use statement and rerun deptrac, the violation will be disappear.
 
-## Different Layers And Different Views
-In the example above we defined 3 different layers (controller, repository and service).
+
+## Different layers and different views
+
+In the example above we defined 3 different layers (*controller*, *repository* and *service*).
 Deptrac gives architects the power to define what kind of layers exists.
 
 Typically usecases are:
@@ -353,8 +358,8 @@ Typically usecases are:
 - enforcing naming conventions
 - ...
 
-Typically software has more than just one view,
-it's totally fine to use multiple depfiles, to take care about different architectural views.
+Typically software has more than just one view.
+**It's totally fine to use multiple depfiles, to take care about different architectural views.**
 
 
 ## Collectors
@@ -380,6 +385,7 @@ layers:
 
 ```
 
+Every class (including namespace) that match the regex `.*Controller.*` becomes a part of the controller layer.
 
 ### `bool` Collector
 
