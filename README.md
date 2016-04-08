@@ -56,14 +56,16 @@ ruleset:
     - Service
   Service:
     - Repository
-  Repository:
+  Repository: ~
 ```
 
 
 #### Quick Intro
-Using the `paths` section you can tell Deptrac where to find the your code.
+In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
 
-In our example we defined 3 Different Layers `Controller`, `Controller` and `Service` in the `layers` section.
+With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
+
+In the `layers` section we defined 3 Different Layers `Controller`, `Repository` and `Service` for example.
 Deptrac is using collectors to group different Classes (in this case by the name of the class) together.
 
 The `ruleset` section defines that every class of the "Controller"-layer may depend on classes that lives in the "Service"-layer,
@@ -129,12 +131,6 @@ git clone https://github.com/sensiolabs-de/deptrac.git && cd deptrac && make bui
 
 This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
-## Location Of Your Code
-
-In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
-
-With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
-
 
 ## Layers
 Deptrac allows you to group different classes in "layers".
@@ -162,8 +158,9 @@ For example if your application has controllers and models, deptrac allows you t
 group them in layers.
 
 ```yml
-paths: ["./examples/ModelController"]
-exclude_files: []
+paths:
+  - ./examples/ModelController
+exclude_files: ~
 layers:
   - name: Models
     collectors:
@@ -173,21 +170,21 @@ layers:
     collectors:
       - type: className
         regex: .*MyNamespace\\.*Controller.*
-ruleset: []
+ruleset: ~
 ```
 
-In the first line we define (paths) the directory deptrac should analyze.
-Using exclude_files we would be able to exclude some directories (by regex).
+In the first line we define `paths` the directory deptrac should analyze.
+Using `exclude_files` we would be able to exclude some directories by regex.
 
-Things become more interesting in the layer part.
+Things become more interesting in the `layers` part.
 At first lets take a closer look at the first layer (with the name "Models").
 
 We decided that our software has some kind of layer called "Models".
 Every layer can have collectors.
 Collectors are responsible for taking a closer look at your code and decide if a class is part of a layer.
-For example by using the className collector you can define a regex for a classname.
-Every classname (including namespace) that matches this regex is collected by the className collector and becomes a part of the layer.
-In this example we define that everyClass that starts with MyNamespace\Models\ will be a part of the "Model" layer.
+For example by using the className collector you can define a regex for a class name.
+Every class name (including namespace) that matches this regex is collected by the className collector and becomes a part of the layer.
+In this example we define that every class that starts with MyNamespace\Models\ will be a part of the "Model" layer.
 
 Every class that is in *\MyNamespace\* and contains the word controller will become a part of the "Controller" layer.
 
@@ -299,8 +296,9 @@ A natural approach would be allowing:
 We can define this using such a depfile:
 
 ```yml
-paths: ["./examples/ControllerServiceRepository1/"]
-exclude_files: []
+paths:
+  - ./examples/ControllerServiceRepository1/
+exclude_files: ~
 layers:
   - name: Controller
     collectors:
@@ -319,10 +317,10 @@ ruleset:
     - Service
   Service:
     - Repository
-  Repository:
+  Repository: ~
 ```
 
-Take a closer look t the rulset, here we whitelist that controller can access service and service can access repository.
+Take a closer look to the rulset, here we whitelist that controller can access service and service can access repository.
 
 After running deptrac we'll get this result:
 
@@ -361,7 +359,6 @@ Now we can remove the use statement and rerun deptrac - now without any violatio
 In the example above we defined 3 different layers (controller, repository and service).
 Deptrac gives architects the power to define what kind of layers exists.
 
-it's totally fine to define multiple depfiles (views of the architecure) for different purposes.
 Typically usecases are:
 
 - caring about layers in different architectures (tier, hexagonal, ddd, ...)
@@ -432,8 +429,6 @@ php deptrac.php analyze --help
 
 you can get a list of available formatters.
 
-
-
 ### Console Formatter
 The console formatter is activated by default.
 The Formatter dumps basic informations to stdout, example:
@@ -449,7 +444,6 @@ Supported Arguments:
 ```
 
 ### Graphviz Formatter
-
 The graphviz formatter is activated by default.
 After running deptrac by default the `--formatter-graphviz-display` is enabled, and deptrac tries to open the generated image.
 For example on CI-Servers you can disable this using `--formatter-graphviz-display=0`.
@@ -462,4 +456,4 @@ For example on CI-Servers you can disable this using `--formatter-graphviz-displ
 --formatter-graphviz-dump-html=         path to a dumped html file [default: ""]
 ```
 
-You can create an image, a dotfile and a htmlfile at the same time.
+You can create an image, a dot file and a html file at the same time.
