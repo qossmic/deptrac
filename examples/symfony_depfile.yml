@@ -200,4 +200,4 @@ layers:
     collectors:
       - type: className
         regex: .*Bridge\\Twig.*
-ruleset: []
+ruleset: ~

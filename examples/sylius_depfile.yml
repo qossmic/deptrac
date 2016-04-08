@@ -299,4 +299,4 @@ layers:
     collectors:
       - type: className
         regex: .*Bundle\\WebBundle.*
-ruleset: []
+ruleset: ~

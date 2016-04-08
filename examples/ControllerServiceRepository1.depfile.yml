@@ -1,5 +1,6 @@
-paths: ["./examples/ControllerServiceRepository1/"]
-exclude_files: []
+paths:
+  - ./examples/ControllerServiceRepository1/
+exclude_files: ~
 layers:
   - name: Controller
     collectors:
@@ -18,4 +19,4 @@ ruleset:
     - Service
   Service:
     - Repository
-  Repository:
+  Repository: ~
