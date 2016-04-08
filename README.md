@@ -436,6 +436,7 @@ After running deptrac with `--formatter-graphviz-display` enabled, deptrac tries
 For example on CI-Servers you can disable automatic opening of the image by setting the `--formatter-graphviz-display=0` option.
 
 Supported Options:
+
 ```
 --formatter-graphviz=                   to disable the graphviz fomatter, set this option to 0 [default: 1]
 --formatter-graphviz-display=           should try to open graphviz image [default: true]
@@ -464,4 +465,5 @@ composer install
 make build
 ```
 
-This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin`)
+This will create an executable file `debtrac.phar` file in the current directory.
+In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`)
