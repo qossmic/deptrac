@@ -150,7 +150,7 @@ to access models. Deptrac allows you to enforce and visualize such dependencies 
 If your application has *controllers* and *models*, deptrac allows you to
 group them in layers.
 
-```yml
+```yaml
 paths:
   - ./examples/ModelController
 layers:
@@ -277,7 +277,7 @@ A natural approach would be allowing:
 
 We can define this using such a depfile:
 
-```yml
+```yaml
 paths:
   - ./examples/ControllerServiceRepository1/
 exclude_files: ~
@@ -366,7 +366,7 @@ The className collector allows collecting classes by the full qualified name (na
 
 example:
 
-```yml
+```yaml
 layers:
   - name: Controller
     collectors:
@@ -380,7 +380,7 @@ Every class (including namespace) that match the regex `.*Controller.*` becomes 
 ### "bool" Collector
 The bool collector allows defining a collector based on other collectors.
 
-```yml
+```yaml
 layers:
   - name: Asset
     collectors:
