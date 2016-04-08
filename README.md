@@ -68,7 +68,7 @@ As this is an array of directories, you can specify multiple locations.
 With the `exclude_files` section, you can specify one or more regular expression for files, that should be excludes,
 the most common being probably anything containing the "test" word in the path.
 
-In our example we defined three different layers *Controller*, *Repository* and *Service* in the `layers` section.
+We defined three `layers` in the example: *Controller*, *Repository* and *Service*.
 Deptrac is using so called `collectors` to group classes into `layers` (in this case by the name of the class).
 
 The `ruleset` section defines, how these layers may or may not depend on other layers.
@@ -342,7 +342,7 @@ use examples\MyNamespace\Controllers\SomeController;
 class SomeRepository { }
 ```
 
-If we remove the use statement and rerun deptrac, the violation will be disappear.
+If we remove the `use` statement and rerun deptrac, the violation will disappear.
 
 
 ## Different layers and different views
