@@ -358,17 +358,18 @@ it's totally fine to use multiple depfiles, to take care about different archite
 
 
 ## Collectors
-Deptrac groups nodes in the ast to different layers.
-Collectors decides if a node (class) is part of a layer.
-From time to time deptrac will support more collectors out of the box and will provide an
+
+Deptrac groups nodes in your code's AST to different layers.
+Collectors decide if a node (typically a class) is part of a layer.
+deptrac will support more collectors out of the box and will provide an
 easy way to extend deptrac with custom collectors.
 
 
-### "className" Collector
-Most examples are using the className collector.
-The className collector allows collecting classes by the full qualified name (namespace + class).
+### `className` Collector
 
-example:
+Most examples are using the `className` collector.
+The `className` collector allows collecting classes by matching their fully qualified name to a regular expression.
+Any matching class will be added to the assigned layer.
 
 ```yaml
 layers:
@@ -379,12 +380,12 @@ layers:
 
 ```
 
-Every class (including namespace) that match the regex `.*Controller.*` becomes a part of the controller layer.
 
-### "bool" Collector
-The bool collector allows defining a collector based on other collectors.
+### `bool` Collector
 
-```yaml
+The `bool` collector allows combining other collectors with or without negation.
+
+```yml
 layers:
   - name: Asset
     collectors:
@@ -399,8 +400,7 @@ layers:
             regex: .*Assetic.*
 ```
 
-The example shows an example of the bool collector.
-Every class that contains (Foo\Asset OR Bar\Asset) and NOT Assetic will become a part of the asset layer.
+Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will become a part of the *Asset*-layer.
 
 
 ## Formatters
