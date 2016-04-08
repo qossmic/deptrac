@@ -364,15 +364,15 @@ Typically software has more than just one view.
 
 ## Collectors
 
-Deptrac groups nodes in your code's AST to different layers.
 Collectors decide if a node (typically a class) is part of a layer.
-deptrac will support more collectors out of the box and will provide an
+Deptrac will support more collectors out of the box and will provide an
 easy way to extend deptrac with custom collectors.
+
+Technically, deptrac creates an [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) from your code and groups nodes to different layers.
 
 
 ### `className` Collector
 
-Most examples are using the `className` collector.
 The `className` collector allows collecting classes by matching their fully qualified name to a regular expression.
 Any matching class will be added to the assigned layer.
 
@@ -385,7 +385,8 @@ layers:
 
 ```
 
-Every class (including namespace) that match the regex `.*Controller.*` becomes a part of the controller layer.
+Every classname that match the regex `.*Controller.*` becomes a part of the controller layer.
+
 
 ### `bool` Collector
 
@@ -420,9 +421,9 @@ php deptrac.php analyze --help
 ```
 
 
-### Console Formatter
+### Console formatter
 
-The default formatter is the Console Formatter, which dumps basic informations to *STDOUT*,
+The default formatter is the console formatter, which dumps basic informations to *STDOUT*,
 
 ```
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
@@ -439,7 +440,7 @@ Supported Options:
 
 If Graphviz is installed, the Graphviz formatter will be activated by default.
 After running deptrac with `--formatter-graphviz-display` enabled, deptrac tries to open the from Graphviz generated image.
-For example on CI-Servers you can disable automatic opening of the image by setting the `--formatter-graphviz-display=0` option.
+You can disable automatic opening of the image by setting the `--formatter-graphviz-display=0` option, which is usefull on CI-servers.
 
 Supported Options:
 
@@ -451,7 +452,7 @@ Supported Options:
 --formatter-graphviz-dump-html=         path to a dumped html file [default: ""]
 ```
 
-You can create an image, a dot and a HTML file at the same time.
+*Hint*: You can create an image, a dot and a HTML file at the same time.
 
 
 ## Build deptrac
@@ -463,6 +464,7 @@ To build deptrac, clone this repository and ensure you have the build dependenci
 - [Box](http://box-project.github.io/box2/)
 - make
 
+`cd` into your cloned directory, and call `make build`.
 
 ```bash
 git clone https://github.com/sensiolabs-de/deptrac.git 
@@ -472,3 +474,4 @@ make build
 
 This will create an executable file `debtrac.phar` file in the current directory.
 In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`)
+
