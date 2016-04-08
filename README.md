@@ -75,18 +75,19 @@ The `ruleset` section defines, how these layers may or may not depend on other l
 In the example every class of the *Controller*-layer may depend on classes that reside in the *Service*-layer,
 and classes in the *Service*-layer may depend on classes in the *Repository*-layer.
 
-Classes in the *Repository*-layer my NOT depend on any classes in other layers.
+Classes in the *Repository*-layer may NOT depend on any classes in other layers.
 The `ruleset` acts as a whitelist, therefore the *Repository*-layer rules may be omitted, however
 explicitly stating that the layer may not depend on other layers is more declarative.
 
-If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac wil recognize the dependency and throw a violation for this case.
-The same counts for if a *Service*-layer-class uses a *Controller*-layer-class.
+If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac wil recognize the dependency
+and throws a violation for this case. The same counts if a *Service*-layer-class uses a *Controller*-layer-class.
 
 
 ## Installation
 
 
 ### Download the phar (recommended)
+
 Download the [depfile.phar](https://get.sensiolans.de/deptrac.phar) and run it using `php deptrac.phar`.
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
