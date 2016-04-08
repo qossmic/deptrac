@@ -66,14 +66,14 @@ ruleset:
 In the first section, `paths`, you declare, where deptrac should look for your code.
 As this is an array of directories, you can specify multiple locations.
 
-With the `exclude_files` section, you can specify one or more regular expression for files, that should be excludes,
+With the `exclude_files` section, you can specify one or more regular expressions for files, that should be excluded,
 the most common being probably anything containing the "test" word in the path.
 
 We defined three `layers` in the example: *Controller*, *Repository* and *Service*.
 Deptrac is using so called `collectors` to group classes into `layers` (in this case by the name of the class).
 
 The `ruleset` section defines, how these layers may or may not depend on other layers.
-In the example every class of the *Controller*-layer may depend on classes that reside in the *Service*-layer,
+In the example, every class of the *Controller*-layer may depend on classes that reside in the *Service*-layer,
 and classes in the *Service*-layer may depend on classes in the *Repository*-layer.
 
 Classes in the *Repository*-layer may NOT depend on any classes in other layers.
@@ -105,7 +105,7 @@ sudo mv deptract.phar /usr/bin/local/deptrac
 ### Optional dependency: Graphviz
 
 If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
-There are packages for the usual package managers, for example:
+Graphviz can be install using common package managers:
 
 ```bash
 # for osx + brew
@@ -133,18 +133,18 @@ php deptrac.phar analyze depfile.yml
 Deptrac allows you to group different classes in *layers*.
 Technically layers are nothing more than a collection of classes.
 
-Each layer has a unique name and a list of one or more collectors, that will look for classes, that should be assigned to this layer
+Each layer has a unique name and a list of one or more collectors, which will look for classes, that should be assigned to this layer
 (and yes, classes can be assigned to more than one layer).
 
 (Hopefully) most software is written with some kind of layers in mind.
 For example a typically MVC application has at least controllers, models and views.
 
-Deptrac allows you to visualize and enforce rulesets, based on such layer informations.
+Deptrac allows you to visualize and enforce rulesets, based on such layer information.
 
 So, you could define, that every class, that ends with `Controller` will be assigned to the *Controller*-layer, and
 every class, that has a `\Model\` in its namespace will be added to the *Model*-layer.
 
-Saying, you're adopting MVC, most time you do not want your models to access controllers, but it is allowed for controllers
+Saying, you are adopting MVC, most time you do not want your models to access controllers, but it is allowed for controllers
 to access models. Deptrac allows you to enforce and visualize these dependencies / rules.
 
 **By default, any dependencies between layers are forbidden!**
@@ -265,7 +265,7 @@ Found 2 Violations
 
 ![ModelController1](examples/ModelController2.png)
 
-Deptrac has found two violations because the relation from the controller to models layer isn't allowed.
+Deptrac has found two violations because the relation from the controller to models layer is not allowed.
 The console output shows exactly the lines deptrac found.
 
 
@@ -282,7 +282,7 @@ As a lot of architectures define some kind of *Controllers*, *Services* and *Rep
 - *services* may access *repositories*, but not *controllers*
 - *repositories* neither may access services nor *controllers*.
 
-We can define this using such a depfile:
+We can define this using the following depfile:
 
 ```yaml
 paths:
@@ -309,10 +309,10 @@ ruleset:
   Repository: ~
 ```
 
-Take a closer look to the rulset.
+Take a closer look at the rulset.
 We whitelist that *controller* can access *service* and *service* can access *repository*.
 
-After running deptrac we'll get this result:
+After running deptrac we will get this result:
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
@@ -333,7 +333,7 @@ examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\My
 ```
 
 Deptrac now finds a violation.
-If we take a closer look at the "SomeRepository" on line 5, we'll see an unused use statement for a controller:
+If we take a closer look at the "SomeRepository" on line 5, we will see an unused use statement for a controller:
 
 ```php
 namespace examples\MyNamespace\Repository;
@@ -354,13 +354,13 @@ Deptrac gives architects the power to define what kind of layers exists.
 Typically usecases are:
 
 - caring about layers in different architectures (tier, hexagonal, ddd, ...)
-- caring about dependencies between different kinds of services (infrastructure services / domain services / entities / dto's / ...)
+- caring about dependencies between different kinds of services (infrastructure services / domain services / entities / DTOs / ...)
 - caring about coupling to third party code like composer vendors, frameworks, ...
 - enforcing naming conventions
 - ...
 
 Typically software has more than just one view.
-**It's totally fine to use multiple depfiles, to take care about different architectural views.**
+**It is possible to use multiple depfiles, to take care about different architectural views.**
 
 
 ## Collectors
@@ -386,7 +386,7 @@ layers:
 
 ```
 
-Every classname that match the regular expression `.*Controller.*` becomes a part of the controller layer.
+Every classname that matches the regular expression `.*Controller.*` becomes a part of the *controller* layer.
 
 
 ### `bool` collector
@@ -413,7 +413,7 @@ Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will bec
 
 ### More collectors
 
-As deptrac ist in a very early state, feel free to contribute your own collector.
+As deptrac is in a very early state, feel free to contribute your own collector.
 
 ## Formatters
 
