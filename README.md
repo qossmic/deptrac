@@ -85,6 +85,7 @@ The same counts for if a *Service*-layer-class uses a *Controller*-layer-class.
 
 ## Installation
 
+
 ### Download the phar (recommended)
 Download the [depfile.phar](https://get.sensiolans.de/deptrac.phar) and run it using `php deptrac.phar`.
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
@@ -99,7 +100,9 @@ sudo mv deptract.phar /usr/bin/local/deptrac
 
 (In this guide, we assume, you have the `deptrac.phar` in your project root)
 
+
 ### Optional dependency: Graphviz
+
 If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
 There are packages for the usual package managers, for example:
 
@@ -127,23 +130,24 @@ php deptrac.phar analyze depfile.yml
 ## Layers
 
 Deptrac allows you to group different classes in *layers*.
-Technically layers are nothing more than collection of classes.
+Technically layers are nothing more than a collection of classes.
 
-Each layer has a unique name and a list of collectors, that will look for classes, that should be assigned to this layer
-(and yes, classes can be in more than one layer).
+Each layer has a unique name and a list of one or more collectors, that will look for classes, that should be assigned to this layer
+(and yes, classes can be assigned to more than one layer).
 
 (Hopefully) most software is written with some kind of layers in mind.
 For example a typically MVC application has at least controllers, models and views.
 
-Deptrac allows you to visualize and enforce some kind of ruleset, based on such layer informations.
+Deptrac allows you to visualize and enforce rulesets, based on such layer informations.
 
 So, you could define, that every class, that ends with `Controller` will be assigned to the *Controller*-layer, and
 every class, that has a `\Model\` in its namespace will be added to the *Model*-layer.
 
-Saying, you're adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
-to access models. Deptrac allows you to enforce and visualize such dependencies / rules.
+Saying, you're adopting MVC, most time you do not want your models to access controllers, but it is allowed for controllers
+to access models. Deptrac allows you to enforce and visualize these dependencies / rules.
 
-**Per default, any dependencies between layers are forbidden!**
+**By default, any dependencies between layers are forbidden!**
+
 
 ### Collecting Layers
 
@@ -401,45 +405,46 @@ Every class that contains (Foo\Asset OR Bar\Asset) and NOT Assetic will become a
 
 ## Formatters
 
-Deptrac has support for different formatters with different options.
+Deptrac has support for different output formatters with various options.
 
-by running
+You can get a list of available formatters by running,
 
-```
+```bash
 php deptrac.php analyze --help
 ```
 
-you can get a list of available formatters.
 
 ### Console Formatter
-The console formatter is activated by default.
-The Formatter dumps basic informations to stdout, example:
+
+The default formatter is the Console Formatter, which dumps basic informations to *STDOUT*,
 
 ```
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
 ```
 
-Supported Arguments:
+Supported Options:
 
 ```
---formatter-console=         to disable the console fomatter, set this argument to 0 [default: 1]
+--formatter-console=         to disable the console fomatter, set this option to 0 [default: 1]
 ```
+
 
 ### Graphviz Formatter
-The graphviz formatter is activated by default.
-After running deptrac by default the `--formatter-graphviz-display` is enabled, and deptrac tries to open the generated image.
-For example on CI-Servers you can disable this using `--formatter-graphviz-display=0`.
 
+If Graphviz is installed, the Graphviz formatter will be activated by default.
+After running deptrac with `--formatter-graphviz-display` enabled, deptrac tries to open the from Graphviz generated image.
+For example on CI-Servers you can disable automatic opening of the image by setting the `--formatter-graphviz-display=0` option.
+
+Supported Options:
 ```
---formatter-graphviz=                   to disable the graphviz fomatter, set this argument to 0 [default: 1]
+--formatter-graphviz=                   to disable the graphviz fomatter, set this option to 0 [default: 1]
 --formatter-graphviz-display=           should try to open graphviz image [default: true]
 --formatter-graphviz-dump-image=        path to a dumped png file [default: ""]
 --formatter-graphviz-dump-dot=          path to a dumped dot file [default: ""]
 --formatter-graphviz-dump-html=         path to a dumped html file [default: ""]
 ```
 
-You can create an image, a dot and a html file at the same time.
-
+You can create an image, a dot and a HTML file at the same time.
 
 
 ## Build deptrac
