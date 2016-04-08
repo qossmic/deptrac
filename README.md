@@ -456,4 +456,4 @@ For example on CI-Servers you can disable this using `--formatter-graphviz-displ
 --formatter-graphviz-dump-html=         path to a dumped html file [default: ""]
 ```
 
-You can create an image, a dot file and a html file at the same time.
+You can create an image, a dot and a html file at the same time.
