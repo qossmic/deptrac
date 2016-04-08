@@ -234,7 +234,6 @@ class SomeController
         return $m;
     }
 }
-
 ```
 
 After running deptrac for this example
@@ -383,7 +382,6 @@ layers:
     collectors:
       - type: className
         regex: .*Controller.*
-
 ```
 
 Every classname that matches the regular expression `.*Controller.*` becomes a part of the *controller* layer.
@@ -414,6 +412,7 @@ Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will bec
 ### More collectors
 
 As deptrac is in a very early state, feel free to contribute your own collector.
+
 
 ## Formatters
 
