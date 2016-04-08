@@ -76,7 +76,7 @@ In the example every class of the *Controller*-layer may depend on classes that 
 and classes in the *Service*-layer may depend on classes in the *Repository*-layer.
 
 Classes in the *Repository*-layer may NOT depend on any classes in other layers.
-The `ruleset` acts as a whitelist, therefore the *Repository*-layer rules may be omitted, however
+The `ruleset` acts as a whitelist, therefore the *Repository*-layer rules can be omitted, however
 explicitly stating that the layer may not depend on other layers is more declarative.
 
 If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac wil recognize the dependency
