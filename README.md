@@ -5,7 +5,7 @@
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
 
 For example, you can define a rule like "controllers may not depend on models".
-To ensure this, deptrac analyses your code to find any usages of models in your controllers and will show you where
+To ensure this, deptrac analyzes your code to find any usages of models in your controllers and will show you where
 this rule was violated.
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
@@ -24,7 +24,7 @@ php deptrac.phar init
 
 In this file you define (mainly) three things:
 
-1. The location of your sourcecode.
+1. The location of your source code.
 2. The layers of you application.
 3. The allowed dependencies between your layers.
 
@@ -63,10 +63,10 @@ ruleset:
 
 #### Explanation
 
-In the first section, `paths`, you declare, where deptrac should look for your code.
+In the first section, `paths`, you declare where deptrac should look for your code.
 As this is an array of directories, you can specify multiple locations.
 
-With the `exclude_files` section, you can specify one or more regular expressions for files, that should be excluded,
+With the `exclude_files` section, you can specify one or more regular expressions for files that should be excluded,
 the most common being probably anything containing the "test" word in the path.
 
 We defined three `layers` in the example: *Controller*, *Repository* and *Service*.
@@ -123,37 +123,37 @@ To execute deptrac, run
 ```bash
 php deptrac.phar
 
-# what es equivalent to
+# which is equivalent to
 php deptrac.phar analyze depfile.yml
 ```
 
 
 ## Layers
 
-Deptrac allows you to group different classes in *layers*.
+Deptrac allows you to group different classes into *layers*.
 Technically layers are nothing more than a collection of classes.
 
-Each layer has a unique name and a list of one or more collectors, which will look for classes, that should be assigned to this layer
+Each layer has a unique name and a list of one or more collectors, which will look for classes that should be assigned to this layer
 (and yes, classes can be assigned to more than one layer).
 
 (Hopefully) most software is written with some kind of layers in mind.
-For example a typically MVC application has at least controllers, models and views.
+For example a typical MVC application has at least controllers, models and views.
 
 Deptrac allows you to visualize and enforce rulesets, based on such layer information.
 
-So, you could define, that every class, that ends with `Controller` will be assigned to the *Controller*-layer, and
-every class, that has a `\Model\` in its namespace will be added to the *Model*-layer.
+So, you could define that every class that ends with `Controller` will be assigned to the *Controller*-layer, and
+every class, that has a `\Model\` in its namespace, will be added to the *Model*-layer.
 
-Saying, you are adopting MVC, most time you do not want your models to access controllers, but it is allowed for controllers
-to access models. Deptrac allows you to enforce and visualize these dependencies / rules.
+Say you are adopting MVC, most of the time you do not want your models to access controllers, but it is allowed for controllers
+to access models. Deptrac allows you to enforce and visualize these dependencies/rules.
 
-**By default, any dependencies between layers are forbidden!**
+**By default, all dependencies between layers are forbidden!**
 
 
 ### Collecting Layers
 
 If your application has *controllers* and *models*, deptrac allows you to
-group them in layers.
+group them into layers.
 
 ```yaml
 paths:
@@ -171,7 +171,7 @@ layers:
 ruleset: ~
 ```
 
-At first lets take a closer look at the first layer (named *Models*).
+At first, lets take a closer look at the first layer (named *Models*).
 
 Here we decided that our software has some kind of layer called *Models*.
 You assign classes to this layer with the help of *Collectors*.
@@ -213,7 +213,7 @@ Found 0 Violations
 ```
 
 The output shows, that deptrac is parsing 2 files and found 0 violations.
-By default every dependency between layers are violations.
+By default every dependency between layers is a violation.
 In our case there are (for now) no dependencies between our classes (layers).
 So it's fine that deptrac will show us 2 independent layers without any relationship.
 
@@ -264,7 +264,7 @@ Found 2 Violations
 
 ![ModelController1](examples/ModelController2.png)
 
-Deptrac has found two violations because the relation from the controller to models layer is not allowed.
+Deptrac has found two violations because the relation from the controller to model layers is not allowed.
 The console output shows exactly the lines deptrac found.
 
 
@@ -273,9 +273,9 @@ The console output shows exactly the lines deptrac found.
 Allowed dependencies between layers are configured in *rulesets*.
 
 By default deptrac will raise a violation for every dependency between layers.
-In real software you want to allow dependencies between different kind of layers.
+In real software you want to allow dependencies between different kinds of layers.
 
-As a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*, a natural approach for this would be allowing:
+As a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*, a natural approach for this would be to allow:
 
 - *controllers* may access *service*, but not *repositories*
 - *services* may access *repositories*, but not *controllers*
@@ -348,7 +348,7 @@ If we remove the `use` statement and rerun deptrac, the violation will disappear
 ## Different layers and different views
 
 In the example above we defined 3 different layers (*controller*, *repository* and *service*).
-Deptrac gives architects the power to define what kind of layers exists.
+Deptrac gives architects the power to define what kind of layers exist.
 
 Typically usecases are:
 
@@ -427,7 +427,7 @@ php deptrac.php analyze --help
 
 ### Console formatter
 
-The default formatter is the console formatter, which dumps basic informations to *STDOUT*,
+The default formatter is the console formatter, which dumps basic information to *STDOUT*,
 
 ```
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
@@ -443,7 +443,7 @@ Supported Options:
 ### Graphviz Formatter
 
 If Graphviz is installed, the Graphviz formatter will be activated by default.
-After running deptrac with `--formatter-graphviz-display` enabled, deptrac tries to open the from Graphviz generated image.
+After running deptrac with `--formatter-graphviz-display` enabled, deptrac tries to open the image generated by Graphviz.
 You can disable automatic opening of the image by setting the `--formatter-graphviz-display=0` option, which is usefull on CI-servers.
 
 Supported Options:
@@ -476,12 +476,12 @@ cd deptrac
 make build
 ```
 
-This will create an executable file [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) file in the current directory.
-In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`).
+This will create an executable file [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) in the current directory.
+In order to use deptrac globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`).
 
 
 ## Contribute
 
-Deptrac is in a very early state, so, it needs you to make it more awesome.
+Deptrac is in a very early state, so it needs you to make it more awesome.
 
-Feel free to report bugs, enhance the documentation, request or even implement new features.
+Feel free to report bugs, improve the documentation, request or even implement new features.
