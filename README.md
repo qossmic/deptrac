@@ -13,7 +13,7 @@ this rule was violated.
 
 ## Getting Started
 
-The easiest way to get started is to download the depfile.phar.
+The easiest way to get started is to download the [deptrac.phar](https://get.sensiolabs.de/deptrac.phar).
 
 At first, you need a so called *depfile*, which is written in YAML.
 You can generate a bootstrapped `depfile.yml` with
@@ -88,7 +88,7 @@ and throws a violation for this case. The same counts if a *Service*-layer-class
 
 ### Download the phar (recommended)
 
-Download the [depfile.phar](https://get.sensiolans.de/deptrac.phar) and run it using `php deptrac.phar`.
+Download the [deptrac.phar](https://get.sensiolabs.de/deptrac.phar) and run it using `php deptrac.phar`.
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
 ```bash
@@ -99,7 +99,7 @@ sudo chmod +x deptrac.phar
 sudo mv deptract.phar /usr/bin/local/deptrac
 ```
 
-(In this guide, we assume, you have the `deptrac.phar` in your project root)
+(In this guide, we assume, you have the [deptrac.phar](https://get.sensiolabs.de/deptrac.phar) in your project root)
 
 
 ### Optional dependency: Graphviz
@@ -476,7 +476,7 @@ cd deptrac
 make build
 ```
 
-This will create an executable file `debtrac.phar` file in the current directory.
+This will create an executable file [deptrac.phar](https://get.sensiolabs.de/deptrac.phar) file in the current directory.
 In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`).
 
 
