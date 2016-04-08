@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
+
+        <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
+
+        <service id="output_formatter_factory" class="SensioLabs\Deptrac\OutputFormatterFactory">
+            <argument/>
+        </service>
+
+        <service id="output_formatter_graphviz" class="SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
+        <service id="output_formatter_console" class="SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
+        <service id="command_init" class="SensioLabs\Deptrac\Command\InitCommand"/>
+
+        <service id="ruleset_engine" class="SensioLabs\Deptrac\RulesetEngine"/>
+
+        <service id="collector_factory" class="SensioLabs\Deptrac\CollectorFactory">
+            <argument/>
+        </service>
+
+        <service id="collector_className" class="SensioLabs\Deptrac\Collector\ClassNameCollector">
+            <tag name="collector"/>
+        </service>
+
+        <service id="collector_bool" class="SensioLabs\Deptrac\Collector\BoolCollector">
+            <tag name="collector"/>
+        </service>
+
+        <service id="collector_inheritance_level" class="SensioLabs\Deptrac\Collector\InheritanceLevelCollector">
+            <tag name="collector" />
+        </service>
+
+        <service id="command_analyze" class="SensioLabs\Deptrac\Command\AnalyzeCommand">
+            <argument type="service" id="dispatcher"/>
+            <argument type="service" id="astrunner"/>
+            <argument type="service" id="output_formatter_factory"/>
+            <argument type="service" id="ruleset_engine"/>
+            <argument type="service" id="collector_factory"/>
+        </service>
+
+    </services>
+</container>

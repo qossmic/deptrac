@@ -1,0 +1,12 @@
+{
+  "directories": [
+    "src",
+    "vendor"
+  ],
+  "files": [
+    "services.xml"
+  ],
+  "main": "deptrac.php",
+  "output": "deptrac.phar",
+  "stub": true
+}
