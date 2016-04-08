@@ -483,8 +483,6 @@ In order to use deptract globally on your system, feel free to add it to your PA
 
 ## Contribute
 
-Deptrac is in a very early state. So, its needs you to make it more aweseome.
+Deptrac is in a very early state, so, it needs you to make it more awesome.
 
 Feel free to report bugs, enhance the documentation, request or even implement new features.
-
-
