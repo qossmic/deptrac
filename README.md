@@ -62,7 +62,7 @@ ruleset:
 
 
 #### Explanation
-In section `paths`, you declare, where deptrac should look for your code.
+In section `paths`, you declare, where deptrac should look for your code. As this is an array of directories, you can specify multiple locations.
 
 With the `exclude_files` section, you can specify a regular expression for files, that should be excludes (like tests).
 
@@ -82,47 +82,31 @@ The same, if a *Service*-layer-class uses a *Controller*-layer-class.
 
 ## Installation
 
-### download the phar (recommended)
+### Download the phar (recommended)
 Download the [depfile.phar](https://get.sensiolans.de/deptrac.phar) and run it using `php deptrac.phar`.
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
 ```bash
 curl -LS https://get.sensiolans.de/deptrac.phar -o deptract.phar
+
+# optional
 sudo chmod +x deptrac.phar
 sudo mv deptract.phar /usr/bin/local/deptrac
 ```
 
+(In this guide, we assume, you have the `deptrac.phar` in your project root)
 
-#### Optional dependency: Graphviz
+### Optional dependency: Graphviz
 If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
 There are packages for the usual package managers, for example:
 
 ```bash
-brew install graphviz // osx + brew
-sudo apt-get install graphviz // ubuntu
+# for osx + brew
+brew install graphviz
+
+# for ubuntu and debian
+sudo apt-get install graphviz
 ```
-
-
-### Build @todo moove down
-
-For now, you have to build deptrac on your own.
-To do this, you need the following software installed on your machine:
-
-- PHP in version 5.5.9 or above
-- [Composer](https://getcomposer.org/)
-- [Box](http://box-project.github.io/box2/)
-- make
-
-Clone this repository, cd into it and run the make target:
-
-```bash
-git clone https://github.com/sensiolabs-de/deptrac.git 
-cd deptrac 
-composer install
-make build
-```
-
-This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
 
 ## Run Deptrac
@@ -136,8 +120,10 @@ php deptrac.phar
 php deptrac.phar analyze depfile.yml
 ```
 
+
 ## Layers
-Deptrac allows you to group different classes in "layers".
+
+Deptrac allows you to group different classes in *layers*.
 Technically layers are nothing more than collection of classes.
 
 Each layer has a unique name and a list of collectors, that will look for classes, that should be assigned to this layer
@@ -148,23 +134,22 @@ For example a typically MVC application has at least controllers, models and vie
 
 Deptrac allows you to visualize and enforce some kind of ruleset, based on such layer informations.
 
-For example, you can define, that every class, that ends with `Controller` will be assigned to the "Controller"-layer, and
-every class, that has a `\Model\` in its namespace will be added to the "Model"-layer.
+So, you could define, that every class, that ends with `Controller` will be assigned to the *Controller*-layer, and
+every class, that has a `\Model\` in its namespace will be added to the *Model*-layer.
 
-For example, by adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
+Saying, you're adopting MVC, most time you don't want your models to access controllers, but it's fine for controllers
 to access models. Deptrac allows you to enforce and visualize such dependencies / rules.
-
 
 **Per default, any dependencies between layers are forbidden!**
 
 ### Collecting Layers
-For example if your application has controllers and models, deptrac allows you to
+
+If your application has *controllers* and *models*, deptrac allows you to
 group them in layers.
 
 ```yml
 paths:
   - ./examples/ModelController
-exclude_files: ~
 layers:
   - name: Models
     collectors:
@@ -177,40 +162,30 @@ layers:
 ruleset: ~
 ```
 
-In the first line we define `paths` the directory deptrac should analyze.
-Using `exclude_files` we would be able to exclude some directories by regex.
+At first lets take a closer look at the first layer (named *Models*).
 
-Things become more interesting in the `layers` part.
-At first lets take a closer look at the first layer (with the name "Models").
+Here we decided that our software has some kind of layer called *Models*.
+You assign classes to this layer with the help of *Collectors*.
 
-We decided that our software has some kind of layer called "Models".
-Every layer can have collectors.
 Collectors are responsible for taking a closer look at your code and decide if a class is part of a layer.
-For example by using the className collector you can define a regex for a class name.
-Every class name (including namespace) that matches this regex is collected by the className collector and becomes a part of the layer.
-In this example we define that every class that starts with MyNamespace\Models\ will be a part of the "Model" layer.
+By using the `className` collector you can define a regular expression for a class name.
+Every (fully qualified) class name that matches this regular expression becomes part of the assigned layer.
+In this example we define that every class that contains `MyNamespace\Models\` will be a part of the *Model* layer.
 
-Every class that is in *\MyNamespace\* and contains the word controller will become a part of the "Controller" layer.
+Every class that matches `.*MyNamespace\\.*Controller.*` will become a part of the *Controller* layer.
 
-We can generate a dependency graph for the example configuration using:
+As we defined our layers, we can generate a dependency graph for the example configuration:
+(Make sure that [*graphviz*](### Optional dependency: Graphviz) (dot) is installed on your system)
 
-```
+```bash
 php deptrac.php analyze examples/ModelController1.depfile.yml
 ```
 
-Make sure that *graphviz* (dot) is installed on your system and you run php from your local system (for generating images).
-You can install graphviz using:
-
-```
-brew install graphviz // osx + brew
-sudo apt-get install graphviz // ubuntu
-```
-
-After deptrac finished the final png should be open:
+After deptrac finished an image should be opened:
 
 ![ModelController1](examples/ModelController1.png)
 
-and deptrac will produce this output:
+on your command line deptrac will produce this output:
 
 ```
 Start to create an AstMap for 2 Files.
@@ -461,3 +436,24 @@ For example on CI-Servers you can disable this using `--formatter-graphviz-displ
 ```
 
 You can create an image, a dot and a html file at the same time.
+
+
+
+## Build deptrac
+
+To build deptrac, clone this repository and ensure you have the build dependencies installed:
+
+- PHP in version 5.5.9 or above
+- [Composer](https://getcomposer.org/)
+- [Box](http://box-project.github.io/box2/)
+- make
+
+
+```bash
+git clone https://github.com/sensiolabs-de/deptrac.git 
+cd deptrac 
+composer install
+make build
+```
+
+This will create a executable file `debtrac.phar` file in the current directory. Feel free to add it to your PATH (i.e. `/usr/local/bin`)
