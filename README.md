@@ -385,7 +385,7 @@ layers:
 
 ```
 
-Every classname that match the regex `.*Controller.*` becomes a part of the controller layer.
+Every classname that match the regular expression `.*Controller.*` becomes a part of the controller layer.
 
 
 ### `bool` Collector
