@@ -480,7 +480,11 @@ make build
 This will create an executable file `debtrac.phar` file in the current directory.
 In order to use deptract globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`).
 
+
 ## Contribute
 
-Deptrac is in a very early state
+Deptrac is in a very early state. So, its needs you to make it more aweseome.
+
+Feel free to report bugs, enhance the documentation, request or even implement new features.
+
 
