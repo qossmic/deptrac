@@ -110,7 +110,7 @@ class AnalyzeCommand extends Command
         $this->printFlattenEnd($output);
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
-            new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory)
+            new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory, $parser)
         );
 
         $this->printCollectViolations($output);

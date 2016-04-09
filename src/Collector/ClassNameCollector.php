@@ -2,12 +2,15 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
 {
+
+
     public function getType()
     {
         return 'className';
@@ -26,7 +29,8 @@ class ClassNameCollector implements CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory
+        CollectorFactory $collectorFactory,
+        AstParserInterface $astParser
     ) {
         return preg_match(
             '/'.$this->getRegexByConfiguration($configuration).'/i',

@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\Tests\Collector;
 
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
 use SensioLabs\Deptrac\CollectorFactory;
 use Prophecy\Argument;
@@ -46,7 +47,8 @@ class InheritanceLevelCollectorTest extends  \PHPUnit_Framework_TestCase
                 ['level' => $levelConfig],
                 $this->prophesize(AstClassReferenceInterface::class)->reveal(),
                 $astMap->reveal(),
-                $this->prophesize(CollectorFactory::class)->reveal()
+                $this->prophesize(CollectorFactory::class)->reveal(),
+                $this->prophesize(AstParserInterface::class)->reveal()
             )
         ;
 
