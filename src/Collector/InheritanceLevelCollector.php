@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
@@ -17,7 +18,8 @@ class InheritanceLevelCollector implements CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory
+        CollectorFactory $collectorFactory,
+        AstParserInterface $astParser
     ) {
         $classInherits = $astMap->getClassInherits($abstractClassReference->getClassName());
 

@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\Tests;
 
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\CollectorFactory;
@@ -29,7 +30,8 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
             Argument::type('array'),
             Argument::type(AstClassReferenceInterface::class),
             Argument::type(AstMap::class),
-            Argument::type(CollectorFactory::class)
+            Argument::type(CollectorFactory::class),
+            Argument::type(AstParserInterface::class)
         )->willReturn($return);
 
         return $collector->reveal();
@@ -103,7 +105,8 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
         $resolver = new ClassNameLayerResolver(
             $configuration->reveal(),
             $astMap->reveal(),
-            $collectorFactory->reveal()
+            $collectorFactory->reveal(),
+            $this->prophesize(AstParserInterface::class)->reveal()
         );
 
         $this->assertEquals(

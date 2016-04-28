@@ -3,6 +3,7 @@
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
@@ -16,21 +17,27 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     /** @var CollectorFactory */
     protected $collectorFactory;
 
+    /** @var AstParserInterface */
+    protected $astParser;
+
+
     /**
      * ClassNameLayerResolver constructor.
      *
-     * @param Configuration    $configuration
-     * @param AstMap           $astMap
+     * @param Configuration $configuration
+     * @param AstMap $astMap
      * @param CollectorFactory $collectorFactory
      */
     public function __construct(
         Configuration $configuration,
         AstMap $astMap,
-        CollectorFactory $collectorFactory
+        CollectorFactory $collectorFactory,
+        AstParserInterface $astParser
     ) {
         $this->configuration = $configuration;
         $this->astMap = $astMap;
         $this->collectorFactory = $collectorFactory;
+        $this->astParser = $astParser;
     }
 
     public function getLayersByClassName($className)
@@ -49,8 +56,10 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
                     $configurationCollector->getArgs(),
                     $astClassReference,
                     $this->astMap,
-                    $this->collectorFactory
-                )) {
+                    $this->collectorFactory,
+                    $this->astParser
+                )
+                ) {
                     $layers[$configurationLayer->getName()] = true;
                 }
             }

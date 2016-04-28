@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\Tests\Collector;
 
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
@@ -32,7 +33,8 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
             $configuration,
             $astClassReference->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal()
+            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(AstParserInterface::class)->reveal()
         );
 
         $this->assertEquals($expected, $stat);
@@ -47,7 +49,8 @@ class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
             ['Foo' => 'a'],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal()
+            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(AstParserInterface::class)->reveal()
         );
     }
 }

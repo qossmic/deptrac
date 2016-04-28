@@ -33,6 +33,10 @@
             <tag name="collector"/>
         </service>
 
+        <service id="collector_method" class="SensioLabs\Deptrac\Collector\MethodCollector">
+            <tag name="collector"/>
+        </service>
+
         <service id="collector_bool" class="SensioLabs\Deptrac\Collector\BoolCollector">
             <tag name="collector"/>
         </service>
