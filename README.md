@@ -95,7 +95,7 @@ Download the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) and run it us
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
 ```bash
-curl -LS https://get.sensiolans.de/deptrac.phar -o deptract.phar
+curl -LS https://get.sensiolabs.de/deptrac.phar -o deptract.phar
 
 # optional
 sudo chmod +x deptrac.phar
