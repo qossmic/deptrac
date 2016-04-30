@@ -28,7 +28,7 @@ php deptrac.phar init
 In this file you define (mainly) three things:
 
 1. The location of your source code.
-2. The layers of you application.
+2. The layers of your application.
 3. The allowed dependencies between your layers.
 
 
