@@ -1,3 +1,5 @@
+![travis](https://api.travis-ci.org/sensiolabs-de/deptrac.svg?branch=master)
+
 # Deptrac
 
 ## What is Deptrac
