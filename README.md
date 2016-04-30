@@ -1,5 +1,7 @@
 # Deptrac
 
+[![Build Status](https://travis-ci.org/sensiolabs-de/deptrac.svg?branch=master)](https://travis-ci.org/sensiolabs-de/deptrac)
+
 ## What is Deptrac
 
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
