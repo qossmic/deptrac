@@ -132,7 +132,7 @@ class AnalyzeCommand extends Command
             }
         }
 
-        return !count($violations);
+        return count($violations) ? 1 : 0;
     }
 
     private function collectFiles(Configuration $configuration)
