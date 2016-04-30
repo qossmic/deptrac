@@ -39,7 +39,7 @@ In this file you define (mainly) three things:
 Let's have a look at the generated file:
 
 ```yaml
-# depfile.yml 
+# depfile.yml
 paths:
   - ./src
 exclude_files:
@@ -429,6 +429,7 @@ You can get a list of available formatters by running,
 php deptrac.php analyze --help
 ```
 
+*Hint*: Symfony Console does not allow to pass options to the default command. Therefore in order to use the formatter-options you have to explicitly use the `analyze` command as shown above.
 
 ### Console formatter
 
@@ -476,7 +477,7 @@ To build deptrac, clone this repository and ensure you have the build dependenci
 `cd` into your cloned directory, and call `make build`.
 
 ```bash
-git clone https://github.com/sensiolabs-de/deptrac.git 
+git clone https://github.com/sensiolabs-de/deptrac.git
 cd deptrac
 make build
 ```
