@@ -95,11 +95,11 @@ Download the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) and run it us
 Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
 
 ```bash
-curl -LS https://get.sensiolabs.de/deptrac.phar -o deptract.phar
+curl -LS https://get.sensiolabs.de/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
-sudo mv deptract.phar /usr/bin/local/deptrac
+sudo mv deptrac.phar /usr/bin/local/deptrac
 ```
 
 (In this guide, we assume, you have the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) in your project root)
