@@ -1,5 +1,6 @@
 {
     "name": "sensiolabs-de/deptrac",
+    "license": "MIT",
     "require": {
         "php": ">=5.5.9",
         "nikic/php-parser": "~2.0",
