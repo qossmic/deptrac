@@ -12,11 +12,9 @@ this rule was violated.
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
-### Introduction Video
-[![ScreenShot](examples/youtube.png)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
-
 ## Table of Contents
 
+1. [Introduction Video](#introduction-video)
 1. [Getting Started](#getting-started)
   1. [The depfile](#the-depfile)
   1. [Explanation](#explanation)
@@ -39,6 +37,9 @@ this rule was violated.
 1. [Build deptrac](#build-deptrac)
 1. [Contribute](#contribute)
 
+## Introduction Video
+
+[![ScreenShot](examples/youtube.png)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
 
 ## Getting Started
 
