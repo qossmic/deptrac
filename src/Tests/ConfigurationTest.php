@@ -38,4 +38,16 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
         $this->assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependendencies('lala'));
     }
+
+    public function testFromWithNullExcludeFiles()
+    {
+        $configuration = Configuration::fromArray([
+            'layers' => [],
+            'paths' => [],
+            'exclude_files' => null,
+            'ruleset' => [],
+        ]);
+
+        $this->assertEquals([], $configuration->getExcludeFiles());
+    }
 }

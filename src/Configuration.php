@@ -24,13 +24,17 @@ class Configuration
             'exclude_files',
             'ruleset',
         ])
+        ->addAllowedTypes('layers', 'array')
+        ->addAllowedTypes('paths', 'array')
+        ->addAllowedTypes('exclude_files', ['array', 'null'])
+        ->addAllowedTypes('ruleset', 'array')
         ->resolve($arr);
 
         return new static(
             array_map(function ($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
-            $options['exclude_files']
+            (array) $options['exclude_files']
         );
     }
 
