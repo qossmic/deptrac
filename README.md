@@ -467,9 +467,11 @@ Supported Options:
 
 ## Build deptrac
 
+
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
 - PHP in version 5.5.9 or above
+- `phar.readonly = On` in the php.ini
 - [Composer](https://getcomposer.org/)
 - [Box](http://box-project.github.io/box2/)
 - make
