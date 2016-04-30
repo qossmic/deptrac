@@ -61,12 +61,10 @@ class ConsoleFormatter
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
     {
-        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $this->output->writeln(sprintf(
-                "Syntax Error on File %s\n<error>%s</error>\n",
-                $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
-                $astFileSyntaxErrorEvent->getSyntaxError()
-            ));
-        }
+        $this->output->writeln(sprintf(
+            "Syntax Error on File %s\n<error>%s</error>\n",
+            $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
+            $astFileSyntaxErrorEvent->getSyntaxError()
+        ));
     }
 }
