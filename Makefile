@@ -6,7 +6,11 @@ build: tests
 	chmod +x deptrac.phar
 
 composer-install-dev:
-	composer install --dev --optimize-autoloader
+	COMPOSER-CMD := $(composer)
+	ifndef COMPOSER-CMD
+		$(error "Composer is not available globally.")
+	endif
+	COMPOSER-CMD install --dev --optimize-autoloader
 
 tests: composer-install-dev
 	./vendor/phpunit/phpunit/phpunit -c .
