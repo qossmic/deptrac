@@ -37,28 +37,36 @@ class ConsoleFormatter
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
     {
-        $this->output->writeln(sprintf(
-            'Start to create an AstMap for <info>%s</info> Files.',
-            $preCreateAstMapEvent->getExpectedFileCount()
-        ));
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln(sprintf(
+                'Start to create an AstMap for <info>%s</info> Files.',
+                $preCreateAstMapEvent->getExpectedFileCount()
+            ));
+        }
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent)
     {
-        $this->output->writeln('AstMap created.');
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln('AstMap created.');
+        }
     }
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent)
     {
-        $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getRelativePathname()));
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getRelativePathname()));
+        }
     }
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
     {
-        $this->output->writeln(sprintf(
-            "Syntax Error on File %s\n<error>%s</error>\n",
-            $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
-            $astFileSyntaxErrorEvent->getSyntaxError()
-        ));
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln(sprintf(
+                "Syntax Error on File %s\n<error>%s</error>\n",
+                $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
+                $astFileSyntaxErrorEvent->getSyntaxError()
+            ));
+        }
     }
 }
