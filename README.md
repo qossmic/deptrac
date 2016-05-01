@@ -12,9 +12,34 @@ this rule was violated.
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
-### Introduction Video
-[![ScreenShot](examples/youtube.png)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
+## Table of Contents
 
+1. [Introduction Video](#introduction-video)
+1. [Getting Started](#getting-started)
+  1. [The depfile](#the-depfile)
+  1. [Explanation](#explanation)
+1. [Installation](#installation)
+  1. [Download the phar (recommended)](#download-the-phar-recommended)
+  1. [Optional dependency: Graphviz](#optional-dependency-graphviz)
+1. [Run Deptrac](#run-deptrac)
+1. [Layers](#layers)
+  1. [Collecting Layers](#collecting-layers)
+1. [Violations](#violations)
+1. [Ruleset (allowing dependencies)](#ruleset-allowing-dependencies)
+1. [Different layers and different views](#different-layers-and-different-views)
+1. [Collectors](#collectors)
+  1. [`className` Collector](#classname-collector)
+  1. [`bool` Collector](#bool-collector)
+  1. [More collectors](#more-collectors)
+1. [Formatters](#formatters)
+  1. [Console formatter](#console-formatter)
+  1. [Graphviz Formatter](#graphviz-formatter)
+1. [Build deptrac](#build-deptrac)
+1. [Contribute](#contribute)
+
+## Introduction Video
+
+[![ScreenShot](examples/youtube.png)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
 
 ## Getting Started
 
