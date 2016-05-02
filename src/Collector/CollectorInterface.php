@@ -10,7 +10,8 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 interface CollectorInterface
 {
     /**
-     * @return string Collector type name
+     * @return string Used as an identifier to access to the collector or to display something more user-friendly
+     *                name to the user when referring to the collector.
      *                
      * @example
      *  'bool', 'className', etc.
