@@ -9,8 +9,23 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 interface CollectorInterface
 {
+    /**
+     * @return string Collector type name
+     *                
+     * @example
+     *  'bool', 'className', etc.
+     */
     public function getType();
 
+    /**
+     * @param array                      $configuration List of arguments passed for this collector declaration
+     * @param AstClassReferenceInterface $abstractClassReference
+     * @param AstMap                     $astMap
+     * @param CollectorFactory           $collectorFactory
+     * @param AstParserInterface         $astParser
+     *
+     * @return boolean
+     */
     public function satisfy(
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
