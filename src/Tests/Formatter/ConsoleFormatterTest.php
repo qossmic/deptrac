@@ -29,6 +29,6 @@ class ConsoleFormatterTest extends \PHPUnit_Framework_TestCase
         ));
 
         $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        $this->assertEmpty($formatter->fetch());
+        $this->assertContains('.', $formatter->fetch());
     }
 }
