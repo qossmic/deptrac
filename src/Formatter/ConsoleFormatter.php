@@ -38,7 +38,7 @@ class ConsoleFormatter
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
     {
         $this->output->writeln(sprintf(
-            'Start to create an AstMap for <info>%s</info> Files.',
+            'Start to create an AstMap for <info>%u</info> Files.',
             $preCreateAstMapEvent->getExpectedFileCount()
         ));
     }
@@ -50,7 +50,11 @@ class ConsoleFormatter
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent)
     {
-        $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getRelativePathname()));
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getRelativePathname()));
+        } else {
+            $this->output->write('.');
+        }
     }
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
