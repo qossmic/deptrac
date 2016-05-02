@@ -119,7 +119,7 @@ and throws a violation for this case. The same counts if a *Service*-layer-class
 ### Download the phar (recommended)
 
 Download the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) and run it using `php deptrac.phar`.
-Feel free to add it to your PATH (i.e. `/usr/local/bin/box`)
+Feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
 curl -LS http://get.sensiolabs.de/deptrac.phar -o deptrac.phar
@@ -156,6 +156,8 @@ php deptrac.phar
 # which is equivalent to
 php deptrac.phar analyze depfile.yml
 ```
+
+If you run `php deptrac.phar -v` you'll get a more verbose output.
 
 
 ## Layers
@@ -228,8 +230,7 @@ On your command line deptrac will produce this output:
 
 ```bash
 Start to create an AstMap for 2 Files.
-Parsing File SomeController.php
-Parsing File SomeModel.php
+..
 AstMap created.
 start emitting dependencies "InheritanceDependencyEmitter"
 start emitting dependencies "BasicDependencyEmitter"
@@ -276,8 +277,7 @@ we will get this output:
 
 ```bash
 Start to create an AstMap for 2 Files.
-Parsing File SomeController.php
-Parsing File SomeModel.php
+..
 AstMap created.
 start emitting dependencies "InheritanceDependencyEmitter"
 start emitting dependencies "BasicDependencyEmitter"
@@ -347,9 +347,7 @@ After running deptrac we will get this result:
 
 ```bash
 Start to create an AstMap for 3 Files.
-Parsing File SomeController.php
-Parsing File SomeRepository.php
-Parsing File SomeService.php
+...
 AstMap created.
 start emitting dependencies "InheritanceDependencyEmitter"
 start emitting dependencies "BasicDependencyEmitter"

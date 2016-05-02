@@ -45,7 +45,7 @@ class ConsoleFormatter
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent)
     {
-        $this->output->writeln('AstMap created.');
+        $this->output->writeln("\nAstMap created.");
     }
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent)
@@ -60,7 +60,7 @@ class ConsoleFormatter
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
     {
         $this->output->writeln(sprintf(
-            "Syntax Error on File %s\n<error>%s</error>\n",
+            "\nSyntax Error on File %s\n<error>%s</error>\n",
             $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
             $astFileSyntaxErrorEvent->getSyntaxError()
         ));
