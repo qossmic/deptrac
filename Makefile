@@ -1,4 +1,4 @@
-.PHONY: build composer-install-dev tess tests-coverage
+.PHONY: build composer-install-dev tests tests-coverage
 
 build: tests
 	composer install --no-dev --optimize-autoloader
