@@ -145,6 +145,8 @@ brew install graphviz
 sudo apt-get install graphviz
 ```
 
+Graphviz is also available for [Windows](http://www.graphviz.org/Download_windows.php): install the current stable release and append the binary path on the environment variable Path (like ``C:\Program Files (x86)\Graphviz2.38\bin``).
+
 
 ## Run Deptrac
 
