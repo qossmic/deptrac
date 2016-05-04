@@ -1,7 +1,22 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__.'/vendor/autoload.php';
+$files = array(
+    __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php'
+);
+
+$found = false;
+
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        require $file;
+        $found = true;
+        break;
+    }
+}
 
 use SensioLabs\Deptrac\CompilerPass\CollectorPass;
 use SensioLabs\Deptrac\CompilerPass\OutputFormatterPass;
