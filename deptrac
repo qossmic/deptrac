@@ -18,6 +18,14 @@ foreach ($files as $file) {
     }
 }
 
+if (!$found) {
+    die(
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    );
+}
+
 use SensioLabs\Deptrac\CompilerPass\CollectorPass;
 use SensioLabs\Deptrac\CompilerPass\OutputFormatterPass;
 use Symfony\Component\Config\FileLocator;
