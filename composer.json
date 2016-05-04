@@ -35,6 +35,11 @@
             "url": "git@github.com:sensiolabs-de/astrunner.git",
             "type": "git"
         }
+    ],
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "bin": [
+        "fastest"
     ]
-
 }
