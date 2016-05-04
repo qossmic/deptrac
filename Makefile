@@ -1,15 +1,19 @@
+PHP_BIN      := php
+COMPOSER_BIN := composer
+BOX_BIN      := box
+
 .PHONY: build composer-install-dev tests tests-coverage
 
 build: tests
-	composer install --no-dev --optimize-autoloader
-	box build
+	$(COMPOSER_BIN) install --no-dev --optimize-autoloader
+	$(BOX_BIN) build
 	chmod +x deptrac.phar
 
 composer-install-dev:
-	composer install --dev --optimize-autoloader
+	$(COMPOSER_BIN) install --dev --optimize-autoloader
 
 tests: composer-install-dev
-	./vendor/phpunit/phpunit/phpunit -c .
+	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c .
 
 tests-coverage: composer-install-dev
-	./vendor/phpunit/phpunit/phpunit -c . --coverage-html coverage
+	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c . --coverage-html coverage
