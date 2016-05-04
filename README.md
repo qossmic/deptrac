@@ -22,6 +22,7 @@ this rule was violated.
 1. [Installation](#installation)
   1. [Download the phar (recommended)](#download-the-phar-recommended)
   1. [Optional dependency: Graphviz](#optional-dependency-graphviz)
+1. [Updating Deptrac](#updating-deptrac)
 1. [Run Deptrac](#run-deptrac)
 1. [Layers](#layers)
   1. [Collecting Layers](#collecting-layers)
@@ -147,6 +148,11 @@ sudo apt-get install graphviz
 ```
 
 Graphviz is also available for [Windows](http://www.graphviz.org/Download_windows.php): install the current stable release and append the binary path on the environment variable Path (like ``C:\Program Files (x86)\Graphviz2.38\bin``).
+
+
+## Updating Deptrac
+
+To update deptrac to the latest version just run `php deptrac.phar self-update`.
 
 
 ## Run Deptrac
