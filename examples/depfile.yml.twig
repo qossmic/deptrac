@@ -1,14 +1,16 @@
-{% yaml some_models() %}
+{% import _self as dep %}
+
+{% macro some_models(name, value, type, size) %}
 type: className
 regex: .*MyNamespace\\Models\\.*
-{% endyaml %}
+{% endmacro %}
 
 paths: ["./examples/ModelController1"]
 exclude_files: []
 layers:
 - name: Models
   collectors:
-    - {{ yaml('some_models') }}
+    - {{ dep.some_models('some_models') | yaml }}
   layers:
     - name: ModelsA
       collectors: []
