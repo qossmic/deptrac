@@ -5,6 +5,7 @@ namespace SensioLabs\Deptrac;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
@@ -40,31 +41,63 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
         $this->astParser = $astParser;
     }
 
-    public function getLayersByClassName($className)
-    {
-        $layers = [];
+    private function statisfyConfigurationLayer(ConfigurationLayer $configurationLayer, $className) {
 
-        foreach ($this->configuration->getLayers() as $configurationLayer) {
-            foreach ($configurationLayer->getCollectors() as $configurationCollector) {
-                $collector = $this->collectorFactory->getCollector($configurationCollector->getType());
+        if (empty($configurationLayer->getCollectors())) {
+            return true;
+        }
 
-                if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
-                    $astClassReference = new AstClassReference($className);
-                }
+        foreach ($configurationLayer->getCollectors() as $configurationCollector) {
+            $collector = $this->collectorFactory->getCollector($configurationCollector->getType());
 
-                if ($collector->satisfy(
-                    $configurationCollector->getArgs(),
-                    $astClassReference,
-                    $this->astMap,
-                    $this->collectorFactory,
-                    $this->astParser
-                )
-                ) {
-                    $layers[$configurationLayer->getName()] = true;
-                }
+            if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
+                $astClassReference = new AstClassReference($className);
+            }
+
+            if ($collector->satisfy(
+                $configurationCollector->getArgs(),
+                $astClassReference,
+                $this->astMap,
+                $this->collectorFactory,
+                $this->astParser
+            )) {
+                return true;
             }
         }
 
-        return array_keys($layers);
+        return false;
+    }
+
+    /**
+     * @param ConfigurationLayer[] $configurationLayers
+     * @param $className
+     * @return array
+     */
+    private function getLayersByClassNameRecursive(array $configurationLayers, $className)
+    {
+        $layers = [];
+
+        foreach ($configurationLayers as $configurationLayer) {
+            if (!$this->statisfyConfigurationLayer($configurationLayer, $className)) {
+                continue;
+            }
+
+            $layers = array_merge($layers, $this->getLayersByClassNameRecursive($configurationLayer->getLayers(), $className));
+
+            $layers[$configurationLayer->getName()] = true;
+        }
+
+        return $layers;
+
+    }
+
+    public function getLayersByClassName($className)
+    {
+        $a = $this->getLayersByClassNameRecursive(
+            $this->configuration->getLayers(),
+            $className
+        );
+
+        return array_values(array_unique(array_keys($a)));
     }
 }

@@ -6,6 +6,7 @@ use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration;
+use SensioLabs\Deptrac\ConfigurationEngine\ConfigurationEngineInterface;
 use SensioLabs\Deptrac\ConfigurationLoader;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
@@ -37,18 +38,22 @@ class AnalyzeCommand extends Command
 
     protected $collectorFactory;
 
+    protected $configurationEngine;
+
     public function __construct(
         EventDispatcherInterface $dispatcher,
         AstRunner $astRunner,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
-        CollectorFactory $collectorFactory
+        CollectorFactory $collectorFactory,
+        ConfigurationEngineInterface $configurationEngine
     ) {
         $this->dispatcher = $dispatcher;
         $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
         $this->collectorFactory = $collectorFactory;
+        $this->configurationEngine = $configurationEngine;
         parent::__construct();
     }
 
@@ -71,7 +76,10 @@ class AnalyzeCommand extends Command
 
         $this->printBanner($output);
 
-        $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
+        $configurationLoader = new ConfigurationLoader(
+            $input->getArgument('depfile'),
+            $this->configurationEngine
+        );
 
         if (!$configurationLoader->hasConfiguration()) {
             $this->printConfigMissingError($output, $configurationLoader);

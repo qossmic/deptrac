@@ -25,5 +25,6 @@ $container
 $application = new Application();
 $application->add($container->get('command_init'));
 $application->add($container->get('command_analyze'));
+$application->add($container->get('command_lint'));
 $application->setDefaultCommand('analyze');
 $application->run();

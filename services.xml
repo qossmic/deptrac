@@ -51,7 +51,20 @@
             <argument type="service" id="output_formatter_factory"/>
             <argument type="service" id="ruleset_engine"/>
             <argument type="service" id="collector_factory"/>
+            <argument type="service" id="configuration_engine_twig"/>
         </service>
+
+
+        <service id="configuration_provider_filesystem" class="SensioLabs\Deptrac\ConfigurationEngine\FilesystemConfigurationProvider"/>
+
+        <service id="configuration_engine_twig" class="SensioLabs\Deptrac\ConfigurationEngine\TwigConfigurationEngine">
+            <argument type="service" id="configuration_provider_filesystem"/>
+        </service>
+
+        <service id="command_lint" class="SensioLabs\Deptrac\Command\DepfileLintCommand">
+            <argument type="service" id="configuration_engine_twig"/>
+        </service>
+
 
     </services>
 </container>

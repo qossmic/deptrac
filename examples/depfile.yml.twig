@@ -1,0 +1,21 @@
+{% yaml some_models() %}
+type: className
+regex: .*MyNamespace\\Models\\.*
+{% endyaml %}
+
+{# collectors('Component_Archetype') #}
+
+paths: ["./examples/ModelController1"]
+exclude_files: []
+layers:
+- name: Models
+  collectors:
+    - {{ yaml('some_models') }}
+  layers:
+    - name: ModelsA
+      collectors: []
+- name: Controller
+  collectors:
+    - type: className
+      regex: .*MyNamespace\\.*Controller.*
+ruleset: []

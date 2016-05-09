@@ -2,27 +2,34 @@
 
 namespace SensioLabs\Deptrac;
 
-use Symfony\Component\Yaml\Yaml;
+use SensioLabs\Deptrac\ConfigurationEngine\ConfigurationEngineInterface;
 
 class ConfigurationLoader
 {
     private $configFilePathname;
+
+    /** @var ConfigurationEngineInterface */
+    private $configurtionEngine;
 
     /**
      * ConfigurationLoader constructor.
      *
      * @param $configFilePathname
      */
-    public function __construct($configFilePathname)
+    public function __construct(
+        $configFilePathname,
+        ConfigurationEngineInterface $configurationEngine
+    )
     {
         $this->configFilePathname = $configFilePathname;
+        $this->configurtionEngine = $configurationEngine;
     }
 
     /** @return Configuration */
     public function loadConfiguration()
     {
         return Configuration::fromArray(
-            Yaml::parse(file_get_contents($this->configFilePathname))
+            $this->configurtionEngine->render($this->configFilePathname)
         );
     }
 

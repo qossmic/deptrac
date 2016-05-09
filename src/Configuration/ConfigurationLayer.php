@@ -11,27 +11,36 @@ class ConfigurationLayer
 
     private $name;
 
-    public static function fromArray(array $arr)
+    private $layers;
+
+    public static function fromArray(array $arr, $parentName = null)
     {
         $options = (new OptionsResolver())->setRequired([
             'name',
-            'collectors',
+            'collectors'
+        ])->setDefaults([
+            'layers' => []
         ])->resolve($arr);
+
+        $name = ($parentName ? $parentName .' -> '. $options['name'] : $options['name']);
 
         return new static(
             array_map(function ($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
-            $options['name']
+            $name,
+            array_map(function ($v) use ($name) { return ConfigurationLayer::fromArray($v, $name);}, $options['layers'])
         );
     }
 
     /**
-     * @param $color
      * @param $collectors
+     * @param $name
+     * @param $layers
      */
-    private function __construct($collectors, $name)
+    private function __construct($collectors, $name, $layers)
     {
         $this->collectors = $collectors;
         $this->name = $name;
+        $this->layers = $layers;
     }
 
     /**
@@ -49,4 +58,13 @@ class ConfigurationLayer
     {
         return $this->name;
     }
+
+    /**
+     * @return ConfigurationLayer[]
+     */
+    public function getLayers()
+    {
+        return $this->layers;
+    }
+
 }
