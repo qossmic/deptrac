@@ -5,4 +5,4 @@ type: className
 regex: .*MyNamespace\\Models\\.*
 {% endmacro %}
 
-{{ dep.foo('some_models') }}
+{{ dep.foo('some_models') | yaml | yaml }}
