@@ -67,27 +67,6 @@ class TwigConfigurationEngine implements ConfigurationEngineInterface
             });
         }
 
-        while ($this->requiresParsingStep($yamlAsArray, '!!collectors_')) {
-            array_walk_recursive(
-                $yamlAsArray,
-                function (&$item, &$key) use ($yamlAsArray) {
-                    $loopfor = '!!collectors_';
-                    if (substr($item, 0, strlen($loopfor)) == $loopfor) {
-                        $str = substr($item, strlen($loopfor));
-
-                        $collectors = null;
-                        foreach ($yamlAsArray['layers'] as $yaml) {
-                            if ($yaml['name'] === $str) {
-                                $collectors = $yaml['collectors'];
-                            }
-                        }
-
-                        $item = $collectors;
-                    }
-                }
-            );
-        }
-
         return $yamlAsArray;
     }
 }
