@@ -150,10 +150,8 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
         // all classes
         foreach ($astMap->getAstClassReferences() as $classReferences) {
-            foreach ($classNameLayerResolver->getLayersByClassName(
-                $classReferences->getClassName()
-            ) as $classReferenceLayer) {
-                $layersDependOnLayers[$classReferenceLayer] = [];
+            foreach ($classNameLayerResolver->getLayersByClassName($classReferences->getClassName()) as $classReferenceLayer) {
+                $layersDependOnLayers[$classReferenceLayer->getPathname()] = [];
             }
         }
 
@@ -167,21 +165,27 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
 
             foreach ($layersA as $layerA) {
-                if (!isset($layersDependOnLayers[$layerA])) {
-                    $layersDependOnLayers[$layerA] = [];
+
+                $layerAPathname = $layerA->getPathname();
+
+                if (!isset($layersDependOnLayers[$layerAPathname])) {
+                    $layersDependOnLayers[$layerAPathname] = [];
                 }
 
                 foreach ($layersB as $layerB) {
-                    if ($layerA == $layerB) {
+
+                    $layerBPathname = $layerB->getPathname();
+
+                    if ($layerAPathname == $layerBPathname) {
                         continue;
                     }
 
-                    if (!isset($layersDependOnLayers[$layerA][$layerB])) {
-                        $layersDependOnLayers[$layerA][$layerB] = 1;
+                    if (!isset($layersDependOnLayers[$layerAPathname][$layerBPathname])) {
+                        $layersDependOnLayers[$layerAPathname][$layerBPathname] = 1;
                         continue;
                     }
 
-                    $layersDependOnLayers[$layerA][$layerB] = $layersDependOnLayers[$layerA][$layerB] + 1;
+                    $layersDependOnLayers[$layerAPathname][$layerBPathname] = $layersDependOnLayers[$layerAPathname][$layerBPathname] + 1;
                 }
             }
         }

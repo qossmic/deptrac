@@ -29,15 +29,15 @@ class RulesetEngine
 
                     if (in_array(
                         $layerNameOfDependency,
-                        $configurationRuleset->getAllowedDependendencies($layerName)
+                        $configurationRuleset->getAllowedDependendencies($layerName->getPathname())
                     )) {
                         continue;
                     }
 
                     $violations[] = new RulesetViolation(
                         $dependency,
-                        $layerName,
-                        $layerNameOfDependency,
+                        $layerName->getPathname(),
+                        $layerNameOfDependency->getPathname(),
                         ''
                     );
                 }

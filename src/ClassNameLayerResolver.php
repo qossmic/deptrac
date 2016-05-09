@@ -82,22 +82,26 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
                 continue;
             }
 
-            $layers = array_merge($layers, $this->getLayersByClassNameRecursive($configurationLayer->getLayers(), $className));
+            $layers = array_merge(
+                [$configurationLayer->getPathname() => $configurationLayer],
+                $this->getLayersByClassNameRecursive($configurationLayer->getLayers(), $className)
+            );
 
-            $layers[$configurationLayer->getName()] = true;
         }
 
         return $layers;
 
     }
 
+    /**
+     * @param $className
+     * @return ConfigurationLayer[]
+     */
     public function getLayersByClassName($className)
     {
-        $a = $this->getLayersByClassNameRecursive(
+        return $this->getLayersByClassNameRecursive(
             $this->configuration->getLayers(),
             $className
         );
-
-        return array_values(array_unique(array_keys($a)));
     }
 }

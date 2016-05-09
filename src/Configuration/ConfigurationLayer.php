@@ -13,7 +13,10 @@ class ConfigurationLayer
 
     private $layers;
 
-    public static function fromArray(array $arr, $parentName = null)
+    /** @var ConfigurationLayer | null */
+    private $parent = null;
+
+    public static function fromArray(array $arr, $parent = null)
     {
         $options = (new OptionsResolver())->setRequired([
             'name',
@@ -22,25 +25,38 @@ class ConfigurationLayer
             'layers' => []
         ])->resolve($arr);
 
-        $name = ($parentName ? $parentName .' -> '. $options['name'] : $options['name']);
-
-        return new static(
-            array_map(function ($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
-            $name,
-            array_map(function ($v) use ($name) { return ConfigurationLayer::fromArray($v, $name);}, $options['layers'])
+        $self = new static(
+            array_map(function ($v) {
+                return ConfigurationCollector::fromArray($v);
+            }, $options['collectors']),
+            $options['name'],
+            $parent
         );
+
+        $self->setLayers(
+            array_map(function ($v) use ($self) {
+                return ConfigurationLayer::fromArray(
+                    $v,
+                    $self
+                );
+            }, $options['layers'])
+        );
+
+        return $self;
     }
 
     /**
      * @param $collectors
      * @param $name
-     * @param $layers
+     * @param ConfigurationLayer|null $parent
+     * @param array $layers
      */
-    private function __construct($collectors, $name, $layers)
+    private function __construct($collectors, $name, ConfigurationLayer $parent = null, $layers = [])
     {
         $this->collectors = $collectors;
         $this->name = $name;
         $this->layers = $layers;
+        $this->parent = $parent;
     }
 
     /**
@@ -49,6 +65,17 @@ class ConfigurationLayer
     public function getCollectors()
     {
         return $this->collectors;
+    }
+
+    private function walkParents($callable) {
+        if (!$this->parent) {
+            return [];
+        }
+
+        return array_merge(
+            [$callable($this->parent)],
+            $this->parent->walkParents($callable)
+        );
     }
 
     /**
@@ -60,11 +87,31 @@ class ConfigurationLayer
     }
 
     /**
+     * @return mixed
+     */
+    public function getPathname()
+    {
+        $parentNames = $this->walkParents(function(ConfigurationLayer $layer) {
+           return $layer->getName();
+        });
+
+        return trim(implode(' -> ', $parentNames).' -> '.$this->name, ' -> ');
+    }
+
+    /**
      * @return ConfigurationLayer[]
      */
     public function getLayers()
     {
         return $this->layers;
+    }
+
+    /**
+     * @param array $layers
+     */
+    public function setLayers($layers)
+    {
+        $this->layers = $layers;
     }
 
 }
