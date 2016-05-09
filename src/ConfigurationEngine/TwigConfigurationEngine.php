@@ -4,6 +4,7 @@ namespace SensioLabs\Deptrac\ConfigurationEngine;
 
 use SensioLabs\Deptrac\ConfigurationEngine\Twig\YamlTwigExtension;
 use Symfony\Component\Yaml\Yaml;
+use Twig_Loader_Chain;
 
 class TwigConfigurationEngine implements ConfigurationEngineInterface
 {
@@ -38,10 +39,16 @@ class TwigConfigurationEngine implements ConfigurationEngineInterface
     public function render($pathname)
     {
 
+
         $twig = new \Twig_Environment(
-            new \Twig_Loader_Array([
-                'base' => $this->configurationProvider->provide($pathname)
-            ])
+            new Twig_Loader_Chain(array(
+                new \Twig_Loader_Array([
+                    'base' => $this->configurationProvider->provide($pathname)
+                ]),
+                new \Twig_Loader_Filesystem([
+                    '@root' => dirname($pathname)
+                ])
+            ))
         );
 
         $twig->addExtension(new YamlTwigExtension());

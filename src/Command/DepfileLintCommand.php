@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 class DepfileLintCommand extends Command
@@ -41,6 +42,11 @@ class DepfileLintCommand extends Command
             $input->getArgument('depfile', getcwd().'/depfile.yml')
         );
 
-        $output->write(Yaml::dump($a, PHP_INT_MAX));
+        try {
+            $output->write(Yaml::dump($a, PHP_INT_MAX));
+        } catch(ParseException $e) {
+            $output->write($a);
+            throw $e;
+        }
     }
 }

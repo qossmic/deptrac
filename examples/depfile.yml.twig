@@ -11,6 +11,7 @@ layers:
 - name: Models
   collectors:
     - {{ dep.some_models('some_models') | yaml }}
+    - {{ include('some-include.depfile.yml.twig') | yaml }}
   layers:
     - name: ModelsA
       collectors: []

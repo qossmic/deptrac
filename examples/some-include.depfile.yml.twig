@@ -1,0 +1,8 @@
+{% import _self as dep %}
+
+{% macro foo(name, value, type, size) %}
+type: className
+regex: .*MyNamespace\\Models\\.*
+{% endmacro %}
+
+{{ dep.foo('some_models') }}
