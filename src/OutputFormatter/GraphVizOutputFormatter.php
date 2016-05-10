@@ -41,8 +41,8 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param DependencyContext    $dependencyContext
-     * @param OutputInterface      $output
+     * @param DependencyContext $dependencyContext
+     * @param OutputInterface $output
      * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
@@ -66,12 +66,12 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         // create a vertices
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             if (!isset($vertices[$layer])) {
-                $vertices[$layer] = $graph->createVertex($layer);
+                $vertices[$layer] = $graph->createVertex($layer)->setGroup('A');
             }
 
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
                 if (!isset($vertices[$layerDependOn])) {
-                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
+                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn)->setGroup('A');
                 }
             }
         }
@@ -126,8 +126,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             if (!isset($layerViolations[$violation->getLayerA()][$violation->getLayerB()])) {
                 $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = 1;
             } else {
-                $layerViolations[$violation->getLayerA()][$violation->getLayerB(
-                )] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
+                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
             }
         }
 

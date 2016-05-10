@@ -3,6 +3,7 @@
 namespace SensioLabs\Deptrac\Command;
 
 use SensioLabs\Deptrac\ConfigurationEngine\ConfigurationEngineInterface;
+use SensioLabs\Deptrac\OutputFormatter\Graphviz\Graphs;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,6 +39,11 @@ class DepfileLintCommand extends Command
         InputInterface $input,
         OutputInterface $output
     ) {
+
+        $g = new Graphs('', [], [], true);
+        $output->writeln($g->render());
+        $output->writeln("------");
+
         $a = $this->configurationEngine->render(
             $input->getArgument('depfile', getcwd().'/depfile.yml')
         );
