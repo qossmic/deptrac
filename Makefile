@@ -10,7 +10,7 @@ build: tests
 	chmod +x deptrac.phar
 
 composer-install-dev:
-	$(COMPOSER_BIN) install --dev --optimize-autoloader
+	$(COMPOSER_BIN) install --optimize-autoloader
 
 tests: composer-install-dev
 	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c .
