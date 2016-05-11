@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\RulesetEngine;
 
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
@@ -35,7 +36,7 @@ class RulesetViolation
     }
 
     /**
-     * @return mixed
+     * @return ConfigurationLayer
      */
     public function getLayerA()
     {
@@ -43,7 +44,7 @@ class RulesetViolation
     }
 
     /**
-     * @return mixed
+     * @return ConfigurationLayer
      */
     public function getLayerB()
     {

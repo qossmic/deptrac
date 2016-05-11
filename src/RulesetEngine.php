@@ -36,8 +36,8 @@ class RulesetEngine
 
                     $violations[] = new RulesetViolation(
                         $dependency,
-                        $layerName->getPathname(),
-                        $layerNameOfDependency->getPathname(),
+                        $layerName,
+                        $layerNameOfDependency,
                         ''
                     );
                 }

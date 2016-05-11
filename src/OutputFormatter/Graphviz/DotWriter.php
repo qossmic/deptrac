@@ -48,14 +48,7 @@ class DotWriter
     public function render(DotWriter $parent = null)
     {
 
-        if ($this->graphType == 'digraph') {
-            $out = $this->graphType . ' G  {'."\n";
-        } else {
-            $out = $this->graphType . ' cluster_'.uniqid().' {'."\n";
-        }
-
-
-        $out .= implode("\n", array_filter(array_map(function($v) use ($parent) {
+        $body = implode("\n", array_filter(array_map(function($v) use ($parent) {
 
             if (!$v) {
                 return;
@@ -63,6 +56,20 @@ class DotWriter
 
             return str_repeat("\t", ($parent ? $parent->getIndent() : 0) + 1) . $v;
         }, explode("\n", $this->buffer))));
+
+        if (!trim($body)) {
+            return '';
+        }
+
+        if ($this->graphType == 'digraph') {
+            $out = $this->graphType . ' G  {'."\n";
+        } else {
+            $out = $this->graphType . ' cluster_'.uniqid().' {'."\n";
+        }
+
+        $out .= $body;
+
+
 
         $out .= "\n}\n";
 

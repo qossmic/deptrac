@@ -43,6 +43,7 @@ class DepfileLintCommand extends Command
         $g = new Graphs('', [], [], true);
         $output->writeln($g->render());
         $output->writeln("------");
+        die();
 
         $a = $this->configurationEngine->render(
             $input->getArgument('depfile', getcwd().'/depfile.yml')

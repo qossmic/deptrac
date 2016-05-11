@@ -53,8 +53,8 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
                 "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
                 $violation->getDependency()->getClassA(),
                 $violation->getDependency()->getClassB(),
-                $violation->getLayerA(),
-                $violation->getLayerB(),
+                $violation->getLayerA()->getPathname(),
+                $violation->getLayerB()->getPathname(),
                 $this->formatPath($violation->getDependency()->getPath(), $violation->getDependency())
             )
         );
@@ -68,8 +68,8 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
                 $violation->getDependency()->getClassA(),
                 $violation->getDependency()->getClassALine(),
                 $violation->getDependency()->getClassB(),
-                $violation->getLayerA(),
-                $violation->getLayerB()
+                $violation->getLayerA()->getPathname(),
+                $violation->getLayerB()->getPathname()
             )
         );
     }

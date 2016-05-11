@@ -20,6 +20,9 @@ class DependencyContext
     /** @var ClassNameLayerResolverInterface */
     private $classNameLayerResolver;
 
+    /** @var Configuration */
+    private $configuration;
+
     /**
      * DependencyContext constructor.
      *
@@ -29,6 +32,7 @@ class DependencyContext
      * @param ClassNameLayerResolverInterface  $classNameLayerResolver
      */
     public function __construct(
+        Configuration $configuration,
         AstMap $astMap,
         array $violations,
         DependencyResult $dependencyResult,
@@ -38,6 +42,7 @@ class DependencyContext
         $this->violations = $violations;
         $this->dependencyResult = $dependencyResult;
         $this->classNameLayerResolver = $classNameLayerResolver;
+        $this->configuration = $configuration;
     }
 
     /** @return AstMap */
@@ -63,4 +68,11 @@ class DependencyContext
     {
         return $this->classNameLayerResolver;
     }
+
+    /** @return Configuration */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
 }

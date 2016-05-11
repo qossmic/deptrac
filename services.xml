@@ -17,6 +17,10 @@
             <tag name="output_formatter"/>
         </service>
 
+        <service id="output_formatter_graphviz2" class="SensioLabs\Deptrac\OutputFormatter\GraphViz2OutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
         <service id="output_formatter_console" class="SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter">
             <tag name="output_formatter"/>
         </service>

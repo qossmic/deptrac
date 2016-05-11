@@ -131,7 +131,7 @@ class AnalyzeCommand extends Command
         foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
             try {
                 $formatter->finish(
-                    new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver),
+                    new DependencyContext($configuration, $astMap, $violations, $dependencyResult, $classNameLayerResolver),
                     $output,
                     $this->formatterFactory->getOutputFormatterInput($formatter, $input)
                 );

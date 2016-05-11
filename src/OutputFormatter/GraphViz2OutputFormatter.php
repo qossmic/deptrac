@@ -2,15 +2,18 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\OutputFormatter\Graph\GraphDependency;
+use SensioLabs\Deptrac\OutputFormatter\Graphviz\DotWriter;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GraphVizOutputFormatter implements OutputFormatterInterface
+class GraphViz2OutputFormatter implements OutputFormatterInterface
 {
     protected $eventDispatcher;
 
@@ -24,7 +27,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     public function getName()
     {
-        return 'graphviz';
+        return 'graphviz2';
     }
 
     /**
@@ -49,47 +52,33 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         DependencyContext $dependencyContext,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
-    ) {
-        return;
+    ) {;
 
-        $layerViolations = $this->calculateViolations($dependencyContext->getViolations());
-
-        $layersDependOnLayers = $this->calculateLayerDependencies(
+        $graphDependencies = $this->calculateLayerDependencies(
+            $dependencyContext->getViolations(),
             $dependencyContext->getAstMap(),
             $dependencyContext->getDependencyResult(),
             $dependencyContext->getClassNameLayerResolver()
         );
 
-        $graph = new \Fhaculty\Graph\Graph();
 
-        /** @var $vertices Vertex[] */
-        $vertices = [];
+        $g = DotWriter::newDigraph()
+            ->writeln("node [shape=box, style=rounded];")
+            ->writeln("style=filled;")
+            ->writeln("color=lightgrey;")
+        ;
 
-        // create a vertices
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (!isset($vertices[$layer])) {
-                $vertices[$layer] = $graph->createVertex($layer)->setGroup('A');
-            }
+        $g = $this->writeGraphLayers(
+            $dependencyContext->getConfiguration()->getLayers(),
+            $graphDependencies,
+            $g
+        );
 
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if (!isset($vertices[$layerDependOn])) {
-                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn)->setGroup('A');
-                }
-            }
-        }
 
-        // createEdges
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
+        echo $g->render();
 
-                if (isset($layerViolations[$layer], $layerViolations[$layer][$layerDependOn])) {
-                    $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
-                    $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
-                    $edge->setAttribute('graphviz.color', 'red');
-                }
-            }
-        }
+
+        return;
 
         if ($outputFormatterInput->getOption(static::$argument_display)) {
             (new \Graphp\GraphViz\GraphViz())->display($graph);
@@ -113,48 +102,83 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param RulesetViolation[] $violations
-     *
-     * @return array
+     * @param ConfigurationLayer[] $layers
+     * @param GraphDependency[] $graphDependencies
+     * @param DotWriter $dotWriter
      */
-    private function calculateViolations(array $violations)
+    private function writeGraphLayers(array $layers, array $graphDependencies, DotWriter $dotWriter)
     {
-        $layerViolations = [];
-        foreach ($violations as $violation) {
-            if (!isset($layerViolations[$violation->getLayerA()])) {
-                $layerViolations[$violation->getLayerA()] = [];
+        foreach ($layers as $layer) {
+
+            $layerGraphDependencies = $this->getGraphDependenciesForLayer($layer, $graphDependencies);
+
+            if (!count($layerGraphDependencies)) {
+                continue;
             }
 
-            if (!isset($layerViolations[$violation->getLayerA()][$violation->getLayerB()])) {
-                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = 1;
-            } else {
-                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
+            $dotWriter
+                ->writeln(
+                    'a1 [label=<<FONT point-size="19">' . $layer->getPathname() . '</FONT><BR/><FONT point-size="8"><FONT color="darkred">3</FONT>/<FONT color="darkred">12</FONT></FONT>>];'
+                );
+
+            foreach ($layerGraphDependencies as $layerGraphDependency) {
+
+                if (count($layerGraphDependency->getViolations())) {
+                    $dotWriter
+                        ->writeln(
+                            '"' . $layerGraphDependency->getLayerA()->getPathname() . '" -> "' . $layerGraphDependency->getLayerB()->getPathname() . '" [label = "' . count($layerGraphDependency->getViolations()) . '", color=red ];'
+                        );
+                    continue;
+                }
+
+                $dotWriter
+                    ->writeln(
+                        '"' . $layerGraphDependency->getLayerA()->getPathname() . '" -> "' . $layerGraphDependency->getLayerB() . '";'
+                    );
             }
+
+            $dotWriter->writeln($this->writeGraphLayers($layer->getLayers(), $graphDependencies, DotWriter::newSubgraph()));
         }
 
-        return $layerViolations;
+        return $dotWriter;
+
     }
 
     /**
-     * @param AstMap                          $astMap
-     * @param DependencyResult                $dependencyResult
+     * @param ConfigurationLayer $layer
+     * @param GraphDependency[] $grapDependencies
+     * @return GraphDependency[]
+     */
+    private function getGraphDependenciesForLayer(ConfigurationLayer $layer, array $grapDependencies) {
+        return array_filter($grapDependencies, function(GraphDependency $graphDependency) use ($layer) {
+            return $graphDependency->getLayerA()->getPathname() == $layer->getPathname();
+        });
+    }
+
+    /**
+     * @param RulesetViolation[] $violations
+     * @param AstMap $astMap
+     * @param DependencyResult $dependencyResult
      * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     *
-     * @return array
+     * @return Graph\GraphDependency[]
      */
     private function calculateLayerDependencies(
+        array $violations,
         AstMap $astMap,
         DependencyResult $dependencyResult,
         ClassNameLayerResolverInterface $classNameLayerResolver
     ) {
-        $layersDependOnLayers = [];
+        /** @var $graphDependency GraphDependency[] */
+        $graphDependency = [];
 
         // all classes
+        /*
+        TODO, drap all layers...
         foreach ($astMap->getAstClassReferences() as $classReferences) {
             foreach ($classNameLayerResolver->getLayersByClassName($classReferences->getClassName()) as $classReferenceLayer) {
                 $layersDependOnLayers[$classReferenceLayer->getPathname()] = [];
             }
-        }
+        }*/
 
         // dependencies
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
@@ -169,10 +193,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
                 $layerAPathname = $layerA->getPathname();
 
-                if (!isset($layersDependOnLayers[$layerAPathname])) {
-                    $layersDependOnLayers[$layerAPathname] = [];
-                }
-
                 foreach ($layersB as $layerB) {
 
                     $layerBPathname = $layerB->getPathname();
@@ -181,16 +201,23 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
                         continue;
                     }
 
-                    if (!isset($layersDependOnLayers[$layerAPathname][$layerBPathname])) {
-                        $layersDependOnLayers[$layerAPathname][$layerBPathname] = 1;
-                        continue;
+                    $uniqueKey = $layerAPathname.'|'.$layerBPathname;
+
+                    if (!isset($graphDependency[$uniqueKey])) {
+                        $graphDependency[$uniqueKey] = new GraphDependency($layerA, $layerB);
                     }
 
-                    $layersDependOnLayers[$layerAPathname][$layerBPathname] = $layersDependOnLayers[$layerAPathname][$layerBPathname] + 1;
+                    $graphDependency[$uniqueKey]->addDependency($dependency);
                 }
             }
         }
 
-        return $layersDependOnLayers;
+        // violations
+        foreach ($violations as $violation) {
+            $uniqueKey = $violation->getLayerA()->getPathname().'|'.$violation->getLayerB()->getPathname();
+            $graphDependency[$uniqueKey]->addViolation($violation);
+        }
+
+        return $graphDependency;
     }
 }
