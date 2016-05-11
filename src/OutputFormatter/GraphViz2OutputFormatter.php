@@ -118,7 +118,7 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
 
             $dotWriter
                 ->writeln(
-                    'a1 [label=<<FONT point-size="19">' . $layer->getPathname() . '</FONT><BR/><FONT point-size="8"><FONT color="darkred">3</FONT>/<FONT color="darkred">12</FONT></FONT>>];'
+                    '"' . $layer->getPathname() . '" [label=<<FONT point-size="19">' . $layer->getPathname() . '</FONT><BR/><FONT point-size="8"><FONT color="darkred">3</FONT>/<FONT color="darkred">12</FONT></FONT>>];'
                 );
 
             foreach ($layerGraphDependencies as $layerGraphDependency) {
