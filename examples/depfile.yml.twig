@@ -1,22 +1,25 @@
 {% import _self as dep %}
 
-{% macro some_models(name, value, type, size) %}
+{% macro class_name_collector(regex) %}
 type: className
-regex: .*MyNamespace\\Models\\.*
+regex: .*{{ regex }}.*
 {% endmacro %}
 
-paths: ["./examples/ModelController1"]
+
+paths: ["./examples/Sublayers1"]
 exclude_files: []
 layers:
-- name: Models
-  collectors:
-    - {{ dep.some_models('some_models') | yaml }}
-    - {{ include('some-include.depfile.yml.twig') | yaml }}
-  layers:
-    - name: ModelsA
-      collectors: []
-- name: Controller
-  collectors:
-    - type: className
-      regex: .*MyNamespace\\.*Controller.*
+  - name: Services
+    collectors:
+      - {{ dep.class_name_collector('Services') | yaml }}
+    layers:
+      - name: Infrastructure
+        collectors:
+          - {{ dep.class_name_collector('Infrastructure') | yaml }}
+      - name: Domain
+        collectors:
+          - {{ dep.class_name_collector('Domain') | yaml }}
+  - name: Controller
+    collectors:
+      - {{ dep.class_name_collector('Controller') | yaml }}
 ruleset: []

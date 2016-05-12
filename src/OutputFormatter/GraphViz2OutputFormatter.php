@@ -62,10 +62,10 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
         );
 
 
+
         $g = DotWriter::newDigraph()
             ->writeln("node [shape=box, style=rounded];")
             ->writeln("style=filled;")
-            ->writeln("color=lightgrey;")
         ;
 
         $g = $this->writeGraphLayers(
@@ -112,13 +112,18 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
 
             $layerGraphDependencies = $this->getGraphDependenciesForLayer($layer, $graphDependencies);
 
+            /*
             if (!count($layerGraphDependencies)) {
                 continue;
             }
+            */
+
+            $colors = ['red', 'lightgrey','grey', 'white', 'blue', 'yellow'];
 
             $dotWriter
+                ->writeln("color=".$colors[array_rand($colors)].";")
                 ->writeln(
-                    '"' . $layer->getPathname() . '" [label=<<FONT point-size="19">' . $layer->getPathname() . '</FONT><BR/><FONT point-size="8"><FONT color="darkred">3</FONT>/<FONT color="darkred">12</FONT></FONT>>];'
+                    '"' . $layer->getPathname() . '" [label=<<FONT point-size="19">' . htmlentities($layer->getPathname()) . '</FONT><BR/><FONT point-size="8"><FONT color="darkred">3</FONT>/<FONT color="darkred">12</FONT></FONT>>];'
                 );
 
             foreach ($layerGraphDependencies as $layerGraphDependency) {
@@ -133,7 +138,7 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
 
                 $dotWriter
                     ->writeln(
-                        '"' . $layerGraphDependency->getLayerA()->getPathname() . '" -> "' . $layerGraphDependency->getLayerB() . '";'
+                        '"' . $layerGraphDependency->getLayerA()->getPathname() . '" -> "' . $layerGraphDependency->getLayerB()->getPathname() . '";'
                     );
             }
 
@@ -180,8 +185,10 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
             }
         }*/
 
+        $d = $dependencyResult->getDependenciesAndInheritDependencies();
+
         // dependencies
-        foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
+        foreach ($d as $dependency) {
             $layersA = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
             $layersB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
 
