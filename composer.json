@@ -29,12 +29,5 @@
         "psr-4": {
             "SensioLabs\\Deptrac\\": "src/"
         }
-    },
-    "repositories": [
-        {
-            "url": "git@github.com:sensiolabs-de/astrunner.git",
-            "type": "git"
-        }
-    ]
-
+    }
 }
