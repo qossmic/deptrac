@@ -16,6 +16,13 @@ layers:
       - name: Infrastructure
         collectors:
           - {{ dep.class_name_collector('Infrastructure') | yaml }}
+        layers:
+          - name: Database
+            collectors:
+            - {{ dep.class_name_collector('Infrastructure\\Database') | yaml }}
+          - name: Redis
+            collectors:
+              - {{ dep.class_name_collector('Infrastructure\\Redis') | yaml }}
       - name: Domain
         collectors:
           - {{ dep.class_name_collector('Domain') | yaml }}

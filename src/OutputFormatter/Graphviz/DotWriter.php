@@ -2,6 +2,9 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter\Graphviz;
 
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\OutputFormatter\Graph\GraphDependency;
+
 class DotWriter
 {
 
@@ -11,20 +14,80 @@ class DotWriter
 
     private $buffer = '';
 
+    /** @var ConfigurationLayer|null */
+    private $layer;
+
     /**
      * @param $graphType
      */
-    private function __construct($graphType)
+    private function __construct($graphType, ConfigurationLayer $layer = null)
     {
         $this->graphType = $graphType;
+        $this->layer = $layer;
     }
 
     public static function newDigraph() {
         return new static('digraph');
     }
 
-    public static function newSubgraph() {
-        return new static('subgraph');
+    public static function newSubgraph(ConfigurationLayer $layer) {
+        return new static('subgraph', $layer);
+    }
+
+    /**
+     * @param ConfigurationLayer $layer
+     * @return string
+     */
+    private function findArrowDestination(ConfigurationLayer $layer) {
+        if (!$layer->getLayers()) {
+            return $layer->getPathname();
+        }
+
+        foreach ($layer->getLayers() as $sublayer) {
+            if ($sublayer->getLayers()) {
+                return $sublayer->getLayers()[0]->getPathname();
+            }
+        }
+
+        return $this->findArrowDestination($layer->getLayers()[0]);
+    }
+
+    private function resolveClusterConnection(ConfigurationLayer $layer) {
+        if (!$layer->getLayers()) {
+            return null;
+        }
+
+        return 'cluster_'.$layer->getId();
+    }
+
+    public function writeViolationArrow(GraphDependency $a) {
+
+        $ltail = $this->resolveClusterConnection($a->getLayerA());
+        $lhead = $this->resolveClusterConnection($a->getLayerB());
+
+        $this
+            ->writeln(
+                '"' . $this->findArrowDestination($a->getLayerA()) .
+                '" -> "' .
+                $this->findArrowDestination($a->getLayerB()) .
+                '" [label = "' . count($a->getDependencies()) . '" color=red '.($ltail?'ltail='.$ltail:'').' '.($lhead?'lhead='.$lhead:'').' ];'
+            )
+        ;
+    }
+
+    public function writeArrow(GraphDependency $a) {
+
+        $ltail = $this->resolveClusterConnection($a->getLayerA());
+        $lhead = $this->resolveClusterConnection($a->getLayerB());
+
+        $this
+            ->writeln(
+                '"' . $this->findArrowDestination($a->getLayerA()) .
+                '" -> "' .
+                $this->findArrowDestination($a->getLayerB()) .
+                '" [label = "' . count($a->getViolations()) . '" color=black '.($ltail?'ltail='.$ltail:'').' '.($lhead?'lhead='.$lhead:'').' ];'
+            )
+        ;
     }
 
     public function writeln($data) {
@@ -62,9 +125,9 @@ class DotWriter
         }
 
         if ($this->graphType == 'digraph') {
-            $out = $this->graphType . ' G  {'."\n";
+            $out = $this->graphType . ' G  {'."\n\tcompound=true;\n";
         } else {
-            $out = $this->graphType . ' cluster_'.uniqid().' {'."\n";
+            $out = $this->graphType . ' cluster_'.($this->layer ? $this->layer->getId() : uniqid()).' {'."\n";
         }
 
         $out .= $body;

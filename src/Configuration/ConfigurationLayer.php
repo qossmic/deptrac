@@ -13,6 +13,10 @@ class ConfigurationLayer
 
     private $layers;
 
+    private static $instance_counter = 0;
+
+    private $id = 0;
+
     /** @var ConfigurationLayer | null */
     private $parent = null;
 
@@ -57,6 +61,7 @@ class ConfigurationLayer
         $this->name = $name;
         $this->layers = $layers;
         $this->parent = $parent;
+        $this->id = ++self::$instance_counter;
     }
 
     /**
@@ -112,6 +117,14 @@ class ConfigurationLayer
     public function setLayers($layers)
     {
         $this->layers = $layers;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 }
