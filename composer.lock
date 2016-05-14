@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "898d700a7f4dbd7ab56fa88a8d6574cd",
-    "content-hash": "53483614a137c2234993e20b38f21664",
+    "hash": "ebe771ebefde29ab37094e27b1a8383d",
+    "content-hash": "3c6682ece263b20d2014abe3bfd2a4ef",
     "packages": [
         {
             "name": "clue/graph",
@@ -241,8 +241,14 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:sensiolabs-de/astrunner.git",
-                "reference": "1746afa4f57523c696fb855d944765a39fa770c0"
+                "url": "https://github.com/sensiolabs-de/astrunner.git",
+                "reference": "018e244884ddec67a3b5fa53cb2600546a89adfd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/018e244884ddec67a3b5fa53cb2600546a89adfd",
+                "reference": "018e244884ddec67a3b5fa53cb2600546a89adfd",
+                "shasum": ""
             },
             "require": {
                 "nikic/php-parser": "~2.0",
@@ -257,6 +263,7 @@
                     "SensioLabs\\AstRunner\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -266,7 +273,7 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2016-04-08 09:23:52"
+            "time": "2016-04-08 11:15:48"
         },
         {
             "name": "symfony/config",
