@@ -5,7 +5,8 @@ namespace SensioLabs\Deptrac;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
-use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayerInterface;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
@@ -41,7 +42,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
         $this->astParser = $astParser;
     }
 
-    private function statisfyConfigurationLayer(ConfigurationLayer $configurationLayer, $className) {
+    private function statisfyConfigurationLayer(ConfigurationLayerInterface $configurationLayer, $className) {
 
         if (empty($configurationLayer->getCollectors())) {
             return true;
@@ -69,9 +70,9 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     }
 
     /**
-     * @param ConfigurationLayer[] $configurationLayers
+     * @param ConfigurationLayerInterface[] $configurationLayers
      * @param $className
-     * @return array
+     * @return ResolvedLayer[]
      */
     private function getLayersByClassNameRecursive(array $configurationLayers, $className)
     {
@@ -82,9 +83,11 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
                 continue;
             }
 
+            $sublayers = $this->getLayersByClassNameRecursive($configurationLayer->getLayers(), $className);
+
             $layers = array_merge(
-                [$configurationLayer->getPathname() => $configurationLayer],
-                $this->getLayersByClassNameRecursive($configurationLayer->getLayers(), $className)
+                [$configurationLayer->getPathname() => $sublayers ? ResolvedLayer::newBranch($configurationLayer) : ResolvedLayer::newLeaf($configurationLayer)],
+                $sublayers
             );
 
         }
@@ -95,7 +98,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
     /**
      * @param $className
-     * @return ConfigurationLayer[]
+     * @return ResolvedLayer[]
      */
     public function getLayersByClassName($className)
     {

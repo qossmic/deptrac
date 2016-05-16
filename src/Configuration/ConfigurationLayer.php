@@ -4,7 +4,7 @@ namespace SensioLabs\Deptrac\Configuration;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConfigurationLayer
+class ConfigurationLayer implements ConfigurationLayerInterface
 {
     /** @var ConfigurationCollector[] */
     private $collectors;

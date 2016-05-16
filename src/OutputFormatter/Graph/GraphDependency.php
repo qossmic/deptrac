@@ -4,14 +4,15 @@ namespace SensioLabs\Deptrac\OutputFormatter\Graph;
 
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class GraphDependency
 {
-    /** @var ConfigurationLayer */
+    /** @var ResolvedLayer */
     private $layerA;
 
-    /** @var ConfigurationLayer */
+    /** @var ResolvedLayer */
     private $layerB;
 
     /** @var DependencyInterface[] */
@@ -22,10 +23,10 @@ class GraphDependency
 
     /**
      * GraphDependency constructor.
-     * @param ConfigurationLayer $layerA
-     * @param ConfigurationLayer $layerB
+     * @param ResolvedLayer $layerA
+     * @param ResolvedLayer $layerB
      */
-    public function __construct(ConfigurationLayer $layerA, ConfigurationLayer $layerB)
+    public function __construct(ResolvedLayer $layerA, ResolvedLayer $layerB)
     {
         $this->layerA = $layerA;
         $this->layerB = $layerB;
@@ -42,13 +43,13 @@ class GraphDependency
         $this->violations[] = $rulesetViolation;
     }
 
-    /** @return ConfigurationLayer */
+    /** @return ResolvedLayer */
     public function getLayerA()
     {
         return $this->layerA;
     }
 
-    /** @return ConfigurationLayer */
+    /** @return ResolvedLayer */
     public function getLayerB()
     {
         return $this->layerB;

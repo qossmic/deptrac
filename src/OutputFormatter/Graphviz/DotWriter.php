@@ -2,7 +2,8 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter\Graphviz;
 
-use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayerInterface;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 use SensioLabs\Deptrac\OutputFormatter\Graph\GraphDependency;
 
 class DotWriter
@@ -14,13 +15,13 @@ class DotWriter
 
     private $buffer = '';
 
-    /** @var ConfigurationLayer|null */
+    /** @var ConfigurationLayerInterface|null */
     private $layer;
 
     /**
      * @param $graphType
      */
-    private function __construct($graphType, ConfigurationLayer $layer = null)
+    private function __construct($graphType, ConfigurationLayerInterface $layer = null)
     {
         $this->graphType = $graphType;
         $this->layer = $layer;
@@ -30,15 +31,15 @@ class DotWriter
         return new static('digraph');
     }
 
-    public static function newSubgraph(ConfigurationLayer $layer) {
+    public static function newSubgraph(ConfigurationLayerInterface $layer) {
         return new static('subgraph', $layer);
     }
 
     /**
-     * @param ConfigurationLayer $layer
+     * @param ResolvedLayer $layer
      * @return string
      */
-    private function findArrowDestination(ConfigurationLayer $layer) {
+    private function findArrowDestination(ResolvedLayer $layer) {
         if (!$layer->getLayers()) {
             return $layer->getPathname();
         }
@@ -52,7 +53,7 @@ class DotWriter
         return $this->findArrowDestination($layer->getLayers()[0]);
     }
 
-    private function resolveClusterConnection(ConfigurationLayer $layer) {
+    private function resolveClusterConnection(ResolvedLayer $layer) {
         if (!$layer->getLayers()) {
             return null;
         }
@@ -61,6 +62,10 @@ class DotWriter
     }
 
     public function writeViolationArrow(GraphDependency $a) {
+
+        if (!$a->getLayerA()->isLeaf()  || !$a->getLayerB()->isLeaf()) {
+            return;
+        }
 
         $ltail = $this->resolveClusterConnection($a->getLayerA());
         $lhead = $this->resolveClusterConnection($a->getLayerB());
@@ -76,6 +81,10 @@ class DotWriter
     }
 
     public function writeArrow(GraphDependency $a) {
+
+        if (!$a->getLayerA()->isLeaf()  || !$a->getLayerB()->isLeaf()) {
+            return;
+        }
 
         $ltail = $this->resolveClusterConnection($a->getLayerA());
         $lhead = $this->resolveClusterConnection($a->getLayerB());

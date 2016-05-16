@@ -19,25 +19,25 @@ class RulesetEngine
         $violations = [];
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
+            $layers = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
 
-            foreach ($layerNames as $layerName) {
-                foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
-                    if ($layerName == $layerNameOfDependency) {
+            foreach ($layers as $layer) {
+                foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerOfDependency) {
+                    if ($layer == $layerOfDependency) {
                         continue;
                     }
 
                     if (in_array(
-                        $layerNameOfDependency,
-                        $configurationRuleset->getAllowedDependendencies($layerName->getPathname())
+                        $layerOfDependency,
+                        $configurationRuleset->getAllowedDependendencies($layer->getPathname())
                     )) {
                         continue;
                     }
 
                     $violations[] = new RulesetViolation(
                         $dependency,
-                        $layerName,
-                        $layerNameOfDependency,
+                        $layer,
+                        $layerOfDependency,
                         ''
                     );
                 }

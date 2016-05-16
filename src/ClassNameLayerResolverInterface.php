@@ -2,13 +2,13 @@
 
 namespace SensioLabs\Deptrac;
 
-use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 
 interface ClassNameLayerResolverInterface
 {
     /**
      * @param $className
-     * @return ConfigurationLayer[]
+     * @return ResolvedLayer[]
      */
     public function getLayersByClassName($className);
 }
