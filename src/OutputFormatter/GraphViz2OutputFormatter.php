@@ -74,7 +74,7 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
         );
 
 
-        echo $g->render();
+        echo $g->display();
     }
 
 

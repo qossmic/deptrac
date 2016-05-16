@@ -139,6 +139,46 @@ class DotWriter
         return $out;
     }
 
+    public function display($format = 'png') {
+        $script = $this->render();
+
+        $tmp = tempnam(sys_get_temp_dir(), 'graphviz');
+        if ($tmp === false) {
+            throw new \Exception('Unable to get temporary file name for graphviz script');
+        }
+
+        $ret = file_put_contents($tmp, $script, LOCK_EX);
+        if ($ret === false) {
+            throw new \Exception('Unable to write graphviz script to temporary file');
+        }
+
+        $ret = 0;
+
+        $executable = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'dot.exe' : 'dot';
+        system(escapeshellarg($executable) . ' -T ' . escapeshellarg($format) . ' ' . escapeshellarg($tmp) . ' -o ' . escapeshellarg($tmp . '.' . $format), $ret);
+
+        if ($ret !== 0) {
+            throw new \Exception('Unable to invoke "' . $executable .'" to create image file (code ' . $ret . ')');
+        }
+
+        unlink($tmp);
+
+        $image = $tmp . '.' . $format;
+
+
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // open image in untitled, temporary background shell
+            exec('start "" ' . escapeshellarg($image) . ' >NUL');
+        } elseif (strtoupper(PHP_OS) === 'DARWIN') {
+            // open image in background (redirect stdout to /dev/null, sterr to stdout and run in background)
+            exec('open ' . escapeshellarg($image) . ' > /dev/null 2>&1 &');
+        } else {
+            // open image in background (redirect stdout to /dev/null, sterr to stdout and run in background)
+            exec('xdg-open ' . escapeshellarg($image) . ' > /dev/null 2>&1 &');
+        }
+
+    }
 
 
 }
