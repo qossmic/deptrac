@@ -53,5 +53,19 @@
             <argument type="service" id="collector_factory"/>
         </service>
 
+        <service id="updater_strategy" class="SensioLabs\Deptrac\Updater\DeptracStrategy" />
+
+        <service id="updater" class="Humbug\SelfUpdate\Updater">
+            <argument>null</argument>
+            <!-- disable signed releases, otherwise will search for a .pubkey file for the PHAR -->
+            <argument>false</argument>
+            <call method="setStrategyObject">
+                <argument type="service" id="updater_strategy"/>
+            </call>
+        </service>
+
+        <service id="command_self_update" class="SensioLabs\Deptrac\Command\SelfUpdateCommand">
+            <argument type="service" id="updater"/>
+        </service>
     </services>
 </container>
