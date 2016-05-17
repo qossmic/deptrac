@@ -1,6 +1,7 @@
 PHP_BIN      := php
 COMPOSER_BIN := composer
 BOX_BIN      := box
+SHA1SUM		 := sha1sum
 
 .PHONY: build composer-install-dev tests tests-coverage
 
@@ -8,6 +9,7 @@ build: tests
 	$(COMPOSER_BIN) install --no-dev --optimize-autoloader
 	$(BOX_BIN) build
 	chmod +x deptrac.phar
+	$(SHA1SUM) deptrac.phar > deptrac.version
 
 composer-install-dev:
 	$(COMPOSER_BIN) install --optimize-autoloader
