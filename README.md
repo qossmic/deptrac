@@ -41,7 +41,7 @@ this rule was violated.
 
 ## Introduction Video
 
-[![ScreenShot](examples/youtube.png)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
+[![ScreenShot](https://img.youtube.com/vi/T5oWc4ujmOo/0.jpg)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
 
 ## Getting Started
 
