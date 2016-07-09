@@ -8,7 +8,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-
+use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 if (!version_compare(phpversion(), "5.5.9", '>=')) {
     echo 'Required at least PHP version 5.5.9, your version: ' . PHP_VERSION . "\n";
@@ -19,6 +19,7 @@ if (!version_compare(phpversion(), "5.5.9", '>=')) {
 $container
     ->addCompilerPass(new OutputFormatterPass())
     ->addCompilerPass(new CollectorPass())
+    ->addCompilerPass(new RegisterListenersPass())
     ->compile()
 ;
 
@@ -27,4 +28,4 @@ $application->add($container->get('command_init'));
 $application->add($container->get('command_analyze'));
 $application->add($container->get('command_self_update'));
 $application->setDefaultCommand('analyze');
-$application->run();
+$application->run($container->get('argv_input'), $container->get('console_output'));
