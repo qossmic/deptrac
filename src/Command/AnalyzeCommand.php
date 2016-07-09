@@ -81,8 +81,6 @@ class AnalyzeCommand extends Command
 
         $configuration = $configurationLoader->loadConfiguration();
 
-        new ConsoleFormatter($this->dispatcher, $output);
-
         $parser = new NikicPhpParser();
         $astMap = $this->astRunner->createAstMapByFiles($parser, $this->dispatcher, $this->collectFiles($configuration));
 

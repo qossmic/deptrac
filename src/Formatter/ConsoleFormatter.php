@@ -7,32 +7,30 @@ use SensioLabs\AstRunner\Event\AstFileSyntaxErrorEvent;
 use SensioLabs\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\AstRunner\Event\PreCreateAstMapEvent;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ConsoleFormatter
+class ConsoleFormatter implements EventSubscriberInterface
 {
-    /** @var EventDispatcherInterface */
-    protected $dispatcher;
-
     /** @var OutputInterface */
     protected $output;
 
     /**
      * ConsoleFormatter constructor.
      *
-     * @param EventDispatcherInterface $dispatcher
+     * @param OutputInterface $output
      */
-    public function __construct(
-        EventDispatcherInterface $dispatcher,
-        OutputInterface $output
-    ) {
-        $this->dispatcher = $dispatcher;
+    public function __construct(OutputInterface $output) {
         $this->output = $output;
+    }
 
-        $dispatcher->addListener(PreCreateAstMapEvent::class, array($this, 'onPreCreateAstMapEvent'));
-        $dispatcher->addListener(PostCreateAstMapEvent::class, array($this, 'onPostCreateAstMapEvent'));
-        $dispatcher->addListener(AstFileAnalyzedEvent::class, array($this, 'onAstFileAnalyzedEvent'));
-        $dispatcher->addListener(AstFileSyntaxErrorEvent::class, array($this, 'onAstFileSyntaxErrorEvent'));
+    public static function getSubscribedEvents()
+    {
+        return array(
+            PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
+            PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
+            AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
+            AstFileSyntaxErrorEvent::class => 'onAstFileSyntaxErrorEvent',
+        );
     }
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)

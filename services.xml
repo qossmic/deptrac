@@ -5,9 +5,19 @@
 
     <services>
 
-        <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
+        <service id="event_dispatcher" class="Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher">
+            <argument type="service" id="service_container"/>
+        </service>
 
         <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
+
+        <service id="argv_input" class="Symfony\Component\Console\Input\ArgvInput"/>
+        <service id="console_output" class="Symfony\Component\Console\Output\ConsoleOutput"/>
+
+        <service id="console_formatter" class="SensioLabs\Deptrac\Formatter\ConsoleFormatter">
+            <tag name="kernel.event_subscriber"/>
+            <argument type="service" id="console_output"/>
+        </service>
 
         <service id="output_formatter_factory" class="SensioLabs\Deptrac\OutputFormatterFactory">
             <argument/>
@@ -46,7 +56,7 @@
         </service>
 
         <service id="command_analyze" class="SensioLabs\Deptrac\Command\AnalyzeCommand">
-            <argument type="service" id="dispatcher"/>
+            <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="astrunner"/>
             <argument type="service" id="output_formatter_factory"/>
             <argument type="service" id="ruleset_engine"/>
