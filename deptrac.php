@@ -22,6 +22,8 @@ $container
     ->compile()
 ;
 
+$container->set('container', $container);
+
 $application = new Application();
 $application->add($container->get('command_init'));
 $application->add($container->get('command_analyze'));

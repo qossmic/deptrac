@@ -7,9 +7,16 @@ use SensioLabs\Deptrac\Command\SelfUpdateCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Humbug\SelfUpdate\Exception\HttpRequestException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SelfUpdateCommandTest extends \PHPUnit_Framework_TestCase
 {
+    private function getContainerWithUpdater(Updater $updater) {
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('updater')->willReturn($updater);
+        return $container->reveal();
+    }
+
     /**
      * Tests the command status is 1 (fail) if the update fails
      */
@@ -21,7 +28,7 @@ class SelfUpdateCommandTest extends \PHPUnit_Framework_TestCase
 
         $updater->update()->willThrow(HttpRequestException::class);
 
-        $command = new SelfUpdateCommand($updater->reveal());
+        $command = new SelfUpdateCommand($this->getContainerWithUpdater($updater->reveal()));
         $result = $command->run($input->reveal(), $output->reveal());
 
         $this->assertSame(1, $result);
@@ -42,7 +49,7 @@ class SelfUpdateCommandTest extends \PHPUnit_Framework_TestCase
 
         $updater->update()->willReturn($isPharOutdated);
 
-        $command = new SelfUpdateCommand($updater->reveal());
+        $command = new SelfUpdateCommand($this->getContainerWithUpdater($updater->reveal()));
         $result = $command->run($input->reveal(), $output->reveal());
 
         $this->assertSame(0, $result);

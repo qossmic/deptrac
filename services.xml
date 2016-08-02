@@ -5,6 +5,8 @@
 
     <services>
 
+        <service id="container" synthetic="true" />
+
         <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
         <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
@@ -65,7 +67,7 @@
         </service>
 
         <service id="command_self_update" class="SensioLabs\Deptrac\Command\SelfUpdateCommand">
-            <argument type="service" id="updater"/>
+            <argument type="service" id="container"/>
         </service>
     </services>
 </container>
