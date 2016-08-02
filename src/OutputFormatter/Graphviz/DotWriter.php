@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter\Graphviz;
 
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayerInterface;
 use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 use SensioLabs\Deptrac\OutputFormatter\Graph\GraphDependency;
@@ -36,10 +37,10 @@ class DotWriter
     }
 
     /**
-     * @param ResolvedLayer $layer
+     * @param ConfigurationLayerInterface $layer
      * @return string
      */
-    private function findArrowDestination(ResolvedLayer $layer) {
+    private function findArrowDestination(ConfigurationLayerInterface $layer) {
         if (!$layer->getLayers()) {
             return $layer->getPathname();
         }

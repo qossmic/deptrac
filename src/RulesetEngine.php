@@ -14,7 +14,11 @@ class RulesetEngine
      *
      * @return RulesetViolation[]
      */
-    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
+    public function getViolations(
+        DependencyResult $dependencyResult,
+        ClassNameLayerResolverInterface $classNameLayerResolver,
+        ConfigurationRuleset $configurationRuleset
+    )
     {
         $violations = [];
 
@@ -28,7 +32,7 @@ class RulesetEngine
                     }
 
                     if (in_array(
-                        $layerOfDependency,
+                        $layerOfDependency->getPathname(),
                         $configurationRuleset->getAllowedDependendencies($layer->getPathname())
                     )) {
                         continue;

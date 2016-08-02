@@ -3,9 +3,11 @@
 namespace SensioLabs\Deptrac\Tests;
 
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayerInterface;
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 use SensioLabs\Deptrac\RulesetEngine;
 
 class RulesetEngineTest extends \PHPUnit_Framework_TestCase
@@ -136,6 +138,13 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    private function createLayer($name) {
+        $layer = $this->prophesize(ResolvedLayer::class);
+        $layer->getName()->willReturn($name);
+        $layer->getPathname()->willReturn($name);
+        return $layer;
+    }
+
     /**
      * @param array $dependenciesAsArray
      * @param array $classesInLayers
@@ -152,7 +161,9 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
 
         $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
+            $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn(
+                array_map([$this, 'createLayer'], $layers)
+            );
         }
 
         $this->assertCount(

@@ -73,8 +73,9 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
             $g
         );
 
+        file_put_contents('foo.dot', $g->render());
 
-        echo $g->display();
+        //echo $g->display();
     }
 
 
@@ -142,7 +143,13 @@ class GraphViz2OutputFormatter implements OutputFormatterInterface
 
         // violations
         foreach ($violations as $violation) {
+
+            if ($violation->getLayerA()->getPathname() == $violation->getLayerB()->getPathname()) {
+                continue;
+            }
+
             $uniqueKey = $violation->getLayerA()->getPathname().'|'.$violation->getLayerB()->getPathname();
+
             $graphDependency[$uniqueKey]->addViolation($violation);
         }
 

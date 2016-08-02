@@ -12,6 +12,7 @@ use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 
 class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
 {
@@ -111,7 +112,10 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expectedLayers,
-            $resolver->getLayersByClassName('classA')
+            array_values(array_map(function(ResolvedLayer $l) {
+                return $l->getPathname();
+            }, $resolver->getLayersByClassName('classA')))
         );
+
     }
 }

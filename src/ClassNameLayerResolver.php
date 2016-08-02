@@ -86,6 +86,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
             $sublayers = $this->getLayersByClassNameRecursive($configurationLayer->getLayers(), $className);
 
             $layers = array_merge(
+                $layers,
                 [$configurationLayer->getPathname() => $sublayers ? ResolvedLayer::newBranch($configurationLayer) : ResolvedLayer::newLeaf($configurationLayer)],
                 $sublayers
             );

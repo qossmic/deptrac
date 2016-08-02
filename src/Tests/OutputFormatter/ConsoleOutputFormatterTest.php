@@ -7,6 +7,7 @@ use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\LayerResolver\ResolvedLayer;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
@@ -20,6 +21,14 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $this->assertEquals('console', (new ConsoleOutputFormatter())->getName());
+    }
+
+    private function createResolvedLayer($name)
+    {
+        $resolvedLayer = $this->prophesize(ResolvedLayer::class);
+        $resolvedLayer->getName()->willReturn($name);
+        $resolvedLayer->getPathname()->willReturn('path_'.$name);
+        return $resolvedLayer->reveal();
     }
 
     public function basicDataProvider()
@@ -39,8 +48,8 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
                             ]
                         )
                     ),
-                    'LayerA',
-                    'LayerB'
+                    $this->createResolvedLayer('LayerA'),
+                    $this->createResolvedLayer('LayerB')
                 ),
             ],
             '
@@ -59,8 +68,8 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
             [
                 new RulesetViolation(
                     new Dependency('OriginalA', 12, 'OriginalB'),
-                    'LayerA',
-                    'LayerB'
+                    $this->createResolvedLayer('LayerA'),
+                    $this->createResolvedLayer('LayerB')
                 ),
             ],
             '

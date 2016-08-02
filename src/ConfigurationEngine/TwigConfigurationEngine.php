@@ -74,6 +74,8 @@ class TwigConfigurationEngine implements ConfigurationEngineInterface
             });
         }
 
+        //echo Yaml::dump($yamlAsArray);die();
+
         return $yamlAsArray;
     }
 }

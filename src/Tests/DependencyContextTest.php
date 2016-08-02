@@ -4,6 +4,7 @@ namespace SensioLabs\Deptrac\Tests;
 
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\Configuration;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult;
 
@@ -12,6 +13,7 @@ class DependencyContextTest extends \PHPUnit_Framework_TestCase
     public function testGetSet()
     {
         $context = new DependencyContext(
+            $astMap = $this->prophesize(Configuration::class)->reveal(),
             $astMap = $this->prophesize(AstMap::class)->reveal(),
             [1, 2, 3],
             $dependencyResult = $this->prophesize(DependencyResult::class)->reveal(),
