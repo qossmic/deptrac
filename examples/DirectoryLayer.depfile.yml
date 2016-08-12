@@ -12,7 +12,7 @@ layers:
   - name: Layer2
     collectors:
       - type: directory
-        regex: ./examples/Layer2/*
+        regex: ./examples/Layer2/.*
 ruleset:
   Controller:
     - Layer1
