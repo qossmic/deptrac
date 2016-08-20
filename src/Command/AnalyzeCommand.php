@@ -9,6 +9,7 @@ use SensioLabs\Deptrac\Configuration;
 use SensioLabs\Deptrac\ConfigurationLoader;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
+use SensioLabs\Deptrac\DependencyEmitter\PropertyDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\Deptrac\DependencyInheritanceFlatter;
@@ -92,6 +93,7 @@ class AnalyzeCommand extends Command
         $dependencyEmitters = [
             new InheritanceDependencyEmitter(),
             new BasicDependencyEmitter(),
+            new PropertyDependencyEmitter(),
         ];
 
         foreach ($dependencyEmitters as $dependencyEmitter) {
