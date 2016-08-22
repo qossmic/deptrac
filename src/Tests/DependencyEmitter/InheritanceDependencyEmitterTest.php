@@ -23,7 +23,7 @@ class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase
     {
         $deps = $this->getDeps(
             new InheritanceDependencyEmitter(),
-            new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
+            [new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')]
         );
 
         $this->assertCount(4, $deps);

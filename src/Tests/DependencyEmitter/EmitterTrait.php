@@ -11,13 +11,13 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
 {
-    public function getDeps(DependencyEmitterInterface $emitter, \SplFileInfo $fileInfo)
+    public function getDeps(DependencyEmitterInterface $emitter, array $fileInfos)
     {
         $parser = new NikicPhpParser();
         $astMap = (new AstRunner())->createAstMapByFiles(
             $parser,
             new EventDispatcher(),
-            [$fileInfo]
+            $fileInfos
         );
         $result = new DependencyResult();
 

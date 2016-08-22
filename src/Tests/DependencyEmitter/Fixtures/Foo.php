@@ -7,11 +7,6 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
 
     use SomeTrait;
 
-    /**
-     * @var \Foo\Bar
-     */
-    protected $bar;
-
     public function foo(SomeParam $someParam, $lala)
     {
         new SomeClass();
