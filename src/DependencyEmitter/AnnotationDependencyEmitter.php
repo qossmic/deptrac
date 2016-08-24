@@ -2,15 +2,16 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
+use PhpParser\Comment\Doc;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\NodeTraverser;
 use SensioLabs\AstRunner\AstParser\AstFileReferenceInterface;
+use SensioLabs\Deptrac\DependencyEmitter\AnnotationDependencyEmitter\DocBlockVisitor;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
-use PhpParser\Node\Stmt\Property;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
@@ -18,6 +19,8 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class AnnotationDependencyEmitter implements DependencyEmitterInterface
 {
+    private $supportedAnnotations = ['var', 'param', 'return', 'throws'];
+    
     public function getName()
     {
         return 'AnnotationDependencyEmitter';
@@ -28,53 +31,27 @@ class AnnotationDependencyEmitter implements DependencyEmitterInterface
         return $astParser instanceof NikicPhpParser;
     }
 
-    private function getPropertyStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference, AstFileReferenceInterface $fileReference)
+    private function getStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference, AstFileReferenceInterface $fileReference)
     {
-        $annotations = ['var'];
         $buffer = [];
         $ast = $astParser->getAstForClassname($classReference->getClassName());
-        foreach ($astParser->findNodesOfType($ast, Property::class) as $property) {
-            /** @var $property Property */
-            $docComment = $property->getDocComment();
+        $docBlocks = self::getDocBlocks($ast);
+
+        foreach ($docBlocks as $property) {
+            /** @var $property Doc */
+            $docComment = $property->getText();
 
             if (empty($docComment)) {
                 continue;
             }
 
-            foreach ($annotations as $annotation) {
+            foreach ($this->supportedAnnotations as $annotation) {
                 $buffer = array_merge($buffer, $this->parseAnnotation(
                     $astParser,
                     $fileReference,
                     $annotation,
                     $docComment,
                     $property->getLine()
-                ));
-            }
-        }
-
-        return $buffer;
-    }
-
-    private function getMethodStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference, AstFileReferenceInterface $fileReference)
-    {
-        $annotations = ['param', 'return', 'throws'];
-        $buffer = [];
-        $ast = $astParser->getAstForClassname($classReference->getClassName());
-        foreach ($astParser->findNodesOfType($ast, ClassMethod::class) as $method) {
-            /** @var $method ClassMethod */
-            $docComment = $method->getDocComment();
-
-            if (empty($docComment)) {
-                continue; // @codeCoverageIgnore
-            }
-
-            foreach ($annotations as $annotation) {
-                $buffer = array_merge($buffer, $this->parseAnnotation(
-                    $astParser,
-                    $fileReference,
-                    $annotation,
-                    $docComment,
-                    $method->getLine()
                 ));
             }
         }
@@ -159,6 +136,16 @@ class AnnotationDependencyEmitter implements DependencyEmitterInterface
         return null;
     }
 
+    private static function getDocBlocks($ast)
+    {
+        $visitor = new DocBlockVisitor();
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor($visitor);
+        $traverser->traverse([$ast]);
+
+        return $visitor->getDocBlocks();
+    }
+
     public function applyDependencies(
         AstParserInterface $astParser,
         AstMap $astMap,
@@ -172,10 +159,7 @@ class AnnotationDependencyEmitter implements DependencyEmitterInterface
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
 
                 /** @var $dependencies EmittedDependency[] */
-                $dependencies = array_merge(
-                    $this->getPropertyStatements($astParser, $astClassReference, $fileReference), 
-                    $this->getMethodStatements($astParser, $astClassReference, $fileReference)
-                );
+                $dependencies = $this->getStatements($astParser, $astClassReference, $fileReference);
 
                 foreach ($dependencies as $emittedDependency) {
                     $dependencyResult->addDependency(

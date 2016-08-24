@@ -27,11 +27,11 @@ class AnnotationDependencyEmitterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertCount(6, $deps);
-        $this->assertContains('Foo\Foo:12 on Foo\Foo', $deps);
-        $this->assertContains('Foo\Foo:17 on Foo\Foo', $deps);
-        $this->assertContains('Foo\Foo:22 on Baz\Bar', $deps);
-        $this->assertContains('Foo\Foo:30 on Foo\Foo', $deps);
-        $this->assertContains('Foo\Foo:30 on Foo\Foo', $deps);
-        $this->assertContains('Foo\Foo:30 on Baz\Bar', $deps);
+        $this->assertContains('Foo\Foo:9 on Foo\Foo', $deps);
+        $this->assertContains('Foo\Foo:14 on Foo\Foo', $deps);
+        $this->assertContains('Foo\Foo:19 on Baz\Bar', $deps);
+        $this->assertContains('Foo\Foo:24 on Foo\Foo', $deps);
+        $this->assertContains('Foo\Foo:24 on Foo\Foo', $deps);
+        $this->assertContains('Foo\Foo:24 on Baz\Bar', $deps);
     }
 }
