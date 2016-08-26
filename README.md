@@ -128,7 +128,7 @@ curl -LS http://get.sensiolabs.de/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
-sudo mv deptrac.phar /usr/bin/local/deptrac
+sudo mv deptrac.phar /usr/local/bin/deptrac
 ```
 
 (In this guide, we assume, you have the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) in your project root)
