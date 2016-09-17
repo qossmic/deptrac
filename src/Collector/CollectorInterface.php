@@ -7,6 +7,9 @@ namespace SensioLabs\Deptrac\Collector;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 
+/**
+ * A collector is responsible to tell from an AST node (e.g. a specific class) is part of a layer.
+ */
 interface CollectorInterface
 {
     /**
@@ -19,7 +22,23 @@ interface CollectorInterface
     public function getType(): string;
 
     /**
-     * @param array<string, mixed> $configuration List of arguments passed for this collector declaration
+     * @param array<string, mixed> $configuration     List of arguments passed for this collector declaration
+     * @param AstClassReference    $astClassReference Class being checked
+     *
+     * @example
+     *  For the YAML configuration:
+     *
+     *  ```yaml
+     *  collectors:
+     *      - type: className
+     *        regex: .*Controller.*
+     *  ```
+     *
+     *  The configuration `$configuration` will be:
+     *  [
+     *      'type' => 'className',
+     *      'regex' => '.*Controller.*',
+     *  ]
      */
     public function satisfy(
         array $configuration,

@@ -34,6 +34,7 @@ this rule was violated.
     1. [`classNameRegex` Collector](#classnameregex-collector)
     1. [`directory` Collector](#directory-collector)
     1. [`bool` Collector](#bool-collector)
+    1. [`method` Collector](#method-collector)
     1. [More Collectors](#more-collectors)
 1. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
@@ -230,7 +231,7 @@ ruleset: ~
 At first, lets take a closer look at the first layer (named *Models*).
 
 Here we decided that our software has some kind of layer called *Models*.
-You assign classes to this layer with the help of *Collectors*.
+You assign classes to this layer with the help of [*Collectors*](#collectors).
 
 Collectors are responsible for taking a closer look at your code and decide if a class is part of a layer.
 By using the `className` collector you can define a regular expression for a class name.
@@ -529,6 +530,23 @@ layers:
 Every class that contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
 
 
+### `method` Collector
+
+The `method` collector allows collecting classes by matching their methods name to a regular expression.
+Any matching class will be added to the assigned layer.
+
+```yaml
+layers:
+  - name: Foo services
+    collectors:
+      - type: method
+        name: .*foo
+```
+
+Every class having a method that matches the regular expression `.*foo`, e.g. `getFoo()` or `setFoo()` becomes a part
+of the *Foo services* layer.
+
+
 ### More Collectors
 
 As deptrac is in a very early state, feel free to contribute your own collector.
@@ -620,7 +638,7 @@ Supported options:
 
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
-- PHP in version 7.1 or above
+- PHP in version 7.2 or above
 - [Composer](https://getcomposer.org/)
 - [Box](https://github.com/humbug/box)
 - make
