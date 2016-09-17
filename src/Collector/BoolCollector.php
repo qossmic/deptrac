@@ -31,7 +31,7 @@ class BoolCollector implements CollectorInterface
         }
 
         if (!$configuration['must'] && !$configuration['must_not']) {
-            throw new \InvalidArgumentException('bool collector must have a must or a must_not attribute');
+            throw new \InvalidArgumentException('"bool" collector must have a "must" or a "must_not" attribute.');
         }
 
         foreach ($configuration['must'] as $v) {

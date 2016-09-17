@@ -50,7 +50,7 @@ class MethodCollectorTest extends \PHPUnit_Framework_TestCase
 
     private function getClassMethod($name)
     {
-        $classMethod = new \StdClass();
+        $classMethod = new \stdClass();
         $classMethod->name = $name;
         return $classMethod;
     }
@@ -66,7 +66,7 @@ class MethodCollectorTest extends \PHPUnit_Framework_TestCase
         $astClassReference->getClassName()->willReturn($className);
 
         $parser = $this->prophesize(NikicPhpParser::class);
-        $parser->getAstForClassname($className)->willReturn($ast = new \StdClass());
+        $parser->getAstForClassname($className)->willReturn($ast = new \stdClass());
 
 
         $parser->findNodesOfType($ast, ClassMethod::class)->willReturn($methods);
@@ -81,5 +81,4 @@ class MethodCollectorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $stat);
     }
-
 }

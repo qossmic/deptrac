@@ -9,20 +9,11 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\CollectorFactory;
 use PhpParser\Node\Stmt\ClassMethod;
 
-class MethodCollector
+class MethodCollector implements CollectorInterface
 {
     public function getType()
     {
         return 'method';
-    }
-
-    private function getMethodNameRegexByConfiguration(array $configuration)
-    {
-        if (!isset($configuration['name'])) {
-            throw new \LogicException('MethodCollector needs the name configuration.');
-        }
-
-        return $configuration['name'];
     }
 
     public function satisfy(
@@ -32,7 +23,6 @@ class MethodCollector
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
     ) {
-
         if (!$astParser instanceof NikicPhpParser) {
             return false;
         }
@@ -44,7 +34,7 @@ class MethodCollector
 
         foreach ($classMethods as $classMethod) {
             if (preg_match(
-                '/'.$this->getMethodNameRegexByConfiguration($configuration).'/i',
+                $this->getMethodNameConfigurationRegex($configuration),
                 $classMethod->name,
                 $collectorFactory
             )) {
@@ -55,4 +45,12 @@ class MethodCollector
         return false;
     }
 
+    private function getMethodNameConfigurationRegex(array $configuration)
+    {
+        if (!isset($configuration['name'])) {
+            throw new \LogicException('MethodCollector needs the name configuration.');
+        }
+
+        return sprintf('/%s/i', $configuration['name']);
+    }
 }

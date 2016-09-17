@@ -215,7 +215,7 @@ ruleset: ~
 At first, lets take a closer look at the first layer (named *Models*).
 
 Here we decided that our software has some kind of layer called *Models*.
-You assign classes to this layer with the help of *Collectors*.
+You assign classes to this layer with the help of [*Collectors*](#collectors).
 
 Collectors are responsible for taking a closer look at your code and decide if a class is part of a layer.
 By using the `className` collector you can define a regular expression for a class name.
@@ -444,6 +444,23 @@ layers:
 ```
 
 Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will become a part of the *Asset*-layer.
+
+
+### `method` collector
+
+The `method` collector allows collecting classes by matching their methods name to a regular expression.
+Any matching class will be added to the assigned layer.
+
+```yaml
+layers:
+  - name: Foo services
+    collectors:
+      - type: method
+        name: .*foo
+```
+
+Every class having a method that matches the regular expression `.*foo`, e.g. `getFoo()` or `setFoo()` becomes a part
+of the *Foo services* layer.
 
 
 ### More collectors

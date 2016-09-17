@@ -9,20 +9,9 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
 {
-
-
     public function getType()
     {
         return 'className';
-    }
-
-    private function getRegexByConfiguration(array $configuration)
-    {
-        if (!isset($configuration['regex'])) {
-            throw new \LogicException('ClassNameCollector needs the regex configuration.');
-        }
-
-        return $configuration['regex'];
     }
 
     public function satisfy(
@@ -33,9 +22,18 @@ class ClassNameCollector implements CollectorInterface
         AstParserInterface $astParser
     ) {
         return preg_match(
-            '/'.$this->getRegexByConfiguration($configuration).'/i',
+            $this->getConfigurationRegex($configuration),
             $abstractClassReference->getClassName(),
             $collectorFactory
         );
+    }
+
+    private function getConfigurationRegex(array $configuration)
+    {
+        if (!isset($configuration['regex'])) {
+            throw new \LogicException('ClassNameCollector needs the regex configuration.');
+        }
+
+        return sprintf('/%s/i', $configuration['regex']);
     }
 }
