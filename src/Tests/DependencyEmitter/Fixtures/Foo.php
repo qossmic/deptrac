@@ -17,6 +17,10 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
         };
 
         assert ($foo instanceof SomeInstanceOf);
+
+        SomeClass::staticMethodCall();
+
+        SomeClass::$staticPropertyAccess;
     }
 
 }
