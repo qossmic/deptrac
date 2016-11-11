@@ -2,6 +2,8 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
+use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use PhpParser\Node\Expr\Instanceof_;
@@ -114,6 +116,47 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $buffer;
     }
 
+    private function getStaticPropertiesAccess(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
+    {
+        $buffer = [];
+        $ast = $astParser->getAstForClassname($classReference->getClassName());
+
+        foreach ($astParser->findNodesOfType($ast, StaticPropertyFetch::class) as $node) {
+            if (!$node->class instanceof Name) {
+                continue; // @codeCoverageIgnore
+            }
+
+            $buffer[] = new EmittedDependency(
+                $node->class->toString(),
+                $node->class->getLine(),
+                'static_property'
+            );
+        }
+
+        return $buffer;
+    }
+
+
+    private function getStaticMethodCalls(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
+    {
+        $buffer = [];
+        $ast = $astParser->getAstForClassname($classReference->getClassName());
+
+        foreach ($astParser->findNodesOfType($ast, StaticCall::class) as $node) {
+            if (!$node->class instanceof Name) {
+                continue; // @codeCoverageIgnore
+            }
+
+            $buffer[] = new EmittedDependency(
+                $node->class->toString(),
+                $node->class->getLine(),
+                'static_method'
+            );
+        }
+
+        return $buffer;
+    }
+
     public function applyDependencies(
         AstParserInterface $astParser,
         AstMap $astMap,
@@ -132,7 +175,9 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                     $uses,
                     $this->getInstanceOfStatements($astParser, $astClassReference),
                     $this->getParamStatements($astParser, $astClassReference),
-                    $this->getNewStatements($astParser, $astClassReference)
+                    $this->getNewStatements($astParser, $astClassReference),
+                    $this->getStaticPropertiesAccess($astParser, $astClassReference),
+                    $this->getStaticMethodCalls($astParser, $astClassReference)
                 );
 
                 foreach ($uses as $emittedDependency) {
