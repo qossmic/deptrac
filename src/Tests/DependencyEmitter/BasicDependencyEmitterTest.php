@@ -26,14 +26,20 @@ class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        $this->assertCount(8, $deps);
+        $this->assertCount(14, $deps);
         $this->assertContains('Foo\Bar:4 on SomeUse', $deps);
         $this->assertContains('Foo\Bar:10 on Foo\SomeParam', $deps);
+        $this->assertContains('Foo\Bar:10 on Foo\SomeClass', $deps);
         $this->assertContains('Foo\Bar:12 on Foo\SomeClass', $deps);
         $this->assertContains('Foo\Bar:13 on SomeOtherClass', $deps);
         $this->assertContains('Foo\Bar:15 on Foo\SomeOtherParam', $deps);
         $this->assertContains('Foo\Bar:19 on Foo\SomeInstanceOf', $deps);
         $this->assertContains('Foo\Bar:21 on Foo\SomeClass', $deps);
         $this->assertContains('Foo\Bar:23 on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:26 on Some\NamespacedClass', $deps);
+        $this->assertContains('Foo\Bar:30 on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:32 on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:36 on Foo\string2', $deps);
+        $this->assertContains('Foo\Bar:38 on string', $deps);
     }
 }

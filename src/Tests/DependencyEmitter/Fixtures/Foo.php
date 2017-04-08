@@ -7,7 +7,7 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
 
     use SomeTrait;
 
-    public function foo(SomeParam $someParam, $lala)
+    public function foo(SomeParam $someParam, $lala): SomeClass
     {
         new SomeClass();
         new \SomeOtherClass();
@@ -23,4 +23,18 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
         SomeClass::$staticPropertyAccess;
     }
 
+    public function baz(): ?\Some\NamespacedClass {}
+
+    public function foobar(): void
+    {
+        new class { public function foo(): SomeClass {} };
+
+        function () : SomeClass {};
+
+        function () : string {};
+
+        function () : string2 {};
+
+        function () : \string {};
+    }
 }
