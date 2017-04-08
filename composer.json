@@ -5,7 +5,7 @@
     "require": {
         "php": ">=5.5.9",
         "graphp/graphviz": "0.2.*",
-        "nikic/php-parser": "~2.0",
+        "nikic/php-parser": "^3.0",
         "padraic/phar-updater": "^1.0",
         "phpdocumentor/graphviz": "~1.0",
         "sensiolabs-de/astrunner": "dev-master",
