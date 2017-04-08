@@ -2,16 +2,20 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
+use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Expr\StaticPropertyFetch;
+use PhpParser\Node\NullableType;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstFileReferenceInterface;
@@ -90,6 +94,39 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 $node->type->toString(),
                 $node->type->getLine(),
                 'parameter'
+            );
+        }
+
+        return $buffer;
+    }
+
+    private function getReturnTypes(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
+    {
+        $buffer = [];
+        $ast = $astParser->getAstForClassname($classReference->getClassName());
+        $canHaveReturnTypes = array_merge(
+            $astParser->findNodesOfType($ast, ClassMethod::class),
+            $closures = $astParser->findNodesOfType($ast, Closure::class)
+        );
+
+        foreach ($canHaveReturnTypes as $node) {
+            if (!$node->returnType instanceof FullyQualified) {
+                continue; // @codeCoverageIgnore
+            }
+            $buffer[] = new EmittedDependency(
+                $node->returnType->toString(),
+                $node->returnType->getLine(),
+                'returntype'
+            );
+        }
+        foreach ($canHaveReturnTypes as $node) {
+            if (!$node->returnType instanceof NullableType) {
+                continue; // @codeCoverageIgnore
+            }
+            $buffer[] = new EmittedDependency(
+                $node->returnType->type->toString(),
+                $node->returnType->type->getLine(),
+                'returntype'
             );
         }
 
@@ -177,7 +214,8 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                     $this->getParamStatements($astParser, $astClassReference),
                     $this->getNewStatements($astParser, $astClassReference),
                     $this->getStaticPropertiesAccess($astParser, $astClassReference),
-                    $this->getStaticMethodCalls($astParser, $astClassReference)
+                    $this->getStaticMethodCalls($astParser, $astClassReference),
+                    $this->getReturnTypes($astParser, $astClassReference)
                 );
 
                 foreach ($uses as $emittedDependency) {
