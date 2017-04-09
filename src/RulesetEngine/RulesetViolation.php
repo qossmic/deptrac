@@ -8,7 +8,7 @@ use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
 class RulesetViolation
 {
-    private $dependeny;
+    private $dependency;
 
     private $layerA;
 
@@ -21,7 +21,7 @@ class RulesetViolation
      */
     public function __construct(DependencyInterface $dependency, $layerA, $layerB)
     {
-        $this->dependeny = $dependency;
+        $this->dependency = $dependency;
         $this->layerA = $layerA;
         $this->layerB = $layerB;
     }
@@ -31,7 +31,7 @@ class RulesetViolation
      */
     public function getDependency()
     {
-        return $this->dependeny;
+        return $this->dependency;
     }
 
     /**
