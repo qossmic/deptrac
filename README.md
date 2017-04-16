@@ -112,7 +112,7 @@ Classes in the *Repository*-layer may NOT depend on any classes in other layers.
 The `ruleset` acts as a whitelist, therefore the *Repository*-layer rules can be omitted, however
 explicitly stating that the layer may not depend on other layers is more declarative.
 
-If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac wil recognize the dependency
+If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac will recognize the dependency
 and throws a violation for this case. The same counts if a *Service*-layer-class uses a *Controller*-layer-class.
 
 
@@ -494,7 +494,7 @@ Supported Options:
 --formatter-graphviz-dump-html=         path to a dumped html file [default: ""]
 ```
 
-*Hint*: You can create an image, a dot and a HTML file at the same time.
+*Hint*: You can create an image, a dot and an HTML file at the same time.
 
 
 ## Build deptrac
