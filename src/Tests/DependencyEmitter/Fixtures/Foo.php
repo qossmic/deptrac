@@ -36,5 +36,9 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
         function () : string2 {};
 
         function () : \string {};
+
+        function () : ?string {};
+
+        function () : ?SomeClass {};
     }
 }

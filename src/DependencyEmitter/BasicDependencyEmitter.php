@@ -124,8 +124,8 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 continue; // @codeCoverageIgnore
             }
             $buffer[] = new EmittedDependency(
-                $node->returnType->type->toString(),
-                $node->returnType->type->getLine(),
+                $node->returnType->type,
+                $node->returnType->getLine(),
                 'returntype'
             );
         }
