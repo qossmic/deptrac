@@ -25,8 +25,6 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
 
     public function baz(): ?\Some\NamespacedClass {}
 
-    public function foobaz(): ?string {}
-
     public function foobar(): void
     {
         new class { public function foo(): SomeClass {} };
@@ -38,5 +36,7 @@ class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
         function () : string2 {};
 
         function () : \string {};
+
+        function () : ?string {};
     }
 }
