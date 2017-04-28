@@ -123,6 +123,16 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             if (!$node->returnType instanceof NullableType) {
                 continue; // @codeCoverageIgnore
             }
+
+            if ($node->returnType->type instanceof FullyQualified) {
+                $buffer[] = $emitted = new EmittedDependency(
+                    $node->returnType->type->toString(),
+                    $node->returnType->getLine(),
+                    'returntype'
+                );
+                continue;
+            }
+
             $buffer[] = new EmittedDependency(
                 $node->returnType->type,
                 $node->returnType->getLine(),
