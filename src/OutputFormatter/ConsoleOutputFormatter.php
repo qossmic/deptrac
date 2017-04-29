@@ -40,9 +40,9 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         }
 
         if (count($dependencyContext->getViolations())) {
-            $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($dependencyContext->getViolations())));
+            $output->writeln(sprintf("\nFound <error>%d violations</error>", count($dependencyContext->getViolations())));
         } else {
-            $output->writeln(sprintf("\nFound <info>%s Violations</info>", count($dependencyContext->getViolations())));
+            $output->writeln("\n<info>No violations</info> found");
         }
     }
 
