@@ -26,7 +26,7 @@ class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        $this->assertCount(16, $deps);
+        $this->assertCount(18, $deps);
         $this->assertContains('Foo\Bar:4 on SomeUse', $deps);
         $this->assertContains('Foo\Bar:10 on Foo\SomeParam', $deps);
         $this->assertContains('Foo\Bar:10 on Foo\SomeClass', $deps);
@@ -43,5 +43,7 @@ class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('Foo\Bar:38 on string', $deps);
         $this->assertContains('Foo\Bar:40 on string', $deps);
         $this->assertContains('Foo\Bar:42 on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:44 on self', $deps);
+        $this->assertContains('Foo\Bar:46 on self', $deps);
     }
 }
