@@ -11,7 +11,6 @@ use SensioLabs\Deptrac\DependencyResult\Dependency;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
-use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
@@ -110,7 +109,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         );
 
         foreach ($canHaveReturnTypes as $node) {
-            if (!$node->returnType instanceof FullyQualified) {
+            if (!$node->returnType instanceof Name) {
                 continue; // @codeCoverageIgnore
             }
             $buffer[] = new EmittedDependency(
@@ -124,7 +123,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 continue; // @codeCoverageIgnore
             }
 
-            if ($node->returnType->type instanceof FullyQualified) {
+            if ($node->returnType->type instanceof Name) {
                 $buffer[] = $emitted = new EmittedDependency(
                     $node->returnType->type->toString(),
                     $node->returnType->getLine(),
