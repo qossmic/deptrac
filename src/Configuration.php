@@ -21,9 +21,9 @@ class Configuration
         $options = (new OptionsResolver())->setRequired([
             'layers',
             'paths',
-            'exclude_files',
             'ruleset',
         ])
+        ->setDefault('exclude_files', [])
         ->addAllowedTypes('layers', 'array')
         ->addAllowedTypes('paths', 'array')
         ->addAllowedTypes('exclude_files', ['array', 'null'])
