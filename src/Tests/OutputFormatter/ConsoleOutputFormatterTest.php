@@ -64,7 +64,7 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
                 ),
             ],
             '
-                OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
+                OriginalA::12 must not depend [use] on OriginalB (LayerA on LayerB)
 
                 Found 1 Violations
             ',
