@@ -36,7 +36,8 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
                     new Dependency(
                         $classReference->getClassName(),
                         $inherit->getLine(),
-                        $inherit->getClassName()
+                        $inherit->getClassName(),
+                        Dependency::TYPE_EXTENDS
                     )
                 );
             }

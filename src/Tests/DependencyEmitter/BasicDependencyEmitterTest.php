@@ -27,23 +27,23 @@ class BasicDependencyEmitterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertCount(18, $deps);
-        $this->assertContains('Foo\Bar:4 on SomeUse', $deps);
-        $this->assertContains('Foo\Bar:10 on Foo\SomeParam', $deps);
-        $this->assertContains('Foo\Bar:10 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:12 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:13 on SomeOtherClass', $deps);
-        $this->assertContains('Foo\Bar:15 on Foo\SomeOtherParam', $deps);
-        $this->assertContains('Foo\Bar:19 on Foo\SomeInstanceOf', $deps);
-        $this->assertContains('Foo\Bar:21 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:23 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:26 on Some\NamespacedClass', $deps);
-        $this->assertContains('Foo\Bar:30 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:32 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:36 on Foo\string2', $deps);
-        $this->assertContains('Foo\Bar:38 on string', $deps);
-        $this->assertContains('Foo\Bar:40 on string', $deps);
-        $this->assertContains('Foo\Bar:42 on Foo\SomeClass', $deps);
-        $this->assertContains('Foo\Bar:44 on self', $deps);
-        $this->assertContains('Foo\Bar:46 on self', $deps);
+        $this->assertContains('Foo\Bar:4 [use] on SomeUse', $deps);
+        $this->assertContains('Foo\Bar:10 [parameter] on Foo\SomeParam', $deps);
+        $this->assertContains('Foo\Bar:10 [return] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:12 [new] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:13 [new] on SomeOtherClass', $deps);
+        $this->assertContains('Foo\Bar:15 [parameter] on Foo\SomeOtherParam', $deps);
+        $this->assertContains('Foo\Bar:19 [instanceof] on Foo\SomeInstanceOf', $deps);
+        $this->assertContains('Foo\Bar:21 [static_method] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:23 [static_property] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:26 [return] on Some\NamespacedClass', $deps);
+        $this->assertContains('Foo\Bar:30 [return] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:32 [return] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:36 [return] on Foo\string2', $deps);
+        $this->assertContains('Foo\Bar:38 [return] on string', $deps);
+        $this->assertContains('Foo\Bar:40 [return] on string', $deps);
+        $this->assertContains('Foo\Bar:42 [return] on Foo\SomeClass', $deps);
+        $this->assertContains('Foo\Bar:44 [return] on self', $deps);
+        $this->assertContains('Foo\Bar:46 [return] on self', $deps);
     }
 }

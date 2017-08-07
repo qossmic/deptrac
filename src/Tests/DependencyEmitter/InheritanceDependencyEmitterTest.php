@@ -27,9 +27,9 @@ class InheritanceDependencyEmitterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertCount(4, $deps);
-        $this->assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
-        $this->assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
-        $this->assertContains('Foo\Bar:6 on BarInterface2', $deps);
-        $this->assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
+        $this->assertContains('Foo\Bar:6 [extends] on Foo\BarExtends', $deps);
+        $this->assertContains('Foo\Bar:6 [extends] on Foo\BarInterface1', $deps);
+        $this->assertContains('Foo\Bar:6 [extends] on BarInterface2', $deps);
+        $this->assertContains('Foo\Bar:8 [extends] on Foo\SomeTrait', $deps);
     }
 }
