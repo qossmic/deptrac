@@ -1,0 +1,43 @@
+paths: ["./examples/DependencyTypes"]
+exclude_files: []
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
+  - name: Entity
+    collectors:
+      - type: className
+        regex: .*Entity.*
+  - name: Factory
+    collectors:
+      - type: className
+        regex: .*Factory.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*Repository.*
+ruleset:
+  Controller:
+    Entity:
+      include: # As the controller instantiates an entity via "new", this configuration should cause a violation
+        - use
+        - parameter
+    Factory:
+      include:
+        - use
+        - new
+    Repository:
+      include:
+        - use
+        - new
+  Factory:
+    Entity:
+      include:
+        - new
+        - return
+  Repository:
+    Entity:
+      include:
+        - parameter
+        - instanceof
