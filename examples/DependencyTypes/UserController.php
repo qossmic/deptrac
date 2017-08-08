@@ -1,5 +1,11 @@
 <?php
 
+namespace DependencyTypes\Controller;
+
+use DependencyTypes\Entity\UserEntity;
+use DependencyTypes\Factory\UserFactory;
+use DependencyTypes\Repository\UserRepository;
+
 class UserController
 {
     private $factory;
@@ -15,7 +21,7 @@ class UserController
     {
         $user = new UserEntity(); // direct instantiation should be considered as an architectural violation!
         $user->name = $name;
-        $user->email = !empty($email) ? $email : UserEntity::EMAIL_MISSING; // static access should be considered as an architectural violation!
+        $user->email = $email;
 
         $this->addToRepository($user);
     }

@@ -20,9 +20,8 @@ layers:
 ruleset:
   Controller:
     Entity:
-      include: # As the controller instantiates an entity via "new", this configuration should cause a violation
-        - use
-        - parameter
+      exclude:
+        - new
     Factory:
       include:
         - use
@@ -32,12 +31,9 @@ ruleset:
         - use
         - new
   Factory:
-    Entity:
-      include:
-        - new
-        - return
+    Entity: ~ # allow all dependency types
   Repository:
     Entity:
       include:
+        - use
         - parameter
-        - instanceof
