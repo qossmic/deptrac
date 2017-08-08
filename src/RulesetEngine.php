@@ -27,23 +27,68 @@ class RulesetEngine
                         continue;
                     }
 
-                    if (in_array(
-                        $layerNameOfDependency,
-                        $configurationRuleset->getAllowedDependendencies($layerName)
-                    )) {
+                    $allowedDependencies = $configurationRuleset->getAllowedDependendencies($layerName);
+
+                    if ($this->definesDependencyTypes($allowedDependencies)) {
+                        if ($this->isAllowedDependency($allowedDependencies, $layerNameOfDependency, $dependency->getType())) {
+                            continue;
+                        }
+                    } else if (in_array($layerNameOfDependency, $allowedDependencies)) {
                         continue;
                     }
 
                     $violations[] = new RulesetViolation(
                         $dependency,
                         $layerName,
-                        $layerNameOfDependency,
-                        ''
+                        $layerNameOfDependency
                     );
                 }
             }
         }
 
         return $violations;
+    }
+
+    /**
+     * Determines whether the allowed dependencies define include or exclude filters
+     * based on dependency types.
+     *
+     * @param array $allowedDependencies
+     * @return bool
+     */
+    private function definesDependencyTypes(array $allowedDependencies)
+    {
+        return count($allowedDependencies) > 0
+            && is_string(key($allowedDependencies));
+    }
+
+    /**
+     * Returns true iff the given dependency and its associated layer matches an allowed
+     * dependency that uses include or exclude filters based on dependency types.
+     *
+     * @param array $allowedDependencies
+     * @param $layerNameOfDependency
+     * @param $typeOfDependency
+     * @return bool
+     */
+    private function isAllowedDependency(array $allowedDependencies, $layerNameOfDependency, $typeOfDependency)
+    {
+        foreach ($allowedDependencies as $allowedLayerName => $allowedDependencyTypes) {
+            if ($layerNameOfDependency != $allowedLayerName) {
+                continue;
+            }
+
+            if ($allowedDependencyTypes == null) {
+                return true; // Convention: "LayerName: ~" whitelists all dependency types
+            }
+
+            if (isset($allowedDependencyTypes['include'])) {
+                return in_array($typeOfDependency, $allowedDependencyTypes['include']);
+            } else if($allowedDependencyTypes['exclude']) {
+                return !in_array($typeOfDependency, $allowedDependencyTypes['exclude']);
+            }
+        }
+
+        return false;
     }
 }

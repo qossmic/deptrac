@@ -28,6 +28,7 @@ this rule was violated.
   1. [Collecting Layers](#collecting-layers)
 1. [Violations](#violations)
 1. [Ruleset (allowing dependencies)](#ruleset-allowing-dependencies)
+1. [Advanced ruleset (using dependency types)](#advanced-ruleset-using-dependency-types)
 1. [Different layers and different views](#different-layers-and-different-views)
 1. [Collectors](#collectors)
   1. [`className` Collector](#classname-collector)
@@ -295,8 +296,8 @@ start flatten dependencies
 end flatten dependencies
 collecting violations.
 formatting dependencies.
-examples\MyNamespace\Controllers\SomeController::5 must not depend on examples\MyNamespace\Models\SomeModel (Controller on Models)
-examples\MyNamespace\Controllers\SomeController::9 must not depend on examples\MyNamespace\Models\SomeModel (Controller on Models)
+examples\MyNamespace\Controllers\SomeController::5 must not depend [use] on examples\MyNamespace\Models\SomeModel (Controller on Models)
+examples\MyNamespace\Controllers\SomeController::9 must not depend [parameter] on examples\MyNamespace\Models\SomeModel (Controller on Models)
 
 Found 2 Violations
 ```
@@ -365,7 +366,7 @@ start flatten dependencies
 end flatten dependencies
 collecting violations.
 formatting dependencies.
-examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
+examples\MyNamespace\Repository\SomeRepository::5 must not depend [use] on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
 ```
 
 Deptrac now finds a violation.
@@ -381,6 +382,78 @@ class SomeRepository { }
 
 If we remove the `use` statement and rerun deptrac, the violation will disappear.
 
+## Advanced ruleset (using dependency types)
+Sometimes one needs to specify more fine grained rules than *Layer A is allowed to use Layer B*.
+For instance, *Layer B* might provide an Entity class which *Layer A* is allowed to use, but not allowed to instantiate on its own.
+Instead, *Layer A* must use a dedicated factory which is provided by *Layer C*.
+For this reason, deptrac can extract and distinguish eight dependency types: *extends*, *instanceof*, *new*, *parameter*, *return*, *static_method*, *static_property* and *use*.
+
+The following example shows how such a use case can be specified by dependency type aware rule sets:
+
+```yaml
+paths: ["./examples/DependencyTypes"]
+exclude_files: []
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
+  - name: Entity
+    collectors:
+      - type: className
+        regex: .*Entity.*
+  - name: Factory
+    collectors:
+      - type: className
+        regex: .*Factory.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*Repository.*
+ruleset:
+  Controller:
+    Entity:
+      exclude:
+        - new
+    Factory:
+      include:
+        - use
+        - new
+    Repository:
+      include:
+        - use
+        - new
+  Factory:
+    Entity: ~ # allow all dependency types
+  Repository:
+    Entity:
+      include:
+        - use
+        - parameter
+```
+
+After running deptrac we will get this result:
+
+![DependencyTypes](examples/DependencyTypes.png)
+
+```bash
+Start to create an AstMap for 4 Files.
+....
+AstMap created.
+start emitting dependencies "InheritanceDependencyEmitter"
+start emitting dependencies "BasicDependencyEmitter"
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+DependencyTypes\Controller\UserController::22 must not depend [new] on DependencyTypes\Entity\UserEntity (Controller on Entity)
+DependencyTypes\Repository\UserRepository::19 must not depend [instanceof] on DependencyTypes\Entity\UserEntity (Repository on Entity)
+```
+
+Deptrac now finds two violations.
+If we take a closer look at the "UserController" on line 22, we will see that it directly instantiates an entity without using the factory.
+A second violation is found in the "UserRepository" on line 19, as we did not specify *instanceof* as an allowed dependency type.
 
 ## Different layers and different views
 

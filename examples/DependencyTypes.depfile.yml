@@ -1,0 +1,39 @@
+paths: ["./examples/DependencyTypes"]
+exclude_files: []
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
+  - name: Entity
+    collectors:
+      - type: className
+        regex: .*Entity.*
+  - name: Factory
+    collectors:
+      - type: className
+        regex: .*Factory.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*Repository.*
+ruleset:
+  Controller:
+    Entity:
+      exclude:
+        - new
+    Factory:
+      include:
+        - use
+        - new
+    Repository:
+      include:
+        - use
+        - new
+  Factory:
+    Entity: ~ # allow all dependency types
+  Repository:
+    Entity:
+      include:
+        - use
+        - parameter

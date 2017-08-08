@@ -50,7 +50,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                     $uses[] = new EmittedDependency(
                         $useNode->name->toString(),
                         $useNode->name->getLine(),
-                        'use'
+                        Dependency::TYPE_USE
                     );
                 }
             }
@@ -72,7 +72,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $instanceOf->class->toString(),
                 $instanceOf->getLine(),
-                'instanceof'
+                Dependency::TYPE_INSTANCEOF
             );
         }
 
@@ -92,7 +92,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $node->type->toString(),
                 $node->type->getLine(),
-                'parameter'
+                Dependency::TYPE_PARAMETER
             );
         }
 
@@ -115,7 +115,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $node->returnType->toString(),
                 $node->returnType->getLine(),
-                'returntype'
+                Dependency::TYPE_RETURN
             );
         }
         foreach ($canHaveReturnTypes as $node) {
@@ -127,7 +127,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 $buffer[] = $emitted = new EmittedDependency(
                     $node->returnType->type->toString(),
                     $node->returnType->getLine(),
-                    'returntype'
+                    Dependency::TYPE_RETURN
                 );
                 continue;
             }
@@ -135,7 +135,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $node->returnType->type,
                 $node->returnType->getLine(),
-                'returntype'
+                Dependency::TYPE_RETURN
             );
         }
 
@@ -155,7 +155,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $node->class->toString(),
                 $node->class->getLine(),
-                'new'
+                Dependency::TYPE_NEW
             );
         }
 
@@ -175,7 +175,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $node->class->toString(),
                 $node->class->getLine(),
-                'static_property'
+                Dependency::TYPE_STATIC_PROPERTY
             );
         }
 
@@ -196,7 +196,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $buffer[] = new EmittedDependency(
                 $node->class->toString(),
                 $node->class->getLine(),
-                'static_method'
+                Dependency::TYPE_STATIC_METHOD
             );
         }
 
@@ -230,7 +230,10 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 foreach ($uses as $emittedDependency) {
                     $dependencyResult->addDependency(
                         new Dependency(
-                            $astClassReference->getClassName(), $emittedDependency->getLine(), $emittedDependency->getClass()
+                            $astClassReference->getClassName(),
+                            $emittedDependency->getLine(),
+                            $emittedDependency->getClass(),
+                            $emittedDependency->getType()
                         )
                     );
                 }

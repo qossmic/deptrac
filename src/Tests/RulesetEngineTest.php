@@ -13,7 +13,11 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
     private function createDependencies(array $fromTo)
     {
         foreach ($fromTo as $from => $to) {
-            yield new Dependency($from, 0, $to);
+            if (is_array($to)) {
+                yield new Dependency($from, 0, $to[0], $to[1]);
+            } else {
+                yield new Dependency($from, 0, $to);
+            }
         }
     }
 
@@ -133,6 +137,71 @@ class RulesetEngineTest extends \PHPUnit_Framework_TestCase
             ],
             [],
             0,
+        ];
+
+        yield [
+            [
+                'ClassA' => ['ClassB', 'new'],
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB'],
+            ],
+            [
+                'LayerA' => [
+                    'LayerB' => ['include' => ['use']]
+                ],
+            ],
+            1,
+        ];
+
+        yield [
+            [
+                'ClassA' => ['ClassB', 'new'],
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB'],
+            ],
+            [
+                'LayerA' => [
+                    'LayerB' => ['exclude' => ['new']]
+                ],
+            ],
+            1,
+        ];
+
+        yield [
+            [
+                'ClassA' => ['ClassB', 'extends'],
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB'],
+            ],
+            [
+                'LayerA' => [
+                    'LayerB' => null
+                ],
+            ],
+            0,
+        ];
+
+        yield [
+            [
+                'ClassA' => ['ClassB', 'use'],
+            ],
+            [
+                'ClassA' => ['LayerA'],
+                'ClassB' => ['LayerB'],
+                'ClassC' => ['LayerC'],
+            ],
+            [
+                'LayerA' => [
+                    'LayerC' => null
+                ],
+            ],
+            1,
         ];
     }
 

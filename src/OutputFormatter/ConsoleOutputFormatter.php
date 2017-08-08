@@ -64,9 +64,10 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     {
         $output->writeln(
             sprintf(
-                '<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
+                '<info>%s</info>::%s must not depend [%s] on <info>%s</info> (%s on %s)',
                 $violation->getDependency()->getClassA(),
                 $violation->getDependency()->getClassALine(),
+                $violation->getDependency()->getType(),
                 $violation->getDependency()->getClassB(),
                 $violation->getLayerA(),
                 $violation->getLayerB()
