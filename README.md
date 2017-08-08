@@ -383,8 +383,12 @@ class SomeRepository { }
 If we remove the `use` statement and rerun deptrac, the violation will disappear.
 
 ## Advanced ruleset (using dependency types)
-Sometimes one needs to specify more fine grained rules than *Layer A is allwoed to use Layer B*. For instance, *Layer B* might provide an Entity class which *Layer A* is allowed to use, but not allowed to instantiate on its own. Instead, *Layer A* must use a dedicated factory which is provided by *Layer C*. At this point, deptrac can extract and distinguish eight dependency types: *extends*, *instanceof*, *new*, *parameter*, *return*, *static_method*, *static_property* and *use*.
-The following example shows how such a use case can be expressed by dependecy type aware rule sets:
+Sometimes one needs to specify more fine grained rules than *Layer A is allowed to use Layer B*.
+For instance, *Layer B* might provide an Entity class which *Layer A* is allowed to use, but not allowed to instantiate on its own.
+Instead, *Layer A* must use a dedicated factory which is provided by *Layer C*.
+For this reason, deptrac can extract and distinguish eight dependency types: *extends*, *instanceof*, *new*, *parameter*, *return*, *static_method*, *static_property* and *use*.
+
+The following example shows how such a use case can be specified by dependency type aware rule sets:
 
 ```yaml
 paths: ["./examples/DependencyTypes"]
@@ -449,7 +453,7 @@ DependencyTypes\Repository\UserRepository::19 must not depend [instanceof] on De
 
 Deptrac now finds two violations.
 If we take a closer look at the "UserController" on line 22, we will see that it directly instantiates an entity without using the factory.
-A second violation is found in the "UserRepository" on line 19, as we did not specify *instanceof* as an allowed dependecy type.
+A second violation is found in the "UserRepository" on line 19, as we did not specify *instanceof* as an allowed dependency type.
 
 ## Different layers and different views
 
