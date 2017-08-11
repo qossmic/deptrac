@@ -2,14 +2,14 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
+use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\CollectorFactory;
-use PhpParser\Node\Stmt\ClassMethod;
 
-class MethodCollector
+class MethodCollector implements CollectorInterface
 {
     public function getType()
     {
@@ -54,5 +54,4 @@ class MethodCollector
 
         return false;
     }
-
 }

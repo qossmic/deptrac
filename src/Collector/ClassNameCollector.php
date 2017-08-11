@@ -2,15 +2,13 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\CollectorFactory;
 
 class ClassNameCollector implements CollectorInterface
 {
-
-
     public function getType()
     {
         return 'className';

@@ -18,19 +18,21 @@ class CollectorFactory
     }
 
     /**
-     * @param $type
+     * @param string $type
      *
      * @return CollectorInterface
      */
     public function getCollector($type)
     {
         if (!isset($this->collectors[$type])) {
-            throw new \InvalidArgumentException(sprintf(
-                'unknown collector type "%s", possible collectors are %s',
-                $type,
-                implode(', ', array_keys($this->collectors))
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'unknown collector type "%s", possible collectors are %s',
+                    $type,
+                    implode(', ', array_keys($this->collectors))
 
-            ));
+                )
+            );
         }
 
         return $this->collectors[$type];

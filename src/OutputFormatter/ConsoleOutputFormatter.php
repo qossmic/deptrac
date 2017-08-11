@@ -2,10 +2,10 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
-use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutputFormatter implements OutputFormatterInterface
@@ -40,7 +40,9 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         }
 
         if (count($dependencyContext->getViolations())) {
-            $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($dependencyContext->getViolations())));
+            $output->writeln(
+                sprintf("\nFound <error>%s Violations</error>", count($dependencyContext->getViolations()))
+            );
         } else {
             $output->writeln(sprintf("\nFound <info>%s Violations</info>", count($dependencyContext->getViolations())));
         }
@@ -82,7 +84,11 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         }
 
         $buffer[] = "\t".$astInherit->getClassName().'::'.$astInherit->getLine();
-        $buffer[] = "\t".$dependency->getOriginalDependency()->getClassB().'::'.$dependency->getOriginalDependency()->getClassALine();
+        $buffer[] = sprintf(
+            "\t%s::%s",
+            $dependency->getOriginalDependency()->getClassB(),
+            $dependency->getOriginalDependency()->getClassALine()
+        );
 
         return implode(" -> \n", $buffer);
     }

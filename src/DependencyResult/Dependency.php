@@ -4,18 +4,16 @@ namespace SensioLabs\Deptrac\DependencyResult;
 
 class Dependency implements DependencyInterface
 {
-    protected $classA;
-
-    protected $classALine;
-
-    protected $classB;
+    private $classA;
+    private $classALine;
+    private $classB;
 
     /**
      * Dependency constructor.
      *
-     * @param $classA
-     * @param $classALine
-     * @param $classB
+     * @param string $classA
+     * @param string $classALine
+     * @param string $classB
      */
     public function __construct($classA, $classALine, $classB)
     {
@@ -25,7 +23,7 @@ class Dependency implements DependencyInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getClassA()
     {
@@ -33,7 +31,7 @@ class Dependency implements DependencyInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getClassALine()
     {
@@ -41,7 +39,7 @@ class Dependency implements DependencyInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getClassB()
     {

@@ -2,11 +2,11 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class BoolCollector implements CollectorInterface
 {

@@ -2,9 +2,9 @@
 
 namespace SensioLabs\Deptrac;
 
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
 class DependencyInheritanceFlatter
 {
@@ -19,12 +19,14 @@ class DependencyInheritanceFlatter
                 }
 
                 foreach ($dependencyResult->getDependenciesByClass($inherit->getClassName()) as $dep) {
-                    $dependencyResult->addInheritDependency(new InheritDependency(
-                        $classReference->getClassName(),
-                        $dep->getClassB(),
-                        $dep,
-                        $inherit
-                    ));
+                    $dependencyResult->addInheritDependency(
+                        new InheritDependency(
+                            $classReference->getClassName(),
+                            $dep->getClassB(),
+                            $dep,
+                            $inherit
+                        )
+                    );
                 }
             }
         }

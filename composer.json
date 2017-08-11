@@ -3,20 +3,20 @@
     "description": "Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.",
     "license": "MIT",
     "require": {
-        "php": ">=5.5.9",
+        "php": "^5.6 || ^7.0",
         "graphp/graphviz": "0.2.*",
         "nikic/php-parser": "^3.0",
         "padraic/phar-updater": "^1.0",
         "phpdocumentor/graphviz": "~1.0",
         "sensiolabs-de/astrunner": "dev-master",
-        "symfony/config": "^2.7",
-        "symfony/console": "~2.7",
-        "symfony/dependency-injection": "^2.7",
-        "symfony/event-dispatcher": "^2.7",
-        "symfony/filesystem": "~2.7",
-        "symfony/finder": "~2.7",
-        "symfony/options-resolver": "^2.7",
-        "symfony/yaml": "^2.7"
+        "symfony/config": "^2.8 || ^3.0",
+        "symfony/console": "^2.8 || ^3.0",
+        "symfony/dependency-injection": "^2.8 || ^3.0",
+        "symfony/event-dispatcher": "^2.8 || ^3.0",
+        "symfony/filesystem": "^2.8 || ^3.0",
+        "symfony/finder": "^2.8 || ^3.0",
+        "symfony/options-resolver": "^2.8 || ^3.0",
+        "symfony/yaml": "^2.8 || ^3.0"
     },
     "authors": [
         {
@@ -25,7 +25,7 @@
         }
     ],
     "require-dev": {
-        "phpunit/phpunit": "^4.8 || ^5.5"
+        "phpunit/phpunit": "^5.5"
     },
     "autoload": {
         "psr-4": {
@@ -35,6 +35,11 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\SensioLabs\\Deptrac\\": "tests/"
+	}
+    },
+    "config": {
+        "platform": {
+            "php": "5.6"
         }
     }
 }

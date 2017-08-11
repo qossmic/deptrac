@@ -14,11 +14,11 @@ cache:
 matrix:
     include:
         - php: hhvm
-        - php: 5.5
         - php: 5.6
-          env: deps=high
-        - php: 7.0
+        - php: 5.6
           env: deps=low
+        - php: 7.0
+        - php: 7.1
     fast_finish: true
 
 install:

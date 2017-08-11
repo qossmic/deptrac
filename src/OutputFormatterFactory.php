@@ -58,7 +58,7 @@ class OutputFormatterFactory
      */
     private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input)
     {
-        return (bool) $input->getOption('formatter-'.$formatter->getName());
+        return (bool)$input->getOption('formatter-'.$formatter->getName());
     }
 
     /**
@@ -68,9 +68,14 @@ class OutputFormatterFactory
      */
     public function getActiveFormatters(InputInterface $input)
     {
-        return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input) {
-            return $this->isFormatterActive($formatter, $input);
-        }));
+        return array_values(
+            array_filter(
+                $this->formatters,
+                function (OutputFormatterInterface $formatter) use ($input) {
+                    return $this->isFormatterActive($formatter, $input);
+                }
+            )
+        );
     }
 
     /**
@@ -96,26 +101,34 @@ class OutputFormatterFactory
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return OutputFormatterInterface
      */
     public function getFormatterByName($name)
     {
         foreach ($this->formatters as $formatter) {
-            if (strtolower($name) != strtolower($formatter->getName())) {
+            if (strtolower($name) !== strtolower($formatter->getName())) {
                 continue;
             }
 
             return $formatter;
         }
 
-        throw new \LogicException(sprintf(
-            'Formatter %s does not exists, did you mean %s?',
-            $name,
-            implode(', ',
-                array_map(function (OutputFormatterInterface $f) { return $f->getName(); }, $this->formatters)
+        throw new \LogicException(
+            sprintf(
+                'Formatter %s does not exists, did you mean %s?',
+                $name,
+                implode(
+                    ', ',
+                    array_map(
+                        function (OutputFormatterInterface $f) {
+                            return $f->getName();
+                        },
+                        $this->formatters
+                    )
+                )
             )
-        ));
+        );
     }
 }

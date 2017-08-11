@@ -44,9 +44,6 @@ class ConfigurationLoader
             throw new \RuntimeException('Configuration already exists.');
         }
 
-        file_put_contents(
-            $this->configFilePathname,
-            file_get_contents(__DIR__.'/Configuration/example_configuration.yml')
-        );
+        copy(__DIR__.'/Configuration/example_configuration.yml', $this->configFilePathname);
     }
 }

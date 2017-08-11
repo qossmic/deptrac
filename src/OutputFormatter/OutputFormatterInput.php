@@ -8,16 +8,17 @@ class OutputFormatterInput
     private $options;
 
     /**
-     * @param $arguments
+     * @param $options
      */
-    public function __construct($arguments)
+    public function __construct(array $options)
     {
-        $this->options = $arguments;
+        $this->options = $options;
     }
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
+     *
+     * @return mixed
      */
     public function getOption($name)
     {

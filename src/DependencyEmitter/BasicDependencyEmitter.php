@@ -3,23 +3,23 @@
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
 use PhpParser\Node\Expr\Closure;
-use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Expr\StaticPropertyFetch;
-use PhpParser\Node\NullableType;
-use SensioLabs\Deptrac\DependencyResult;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Name;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstFileReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 
 class BasicDependencyEmitter implements DependencyEmitterInterface
 {
@@ -31,6 +31,47 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     public function supportsParser(AstParserInterface $astParser)
     {
         return $astParser instanceof NikicPhpParser;
+    }
+
+    public function applyDependencies(
+        AstParserInterface $astParser,
+        AstMap $astMap,
+        DependencyResult $dependencyResult
+    ) {
+        /** @var $astParser NikicPhpParser */
+        if (!$this->supportsParser($astParser)) {
+            throw new UnsupportedParserException(
+                'Expected \SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"'
+            );
+        }
+
+        foreach ($astMap->getAstFileReferences() as $fileReference) {
+            $uses = $this->getUseStatements($astParser, $fileReference);
+
+            foreach ($fileReference->getAstClassReferences() as $astClassReference) {
+
+                /** @var $uses EmittedDependency[] */
+                $uses = array_merge(
+                    $uses,
+                    $this->getInstanceOfStatements($astParser, $astClassReference),
+                    $this->getParamStatements($astParser, $astClassReference),
+                    $this->getNewStatements($astParser, $astClassReference),
+                    $this->getStaticPropertiesAccess($astParser, $astClassReference),
+                    $this->getStaticMethodCalls($astParser, $astClassReference),
+                    $this->getReturnTypes($astParser, $astClassReference)
+                );
+
+                foreach ($uses as $emittedDependency) {
+                    $dependencyResult->addDependency(
+                        new Dependency(
+                            $astClassReference->getClassName(),
+                            $emittedDependency->getLine(),
+                            $emittedDependency->getClass()
+                        )
+                    );
+                }
+            }
+        }
     }
 
     private function getUseStatements(NikicPhpParser $astParser, AstFileReferenceInterface $fileReference)
@@ -201,40 +242,5 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         }
 
         return $buffer;
-    }
-
-    public function applyDependencies(
-        AstParserInterface $astParser,
-        AstMap $astMap,
-        DependencyResult $dependencyResult
-    ) {
-        /* @var $astParser NikicPhpParser */
-        assert($astParser instanceof NikicPhpParser === true);
-
-        foreach ($astMap->getAstFileReferences() as $fileReference) {
-            $uses = $this->getUseStatements($astParser, $fileReference);
-
-            foreach ($fileReference->getAstClassReferences() as $astClassReference) {
-
-                /** @var $uses EmittedDependency[] */
-                $uses = array_merge(
-                    $uses,
-                    $this->getInstanceOfStatements($astParser, $astClassReference),
-                    $this->getParamStatements($astParser, $astClassReference),
-                    $this->getNewStatements($astParser, $astClassReference),
-                    $this->getStaticPropertiesAccess($astParser, $astClassReference),
-                    $this->getStaticMethodCalls($astParser, $astClassReference),
-                    $this->getReturnTypes($astParser, $astClassReference)
-                );
-
-                foreach ($uses as $emittedDependency) {
-                    $dependencyResult->addDependency(
-                        new Dependency(
-                            $astClassReference->getClassName(), $emittedDependency->getLine(), $emittedDependency->getClass()
-                        )
-                    );
-                }
-            }
-        }
     }
 }

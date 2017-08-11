@@ -2,12 +2,12 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\DependencyResult;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {
@@ -26,6 +26,12 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
         AstMap $astMap,
         DependencyResult $dependencyResult
     ) {
+        if (!$this->supportsParser($astParser)) {
+            throw new UnsupportedParserException(
+                'Expected "\SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"'
+            );
+        }
+
         foreach ($astMap->getAstClassReferences() as $classReference) {
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
                 if ($inherit instanceof FlattenAstInherit) {
