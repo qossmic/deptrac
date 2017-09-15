@@ -3,13 +3,12 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="Tests">
-            <directory suffix="Test.php">./src/Tests/</directory>
+            <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <exclude>
-                <directory>./src/Tests</directory>
                 <directory>./src/Command</directory>
                 <directory>./src/CompilerPass</directory>
             </exclude>

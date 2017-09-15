@@ -31,5 +31,10 @@
         "psr-4": {
             "SensioLabs\\Deptrac\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\SensioLabs\\Deptrac\\": "tests/"
+        }
     }
 }
