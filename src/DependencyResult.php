@@ -2,15 +2,18 @@
 
 namespace SensioLabs\Deptrac;
 
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 
 class DependencyResult
 {
-    private $classLayerMap = [];
-
+    /**
+     * @var array<DependencyInterface[]>
+     */
     private $dependencies = [];
 
+    /**
+     * @var array<DependencyInterface[]>
+     */
     private $inheritDependencies = [];
 
     /**
@@ -46,20 +49,22 @@ class DependencyResult
     }
 
     /**
-     * @param $klass
+     * @param string $className
      *
-     * @return Dependency[]
+     * @return DependencyInterface[]
      */
-    public function getDependenciesByClass($klass)
+    public function getDependenciesByClass($className)
     {
-        if (!isset($this->dependencies[$klass])) {
+        if (!isset($this->dependencies[$className])) {
             return [];
         }
 
-        return $this->dependencies[$klass];
+        return $this->dependencies[$className];
     }
 
-    /** @return Dependency[] */
+    /**
+     * @return DependencyInterface[]
+     */
     public function getDependenciesAndInheritDependencies()
     {
         $buffer = [];

@@ -2,17 +2,17 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\CollectorFactory;
 
 interface CollectorInterface
 {
     /**
      * @return string Used as an identifier to access to the collector or to display something more user-friendly
      *                name to the user when referring to the collector.
-     *                
+     *
      * @example
      *  'bool', 'className', etc.
      */

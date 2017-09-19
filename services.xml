@@ -5,7 +5,7 @@
 
     <services>
 
-        <service id="container" synthetic="true" />
+        <service id="container" synthetic="true"/>
 
         <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
@@ -44,7 +44,7 @@
         </service>
 
         <service id="collector_inheritance_level" class="SensioLabs\Deptrac\Collector\InheritanceLevelCollector">
-            <tag name="collector" />
+            <tag name="collector"/>
         </service>
 
         <service id="command_analyze" class="SensioLabs\Deptrac\Command\AnalyzeCommand">
@@ -55,7 +55,7 @@
             <argument type="service" id="collector_factory"/>
         </service>
 
-        <service id="updater_strategy" class="SensioLabs\Deptrac\Updater\DeptracStrategy" />
+        <service id="updater_strategy" class="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
 
         <service id="updater" class="Humbug\SelfUpdate\Updater">
             <argument>null</argument>

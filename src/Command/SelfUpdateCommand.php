@@ -42,7 +42,7 @@ class SelfUpdateCommand extends Command
                 return 0;
             }
         } catch (HttpRequestException $e) {
-            $output->writeln('<error>Could update deptrac.</error>');
+            $output->writeln('<error>Could not update deptrac.</error>');
             $output->writeln('<error>' . $e->getMessage() . '</error>');
 
             return 1;

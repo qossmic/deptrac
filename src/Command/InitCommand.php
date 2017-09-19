@@ -14,10 +14,8 @@ class InitCommand extends Command
         $this->setName('init');
     }
 
-    protected function execute(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $configurationLoader = new ConfigurationLoader('depfile.yml');
 
         if ($configurationLoader->hasConfiguration()) {

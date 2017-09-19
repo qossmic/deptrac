@@ -9,42 +9,29 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Configuration
 {
     private $layers;
-
     private $paths;
-
     private $exclude_files;
-
     private $ruleset;
 
     public static function fromArray(array $arr)
     {
-        $options = (new OptionsResolver())->setRequired([
-            'layers',
-            'paths',
-            'ruleset',
-        ])
-        ->setDefault('exclude_files', [])
-        ->addAllowedTypes('layers', 'array')
-        ->addAllowedTypes('paths', 'array')
-        ->addAllowedTypes('exclude_files', ['array', 'null'])
-        ->addAllowedTypes('ruleset', 'array')
-        ->resolve($arr);
+        $options = self::resolveOptions($arr);
 
         return new static(
-            array_map(function ($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
+            self::createConfigurationLayers($options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
-            (array) $options['exclude_files']
+            (array)$options['exclude_files']
         );
     }
 
     /**
-     * @param $layers
-     * @param $ruleset
-     * @param $paths
-     * @param $exclude_files
+     * @param ConfigurationLayer[] $layers
+     * @param ConfigurationRuleset $ruleset
+     * @param array                $paths
+     * @param array                $exclude_files
      */
-    private function __construct($layers, $ruleset, $paths, $exclude_files)
+    private function __construct(array $layers, ConfigurationRuleset $ruleset, array $paths, array $exclude_files)
     {
         $this->layers = $layers;
         $this->ruleset = $ruleset;
@@ -61,7 +48,7 @@ class Configuration
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getPaths()
     {
@@ -69,7 +56,7 @@ class Configuration
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getExcludeFiles()
     {
@@ -82,5 +69,33 @@ class Configuration
     public function getRuleset()
     {
         return $this->ruleset;
+    }
+
+    private static function resolveOptions(array $arr)
+    {
+        return (new OptionsResolver())
+            ->setRequired(
+                [
+                    'layers',
+                    'paths',
+                    'ruleset',
+                ]
+            )
+            ->setDefault('exclude_files', [])
+            ->addAllowedTypes('layers', 'array')
+            ->addAllowedTypes('paths', 'array')
+            ->addAllowedTypes('exclude_files', ['array', 'null'])
+            ->addAllowedTypes('ruleset', 'array')
+            ->resolve($arr);
+    }
+
+    private static function createConfigurationLayers(array $layers)
+    {
+        return array_map(
+            function ($v) {
+                return ConfigurationLayer::fromArray($v);
+            },
+            $layers
+        );
     }
 }

@@ -14,22 +14,28 @@ class RulesetEngine
      *
      * @return RulesetViolation[]
      */
-    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
-    {
+    public function getViolations(
+        DependencyResult $dependencyResult,
+        ClassNameLayerResolverInterface $classNameLayerResolver,
+        ConfigurationRuleset $configurationRuleset
+    ) {
         $violations = [];
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
+            $layerNamesClassA = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
 
-            foreach ($layerNames as $layerName) {
-                foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
-                    if ($layerName == $layerNameOfDependency) {
+            foreach ($layerNamesClassA as $layerName) {
+                $layerNamesClassB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
+
+                foreach ($layerNamesClassB as $layerNameOfDependency) {
+                    if ($layerName === $layerNameOfDependency) {
                         continue;
                     }
 
                     if (in_array(
                         $layerNameOfDependency,
-                        $configurationRuleset->getAllowedDependendencies($layerName)
+                        $configurationRuleset->getAllowedDependencies($layerName),
+                        true
                     )) {
                         continue;
                     }
@@ -37,8 +43,7 @@ class RulesetEngine
                     $violations[] = new RulesetViolation(
                         $dependency,
                         $layerName,
-                        $layerNameOfDependency,
-                        ''
+                        $layerNameOfDependency
                     );
                 }
             }

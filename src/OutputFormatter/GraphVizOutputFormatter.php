@@ -2,12 +2,12 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\DependencyResult;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Fhaculty\Graph\Vertex;
 use SensioLabs\AstRunner\AstMap;
+use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\DependencyContext;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface

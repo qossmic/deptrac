@@ -6,29 +6,43 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ConfigurationLayer
 {
-    /** @var ConfigurationCollector[] */
+    /**
+     * @var ConfigurationCollector[]
+     */
     private $collectors;
 
+    /**
+     * @var string
+     */
     private $name;
 
     public static function fromArray(array $arr)
     {
-        $options = (new OptionsResolver())->setRequired([
-            'name',
-            'collectors',
-        ])->resolve($arr);
+        $options = (new OptionsResolver())
+            ->setRequired(
+                [
+                    'name',
+                    'collectors',
+                ]
+            )
+            ->resolve($arr);
 
         return new static(
-            array_map(function ($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
+            array_map(
+                function ($v) {
+                    return ConfigurationCollector::fromArray($v);
+                },
+                $options['collectors']
+            ),
             $options['name']
         );
     }
 
     /**
-     * @param $color
-     * @param $collectors
+     * @param ConfigurationCollector[] $collectors
+     * @param string                   $name
      */
-    private function __construct($collectors, $name)
+    private function __construct(array $collectors, $name)
     {
         $this->collectors = $collectors;
         $this->name = $name;
@@ -43,7 +57,7 @@ class ConfigurationLayer
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {

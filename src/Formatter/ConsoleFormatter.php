@@ -37,10 +37,12 @@ class ConsoleFormatter
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
     {
-        $this->output->writeln(sprintf(
-            'Start to create an AstMap for <info>%u</info> Files.',
-            $preCreateAstMapEvent->getExpectedFileCount()
-        ));
+        $this->output->writeln(
+            sprintf(
+                'Start to create an AstMap for <info>%u</info> Files.',
+                $preCreateAstMapEvent->getExpectedFileCount()
+            )
+        );
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent)
@@ -59,10 +61,12 @@ class ConsoleFormatter
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
     {
-        $this->output->writeln(sprintf(
-            "\nSyntax Error on File %s\n<error>%s</error>\n",
-            $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
-            $astFileSyntaxErrorEvent->getSyntaxError()
-        ));
+        $this->output->writeln(
+            sprintf(
+                "\nSyntax Error on File %s\n<error>%s</error>\n",
+                $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
+                $astFileSyntaxErrorEvent->getSyntaxError()
+            )
+        );
     }
 }

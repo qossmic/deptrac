@@ -24,8 +24,8 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     /**
      * ClassNameLayerResolver constructor.
      *
-     * @param Configuration $configuration
-     * @param AstMap $astMap
+     * @param Configuration    $configuration
+     * @param AstMap           $astMap
      * @param CollectorFactory $collectorFactory
      */
     public function __construct(
@@ -40,6 +40,10 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
         $this->astParser = $astParser;
     }
 
+    /**
+     * @param string $className
+     * @return array
+     */
     public function getLayersByClassName($className)
     {
         $layers = [];

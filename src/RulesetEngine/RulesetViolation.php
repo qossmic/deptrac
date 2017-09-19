@@ -2,9 +2,7 @@
 
 namespace SensioLabs\Deptrac\RulesetEngine;
 
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
 class RulesetViolation
 {
@@ -16,8 +14,8 @@ class RulesetViolation
 
     /**
      * @param DependencyInterface $dependency
-     * @param $layerA
-     * @param $layerB
+     * @param                     $layerA
+     * @param                     $layerB
      */
     public function __construct(DependencyInterface $dependency, $layerA, $layerB)
     {
@@ -27,7 +25,7 @@ class RulesetViolation
     }
 
     /**
-     * @return Dependency|InheritDependency
+     * @return DependencyInterface
      */
     public function getDependency()
     {

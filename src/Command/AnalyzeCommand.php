@@ -2,6 +2,8 @@
 
 namespace SensioLabs\Deptrac\Command;
 
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
@@ -16,8 +18,6 @@ use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -55,23 +55,24 @@ class AnalyzeCommand extends Command
     protected function configure()
     {
         $this->setName('analyze');
-
-        $this->getDefinition()->setArguments([
-            new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml'),
-        ]);
+        $this->addArgument(
+            'depfile',
+            InputArgument::OPTIONAL,
+            'Path to the depfile',
+            getcwd().'/depfile.yml'
+        );
 
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
-    protected function execute(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         ini_set('memory_limit', -1);
 
         $this->printBanner($output);
 
-        $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
+        $depfile = $input->getArgument('depfile');
+        $configurationLoader = new ConfigurationLoader($depfile);
 
         if (!$configurationLoader->hasConfiguration()) {
             $this->printConfigMissingError($output, $configurationLoader);
@@ -84,7 +85,8 @@ class AnalyzeCommand extends Command
         new ConsoleFormatter($this->dispatcher, $output);
 
         $parser = new NikicPhpParser();
-        $astMap = $this->astRunner->createAstMapByFiles($parser, $this->dispatcher, $this->collectFiles($configuration));
+        $files = $this->collectFiles($configuration);
+        $astMap = $this->astRunner->createAstMapByFiles($parser, $this->dispatcher, $files);
 
         $dependencyResult = new DependencyResult();
 
@@ -116,7 +118,11 @@ class AnalyzeCommand extends Command
         $this->printCollectViolations($output);
 
         /** @var $violations RulesetEngine\RulesetViolation[] */
-        $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
+        $violations = $this->rulesetEngine->getViolations(
+            $dependencyResult,
+            $classNameLayerResolver,
+            $configuration->getRuleset()
+        );
 
         $this->printFormattingStart($output);
 
@@ -147,15 +153,18 @@ class AnalyzeCommand extends Command
                 ->ignoreVCS(true)
         );
 
-        return array_filter($files, function (\SplFileInfo $fileInfo) use ($configuration) {
-            foreach ($configuration->getExcludeFiles() as $excludeFiles) {
-                if (preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
-                    return false;
+        return array_filter(
+            $files,
+            function (\SplFileInfo $fileInfo) use ($configuration) {
+                foreach ($configuration->getExcludeFiles() as $excludeFiles) {
+                    if (preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
+                        return false;
+                    }
                 }
-            }
 
-            return true;
-        });
+                return true;
+            }
+        );
     }
 
     /**
@@ -163,21 +172,28 @@ class AnalyzeCommand extends Command
      */
     protected function printBanner(OutputInterface $output)
     {
-        $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
+        $output->writeln(
+            "\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n"
+        );
     }
 
     /**
      * @param OutputInterface $output
-     * @param $configurationLoader
+     * @param                 $configurationLoader
      */
     protected function printConfigMissingError(OutputInterface $output, $configurationLoader)
     {
-        $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
+        $output->writeln(
+            sprintf(
+                'depfile "%s" not found, run "deptrac init" to create one.',
+                $configurationLoader->getConfigFilePathname()
+            )
+        );
     }
 
     /**
      * @param OutputInterface $output
-     * @param $dependencyEmitter
+     * @param                 $dependencyEmitter
      */
     protected function printEmitStart(OutputInterface $output, $dependencyEmitter)
     {
@@ -226,8 +242,8 @@ class AnalyzeCommand extends Command
 
     /**
      * @param OutputInterface $output
-     * @param $formatterName
-     * @param \Exception $exception
+     * @param                 $formatterName
+     * @param \Exception      $exception
      */
     protected function printFormatterException(OutputInterface $output, $formatterName, \Exception $exception)
     {

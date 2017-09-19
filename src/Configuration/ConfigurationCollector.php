@@ -5,7 +5,6 @@ namespace SensioLabs\Deptrac\Configuration;
 class ConfigurationCollector
 {
     private $type;
-
     private $args;
 
     public static function fromArray(array $arr)
@@ -18,19 +17,17 @@ class ConfigurationCollector
     }
 
     /**
-     * ConfigurationCollector constructor.
-     *
-     * @param $type
-     * @param $args
+     * @param string $type
+     * @param array  $args
      */
-    private function __construct($type, $args)
+    private function __construct($type, array $args)
     {
         $this->type = $type;
         $this->args = $args;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getType()
     {
@@ -38,7 +35,7 @@ class ConfigurationCollector
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getArgs()
     {
