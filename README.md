@@ -31,6 +31,7 @@ this rule was violated.
 1. [Different layers and different views](#different-layers-and-different-views)
 1. [Collectors](#collectors)
   1. [`className` Collector](#classname-collector)
+  1. [`directory` Collector](#directory-collector)
   1. [`bool` Collector](#bool-collector)
   1. [More collectors](#more-collectors)
 1. [Formatters](#formatters)
