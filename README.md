@@ -424,6 +424,22 @@ layers:
 Every classname that matches the regular expression `.*Controller.*` becomes a part of the *controller* layer.
 
 
+### `directory` Collector
+
+The `directory` collector allows collecting classes by matching their file path they are declared in to a regular expression.
+Any matching class will be added to the assigned layer.
+
+```yaml
+layers:
+  - name: Controller
+    collectors:
+      - type: directory
+        regex: src/Controller/.*
+```
+
+Every file path that matches the regular expression `src/Controller/.*` becomes a part of the *controller* layer.
+
+
 ### `bool` collector
 
 The `bool` collector allows combining other collectors with or without negation.
