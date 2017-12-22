@@ -2,13 +2,14 @@
 
 namespace Tests\SensioLabs\Deptrac\Collector;
 
+use PHPUnit\Framework\TestCase;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
 use SensioLabs\Deptrac\CollectorFactory;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
-class ClassNameCollectorTest extends \PHPUnit_Framework_TestCase
+class ClassNameCollectorTest extends TestCase
 {
     public function dataProviderStatisfy()
     {

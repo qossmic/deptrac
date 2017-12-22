@@ -2,15 +2,16 @@
 
 namespace Tests\SensioLabs\Deptrac\Collector;
 
+use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\CollectorFactory;
-use Prophecy\Argument;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
-class BoolCollectorTest extends \PHPUnit_Framework_TestCase
+class BoolCollectorTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException

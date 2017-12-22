@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 
-class GraphVizOutputFormatterTest extends \PHPUnit_Framework_TestCase
+class GraphVizOutputFormatterTest extends TestCase
 {
     public function testGetName()
     {

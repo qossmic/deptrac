@@ -2,11 +2,11 @@
 
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait

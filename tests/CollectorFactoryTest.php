@@ -2,10 +2,11 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\CollectorFactory;
 
-class CollectorFactoryTest extends \PHPUnit_Framework_TestCase
+class CollectorFactoryTest extends TestCase
 {
     public function testGetCollector()
     {

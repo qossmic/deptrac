@@ -2,13 +2,14 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
 use SensioLabs\Deptrac\OutputFormatterFactory;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
-class OutputFormatterFactoryTest extends \PHPUnit_Framework_TestCase
+class OutputFormatterFactoryTest extends TestCase
 {
     private function createNamedFormatter($name)
     {
@@ -57,21 +58,21 @@ class OutputFormatterFactoryTest extends \PHPUnit_Framework_TestCase
         /** @var $arguments InputArgument[] */
         $arguments = $formatterFactory->getFormatterOptions('foo1');
 
-        $this->assertEquals('formatter-foo1',           $arguments[0]->getName());
+        $this->assertEquals('formatter-foo1', $arguments[0]->getName());
 
-        $this->assertEquals('formatter-foo1-f1-n1',     $arguments[1]->getName());
-        $this->assertEquals('f1-n1-default',            $arguments[1]->getDefault());
-        $this->assertEquals('f1-n1-desc',               $arguments[1]->getDescription());
+        $this->assertEquals('formatter-foo1-f1-n1', $arguments[1]->getName());
+        $this->assertEquals('f1-n1-default', $arguments[1]->getDefault());
+        $this->assertEquals('f1-n1-desc', $arguments[1]->getDescription());
 
-        $this->assertEquals('formatter-foo2',           $arguments[2]->getName());
+        $this->assertEquals('formatter-foo2', $arguments[2]->getName());
 
-        $this->assertEquals('formatter-foo2-f2-n1',     $arguments[3]->getName());
-        $this->assertEquals('f2-n1-default',            $arguments[3]->getDefault());
-        $this->assertEquals('f2-n1-desc',               $arguments[3]->getDescription());
+        $this->assertEquals('formatter-foo2-f2-n1', $arguments[3]->getName());
+        $this->assertEquals('f2-n1-default', $arguments[3]->getDefault());
+        $this->assertEquals('f2-n1-desc', $arguments[3]->getDescription());
 
-        $this->assertEquals('formatter-foo2-f2-n2',     $arguments[4]->getName());
-        $this->assertEquals('f2-n2-default',            $arguments[4]->getDefault());
-        $this->assertEquals('f2-n2-desc',               $arguments[4]->getDescription());
+        $this->assertEquals('formatter-foo2-f2-n2', $arguments[4]->getName());
+        $this->assertEquals('f2-n2-default', $arguments[4]->getDefault());
+        $this->assertEquals('f2-n2-desc', $arguments[4]->getDescription());
 
         $this->assertCount(6, $arguments);
     }

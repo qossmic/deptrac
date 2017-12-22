@@ -2,6 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
@@ -9,11 +13,8 @@ use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
-use Prophecy\Argument;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
-class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
+class ClassNameLayerResolverTest extends TestCase
 {
     private function getCollectorConfiguration($type)
     {
@@ -65,9 +66,9 @@ class ClassNameLayerResolverTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $collectA
-     * @param $collectB1
-     * @param $collectB2
+     * @param       $collectA
+     * @param       $collectB1
+     * @param       $collectB2
      * @param array $expectedLayers
      * @dataProvider provideGetLayersByClassName
      */

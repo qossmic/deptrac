@@ -2,6 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
+use PHPUnit\Framework\TestCase;
+use SensioLabs\AstRunner\AstMap;
+use SensioLabs\AstRunner\AstMap\AstInherit;
+use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult;
@@ -10,12 +14,9 @@ use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstMap\AstInherit;
-use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
+class ConsoleOutputFormatterTest extends TestCase
 {
     public function testGetName()
     {
@@ -83,7 +84,7 @@ class ConsoleOutputFormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $violations
-     * @param $expectedOutput
+     * @param       $expectedOutput
      * @dataProvider basicDataProvider
      */
     public function testBasic(array $violations, $expectedOutput)

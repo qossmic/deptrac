@@ -4,12 +4,13 @@ namespace Tests\SensioLabs\Deptrac\Command;
 
 use Humbug\SelfUpdate\Exception\HttpRequestException;
 use Humbug\SelfUpdate\Updater;
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Command\SelfUpdateCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class SelfUpdateCommandTest extends \PHPUnit_Framework_TestCase
+class SelfUpdateCommandTest extends TestCase
 {
     private function getContainerWithUpdater(Updater $updater)
     {

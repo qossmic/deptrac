@@ -2,12 +2,13 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult;
 
-class DependencyContextTest extends \PHPUnit_Framework_TestCase
+class DependencyContextTest extends TestCase
 {
     public function testGetSet()
     {

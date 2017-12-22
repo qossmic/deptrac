@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac\Configuration;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
-class ConfigurationLayerTest extends \PHPUnit_Framework_TestCase
+class ConfigurationLayerTest extends TestCase
 {
     public function testFromArray()
     {

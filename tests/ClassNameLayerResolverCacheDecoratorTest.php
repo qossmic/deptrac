@@ -2,10 +2,11 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 
-class ClassNameLayerResolverCacheDecoratorTest extends \PHPUnit_Framework_TestCase
+class ClassNameLayerResolverCacheDecoratorTest extends TestCase
 {
     public function testGetLayersByClassName()
     {

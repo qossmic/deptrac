@@ -2,14 +2,15 @@
 
 namespace Tests\SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
-use SensioLabs\Deptrac\CollectorFactory;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
+use SensioLabs\Deptrac\CollectorFactory;
 
-class InheritanceLevelCollectorTest extends  \PHPUnit_Framework_TestCase
+class InheritanceLevelCollectorTest extends TestCase
 {
     public function dataTests()
     {

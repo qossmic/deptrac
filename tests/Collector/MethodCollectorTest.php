@@ -3,15 +3,15 @@
 
 namespace Tests\SensioLabs\Deptrac\Collector;
 
-
 use PhpParser\Node\Stmt\ClassMethod;
+use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\MethodCollector;
 use SensioLabs\Deptrac\CollectorFactory;
 
-class MethodCollectorTest extends \PHPUnit_Framework_TestCase
+class MethodCollectorTest extends TestCase
 {
     public function dataProviderStatisfy()
     {
@@ -20,26 +20,26 @@ class MethodCollectorTest extends \PHPUnit_Framework_TestCase
             [
                 $this->getClassMethod('abc'),
                 $this->getClassMethod('abcdef'),
-                $this->getClassMethod('xyz')
+                $this->getClassMethod('xyz'),
             ],
-            true
-       ];
-
-        yield [
-            ['name' => 'abc'],
-            [
-                $this->getClassMethod('abc'),
-                $this->getClassMethod('xyz')
-            ],
-            true
+            true,
         ];
 
         yield [
             ['name' => 'abc'],
             [
-                $this->getClassMethod('xyz')
+                $this->getClassMethod('abc'),
+                $this->getClassMethod('xyz'),
             ],
-            false
+            true,
+        ];
+
+        yield [
+            ['name' => 'abc'],
+            [
+                $this->getClassMethod('xyz'),
+            ],
+            false,
         ];
     }
 
@@ -52,6 +52,7 @@ class MethodCollectorTest extends \PHPUnit_Framework_TestCase
     {
         $classMethod = new \StdClass();
         $classMethod->name = $name;
+
         return $classMethod;
     }
 
@@ -81,5 +82,4 @@ class MethodCollectorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $stat);
     }
-
 }
