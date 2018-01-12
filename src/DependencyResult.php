@@ -52,11 +52,7 @@ class DependencyResult
      */
     public function getDependenciesByClass($klass)
     {
-        if (!isset($this->dependencies[$klass])) {
-            return [];
-        }
-
-        return $this->dependencies[$klass];
+        return $this->dependencies[$klass] ?? [];
     }
 
     /** @return Dependency[] */

@@ -26,10 +26,6 @@ class ConfigurationRuleset
      */
     public function getAllowedDependendencies($layerName)
     {
-        if (!isset($this->layerMap[$layerName])) {
-            return [];
-        }
-
-        return $this->layerMap[$layerName];
+        return $this->layerMap[$layerName] ?? [];
     }
 }
