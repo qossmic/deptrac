@@ -182,7 +182,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         return $buffer;
     }
 
-
     private function getStaticMethodCalls(NikicPhpParser $astParser, AstClassReferenceInterface $classReference)
     {
         $buffer = [];
@@ -209,13 +208,12 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         DependencyResult $dependencyResult
     ) {
         /* @var $astParser NikicPhpParser */
-        assert($astParser instanceof NikicPhpParser === true);
+        assert(true === $astParser instanceof NikicPhpParser);
 
         foreach ($astMap->getAstFileReferences() as $fileReference) {
             $uses = $this->getUseStatements($astParser, $fileReference);
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
-
                 /** @var $uses EmittedDependency[] */
                 $uses = array_merge(
                     $uses,
@@ -230,7 +228,9 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 foreach ($uses as $emittedDependency) {
                     $dependencyResult->addDependency(
                         new Dependency(
-                            $astClassReference->getClassName(), $emittedDependency->getLine(), $emittedDependency->getClass()
+                            $astClassReference->getClassName(),
+                            $emittedDependency->getLine(),
+                            $emittedDependency->getClass()
                         )
                     );
                 }

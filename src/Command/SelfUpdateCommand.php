@@ -26,7 +26,7 @@ class SelfUpdateCommand extends Command
     {
         $this
             ->setName('self-update')
-            ->setAliases(array('selfupdate'))
+            ->setAliases(['selfupdate'])
             ->setDescription('Updates deptrac.phar to the latest version.')
         ;
     }
@@ -43,7 +43,7 @@ class SelfUpdateCommand extends Command
             }
         } catch (HttpRequestException $e) {
             $output->writeln('<error>Could update deptrac.</error>');
-            $output->writeln('<error>' . $e->getMessage() . '</error>');
+            $output->writeln('<error>'.$e->getMessage().'</error>');
 
             return 1;
         }

@@ -19,7 +19,9 @@ class ConfigurationLayer
         ])->resolve($arr);
 
         return new static(
-            array_map(function ($v) { return ConfigurationCollector::fromArray($v); }, $options['collectors']),
+            array_map(function ($v) {
+                return ConfigurationCollector::fromArray($v);
+            }, $options['collectors']),
             $options['name']
         );
     }

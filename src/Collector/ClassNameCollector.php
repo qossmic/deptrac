@@ -9,8 +9,6 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
 {
-
-
     public function getType()
     {
         return 'className';

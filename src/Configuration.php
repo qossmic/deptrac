@@ -31,7 +31,9 @@ class Configuration
         ->resolve($arr);
 
         return new static(
-            array_map(function ($v) { return ConfigurationLayer::fromArray($v); }, $options['layers']),
+            array_map(function ($v) {
+                return ConfigurationLayer::fromArray($v);
+            }, $options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
             (array) $options['exclude_files']

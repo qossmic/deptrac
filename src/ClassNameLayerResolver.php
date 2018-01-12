@@ -20,12 +20,11 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     /** @var AstParserInterface */
     protected $astParser;
 
-
     /**
      * ClassNameLayerResolver constructor.
      *
-     * @param Configuration $configuration
-     * @param AstMap $astMap
+     * @param Configuration    $configuration
+     * @param AstMap           $astMap
      * @param CollectorFactory $collectorFactory
      */
     public function __construct(

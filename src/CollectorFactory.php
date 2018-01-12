@@ -29,7 +29,6 @@ class CollectorFactory
                 'unknown collector type "%s", possible collectors are %s',
                 $type,
                 implode(', ', array_keys($this->collectors))
-
             ));
         }
 

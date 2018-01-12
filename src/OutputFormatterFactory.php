@@ -83,7 +83,7 @@ class OutputFormatterFactory
     {
         $buffer = [];
         foreach ($input->getOptions() as $k => $v) {
-            if (strpos($k, 'formatter-'.$outputFormatter->getName().'-') !== 0) {
+            if (0 !== strpos($k, 'formatter-'.$outputFormatter->getName().'-')) {
                 continue;
             }
 
@@ -113,8 +113,11 @@ class OutputFormatterFactory
         throw new \LogicException(sprintf(
             'Formatter %s does not exists, did you mean %s?',
             $name,
-            implode(', ',
-                array_map(function (OutputFormatterInterface $f) { return $f->getName(); }, $this->formatters)
+            implode(
+                ', ',
+                array_map(function (OutputFormatterInterface $f) {
+                    return $f->getName();
+                }, $this->formatters)
             )
         ));
     }

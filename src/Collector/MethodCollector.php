@@ -32,7 +32,6 @@ class MethodCollector
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
     ) {
-
         if (!$astParser instanceof NikicPhpParser) {
             return false;
         }
@@ -54,5 +53,4 @@ class MethodCollector
 
         return false;
     }
-
 }
