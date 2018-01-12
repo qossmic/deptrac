@@ -55,7 +55,7 @@ class OutputFormatterFactoryTest extends TestCase
             $formatter3->reveal(),
         ]);
 
-        /** @var $arguments InputArgument[] */
+        /** @var InputArgument[] $arguments */
         $arguments = $formatterFactory->getFormatterOptions('foo1');
 
         $this->assertEquals('formatter-foo1', $arguments[0]->getName());

@@ -60,7 +60,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
         $graph = new \Fhaculty\Graph\Graph();
 
-        /** @var $vertices Vertex[] */
+        /** @var Vertex[] $vertices */
         $vertices = [];
 
         // create a vertices

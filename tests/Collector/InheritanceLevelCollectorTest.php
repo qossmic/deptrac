@@ -25,9 +25,9 @@ class InheritanceLevelCollectorTest extends TestCase
     }
 
     /**
-     * @param $pathLevel
-     * @param $levelConfig
-     * @param $expected
+     * @param int  $pathLevel
+     * @param int  $levelConfig
+     * @param bool $expected
      *
      * @dataProvider dataTests
      */

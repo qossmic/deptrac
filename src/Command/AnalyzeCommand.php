@@ -88,7 +88,7 @@ class AnalyzeCommand extends Command
 
         $dependencyResult = new DependencyResult();
 
-        /** @var $dependencyEmitters DependencyEmitterInterface[] */
+        /** @var DependencyEmitterInterface[] $dependencyEmitters */
         $dependencyEmitters = [
             new InheritanceDependencyEmitter(),
             new BasicDependencyEmitter(),
@@ -115,7 +115,7 @@ class AnalyzeCommand extends Command
 
         $this->printCollectViolations($output);
 
-        /** @var $violations RulesetEngine\RulesetViolation[] */
+        /** @var RulesetEngine\RulesetViolation[] $violations */
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
 
         $this->printFormattingStart($output);
@@ -167,8 +167,8 @@ class AnalyzeCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
-     * @param $configurationLoader
+     * @param OutputInterface     $output
+     * @param ConfigurationLoader $configurationLoader
      */
     protected function printConfigMissingError(OutputInterface $output, $configurationLoader)
     {
@@ -176,8 +176,8 @@ class AnalyzeCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
-     * @param $dependencyEmitter
+     * @param OutputInterface            $output
+     * @param DependencyEmitterInterface $dependencyEmitter
      */
     protected function printEmitStart(OutputInterface $output, $dependencyEmitter)
     {
@@ -226,8 +226,8 @@ class AnalyzeCommand extends Command
 
     /**
      * @param OutputInterface $output
-     * @param $formatterName
-     * @param \Exception $exception
+     * @param string          $formatterName
+     * @param \Exception      $exception
      */
     protected function printFormatterException(OutputInterface $output, $formatterName, \Exception $exception)
     {

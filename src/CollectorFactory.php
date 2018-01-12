@@ -18,7 +18,7 @@ class CollectorFactory
     }
 
     /**
-     * @param $type
+     * @param CollectorInterface $type
      *
      * @return CollectorInterface
      */

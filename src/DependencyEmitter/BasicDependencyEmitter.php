@@ -214,7 +214,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $uses = $this->getUseStatements($astParser, $fileReference);
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
-                /** @var $uses EmittedDependency[] */
+                /** @var EmittedDependency[] $uses */
                 $uses = array_merge(
                     $uses,
                     $this->getInstanceOfStatements($astParser, $astClassReference),

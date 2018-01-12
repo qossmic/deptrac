@@ -38,7 +38,7 @@ class MethodCollector
 
         $ast = $astParser->getAstForClassname($classReference->getClassName());
 
-        /** @var $classMethods ClassMethod[] */
+        /** @var ClassMethod[] $classMethods */
         $classMethods = $astParser->findNodesOfType($ast, ClassMethod::class);
 
         foreach ($classMethods as $classMethod) {

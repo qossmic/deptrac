@@ -16,8 +16,8 @@ class RulesetViolation
 
     /**
      * @param DependencyInterface $dependency
-     * @param $layerA
-     * @param $layerB
+     * @param mixed $layerA
+     * @param mixed $layerB
      */
     public function __construct(DependencyInterface $dependency, $layerA, $layerB)
     {

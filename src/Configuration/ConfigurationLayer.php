@@ -27,8 +27,8 @@ class ConfigurationLayer
     }
 
     /**
-     * @param $color
-     * @param $collectors
+     * @param ConfigurationCollector[] $collectors
+     * @param mixed                    $name
      */
     private function __construct($collectors, $name)
     {

@@ -13,9 +13,9 @@ class EmittedDependency
     /**
      * EmittedDependency constructor.
      *
-     * @param $class
-     * @param $line
-     * @param $type
+     * @param mixed $class
+     * @param mixed $line
+     * @param mixed $type
      */
     public function __construct($class, $line, $type)
     {

@@ -13,9 +13,9 @@ class Dependency implements DependencyInterface
     /**
      * Dependency constructor.
      *
-     * @param $classA
-     * @param $classALine
-     * @param $classB
+     * @param mixed $classA
+     * @param mixed $classALine
+     * @param mixed $classB
      */
     public function __construct($classA, $classALine, $classB)
     {
