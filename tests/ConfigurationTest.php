@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration;
 
-class ConfigurationTest extends \PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
     public function testFromArray()
     {

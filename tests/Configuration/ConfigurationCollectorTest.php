@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac\Configuration;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
-class ConfigurationCollectorTest extends \PHPUnit_Framework_TestCase
+class ConfigurationCollectorTest extends TestCase
 {
     /** @expectedException \InvalidArgumentException */
     public function testInvalidFromArray()

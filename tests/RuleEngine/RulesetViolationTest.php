@@ -2,10 +2,11 @@
 
 namespace Tests\SensioLabs\Deptrac\RuleEngine;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
-class RulesetViolationTest extends \PHPUnit_Framework_TestCase
+class RulesetViolationTest extends TestCase
 {
     public function testGetSet()
     {

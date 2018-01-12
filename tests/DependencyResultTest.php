@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\DependencyResult;
 
-class DependencyResultTest extends \PHPUnit_Framework_TestCase
+class DependencyResultTest extends TestCase
 {
     public function testAddDependency()
     {

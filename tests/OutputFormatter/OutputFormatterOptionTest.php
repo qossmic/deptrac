@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
 
-class OutputFormatterOptionTest extends \PHPUnit_Framework_TestCase
+class OutputFormatterOptionTest extends TestCase
 {
     public function testGetSet()
     {

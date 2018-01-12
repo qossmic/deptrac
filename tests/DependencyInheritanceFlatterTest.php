@@ -2,16 +2,17 @@
 
 namespace Tests\SensioLabs\Deptrac;
 
-use SensioLabs\Deptrac\DependencyInheritanceFlatter;
-use SensioLabs\Deptrac\DependencyResult;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
+use SensioLabs\Deptrac\DependencyInheritanceFlatter;
+use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
-class DependencyInheritanceFlatterTest extends \PHPUnit_Framework_TestCase
+class DependencyInheritanceFlatterTest extends TestCase
 {
     private function getAstReference($className)
     {

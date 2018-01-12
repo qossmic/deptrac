@@ -2,9 +2,10 @@
 
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\DependencyEmitter\EmittedDependency;
 
-class EmittedDependencyTest extends \PHPUnit_Framework_TestCase
+class EmittedDependencyTest extends TestCase
 {
     public function testGet()
     {
