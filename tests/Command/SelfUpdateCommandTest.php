@@ -40,7 +40,7 @@ class SelfUpdateCommandTest extends TestCase
     /**
      * Tests the command status is 0 (success) if the update success or is not necessary
      *
-     * @param $isPharOutdated
+     * @param bool $isPharOutdated
      *
      * @dataProvider testUpdateSuccessProvider
      */

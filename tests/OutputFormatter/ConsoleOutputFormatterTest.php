@@ -83,8 +83,8 @@ class ConsoleOutputFormatterTest extends TestCase
     }
 
     /**
-     * @param array $violations
-     * @param       $expectedOutput
+     * @param array  $violations
+     * @param string $expectedOutput
      * @dataProvider basicDataProvider
      */
     public function testBasic(array $violations, $expectedOutput)

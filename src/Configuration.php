@@ -41,10 +41,10 @@ class Configuration
     }
 
     /**
-     * @param $layers
-     * @param $ruleset
-     * @param $paths
-     * @param $exclude_files
+     * @param ConfigurationLayer[] $layers
+     * @param ConfigurationRuleset $ruleset
+     * @param mixed                $paths
+     * @param mixed                $exclude_files
      */
     private function __construct($layers, $ruleset, $paths, $exclude_files)
     {

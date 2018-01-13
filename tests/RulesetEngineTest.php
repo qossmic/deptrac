@@ -141,7 +141,7 @@ class RulesetEngineTest extends TestCase
      * @param array $dependenciesAsArray
      * @param array $classesInLayers
      * @param array $rulesetConfiguration
-     * @param       $expectedCount
+     * @param int   $expectedCount
      * @dataProvider dependencyProvider
      */
     public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, $expectedCount)

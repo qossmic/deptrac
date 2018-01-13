@@ -66,9 +66,9 @@ class ClassNameLayerResolverTest extends TestCase
     }
 
     /**
-     * @param       $collectA
-     * @param       $collectB1
-     * @param       $collectB2
+     * @param int   $collectA
+     * @param int   $collectB1
+     * @param int   $collectB2
      * @param array $expectedLayers
      * @dataProvider provideGetLayersByClassName
      */
@@ -94,13 +94,13 @@ class ClassNameLayerResolverTest extends TestCase
         $astMap = $this->prophesize(AstMap::class);
         $collectorFactory = $this->prophesize(CollectorFactory::class);
         $collectorFactory->getCollector('CollectorA')->willReturn(
-            $this->getCollector($collectA, ['type' => 'CollectorA', 'foo' => 'bar'])
+            $this->getCollector($collectA)
         );
         $collectorFactory->getCollector('CollectorB1')->willReturn(
-            $this->getCollector($collectB1, ['type' => 'CollectorB', 'foo' => 'bar'])
+            $this->getCollector($collectB1)
         );
         $collectorFactory->getCollector('CollectorB2')->willReturn(
-            $this->getCollector($collectB2, ['type' => 'CollectorB', 'foo' => 'bar'])
+            $this->getCollector($collectB2)
         );
 
         $resolver = new ClassNameLayerResolver(

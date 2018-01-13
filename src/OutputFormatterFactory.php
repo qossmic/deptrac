@@ -96,7 +96,7 @@ class OutputFormatterFactory
     }
 
     /**
-     * @param $name
+     * @param string $name
      *
      * @return OutputFormatterInterface
      */

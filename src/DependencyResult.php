@@ -46,7 +46,7 @@ class DependencyResult
     }
 
     /**
-     * @param $klass
+     * @param string $klass
      *
      * @return Dependency[]
      */

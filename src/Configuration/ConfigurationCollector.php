@@ -20,8 +20,8 @@ class ConfigurationCollector
     /**
      * ConfigurationCollector constructor.
      *
-     * @param $type
-     * @param $args
+     * @param mixed $type
+     * @param mixed $args
      */
     private function __construct($type, $args)
     {

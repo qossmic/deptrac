@@ -7,7 +7,7 @@ class OutputFormatterInput
     private $options;
 
     /**
-     * @param $arguments
+     * @param array $arguments
      */
     public function __construct($arguments)
     {
@@ -15,8 +15,7 @@ class OutputFormatterInput
     }
 
     /**
-     * @param $name
-     * @param null $default
+     * @param string $name
      */
     public function getOption($name)
     {

@@ -11,7 +11,7 @@ class ConfigurationLoader
     /**
      * ConfigurationLoader constructor.
      *
-     * @param $configFilePathname
+     * @param mixed $configFilePathname
      */
     public function __construct($configFilePathname)
     {
