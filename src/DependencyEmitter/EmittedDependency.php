@@ -10,40 +10,24 @@ class EmittedDependency
 
     private $type;
 
-    /**
-     * EmittedDependency constructor.
-     *
-     * @param $class
-     * @param $line
-     * @param $type
-     */
-    public function __construct($class, $line, $type)
+    public function __construct(string $class, int $line, string $type)
     {
         $this->class = $class;
         $this->line = $line;
         $this->type = $type;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLine()
+    public function getLine(): int
     {
         return $this->line;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }

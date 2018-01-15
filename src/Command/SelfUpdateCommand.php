@@ -49,5 +49,7 @@ class SelfUpdateCommand extends Command
         }
 
         $output->writeln('<info>Deprac is already the latest version.</info>');
+
+        return 0;
     }
 }

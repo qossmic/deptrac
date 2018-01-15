@@ -9,7 +9,7 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class ClassNameCollector implements CollectorInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'className';
     }
@@ -29,8 +29,8 @@ class ClassNameCollector implements CollectorInterface
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    ) {
-        return preg_match(
+    ): bool {
+        return 1 === preg_match(
             '/'.$this->getRegexByConfiguration($configuration).'/i',
             $abstractClassReference->getClassName(),
             $collectorFactory

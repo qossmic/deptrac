@@ -7,18 +7,11 @@ use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 
 class DependencyResult
 {
-    private $classLayerMap = [];
-
     private $dependencies = [];
 
     private $inheritDependencies = [];
 
-    /**
-     * @param DependencyInterface $dependency
-     *
-     * @return $this
-     */
-    public function addDependency(DependencyInterface $dependency)
+    public function addDependency(DependencyInterface $dependency): self
     {
         if (!isset($this->dependencies[$dependency->getClassA()])) {
             $this->dependencies[$dependency->getClassA()] = [];
@@ -29,12 +22,7 @@ class DependencyResult
         return $this;
     }
 
-    /**
-     * @param DependencyInterface $dependency
-     *
-     * @return $this
-     */
-    public function addInheritDependency(DependencyInterface $dependency)
+    public function addInheritDependency(DependencyInterface $dependency): self
     {
         if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
             $this->inheritDependencies[$dependency->getClassA()] = [];
@@ -46,21 +34,19 @@ class DependencyResult
     }
 
     /**
-     * @param $klass
+     * @param string $className
      *
      * @return Dependency[]
      */
-    public function getDependenciesByClass($klass)
+    public function getDependenciesByClass(string $className): array
     {
-        if (!isset($this->dependencies[$klass])) {
-            return [];
-        }
-
-        return $this->dependencies[$klass];
+        return $this->dependencies[$className] ?? [];
     }
 
-    /** @return Dependency[] */
-    public function getDependenciesAndInheritDependencies()
+    /**
+     * @return Dependency[]
+     */
+    public function getDependenciesAndInheritDependencies(): array
     {
         $buffer = [];
 

@@ -13,10 +13,12 @@ interface OutputFormatterInterface
      *
      * @example "graphviz"
      */
-    public function getName();
+    public function getName(): string;
 
-    /** @return OutputFormatterOption[] */
-    public function configureOptions();
+    /**
+     * @return OutputFormatterOption[]
+     */
+    public function configureOptions(): array;
 
     /**
      * Renders the final result.

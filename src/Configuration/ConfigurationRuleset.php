@@ -6,15 +6,13 @@ class ConfigurationRuleset
 {
     private $layerMap = [];
 
-    public static function fromArray(array $arr)
+    public static function fromArray(array $arr): self
     {
         return new static($arr);
     }
 
     /**
-     * ConfigurationRuleset constructor.
-     *
-     * @param array $layerMap
+     * @param array<string> $layerMap
      */
     private function __construct(array $layerMap)
     {
@@ -22,9 +20,10 @@ class ConfigurationRuleset
     }
 
     /**
-     * @return array
+     * @param string $layerName
+     * @return array<string>
      */
-    public function getAllowedDependendencies($layerName)
+    public function getAllowedDependencies(string $layerName): array
     {
         if (!isset($this->layerMap[$layerName])) {
             return [];

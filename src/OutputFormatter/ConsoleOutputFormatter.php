@@ -10,12 +10,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutputFormatter implements OutputFormatterInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'console';
     }
 
-    public function configureOptions()
+    public function configureOptions(): array
     {
         return [];
     }

@@ -22,7 +22,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     private static $argument_dump_html = 'dump-html';
 
-    public function getName()
+    public function getName(): string
     {
         return 'graphviz';
     }
@@ -30,7 +30,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     /**
      * @return OutputFormatterOption[]
      */
-    public function configureOptions()
+    public function configureOptions(): array
     {
         return [
             OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),

@@ -28,5 +28,7 @@ class InitCommand extends Command
 
         $configurationLoader->dumpConfiguration();
         $output->writeln('depfile <info>dumped.</info>');
+
+        return 0;
     }
 }

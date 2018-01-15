@@ -18,11 +18,13 @@ class CollectorFactory
     }
 
     /**
-     * @param $type
+     * @param string $type
+     *
+     * @throws \InvalidArgumentException if collector does not exists
      *
      * @return CollectorInterface
      */
-    public function getCollector($type)
+    public function getCollector(string $type): CollectorInterface
     {
         if (!isset($this->collectors[$type])) {
             throw new \InvalidArgumentException(sprintf(

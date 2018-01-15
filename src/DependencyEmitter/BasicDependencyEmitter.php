@@ -23,12 +23,12 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class BasicDependencyEmitter implements DependencyEmitterInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'BasicDependencyEmitter';
     }
 
-    public function supportsParser(AstParserInterface $astParser)
+    public function supportsParser(AstParserInterface $astParser): bool
     {
         return $astParser instanceof NikicPhpParser;
     }

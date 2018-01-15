@@ -16,7 +16,7 @@ interface CollectorInterface
      * @example
      *  'bool', 'className', etc.
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * @param array                      $configuration          List of arguments passed for this collector declaration
@@ -33,5 +33,5 @@ interface CollectorInterface
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    );
+    ): bool;
 }

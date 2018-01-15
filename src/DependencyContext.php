@@ -39,26 +39,25 @@ class DependencyContext
         $this->classNameLayerResolver = $classNameLayerResolver;
     }
 
-    /** @return AstMap */
-    public function getAstMap()
+    public function getAstMap(): AstMap
     {
         return $this->astMap;
     }
 
-    /** @return RulesetEngine\RulesetViolation[] */
-    public function getViolations()
+    /**
+     * @return RulesetEngine\RulesetViolation[]
+     */
+    public function getViolations(): array
     {
         return $this->violations;
     }
 
-    /** @return DependencyResult */
-    public function getDependencyResult()
+    public function getDependencyResult(): DependencyResult
     {
         return $this->dependencyResult;
     }
 
-    /** @return ClassNameLayerResolverInterface */
-    public function getClassNameLayerResolver()
+    public function getClassNameLayerResolver(): ClassNameLayerResolverInterface
     {
         return $this->classNameLayerResolver;
     }

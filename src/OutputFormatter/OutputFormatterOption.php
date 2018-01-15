@@ -20,7 +20,7 @@ class OutputFormatterOption
      * @param string $description A description text
      * @param mixed  $default     The default value (for self::OPTIONAL mode only)
      */
-    private function __construct($name, $mode = null, $description = '', $default = null)
+    private function __construct(string $name, int $mode = null, string $description = '', $default = null)
     {
         $this->name = $name;
         $this->mode = $mode;
@@ -28,30 +28,32 @@ class OutputFormatterOption
         $this->default = $default;
     }
 
-    public static function newValueOption($name, $description, $default = null)
+    public static function newValueOption($name, $description, $default = null): self
     {
         return new self($name, InputOption::VALUE_OPTIONAL, $description, $default);
     }
 
-    /** @return string */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /** @return int|null */
+    /**
+     * @return int|null
+     */
     public function getMode()
     {
         return $this->mode;
     }
 
-    /** @return string */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /** @return mixed */
+    /**
+     * @return mixed
+     */
     public function getDefault()
     {
         return $this->default;

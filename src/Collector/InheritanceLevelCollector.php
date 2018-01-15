@@ -9,7 +9,7 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class InheritanceLevelCollector implements CollectorInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'inheritanceLevel';
     }
@@ -20,7 +20,7 @@ class InheritanceLevelCollector implements CollectorInterface
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    ) {
+    ): bool {
         $classInherits = $astMap->getClassInherits($abstractClassReference->getClassName());
 
         foreach ($classInherits as $classInherit) {
