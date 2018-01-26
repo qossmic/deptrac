@@ -42,7 +42,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     /**
      * @param string $className
      *
-     * @return array<string>
+     * @return string[]
      */
     public function getLayersByClassName(string $className): array
     {

@@ -15,7 +15,7 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
     /**
      * @param string $className
      *
-     * @return array<string>
+     * @return string[]
      */
     public function getLayersByClassName(string $className): array
     {

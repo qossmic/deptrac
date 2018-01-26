@@ -31,7 +31,7 @@ class SelfUpdateCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<info>Updating deptrac to latest version...</info>');
 

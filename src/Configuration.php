@@ -9,11 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Configuration
 {
     private $layers;
-
     private $paths;
-
     private $excludeFiles;
-
     private $ruleset;
 
     public static function fromArray(array $arr): self
@@ -43,8 +40,8 @@ class Configuration
     /**
      * @param ConfigurationLayer[] $layers
      * @param ConfigurationRuleset $ruleset
-     * @param array                $paths
-     * @param array                $excludeFiles
+     * @param string[]             $paths
+     * @param string[]             $excludeFiles
      */
     private function __construct(array $layers, ConfigurationRuleset $ruleset, array $paths, array $excludeFiles = [])
     {
@@ -62,11 +59,17 @@ class Configuration
         return $this->layers;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPaths(): array
     {
         return $this->paths;
     }
 
+    /**
+     * @return string[]
+     */
     public function getExcludeFiles(): array
     {
         return $this->excludeFiles;

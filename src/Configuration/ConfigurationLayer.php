@@ -28,7 +28,7 @@ class ConfigurationLayer
 
     /**
      * @param ConfigurationCollector[] $collectors
-     * @param string $name
+     * @param string                   $name
      */
     private function __construct(array $collectors, string $name)
     {

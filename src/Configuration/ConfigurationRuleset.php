@@ -12,7 +12,7 @@ class ConfigurationRuleset
     }
 
     /**
-     * @param array<string> $layerMap
+     * @param string[] $layerMap
      */
     private function __construct(array $layerMap)
     {
@@ -21,7 +21,7 @@ class ConfigurationRuleset
 
     /**
      * @param string $layerName
-     * @return array<string>
+     * @return string[]
      */
     public function getAllowedDependencies(string $layerName): array
     {
