@@ -63,7 +63,8 @@ class AnalyzeCommand extends Command
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         ini_set('memory_limit', -1);
 
         $this->printBanner($output);
@@ -134,6 +135,7 @@ class AnalyzeCommand extends Command
 
     /**
      * @param Configuration $configuration
+     *
      * @return \SplFileInfo[]
      */
     private function collectFiles(Configuration $configuration): array

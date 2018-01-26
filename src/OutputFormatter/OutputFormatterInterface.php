@@ -26,8 +26,6 @@ interface OutputFormatterInterface
      * @param DependencyContext    $dependencyContext
      * @param OutputInterface      $output
      * @param OutputFormatterInput $outputFormatterInput
-     *
-     * @return void
      */
     public function finish(
         DependencyContext $dependencyContext,

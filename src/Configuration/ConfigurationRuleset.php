@@ -21,6 +21,7 @@ class ConfigurationRuleset
 
     /**
      * @param string $layerName
+     *
      * @return string[]
      */
     public function getAllowedDependencies(string $layerName): array
