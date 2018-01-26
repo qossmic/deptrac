@@ -2,6 +2,8 @@
 
 namespace SensioLabs\Deptrac\Command;
 
+use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
@@ -16,8 +18,6 @@ use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\AstRunner\AstRunner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -63,10 +63,7 @@ class AnalyzeCommand extends Command
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
-    protected function execute(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         ini_set('memory_limit', -1);
 
         $this->printBanner($output);
@@ -88,7 +85,7 @@ class AnalyzeCommand extends Command
 
         $dependencyResult = new DependencyResult();
 
-        /** @var $dependencyEmitters DependencyEmitterInterface[] */
+        /** @var DependencyEmitterInterface[] $dependencyEmitters */
         $dependencyEmitters = [
             new InheritanceDependencyEmitter(),
             new BasicDependencyEmitter(),
@@ -115,7 +112,7 @@ class AnalyzeCommand extends Command
 
         $this->printCollectViolations($output);
 
-        /** @var $violations RulesetEngine\RulesetViolation[] */
+        /** @var RulesetEngine\RulesetViolation[] $violations */
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
 
         $this->printFormattingStart($output);
@@ -135,7 +132,11 @@ class AnalyzeCommand extends Command
         return count($violations) ? 1 : 0;
     }
 
-    private function collectFiles(Configuration $configuration)
+    /**
+     * @param Configuration $configuration
+     * @return \SplFileInfo[]
+     */
+    private function collectFiles(Configuration $configuration): array
     {
         $files = iterator_to_array(
             (new Finder())
@@ -158,78 +159,47 @@ class AnalyzeCommand extends Command
         });
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     protected function printBanner(OutputInterface $output)
     {
         $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param $configurationLoader
-     */
-    protected function printConfigMissingError(OutputInterface $output, $configurationLoader)
+    protected function printConfigMissingError(OutputInterface $output, ConfigurationLoader $configurationLoader)
     {
         $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param $dependencyEmitter
-     */
-    protected function printEmitStart(OutputInterface $output, $dependencyEmitter)
+    protected function printEmitStart(OutputInterface $output, DependencyEmitterInterface $dependencyEmitter)
     {
         $output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     protected function printEmitEnd(OutputInterface $output)
     {
         $output->writeln('<info>end emitting dependencies</info>');
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     protected function printFlattenStart(OutputInterface $output)
     {
         $output->writeln('<info>start flatten dependencies</info>');
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     protected function printFlattenEnd(OutputInterface $output)
     {
         $output->writeln('<info>end flatten dependencies</info>');
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     protected function printCollectViolations(OutputInterface $output)
     {
         $output->writeln('<info>collecting violations.</info>');
     }
 
-    /**
-     * @param OutputInterface $output
-     */
     protected function printFormattingStart(OutputInterface $output)
     {
         $output->writeln('<info>formatting dependencies.</info>');
     }
 
-    /**
-     * @param OutputInterface $output
-     * @param $formatterName
-     * @param \Exception $exception
-     */
-    protected function printFormatterException(OutputInterface $output, $formatterName, \Exception $exception)
+    protected function printFormatterException(OutputInterface $output, string $formatterName, \Exception $exception)
     {
         $output->writeln('');
         $errorMessages = [

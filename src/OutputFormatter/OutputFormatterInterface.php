@@ -27,7 +27,7 @@ interface OutputFormatterInterface
      * @param OutputInterface      $output
      * @param OutputFormatterInput $outputFormatterInput
      *
-     * @return mixed
+     * @return void
      */
     public function finish(
         DependencyContext $dependencyContext,

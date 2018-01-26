@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\Command;
 
+use Humbug\SelfUpdate\Updater;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,9 +14,6 @@ class SelfUpdateCommand extends Command
     /** @var ContainerInterface */
     private $container;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -36,7 +34,9 @@ class SelfUpdateCommand extends Command
         $output->writeln('<info>Updating deptrac to latest version...</info>');
 
         try {
-            if ($this->container->get('updater')->update()) {
+            /** @var Updater $updater */
+            $updater = $this->container->get('updater');
+            if ($updater->update()) {
                 $output->writeln('<info>Deprac was successfully updated.</info>');
 
                 return 0;
