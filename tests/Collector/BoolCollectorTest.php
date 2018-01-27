@@ -34,11 +34,11 @@ class BoolCollectorTest extends TestCase
         $this->assertEquals('bool', (new BoolCollector())->getType());
     }
 
-    public function getCalculatorMock(string $type, bool $returns)
+    public function getCalculatorMock(bool $returns)
     {
         $collector = $this->prophesize(CollectorInterface::class);
         $collector->satisfy(
-            ['type' => $type, 'foo' => 'bar'],
+            ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
             Argument::type(AstClassReferenceInterface::class),
             Argument::type(AstMap::class),
             Argument::type(CollectorFactory::class),
@@ -156,10 +156,10 @@ class BoolCollectorTest extends TestCase
     {
         $collectorFactory = $this->prophesize(CollectorFactory::class);
         $collectorFactory->getCollector('true')->willReturn(
-            $this->getCalculatorMock('true', true)
+            $this->getCalculatorMock(true)
         );
         $collectorFactory->getCollector('false')->willReturn(
-            $this->getCalculatorMock('false', false)
+            $this->getCalculatorMock( false)
         );
 
         if (isset($configuration['must'])) {
