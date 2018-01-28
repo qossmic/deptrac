@@ -11,7 +11,7 @@ use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\CollectorFactory;
 
-class ImplementsCollector
+class ImplementsCollector implements CollectorInterface
 {
     public function getType()
     {
