@@ -6,9 +6,9 @@ class OutputFormatterInput
 {
     private $options;
 
-    public function __construct(array $arguments)
+    public function __construct(array $options)
     {
-        $this->options = $arguments;
+        $this->options = $options;
     }
 
     public function getOption(string $name)
