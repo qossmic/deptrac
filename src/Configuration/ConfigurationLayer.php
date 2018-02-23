@@ -11,7 +11,7 @@ class ConfigurationLayer
 
     private $name;
 
-    public static function fromArray(array $arr)
+    public static function fromArray(array $arr): self
     {
         $options = (new OptionsResolver())->setRequired([
             'name',
@@ -27,10 +27,10 @@ class ConfigurationLayer
     }
 
     /**
-     * @param $color
-     * @param $collectors
+     * @param ConfigurationCollector[] $collectors
+     * @param string                   $name
      */
-    private function __construct($collectors, $name)
+    private function __construct(array $collectors, string $name)
     {
         $this->collectors = $collectors;
         $this->name = $name;
@@ -39,15 +39,12 @@ class ConfigurationLayer
     /**
      * @return ConfigurationCollector[]
      */
-    public function getCollectors()
+    public function getCollectors(): array
     {
         return $this->collectors;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

@@ -16,7 +16,7 @@ class BoolCollectorTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testStatisfy()
+    public function testSatisfy()
     {
         $stat = (new BoolCollector())->satisfy(
             [],
@@ -34,11 +34,11 @@ class BoolCollectorTest extends TestCase
         $this->assertEquals('bool', (new BoolCollector())->getType());
     }
 
-    public function getCalculatorMock($returns)
+    public function getCalculatorMock(bool $returns)
     {
         $collector = $this->prophesize(CollectorInterface::class);
         $collector->satisfy(
-            ['type' => $returns, 'foo' => 'bar'],
+            ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
             Argument::type(AstClassReferenceInterface::class),
             Argument::type(AstMap::class),
             Argument::type(CollectorFactory::class),
@@ -48,13 +48,13 @@ class BoolCollectorTest extends TestCase
         return $collector->reveal();
     }
 
-    public function provideStatisfyBasic()
+    public function provideSatisfyBasic()
     {
         # must
         yield [
             [
                 'must' => [
-                    ['type' => true],
+                    ['type' => 'true'],
                 ],
             ],
             true,
@@ -63,8 +63,8 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must' => [
-                    ['type' => true],
-                    ['type' => true],
+                    ['type' => 'true'],
+                    ['type' => 'true'],
                 ],
             ],
             true,
@@ -73,8 +73,8 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must' => [
-                    ['type' => true],
-                    ['type' => false],
+                    ['type' => 'true'],
+                    ['type' => 'false'],
                 ],
             ],
             false,
@@ -83,8 +83,8 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must' => [
-                    ['type' => false],
-                    ['type' => true],
+                    ['type' => 'false'],
+                    ['type' => 'true'],
                 ],
             ],
             false,
@@ -93,7 +93,7 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must' => [
-                    ['type' => false],
+                    ['type' => 'false'],
                 ],
             ],
             false,
@@ -103,7 +103,7 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must_not' => [
-                    ['type' => false],
+                    ['type' => 'false'],
                 ],
             ],
             true,
@@ -112,7 +112,7 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must_not' => [
-                    ['type' => true],
+                    ['type' => 'true'],
                 ],
             ],
             false,
@@ -121,8 +121,8 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must_not' => [
-                    ['type' => true],
-                    ['type' => false],
+                    ['type' => 'true'],
+                    ['type' => 'false'],
                 ],
             ],
             false,
@@ -131,8 +131,8 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must_not' => [
-                    ['type' => false],
-                    ['type' => false],
+                    ['type' => 'false'],
+                    ['type' => 'false'],
                 ],
             ],
             true,
@@ -141,8 +141,8 @@ class BoolCollectorTest extends TestCase
         yield [
             [
                 'must_not' => [
-                    ['type' => true],
-                    ['type' => true],
+                    ['type' => 'true'],
+                    ['type' => 'true'],
                 ],
             ],
             false,
@@ -150,16 +150,16 @@ class BoolCollectorTest extends TestCase
     }
 
     /**
-     * @dataProvider provideStatisfyBasic
+     * @dataProvider provideSatisfyBasic
      */
-    public function testStatisfyBasicTest($configuration, $expected)
+    public function testSatisfyBasicTest(array $configuration, bool $expected)
     {
         $collectorFactory = $this->prophesize(CollectorFactory::class);
-        $collectorFactory->getCollector(true)->willReturn(
+        $collectorFactory->getCollector('true')->willReturn(
             $this->getCalculatorMock(true)
         );
-        $collectorFactory->getCollector(false)->willReturn(
-            $this->getCalculatorMock(false)
+        $collectorFactory->getCollector('false')->willReturn(
+            $this->getCalculatorMock( false)
         );
 
         if (isset($configuration['must'])) {

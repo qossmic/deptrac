@@ -10,21 +10,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutputFormatter implements OutputFormatterInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'console';
     }
 
-    public function configureOptions()
+    public function configureOptions(): array
     {
         return [];
     }
 
-    /**
-     * @param DependencyContext    $dependencyContext
-     * @param OutputInterface      $output
-     * @param OutputFormatterInput $outputFormatterInput
-     */
     public function finish(
         DependencyContext $dependencyContext,
         OutputInterface $output,
@@ -36,7 +31,7 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
                 continue;
             }
 
-            $this->handleDependeny($violation, $output);
+            $this->handleDependency($violation, $output);
         }
 
         if (count($dependencyContext->getViolations())) {
@@ -48,19 +43,21 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
 
     private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output)
     {
+        /** @var InheritDependency $dependency */
+        $dependency = $violation->getDependency();
         $output->writeln(
             sprintf(
                 "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
-                $violation->getDependency()->getClassA(),
-                $violation->getDependency()->getClassB(),
+                $dependency->getClassA(),
+                $dependency->getClassB(),
                 $violation->getLayerA(),
                 $violation->getLayerB(),
-                $this->formatPath($violation->getDependency()->getPath(), $violation->getDependency())
+                $this->formatPath($dependency->getPath(), $dependency)
             )
         );
     }
 
-    private function handleDependeny(RulesetViolation $violation, OutputInterface $output)
+    private function handleDependency(RulesetViolation $violation, OutputInterface $output)
     {
         $output->writeln(
             sprintf(

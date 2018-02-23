@@ -9,14 +9,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Configuration
 {
     private $layers;
-
     private $paths;
-
-    private $exclude_files;
-
+    private $excludeFiles;
     private $ruleset;
 
-    public static function fromArray(array $arr)
+    public static function fromArray(array $arr): self
     {
         $options = (new OptionsResolver())->setRequired([
             'layers',
@@ -41,47 +38,44 @@ class Configuration
     }
 
     /**
-     * @param $layers
-     * @param $ruleset
-     * @param $paths
-     * @param $exclude_files
+     * @param ConfigurationLayer[] $layers
+     * @param ConfigurationRuleset $ruleset
+     * @param string[]             $paths
+     * @param string[]             $excludeFiles
      */
-    private function __construct($layers, $ruleset, $paths, $exclude_files)
+    private function __construct(array $layers, ConfigurationRuleset $ruleset, array $paths, array $excludeFiles = [])
     {
         $this->layers = $layers;
         $this->ruleset = $ruleset;
         $this->paths = $paths;
-        $this->exclude_files = $exclude_files;
+        $this->excludeFiles = $excludeFiles;
     }
 
     /**
      * @return ConfigurationLayer[]
      */
-    public function getLayers()
+    public function getLayers(): array
     {
         return $this->layers;
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getPaths()
+    public function getPaths(): array
     {
         return $this->paths;
     }
 
     /**
-     * @return mixed
+     * @return string[]
      */
-    public function getExcludeFiles()
+    public function getExcludeFiles(): array
     {
-        return $this->exclude_files;
+        return $this->excludeFiles;
     }
 
-    /**
-     * @return ConfigurationRuleset
-     */
-    public function getRuleset()
+    public function getRuleset(): ConfigurationRuleset
     {
         return $this->ruleset;
     }

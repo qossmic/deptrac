@@ -39,7 +39,12 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
         $this->astParser = $astParser;
     }
 
-    public function getLayersByClassName($className)
+    /**
+     * @param string $className
+     *
+     * @return string[]
+     */
+    public function getLayersByClassName(string $className): array
     {
         $layers = [];
 

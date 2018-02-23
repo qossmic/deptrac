@@ -10,7 +10,7 @@ use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 
 class BoolCollector implements CollectorInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'bool';
     }
@@ -21,7 +21,7 @@ class BoolCollector implements CollectorInterface
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    ) {
+    ): bool {
         if (!isset($configuration['must'])) {
             $configuration['must'] = [];
         }

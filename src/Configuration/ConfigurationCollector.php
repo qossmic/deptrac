@@ -8,7 +8,7 @@ class ConfigurationCollector
 
     private $args;
 
-    public static function fromArray(array $arr)
+    public static function fromArray(array $arr): self
     {
         if (!isset($arr['type'])) {
             throw new \InvalidArgumentException('Collector needs a type.');
@@ -17,30 +17,18 @@ class ConfigurationCollector
         return new static($arr['type'], $arr);
     }
 
-    /**
-     * ConfigurationCollector constructor.
-     *
-     * @param $type
-     * @param $args
-     */
-    private function __construct($type, $args)
+    private function __construct(string $type, array $args)
     {
         $this->type = $type;
         $this->args = $args;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getArgs()
+    public function getArgs(): array
     {
         return $this->args;
     }

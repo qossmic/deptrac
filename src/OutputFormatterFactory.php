@@ -9,10 +9,14 @@ use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterFactory
 {
-    /** @var OutputFormatterInterface[] */
+    /**
+     * @var OutputFormatterInterface[]
+     */
     protected $formatters;
 
-    /** @param OutputFormatterInterface[] $formatters */
+    /**
+     * @param OutputFormatterInterface[] $formatters
+     */
     public function __construct(array $formatters)
     {
         $this->formatters = $formatters;
@@ -21,7 +25,7 @@ class OutputFormatterFactory
     /**
      * @return InputOption[]
      */
-    public function getFormatterOptions()
+    public function getFormatterOptions(): array
     {
         $arguments = [];
 
@@ -56,7 +60,7 @@ class OutputFormatterFactory
      *
      * @return bool
      */
-    private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input)
+    private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool
     {
         return (bool) $input->getOption('formatter-'.$formatter->getName());
     }
@@ -66,20 +70,14 @@ class OutputFormatterFactory
      *
      * @return OutputFormatterInterface[]
      */
-    public function getActiveFormatters(InputInterface $input)
+    public function getActiveFormatters(InputInterface $input): array
     {
         return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input) {
             return $this->isFormatterActive($formatter, $input);
         }));
     }
 
-    /**
-     * @param OutputFormatterInterface $outputFormatter
-     * @param InputInterface           $input
-     *
-     * @return OutputFormatterInput
-     */
-    public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input)
+    public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input): OutputFormatterInput
     {
         $buffer = [];
         foreach ($input->getOptions() as $k => $v) {
@@ -96,14 +94,16 @@ class OutputFormatterFactory
     }
 
     /**
-     * @param $name
+     * @param string $name
+     *
+     * @throws \LogicException if formatter does not exists
      *
      * @return OutputFormatterInterface
      */
-    public function getFormatterByName($name)
+    public function getFormatterByName(string $name): OutputFormatterInterface
     {
         foreach ($this->formatters as $formatter) {
-            if (strtolower($name) != strtolower($formatter->getName())) {
+            if (strtolower($name) !== strtolower($formatter->getName())) {
                 continue;
             }
 

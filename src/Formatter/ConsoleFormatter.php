@@ -11,21 +11,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConsoleFormatter
 {
-    /** @var EventDispatcherInterface */
     protected $dispatcher;
-
-    /** @var OutputInterface */
     protected $output;
 
-    /**
-     * ConsoleFormatter constructor.
-     *
-     * @param EventDispatcherInterface $dispatcher
-     */
-    public function __construct(
-        EventDispatcherInterface $dispatcher,
-        OutputInterface $output
-    ) {
+    public function __construct(EventDispatcherInterface $dispatcher, OutputInterface $output)
+    {
         $this->dispatcher = $dispatcher;
         $this->output = $output;
 
@@ -51,7 +41,7 @@ class ConsoleFormatter
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent)
     {
         if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getRelativePathname()));
+            $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()));
         } else {
             $this->output->write('.');
         }
@@ -61,7 +51,7 @@ class ConsoleFormatter
     {
         $this->output->writeln(sprintf(
             "\nSyntax Error on File %s\n<error>%s</error>\n",
-            $astFileSyntaxErrorEvent->getFile()->getRelativePathname(),
+            $astFileSyntaxErrorEvent->getFile()->getPathname(),
             $astFileSyntaxErrorEvent->getSyntaxError()
         ));
     }

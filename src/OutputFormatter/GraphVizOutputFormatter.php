@@ -22,7 +22,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     private static $argument_dump_html = 'dump-html';
 
-    public function getName()
+    public function getName(): string
     {
         return 'graphviz';
     }
@@ -30,7 +30,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     /**
      * @return OutputFormatterOption[]
      */
-    public function configureOptions()
+    public function configureOptions(): array
     {
         return [
             OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
@@ -40,11 +40,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    /**
-     * @param DependencyContext    $dependencyContext
-     * @param OutputInterface      $output
-     * @param OutputFormatterInput $outputFormatterInput
-     */
     public function finish(
         DependencyContext $dependencyContext,
         OutputInterface $output,
@@ -60,7 +55,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
         $graph = new \Fhaculty\Graph\Graph();
 
-        /** @var $vertices Vertex[] */
+        /** @var Vertex[] $vertices */
         $vertices = [];
 
         // create a vertices
@@ -115,7 +110,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
      *
      * @return array
      */
-    private function calculateViolations(array $violations)
+    private function calculateViolations(array $violations): array
     {
         $layerViolations = [];
         foreach ($violations as $violation) {
@@ -134,18 +129,11 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         return $layerViolations;
     }
 
-    /**
-     * @param AstMap                          $astMap
-     * @param DependencyResult                $dependencyResult
-     * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     *
-     * @return array
-     */
     private function calculateLayerDependencies(
         AstMap $astMap,
         DependencyResult $dependencyResult,
         ClassNameLayerResolverInterface $classNameLayerResolver
-    ) {
+    ): array {
         $layersDependOnLayers = [];
 
         // all classes
@@ -172,7 +160,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
                 }
 
                 foreach ($layersB as $layerB) {
-                    if ($layerA == $layerB) {
+                    if ($layerA === $layerB) {
                         continue;
                     }
 

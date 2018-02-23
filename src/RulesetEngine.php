@@ -23,13 +23,14 @@ class RulesetEngine
 
             foreach ($layerNames as $layerName) {
                 foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
-                    if ($layerName == $layerNameOfDependency) {
+                    if ($layerName === $layerNameOfDependency) {
                         continue;
                     }
 
                     if (in_array(
                         $layerNameOfDependency,
-                        $configurationRuleset->getAllowedDependendencies($layerName)
+                        $configurationRuleset->getAllowedDependencies($layerName),
+                        true
                     )) {
                         continue;
                     }
@@ -37,8 +38,7 @@ class RulesetEngine
                     $violations[] = new RulesetViolation(
                         $dependency,
                         $layerName,
-                        $layerNameOfDependency,
-                        ''
+                        $layerNameOfDependency
                     );
                 }
             }

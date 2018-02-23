@@ -7,21 +7,11 @@ use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 class InheritDependency implements DependencyInterface
 {
     private $classA;
-
-    /** @var Dependency */
     private $classB;
-
-    /** @var AstInheritInterface */
     private $path;
-
-    /** @var Dependency */
     private $originalDependency;
 
-    /**
-     * @param $classA
-     * @param AstInheritInterface $path
-     */
-    public function __construct($classA, $classB, DependencyInterface $originalDependency, AstInheritInterface $path)
+    public function __construct(string $classA, string $classB, DependencyInterface $originalDependency, AstInheritInterface $path)
     {
         $this->classA = $classA;
         $this->classB = $classB;
@@ -29,33 +19,27 @@ class InheritDependency implements DependencyInterface
         $this->path = $path;
     }
 
-    public function getClassA()
+    public function getClassA(): string
     {
         return $this->classA;
     }
 
-    public function getClassALine()
+    public function getClassALine(): int
     {
-        return '';
+        return 0;
     }
 
-    public function getClassB()
+    public function getClassB(): string
     {
         return $this->classB;
     }
 
-    /**
-     * @return AstInheritInterface
-     */
-    public function getPath()
+    public function getPath(): AstInheritInterface
     {
         return $this->path;
     }
 
-    /**
-     * @return Dependency
-     */
-    public function getOriginalDependency()
+    public function getOriginalDependency(): DependencyInterface
     {
         return $this->originalDependency;
     }

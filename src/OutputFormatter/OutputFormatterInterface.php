@@ -13,10 +13,12 @@ interface OutputFormatterInterface
      *
      * @example "graphviz"
      */
-    public function getName();
+    public function getName(): string;
 
-    /** @return OutputFormatterOption[] */
-    public function configureOptions();
+    /**
+     * @return OutputFormatterOption[]
+     */
+    public function configureOptions(): array;
 
     /**
      * Renders the final result.
@@ -24,8 +26,6 @@ interface OutputFormatterInterface
      * @param DependencyContext    $dependencyContext
      * @param OutputInterface      $output
      * @param OutputFormatterInput $outputFormatterInput
-     *
-     * @return mixed
      */
     public function finish(
         DependencyContext $dependencyContext,

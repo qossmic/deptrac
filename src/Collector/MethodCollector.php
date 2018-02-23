@@ -9,9 +9,9 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\CollectorFactory;
 use PhpParser\Node\Stmt\ClassMethod;
 
-class MethodCollector
+class MethodCollector implements CollectorInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'method';
     }
@@ -31,14 +31,14 @@ class MethodCollector
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    ) {
+    ): bool {
         if (!$astParser instanceof NikicPhpParser) {
             return false;
         }
 
         $ast = $astParser->getAstForClassname($classReference->getClassName());
 
-        /** @var $classMethods ClassMethod[] */
+        /** @var ClassMethod[] $classMethods */
         $classMethods = $astParser->findNodesOfType($ast, ClassMethod::class);
 
         foreach ($classMethods as $classMethod) {

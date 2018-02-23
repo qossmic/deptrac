@@ -8,32 +8,24 @@ class ConfigurationLoader
 {
     private $configFilePathname;
 
-    /**
-     * ConfigurationLoader constructor.
-     *
-     * @param $configFilePathname
-     */
-    public function __construct($configFilePathname)
+    public function __construct(string $configFilePathname)
     {
         $this->configFilePathname = $configFilePathname;
     }
 
-    /** @return Configuration */
-    public function loadConfiguration()
+    public function loadConfiguration(): Configuration
     {
         return Configuration::fromArray(
             Yaml::parse(file_get_contents($this->configFilePathname))
         );
     }
 
-    /** @return mixed */
-    public function getConfigFilePathname()
+    public function getConfigFilePathname(): string
     {
         return $this->configFilePathname;
     }
 
-    /** @return bool */
-    public function hasConfiguration()
+    public function hasConfiguration(): bool
     {
         return file_exists($this->configFilePathname);
     }

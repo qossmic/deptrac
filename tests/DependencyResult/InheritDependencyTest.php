@@ -20,7 +20,7 @@ class InheritDependencyTest extends TestCase
 
         $this->assertEquals('a', $dependency->getClassA());
         $this->assertEquals('b', $dependency->getClassB());
-        $this->assertEquals('', $dependency->getClassALine());
+        $this->assertEquals(0, $dependency->getClassALine());
         $this->assertEquals($dep, $dependency->getOriginalDependency());
         $this->assertSame($astInherit, $dependency->getPath());
     }

@@ -6,19 +6,12 @@ class OutputFormatterInput
 {
     private $options;
 
-    /**
-     * @param $arguments
-     */
-    public function __construct($arguments)
+    public function __construct(array $options)
     {
-        $this->options = $arguments;
+        $this->options = $options;
     }
 
-    /**
-     * @param $name
-     * @param null $default
-     */
-    public function getOption($name)
+    public function getOption(string $name)
     {
         if (!isset($this->options[$name])) {
             throw new \InvalidArgumentException('option '.$name.' is not configured.');

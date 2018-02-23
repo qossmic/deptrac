@@ -11,12 +11,12 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'InheritanceDependencyEmitter';
     }
 
-    public function supportsParser(AstParserInterface $astParser)
+    public function supportsParser(AstParserInterface $astParser): bool
     {
         return $astParser instanceof NikicPhpParser;
     }

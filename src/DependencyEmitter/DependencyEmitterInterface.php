@@ -8,17 +8,9 @@ use SensioLabs\AstRunner\AstParser\AstParserInterface;
 
 interface DependencyEmitterInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @param AstParserInterface $astParser
-     *
-     * @return bool
-     */
-    public function supportsParser(AstParserInterface $astParser);
+    public function supportsParser(AstParserInterface $astParser): bool;
 
     /**
      * @param AstParserInterface $astParser

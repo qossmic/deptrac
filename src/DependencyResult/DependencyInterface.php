@@ -4,9 +4,9 @@ namespace SensioLabs\Deptrac\DependencyResult;
 
 interface DependencyInterface
 {
-    public function getClassA();
+    public function getClassA(): string;
 
-    public function getClassALine();
+    public function getClassALine(): int;
 
-    public function getClassB();
+    public function getClassB(): string;
 }

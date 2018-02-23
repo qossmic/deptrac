@@ -14,10 +14,8 @@ class InitCommand extends Command
         $this->setName('init');
     }
 
-    protected function execute(
-        InputInterface $input,
-        OutputInterface $output
-    ) {
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
         $configurationLoader = new ConfigurationLoader('depfile.yml');
 
         if ($configurationLoader->hasConfiguration()) {
@@ -28,5 +26,7 @@ class InitCommand extends Command
 
         $configurationLoader->dumpConfiguration();
         $output->writeln('depfile <info>dumped.</info>');
+
+        return 0;
     }
 }
