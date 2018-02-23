@@ -14,7 +14,7 @@ class RulesetEngine
      *
      * @return RulesetViolation[]
      */
-    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset)
+    public function getViolations(DependencyResult $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset): array
     {
         $violations = [];
 
