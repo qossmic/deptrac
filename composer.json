@@ -9,14 +9,14 @@
         "padraic/phar-updater": "^1.0",
         "phpdocumentor/graphviz": "~1.0",
         "sensiolabs-de/astrunner": "dev-master",
-        "symfony/config": "^3.4",
-        "symfony/console": "^3.4",
-        "symfony/dependency-injection": "^3.4",
-        "symfony/event-dispatcher": "^3.4",
-        "symfony/filesystem": "^3.4",
-        "symfony/finder": "^3.4",
-        "symfony/options-resolver": "^3.4",
-        "symfony/yaml": "^3.4"
+        "symfony/config": "^3.4|^4.0",
+        "symfony/console": "^3.4|^4.0",
+        "symfony/dependency-injection": "^3.4|^4.0",
+        "symfony/event-dispatcher": "^3.4|^4.0",
+        "symfony/filesystem": "^3.4|^4.0",
+        "symfony/finder": "^3.4|^4.0",
+        "symfony/options-resolver": "^3.4|^4.0",
+        "symfony/yaml": "^3.4|^4.0"
     },
     "authors": [
         {
