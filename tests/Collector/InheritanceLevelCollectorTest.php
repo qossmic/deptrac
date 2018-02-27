@@ -3,7 +3,6 @@
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
@@ -12,7 +11,7 @@ use SensioLabs\Deptrac\CollectorFactory;
 
 class InheritanceLevelCollectorTest extends TestCase
 {
-    public function dataTests()
+    public function dataTests(): array
     {
         return [
             [1, 1, true],
@@ -35,23 +34,23 @@ class InheritanceLevelCollectorTest extends TestCase
     {
         $classInherit = $this->prophesize(AstMap\AstInheritInterface::class);
         $classInherit->getPath()
-            ->willReturn(array_fill(0, $pathLevel, 1))
-        ;
+            ->willReturn(array_fill(0, $pathLevel, 1));
 
         $astMap = $this->prophesize(AstMap::class);
-        $astMap->getClassInherits(Argument::any())
-            ->willReturn([$classInherit->reveal()])
-        ;
+        $astMap->getClassInherits(AstMap\AstInheritInterface::class)
+            ->willReturn([$classInherit->reveal()]);
 
-        $stat = (new InheritanceLevelCollector())
-            ->satisfy(
-                ['level' => $levelConfig],
-                $this->prophesize(AstClassReferenceInterface::class)->reveal(),
-                $astMap->reveal(),
-                $this->prophesize(CollectorFactory::class)->reveal(),
-                $this->prophesize(AstParserInterface::class)->reveal()
-            )
-        ;
+        $classReference = $this->prophesize(AstClassReferenceInterface::class);
+        $classReference->getClassName()
+            ->willReturn(AstMap\AstInheritInterface::class);
+
+        $stat = (new InheritanceLevelCollector())->satisfy(
+            ['level' => $levelConfig],
+            $classReference->reveal(),
+            $astMap->reveal(),
+            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(AstParserInterface::class)->reveal()
+        );
 
         $this->assertEquals($expected, $stat);
     }

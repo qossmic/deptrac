@@ -23,8 +23,11 @@ trait EmitterTrait
 
         $emitter->applyDependencies($parser, $astMap, $result);
 
-        return array_map(function (Dependency $d) {
-            return $d->getClassA().':'.$d->getClassALine().' on '.$d->getClassB();
-        }, $result->getDependenciesAndInheritDependencies());
+        return array_map(
+            function (Dependency $d) {
+                return $d->getClassA().':'.$d->getClassALine().' on '.$d->getClassB();
+            },
+            $result->getDependenciesAndInheritDependencies()
+        );
     }
 }

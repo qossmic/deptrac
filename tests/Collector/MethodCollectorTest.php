@@ -69,8 +69,7 @@ class MethodCollectorTest extends TestCase
         $parser = $this->prophesize(NikicPhpParser::class);
         $parser->getAstForClassname($className)->willReturn($ast = new \StdClass());
 
-
-        $parser->findNodesOfType($ast, ClassMethod::class)->willReturn($methods);
+        $parser->findNodesOfType((array)$ast, ClassMethod::class)->willReturn($methods);
 
         $stat = (new MethodCollector())->satisfy(
             $configuration,

@@ -39,7 +39,7 @@ class MethodCollector implements CollectorInterface
         $ast = $astParser->getAstForClassname($classReference->getClassName());
 
         /** @var ClassMethod[] $classMethods */
-        $classMethods = $astParser->findNodesOfType($ast, ClassMethod::class);
+        $classMethods = $astParser->findNodesOfType((array) $ast, ClassMethod::class);
 
         foreach ($classMethods as $classMethod) {
             if (preg_match(

@@ -446,21 +446,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs-de/astrunner.git",
-                "reference": "43d5622a393cc8144f3e77198a2d3e7735242135"
+                "reference": "ff036ac38f0f86541ffc172b44d486d53c101cf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/43d5622a393cc8144f3e77198a2d3e7735242135",
-                "reference": "43d5622a393cc8144f3e77198a2d3e7735242135",
+                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/ff036ac38f0f86541ffc172b44d486d53c101cf8",
+                "reference": "ff036ac38f0f86541ffc172b44d486d53c101cf8",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "^2.0 || ^3.0",
-                "php": "^5.6 || ^7.0",
-                "symfony/event-dispatcher": "^2.8 || ^3.0"
+                "nikic/php-parser": "^3.0",
+                "php": "^7.0",
+                "symfony/event-dispatcher": "^2.8 || ^3.0 || ^4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.5"
+                "phpunit/phpunit": "^6.0"
             },
             "type": "library",
             "autoload": {
@@ -478,7 +478,7 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2017-09-15T10:24:00+00:00"
+            "time": "2018-02-26T17:39:05+00:00"
         },
         {
             "name": "symfony/config",
