@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\CollectorFactory;
 
 class DirectoryCollector implements CollectorInterface
 {
-    public function getType()
+    public function getType(): string
     {
         return 'directory';
     }
@@ -30,7 +30,7 @@ class DirectoryCollector implements CollectorInterface
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    )
+    ): bool
     {
         $fileReference = $abstractClassReference->getFileReference();
         assert($fileReference instanceof AstFileReference);
