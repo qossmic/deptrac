@@ -47,6 +47,10 @@
             <tag name="collector" />
         </service>
 
+        <service id="collector_directory" class="SensioLabs\Deptrac\Collector\DirectoryCollector">
+            <tag name="collector"></tag>
+        </service>
+
         <service id="command_analyze" class="SensioLabs\Deptrac\Command\AnalyzeCommand">
             <argument type="service" id="dispatcher"/>
             <argument type="service" id="astrunner"/>
