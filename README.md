@@ -31,6 +31,7 @@ this rule was violated.
 1. [Different layers and different views](#different-layers-and-different-views)
 1. [Collectors](#collectors)
   1. [`className` Collector](#classname-collector)
+  1. [`directory` Collector](#directory-collector)
   1. [`bool` Collector](#bool-collector)
   1. [More collectors](#more-collectors)
 1. [Formatters](#formatters)
@@ -422,6 +423,22 @@ layers:
 ```
 
 Every classname that matches the regular expression `.*Controller.*` becomes a part of the *controller* layer.
+
+
+### `directory` Collector
+
+The `directory` collector allows collecting classes by matching their file path they are declared in to a regular expression.
+Any matching class will be added to the assigned layer.
+
+```yaml
+layers:
+  - name: Controller
+    collectors:
+      - type: directory
+        regex: src/Controller/.*
+```
+
+Every file path that matches the regular expression `src/Controller/.*` becomes a part of the *controller* layer.
 
 
 ### `bool` collector
