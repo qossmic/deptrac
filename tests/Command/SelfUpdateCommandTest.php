@@ -12,14 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SelfUpdateCommandTest extends TestCase
 {
-    private function getContainerWithUpdater(Updater $updater)
-    {
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->get('updater')->willReturn($updater);
-
-        return $container->reveal();
-    }
-
     /**
      * Tests the command status is 1 (fail) if the update fails
      */
@@ -31,7 +23,7 @@ class SelfUpdateCommandTest extends TestCase
 
         $updater->update()->willThrow(HttpRequestException::class);
 
-        $command = new SelfUpdateCommand($this->getContainerWithUpdater($updater->reveal()));
+        $command = new SelfUpdateCommand($updater->reveal());
         $result = $command->run($input->reveal(), $output->reveal());
 
         $this->assertSame(1, $result);
@@ -52,7 +44,7 @@ class SelfUpdateCommandTest extends TestCase
 
         $updater->update()->willReturn($isPharOutdated);
 
-        $command = new SelfUpdateCommand($this->getContainerWithUpdater($updater->reveal()));
+        $command = new SelfUpdateCommand($updater->reveal());
         $result = $command->run($input->reveal(), $output->reveal());
 
         $this->assertSame(0, $result);
