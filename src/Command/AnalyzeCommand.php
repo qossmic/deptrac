@@ -2,6 +2,8 @@
 
 namespace SensioLabs\Deptrac\Command;
 
+use Humbug\SelfUpdate\Exception\HttpRequestException;
+use Humbug\SelfUpdate\Updater;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
@@ -21,6 +23,7 @@ use SensioLabs\Deptrac\RulesetEngine;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Finder\Finder;
@@ -37,18 +40,22 @@ class AnalyzeCommand extends Command
 
     protected $collectorFactory;
 
+    protected $updater;
+
     public function __construct(
         EventDispatcherInterface $dispatcher,
         AstRunner $astRunner,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
-        CollectorFactory $collectorFactory
+        CollectorFactory $collectorFactory,
+        Updater $updater
     ) {
         $this->dispatcher = $dispatcher;
         $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
         $this->collectorFactory = $collectorFactory;
+        $this->updater = $updater;
         parent::__construct();
     }
 
@@ -60,6 +67,10 @@ class AnalyzeCommand extends Command
             new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml'),
         ]);
 
+        $this->getDefinition()->setOptions([
+            new InputOption('self-update', null, InputOption::VALUE_NONE, 'Updates deptrac.phar to the latest version.')
+        ]);
+
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
@@ -68,6 +79,10 @@ class AnalyzeCommand extends Command
         ini_set('memory_limit', -1);
 
         $this->printBanner($output);
+
+        if ($input->getOption('self-update')) {
+            $this->updateDeptrac($output);
+        }
 
         $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
 
@@ -131,6 +146,20 @@ class AnalyzeCommand extends Command
         }
 
         return count($violations) ? 1 : 0;
+    }
+
+    private function updateDeptrac(OutputInterface $output)
+    {
+        try {
+            $output->writeln('<info>Updating deptrac to latest version...</info>');
+
+            if ($this->updater->update()) {
+                $output->writeln('<info>Deptrac was successfully updated.</info>');
+            }
+        } catch (HttpRequestException $e) {
+            $output->writeln('<error>Could not update deptrac.</error>');
+            $output->writeln('<error>'.$e->getMessage().'</error>');
+        }
     }
 
     /**

@@ -57,6 +57,7 @@
             <argument type="service" id="output_formatter_factory"/>
             <argument type="service" id="ruleset_engine"/>
             <argument type="service" id="collector_factory"/>
+            <argument type="service" id="updater"/>
         </service>
 
         <service id="updater_strategy" class="SensioLabs\Deptrac\Updater\DeptracStrategy" />
@@ -71,7 +72,7 @@
         </service>
 
         <service id="command_self_update" class="SensioLabs\Deptrac\Command\SelfUpdateCommand">
-            <argument type="service" id="container"/>
+            <argument type="service" id="updater"/>
         </service>
     </services>
 </container>

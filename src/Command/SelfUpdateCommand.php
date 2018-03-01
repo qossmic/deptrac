@@ -11,12 +11,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SelfUpdateCommand extends Command
 {
-    /** @var ContainerInterface */
-    private $container;
+    /** @var Updater */
+    protected $updater;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(Updater $updater)
     {
-        $this->container = $container;
+        $this->updater = $updater;
         parent::__construct();
     }
 
@@ -34,15 +34,13 @@ class SelfUpdateCommand extends Command
         $output->writeln('<info>Updating deptrac to latest version...</info>');
 
         try {
-            /** @var Updater $updater */
-            $updater = $this->container->get('updater');
-            if ($updater->update()) {
-                $output->writeln('<info>Deprac was successfully updated.</info>');
+            if ($this->updater->update()) {
+                $output->writeln('<info>Deptrac was successfully updated.</info>');
 
                 return 0;
             }
         } catch (HttpRequestException $e) {
-            $output->writeln('<error>Could update deptrac.</error>');
+            $output->writeln('<error>Could not update deptrac.</error>');
             $output->writeln('<error>'.$e->getMessage().'</error>');
 
             return 1;
