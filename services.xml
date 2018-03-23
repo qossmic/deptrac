@@ -48,6 +48,10 @@
             <tag name="collector"/>
         </service>
 
+        <service id="SensioLabs\Deptrac\Configuration\Dumper"/>
+
+        <service id="SensioLabs\Deptrac\Configuration\Loader"/>
+
         <service id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
 
         <service id="Humbug\SelfUpdate\Updater">
@@ -60,9 +64,12 @@
         </service>
 
         <!-- COMMANDS -->
-        <service id="SensioLabs\Deptrac\Command\InitCommand" public="true"/>
+        <service id="SensioLabs\Deptrac\Command\InitCommand" public="true">
+            <argument type="service" id="SensioLabs\Deptrac\Configuration\Dumper"/>
+        </service>
 
         <service id="SensioLabs\Deptrac\Command\AnalyzeCommand" public="true">
+            <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
             <argument type="service" id="SensioLabs\AstRunner\AstRunner"/>
             <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>

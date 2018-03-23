@@ -7,8 +7,9 @@ use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
-use SensioLabs\Deptrac\Configuration;
-use SensioLabs\Deptrac\ConfigurationLoader;
+use SensioLabs\Deptrac\Configuration\Configuration;
+use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
+use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
@@ -27,6 +28,7 @@ use Symfony\Component\Finder\Finder;
 
 class AnalyzeCommand extends Command
 {
+    private $configurationLoader;
     protected $dispatcher;
     protected $astRunner;
     protected $formatterFactory;
@@ -34,12 +36,14 @@ class AnalyzeCommand extends Command
     protected $collectorFactory;
 
     public function __construct(
+        ConfigurationLoader $configurationLoader,
         EventDispatcherInterface $dispatcher,
         AstRunner $astRunner,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
         CollectorFactory $collectorFactory
     ) {
+        $this->configurationLoader = $configurationLoader;
         $this->dispatcher = $dispatcher;
         $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
@@ -66,15 +70,13 @@ class AnalyzeCommand extends Command
 
         $this->printBanner($output);
 
-        $configurationLoader = new ConfigurationLoader($input->getArgument('depfile'));
-
-        if (!$configurationLoader->hasConfiguration()) {
-            $this->printConfigMissingError($output, $configurationLoader);
+        try {
+            $configuration = $this->configurationLoader->load($input->getArgument('depfile'));
+        } catch (MissingFileException $e) {
+            $this->printConfigMissingError($output, $input->getArgument('depfile'));
 
             return 1;
         }
-
-        $configuration = $configurationLoader->loadConfiguration();
 
         new ConsoleFormatter($this->dispatcher, $output);
 
@@ -163,9 +165,9 @@ class AnalyzeCommand extends Command
         $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
     }
 
-    protected function printConfigMissingError(OutputInterface $output, ConfigurationLoader $configurationLoader)
+    protected function printConfigMissingError(OutputInterface $output, string $file)
     {
-        $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $configurationLoader->getConfigFilePathname()));
+        $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $file));
     }
 
     protected function printEmitStart(OutputInterface $output, DependencyEmitterInterface $dependencyEmitter)

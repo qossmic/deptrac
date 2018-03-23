@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\SensioLabs\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration;
+use SensioLabs\Deptrac\Configuration\Configuration;
 
 class ConfigurationTest extends TestCase
 {

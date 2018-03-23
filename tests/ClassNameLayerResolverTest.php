@@ -10,7 +10,7 @@ use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\CollectorFactory;
-use SensioLabs\Deptrac\Configuration;
+use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
