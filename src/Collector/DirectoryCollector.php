@@ -30,10 +30,10 @@ class DirectoryCollector implements CollectorInterface
         AstMap $astMap,
         CollectorFactory $collectorFactory,
         AstParserInterface $astParser
-    ): bool
-    {
+    ): bool {
         $fileReference = $abstractClassReference->getFileReference();
         assert($fileReference instanceof AstFileReference);
+
         return preg_match(
             '#'.$this->getRegexByConfiguration($configuration).'#i',
             $fileReference->getFilepath(),

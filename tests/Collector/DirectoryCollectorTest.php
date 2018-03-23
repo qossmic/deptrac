@@ -1,7 +1,8 @@
 <?php
 
-namespace SensioLabs\Deptrac\Tests\Collector;
+namespace Tests\SensioLabs\Deptrac\Collector;
 
+use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
@@ -9,7 +10,7 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstFileReference;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
 use SensioLabs\Deptrac\CollectorFactory;
 
-class DirectoryCollectorTest extends \PHPUnit_Framework_TestCase
+class DirectoryCollectorTest extends TestCase
 {
     public function testType()
     {
@@ -26,7 +27,7 @@ class DirectoryCollectorTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProviderStatisfy
      */
-    public function testSatisfy($configuration, $filePath, $expected)
+    public function testSatisfy(array $configuration, string $filePath, bool $expected)
     {
         $fileReference = $this->prophesize(AstFileReference::class);
         $fileReference->getFilepath()->willReturn($filePath);
