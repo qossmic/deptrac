@@ -4,72 +4,74 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <defaults public="false"/>
 
-        <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
+        <service id="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
-        <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
+        <service id="SensioLabs\AstRunner\AstRunner"/>
 
-        <service id="output_formatter_factory" class="SensioLabs\Deptrac\OutputFormatterFactory">
+        <service id="SensioLabs\Deptrac\OutputFormatterFactory">
             <argument type="tagged" tag="output_formatter"/>
         </service>
 
-        <service id="output_formatter_graphviz" class="SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter">
+        <service id="SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter">
             <tag name="output_formatter"/>
         </service>
 
-        <service id="output_formatter_console" class="SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter">
+        <service id="SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter">
             <tag name="output_formatter"/>
         </service>
 
-        <service id="command_init" class="SensioLabs\Deptrac\Command\InitCommand"/>
+        <service id="SensioLabs\Deptrac\RulesetEngine"/>
 
-        <service id="ruleset_engine" class="SensioLabs\Deptrac\RulesetEngine"/>
-
-        <service id="collector_factory" class="SensioLabs\Deptrac\CollectorFactory">
+        <service id="SensioLabs\Deptrac\CollectorFactory">
             <argument type="tagged" tag="collector"/>
         </service>
 
-        <service id="collector_className" class="SensioLabs\Deptrac\Collector\ClassNameCollector">
+        <service id="SensioLabs\Deptrac\Collector\ClassNameCollector">
             <tag name="collector"/>
         </service>
 
-        <service id="collector_method" class="SensioLabs\Deptrac\Collector\MethodCollector">
+        <service id="SensioLabs\Deptrac\Collector\MethodCollector">
             <tag name="collector"/>
         </service>
 
-        <service id="collector_bool" class="SensioLabs\Deptrac\Collector\BoolCollector">
+        <service id="SensioLabs\Deptrac\Collector\BoolCollector">
             <tag name="collector"/>
         </service>
 
-        <service id="collector_inheritance_level" class="SensioLabs\Deptrac\Collector\InheritanceLevelCollector">
-            <tag name="collector" />
-        </service>
-
-        <service id="collector_directory" class="SensioLabs\Deptrac\Collector\DirectoryCollector">
+        <service id="SensioLabs\Deptrac\Collector\InheritanceLevelCollector">
             <tag name="collector"/>
         </service>
 
-        <service id="command_analyze" class="SensioLabs\Deptrac\Command\AnalyzeCommand">
-            <argument type="service" id="dispatcher"/>
-            <argument type="service" id="astrunner"/>
-            <argument type="service" id="output_formatter_factory"/>
-            <argument type="service" id="ruleset_engine"/>
-            <argument type="service" id="collector_factory"/>
+        <service id="SensioLabs\Deptrac\Collector\DirectoryCollector">
+            <tag name="collector"/>
         </service>
 
-        <service id="updater_strategy" class="SensioLabs\Deptrac\Updater\DeptracStrategy" />
+        <service id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
 
-        <service id="updater" class="Humbug\SelfUpdate\Updater">
+        <service id="Humbug\SelfUpdate\Updater">
             <argument>null</argument>
             <!-- disable signed releases, otherwise will search for a .pubkey file for the PHAR -->
             <argument>false</argument>
             <call method="setStrategyObject">
-                <argument type="service" id="updater_strategy"/>
+                <argument type="service" id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
             </call>
         </service>
 
-        <service id="command_self_update" class="SensioLabs\Deptrac\Command\SelfUpdateCommand">
-            <argument type="service" id="updater"/>
+        <!-- COMMANDS -->
+        <service id="SensioLabs\Deptrac\Command\InitCommand" public="true"/>
+
+        <service id="SensioLabs\Deptrac\Command\AnalyzeCommand" public="true">
+            <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
+            <argument type="service" id="SensioLabs\AstRunner\AstRunner"/>
+            <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>
+            <argument type="service" id="SensioLabs\Deptrac\RulesetEngine"/>
+            <argument type="service" id="SensioLabs\Deptrac\CollectorFactory"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\Command\SelfUpdateCommand" public="true">
+            <argument type="service" id="Humbug\SelfUpdate\Updater"/>
         </service>
     </services>
 </container>
