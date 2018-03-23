@@ -12,14 +12,16 @@ class OutputFormatterFactory
     /**
      * @var OutputFormatterInterface[]
      */
-    protected $formatters;
+    protected $formatters = [];
 
     /**
      * @param OutputFormatterInterface[] $formatters
      */
-    public function __construct(array $formatters)
+    public function __construct($formatters)
     {
-        $this->formatters = $formatters;
+        foreach ($formatters as $formatter) {
+            $this->addFormatter($formatter);
+        }
     }
 
     /**
@@ -52,17 +54,6 @@ class OutputFormatterFactory
         }
 
         return $arguments;
-    }
-
-    /**
-     * @param OutputFormatterInterface $formatter
-     * @param InputInterface           $input
-     *
-     * @return bool
-     */
-    private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool
-    {
-        return (bool) $input->getOption('formatter-'.$formatter->getName());
     }
 
     /**
@@ -120,5 +111,15 @@ class OutputFormatterFactory
                 }, $this->formatters)
             )
         ));
+    }
+
+    private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool
+    {
+        return (bool) $input->getOption('formatter-'.$formatter->getName());
+    }
+
+    private function addFormatter(OutputFormatterInterface $formatter)
+    {
+        $this->formatters[] = $formatter;
     }
 }

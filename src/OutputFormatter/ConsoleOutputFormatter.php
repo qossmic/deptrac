@@ -2,10 +2,10 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
-use SensioLabs\AstRunner\AstMap\AstInheritInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ConsoleOutputFormatter implements OutputFormatterInterface
@@ -75,11 +75,15 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     {
         $buffer = [];
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, "\t".$p->getClassName().'::'.$p->getLine());
+            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassName(), $p->getLine()));
         }
 
-        $buffer[] = "\t".$astInherit->getClassName().'::'.$astInherit->getLine();
-        $buffer[] = "\t".$dependency->getOriginalDependency()->getClassB().'::'.$dependency->getOriginalDependency()->getClassALine();
+        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassName(), $astInherit->getLine());
+        $buffer[] = sprintf(
+            "\t%s::%d",
+            $dependency->getOriginalDependency()->getClassB(),
+            $dependency->getOriginalDependency()->getClassALine()
+        );
 
         return implode(" -> \n", $buffer);
     }

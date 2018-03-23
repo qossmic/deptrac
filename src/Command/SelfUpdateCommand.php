@@ -2,21 +2,19 @@
 
 namespace SensioLabs\Deptrac\Command;
 
+use Humbug\SelfUpdate\Exception\HttpRequestException;
 use Humbug\SelfUpdate\Updater;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Humbug\SelfUpdate\Exception\HttpRequestException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class SelfUpdateCommand extends Command
 {
-    /** @var ContainerInterface */
-    private $container;
+    private $updater;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(Updater $updater)
     {
-        $this->container = $container;
+        $this->updater = $updater;
         parent::__construct();
     }
 
@@ -25,8 +23,7 @@ class SelfUpdateCommand extends Command
         $this
             ->setName('self-update')
             ->setAliases(['selfupdate'])
-            ->setDescription('Updates deptrac.phar to the latest version.')
-        ;
+            ->setDescription('Updates deptrac.phar to the latest version.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -34,9 +31,7 @@ class SelfUpdateCommand extends Command
         $output->writeln('<info>Updating deptrac to latest version...</info>');
 
         try {
-            /** @var Updater $updater */
-            $updater = $this->container->get('updater');
-            if ($updater->update()) {
+            if ($this->updater->update()) {
                 $output->writeln('<info>Deprac was successfully updated.</info>');
 
                 return 0;
