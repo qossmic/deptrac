@@ -5,6 +5,7 @@ namespace SensioLabs\Deptrac;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
+use SensioLabs\Deptrac\Configuration\Configuration;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {

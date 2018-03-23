@@ -1,9 +1,7 @@
 <?php
 
-namespace SensioLabs\Deptrac;
+namespace SensioLabs\Deptrac\Configuration;
 
-use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
-use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Configuration
