@@ -5,14 +5,12 @@
 
     <services>
 
-        <service id="container" synthetic="true" />
-
         <service id="dispatcher" class="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
         <service id="astrunner" class="SensioLabs\AstRunner\AstRunner"/>
 
         <service id="output_formatter_factory" class="SensioLabs\Deptrac\OutputFormatterFactory">
-            <argument/>
+            <argument type="tagged" tag="output_formatter"/>
         </service>
 
         <service id="output_formatter_graphviz" class="SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter">
@@ -28,7 +26,7 @@
         <service id="ruleset_engine" class="SensioLabs\Deptrac\RulesetEngine"/>
 
         <service id="collector_factory" class="SensioLabs\Deptrac\CollectorFactory">
-            <argument/>
+            <argument type="tagged" tag="collector"/>
         </service>
 
         <service id="collector_className" class="SensioLabs\Deptrac\Collector\ClassNameCollector">
@@ -48,7 +46,7 @@
         </service>
 
         <service id="collector_directory" class="SensioLabs\Deptrac\Collector\DirectoryCollector">
-            <tag name="collector"></tag>
+            <tag name="collector"/>
         </service>
 
         <service id="command_analyze" class="SensioLabs\Deptrac\Command\AnalyzeCommand">
@@ -71,7 +69,7 @@
         </service>
 
         <service id="command_self_update" class="SensioLabs\Deptrac\Command\SelfUpdateCommand">
-            <argument type="service" id="container"/>
+            <argument type="service" id="updater"/>
         </service>
     </services>
 </container>

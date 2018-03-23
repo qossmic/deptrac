@@ -9,11 +9,13 @@ class CollectorFactory
     /** @var CollectorInterface[] */
     protected $collectors = [];
 
-    /** @param CollectorInterface[] $collectors */
-    public function __construct(array $collectors)
+    /**
+     * @param CollectorInterface[] $collectors
+     */
+    public function __construct($collectors)
     {
         foreach ($collectors as $collector) {
-            $this->collectors[$collector->getType()] = $collector;
+            $this->addCollector($collector);
         }
     }
 
@@ -35,5 +37,10 @@ class CollectorFactory
         }
 
         return $this->collectors[$type];
+    }
+
+    private function addCollector(CollectorInterface $collector)
+    {
+        $this->collectors[$collector->getType()] = $collector;
     }
 }

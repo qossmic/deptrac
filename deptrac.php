@@ -2,8 +2,6 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use SensioLabs\Deptrac\CompilerPass\CollectorPass;
-use SensioLabs\Deptrac\CompilerPass\OutputFormatterPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,13 +12,9 @@ if (PHP_VERSION_ID < 70000) {
     die(1);
 }
 
-(new XmlFileLoader($container = new ContainerBuilder(), new FileLocator(__DIR__)))->load(__DIR__.'/services.xml');
-$container
-    ->addCompilerPass(new OutputFormatterPass())
-    ->addCompilerPass(new CollectorPass())
-    ->compile();
-
-$container->set('container', $container);
+$container = new ContainerBuilder();
+(new XmlFileLoader($container, new FileLocator(__DIR__)))->load('services.xml');
+$container->compile();
 
 $application = new Application();
 $application->add($container->get('command_init'));
