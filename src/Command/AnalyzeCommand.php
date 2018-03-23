@@ -28,13 +28,9 @@ use Symfony\Component\Finder\Finder;
 class AnalyzeCommand extends Command
 {
     protected $dispatcher;
-
     protected $astRunner;
-
     protected $formatterFactory;
-
     protected $rulesetEngine;
-
     protected $collectorFactory;
 
     public function __construct(
@@ -55,6 +51,7 @@ class AnalyzeCommand extends Command
     protected function configure()
     {
         $this->setName('analyze');
+        $this->setAliases(['analyse']);
 
         $this->getDefinition()->setArguments([
             new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml'),
