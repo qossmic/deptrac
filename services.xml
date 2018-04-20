@@ -8,7 +8,9 @@
 
         <service id="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
-        <service id="SensioLabs\AstRunner\AstRunner"/>
+        <service id="SensioLabs\AstRunner\AstRunner">
+            <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
+        </service>
 
         <service id="SensioLabs\Deptrac\OutputFormatterFactory">
             <argument type="tagged" tag="output_formatter"/>
