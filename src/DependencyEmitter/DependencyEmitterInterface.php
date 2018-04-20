@@ -2,9 +2,9 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\Dependency\Result;
 
 interface DependencyEmitterInterface
 {
@@ -15,9 +15,9 @@ interface DependencyEmitterInterface
     /**
      * @param AstParserInterface $astParser
      * @param AstMap             $astMap
-     * @param DependencyResult   $dependencyResult
+     * @param Result             $dependencyResult
      *
      * @return mixed
      */
-    public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, DependencyResult $dependencyResult);
+    public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, Result $dependencyResult);
 }

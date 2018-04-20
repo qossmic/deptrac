@@ -2,12 +2,12 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\DependencyResult;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\Dependency\Result;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {
@@ -24,7 +24,7 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
     public function applyDependencies(
         AstParserInterface $astParser,
         AstMap $astMap,
-        DependencyResult $dependencyResult
+        Result $dependencyResult
     ) {
         foreach ($astMap->getAstClassReferences() as $classReference) {
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {

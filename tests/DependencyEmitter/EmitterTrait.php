@@ -4,8 +4,8 @@ namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
+use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
-use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -18,7 +18,7 @@ trait EmitterTrait
             $parser,
             [$fileInfo]
         );
-        $result = new DependencyResult();
+        $result = new Result();
 
         $emitter->applyDependencies($parser, $astMap, $result);
 

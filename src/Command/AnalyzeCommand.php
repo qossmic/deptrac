@@ -9,12 +9,8 @@ use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
 use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
+use SensioLabs\Deptrac\Dependency\Analyzer as DependencyAnalyzer;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
-use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
-use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
-use SensioLabs\Deptrac\DependencyInheritanceFlatter;
-use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\FileResolver;
 use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
@@ -34,6 +30,7 @@ class AnalyzeCommand extends Command
     private $formatterFactory;
     private $rulesetEngine;
     private $collectorFactory;
+    private $dependencyAnalyzer;
 
     public function __construct(
         ConfigurationLoader $configurationLoader,
@@ -42,7 +39,8 @@ class AnalyzeCommand extends Command
         AstRunner $astRunner,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
-        CollectorFactory $collectorFactory
+        CollectorFactory $collectorFactory,
+        DependencyAnalyzer $dependencyAnalyzer
     ) {
         $this->configurationLoader = $configurationLoader;
         $this->fileResolver = $fileResolver;
@@ -51,6 +49,8 @@ class AnalyzeCommand extends Command
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
         $this->collectorFactory = $collectorFactory;
+        $this->dependencyAnalyzer = $dependencyAnalyzer;
+
         parent::__construct();
     }
 
@@ -85,28 +85,7 @@ class AnalyzeCommand extends Command
         $parser = new NikicPhpParser();
         $astMap = $this->astRunner->createAstMapByFiles($parser, $this->fileResolver->resolve($configuration));
 
-        $dependencyResult = new DependencyResult();
-
-        /** @var DependencyEmitterInterface[] $dependencyEmitters */
-        $dependencyEmitters = [
-            new InheritanceDependencyEmitter(),
-            new BasicDependencyEmitter(),
-        ];
-
-        foreach ($dependencyEmitters as $dependencyEmitter) {
-            $this->printEmitStart($output, $dependencyEmitter);
-            $dependencyEmitter->applyDependencies(
-                $parser,
-                $astMap,
-                $dependencyResult
-            );
-        }
-        $this->printEmitEnd($output);
-        $this->printFlattenStart($output);
-
-        (new DependencyInheritanceFlatter())->flattenDependencies($astMap, $dependencyResult);
-
-        $this->printFlattenEnd($output);
+        $dependencyResult = $this->dependencyAnalyzer->analyze($parser, $astMap);
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
             new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory, $parser)
@@ -142,26 +121,6 @@ class AnalyzeCommand extends Command
     protected function printConfigMissingError(OutputInterface $output, string $file)
     {
         $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $file));
-    }
-
-    protected function printEmitStart(OutputInterface $output, DependencyEmitterInterface $dependencyEmitter)
-    {
-        $output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $dependencyEmitter->getName()));
-    }
-
-    protected function printEmitEnd(OutputInterface $output)
-    {
-        $output->writeln('<info>end emitting dependencies</info>');
-    }
-
-    protected function printFlattenStart(OutputInterface $output)
-    {
-        $output->writeln('<info>start flatten dependencies</info>');
-    }
-
-    protected function printFlattenEnd(OutputInterface $output)
-    {
-        $output->writeln('<info>end flatten dependencies</info>');
     }
 
     protected function printCollectViolations(OutputInterface $output)

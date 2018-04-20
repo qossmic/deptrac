@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
-use SensioLabs\Deptrac\DependencyInheritanceFlatter;
-use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
+use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
-class DependencyInheritanceFlatterTest extends TestCase
+class InheritanceFlatterTest extends TestCase
 {
     private function getAstReference($className)
     {
@@ -43,7 +43,7 @@ class DependencyInheritanceFlatterTest extends TestCase
             $this->getAstReference('classGeschmückterWeihnachtsbaum'),
         ]);
 
-        $dependencyResult = new DependencyResult();
+        $dependencyResult = new Result();
         $dependencyResult->addDependency($classADep = $this->getDependency('classA'));
         $dependencyResult->addDependency($classBDep = $this->getDependency('classB'));
         $dependencyResult->addDependency($classBaumDep = $this->getDependency('classBaum'));
@@ -61,7 +61,7 @@ class DependencyInheritanceFlatterTest extends TestCase
             ]),
         ]);
 
-        (new DependencyInheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);
+        (new InheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);
 
         $inheritDeps = array_filter($dependencyResult->getDependenciesAndInheritDependencies(), function ($v) {
             return $v instanceof InheritDependency;

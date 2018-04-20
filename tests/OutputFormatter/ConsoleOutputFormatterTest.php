@@ -7,8 +7,8 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\AstInherit;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyResult;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
@@ -96,7 +96,7 @@ class ConsoleOutputFormatterTest extends TestCase
             new DependencyContext(
                 $this->prophesize(AstMap::class)->reveal(),
                 $violations,
-                $this->prophesize(DependencyResult::class)->reveal(),
+                $this->prophesize(Result::class)->reveal(),
                 $this->prophesize(ClassNameLayerResolverInterface::class)->reveal()
             ),
             $output,

@@ -1,11 +1,11 @@
 <?php
 
-namespace SensioLabs\Deptrac;
+namespace SensioLabs\Deptrac\Dependency;
 
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 
-class DependencyResult
+class Result
 {
     private $dependencies = [];
 

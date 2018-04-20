@@ -6,6 +6,8 @@ use SensioLabs\AstRunner\Event\AstFileAnalyzedEvent;
 use SensioLabs\AstRunner\Event\AstFileSyntaxErrorEvent;
 use SensioLabs\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\AstRunner\Event\PreCreateAstMapEvent;
+use SensioLabs\Deptrac\Dependency\Events as DependencyEvents;
+use SensioLabs\Deptrac\Dependency\PreEmitEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -23,6 +25,10 @@ class ConsoleFormatter
         $dispatcher->addListener(PostCreateAstMapEvent::class, [$this, 'onPostCreateAstMapEvent']);
         $dispatcher->addListener(AstFileAnalyzedEvent::class, [$this, 'onAstFileAnalyzedEvent']);
         $dispatcher->addListener(AstFileSyntaxErrorEvent::class, [$this, 'onAstFileSyntaxErrorEvent']);
+        $dispatcher->addListener(DependencyEvents::PRE_EMIT, [$this, 'onPreDependencyEmit']);
+        $dispatcher->addListener(DependencyEvents::POST_EMIT, [$this, 'onPostDependencyEmit']);
+        $dispatcher->addListener(DependencyEvents::PRE_FLATTEN, [$this, 'onPreDependencyFlatten']);
+        $dispatcher->addListener(DependencyEvents::POST_FLATTEN, [$this, 'onPostDependencyFlatten']);
     }
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
@@ -54,5 +60,25 @@ class ConsoleFormatter
             $astFileSyntaxErrorEvent->getFile()->getPathname(),
             $astFileSyntaxErrorEvent->getSyntaxError()
         ));
+    }
+
+    public function onPreDependencyEmit(PreEmitEvent $event)
+    {
+        $this->output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()));
+    }
+
+    public function onPostDependencyEmit()
+    {
+        $this->output->writeln('<info>end emitting dependencies</info>');
+    }
+
+    public function onPreDependencyFlatten()
+    {
+        $this->output->writeln('<info>start flatten dependencies</info>');
+    }
+
+    public function onPostDependencyFlatten()
+    {
+        $this->output->writeln('<info>end flatten dependencies</info>');
     }
 }
