@@ -1,16 +1,16 @@
 <?php
 
-namespace SensioLabs\Deptrac;
+namespace SensioLabs\Deptrac\Dependency;
 
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
-class DependencyInheritanceFlatter
+class InheritanceFlatter
 {
     public function flattenDependencies(
         AstMap $astMap,
-        DependencyResult $dependencyResult
+        Result $dependencyResult
     ) {
         foreach ($astMap->getAstClassReferences() as $classReference) {
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {

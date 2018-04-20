@@ -5,8 +5,8 @@ namespace Tests\SensioLabs\Deptrac;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyResult;
 
 class DependencyContextTest extends TestCase
 {
@@ -15,7 +15,7 @@ class DependencyContextTest extends TestCase
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
             [1, 2, 3],
-            $dependencyResult = $this->prophesize(DependencyResult::class)->reveal(),
+            $dependencyResult = $this->prophesize(Result::class)->reveal(),
             $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal()
         );
 

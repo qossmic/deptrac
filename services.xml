@@ -54,6 +54,22 @@
 
         <service id="SensioLabs\Deptrac\Configuration\Loader"/>
 
+        <service id="SensioLabs\Deptrac\Dependency\Analyzer">
+            <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
+            <argument type="service" id="SensioLabs\Deptrac\Dependency\InheritanceFlatter"/>
+            <argument type="tagged" tag="dependency_emitter"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\Dependency\InheritanceFlatter"/>
+
+        <service id="SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter">
+            <tag name="dependency_emitter"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter">
+            <tag name="dependency_emitter"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
 
         <service id="SensioLabs\Deptrac\FileResolver"/>
@@ -80,6 +96,7 @@
             <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>
             <argument type="service" id="SensioLabs\Deptrac\RulesetEngine"/>
             <argument type="service" id="SensioLabs\Deptrac\CollectorFactory"/>
+            <argument type="service" id="SensioLabs\Deptrac\Dependency\Analyzer"/>
         </service>
 
         <service id="SensioLabs\Deptrac\Command\SelfUpdateCommand" public="true">

@@ -3,23 +3,23 @@
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
 use PhpParser\Node\Expr\Closure;
-use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Expr\StaticPropertyFetch;
-use PhpParser\Node\NullableType;
-use SensioLabs\Deptrac\DependencyResult;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Name;
+use PhpParser\Node\NullableType;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstFileReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\Dependency\Result;
+use SensioLabs\Deptrac\DependencyResult\Dependency;
 
 class BasicDependencyEmitter implements DependencyEmitterInterface
 {
@@ -267,7 +267,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     public function applyDependencies(
         AstParserInterface $astParser,
         AstMap $astMap,
-        DependencyResult $dependencyResult
+        Result $dependencyResult
     ) {
         /* @var $astParser NikicPhpParser */
         assert(true === $astParser instanceof NikicPhpParser);

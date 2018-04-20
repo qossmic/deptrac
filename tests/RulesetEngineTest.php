@@ -5,7 +5,7 @@ namespace Tests\SensioLabs\Deptrac;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
-use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\RulesetEngine;
 
@@ -146,7 +146,7 @@ class RulesetEngineTest extends TestCase
      */
     public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, $expectedCount)
     {
-        $dependencyResult = (new DependencyResult());
+        $dependencyResult = (new Result());
         foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
             $dependencyResult->addDependency($dep);
         }
