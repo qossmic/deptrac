@@ -32,8 +32,7 @@ class ClassNameCollector implements CollectorInterface
     ): bool {
         return 1 === preg_match(
             '/'.$this->getRegexByConfiguration($configuration).'/i',
-            $abstractClassReference->getClassName(),
-            $collectorFactory
+            $abstractClassReference->getClassName()
         );
     }
 }

@@ -42,10 +42,9 @@ class MethodCollector implements CollectorInterface
         $classMethods = $astParser->findNodesOfType((array) $ast, ClassMethod::class);
 
         foreach ($classMethods as $classMethod) {
-            if (preg_match(
+            if (1 === preg_match(
                 '/'.$this->getMethodNameRegexByConfiguration($configuration).'/i',
-                $classMethod->name,
-                $collectorFactory
+                $classMethod->name
             )) {
                 return true;
             }
