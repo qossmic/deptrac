@@ -7,7 +7,6 @@ use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\CollectorFactory;
-use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
 use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
 use SensioLabs\Deptrac\DependencyContext;
@@ -16,6 +15,7 @@ use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\Deptrac\DependencyInheritanceFlatter;
 use SensioLabs\Deptrac\DependencyResult;
+use SensioLabs\Deptrac\FileResolver;
 use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
@@ -24,19 +24,20 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Finder\Finder;
 
 class AnalyzeCommand extends Command
 {
     private $configurationLoader;
-    protected $dispatcher;
-    protected $astRunner;
-    protected $formatterFactory;
-    protected $rulesetEngine;
-    protected $collectorFactory;
+    private $fileResolver;
+    private $dispatcher;
+    private $astRunner;
+    private $formatterFactory;
+    private $rulesetEngine;
+    private $collectorFactory;
 
     public function __construct(
         ConfigurationLoader $configurationLoader,
+        FileResolver $fileResolver,
         EventDispatcherInterface $dispatcher,
         AstRunner $astRunner,
         OutputFormatterFactory $formatterFactory,
@@ -44,6 +45,7 @@ class AnalyzeCommand extends Command
         CollectorFactory $collectorFactory
     ) {
         $this->configurationLoader = $configurationLoader;
+        $this->fileResolver = $fileResolver;
         $this->dispatcher = $dispatcher;
         $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
@@ -81,7 +83,7 @@ class AnalyzeCommand extends Command
         new ConsoleFormatter($this->dispatcher, $output);
 
         $parser = new NikicPhpParser();
-        $astMap = $this->astRunner->createAstMapByFiles($parser, $this->collectFiles($configuration));
+        $astMap = $this->astRunner->createAstMapByFiles($parser, $this->fileResolver->resolve($configuration));
 
         $dependencyResult = new DependencyResult();
 
@@ -130,34 +132,6 @@ class AnalyzeCommand extends Command
         }
 
         return count($violations) ? 1 : 0;
-    }
-
-    /**
-     * @param Configuration $configuration
-     *
-     * @return \SplFileInfo[]
-     */
-    private function collectFiles(Configuration $configuration): array
-    {
-        $files = iterator_to_array(
-            (new Finder())
-                ->in($configuration->getPaths())
-                ->name('*.php')
-                ->files()
-                ->followLinks()
-                ->ignoreUnreadableDirs(true)
-                ->ignoreVCS(true)
-        );
-
-        return array_filter($files, function (\SplFileInfo $fileInfo) use ($configuration) {
-            foreach ($configuration->getExcludeFiles() as $excludeFiles) {
-                if (preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
-                    return false;
-                }
-            }
-
-            return true;
-        });
     }
 
     protected function printBanner(OutputInterface $output)

@@ -56,6 +56,8 @@
 
         <service id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
 
+        <service id="SensioLabs\Deptrac\FileResolver"/>
+
         <service id="Humbug\SelfUpdate\Updater">
             <argument>null</argument>
             <!-- disable signed releases, otherwise will search for a .pubkey file for the PHAR -->
@@ -72,6 +74,7 @@
 
         <service id="SensioLabs\Deptrac\Command\AnalyzeCommand" public="true">
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
+            <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
             <argument type="service" id="SensioLabs\AstRunner\AstRunner"/>
             <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>
