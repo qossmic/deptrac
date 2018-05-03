@@ -35,7 +35,5 @@ class InitCommand extends Command
 
             return 1;
         }
-
-
     }
 }

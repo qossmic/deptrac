@@ -2,14 +2,15 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\CollectorFactory;
-use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
-class BoolCollector implements CollectorInterface
+class BoolCollector implements CollectorInterface, DelegatingCollectorInterface
 {
+    use DelegatingCollectorTrait;
+
     public function getType(): string
     {
         return 'bool';
@@ -19,7 +20,6 @@ class BoolCollector implements CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory,
         AstParserInterface $astParser
     ): bool {
         if (!isset($configuration['must'])) {
@@ -34,14 +34,15 @@ class BoolCollector implements CollectorInterface
             throw new \InvalidArgumentException('bool collector must have a must or a must_not attribute');
         }
 
+        $collectorRegistry = $this->getRegistry();
+
         foreach ($configuration['must'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
-            if (!$collectorFactory->getCollector($configurationForCollector->getType())->satisfy(
+            if (!$collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
                 $abstractClassReference,
                 $astMap,
-                $collectorFactory,
                 $astParser
             )) {
                 return false;
@@ -51,11 +52,10 @@ class BoolCollector implements CollectorInterface
         foreach ($configuration['must_not'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
-            if ($collectorFactory->getCollector($configurationForCollector->getType())->satisfy(
+            if ($collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
                 $abstractClassReference,
                 $astMap,
-                $collectorFactory,
                 $astParser
             )) {
                 return false;

@@ -8,8 +8,8 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class BoolCollectorTest extends TestCase
 {
@@ -22,7 +22,6 @@ class BoolCollectorTest extends TestCase
             [],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
@@ -41,7 +40,6 @@ class BoolCollectorTest extends TestCase
             ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
             Argument::type(AstClassReferenceInterface::class),
             Argument::type(AstMap::class),
-            Argument::type(CollectorFactory::class),
             Argument::type(AstParserInterface::class)
         )->willReturn($returns);
 
@@ -154,11 +152,11 @@ class BoolCollectorTest extends TestCase
      */
     public function testSatisfyBasicTest(array $configuration, bool $expected)
     {
-        $collectorFactory = $this->prophesize(CollectorFactory::class);
-        $collectorFactory->getCollector('true')->willReturn(
+        $registry = $this->prophesize(Registry::class);
+        $registry->getCollector('true')->willReturn(
             $this->getCalculatorMock(true)
         );
-        $collectorFactory->getCollector('false')->willReturn(
+        $registry->getCollector('false')->willReturn(
             $this->getCalculatorMock( false)
         );
 
@@ -173,11 +171,13 @@ class BoolCollectorTest extends TestCase
             }
         }
 
-        $stat = (new BoolCollector())->satisfy(
+        $collector = new BoolCollector();
+        $collector->setRegistry($registry->reveal());
+
+        $stat = $collector->satisfy(
             $configuration,
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $collectorFactory->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 

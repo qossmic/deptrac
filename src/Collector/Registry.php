@@ -1,10 +1,8 @@
 <?php
 
-namespace SensioLabs\Deptrac;
+namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\Deptrac\Collector\CollectorInterface;
-
-class CollectorFactory
+class Registry
 {
     /** @var CollectorInterface[] */
     protected $collectors = [];
@@ -20,11 +18,7 @@ class CollectorFactory
     }
 
     /**
-     * @param string $type
-     *
      * @throws \InvalidArgumentException if collector does not exists
-     *
-     * @return CollectorInterface
      */
     public function getCollector(string $type): CollectorInterface
     {
@@ -42,5 +36,9 @@ class CollectorFactory
     private function addCollector(CollectorInterface $collector)
     {
         $this->collectors[$collector->getType()] = $collector;
+
+        if ($collector instanceof DelegatingCollectorInterface) {
+            $collector->setRegistry($this);
+        }
     }
 }
