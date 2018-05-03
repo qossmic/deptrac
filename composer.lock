@@ -446,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs-de/astrunner.git",
-                "reference": "11788072797cb1d93aa3dbe9062ed8d0c5dc4a66"
+                "reference": "29f1327a3eae06911b6521b180edbc6ed2f853d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/11788072797cb1d93aa3dbe9062ed8d0c5dc4a66",
-                "reference": "11788072797cb1d93aa3dbe9062ed8d0c5dc4a66",
+                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/29f1327a3eae06911b6521b180edbc6ed2f853d2",
+                "reference": "29f1327a3eae06911b6521b180edbc6ed2f853d2",
                 "shasum": ""
             },
             "require": {
@@ -478,7 +478,7 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2018-04-14T13:59:24+00:00"
+            "time": "2018-05-03T14:27:11+00:00"
         },
         {
             "name": "symfony/config",
