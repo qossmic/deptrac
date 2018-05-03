@@ -34,6 +34,10 @@
             <tag name="collector"/>
         </service>
 
+        <service id="SensioLabs\Deptrac\Collector\ClassNameRegexCollector">
+            <tag name="collector"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\Collector\MethodCollector">
             <tag name="collector"/>
         </service>

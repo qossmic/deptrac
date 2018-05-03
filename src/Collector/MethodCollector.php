@@ -16,15 +16,6 @@ class MethodCollector implements CollectorInterface
         return 'method';
     }
 
-    private function getMethodNameRegexByConfiguration(array $configuration)
-    {
-        if (!isset($configuration['name'])) {
-            throw new \LogicException('MethodCollector needs the name configuration.');
-        }
-
-        return $configuration['name'];
-    }
-
     public function satisfy(
         array $configuration,
         AstClassReferenceInterface $classReference,
@@ -40,16 +31,23 @@ class MethodCollector implements CollectorInterface
 
         /** @var ClassMethod[] $classMethods */
         $classMethods = $astParser->findNodesOfType((array) $ast, ClassMethod::class);
+        $pattern = $this->getPattern($configuration);
 
         foreach ($classMethods as $classMethod) {
-            if (1 === preg_match(
-                '/'.$this->getMethodNameRegexByConfiguration($configuration).'/i',
-                $classMethod->name
-            )) {
+            if (1 === preg_match($pattern, $classMethod->name)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private function getPattern(array $configuration): string
+    {
+        if (!isset($configuration['name'])) {
+            throw new \LogicException('MethodCollector needs the name configuration.');
+        }
+
+        return '/'.$configuration['name'].'/i';
     }
 }

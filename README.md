@@ -31,6 +31,7 @@ this rule was violated.
 1. [Different layers and different views](#different-layers-and-different-views)
 1. [Collectors](#collectors)
   1. [`className` Collector](#classname-collector)
+  1. [`classNameRegex` Collector](#classnameregex-collector)
   1. [`directory` Collector](#directory-collector)
   1. [`bool` Collector](#bool-collector)
   1. [More collectors](#more-collectors)
@@ -411,7 +412,7 @@ Technically, deptrac creates an [AST](https://en.wikipedia.org/wiki/Abstract_syn
 
 ### `className` Collector
 
-The `className` collector allows collecting classes by matching their fully qualified name to a regular expression.
+The `className` collector allows collecting classes by matching their fully qualified name to a simplified regular expression.
 Any matching class will be added to the assigned layer.
 
 ```yaml
@@ -422,12 +423,29 @@ layers:
         regex: .*Controller.*
 ```
 
-Every classname that matches the regular expression `.*Controller.*` becomes a part of the *controller* layer.
+Every class name that matches the regular expression becomes a part of the *controller* layer.
+This collector has predefined delimiters and modifier: `/YOUR_EXPRESSION/i`
+
+
+### `classNameRegex` Collector
+
+The `classNameRegex` collector allows collecting classes by matching their fully qualified name to a regular expression.
+Any matching class will be added to the assigned layer.
+
+```yaml
+layers:
+  - name: Controller
+    collectors:
+      - type: classNameRegex
+        regex: #.*Controller.*#
+```
+
+Every class name that matches the regular expression becomes a part of the *controller* layer.
 
 
 ### `directory` Collector
 
-The `directory` collector allows collecting classes by matching their file path they are declared in to a regular expression.
+The `directory` collector allows collecting classes by matching their file path they are declared in to a simplified regular expression.
 Any matching class will be added to the assigned layer.
 
 ```yaml
@@ -439,6 +457,7 @@ layers:
 ```
 
 Every file path that matches the regular expression `src/Controller/.*` becomes a part of the *controller* layer.
+This collector has predefined delimiters and modifier: `#YOUR_EXPRESSION#i`
 
 
 ### `bool` collector

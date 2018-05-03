@@ -17,7 +17,7 @@ class DirectoryCollectorTest extends TestCase
         $this->assertEquals('directory', (new DirectoryCollector())->getType());
     }
 
-    public function dataProviderStatisfy()
+    public function dataProviderSatisfy()
     {
         yield [['regex' => 'foo/layer1/.*'], 'foo/layer1/bar.php', true];
         yield [['regex' => 'foo/layer1/.*'], 'foo/layer1/dir/bar.php', true];
@@ -25,7 +25,7 @@ class DirectoryCollectorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderStatisfy
+     * @dataProvider dataProviderSatisfy
      */
     public function testSatisfy(array $configuration, string $filePath, bool $expected)
     {

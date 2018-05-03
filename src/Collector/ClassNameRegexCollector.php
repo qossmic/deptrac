@@ -2,16 +2,16 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\CollectorFactory;
 
-class ClassNameCollector implements CollectorInterface
+class ClassNameRegexCollector implements CollectorInterface
 {
     public function getType(): string
     {
-        return 'className';
+        return 'classNameRegex';
     }
 
     public function satisfy(
@@ -27,9 +27,9 @@ class ClassNameCollector implements CollectorInterface
     private function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex'])) {
-            throw new \LogicException('ClassNameCollector needs the regex configuration.');
+            throw new \LogicException('ClassNameRegexCollector needs the regex configuration.');
         }
 
-        return '/'.$configuration['regex'].'/i';
+        return (string)$configuration['regex'];
     }
 }

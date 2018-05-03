@@ -25,18 +25,15 @@ class DirectoryCollector implements CollectorInterface
         $fileReference = $abstractClassReference->getFileReference();
         assert($fileReference instanceof AstFileReference);
 
-        return 1 === preg_match(
-            '#'.$this->getRegexByConfiguration($configuration).'#i',
-            $fileReference->getFilepath()
-        );
+        return 1 === preg_match($this->getPattern($configuration), $fileReference->getFilepath());
     }
 
-    private function getRegexByConfiguration(array $configuration)
+    private function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex'])) {
             throw new \LogicException('DirectoryCollector needs the regex configuration.');
         }
 
-        return $configuration['regex'];
+        return '#'.$configuration['regex'].'#i';
     }
 }
