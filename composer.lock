@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b65e2efe733ceacf7eb2580c90f387f5",
+    "content-hash": "209b7de6d6c82d833ba7bd0599f5d01d",
     "packages": [
         {
             "name": "clue/graph",
@@ -145,24 +145,24 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v3.1.2",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "08131e7ff29de6bb9f12275c7d35df71f25f4d89"
+                "reference": "e4a54fa90a5cd8e8dd3fb4099942681731c5cdd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/08131e7ff29de6bb9f12275c7d35df71f25f4d89",
-                "reference": "08131e7ff29de6bb9f12275c7d35df71f25f4d89",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/e4a54fa90a5cd8e8dd3fb4099942681731c5cdd3",
+                "reference": "e4a54fa90a5cd8e8dd3fb4099942681731c5cdd3",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "php": ">=5.5"
+                "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0|~5.0"
+                "phpunit/phpunit": "^6.5 || ^7.0"
             },
             "bin": [
                 "bin/php-parse"
@@ -170,7 +170,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "4.0-dev"
                 }
             },
             "autoload": {
@@ -192,7 +192,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2017-11-04T11:48:34+00:00"
+            "time": "2018-03-25T17:35:16+00:00"
         },
         {
             "name": "padraic/humbug_get_contents",
@@ -446,16 +446,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs-de/astrunner.git",
-                "reference": "29f1327a3eae06911b6521b180edbc6ed2f853d2"
+                "reference": "7a329c8798f40d947010471c45ebb0b7c88a6799"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/29f1327a3eae06911b6521b180edbc6ed2f853d2",
-                "reference": "29f1327a3eae06911b6521b180edbc6ed2f853d2",
+                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/7a329c8798f40d947010471c45ebb0b7c88a6799",
+                "reference": "7a329c8798f40d947010471c45ebb0b7c88a6799",
                 "shasum": ""
             },
             "require": {
-                "nikic/php-parser": "^3.0",
+                "nikic/php-parser": "^3.0 || ^4.0",
                 "php": "^7.0",
                 "symfony/event-dispatcher": "^2.8 || ^3.0 || ^4.0"
             },
@@ -478,7 +478,7 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2018-05-03T14:27:11+00:00"
+            "time": "2018-05-09T14:15:20+00:00"
         },
         {
             "name": "symfony/config",
