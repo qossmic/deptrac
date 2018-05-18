@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\MethodCollector;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class MethodCollectorTest extends TestCase
 {
@@ -75,7 +75,7 @@ class MethodCollectorTest extends TestCase
             $configuration,
             $astClassReference->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(Registry::class)->reveal(),
             $parser->reveal()
         );
 

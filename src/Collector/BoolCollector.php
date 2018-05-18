@@ -2,11 +2,10 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\CollectorFactory;
-use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
 class BoolCollector implements CollectorInterface
 {
@@ -19,7 +18,7 @@ class BoolCollector implements CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory,
+        Registry $collectorRegistry,
         AstParserInterface $astParser
     ): bool {
         if (!isset($configuration['must'])) {
@@ -37,11 +36,11 @@ class BoolCollector implements CollectorInterface
         foreach ($configuration['must'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
-            if (!$collectorFactory->getCollector($configurationForCollector->getType())->satisfy(
+            if (!$collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
                 $abstractClassReference,
                 $astMap,
-                $collectorFactory,
+                $collectorRegistry,
                 $astParser
             )) {
                 return false;
@@ -51,11 +50,11 @@ class BoolCollector implements CollectorInterface
         foreach ($configuration['must_not'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
-            if ($collectorFactory->getCollector($configurationForCollector->getType())->satisfy(
+            if ($collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
                 $abstractClassReference,
                 $astMap,
-                $collectorFactory,
+                $collectorRegistry,
                 $astParser
             )) {
                 return false;

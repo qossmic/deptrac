@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
-use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Collector\Registry;
 
-class CollectorFactoryTest extends TestCase
+class RegistryTest extends TestCase
 {
     public function testGetCollector()
     {
@@ -16,7 +16,7 @@ class CollectorFactoryTest extends TestCase
 
         $this->assertSame(
             $fooCollector,
-            (new CollectorFactory([
+            (new Registry([
                 $fooCollector,
             ]))->getCollector('foo')
         );
@@ -27,6 +27,6 @@ class CollectorFactoryTest extends TestCase
      */
     public function testGetUnknownCollector()
     {
-        (new CollectorFactory([]))->getCollector('foo');
+        (new Registry([]))->getCollector('foo');
     }
 }

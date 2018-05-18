@@ -1,10 +1,8 @@
 <?php
 
-namespace SensioLabs\Deptrac;
+namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\Deptrac\Collector\CollectorInterface;
-
-class CollectorFactory
+class Registry
 {
     /** @var CollectorInterface[] */
     protected $collectors = [];

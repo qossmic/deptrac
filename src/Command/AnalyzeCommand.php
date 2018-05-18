@@ -6,7 +6,7 @@ use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
-use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
 use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
 use SensioLabs\Deptrac\Dependency\Analyzer as DependencyAnalyzer;
@@ -29,7 +29,7 @@ class AnalyzeCommand extends Command
     private $astRunner;
     private $formatterFactory;
     private $rulesetEngine;
-    private $collectorFactory;
+    private $collectorRegistry;
     private $dependencyAnalyzer;
 
     public function __construct(
@@ -39,7 +39,7 @@ class AnalyzeCommand extends Command
         AstRunner $astRunner,
         OutputFormatterFactory $formatterFactory,
         RulesetEngine $rulesetEngine,
-        CollectorFactory $collectorFactory,
+        Registry $collectorRegistry,
         DependencyAnalyzer $dependencyAnalyzer
     ) {
         $this->configurationLoader = $configurationLoader;
@@ -48,7 +48,7 @@ class AnalyzeCommand extends Command
         $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
         $this->rulesetEngine = $rulesetEngine;
-        $this->collectorFactory = $collectorFactory;
+        $this->collectorRegistry = $collectorRegistry;
         $this->dependencyAnalyzer = $dependencyAnalyzer;
 
         parent::__construct();
@@ -88,7 +88,7 @@ class AnalyzeCommand extends Command
         $dependencyResult = $this->dependencyAnalyzer->analyze($parser, $astMap);
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
-            new ClassNameLayerResolver($configuration, $astMap, $this->collectorFactory, $parser)
+            new ClassNameLayerResolver($configuration, $astMap, $this->collectorRegistry, $parser)
         );
 
         $this->printCollectViolations($output);

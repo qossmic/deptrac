@@ -7,8 +7,8 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstFileReference;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class DirectoryCollectorTest extends TestCase
 {
@@ -39,7 +39,7 @@ class DirectoryCollectorTest extends TestCase
             $configuration,
             $astClassReference->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 

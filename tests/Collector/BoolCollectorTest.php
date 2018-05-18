@@ -8,8 +8,8 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class BoolCollectorTest extends TestCase
 {
@@ -22,7 +22,7 @@ class BoolCollectorTest extends TestCase
             [],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
@@ -41,7 +41,7 @@ class BoolCollectorTest extends TestCase
             ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
             Argument::type(AstClassReferenceInterface::class),
             Argument::type(AstMap::class),
-            Argument::type(CollectorFactory::class),
+            Argument::type(Registry::class),
             Argument::type(AstParserInterface::class)
         )->willReturn($returns);
 
@@ -154,7 +154,7 @@ class BoolCollectorTest extends TestCase
      */
     public function testSatisfyBasicTest(array $configuration, bool $expected)
     {
-        $collectorFactory = $this->prophesize(CollectorFactory::class);
+        $collectorFactory = $this->prophesize(Registry::class);
         $collectorFactory->getCollector('true')->willReturn(
             $this->getCalculatorMock(true)
         );
