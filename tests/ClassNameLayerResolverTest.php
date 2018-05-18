@@ -8,8 +8,8 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
@@ -31,7 +31,7 @@ class ClassNameLayerResolverTest extends TestCase
             Argument::type('array'),
             Argument::type(AstClassReferenceInterface::class),
             Argument::type(AstMap::class),
-            Argument::type(CollectorFactory::class),
+            Argument::type(Registry::class),
             Argument::type(AstParserInterface::class)
         )->willReturn($return);
 
@@ -92,7 +92,7 @@ class ClassNameLayerResolverTest extends TestCase
         ]);
 
         $astMap = $this->prophesize(AstMap::class);
-        $collectorFactory = $this->prophesize(CollectorFactory::class);
+        $collectorFactory = $this->prophesize(Registry::class);
         $collectorFactory->getCollector('CollectorA')->willReturn(
             $this->getCollector($collectA, ['type' => 'CollectorA', 'foo' => 'bar'])
         );

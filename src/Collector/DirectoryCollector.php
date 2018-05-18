@@ -6,7 +6,6 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstFileReference;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class DirectoryCollector implements CollectorInterface
 {
@@ -19,7 +18,7 @@ class DirectoryCollector implements CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory,
+        Registry $collectorRegistry,
         AstParserInterface $astParser
     ): bool {
         $fileReference = $abstractClassReference->getFileReference();

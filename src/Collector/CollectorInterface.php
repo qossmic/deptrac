@@ -2,10 +2,9 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\CollectorFactory;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\AstRunner\AstParser\AstParserInterface;
 
 interface CollectorInterface
 {
@@ -22,7 +21,7 @@ interface CollectorInterface
      * @param array                      $configuration          List of arguments passed for this collector declaration
      * @param AstClassReferenceInterface $abstractClassReference
      * @param AstMap                     $astMap
-     * @param CollectorFactory           $collectorFactory
+     * @param Registry                   $collectorRegistry
      * @param AstParserInterface         $astParser
      *
      * @return bool
@@ -31,7 +30,7 @@ interface CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory,
+        Registry $collectorRegistry,
         AstParserInterface $astParser
     ): bool;
 }

@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class InheritanceLevelCollectorTest extends TestCase
 {
@@ -48,7 +48,7 @@ class InheritanceLevelCollectorTest extends TestCase
             ['level' => $levelConfig],
             $classReference->reveal(),
             $astMap->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
