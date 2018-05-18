@@ -7,7 +7,7 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
-use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Collector\Registry;
 
 class ClassNameCollectorTest extends TestCase
 {
@@ -34,7 +34,6 @@ class ClassNameCollectorTest extends TestCase
             $configuration,
             $astClassReference->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
@@ -50,7 +49,6 @@ class ClassNameCollectorTest extends TestCase
             ['Foo' => 'a'],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
     }

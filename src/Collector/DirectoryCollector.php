@@ -5,8 +5,6 @@ namespace SensioLabs\Deptrac\Collector;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstFileReference;
-use SensioLabs\Deptrac\CollectorFactory;
 
 class DirectoryCollector implements CollectorInterface
 {
@@ -19,11 +17,13 @@ class DirectoryCollector implements CollectorInterface
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
         AstMap $astMap,
-        CollectorFactory $collectorFactory,
         AstParserInterface $astParser
     ): bool {
         $fileReference = $abstractClassReference->getFileReference();
-        assert($fileReference instanceof AstFileReference);
+
+        if (null === $fileReference) {
+            return false;
+        }
 
         return 1 === preg_match(
             '#'.$this->getRegexByConfiguration($configuration).'#i',

@@ -26,7 +26,7 @@
 
         <service id="SensioLabs\Deptrac\RulesetEngine"/>
 
-        <service id="SensioLabs\Deptrac\CollectorFactory">
+        <service id="SensioLabs\Deptrac\Collector\Registry">
             <argument type="tagged" tag="collector"/>
         </service>
 
@@ -95,7 +95,7 @@
             <argument type="service" id="SensioLabs\AstRunner\AstRunner"/>
             <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>
             <argument type="service" id="SensioLabs\Deptrac\RulesetEngine"/>
-            <argument type="service" id="SensioLabs\Deptrac\CollectorFactory"/>
+            <argument type="service" id="SensioLabs\Deptrac\Collector\Registry"/>
             <argument type="service" id="SensioLabs\Deptrac\Dependency\Analyzer"/>
         </service>
 
