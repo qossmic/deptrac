@@ -53,6 +53,18 @@ class DependencyContext
         return $this->violations;
     }
 
+    /**
+     * @param string $layerName
+     *
+     * @return RulesetViolation[]
+     */
+    public function getViolationsByLayerName(string $layerName): array
+    {
+        return array_filter($this->violations, function (RulesetViolation $violation) use ($layerName) {
+            return $violation->getLayerA() ===  $layerName;
+        });
+    }
+
     public function getDependencyResult(): Result
     {
         return $this->dependencyResult;

@@ -514,6 +514,41 @@ Supported Options:
 *Hint*: You can create an image, a dot and an HTML file at the same time.
 
 
+### JUnit Formatter
+
+The JUnit formatter dumps a Junit Report XML file, which is quite handy in CI environments.
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite id="1" package="" name="Controller" timestamp="2018-06-07T10:09:34+00:00" hostname="localhost" tests="3" failures="2" errors="0" time="0">
+    <testcase name="Controller-examples\Layer1\AnotherClassLikeAController" classname="examples\Layer1\AnotherClassLikeAController" time="0">
+      <failure message="examples\Layer1\AnotherClassLikeAController:5 must not depend on examples\Layer2\SomeOtherClass (Controller on Layer2)" type="WARNING"/>
+      <failure message="examples\Layer1\AnotherClassLikeAController:23 must not depend on examples\Layer2\SomeOtherClass (Controller on Layer2)" type="WARNING"/>
+    </testcase>
+  </testsuite>
+  <testsuite id="2" package="" name="Layer2" timestamp="2018-06-07T10:09:34+00:00" hostname="localhost" tests="3" failures="4" errors="0" time="0">
+    <testcase name="Layer2-examples\Layer2\SomeOtherClass2" classname="examples\Layer2\SomeOtherClass2" time="0">
+      <failure message="examples\Layer2\SomeOtherClass2:5 must not depend on examples\Layer1\SomeClass2 (Layer2 on Layer1)" type="WARNING"/>
+      <failure message="examples\Layer2\SomeOtherClass2:17 must not depend on examples\Layer1\SomeClass2 (Layer2 on Layer1)" type="WARNING"/>
+    </testcase>
+    <testcase name="Layer2-examples\Layer2\SomeOtherClass" classname="examples\Layer2\SomeOtherClass" time="0">
+      <failure message="examples\Layer2\SomeOtherClass:5 must not depend on examples\Layer1\SomeClass (Layer2 on Layer1)" type="WARNING"/>
+      <failure message="examples\Layer2\SomeOtherClass:17 must not depend on examples\Layer1\SomeClass (Layer2 on Layer1)" type="WARNING"/>
+    </testcase>
+  </testsuite>
+</testsuites>
+```
+
+Supported Options:
+
+```
+--formatter-junit=              to disable the junit fomatter, set this option to 0 [default: 1]
+--formatter-junit-dump-xml=     path to a dumped xml file [default: ""]
+```
+
+*Hint*: If you don't specify the path to the dumped xml file, deptrac will show the junit report xml structure in the console.
+
 ## Build deptrac
 
 

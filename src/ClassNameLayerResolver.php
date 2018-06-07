@@ -7,6 +7,7 @@ use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
+use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
@@ -58,5 +59,12 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
         }
 
         return array_keys($layers);
+    }
+
+    public function getLayers(): array
+    {
+        return array_map(function (ConfigurationLayer $configurationLayer) {
+            return $configurationLayer->getName();
+        }, $this->configuration->getLayers());
     }
 }

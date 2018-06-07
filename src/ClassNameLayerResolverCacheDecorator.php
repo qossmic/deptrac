@@ -25,4 +25,9 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
 
         return $this->classLayerCache[$className];
     }
+
+    public function getLayers(): array
+    {
+        return $this->classNameLayerResolver->getLayers();
+    }
 }
