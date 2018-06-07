@@ -12,10 +12,11 @@ use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @author Jan Schädlich <janschaedlich@sensiolabs.de>
+ */
 class JUnitOutputFormatter implements OutputFormatterInterface
 {
-    protected $eventDispatcher;
-
     private static $argument_dump_xml = 'dump-xml';
 
     public function getName(): string
@@ -41,11 +42,11 @@ class JUnitOutputFormatter implements OutputFormatterInterface
 
         $xml = $this->createXml($dependencyContext);
 
-        if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml)) {
+        if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml) ?: './junit-report.xml') {
             file_put_contents($dumpXmlPath, $xml);
-            $output->writeln(PHP_EOL . '<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
+            $output->writeln('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
         } else {
-            $output->writeln(PHP_EOL . '<info>JUnit Report dump:</info>');
+            $output->writeln('<info>JUnit Report dump:</info>');
             $output->writeln($xml);
         }
     }

@@ -17,11 +17,23 @@ use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
+/**
+ * @author Jan Schädlich <janschaedlich@sensiolabs.de>
+ */
 class JUnitOutputFormatterTest extends TestCase
 {
+    const ACTUAL_JUNIT_REPORT_FILE = 'actual-junit-report.xml';
+
+    public function tearDown()
+    {
+        if (file_exists(__DIR__ .  '/data/' . self::ACTUAL_JUNIT_REPORT_FILE)) {
+            unlink(__DIR__ .  '/data/' . self::ACTUAL_JUNIT_REPORT_FILE);
+        }
+    }
+
     public function testGetName()
     {
-        $this->assertEquals('junit', (new JUnitOutputFormatter())->getName());
+        $this->assertSame('junit', (new JUnitOutputFormatter())->getName());
     }
 
     public function basicDataProvider()
@@ -49,9 +61,7 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            '
-                JUnitReportdump:<?xmlversion="1.0"encoding="UTF-8"?><testsuites><testsuiteid="1"package=""name="LayerA"hostname="localhost"tests="1"failures="1"errors="0"time="0"><testcasename="LayerA-ClassA"classname="ClassA"time="0"><failuremessage="ClassA:0mustnotdependonClassB(LayerAonLayerB)"type="WARNING"/></testcase></testsuite></testsuites>
-            ',
+            'expected-junit-report_1.xml',
         ];
 
         yield [
@@ -66,7 +76,7 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            'JUnitReportdump:<?xmlversion="1.0"encoding="UTF-8"?><testsuites><testsuiteid="1"package=""name="LayerA"hostname="localhost"tests="1"failures="1"errors="0"time="0"><testcasename="LayerA-OriginalA"classname="OriginalA"time="0"><failuremessage="OriginalA:12mustnotdependonOriginalB(LayerAonLayerB)"type="WARNING"/></testcase></testsuite></testsuites>',
+            'expected-junit-report_2.xml',
         ];
 
         yield [
@@ -76,17 +86,14 @@ class JUnitOutputFormatterTest extends TestCase
             [
 
             ],
-            'JUnitReportdump:<?xmlversion="1.0"encoding="UTF-8"?><testsuites/>',
+            'expected-junit-report_3.xml',
         ];
     }
 
     /**
-     * @param array $layers
-     * @param array $violations
-     * @param       $expectedOutput
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $layers, array $violations, $expectedOutput)
+    public function testBasic(array $layers, array $violations, $expectedOutputFile)
     {
         $classNameResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         $classNameResolver->getLayers()->willReturn($layers);
@@ -102,23 +109,17 @@ class JUnitOutputFormatterTest extends TestCase
                 $classNameResolver->reveal()
             ),
             $output,
-            new OutputFormatterInput(['dump-xml' => ''])
+            new OutputFormatterInput(['dump-xml' => __DIR__ .  '/data/' . self::ACTUAL_JUNIT_REPORT_FILE])
         );
 
-        $o = $output->fetch();
-        $this->assertEquals(
-            $this->normalize($expectedOutput),
-            $this->normalize($o)
+        $this->assertXmlFileEqualsXmlFile(
+            __DIR__ . '/data/' . self::ACTUAL_JUNIT_REPORT_FILE,
+            __DIR__ . '/data/' . $expectedOutputFile
         );
     }
 
     public function testGetOptions()
     {
         $this->assertCount(1, (new JUnitOutputFormatter())->configureOptions());
-    }
-
-    private function normalize($str)
-    {
-        return str_replace(["\t", "\n", ' '], '', $str);
     }
 }
