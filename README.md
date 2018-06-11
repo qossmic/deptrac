@@ -544,10 +544,9 @@ Supported Options:
 
 ```
 --formatter-junit=              to disable the junit fomatter, set this option to 0 [default: 1]
---formatter-junit-dump-xml=     path to a dumped xml file [default: ""]
+--formatter-junit-dump-xml=     path to a dumped xml file [default: "./junit-report.xml"]
 ```
 
-*Hint*: If you don't specify the path to the dumped xml file, deptrac will show the junit report xml structure in the console.
 
 ## Build deptrac
 

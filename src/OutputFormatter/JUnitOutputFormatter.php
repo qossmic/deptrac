@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Jan Schädlich <janschaedlich@sensiolabs.de>
  */
-class JUnitOutputFormatter implements OutputFormatterInterface
+final class JUnitOutputFormatter implements OutputFormatterInterface
 {
     private static $argument_dump_xml = 'dump-xml';
 
@@ -34,6 +34,10 @@ class JUnitOutputFormatter implements OutputFormatterInterface
         ];
     }
 
+    /**
+     * @inheritdoc
+     * @throws \Exception
+     */
     public function finish(
         DependencyContext $dependencyContext,
         OutputInterface $output,
@@ -44,16 +48,18 @@ class JUnitOutputFormatter implements OutputFormatterInterface
 
         if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml) ?: './junit-report.xml') {
             file_put_contents($dumpXmlPath, $xml);
-            $output->writeln('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
-        } else {
-            $output->writeln('<info>JUnit Report dump:</info>');
-            $output->writeln($xml);
+            $output->writeln('<info>JUnit Report dumped to ' . realpath($dumpXmlPath) . '</info>');
         }
     }
 
+    /**
+     * @param DependencyContext $dependencyContext
+     * @return string
+     * @throws \Exception
+     */
     private function createXml(DependencyContext $dependencyContext)
     {
-        if (!class_exists("DomDocument")) {
+        if (!class_exists("\DomDocument")) {
             throw new \Exception('Unable to create xml file (php-xml needs to be installed)');
         }
 

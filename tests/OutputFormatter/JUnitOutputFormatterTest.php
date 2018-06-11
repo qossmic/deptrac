@@ -22,12 +22,12 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class JUnitOutputFormatterTest extends TestCase
 {
-    const ACTUAL_JUNIT_REPORT_FILE = 'actual-junit-report.xml';
+    private static $actual_junit_report_file = 'actual-junit-report.xml';
 
     public function tearDown()
     {
-        if (file_exists(__DIR__ .  '/data/' . self::ACTUAL_JUNIT_REPORT_FILE)) {
-            unlink(__DIR__ .  '/data/' . self::ACTUAL_JUNIT_REPORT_FILE);
+        if (file_exists(__DIR__ .  '/data/' . static::$actual_junit_report_file)) {
+            unlink(__DIR__ .  '/data/' . static::$actual_junit_report_file);
         }
     }
 
@@ -109,11 +109,11 @@ class JUnitOutputFormatterTest extends TestCase
                 $classNameResolver->reveal()
             ),
             $output,
-            new OutputFormatterInput(['dump-xml' => __DIR__ .  '/data/' . self::ACTUAL_JUNIT_REPORT_FILE])
+            new OutputFormatterInput(['dump-xml' => __DIR__ .  '/data/' . static::$actual_junit_report_file])
         );
 
         $this->assertXmlFileEqualsXmlFile(
-            __DIR__ . '/data/' . self::ACTUAL_JUNIT_REPORT_FILE,
+            __DIR__ . '/data/' . static::$actual_junit_report_file,
             __DIR__ . '/data/' . $expectedOutputFile
         );
     }
