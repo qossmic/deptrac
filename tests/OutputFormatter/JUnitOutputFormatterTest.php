@@ -17,9 +17,6 @@ use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-/**
- * @author Jan Schädlich <janschaedlich@sensiolabs.de>
- */
 class JUnitOutputFormatterTest extends TestCase
 {
     private static $actual_junit_report_file = 'actual-junit-report.xml';

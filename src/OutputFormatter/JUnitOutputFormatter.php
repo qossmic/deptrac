@@ -12,9 +12,6 @@ use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Jan Schädlich <janschaedlich@sensiolabs.de>
- */
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
     private static $argument_dump_xml = 'dump-xml';
