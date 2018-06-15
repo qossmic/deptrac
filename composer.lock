@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "209b7de6d6c82d833ba7bd0599f5d01d",
+    "content-hash": "ca80c49af97c1e8ae543bdd97430b31c",
     "packages": [
         {
             "name": "clue/graph",
@@ -442,16 +442,16 @@
         },
         {
             "name": "sensiolabs-de/astrunner",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs-de/astrunner.git",
-                "reference": "7a329c8798f40d947010471c45ebb0b7c88a6799"
+                "reference": "3851583a554fa13f1722522d0bf2247efeb8b333"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/7a329c8798f40d947010471c45ebb0b7c88a6799",
-                "reference": "7a329c8798f40d947010471c45ebb0b7c88a6799",
+                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/3851583a554fa13f1722522d0bf2247efeb8b333",
+                "reference": "3851583a554fa13f1722522d0bf2247efeb8b333",
                 "shasum": ""
             },
             "require": {
@@ -463,6 +463,11 @@
                 "phpunit/phpunit": "^6.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "SensioLabs\\AstRunner\\": "src/"
@@ -478,7 +483,8 @@
                     "email": "astrunner+tim.glabisch@sensiolabs.de"
                 }
             ],
-            "time": "2018-05-09T14:15:20+00:00"
+            "description": "Astrunner is a low level lib that helps to run static code analysis",
+            "time": "2018-06-15T09:39:35+00:00"
         },
         {
             "name": "symfony/config",
@@ -2591,9 +2597,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "sensiolabs-de/astrunner": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
