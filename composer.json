@@ -8,7 +8,7 @@
         "nikic/php-parser": "^4.0",
         "padraic/phar-updater": "^1.0",
         "phpdocumentor/graphviz": "~1.0",
-        "sensiolabs-de/astrunner": "dev-master",
+        "sensiolabs-de/astrunner": "^1.0",
         "symfony/config": "^3.4",
         "symfony/console": "^3.4",
         "symfony/dependency-injection": "^3.4",
