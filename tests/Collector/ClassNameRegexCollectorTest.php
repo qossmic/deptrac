@@ -7,7 +7,7 @@ use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
-use SensioLabs\Deptrac\CollectorFactory;
+use SensioLabs\Deptrac\Collector\Registry;
 
 class ClassNameRegexCollectorTest extends TestCase
 {
@@ -34,7 +34,7 @@ class ClassNameRegexCollectorTest extends TestCase
             $configuration,
             $astClassReference->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
@@ -50,7 +50,7 @@ class ClassNameRegexCollectorTest extends TestCase
             ['Foo' => 'a'],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(CollectorFactory::class)->reveal(),
+            $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
     }
