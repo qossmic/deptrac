@@ -13,7 +13,7 @@ use SensioLabs\Deptrac\Collector\MethodCollector;
 
 class MethodCollectorTest extends TestCase
 {
-    public function dataProviderStatisfy()
+    public function dataProviderSatisfy()
     {
         yield [
             ['name' => 'abc'],
@@ -57,7 +57,7 @@ class MethodCollectorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderStatisfy
+     * @dataProvider dataProviderSatisfy
      */
     public function testStatisfy($configuration, $methods, $expected)
     {

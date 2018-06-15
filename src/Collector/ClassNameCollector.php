@@ -13,15 +13,6 @@ class ClassNameCollector implements CollectorInterface
         return 'className';
     }
 
-    private function getRegexByConfiguration(array $configuration)
-    {
-        if (!isset($configuration['regex'])) {
-            throw new \LogicException('ClassNameCollector needs the regex configuration.');
-        }
-
-        return $configuration['regex'];
-    }
-
     public function satisfy(
         array $configuration,
         AstClassReferenceInterface $abstractClassReference,
@@ -29,9 +20,15 @@ class ClassNameCollector implements CollectorInterface
         Registry $collectorRegistry,
         AstParserInterface $astParser
     ): bool {
-        return 1 === preg_match(
-            '/'.$this->getRegexByConfiguration($configuration).'/i',
-            $abstractClassReference->getClassName()
-        );
+        return 1 === preg_match($this->getPattern($configuration), $abstractClassReference->getClassName());
+    }
+
+    private function getPattern(array $configuration): string
+    {
+        if (!isset($configuration['regex'])) {
+            throw new \LogicException('ClassNameCollector needs the regex configuration.');
+        }
+
+        return '/'.$configuration['regex'].'/i';
     }
 }
