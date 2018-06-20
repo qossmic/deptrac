@@ -22,9 +22,8 @@ class DirectoryCollector implements CollectorInterface
         AstParserInterface $astParser
     ): bool {
         $fileReference = $abstractClassReference->getFileReference();
-        assert($fileReference instanceof AstFileReference);
 
-        return 1 === preg_match($this->getPattern($configuration), $fileReference->getFilepath());
+        return $fileReference && 1 === preg_match($this->getPattern($configuration), $fileReference->getFilepath());
     }
 
     private function getPattern(array $configuration): string
