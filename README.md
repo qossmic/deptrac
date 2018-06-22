@@ -537,7 +537,7 @@ Supported Options:
 
 The JUnit formatter dumps a Junit Report XML file, which is quite handy in CI environments.
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
   <testsuite id="1" package="" name="Controller" timestamp="2018-06-07T10:09:34+00:00" hostname="localhost" tests="3" failures="2" errors="0" time="0">
