@@ -16,7 +16,8 @@
         "symfony/filesystem": "^3.4",
         "symfony/finder": "^3.4",
         "symfony/options-resolver": "^3.4",
-        "symfony/yaml": "^3.4"
+        "symfony/yaml": "^3.4",
+        "symfony/proxy-manager-bridge": "^3.4"
     },
     "authors": [
         {

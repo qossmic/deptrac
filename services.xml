@@ -82,7 +82,7 @@
 
         <service id="SensioLabs\Deptrac\FileResolver"/>
 
-        <service id="Humbug\SelfUpdate\Updater">
+        <service id="Humbug\SelfUpdate\Updater" lazy="true">
             <argument>null</argument>
             <!-- disable signed releases, otherwise will search for a .pubkey file for the PHAR -->
             <argument>false</argument>
