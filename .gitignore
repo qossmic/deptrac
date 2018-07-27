@@ -3,3 +3,4 @@ coverage/*
 deptrac.phar
 depfile.yml
 phpunit.xml
+box.json
