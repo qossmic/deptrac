@@ -24,6 +24,9 @@
             "email": "tim.glabisch@sensiolabs.de"
         }
     ],
+    "bin": [
+        "bin/deptrac"
+    ],
     "require-dev": {
         "phpunit/phpunit": "^6.5"
     },
