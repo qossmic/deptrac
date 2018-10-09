@@ -6,9 +6,7 @@ SHA1SUM		 := sha1sum
 .PHONY: build composer-install-dev tests tests-coverage
 
 build: tests
-	$(COMPOSER_BIN) install --no-dev --optimize-autoloader
-	$(BOX_BIN) build
-	chmod +x deptrac.phar
+	$(BOX_BIN) compile
 	$(SHA1SUM) deptrac.phar > deptrac.version
 
 composer-install-dev:
