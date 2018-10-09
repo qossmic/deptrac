@@ -4,3 +4,5 @@ deptrac.phar
 depfile.yml
 phpunit.xml
 box.json
+deptrac.version
+junit-report.xml
