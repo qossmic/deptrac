@@ -33,7 +33,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
+            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', false),
             OutputFormatterOption::newValueOption(static::$argument_dump_image, 'path to a dumped png file', ''),
             OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'path to a dumped dot file', ''),
             OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', ''),

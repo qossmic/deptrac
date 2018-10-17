@@ -2,13 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use Fhaculty\Graph\Vertex;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -32,7 +26,8 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
+     *
      * @throws \Exception
      */
     public function finish(
@@ -40,27 +35,24 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ) {
-
         $xml = $this->createXml($dependencyContext);
 
-        if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml) ?: './junit-report.xml') {
+        if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml)) {
             file_put_contents($dumpXmlPath, $xml);
-            $output->writeln('<info>JUnit Report dumped to ' . realpath($dumpXmlPath) . '</info>');
+            $output->writeln('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
         }
     }
 
     /**
-     * @param DependencyContext $dependencyContext
-     * @return string
      * @throws \Exception
      */
-    private function createXml(DependencyContext $dependencyContext)
+    private function createXml(DependencyContext $dependencyContext): string
     {
-        if (!class_exists(\DomDocument::class)) {
+        if (!class_exists(\DOMDocument::class)) {
             throw new \Exception('Unable to create xml file (php-xml needs to be installed)');
         }
 
-        $xmlDoc = new \DOMDocument('1.0', "UTF-8");
+        $xmlDoc = new \DOMDocument('1.0', 'UTF-8');
         $xmlDoc->formatOutput = true;
 
         $this->addTestSuites($dependencyContext, $xmlDoc);
@@ -84,7 +76,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $layerIndex = 0;
         foreach ($layers as $layer) {
             $violationsByLayer = $dependencyContext->getViolationsByLayerName($layer);
-            if (count($violationsByLayer) === 0) {
+            if (0 === count($violationsByLayer)) {
                 continue;
             }
 
@@ -113,7 +105,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     {
         foreach ($violationsByClassName as $className => $violations) {
             $testCase = $xmlDoc->createElement('testcase');
-            $testCase->appendChild(new \DOMAttr('name', $layer . ' - ' . $className));
+            $testCase->appendChild(new \DOMAttr('name', $layer.' - '.$className));
             $testCase->appendChild(new \DOMAttr('classname', $className));
             $testCase->appendChild(new \DOMAttr('time', 0));
 

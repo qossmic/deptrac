@@ -5,7 +5,6 @@ namespace SensioLabs\Deptrac\Collector;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\AstFileReference;
 
 class DirectoryCollector implements CollectorInterface
 {
