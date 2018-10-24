@@ -20,6 +20,8 @@ interface OutputFormatterInterface
      */
     public function configureOptions(): array;
 
+    public function enabledByDefault(): bool;
+
     /**
      * Renders the final result.
      *

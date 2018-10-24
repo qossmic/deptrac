@@ -3,6 +3,7 @@
 namespace SensioLabs\Deptrac\OutputFormatter;
 
 use Fhaculty\Graph\Vertex;
+use Graphp\GraphViz\GraphViz;
 use SensioLabs\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
@@ -15,16 +16,18 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     protected $eventDispatcher;
 
     private static $argument_display = 'display';
-
     private static $argument_dump_image = 'dump-image';
-
     private static $argument_dump_dot = 'dump-dot';
-
     private static $argument_dump_html = 'dump-html';
 
     public function getName(): string
     {
         return 'graphviz';
+    }
+
+    public function enabledByDefault(): bool
+    {
+        return false;
     }
 
     /**
@@ -33,7 +36,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', false),
+            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
             OutputFormatterOption::newValueOption(static::$argument_dump_image, 'path to a dumped png file', ''),
             OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'path to a dumped dot file', ''),
             OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', ''),
@@ -76,7 +79,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
                 $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
 
-                if (isset($layerViolations[$layer], $layerViolations[$layer][$layerDependOn])) {
+                if (isset($layerViolations[$layer][$layerDependOn])) {
                     $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
                     $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
                     $edge->setAttribute('graphviz.color', 'red');
@@ -84,23 +87,24 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        if ($outputFormatterInput->getOption(static::$argument_display)) {
-            (new \Graphp\GraphViz\GraphViz())->display($graph);
+        $display = $outputFormatterInput->getOption(static::$argument_display);
+        if (true === filter_var($display, FILTER_VALIDATE_BOOLEAN)) {
+            (new GraphViz())->display($graph);
         }
 
         if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image)) {
-            $imagePath = (new \Graphp\GraphViz\GraphViz())->createImageFile($graph);
+            $imagePath = (new GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
             $output->writeln('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot)) {
-            file_put_contents($dumpDotPath, (new \Graphp\GraphViz\GraphViz())->createScript($graph));
+            file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
             $output->writeln('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html)) {
-            file_put_contents($dumpHtmlPath, (new \Graphp\GraphViz\GraphViz())->createImageHtml($graph));
+            file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
             $output->writeln('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
     }
@@ -121,8 +125,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             if (!isset($layerViolations[$violation->getLayerA()][$violation->getLayerB()])) {
                 $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = 1;
             } else {
-                $layerViolations[$violation->getLayerA()][$violation->getLayerB(
-                )] = $layerViolations[$violation->getLayerA()][$violation->getLayerB()] + 1;
+                ++$layerViolations[$violation->getLayerA()][$violation->getLayerB()];
             }
         }
 
@@ -169,7 +172,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
                         continue;
                     }
 
-                    $layersDependOnLayers[$layerA][$layerB] = $layersDependOnLayers[$layerA][$layerB] + 1;
+                    ++$layersDependOnLayers[$layerA][$layerB];
                 }
             }
         }

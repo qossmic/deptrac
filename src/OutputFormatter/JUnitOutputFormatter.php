@@ -21,8 +21,13 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::$argument_dump_xml, 'path to a dumped xml file', ''),
+            OutputFormatterOption::newValueOption(static::$argument_dump_xml, 'path to a dumped xml file', './junit-report.xml'),
         ];
+    }
+
+    public function enabledByDefault(): bool
+    {
+        return false;
     }
 
     /**
