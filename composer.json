@@ -36,5 +36,8 @@
         "psr-4": {
             "Tests\\SensioLabs\\Deptrac\\": "tests/"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
