@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#177](https://github.com/sensiolabs-de/deptrac/pull/177) Removed the self updating mechanism.
 
 ### Fixed
 
