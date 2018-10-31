@@ -78,18 +78,7 @@
             <tag name="dependency_emitter"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
-
         <service id="SensioLabs\Deptrac\FileResolver"/>
-
-        <service id="Humbug\SelfUpdate\Updater">
-            <argument>null</argument>
-            <!-- disable signed releases, otherwise will search for a .pubkey file for the PHAR -->
-            <argument>false</argument>
-            <call method="setStrategyObject">
-                <argument type="service" id="SensioLabs\Deptrac\Updater\DeptracStrategy"/>
-            </call>
-        </service>
 
         <!-- COMMANDS -->
         <service id="SensioLabs\Deptrac\Command\InitCommand" public="true">
@@ -107,8 +96,5 @@
             <argument type="service" id="SensioLabs\Deptrac\Dependency\Analyzer"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\Command\SelfUpdateCommand" public="true">
-            <argument type="service" id="Humbug\SelfUpdate\Updater"/>
-        </service>
     </services>
 </container>

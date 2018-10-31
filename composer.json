@@ -6,7 +6,6 @@
         "php": "^7.0",
         "graphp/graphviz": "0.2.*",
         "nikic/php-parser": "^4.0",
-        "padraic/phar-updater": "^1.0",
         "phpdocumentor/graphviz": "~1.0",
         "sensiolabs-de/astrunner": "^1.0",
         "symfony/config": "^3.4",

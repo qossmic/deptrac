@@ -20,7 +20,8 @@ this rule was violated.
   1. [The depfile](#the-depfile)
   1. [Explanation](#explanation)
 1. [Installation](#installation)
-  1. [Download the phar (recommended)](#download-the-phar-recommended)
+  1. [PHAR](#phar)
+  1. [PHIVE](#phive)
   1. [Optional dependency: Graphviz](#optional-dependency-graphviz)
 1. [Updating Deptrac](#updating-deptrac)
 1. [Run Deptrac](#run-deptrac)
@@ -47,7 +48,7 @@ this rule was violated.
 
 ## Getting Started
 
-The easiest way to get started is to download the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar).
+The easiest way to get started is to download the latest [deptrac.phar](http://get.sensiolabs.de/deptrac.phar).
 
 At first, you need a so called *depfile*, which is written in YAML.
 You can generate a bootstrapped `depfile.yml` with
@@ -120,10 +121,11 @@ and throws a violation for this case. The same counts if a *Service*-layer-class
 
 ## Installation
 
-### Download the phar (recommended)
+### PHAR
 
-Download the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) and run it using `php deptrac.phar`.
-Feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
+Download the latest [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) or a tagged version from [Github Release](https://github.com/sensiolabs-de/deptrac/releases).
+ 
+Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
 curl -LS http://get.sensiolabs.de/deptrac.phar -o deptrac.phar
@@ -135,6 +137,15 @@ sudo mv deptrac.phar /usr/local/bin/deptrac
 
 (In this guide, we assume, you have the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) in your project root)
 
+### PHIVE
+
+You can install Deptrac with [Phive](https://phar.io/#Install)
+
+`phive install -g sensiolabs-de/deptrac --force-accept-unsigned`
+
+To upgrade Deptrac use the following command:
+
+`phive update -g sensiolabs-de/deptrac --force-accept-unsigned`
 
 ### Optional dependency: Graphviz
 

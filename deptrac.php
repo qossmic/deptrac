@@ -4,7 +4,6 @@ require __DIR__.'/vendor/autoload.php';
 
 use SensioLabs\Deptrac\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Command\InitCommand;
-use SensioLabs\Deptrac\Command\SelfUpdateCommand;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +21,5 @@ $container->compile();
 $application = new Application();
 $application->add($container->get(InitCommand::class));
 $application->add($container->get(AnalyzeCommand::class));
-$application->add($container->get(SelfUpdateCommand::class));
 $application->setDefaultCommand('analyze');
 $application->run();
