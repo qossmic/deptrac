@@ -2,9 +2,11 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 0.3.0 - TBD
+## 0.3.0 - 2018-11-05
 
 ### Added
+
+- [#160](https://github.com/sensiolabs-de/deptrac/pull/160) new ClassNameRegexCollector was added
 
 - [#167](https://github.com/sensiolabs-de/deptrac/pull/167) Added JUnit report formatter.
 
