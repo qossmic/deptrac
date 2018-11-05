@@ -33,12 +33,14 @@ class OutputFormatterFactoryTest extends TestCase
     public function testGetFormatterOptions()
     {
         $formatter1 = $this->prophesize(OutputFormatterInterface::class);
+        $formatter1->enabledByDefault()->willReturn(true);
         $formatter1->getName()->willReturn('foo1');
         $formatter1->configureOptions()->willReturn([
             OutputFormatterOption::newValueOption('f1-n1', 'f1-n1-desc', 'f1-n1-default'),
         ]);
 
         $formatter2 = $this->prophesize(OutputFormatterInterface::class);
+        $formatter2->enabledByDefault()->willReturn(true);
         $formatter2->getName()->willReturn('foo2');
         $formatter2->configureOptions()->willReturn([
             OutputFormatterOption::newValueOption('f2-n1', 'f2-n1-desc', 'f2-n1-default'),
@@ -46,6 +48,7 @@ class OutputFormatterFactoryTest extends TestCase
         ]);
 
         $formatter3 = $this->prophesize(OutputFormatterInterface::class);
+        $formatter3->enabledByDefault()->willReturn(true);
         $formatter3->getName()->willReturn('foo3');
         $formatter3->configureOptions()->willReturn([]);
 

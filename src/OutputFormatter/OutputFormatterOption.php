@@ -7,11 +7,8 @@ use Symfony\Component\Console\Input\InputOption;
 class OutputFormatterOption
 {
     private $name;
-
     private $mode;
-
     private $description;
-
     private $default;
 
     /**
@@ -28,7 +25,7 @@ class OutputFormatterOption
         $this->default = $default;
     }
 
-    public static function newValueOption($name, $description, $default = null): self
+    public static function newValueOption(string $name, string $description, $default = null): self
     {
         return new self($name, InputOption::VALUE_OPTIONAL, $description, $default);
     }

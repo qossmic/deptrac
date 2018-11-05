@@ -4,6 +4,7 @@ namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -32,24 +33,12 @@ class OutputFormatterFactory
         $arguments = [];
 
         foreach ($this->formatters as $formatter) {
+            $arguments[] = $this->createFormatterOption($formatter);
+
             $formatterArguments = $formatter->configureOptions();
 
-            $arguments[] = new InputOption(
-                'formatter-'.$formatter->getName(),
-                null,
-                InputOption::VALUE_OPTIONAL,
-                'to disable the '.$formatter->getName().' fomatter, set this argument to 0',
-                1
-            );
-
             foreach ($formatterArguments as $formatterArgument) {
-                $arguments[] = new InputOption(
-                    'formatter-'.$formatter->getName().'-'.$formatterArgument->getName(),
-                    null,
-                    $formatterArgument->getMode(),
-                    $formatterArgument->getDescription(),
-                    $formatterArgument->getDefault()
-                );
+                $arguments[] = $this->createFormatterArgumentOption($formatter, $formatterArgument);
             }
         }
 
@@ -115,11 +104,39 @@ class OutputFormatterFactory
 
     private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool
     {
-        return (bool) $input->getOption('formatter-'.$formatter->getName());
+        $option = $input->getOption('formatter-'.$formatter->getName());
+
+        return true === filter_var($option, FILTER_VALIDATE_BOOLEAN);
     }
 
     private function addFormatter(OutputFormatterInterface $formatter)
     {
         $this->formatters[] = $formatter;
+    }
+
+    private function createFormatterOption(OutputFormatterInterface $formatter): InputOption
+    {
+        $description = $formatter->enabledByDefault()
+            ? 'to disable the '.$formatter->getName().' formatter, set this argument to "false"'
+            : 'to activate the '.$formatter->getName().' formatter, set this argument to "true"';
+
+        return new InputOption(
+            'formatter-'.$formatter->getName(),
+            null,
+            InputOption::VALUE_OPTIONAL,
+            $description,
+            $formatter->enabledByDefault()
+        );
+    }
+
+    private function createFormatterArgumentOption(OutputFormatterInterface $formatter, OutputFormatterOption $formatterArgument): InputOption
+    {
+        return new InputOption(
+            'formatter-'.$formatter->getName().'-'.$formatterArgument->getName(),
+            null,
+            $formatterArgument->getMode(),
+            $formatterArgument->getDescription(),
+            $formatterArgument->getDefault()
+        );
     }
 }

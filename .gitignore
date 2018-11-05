@@ -6,3 +6,4 @@ phpunit.xml
 box.json
 deptrac.version
 junit-report.xml
+.php_cs.cache

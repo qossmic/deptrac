@@ -29,6 +29,6 @@ class ClassNameRegexCollector implements CollectorInterface
             throw new \LogicException('ClassNameRegexCollector needs the regex configuration.');
         }
 
-        return (string)$configuration['regex'];
+        return (string) $configuration['regex'];
     }
 }

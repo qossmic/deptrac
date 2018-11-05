@@ -20,6 +20,11 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         return [];
     }
 
+    public function enabledByDefault(): bool
+    {
+        return true;
+    }
+
     public function finish(
         DependencyContext $dependencyContext,
         OutputInterface $output,
