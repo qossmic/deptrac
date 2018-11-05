@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#179](https://github.com/sensiolabs-de/deptrac/pull/179) disabled JUnitFormatter and GraphizFormatter by default
 
 ### Deprecated
 
