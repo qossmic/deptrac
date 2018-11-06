@@ -21,6 +21,7 @@ this rule was violated.
     1. [Explanation](#explanation)
 1. [Installation](#installation)
     1. [PHAR](#phar)
+    1. [Composer](#composer)
     1. [PHIVE](#phive)
     1. [Optional dependency: Graphviz](#optional-dependency-graphviz)
 1. [Run Deptrac](#run-deptrac)
@@ -48,7 +49,7 @@ this rule was violated.
 
 ## Getting Started
 
-The easiest way to get started is to download the latest [deptrac.phar](http://get.sensiolabs.de/deptrac.phar).
+The easiest way to get started is to download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases).
 
 At first, you need a so called *depfile*, which is written in YAML.
 You can generate a bootstrapped `depfile.yml` with
@@ -123,19 +124,23 @@ and throws a violation for this case. The same counts if a *Service*-layer-class
 
 ### PHAR
 
-Download the latest [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) or a tagged version from [Github Release](https://github.com/sensiolabs-de/deptrac/releases).
+Download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases).
  
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS http://get.sensiolabs.de/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.3.0/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
 sudo mv deptrac.phar /usr/local/bin/deptrac
 ```
 
-(In this guide, we assume, you have the [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) in your project root)
+(In this guide, we assume, you have the [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases) in your project root)
+
+### Composer
+
+We are not recommend installing this repository via composer. Insteas please use the dedicated distribution repository https://github.com/sensiolabs-de/deptrac-shim.
 
 ### PHIVE
 
@@ -580,9 +585,8 @@ Supported Options:
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
 - PHP in version 7.0 or above
-- `phar.readonly = Off` in the php.ini
 - [Composer](https://getcomposer.org/)
-- [Box](http://box-project.github.io/box2/)
+- [Box](https://github.com/humbug/box)
 - make
 
 `cd` into your cloned directory, and call `make build`.
@@ -593,7 +597,7 @@ cd deptrac
 make build
 ```
 
-This will create an executable file [deptrac.phar](http://get.sensiolabs.de/deptrac.phar) in the current directory.
+This will create an executable file `deptrac.phar` in the current directory.
 In order to use deptrac globally on your system, feel free to add it to your PATH (i.e. `/usr/local/bin`).
 
 
