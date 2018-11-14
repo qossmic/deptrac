@@ -47,7 +47,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         DependencyContext $dependencyContext,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
-    ) {
+    ): void {
         $layerViolations = $this->calculateViolations($dependencyContext->getViolations());
 
         $layersDependOnLayers = $this->calculateLayerDependencies(
@@ -111,8 +111,6 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     /**
      * @param RulesetViolation[] $violations
-     *
-     * @return array
      */
     private function calculateViolations(array $violations): array
     {

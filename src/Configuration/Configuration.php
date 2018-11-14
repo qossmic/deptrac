@@ -37,7 +37,6 @@ class Configuration
 
     /**
      * @param ConfigurationLayer[] $layers
-     * @param ConfigurationRuleset $ruleset
      * @param string[]             $paths
      * @param string[]             $excludeFiles
      */

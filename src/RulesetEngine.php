@@ -9,10 +9,6 @@ use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 class RulesetEngine
 {
     /**
-     * @param Result                          $dependencyResult
-     * @param ClassNameLayerResolverInterface $classNameLayerResolver
-     * @param ConfigurationRuleset            $configurationRuleset
-     *
      * @return RulesetViolation[]
      */
     public function getViolations(Result $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset): array

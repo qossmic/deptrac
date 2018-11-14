@@ -23,10 +23,7 @@ class DependencyContext
     /**
      * DependencyContext constructor.
      *
-     * @param AstMap                           $astMap
      * @param RulesetEngine\RulesetViolation[] $violations
-     * @param Result                           $dependencyResult
-     * @param ClassNameLayerResolverInterface  $classNameLayerResolver
      */
     public function __construct(
         AstMap $astMap,
@@ -54,8 +51,6 @@ class DependencyContext
     }
 
     /**
-     * @param string $layerName
-     *
      * @return RulesetViolation[]
      */
     public function getViolationsByLayerName(string $layerName): array

@@ -54,7 +54,7 @@ class AnalyzeCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('analyze');
         $this->setAliases(['analyse']);
@@ -66,7 +66,7 @@ class AnalyzeCommand extends Command
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         ini_set('memory_limit', -1);
 
@@ -113,27 +113,27 @@ class AnalyzeCommand extends Command
         return count($violations) ? 1 : 0;
     }
 
-    protected function printBanner(OutputInterface $output)
+    protected function printBanner(OutputInterface $output): void
     {
         $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
     }
 
-    protected function printConfigMissingError(OutputInterface $output, string $file)
+    protected function printConfigMissingError(OutputInterface $output, string $file): void
     {
         $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $file));
     }
 
-    protected function printCollectViolations(OutputInterface $output)
+    protected function printCollectViolations(OutputInterface $output): void
     {
         $output->writeln('<info>collecting violations.</info>');
     }
 
-    protected function printFormattingStart(OutputInterface $output)
+    protected function printFormattingStart(OutputInterface $output): void
     {
         $output->writeln('<info>formatting dependencies.</info>');
     }
 
-    protected function printFormatterException(OutputInterface $output, string $formatterName, \Exception $exception)
+    protected function printFormatterException(OutputInterface $output, string $formatterName, \Exception $exception): void
     {
         $output->writeln('');
         $errorMessages = [

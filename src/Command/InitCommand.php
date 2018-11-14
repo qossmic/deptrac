@@ -18,7 +18,7 @@ class InitCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('init');
     }

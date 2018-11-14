@@ -35,10 +35,7 @@ class OutputFormatterOption
         return $this->name;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getMode()
+    public function getMode(): ?int
     {
         return $this->mode;
     }
@@ -48,9 +45,6 @@ class OutputFormatterOption
         return $this->description;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDefault()
     {
         return $this->default;

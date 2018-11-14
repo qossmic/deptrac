@@ -18,13 +18,7 @@ interface CollectorInterface
     public function getType(): string;
 
     /**
-     * @param array                      $configuration          List of arguments passed for this collector declaration
-     * @param AstClassReferenceInterface $abstractClassReference
-     * @param AstMap                     $astMap
-     * @param Registry                   $collectorRegistry
-     * @param AstParserInterface         $astParser
-     *
-     * @return bool
+     * @param array $configuration List of arguments passed for this collector declaration
      */
     public function satisfy(
         array $configuration,

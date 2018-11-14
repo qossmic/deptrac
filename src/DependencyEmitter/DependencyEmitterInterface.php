@@ -12,12 +12,5 @@ interface DependencyEmitterInterface
 
     public function supportsParser(AstParserInterface $astParser): bool;
 
-    /**
-     * @param AstParserInterface $astParser
-     * @param AstMap             $astMap
-     * @param Result             $dependencyResult
-     *
-     * @return mixed
-     */
-    public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, Result $dependencyResult);
+    public function applyDependencies(AstParserInterface $astParser, AstMap $astMap, Result $dependencyResult): void;
 }

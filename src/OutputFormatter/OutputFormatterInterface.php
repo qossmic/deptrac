@@ -24,14 +24,10 @@ interface OutputFormatterInterface
 
     /**
      * Renders the final result.
-     *
-     * @param DependencyContext    $dependencyContext
-     * @param OutputInterface      $output
-     * @param OutputFormatterInput $outputFormatterInput
      */
     public function finish(
         DependencyContext $dependencyContext,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
-    );
+    ): void;
 }

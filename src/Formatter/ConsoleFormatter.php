@@ -31,7 +31,7 @@ class ConsoleFormatter
         $dispatcher->addListener(DependencyEvents::POST_FLATTEN, [$this, 'onPostDependencyFlatten']);
     }
 
-    public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent)
+    public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
         $this->output->writeln(sprintf(
             'Start to create an AstMap for <info>%u</info> Files.',
@@ -39,12 +39,12 @@ class ConsoleFormatter
         ));
     }
 
-    public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent)
+    public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
         $this->output->writeln("\nAstMap created.");
     }
 
-    public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent)
+    public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent): void
     {
         if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
             $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()));
@@ -53,7 +53,7 @@ class ConsoleFormatter
         }
     }
 
-    public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent)
+    public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent): void
     {
         $this->output->writeln(sprintf(
             "\nSyntax Error on File %s\n<error>%s</error>\n",
@@ -62,22 +62,22 @@ class ConsoleFormatter
         ));
     }
 
-    public function onPreDependencyEmit(PreEmitEvent $event)
+    public function onPreDependencyEmit(PreEmitEvent $event): void
     {
         $this->output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()));
     }
 
-    public function onPostDependencyEmit()
+    public function onPostDependencyEmit(): void
     {
         $this->output->writeln('<info>end emitting dependencies</info>');
     }
 
-    public function onPreDependencyFlatten()
+    public function onPreDependencyFlatten(): void
     {
         $this->output->writeln('<info>start flatten dependencies</info>');
     }
 
-    public function onPostDependencyFlatten()
+    public function onPostDependencyFlatten(): void
     {
         $this->output->writeln('<info>end flatten dependencies</info>');
     }

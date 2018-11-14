@@ -25,7 +25,7 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
         AstParserInterface $astParser,
         AstMap $astMap,
         Result $dependencyResult
-    ) {
+    ): void {
         foreach ($astMap->getAstClassReferences() as $classReference) {
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
                 if ($inherit instanceof FlattenAstInherit) {

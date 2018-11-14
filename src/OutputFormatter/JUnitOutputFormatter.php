@@ -39,7 +39,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         DependencyContext $dependencyContext,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
-    ) {
+    ): void {
         $xml = $this->createXml($dependencyContext);
 
         if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml)) {

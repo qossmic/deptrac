@@ -18,3 +18,9 @@ tests: composer-install-dev
 
 tests-coverage: composer-install-dev
 	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c . --coverage-html coverage
+
+php-cs-check:																	## run cs fixer (dry-run)
+	PHP_CS_FIXER_FUTURE_MODE=1 php-cs-fixer fix --allow-risky=yes --diff --dry-run
+
+php-cs-fix:																		## run cs fixer
+	PHP_CS_FIXER_FUTURE_MODE=1 php-cs-fixer fix --allow-risky=yes

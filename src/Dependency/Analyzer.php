@@ -18,8 +18,6 @@ class Analyzer
     private $emitters;
 
     /**
-     * @param EventDispatcherInterface     $dispatcher
-     * @param InheritanceFlatter           $inheritanceFlatter
      * @param DependencyEmitterInterface[] $emitters
      */
     public function __construct(EventDispatcherInterface $dispatcher, InheritanceFlatter $inheritanceFlatter, $emitters)
@@ -49,7 +47,7 @@ class Analyzer
         return $result;
     }
 
-    private function addEmitter(DependencyEmitterInterface $emitter)
+    private function addEmitter(DependencyEmitterInterface $emitter): void
     {
         $this->emitters[] = $emitter;
     }

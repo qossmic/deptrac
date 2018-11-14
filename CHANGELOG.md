@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.4.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- [#190](https://github.com/sensiolabs-de/deptrac/pull/190) added several nullable and void type-hints
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- [#190](https://github.com/sensiolabs-de/deptrac/pull/190) removed support for PHP <7.1
+
+### Fixed
+
+- Nothing.
+
 ## 0.3.0 - 2018-11-05
 
 ### Added
