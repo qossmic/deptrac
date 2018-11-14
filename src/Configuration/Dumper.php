@@ -11,7 +11,7 @@ class Dumper
     /**
      * @throws FileExistsException
      */
-    public function dump(string $file)
+    public function dump(string $file): void
     {
         if (file_exists($file)) {
             throw new FileExistsException();

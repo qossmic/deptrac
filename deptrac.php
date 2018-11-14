@@ -9,9 +9,9 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-if (PHP_VERSION_ID < 70000) {
-    echo 'Required at least PHP version 7.0.0, your version: '.PHP_VERSION."\n";
-    die(1);
+if (PHP_VERSION_ID < 70100) {
+    echo 'Required at least PHP version 7.1.0, your version: '.PHP_VERSION."\n";
+    exit(1);
 }
 
 $container = new ContainerBuilder();

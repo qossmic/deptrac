@@ -29,7 +29,7 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         DependencyContext $dependencyContext,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
-    ) {
+    ): void {
         foreach ($dependencyContext->getViolations() as $violation) {
             if ($violation->getDependency() instanceof InheritDependency) {
                 $this->handleInheritDependency($violation, $output);

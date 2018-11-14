@@ -34,9 +34,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser            $astParser
-     * @param AstFileReferenceInterface $fileReference
-     *
      * @return EmittedDependency[]
      */
     private function getUseStatements(NikicPhpParser $astParser, AstFileReferenceInterface $fileReference): array
@@ -68,9 +65,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser             $astParser
-     * @param AstClassReferenceInterface $classReference
-     *
      * @return EmittedDependency[]
      */
     private function getInstanceOfStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference): array
@@ -97,9 +91,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser             $astParser
-     * @param AstClassReferenceInterface $classReference
-     *
      * @return EmittedDependency[]
      */
     private function getParamStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference): array
@@ -126,9 +117,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser             $astParser
-     * @param AstClassReferenceInterface $classReference
-     *
      * @return EmittedDependency[]
      */
     private function getReturnTypes(NikicPhpParser $astParser, AstClassReferenceInterface $classReference): array
@@ -178,9 +166,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser             $astParser
-     * @param AstClassReferenceInterface $classReference
-     *
      * @return EmittedDependency[]
      */
     private function getNewStatements(NikicPhpParser $astParser, AstClassReferenceInterface $classReference): array
@@ -207,9 +192,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser             $astParser
-     * @param AstClassReferenceInterface $classReference
-     *
      * @return EmittedDependency[]
      */
     private function getStaticPropertiesAccess(NikicPhpParser $astParser, AstClassReferenceInterface $classReference): array
@@ -236,9 +218,6 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     }
 
     /**
-     * @param NikicPhpParser             $astParser
-     * @param AstClassReferenceInterface $classReference
-     *
      * @return EmittedDependency[]
      */
     private function getStaticMethodCalls(NikicPhpParser $astParser, AstClassReferenceInterface $classReference): array
@@ -268,7 +247,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
         AstParserInterface $astParser,
         AstMap $astMap,
         Result $dependencyResult
-    ) {
+    ): void {
         /* @var $astParser NikicPhpParser */
         assert(true === $astParser instanceof NikicPhpParser);
 

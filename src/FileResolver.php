@@ -10,8 +10,6 @@ use Symfony\Component\Finder\Finder;
 class FileResolver
 {
     /**
-     * @param Configuration $configuration
-     *
      * @throws \InvalidArgumentException
      *
      * @return \SplFileInfo[]

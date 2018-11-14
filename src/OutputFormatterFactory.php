@@ -46,8 +46,6 @@ class OutputFormatterFactory
     }
 
     /**
-     * @param InputInterface $input
-     *
      * @return OutputFormatterInterface[]
      */
     public function getActiveFormatters(InputInterface $input): array
@@ -74,11 +72,7 @@ class OutputFormatterFactory
     }
 
     /**
-     * @param string $name
-     *
      * @throws \LogicException if formatter does not exists
-     *
-     * @return OutputFormatterInterface
      */
     public function getFormatterByName(string $name): OutputFormatterInterface
     {
@@ -109,7 +103,7 @@ class OutputFormatterFactory
         return true === filter_var($option, FILTER_VALIDATE_BOOLEAN);
     }
 
-    private function addFormatter(OutputFormatterInterface $formatter)
+    private function addFormatter(OutputFormatterInterface $formatter): void
     {
         $this->formatters[] = $formatter;
     }

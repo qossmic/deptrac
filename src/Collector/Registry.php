@@ -18,11 +18,7 @@ class Registry
     }
 
     /**
-     * @param string $type
-     *
      * @throws \InvalidArgumentException if collector does not exists
-     *
-     * @return CollectorInterface
      */
     public function getCollector(string $type): CollectorInterface
     {
@@ -37,7 +33,7 @@ class Registry
         return $this->collectors[$type];
     }
 
-    private function addCollector(CollectorInterface $collector)
+    private function addCollector(CollectorInterface $collector): void
     {
         $this->collectors[$collector->getType()] = $collector;
     }

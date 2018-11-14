@@ -34,8 +34,6 @@ class Result
     }
 
     /**
-     * @param string $className
-     *
      * @return Dependency[]
      */
     public function getDependenciesByClass(string $className): array
