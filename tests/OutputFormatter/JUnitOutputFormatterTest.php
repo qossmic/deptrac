@@ -11,7 +11,6 @@ use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
-use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
@@ -23,8 +22,8 @@ class JUnitOutputFormatterTest extends TestCase
 
     public function tearDown()
     {
-        if (file_exists(__DIR__ .  '/data/' . static::$actual_junit_report_file)) {
-            unlink(__DIR__ .  '/data/' . static::$actual_junit_report_file);
+        if (file_exists(__DIR__.'/data/'.static::$actual_junit_report_file)) {
+            unlink(__DIR__.'/data/'.static::$actual_junit_report_file);
         }
     }
 
@@ -38,7 +37,7 @@ class JUnitOutputFormatterTest extends TestCase
         yield [
             [
                 'LayerA',
-                'LayerB'
+                'LayerB',
             ],
             [
                 new RulesetViolation(
@@ -64,7 +63,7 @@ class JUnitOutputFormatterTest extends TestCase
         yield [
             [
                 'LayerA',
-                'LayerB'
+                'LayerB',
             ],
             [
                 new RulesetViolation(
@@ -78,10 +77,8 @@ class JUnitOutputFormatterTest extends TestCase
 
         yield [
             [
-
             ],
             [
-
             ],
             'expected-junit-report_3.xml',
         ];
@@ -106,12 +103,12 @@ class JUnitOutputFormatterTest extends TestCase
                 $classNameResolver->reveal()
             ),
             $output,
-            new OutputFormatterInput(['dump-xml' => __DIR__ .  '/data/' . static::$actual_junit_report_file])
+            new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])
         );
 
         $this->assertXmlFileEqualsXmlFile(
-            __DIR__ . '/data/' . static::$actual_junit_report_file,
-            __DIR__ . '/data/' . $expectedOutputFile
+            __DIR__.'/data/'.static::$actual_junit_report_file,
+            __DIR__.'/data/'.$expectedOutputFile
         );
     }
 

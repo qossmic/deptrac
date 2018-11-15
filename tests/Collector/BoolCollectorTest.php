@@ -50,7 +50,7 @@ class BoolCollectorTest extends TestCase
 
     public function provideSatisfyBasic()
     {
-        # must
+        // must
         yield [
             [
                 'must' => [
@@ -99,7 +99,7 @@ class BoolCollectorTest extends TestCase
             false,
         ];
 
-        # must not
+        // must not
         yield [
             [
                 'must_not' => [
@@ -159,7 +159,7 @@ class BoolCollectorTest extends TestCase
             $this->getCalculatorMock(true)
         );
         $collectorFactory->getCollector('false')->willReturn(
-            $this->getCalculatorMock( false)
+            $this->getCalculatorMock(false)
         );
 
         if (isset($configuration['must'])) {

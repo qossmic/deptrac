@@ -28,11 +28,11 @@ use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceC;
 
 class InheritanceDependencyVisitorTest extends TestCase
 {
-
     use ArrayAsserts;
 
     /**
      * @param $fixture
+     *
      * @return AstMap
      */
     private function getAstMap($fixture)
@@ -95,7 +95,6 @@ class InheritanceDependencyVisitorTest extends TestCase
             ],
             $this->getInheritedInherits(FixtureBasicInheritanceE::class, $astMap)
         );
-
     }
 
     public function testBasicInheritanceInterfaces()
@@ -133,7 +132,6 @@ class InheritanceDependencyVisitorTest extends TestCase
             ],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceE::class, $astMap)
         );
-
     }
 
     public function testBasicMultipleInheritanceInterfaces()
@@ -172,8 +170,6 @@ class InheritanceDependencyVisitorTest extends TestCase
             ],
             $this->getInheritedInherits(MultipleInteritanceC::class, $astMap)
         );
-
-
     }
 
     public function testBasicMultipleInheritanceWithNoise()
@@ -194,7 +190,5 @@ class InheritanceDependencyVisitorTest extends TestCase
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseA::18 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseB::19 (Extends))'],
             $this->getInheritedInherits(FixtureBasicInheritanceWithNoiseC::class, $astMap)
         );
-
     }
-
 }

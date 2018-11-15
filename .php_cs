@@ -1,7 +1,8 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->in([__DIR__.'/src', __DIR__.'/tests']);
+    ->in([__DIR__.'/src', __DIR__.'/tests'])
+    ->exclude('Fixtures');
 
 return PhpCsFixer\Config::create()
     ->setRules([

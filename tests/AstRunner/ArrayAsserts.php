@@ -4,7 +4,6 @@ namespace Tests\SensioLabs\Deptrac\AstRunner;
 
 trait ArrayAsserts
 {
-
     public function assertArrayValuesEquals(array $expected, array $value)
     {
         $expected = array_values($expected);
@@ -15,5 +14,4 @@ trait ArrayAsserts
 
         $this->assertEquals($expected, $value);
     }
-
 }

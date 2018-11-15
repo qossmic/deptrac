@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PhpParser\Node;
@@ -73,7 +72,7 @@ class MethodCollectorTest extends TestCase
         $parser->method('getAstForClassname')->willReturn($ast);
         $parser
             ->method('findNodesOfType')
-            ->with((array)$ast, ClassMethod::class)
+            ->with((array) $ast, ClassMethod::class)
             ->willReturn($methods);
 
         $stat = (new MethodCollector())->satisfy(

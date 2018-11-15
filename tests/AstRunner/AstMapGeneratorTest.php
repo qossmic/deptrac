@@ -22,6 +22,7 @@ class AstMapGeneratorTest extends TestCase
 
     /**
      * @param $fixture
+     *
      * @return AstMap
      */
     private function getAstMap($fixture)

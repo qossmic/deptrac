@@ -66,10 +66,9 @@ class ClassNameLayerResolverTest extends TestCase
     }
 
     /**
-     * @param       $collectA
-     * @param       $collectB1
-     * @param       $collectB2
-     * @param array $expectedLayers
+     * @param $collectA
+     * @param $collectB1
+     * @param $collectB2
      * @dataProvider provideGetLayersByClassName
      */
     public function testGetLayersByClassName($collectA, $collectB1, $collectB2, array $expectedLayers)

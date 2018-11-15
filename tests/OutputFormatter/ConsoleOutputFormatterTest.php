@@ -73,7 +73,6 @@ class ConsoleOutputFormatterTest extends TestCase
 
         yield [
             [
-
             ],
             '
 
@@ -83,8 +82,7 @@ class ConsoleOutputFormatterTest extends TestCase
     }
 
     /**
-     * @param array $violations
-     * @param       $expectedOutput
+     * @param $expectedOutput
      * @dataProvider basicDataProvider
      */
     public function testBasic(array $violations, $expectedOutput)
