@@ -2,8 +2,8 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 
 interface DependencyEmitterInterface

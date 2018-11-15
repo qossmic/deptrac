@@ -2,10 +2,10 @@
 
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 

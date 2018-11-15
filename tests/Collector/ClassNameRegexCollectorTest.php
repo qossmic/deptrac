@@ -3,9 +3,9 @@
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 

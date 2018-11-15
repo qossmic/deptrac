@@ -2,7 +2,7 @@
 
 namespace SensioLabs\Deptrac\DependencyResult;
 
-use SensioLabs\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 
 class InheritDependency implements DependencyInterface
 {

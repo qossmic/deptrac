@@ -3,7 +3,7 @@
 namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;

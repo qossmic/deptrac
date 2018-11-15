@@ -2,10 +2,10 @@
 
 namespace SensioLabs\Deptrac\Formatter;
 
-use SensioLabs\AstRunner\Event\AstFileAnalyzedEvent;
-use SensioLabs\AstRunner\Event\AstFileSyntaxErrorEvent;
-use SensioLabs\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\AstRunner\Event\PreCreateAstMapEvent;
+use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use SensioLabs\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
+use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Dependency\Events as DependencyEvents;
 use SensioLabs\Deptrac\Dependency\PreEmitEvent;
 use Symfony\Component\Console\Output\OutputInterface;

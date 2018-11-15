@@ -4,7 +4,7 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
-use SensioLabs\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;

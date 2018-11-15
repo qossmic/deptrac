@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecacfb643b7de57ef714f9816ef54d9d",
+    "content-hash": "b65d1076c79e18453bc7c6681761ef6f",
     "packages": [
         {
             "name": "clue/graph",
@@ -283,52 +283,6 @@
                 "psr"
             ],
             "time": "2017-02-14T16:28:37+00:00"
-        },
-        {
-            "name": "sensiolabs-de/astrunner",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sensiolabs-de/astrunner.git",
-                "reference": "3851583a554fa13f1722522d0bf2247efeb8b333"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs-de/astrunner/zipball/3851583a554fa13f1722522d0bf2247efeb8b333",
-                "reference": "3851583a554fa13f1722522d0bf2247efeb8b333",
-                "shasum": ""
-            },
-            "require": {
-                "nikic/php-parser": "^3.0 || ^4.0",
-                "php": "^7.0",
-                "symfony/event-dispatcher": "^2.8 || ^3.0 || ^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SensioLabs\\AstRunner\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "timglabisch",
-                    "email": "astrunner+tim.glabisch@sensiolabs.de"
-                }
-            ],
-            "description": "Astrunner is a low level lib that helps to run static code analysis",
-            "time": "2018-06-15T09:39:35+00:00"
         },
         {
             "name": "symfony/config",

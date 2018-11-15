@@ -2,9 +2,9 @@
 
 namespace SensioLabs\Deptrac\Collector;
 
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class ClassNameCollector implements CollectorInterface
 {

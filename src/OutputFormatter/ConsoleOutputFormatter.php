@@ -2,7 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;

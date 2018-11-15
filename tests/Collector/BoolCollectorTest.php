@@ -4,9 +4,9 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;

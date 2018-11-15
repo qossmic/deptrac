@@ -2,7 +2,7 @@
 
 namespace SensioLabs\Deptrac;
 
-use SensioLabs\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 

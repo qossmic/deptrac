@@ -3,10 +3,10 @@
 namespace SensioLabs\Deptrac\Collector;
 
 use PhpParser\Node\Stmt\ClassMethod;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class MethodCollector implements CollectorInterface
 {
