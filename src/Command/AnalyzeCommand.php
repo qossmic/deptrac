@@ -12,9 +12,9 @@ use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
 use SensioLabs\Deptrac\Dependency\Analyzer as DependencyAnalyzer;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\FileResolver;
-use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
+use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -80,7 +80,7 @@ class AnalyzeCommand extends Command
             return 1;
         }
 
-        new ConsoleFormatter($this->dispatcher, $output);
+        $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
 
         $parser = new NikicPhpParser();
         $astMap = $this->astRunner->createAstMapByFiles($parser, $this->fileResolver->resolve($configuration));
