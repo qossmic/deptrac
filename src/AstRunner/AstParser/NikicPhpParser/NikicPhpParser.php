@@ -7,7 +7,6 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
-use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
@@ -15,8 +14,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class NikicPhpParser implements AstParserInterface
 {
-    private static $parser = null;
-    private static $traverser = null;
+    private $traverser;
     private static $inheritanceByClassnameMap = [];
     private static $fileAstMap = [];
 
@@ -25,23 +23,15 @@ class NikicPhpParser implements AstParserInterface
      */
     private static $classAstMap = [];
 
-    private static function getParser(): Parser
+    private $fileParser;
+
+    public function __construct()
     {
-        if (!self::$parser) {
-            self::$parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
-        }
+        $this->traverser = new NodeTraverser();
+        $this->traverser->addVisitor(new NameResolver());
 
-        return self::$parser;
-    }
-
-    private static function getTraverser(): NodeTraverser
-    {
-        if (!self::$traverser) {
-            self::$traverser = new NodeTraverser();
-            self::$traverser->addVisitor(new NameResolver());
-        }
-
-        return self::$traverser;
+        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+        $this->fileParser = new CacheableFileParser(new FileParser($parser));
     }
 
     public function supports($data): bool
@@ -60,10 +50,8 @@ class NikicPhpParser implements AstParserInterface
             throw new \LogicException();
         }
 
-        $ast = self::getTraverser()->traverse(
-            (array) self::getParser()->parse(
-                file_get_contents($data->getPathname())
-            )
+        $ast = $this->traverser->traverse(
+            $this->fileParser->parse($data)
         );
 
         self::$fileAstMap[$data->getRealPath()] = $ast;
@@ -74,7 +62,7 @@ class NikicPhpParser implements AstParserInterface
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
                 $className = $classLikeNode->namespacedName->toString();
             } else {
-                $className = (string) $classLikeNode->name;
+                $className = (string)$classLikeNode->name;
             }
 
             $fileReference->addClassReference($className);
