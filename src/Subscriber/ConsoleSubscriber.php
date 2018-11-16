@@ -1,6 +1,6 @@
 <?php
 
-namespace SensioLabs\Deptrac\Formatter;
+namespace SensioLabs\Deptrac\Subscriber;
 
 use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
 use SensioLabs\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
@@ -9,26 +9,29 @@ use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Dependency\Events as DependencyEvents;
 use SensioLabs\Deptrac\Dependency\PreEmitEvent;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class ConsoleFormatter
+class ConsoleSubscriber implements EventSubscriberInterface
 {
-    protected $dispatcher;
     protected $output;
 
-    public function __construct(EventDispatcherInterface $dispatcher, OutputInterface $output)
+    public function __construct(OutputInterface $output)
     {
-        $this->dispatcher = $dispatcher;
         $this->output = $output;
+    }
 
-        $dispatcher->addListener(PreCreateAstMapEvent::class, [$this, 'onPreCreateAstMapEvent']);
-        $dispatcher->addListener(PostCreateAstMapEvent::class, [$this, 'onPostCreateAstMapEvent']);
-        $dispatcher->addListener(AstFileAnalyzedEvent::class, [$this, 'onAstFileAnalyzedEvent']);
-        $dispatcher->addListener(AstFileSyntaxErrorEvent::class, [$this, 'onAstFileSyntaxErrorEvent']);
-        $dispatcher->addListener(DependencyEvents::PRE_EMIT, [$this, 'onPreDependencyEmit']);
-        $dispatcher->addListener(DependencyEvents::POST_EMIT, [$this, 'onPostDependencyEmit']);
-        $dispatcher->addListener(DependencyEvents::PRE_FLATTEN, [$this, 'onPreDependencyFlatten']);
-        $dispatcher->addListener(DependencyEvents::POST_FLATTEN, [$this, 'onPostDependencyFlatten']);
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
+            PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
+            AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
+            AstFileSyntaxErrorEvent::class => 'onAstFileSyntaxErrorEvent',
+            DependencyEvents::PRE_EMIT => 'onPreDependencyEmit',
+            DependencyEvents::POST_EMIT => 'onPostDependencyEmit',
+            DependencyEvents::PRE_FLATTEN => 'onPreDependencyFlatten',
+            DependencyEvents::POST_FLATTEN => 'onPostDependencyFlatten',
+        ];
     }
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
