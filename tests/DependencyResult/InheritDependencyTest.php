@@ -3,7 +3,7 @@
 namespace Tests\SensioLabs\Deptrac\DependencyResult;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 

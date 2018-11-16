@@ -8,7 +8,7 @@
 
         <service id="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
-        <service id="SensioLabs\AstRunner\AstRunner">
+        <service id="SensioLabs\Deptrac\AstRunner\AstRunner">
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
         </service>
 
@@ -89,7 +89,7 @@
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
             <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
-            <argument type="service" id="SensioLabs\AstRunner\AstRunner"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstRunner"/>
             <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>
             <argument type="service" id="SensioLabs\Deptrac\RulesetEngine"/>
             <argument type="service" id="SensioLabs\Deptrac\Collector\Registry"/>

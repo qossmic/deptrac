@@ -37,7 +37,6 @@ class RulesetEngineTest extends TestCase
                 'LayerC' => [],
             ],
             0,
-
         ];
 
         yield [
@@ -53,7 +52,6 @@ class RulesetEngineTest extends TestCase
                 'LayerB' => [],
             ],
             1,
-
         ];
 
         yield [
@@ -66,7 +64,6 @@ class RulesetEngineTest extends TestCase
             ],
             [],
             1,
-
         ];
 
         yield [
@@ -138,10 +135,7 @@ class RulesetEngineTest extends TestCase
     }
 
     /**
-     * @param array $dependenciesAsArray
-     * @param array $classesInLayers
-     * @param array $rulesetConfiguration
-     * @param       $expectedCount
+     * @param $expectedCount
      * @dataProvider dependencyProvider
      */
     public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, $expectedCount)

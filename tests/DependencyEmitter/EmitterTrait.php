@@ -2,8 +2,8 @@
 
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\AstRunner\AstRunner;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use SensioLabs\Deptrac\DependencyResult\Dependency;

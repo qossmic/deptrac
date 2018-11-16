@@ -3,7 +3,7 @@
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 
 class InheritanceDependencyEmitterTest extends TestCase

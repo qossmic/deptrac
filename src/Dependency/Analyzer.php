@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Dependency;
 
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

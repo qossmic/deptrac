@@ -4,9 +4,9 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
@@ -50,7 +50,7 @@ class BoolCollectorTest extends TestCase
 
     public function provideSatisfyBasic()
     {
-        # must
+        // must
         yield [
             [
                 'must' => [
@@ -99,7 +99,7 @@ class BoolCollectorTest extends TestCase
             false,
         ];
 
-        # must not
+        // must not
         yield [
             [
                 'must_not' => [
@@ -159,7 +159,7 @@ class BoolCollectorTest extends TestCase
             $this->getCalculatorMock(true)
         );
         $collectorFactory->getCollector('false')->willReturn(
-            $this->getCalculatorMock( false)
+            $this->getCalculatorMock(false)
         );
 
         if (isset($configuration['must'])) {

@@ -2,8 +2,8 @@
 
 namespace SensioLabs\Deptrac\Command;
 
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\AstRunner\AstRunner;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\Collector\Registry;

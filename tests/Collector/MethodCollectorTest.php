@@ -1,19 +1,19 @@
 <?php
 
-
 namespace Tests\SensioLabs\Deptrac\Collector;
 
+use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\MethodCollector;
 
 class MethodCollectorTest extends TestCase
 {
-    public function dataProviderSatisfy()
+    public function dataProviderSatisfy(): iterable
     {
         yield [
             ['name' => 'abc'],
@@ -43,14 +43,14 @@ class MethodCollectorTest extends TestCase
         ];
     }
 
-    public function testType()
+    public function testType(): void
     {
-        $this->assertEquals('method', (new MethodCollector())->getType());
+        static::assertEquals('method', (new MethodCollector())->getType());
     }
 
-    private function getClassMethod($name)
+    private function getClassMethod(string $name): \stdClass
     {
-        $classMethod = new \StdClass();
+        $classMethod = new \stdClass();
         $classMethod->name = $name;
 
         return $classMethod;
@@ -59,26 +59,30 @@ class MethodCollectorTest extends TestCase
     /**
      * @dataProvider dataProviderSatisfy
      */
-    public function testStatisfy($configuration, $methods, $expected)
+    public function testStatisfy(array $configuration, array $methods, bool $expected): void
     {
-        $className = "foo";
+        $className = 'foo';
 
-        $astClassReference = $this->prophesize(AstClassReferenceInterface::class);
-        $astClassReference->getClassName()->willReturn($className);
+        $astClassReference = $this->createMock(AstClassReferenceInterface::class);
+        $astClassReference->method('getClassName')->willReturn($className);
 
-        $parser = $this->prophesize(NikicPhpParser::class);
-        $parser->getAstForClassname($className)->willReturn($ast = new \StdClass());
+        $ast = $this->createMock(Node::class);
 
-        $parser->findNodesOfType((array)$ast, ClassMethod::class)->willReturn($methods);
+        $parser = $this->createMock(NikicPhpParser::class);
+        $parser->method('getAstForClassname')->willReturn($ast);
+        $parser
+            ->method('findNodesOfType')
+            ->with((array) $ast, ClassMethod::class)
+            ->willReturn($methods);
 
         $stat = (new MethodCollector())->satisfy(
             $configuration,
-            $astClassReference->reveal(),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal(),
-            $parser->reveal()
+            $astClassReference,
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class),
+            $parser
         );
 
-        $this->assertEquals($expected, $stat);
+        static::assertEquals($expected, $stat);
     }
 }

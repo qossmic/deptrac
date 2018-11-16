@@ -3,7 +3,7 @@
 namespace Tests\SensioLabs\Deptrac\Formatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\Event\PreCreateAstMapEvent;
+use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Formatter\ConsoleFormatter;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;

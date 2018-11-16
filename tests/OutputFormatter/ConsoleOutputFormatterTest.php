@@ -3,9 +3,9 @@
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstMap\AstInherit;
-use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
@@ -73,7 +73,6 @@ class ConsoleOutputFormatterTest extends TestCase
 
         yield [
             [
-
             ],
             '
 
@@ -83,8 +82,7 @@ class ConsoleOutputFormatterTest extends TestCase
     }
 
     /**
-     * @param array $violations
-     * @param       $expectedOutput
+     * @param $expectedOutput
      * @dataProvider basicDataProvider
      */
     public function testBasic(array $violations, $expectedOutput)

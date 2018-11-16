@@ -2,8 +2,8 @@
 
 namespace SensioLabs\Deptrac\Dependency;
 
-use SensioLabs\AstRunner\AstMap;
-use SensioLabs\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
 class InheritanceFlatter
