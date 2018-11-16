@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac\Subscriber;
 
 use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;

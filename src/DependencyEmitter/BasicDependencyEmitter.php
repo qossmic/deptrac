@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
 use PhpParser\Node\Expr\Closure;
@@ -156,7 +158,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             }
 
             $buffer[] = new EmittedDependency(
-                $node->returnType->type,
+                $node->returnType->type->toString(),
                 $node->returnType->getLine(),
                 'returntype'
             );
