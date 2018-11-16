@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
@@ -8,22 +10,13 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
-use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
+use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ClassNameLayerResolverTest extends TestCase
 {
-    private function getCollectorConfiguration($type)
-    {
-        $collectorConfiguration = $this->prophesize(ConfigurationCollector::class);
-        $collectorConfiguration->getType()->willReturn($type);
-
-        return $collectorConfiguration->reveal();
-    }
-
     private function getCollector($return)
     {
         $collector = $this->prophesize(CollectorInterface::class);
@@ -38,40 +31,55 @@ class ClassNameLayerResolverTest extends TestCase
         return $collector->reveal();
     }
 
-    public function provideGetLayersByClassName()
+    public function provideGetLayersByClassName(): iterable
     {
         yield [
-            1, 1, 1, ['LayerA', 'LayerB'],
+            true,
+            true,
+            true,
+            ['LayerA', 'LayerB'],
         ];
 
         yield [
-            1, 0, 1, ['LayerA', 'LayerB'],
+            true,
+            false,
+            true,
+            ['LayerA', 'LayerB'],
         ];
 
         yield [
-            0, 0, 1, ['LayerB'],
+            false,
+            false,
+            true,
+            ['LayerB'],
         ];
 
         yield [
-            1, 1, 0, ['LayerA', 'LayerB'],
+            true,
+            true,
+            false,
+            ['LayerA', 'LayerB'],
         ];
 
         yield [
-            1, 0, 0, ['LayerA'],
+            true,
+            false,
+            false,
+            ['LayerA'],
         ];
 
         yield [
-            0, 0, 0, [],
+            false,
+            false,
+            false,
+            [],
         ];
     }
 
     /**
-     * @param $collectA
-     * @param $collectB1
-     * @param $collectB2
      * @dataProvider provideGetLayersByClassName
      */
-    public function testGetLayersByClassName($collectA, $collectB1, $collectB2, array $expectedLayers)
+    public function testGetLayersByClassName(bool $collectA, bool $collectB1, bool $collectB2, array $expectedLayers): void
     {
         $configuration = $this->prophesize(Configuration::class);
         $configuration->getLayers()->willReturn([
@@ -109,7 +117,7 @@ class ClassNameLayerResolverTest extends TestCase
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $expectedLayers,
             $resolver->getLayersByClassName('classA')
         );

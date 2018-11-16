@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
 use PHPUnit\Framework\TestCase;
@@ -10,27 +12,27 @@ class InheritanceDependencyEmitterTest extends TestCase
 {
     use EmitterTrait;
 
-    public function testGetName()
+    public function testGetName(): void
     {
-        $this->assertEquals('InheritanceDependencyEmitter', (new InheritanceDependencyEmitter())->getName());
+        static::assertEquals('InheritanceDependencyEmitter', (new InheritanceDependencyEmitter())->getName());
     }
 
-    public function testSupportsParser()
+    public function testSupportsParser(): void
     {
-        $this->assertTrue((new InheritanceDependencyEmitter())->supportsParser($this->prophesize(NikicPhpParser::class)->reveal()));
+        static::assertTrue((new InheritanceDependencyEmitter())->supportsParser($this->prophesize(NikicPhpParser::class)->reveal()));
     }
 
-    public function testApplyDependencies()
+    public function testApplyDependencies(): void
     {
         $deps = $this->getDeps(
             new InheritanceDependencyEmitter(),
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        $this->assertCount(4, $deps);
-        $this->assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
-        $this->assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
-        $this->assertContains('Foo\Bar:6 on BarInterface2', $deps);
-        $this->assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
+        static::assertCount(4, $deps);
+        static::assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
+        static::assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
+        static::assertContains('Foo\Bar:6 on BarInterface2', $deps);
+        static::assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
@@ -10,7 +12,7 @@ use SensioLabs\Deptrac\DependencyContext;
 
 class DependencyContextTest extends TestCase
 {
-    public function testGetSet()
+    public function testGetSet(): void
     {
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
@@ -19,9 +21,9 @@ class DependencyContextTest extends TestCase
             $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal()
         );
 
-        $this->assertSame($astMap, $context->getAstMap());
-        $this->assertEquals([1, 2, 3], $context->getViolations());
-        $this->assertSame($dependencyResult, $context->getDependencyResult());
-        $this->assertSame($classNameLayerResolver, $context->getClassNameLayerResolver());
+        static::assertSame($astMap, $context->getAstMap());
+        static::assertEquals([1, 2, 3], $context->getViolations());
+        static::assertSame($dependencyResult, $context->getDependencyResult());
+        static::assertSame($classNameLayerResolver, $context->getClassNameLayerResolver());
     }
 }

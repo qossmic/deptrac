@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
@@ -8,23 +10,23 @@ use SensioLabs\Deptrac\DependencyResult\Dependency;
 
 class ResultTest extends TestCase
 {
-    public function testAddDependency()
+    public function testAddDependency(): void
     {
         $dependencyResult = new Result();
         $dependencyResult->addDependency($dep1 = new Dependency('A', 12, 'B'));
         $dependencyResult->addDependency($dep2 = new Dependency('B', 12, 'C'));
         $dependencyResult->addDependency($dep3 = new Dependency('A', 12, 'C'));
-        $this->assertSame([$dep1, $dep3], $dependencyResult->getDependenciesByClass('A'));
-        $this->assertSame([$dep2], $dependencyResult->getDependenciesByClass('B'));
-        $this->assertSame([], $dependencyResult->getDependenciesByClass('C'));
-        $this->assertCount(3, $dependencyResult->getDependenciesAndInheritDependencies());
+        static::assertSame([$dep1, $dep3], $dependencyResult->getDependenciesByClass('A'));
+        static::assertSame([$dep2], $dependencyResult->getDependenciesByClass('B'));
+        static::assertSame([], $dependencyResult->getDependenciesByClass('C'));
+        static::assertCount(3, $dependencyResult->getDependenciesAndInheritDependencies());
     }
 
-    public function testGetDependenciesAndInheritDependencies()
+    public function testGetDependenciesAndInheritDependencies(): void
     {
         $dependencyResult = new Result();
         $dependencyResult->addDependency($dep1 = new Dependency('A', 12, 'B'));
         $dependencyResult->addInheritDependency($dep2 = new Dependency('A', 12, 'B'));
-        $this->assertEquals([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
+        static::assertEquals([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
     }
 }

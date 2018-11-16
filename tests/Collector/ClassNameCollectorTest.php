@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
@@ -11,21 +13,21 @@ use SensioLabs\Deptrac\Collector\Registry;
 
 class ClassNameCollectorTest extends TestCase
 {
-    public function dataProviderSatisfy()
+    public function dataProviderSatisfy(): iterable
     {
         yield [['regex' => 'a'], 'foo\bar', true];
         yield [['regex' => 'a'], 'foo\bbr', false];
     }
 
-    public function testType()
+    public function testType(): void
     {
-        $this->assertEquals('className', (new ClassNameCollector())->getType());
+        static::assertEquals('className', (new ClassNameCollector())->getType());
     }
 
     /**
      * @dataProvider dataProviderSatisfy
      */
-    public function testSatisfy(array $configuration, string $className, bool $expected)
+    public function testSatisfy(array $configuration, string $className, bool $expected): void
     {
         $astClassReference = $this->prophesize(AstClassReferenceInterface::class);
         $astClassReference->getClassName()->willReturn($className);
@@ -38,13 +40,13 @@ class ClassNameCollectorTest extends TestCase
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
-        $this->assertEquals($expected, $stat);
+        static::assertEquals($expected, $stat);
     }
 
     /**
      * @expectedException \LogicException
      */
-    public function testWrongRegexParam()
+    public function testWrongRegexParam(): void
     {
         (new ClassNameCollector())->satisfy(
             ['Foo' => 'a'],

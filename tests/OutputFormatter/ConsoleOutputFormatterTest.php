@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
@@ -18,12 +20,12 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class ConsoleOutputFormatterTest extends TestCase
 {
-    public function testGetName()
+    public function testGetName(): void
     {
-        $this->assertEquals('console', (new ConsoleOutputFormatter())->getName());
+        static::assertEquals('console', (new ConsoleOutputFormatter())->getName());
     }
 
-    public function basicDataProvider()
+    public function basicDataProvider(): iterable
     {
         yield [
             [
@@ -82,10 +84,9 @@ class ConsoleOutputFormatterTest extends TestCase
     }
 
     /**
-     * @param $expectedOutput
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $violations, $expectedOutput)
+    public function testBasic(array $violations, string $expectedOutput): void
     {
         $output = new BufferedOutput();
 
@@ -102,15 +103,15 @@ class ConsoleOutputFormatterTest extends TestCase
         );
 
         $o = $output->fetch();
-        $this->assertEquals(
+        static::assertEquals(
             $this->normalize($expectedOutput),
             $this->normalize($o)
         );
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
-        $this->assertCount(0, (new ConsoleOutputFormatter())->configureOptions());
+        static::assertCount(0, (new ConsoleOutputFormatter())->configureOptions());
     }
 
     private function normalize($str)

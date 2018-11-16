@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\DependencyResult;
 
 use PHPUnit\Framework\TestCase;
@@ -7,11 +9,11 @@ use SensioLabs\Deptrac\DependencyResult\Dependency;
 
 class DependencyTest extends TestCase
 {
-    public function testGetSet()
+    public function testGetSet(): void
     {
         $dependency = new Dependency('a', 23, 'b');
-        $this->assertEquals('a', $dependency->getClassA());
-        $this->assertEquals(23, $dependency->getClassALine());
-        $this->assertEquals('b', $dependency->getClassB());
+        static::assertEquals('a', $dependency->getClassA());
+        static::assertEquals(23, $dependency->getClassALine());
+        static::assertEquals('b', $dependency->getClassB());
     }
 }
