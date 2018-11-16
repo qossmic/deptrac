@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
@@ -11,14 +13,14 @@ use SensioLabs\Deptrac\RulesetEngine;
 
 class RulesetEngineTest extends TestCase
 {
-    private function createDependencies(array $fromTo)
+    private function createDependencies(array $fromTo): iterable
     {
         foreach ($fromTo as $from => $to) {
             yield new Dependency($from, 0, $to);
         }
     }
 
-    public function dependencyProvider()
+    public function dependencyProvider(): iterable
     {
         yield [
             [
@@ -135,10 +137,9 @@ class RulesetEngineTest extends TestCase
     }
 
     /**
-     * @param $expectedCount
      * @dataProvider dependencyProvider
      */
-    public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, $expectedCount)
+    public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, int $expectedCount): void
     {
         $dependencyResult = (new Result());
         foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
@@ -150,7 +151,7 @@ class RulesetEngineTest extends TestCase
             $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
         }
 
-        $this->assertCount(
+        static::assertCount(
             $expectedCount,
             (new RulesetEngine())->getViolations(
                 $dependencyResult,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Formatter;
 
 use PHPUnit\Framework\TestCase;
@@ -11,25 +13,25 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ConsoleFormatterTest extends TestCase
 {
-    public function testOnPreCreateAstMapEventWithVerboseVerbosity()
+    public function testOnPreCreateAstMapEventWithVerboseVerbosity(): void
     {
-        (new ConsoleFormatter(
+        new ConsoleFormatter(
             $dispatcher = new EventDispatcher(),
             $formatter = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE)
-        ));
+        );
 
         $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        $this->assertContains('9999999', $formatter->fetch());
+        static::assertContains('9999999', $formatter->fetch());
     }
 
-    public function testOnPreCreateAstMapEventWithDefaultVerbosity()
+    public function testOnPreCreateAstMapEventWithDefaultVerbosity(): void
     {
-        (new ConsoleFormatter(
+        new ConsoleFormatter(
             $dispatcher = new EventDispatcher(),
             $formatter = new BufferedOutput()
-        ));
+        );
 
         $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        $this->assertContains('.', $formatter->fetch());
+        static::assertContains('.', $formatter->fetch());
     }
 }

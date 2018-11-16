@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -7,7 +9,7 @@ use SensioLabs\Deptrac\Configuration\Configuration;
 
 class ConfigurationTest extends TestCase
 {
-    public function testFromArray()
+    public function testFromArray(): void
     {
         $configuration = Configuration::fromArray([
             'layers' => [
@@ -33,14 +35,14 @@ class ConfigurationTest extends TestCase
             ],
         ]);
 
-        $this->assertCount(2, $configuration->getLayers());
-        $this->assertEquals('some_name', $configuration->getLayers()[0]->getName());
-        $this->assertEquals(['foo', 'bar'], $configuration->getPaths());
-        $this->assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
-        $this->assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('lala'));
+        static::assertCount(2, $configuration->getLayers());
+        static::assertEquals('some_name', $configuration->getLayers()[0]->getName());
+        static::assertEquals(['foo', 'bar'], $configuration->getPaths());
+        static::assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
+        static::assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('lala'));
     }
 
-    public function testExludedFilesAreOptional()
+    public function testExcludedFilesAreOptional(): void
     {
         $configuration = Configuration::fromArray([
             'layers' => [
@@ -62,10 +64,10 @@ class ConfigurationTest extends TestCase
             ],
         ]);
 
-        $this->assertSame([], $configuration->getExcludeFiles());
+        static::assertSame([], $configuration->getExcludeFiles());
     }
 
-    public function testFromWithNullExcludeFiles()
+    public function testFromWithNullExcludeFiles(): void
     {
         $configuration = Configuration::fromArray([
             'layers' => [],
@@ -74,6 +76,6 @@ class ConfigurationTest extends TestCase
             'ruleset' => [],
         ]);
 
-        $this->assertEquals([], $configuration->getExcludeFiles());
+        static::assertEquals([], $configuration->getExcludeFiles());
     }
 }

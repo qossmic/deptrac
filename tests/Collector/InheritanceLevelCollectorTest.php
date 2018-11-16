@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
@@ -24,13 +26,9 @@ class InheritanceLevelCollectorTest extends TestCase
     }
 
     /**
-     * @param $pathLevel
-     * @param $levelConfig
-     * @param $expected
-     *
      * @dataProvider dataTests
      */
-    public function testSatisfy($pathLevel, $levelConfig, $expected)
+    public function testSatisfy(int $pathLevel, int $levelConfig, bool $expected): void
     {
         $classInherit = $this->prophesize(AstMap\AstInheritInterface::class);
         $classInherit->getPath()
@@ -52,11 +50,11 @@ class InheritanceLevelCollectorTest extends TestCase
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
-        $this->assertEquals($expected, $stat);
+        static::assertEquals($expected, $stat);
     }
 
-    public function testType()
+    public function testType(): void
     {
-        $this->assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
+        static::assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
     }
 }

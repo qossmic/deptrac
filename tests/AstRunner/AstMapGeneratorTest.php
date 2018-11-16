@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor;
 
 use PHPUnit\Framework\TestCase;
@@ -20,12 +22,7 @@ class AstMapGeneratorTest extends TestCase
 {
     use ArrayAsserts;
 
-    /**
-     * @param $fixture
-     *
-     * @return AstMap
-     */
-    private function getAstMap($fixture)
+    private function getAstMap(string $fixture): AstMap
     {
         return (new AstRunner(new EventDispatcher()))->createAstMapByFiles(
             new NikicPhpParser(),
@@ -48,11 +45,11 @@ class AstMapGeneratorTest extends TestCase
         );
     }
 
-    public function testBasicDependencyClass()
+    public function testBasicDependencyClass(): void
     {
         $astMap = $this->getAstMap('BasicDependencyClass');
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassA::9 (Extends)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::9 (Implements)',
@@ -60,7 +57,7 @@ class AstMapGeneratorTest extends TestCase
             $this->getDirectInherits(BasicDependencyClassB::class, $astMap)
         );
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::13 (Implements)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceB::13 (Implements)',
@@ -69,26 +66,26 @@ class AstMapGeneratorTest extends TestCase
         );
     }
 
-    public function testBasicTraitsClass()
+    public function testBasicTraitsClass(): void
     {
         $astMap = $this->getAstMap('BasicDependencyTraits');
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             [],
             $this->getDirectInherits(BasicDependencyTraitA::class, $astMap)
         );
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             [],
             $this->getDirectInherits(BasicDependencyTraitB::class, $astMap)
         );
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::7 (Uses)'],
             $this->getDirectInherits(BasicDependencyTraitC::class, $astMap)
         );
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::10 (Uses)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::11 (Uses)',
@@ -96,7 +93,7 @@ class AstMapGeneratorTest extends TestCase
             $this->getDirectInherits(BasicDependencyTraitD::class, $astMap)
         );
 
-        $this->assertArrayValuesEquals(
+        static::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::15 (Uses)'],
             $this->getDirectInherits(BasicDependencyTraitClass::class, $astMap)
         );

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
@@ -31,7 +33,7 @@ class InheritanceFlatterTest extends TestCase
         return $dep->reveal();
     }
 
-    public function testFlattenDependencies()
+    public function testFlattenDependencies(): void
     {
         $astMap = $this->prophesize(AstMap::class);
 
@@ -67,6 +69,6 @@ class InheritanceFlatterTest extends TestCase
             return $v instanceof InheritDependency;
         });
 
-        $this->assertCount(1, $inheritDeps);
+        static::assertCount(1, $inheritDeps);
     }
 }

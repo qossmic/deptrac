@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\AstRunner;
 
 trait ArrayAsserts
 {
-    public function assertArrayValuesEquals(array $expected, array $value)
+    public static function assertArrayValuesEquals(array $expected, array $value): void
     {
         $expected = array_values($expected);
         $value = array_values($value);
@@ -12,6 +14,6 @@ trait ArrayAsserts
         sort($expected);
         sort($value);
 
-        $this->assertEquals($expected, $value);
+        static::assertEquals($expected, $value);
     }
 }

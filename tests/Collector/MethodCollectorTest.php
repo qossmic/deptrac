@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PhpParser\Node;
@@ -59,7 +61,7 @@ class MethodCollectorTest extends TestCase
     /**
      * @dataProvider dataProviderSatisfy
      */
-    public function testStatisfy(array $configuration, array $methods, bool $expected): void
+    public function testSatisfy(array $configuration, array $methods, bool $expected): void
     {
         $className = 'foo';
 

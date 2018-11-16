@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
@@ -27,12 +29,12 @@ class JUnitOutputFormatterTest extends TestCase
         }
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
-        $this->assertSame('junit', (new JUnitOutputFormatter())->getName());
+        static::assertSame('junit', (new JUnitOutputFormatter())->getName());
     }
 
-    public function basicDataProvider()
+    public function basicDataProvider(): iterable
     {
         yield [
             [
@@ -87,7 +89,7 @@ class JUnitOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $layers, array $violations, $expectedOutputFile)
+    public function testBasic(array $layers, array $violations, $expectedOutputFile): void
     {
         $classNameResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         $classNameResolver->getLayers()->willReturn($layers);
@@ -106,14 +108,14 @@ class JUnitOutputFormatterTest extends TestCase
             new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])
         );
 
-        $this->assertXmlFileEqualsXmlFile(
+        static::assertXmlFileEqualsXmlFile(
             __DIR__.'/data/'.static::$actual_junit_report_file,
             __DIR__.'/data/'.$expectedOutputFile
         );
     }
 
-    public function testGetOptions()
+    public function testGetOptions(): void
     {
-        $this->assertCount(1, (new JUnitOutputFormatter())->configureOptions());
+        static::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
     }
 }

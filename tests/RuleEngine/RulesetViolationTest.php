@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\RuleEngine;
 
 use PHPUnit\Framework\TestCase;
@@ -8,7 +10,7 @@ use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class RulesetViolationTest extends TestCase
 {
-    public function testGetSet()
+    public function testGetSet(): void
     {
         $ruleViolation = new RulesetViolation(
             $dep = $this->prophesize(DependencyInterface::class)->reveal(),
@@ -16,8 +18,8 @@ class RulesetViolationTest extends TestCase
             'layerB'
         );
 
-        $this->assertSame($dep, $ruleViolation->getDependency());
-        $this->assertEquals('layerA', $ruleViolation->getLayerA());
-        $this->assertEquals('layerB', $ruleViolation->getLayerB());
+        static::assertSame($dep, $ruleViolation->getDependency());
+        static::assertEquals('layerA', $ruleViolation->getLayerA());
+        static::assertEquals('layerB', $ruleViolation->getLayerB());
     }
 }

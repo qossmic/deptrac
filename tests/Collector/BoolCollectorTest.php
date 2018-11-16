@@ -1,54 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
-use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
+use SensioLabs\Deptrac\Collector\Registry;
 
 class BoolCollectorTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSatisfy()
+    public function testSatisfy(): void
     {
-        $stat = (new BoolCollector())->satisfy(
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('bool collector must have a must or a must_not attribute');
+
+        (new BoolCollector())->satisfy(
             [],
-            $this->prophesize(AstClassReferenceInterface::class)->reveal(),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal(),
-            $this->prophesize(AstParserInterface::class)->reveal()
+            $this->createMock(AstClassReferenceInterface::class),
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class),
+            $this->createMock(AstParserInterface::class)
         );
-
-        $this->assertEquals(true, $stat);
     }
 
-    public function testType()
+    public function testType(): void
     {
-        $this->assertEquals('bool', (new BoolCollector())->getType());
+        static::assertEquals('bool', (new BoolCollector())->getType());
     }
 
-    public function getCalculatorMock(bool $returns)
+    private function getCalculatorMock(bool $returns)
     {
-        $collector = $this->prophesize(CollectorInterface::class);
-        $collector->satisfy(
-            ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
-            Argument::type(AstClassReferenceInterface::class),
-            Argument::type(AstMap::class),
-            Argument::type(Registry::class),
-            Argument::type(AstParserInterface::class)
-        )->willReturn($returns);
+        $collector = $this->createMock(CollectorInterface::class);
+        $collector
+            ->method('satisfy')
+            ->with(
+                ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
+                static::isInstanceOf(AstClassReferenceInterface::class),
+                static::isInstanceOf(AstMap::class),
+                static::isInstanceOf(Registry::class),
+                static::isInstanceOf(AstParserInterface::class)
+            )
+            ->willReturn($returns);
 
-        return $collector->reveal();
+        return $collector;
     }
 
-    public function provideSatisfyBasic()
+    public function provideSatisfyBasic(): iterable
     {
         // must
         yield [
@@ -152,7 +154,7 @@ class BoolCollectorTest extends TestCase
     /**
      * @dataProvider provideSatisfyBasic
      */
-    public function testSatisfyBasicTest(array $configuration, bool $expected)
+    public function testSatisfyBasicTest(array $configuration, bool $expected): void
     {
         $collectorFactory = $this->prophesize(Registry::class);
         $collectorFactory->getCollector('true')->willReturn(
@@ -181,6 +183,6 @@ class BoolCollectorTest extends TestCase
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 
-        $this->assertEquals($expected, $stat);
+        static::assertEquals($expected, $stat);
     }
 }

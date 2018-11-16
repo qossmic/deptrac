@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
@@ -8,13 +10,13 @@ use SensioLabs\Deptrac\Collector\Registry;
 
 class RegistryTest extends TestCase
 {
-    public function testGetCollector()
+    public function testGetCollector(): void
     {
         $fooCollector = $this->prophesize(CollectorInterface::class);
         $fooCollector->getType()->willReturn('foo');
         $fooCollector = $fooCollector->reveal();
 
-        $this->assertSame(
+        static::assertSame(
             $fooCollector,
             (new Registry([
                 $fooCollector,
@@ -25,7 +27,7 @@ class RegistryTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetUnknownCollector()
+    public function testGetUnknownCollector(): void
     {
         (new Registry([]))->getCollector('foo');
     }
