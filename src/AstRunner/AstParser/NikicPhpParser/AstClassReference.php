@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;

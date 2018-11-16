@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac\Collector;
 
 use PhpParser\Node\Stmt\ClassMethod;

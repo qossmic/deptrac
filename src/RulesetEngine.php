@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;

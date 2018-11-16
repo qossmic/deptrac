@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\DependencyContext;
@@ -65,7 +67,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         return $xmlDoc->saveXML();
     }
 
-    private function addTestSuites(DependencyContext $dependencyContext, \DOMDocument $xmlDoc)
+    private function addTestSuites(DependencyContext $dependencyContext, \DOMDocument $xmlDoc): void
     {
         $testSuites = $xmlDoc->createElement('testsuites');
 
@@ -74,7 +76,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $this->addTestSuite($dependencyContext, $xmlDoc, $testSuites);
     }
 
-    private function addTestSuite(DependencyContext $dependencyContext, \DOMDocument $xmlDoc, \DOMElement $testSuites)
+    private function addTestSuite(DependencyContext $dependencyContext, \DOMDocument $xmlDoc, \DOMElement $testSuites): void
     {
         $layers = $dependencyContext->getClassNameLayerResolver()->getLayers();
 
@@ -91,14 +93,14 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             }
 
             $testSuite = $xmlDoc->createElement('testsuite');
-            $testSuite->appendChild(new \DOMAttr('id', ++$layerIndex));
+            $testSuite->appendChild(new \DOMAttr('id', (string) ++$layerIndex));
             $testSuite->appendChild(new \DOMAttr('package', ''));
             $testSuite->appendChild(new \DOMAttr('name', $layer));
             $testSuite->appendChild(new \DOMAttr('hostname', 'localhost'));
-            $testSuite->appendChild(new \DOMAttr('tests', count($violationsByClassName)));
-            $testSuite->appendChild(new \DOMAttr('failures', count($violationsByLayer)));
-            $testSuite->appendChild(new \DOMAttr('errors', 0));
-            $testSuite->appendChild(new \DOMAttr('time', 0));
+            $testSuite->appendChild(new \DOMAttr('tests', (string) count($violationsByClassName)));
+            $testSuite->appendChild(new \DOMAttr('failures', (string) count($violationsByLayer)));
+            $testSuite->appendChild(new \DOMAttr('errors', '0'));
+            $testSuite->appendChild(new \DOMAttr('time', '0'));
 
             $testSuites->appendChild($testSuite);
 
@@ -106,13 +108,13 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function addTestCase(string $layer, array $violationsByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite)
+    private function addTestCase(string $layer, array $violationsByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite): void
     {
         foreach ($violationsByClassName as $className => $violations) {
             $testCase = $xmlDoc->createElement('testcase');
             $testCase->appendChild(new \DOMAttr('name', $layer.' - '.$className));
             $testCase->appendChild(new \DOMAttr('classname', $className));
-            $testCase->appendChild(new \DOMAttr('time', 0));
+            $testCase->appendChild(new \DOMAttr('time', '0'));
 
             foreach ($violations as $violation) {
                 $this->addFailure($violation, $xmlDoc, $testCase);
@@ -122,7 +124,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function addFailure(RulesetViolation $violation, \DOMDocument $xmlDoc, \DOMElement $testCase)
+    private function addFailure(RulesetViolation $violation, \DOMDocument $xmlDoc, \DOMElement $testCase): void
     {
         $dependency = $violation->getDependency();
 

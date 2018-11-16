@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SensioLabs\Deptrac\Command;
 
 use SensioLabs\Deptrac\Configuration\Dumper as ConfigurationDumper;
