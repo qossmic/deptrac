@@ -7,7 +7,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node\Stmt;
 use PhpParser\Parser;
 
-class FileParser
+class FileParser implements FileParserInterface
 {
     private $parser;
 

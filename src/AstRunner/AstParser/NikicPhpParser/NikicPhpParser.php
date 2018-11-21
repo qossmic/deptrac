@@ -7,7 +7,6 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
-use PhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
@@ -25,13 +24,12 @@ class NikicPhpParser implements AstParserInterface
 
     private $fileParser;
 
-    public function __construct()
+    public function __construct(FileParserInterface $fileParser)
     {
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new NameResolver());
 
-        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
-        $this->fileParser = new CacheableFileParser(new FileParser($parser));
+        $this->fileParser = $fileParser;
     }
 
     public function supports($data): bool

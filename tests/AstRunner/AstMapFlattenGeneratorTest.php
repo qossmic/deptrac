@@ -6,7 +6,9 @@ namespace Tests\SensioLabs\Deptrac\AstRunner;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA;
@@ -35,7 +37,7 @@ class AstMapFlattenGeneratorTest extends TestCase
     private function getAstMap(string $fixture): AstMap
     {
         return (new AstRunner(new EventDispatcher()))->createAstMapByFiles(
-            new NikicPhpParser(),
+            new NikicPhpParser(new FileParser(ParserFactory::createParser())),
             [new \SplFileInfo(__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php')]
         );
     }

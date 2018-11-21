@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Command;
 
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
@@ -25,6 +26,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyzeCommand extends Command
 {
+    private $parser;
     private $configurationLoader;
     private $fileResolver;
     private $dispatcher;
@@ -35,6 +37,7 @@ class AnalyzeCommand extends Command
     private $dependencyAnalyzer;
 
     public function __construct(
+        AstParserInterface $parser,
         ConfigurationLoader $configurationLoader,
         FileResolver $fileResolver,
         EventDispatcherInterface $dispatcher,
@@ -44,6 +47,7 @@ class AnalyzeCommand extends Command
         Registry $collectorRegistry,
         DependencyAnalyzer $dependencyAnalyzer
     ) {
+        $this->parser = $parser;
         $this->configurationLoader = $configurationLoader;
         $this->fileResolver = $fileResolver;
         $this->dispatcher = $dispatcher;
@@ -84,13 +88,12 @@ class AnalyzeCommand extends Command
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
 
-        $parser = new NikicPhpParser();
-        $astMap = $this->astRunner->createAstMapByFiles($parser, $this->fileResolver->resolve($configuration));
+        $astMap = $this->astRunner->createAstMapByFiles($this->parser, $this->fileResolver->resolve($configuration));
 
-        $dependencyResult = $this->dependencyAnalyzer->analyze($parser, $astMap);
+        $dependencyResult = $this->dependencyAnalyzer->analyze($this->parser, $astMap);
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
-            new ClassNameLayerResolver($configuration, $astMap, $this->collectorRegistry, $parser)
+            new ClassNameLayerResolver($configuration, $astMap, $this->collectorRegistry, $this->parser)
         );
 
         $this->printCollectViolations($output);

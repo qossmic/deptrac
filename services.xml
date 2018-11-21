@@ -6,10 +6,35 @@
     <services>
         <defaults public="false"/>
 
-        <service id="Symfony\Component\EventDispatcher\EventDispatcher"/>
+        <service id="SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser"/>
+        </service>
+
+        <service id="Symfony\Component\EventDispatcher\EventDispatcher">
+            <call method="addSubscriber">
+                <argument type="service" id="SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber"/>
+            </call>
+        </service>
 
         <service id="SensioLabs\Deptrac\AstRunner\AstRunner">
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
+        </service>
+
+        <service id="sensiolabs.deptrac.astrunner.nikic_php_parser" class="PhpParser\Parser">
+            <factory class="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory" method="createParser"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser">
+            <argument type="service" id="sensiolabs.deptrac.astrunner.nikic_php_parser"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser"
+                 decorates="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser.inner"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser"/>
         </service>
 
         <service id="SensioLabs\Deptrac\OutputFormatterFactory">
@@ -86,6 +111,7 @@
         </service>
 
         <service id="SensioLabs\Deptrac\Command\AnalyzeCommand" public="true">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"/>
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
             <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
