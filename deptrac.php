@@ -18,7 +18,7 @@ $container = new ContainerBuilder();
 (new XmlFileLoader($container, new FileLocator(__DIR__)))->load('services.xml');
 $container->compile();
 
-$application = new Application();
+$application = new Application('deptrac', '@git-version@');
 $application->add($container->get(InitCommand::class));
 $application->add($container->get(AnalyzeCommand::class));
 $application->setDefaultCommand('analyze');
