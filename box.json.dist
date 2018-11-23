@@ -1,6 +1,11 @@
 {
+  "compactors": [
+    "Herrera\\Box\\Compactor\\Php",
+    "Herrera\\Box\\Compactor\\Json"
+  ],
   "files": [
     "services.xml"
   ],
-  "main": "deptrac.php"
+  "main": "deptrac.php",
+  "git-version": "git-version"
 }
