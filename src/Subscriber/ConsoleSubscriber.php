@@ -10,12 +10,15 @@ use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Dependency\Events as DependencyEvents;
 use SensioLabs\Deptrac\Dependency\PreEmitEvent;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleSubscriber implements EventSubscriberInterface
 {
     protected $output;
+
+    private $progressBar;
 
     public function __construct(OutputInterface $output)
     {
@@ -42,6 +45,10 @@ class ConsoleSubscriber implements EventSubscriberInterface
             'Start to create an AstMap for <info>%u</info> Files.',
             $preCreateAstMapEvent->getExpectedFileCount()
         ));
+
+        if ($this->output->getVerbosity() < OutputInterface::VERBOSITY_VERBOSE) {
+            $this->progressBar = new ProgressBar($this->output, $preCreateAstMapEvent->getExpectedFileCount());
+        }
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
@@ -53,8 +60,8 @@ class ConsoleSubscriber implements EventSubscriberInterface
     {
         if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
             $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()));
-        } else {
-            $this->output->write('.');
+        } elseif ($this->progressBar instanceof ProgressBar) {
+            $this->progressBar->advance();
         }
     }
 
