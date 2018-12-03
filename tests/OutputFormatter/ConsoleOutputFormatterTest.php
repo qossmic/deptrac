@@ -46,6 +46,7 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
                 ClassInheritD::6 ->
@@ -66,6 +67,7 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             '
                 OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
 
@@ -76,9 +78,26 @@ class ConsoleOutputFormatterTest extends TestCase
         yield [
             [
             ],
+            [],
             '
 
                 Found 0 Violations
+            ',
+        ];
+
+        yield [
+            [
+                $violation = new RulesetViolation(
+                    new Dependency('OriginalA', 12, 'OriginalB'),
+                    'LayerA',
+                    'LayerB'
+                ),
+            ],
+            [
+                $violation,
+            ],
+            '[SKIPPED] OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
+            Found 0 Violations and 1 Violations skipped
             ',
         ];
     }
@@ -86,7 +105,7 @@ class ConsoleOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $violations, string $expectedOutput): void
+    public function testBasic(array $violations, array $skippedViolations, string $expectedOutput): void
     {
         $output = new BufferedOutput();
 
@@ -96,7 +115,8 @@ class ConsoleOutputFormatterTest extends TestCase
                 $this->prophesize(AstMap::class)->reveal(),
                 $violations,
                 $this->prophesize(Result::class)->reveal(),
-                $this->prophesize(ClassNameLayerResolverInterface::class)->reveal()
+                $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
+                $skippedViolations
             ),
             $output,
             new OutputFormatterInput([])
@@ -116,6 +136,6 @@ class ConsoleOutputFormatterTest extends TestCase
 
     private function normalize($str)
     {
-        return str_replace(["\t", "\n", ' '], '', $str);
+        return str_replace(["\r", "\t", "\n", ' '], '', $str);
     }
 }

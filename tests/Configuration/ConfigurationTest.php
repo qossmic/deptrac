@@ -78,4 +78,23 @@ class ConfigurationTest extends TestCase
 
         static::assertEquals([], $configuration->getExcludeFiles());
     }
+
+    public function testSkipViolations(): void
+    {
+        $configuration = Configuration::fromArray([
+            'layers' => [],
+            'paths' => [],
+            'exclude_files' => null,
+            'ruleset' => [],
+            'skip_violations' => [
+                'FooClass' => [
+                    'BarClass',
+                    'AnotherClass',
+                ],
+            ],
+        ]);
+
+        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped('FooClass', 'BarClass'));
+        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped('FooClass', 'AnotherClass'));
+    }
 }

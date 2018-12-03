@@ -34,27 +34,42 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     ): void {
         foreach ($dependencyContext->getViolations() as $violation) {
             if ($violation->getDependency() instanceof InheritDependency) {
-                $this->handleInheritDependency($violation, $output);
+                $this->handleInheritDependency($violation, $output, $dependencyContext->isViolationSkipped($violation));
                 continue;
             }
 
-            $this->handleDependency($violation, $output);
+            $this->handleDependency($violation, $output, $dependencyContext->isViolationSkipped($violation));
         }
 
-        if (count($dependencyContext->getViolations())) {
-            $output->writeln(sprintf("\nFound <error>%s Violations</error>", count($dependencyContext->getViolations())));
+        $violationCount = \count($dependencyContext->getViolations());
+        $skippedViolationCount = \count($dependencyContext->getSkippedViolations());
+        if ($violationCount > $skippedViolationCount) {
+            $output->writeln(
+                sprintf(
+                    "\nFound <error>%s Violations</error>".($skippedViolationCount ? ' and %s Violations skipped' : ''),
+                    $violationCount - $skippedViolationCount,
+                    $skippedViolationCount
+                )
+            );
         } else {
-            $output->writeln(sprintf("\nFound <info>%s Violations</info>", count($dependencyContext->getViolations())));
+            $output->writeln(
+                sprintf(
+                    "\nFound <info>%s Violations</info>".($skippedViolationCount ? ' and %s Violations skipped' : ''),
+                    $violationCount - $skippedViolationCount,
+                    $skippedViolationCount
+                )
+            );
         }
     }
 
-    private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output)
+    private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output, bool $isSkipped)
     {
         /** @var InheritDependency $dependency */
         $dependency = $violation->getDependency();
         $output->writeln(
             sprintf(
-                "<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
+                "%s<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
+                $isSkipped ? '[SKIPPED] ' : '',
                 $dependency->getClassA(),
                 $dependency->getClassB(),
                 $violation->getLayerA(),
@@ -64,11 +79,12 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function handleDependency(RulesetViolation $violation, OutputInterface $output)
+    private function handleDependency(RulesetViolation $violation, OutputInterface $output, bool $isSkipped)
     {
         $output->writeln(
             sprintf(
-                '<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
+                '%s<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
+                $isSkipped ? '[SKIPPED] ' : '',
                 $violation->getDependency()->getClassA(),
                 $violation->getDependency()->getClassALine(),
                 $violation->getDependency()->getClassB(),

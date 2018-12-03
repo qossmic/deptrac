@@ -59,6 +59,7 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             'expected-junit-report_1.xml',
         ];
 
@@ -74,6 +75,7 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             'expected-junit-report_2.xml',
         ];
 
@@ -82,14 +84,60 @@ class JUnitOutputFormatterTest extends TestCase
             ],
             [
             ],
+            [],
             'expected-junit-report_3.xml',
+        ];
+
+        yield [
+            [
+                'LayerA',
+                'LayerB',
+            ],
+            [
+                $violations = new RulesetViolation(
+                    new InheritDependency(
+                        'ClassA',
+                        'ClassB',
+                        new Dependency('OriginalA', 12, 'OriginalB'),
+                        new FlattenAstInherit(
+                            AstInherit::newExtends('ClassInheritA', 3), [
+                                AstInherit::newExtends('ClassInheritB', 4),
+                                AstInherit::newExtends('ClassInheritC', 5),
+                                AstInherit::newExtends('ClassInheritD', 6),
+                            ]
+                        )
+                    ),
+                    'LayerA',
+                    'LayerB'
+                ),
+                new RulesetViolation(
+                    new InheritDependency(
+                        'ClassC',
+                        'ClassD',
+                        new Dependency('OriginalA', 12, 'OriginalB'),
+                        new FlattenAstInherit(
+                            AstInherit::newExtends('ClassInheritA', 3), [
+                                AstInherit::newExtends('ClassInheritB', 4),
+                                AstInherit::newExtends('ClassInheritC', 5),
+                                AstInherit::newExtends('ClassInheritD', 6),
+                            ]
+                        )
+                    ),
+                    'LayerA',
+                    'LayerB'
+                ),
+            ],
+            [
+                $violations,
+            ],
+            'expected-junit-report-with-skipped-violations.xml',
         ];
     }
 
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $layers, array $violations, $expectedOutputFile): void
+    public function testBasic(array $layers, array $violations, array $skippedViolations, $expectedOutputFile): void
     {
         $classNameResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         $classNameResolver->getLayers()->willReturn($layers);
@@ -102,7 +150,8 @@ class JUnitOutputFormatterTest extends TestCase
                 $this->prophesize(AstMap::class)->reveal(),
                 $violations,
                 $this->prophesize(Result::class)->reveal(),
-                $classNameResolver->reveal()
+                $classNameResolver->reveal(),
+                $skippedViolations
             ),
             $output,
             new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])

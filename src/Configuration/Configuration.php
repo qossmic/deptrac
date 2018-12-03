@@ -12,6 +12,7 @@ class Configuration
     private $paths;
     private $excludeFiles;
     private $ruleset;
+    private $skipViolations;
 
     public static function fromArray(array $arr): self
     {
@@ -21,10 +22,12 @@ class Configuration
             'ruleset',
         ])
         ->setDefault('exclude_files', [])
+        ->setDefault('skip_violations', [])
         ->addAllowedTypes('layers', 'array')
         ->addAllowedTypes('paths', 'array')
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
+        ->addAllowedTypes('skip_violations', 'array')
         ->resolve($arr);
 
         return new static(
@@ -33,6 +36,7 @@ class Configuration
             }, $options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
             $options['paths'],
+            ConfigurationSkippedViolation::fromArray($options['skip_violations']),
             (array) $options['exclude_files']
         );
     }
@@ -42,12 +46,13 @@ class Configuration
      * @param string[]             $paths
      * @param string[]             $excludeFiles
      */
-    private function __construct(array $layers, ConfigurationRuleset $ruleset, array $paths, array $excludeFiles = [])
+    private function __construct(array $layers, ConfigurationRuleset $ruleset, array $paths, ConfigurationSkippedViolation $skipViolations, array $excludeFiles = [])
     {
         $this->layers = $layers;
         $this->ruleset = $ruleset;
         $this->paths = $paths;
         $this->excludeFiles = $excludeFiles;
+        $this->skipViolations = $skipViolations;
     }
 
     /**
@@ -77,5 +82,10 @@ class Configuration
     public function getRuleset(): ConfigurationRuleset
     {
         return $this->ruleset;
+    }
+
+    public function getSkipViolations(): ConfigurationSkippedViolation
+    {
+        return $this->skipViolations;
     }
 }
