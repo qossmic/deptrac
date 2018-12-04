@@ -30,7 +30,7 @@ class AstRunner
         $astMap = new AstMap($astParser);
 
         foreach ($files as $file) {
-            if (! $astParser->supports($file)) {
+            if (!$astParser->supports($file)) {
                 continue;
             }
 

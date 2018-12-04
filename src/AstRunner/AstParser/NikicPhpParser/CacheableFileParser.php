@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\JsonDecoder;
+use SensioLabs\Deptrac\Console\Application;
 
 class CacheableFileParser implements FileParserInterface
 {
@@ -51,16 +52,20 @@ class CacheableFileParser implements FileParserInterface
 
         $cache = json_decode(file_get_contents($this->cacheFile), true);
 
+        $this->loaded = true;
+
+        if (Application::VERSION !== $cache['version']) {
+            return;
+        }
+
         $this->cache = array_map(
             function (array $data) {
                 $data['ast'] = $this->jsonDecoder->decode($data['ast']);
 
                 return $data;
             },
-            $cache
+            $cache['payload']
         );
-
-        $this->loaded = true;
     }
 
     public function write(): void
@@ -72,14 +77,17 @@ class CacheableFileParser implements FileParserInterface
         file_put_contents(
             $this->cacheFile,
             json_encode(
-                array_map(
-                    function (array $data) {
-                        $data['ast'] = json_encode($data['ast']);
+                [
+                    'version' => Application::VERSION,
+                    'payload' => array_map(
+                        function (array $data) {
+                            $data['ast'] = json_encode($data['ast']);
 
-                        return $data;
-                    },
-                    $this->cache
-                )
+                            return $data;
+                        },
+                        $this->cache
+                    ),
+                ]
             )
         );
     }

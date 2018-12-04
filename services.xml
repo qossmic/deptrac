@@ -106,11 +106,11 @@
         <service id="SensioLabs\Deptrac\FileResolver"/>
 
         <!-- COMMANDS -->
-        <service id="SensioLabs\Deptrac\Command\InitCommand" public="true">
+        <service id="SensioLabs\Deptrac\Console\Command\InitCommand" public="true">
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Dumper"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\Command\AnalyzeCommand" public="true">
+        <service id="SensioLabs\Deptrac\Console\Command\AnalyzeCommand" public="true">
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"/>
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
             <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>

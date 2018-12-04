@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Command;
+namespace SensioLabs\Deptrac\Console\Command;
 
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;

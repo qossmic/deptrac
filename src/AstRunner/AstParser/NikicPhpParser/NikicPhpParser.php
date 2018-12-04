@@ -60,7 +60,7 @@ class NikicPhpParser implements AstParserInterface
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
                 $className = $classLikeNode->namespacedName->toString();
             } else {
-                $className = (string)$classLikeNode->name;
+                $className = (string) $classLikeNode->name;
             }
 
             $fileReference->addClassReference($className);
