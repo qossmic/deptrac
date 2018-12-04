@@ -17,30 +17,30 @@ this rule was violated.
 
 1. [Introduction Video](#introduction-video)
 1. [Getting Started](#getting-started)
-    1. [The depfile](#the-depfile)
+    1. [The Depfile](#the-depfile)
     1. [Explanation](#explanation)
 1. [Installation](#installation)
     1. [PHAR](#phar)
     1. [Composer](#composer)
     1. [PHIVE](#phive)
-    1. [Optional dependency: Graphviz](#optional-dependency-graphviz)
+    1. [Optional Dependency: Graphviz](#optional-dependency-graphviz)
 1. [Run Deptrac](#run-deptrac)
 1. [Layers](#layers)
     1. [Collecting Layers](#collecting-layers)
 1. [Violations](#violations)
-1. [Ruleset (allowing dependencies)](#ruleset-allowing-dependencies)
-1. [Different layers and different views](#different-layers-and-different-views)
+1. [Ruleset (Allowing Dependencies)](#ruleset-allowing-dependencies)
+1. [Different Layers and Different Views](#different-layers-and-different-views)
 1. [Collectors](#collectors)
     1. [`className` Collector](#classname-collector)
     1. [`classNameRegex` Collector](#classnameregex-collector)
     1. [`directory` Collector](#directory-collector)
     1. [`bool` Collector](#bool-collector)
-    1. [More collectors](#more-collectors)
+    1. [More Collectors](#more-collectors)
 1. [Formatters](#formatters)
-    1. [Console formatter](#console-formatter)
+    1. [Console Formatter](#console-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
-1. [Build deptrac](#build-deptrac)
+1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
 
 ## Introduction Video
@@ -65,7 +65,7 @@ In this file you define (mainly) three things:
 3. The allowed dependencies between your layers.
 
 
-### The depfile
+### The Depfile
 
 Let's have a look at the generated file:
 
@@ -109,15 +109,15 @@ We defined three `layers` in the example: *Controller*, *Repository* and *Servic
 Deptrac is using so called `collectors` to group classes into `layers` (in this case by the name of the class).
 
 The `ruleset` section defines, how these layers may or may not depend on other layers.
-In the example, every class of the *Controller*-layer may depend on classes that reside in the *Service*-layer,
-and classes in the *Service*-layer may depend on classes in the *Repository*-layer.
+In the example, every class of the *Controller* layer may depend on classes that reside in the *Service* layer,
+and classes in the *Service* layer may depend on classes in the *Repository* layer.
 
-Classes in the *Repository*-layer may NOT depend on any classes in other layers.
-The `ruleset` acts as a whitelist, therefore the *Repository*-layer rules can be omitted, however
+Classes in the *Repository* layer may NOT depend on any classes in other layers.
+The `ruleset` acts as a whitelist, therefore the *Repository* layer rules can be omitted, however
 explicitly stating that the layer may not depend on other layers is more declarative.
 
-If a class in the *Repository*-layer uses a class in the *Service*-layer, deptrac will recognize the dependency
-and throws a violation for this case. The same counts if a *Service*-layer-class uses a *Controller*-layer-class.
+If a class in the *Repository* layer uses a class in the *Service* layer, deptrac will recognize the dependency
+and raises a violation for this case. The same counts if a *Service* layer class uses a *Controller* layer class.
 
 
 ## Installation
@@ -140,7 +140,7 @@ sudo mv deptrac.phar /usr/local/bin/deptrac
 
 ### Composer
 
-We are not recommend installing this repository via composer. Insteas please use the dedicated distribution repository https://github.com/sensiolabs-de/deptrac-shim.
+We do not recommend installing this repository via Composer. Instead please use the dedicated distribution repository https://github.com/sensiolabs-de/deptrac-shim.
 
 ### PHIVE
 
@@ -152,10 +152,10 @@ To upgrade Deptrac use the following command:
 
 `phive update -g sensiolabs-de/deptrac --force-accept-unsigned`
 
-### Optional dependency: Graphviz
+### Optional Dependency: Graphviz
 
 If you want to create graphical diagrams with your class dependencies, you will also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
-Graphviz can be install using common package managers:
+Graphviz can be installed using common package managers:
 
 ```bash
 # for osx + brew
@@ -165,7 +165,7 @@ brew install graphviz
 sudo apt-get install graphviz
 ```
 
-Graphviz is also available for [Windows](http://www.graphviz.org/Download_windows.php): install the current stable release and append the binary path on the environment variable Path (like ``C:\Program Files (x86)\Graphviz2.38\bin``).
+Graphviz is also available for [Windows](http://www.graphviz.org/Download_windows.php): Install the current stable release and append the binary path on the environment variable Path (like ``C:\Program Files (x86)\Graphviz2.38\bin``).
 
 
 ## Run Deptrac
@@ -187,16 +187,15 @@ If you run `php deptrac.phar -v` you'll get a more verbose output.
 Deptrac allows you to group different classes into *layers*.
 Technically layers are nothing more than a collection of classes.
 
-Each layer has a unique name and a list of one or more collectors, which will look for classes that should be assigned to this layer
-(and yes, classes can be assigned to more than one layer).
+Each layer has a unique name and a list of one or more collectors, which will look for classes that should be assigned to this layer (and yes, classes can be assigned to more than one layer).
 
 (Hopefully) most software is written with some kind of layers in mind.
 For example a typical MVC application has at least controllers, models and views.
 
 Deptrac allows you to visualize and enforce rulesets, based on such layer information.
 
-So, you could define that every class that ends with `Controller` will be assigned to the *Controller*-layer, and
-every class, that has a `\Model\` in its namespace, will be added to the *Model*-layer.
+So you could define that every class that ends with `Controller` will be assigned to the *Controller* layer, and
+every class that has `\Model\` in its namespace will be added to the *Model* layer.
 
 Say you are adopting MVC, most of the time you do not want your models to access controllers, but it is allowed for controllers
 to access models. Deptrac allows you to enforce and visualize these dependencies/rules.
@@ -273,7 +272,7 @@ So it's fine that deptrac will show us 2 independent layers without any relation
 
 ## Violations
 
-If we've 2 layers (*Models*, *Controller*) and one layer is using the other, deptrac will raise a violation by default:
+If we have 2 layers (*Models*, *Controller*) and one layer is using the other, deptrac will raise a violation by default:
 
 ```php
 // see the example in examples/ModelController2
@@ -320,18 +319,18 @@ Deptrac has found two violations because the relation from the controller to mod
 The console output shows exactly the lines deptrac found.
 
 
-## Ruleset (allowing dependencies)
+## Ruleset (Allowing Dependencies)
 
 Allowed dependencies between layers are configured in *rulesets*.
 
 By default deptrac will raise a violation for every dependency between layers.
 In real software you want to allow dependencies between different kinds of layers.
 
-As a lot of architectures define some kind of *Controllers*, *Services* and *Repositories*, a natural approach for this would be to allow:
+As a lot of architectures define some kind of *controllers*, *services* and *repositories*, a natural approach for this would be to define these rules:
 
-- *controllers* may access *service*, but not *repositories*
-- *services* may access *repositories*, but not *controllers*
-- *repositories* neither may access services nor *controllers*.
+- *Controllers* may access *services*, but not *repositories*.
+- *Services* may access *repositories*, but not *controllers*.
+- *Repositories* neither may access services nor *controllers*.
 
 We can define this using the following depfile:
 
@@ -360,8 +359,8 @@ ruleset:
   Repository: ~
 ```
 
-Take a closer look at the rulset.
-We whitelist that *controller* can access *service* and *service* can access *repository*.
+Take a closer look at the ruleset.
+We whitelist that *Controller* can access *Service* and *Service* can access *Repository*.
 
 After running deptrac we will get this result:
 
@@ -395,7 +394,7 @@ class SomeRepository { }
 If we remove the `use` statement and rerun deptrac, the violation will disappear.
 
 
-## Different layers and different views
+## Different Layers and Different Views
 
 In the example above we defined 3 different layers (*controller*, *repository* and *service*).
 Deptrac gives architects the power to define what kind of layers exist.
@@ -471,7 +470,7 @@ Every file path that matches the regular expression `src/Controller/.*` becomes 
 This collector has predefined delimiters and modifier: `#YOUR_EXPRESSION#i`
 
 
-### `bool` collector
+### `bool` Collector
 
 The `bool` collector allows combining other collectors with or without negation.
 
@@ -490,10 +489,10 @@ layers:
             regex: .*Assetic.*
 ```
 
-Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will become a part of the *Asset*-layer.
+Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
 
 
-### More collectors
+### More Collectors
 
 As deptrac is in a very early state, feel free to contribute your own collector.
 
@@ -508,9 +507,9 @@ You can get a list of available formatters by running,
 php deptrac.php analyze --help
 ```
 
-*Hint*: Symfony Console does not allow to pass options to the default command. Therefore in order to use the formatter-options you have to explicitly use the `analyze` command as shown above.
+*Hint*: Symfony Console does not allow to pass options to the default command. Therefore in order to use the formatter options you have to explicitly use the `analyze` command as shown above.
 
-### Console formatter
+### Console Formatter
 
 The default formatter is the console formatter, which dumps basic information to *STDOUT*,
 
@@ -518,7 +517,7 @@ The default formatter is the console formatter, which dumps basic information to
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
 ```
 
-Supported Options:
+Supported options:
 
 ```
 --formatter-console=         to disable the console fomatter, set this option to "false" [default: true]
@@ -531,7 +530,7 @@ The Graphviz formatter is disabled by default. It could be activated with `--for
 Deptrac automatically tries to open the image generated by Graphviz.
 You can disable automatic opening of the image by setting the `--formatter-graphviz-display=false` option, which is useful on CI-servers.
 
-Supported Options:
+Supported options:
 
 ```
 --formatter-graphviz=                   to activate the graphviz fomatter, set this option to "true" [default: false]
@@ -571,20 +570,20 @@ It is disabled by default, to activate the formatter just use `--formatter-junit
 </testsuites>
 ```
 
-Supported Options:
+Supported options:
 
 ```
---formatter-junit=              to activate the junit fomatter, set this option to "true" [default: false]
+--formatter-junit=              to activate the JUnit fomatter, set this option to "true" [default: false]
 --formatter-junit-dump-xml=     path to a dumped xml file [default: "./junit-report.xml"]
 ```
 
 
-## Build deptrac
+## Build Deptrac
 
 
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
-- PHP in version 7.0 or above
+- PHP in version 7.1 or above
 - [Composer](https://getcomposer.org/)
 - [Box](https://github.com/humbug/box)
 - make
