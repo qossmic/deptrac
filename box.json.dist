@@ -1,11 +1,13 @@
 {
   "compactors": [
-    "Herrera\\Box\\Compactor\\Php",
-    "Herrera\\Box\\Compactor\\Json"
+    "KevinGH\\Box\\Compactor\\Json",
+    "KevinGH\\Box\\Compactor\\Php",
+    "KevinGH\\Box\\Compactor\\PhpScoper"
   ],
   "files": [
     "services.xml"
   ],
+  "compression": "GZ",
   "main": "deptrac.php",
   "git-version": "git-version"
 }
