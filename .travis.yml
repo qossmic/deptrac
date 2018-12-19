@@ -1,22 +1,70 @@
-language: php
-
-dist: trusty
-
 sudo: false
 
 git:
     depth: 1
 
 cache:
-  directories:
-    - $HOME/.composer/cache/files
+    directories:
+        - $HOME/.composer/cache/files
+        - $HOME/bin
 
-matrix:
+branches:
+    only:
+        - master
+        - /^v?\d+\.\d+(\.\d+)?$/ # and versions (tags)
+
+stages:
+    - test
+    - build
+
+jobs:
     include:
-        - php: 7.1
-        - php: 7.2
-        - php: 7.3
-    fast_finish: true
+        -   stage: test
+            name: Static analysis
+            language: php
+            php: 7.1
+            before_install:
+                - phpenv config-rm xdebug.ini
+            install:
+                - composer install -o
+                - wget --no-clobber --output-document=$HOME/bin/php-cs-fixer https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar || true
+                - chmod +x $HOME/bin/php-cs-fixer
+                - wget --no-clobber --output-document=$HOME/bin/phpstan https://github.com/phpstan/phpstan/releases/download/0.10.6/phpstan.phar || true
+                - chmod +x $HOME/bin/phpstan
+            script:
+                - $HOME/bin/php-cs-fixer fix --config=.php_cs.dist --dry-run --diff -v --using-cache=no
+                - $HOME/bin/phpstan analyze
 
-install:
-  - make tests
+        -   stage: test
+            name: Unit tests (7.1)
+            language: php
+            php: 7.1
+            install:
+                - make tests
+
+        -   stage: test
+            name: Unit tests (7.2)
+            language: php
+            php: 7.2
+            install:
+                - make tests
+
+        -   stage: test
+            name: Unit tests (7.3)
+            language: php
+            php: 7.3
+            install:
+                - make tests
+
+        -   stage: build
+            language: php
+            php: 7.1
+            before_install:
+                - phpenv config-rm xdebug.ini
+            install:
+                - composer install -o
+                - wget --no-clobber --output-document=$HOME/bin/box https://github.com/humbug/box/releases/download/3.4.0/box.phar || true
+                - chmod +x $HOME/bin/box
+            script:
+                - $HOME/bin/box compile
+                - php deptrac.phar analyze examples/Fixture.depfile.yml

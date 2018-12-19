@@ -35,7 +35,7 @@ class MethodCollector implements CollectorInterface
         $pattern = $this->getPattern($configuration);
 
         foreach ($classMethods as $classMethod) {
-            if (1 === preg_match($pattern, $classMethod->name)) {
+            if (1 === preg_match($pattern, (string) $classMethod->name)) {
                 return true;
             }
         }
