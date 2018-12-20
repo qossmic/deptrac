@@ -5,6 +5,7 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('Fixtures');
 
 return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
