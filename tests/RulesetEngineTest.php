@@ -7,6 +7,7 @@ namespace Tests\SensioLabs\Deptrac;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
+use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
 use SensioLabs\Deptrac\RulesetEngine;
@@ -157,6 +158,75 @@ class RulesetEngineTest extends TestCase
                 $dependencyResult,
                 $classNameLayerResolver->reveal(),
                 ConfigurationRuleset::fromArray($rulesetConfiguration)
+            )
+        );
+    }
+
+    public function provideTestGetSkippedViolations(): array
+    {
+        return [
+            'empty violations' => [
+                [],
+                [
+                    'ClassA' => [
+                        'ClassB',
+                        'ClassC',
+                    ],
+                ],
+                [],
+            ],
+            'not matched violations' => [
+                [
+                    new RulesetEngine\RulesetViolation(
+                        new Dependency('ClassA', 12, 'ClassD'),
+                        'LayerA',
+                        'LayerB'
+                    ),
+                ],
+                [
+                    'ClassA' => [
+                        'ClassB',
+                        'ClassC',
+                    ],
+                ],
+                [],
+            ],
+            'has matched violations' => [
+                [
+                    new RulesetEngine\RulesetViolation(
+                        new Dependency('ClassA', 12, 'ClassD'),
+                        'LayerA',
+                        'LayerB'
+                    ),
+                    $matchedViolation = new RulesetEngine\RulesetViolation(
+                        new Dependency('ClassA', 12, 'ClassB'),
+                        'LayerA',
+                        'LayerB'
+                    ),
+                ],
+                [
+                    'ClassA' => [
+                        'ClassB',
+                        'ClassC',
+                    ],
+                ],
+                [
+                    $matchedViolation,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestGetSkippedViolations
+     */
+    public function testGetSkippedViolations(array $violations, array $skippedViolationsConfig, array $expectedSkippedViolations): void
+    {
+        static::assertSame(
+            $expectedSkippedViolations,
+            (new RulesetEngine())->getSkippedViolations(
+                $violations,
+                ConfigurationSkippedViolation::fromArray($skippedViolationsConfig)
             )
         );
     }

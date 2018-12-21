@@ -1,0 +1,16 @@
+paths: ["./examples/SkipViolations/"]
+layers:
+- name: Core
+  collectors:
+  - type: className
+    regex: Core
+- name: Library
+  collectors:
+  - type: className
+    regex: Library
+ruleset:
+  Core:
+  - Library
+skip_violations:
+  Library\LibClass:
+    - Core\CoreClass

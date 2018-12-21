@@ -318,6 +318,40 @@ Found 2 Violations
 Deptrac has found two violations because the relation from the controller to model layers is not allowed.
 The console output shows exactly the lines deptrac found.
 
+### Skip violations
+
+Deptrac integration into existing CI/CD pipeline might be difficult because of existing dependency violations in the code.
+In this case, you can skip existing violations to gradually improve your code and avoid possibility introduce any new violations.
+
+Violations can be skipped by provided list of dependencies in *skip_violations* configuration section:
+```yaml
+skip_violations:
+  Library\LibClass:
+    - Core\CoreClass
+``` 
+*skip_violations* section contains associative array where a key (`Library\LibClass`) is the name of dependant class 
+and values (`Core\CoreClass`) are dependency classes.
+
+Matched violations will be marked as skipped:
+```bash
+php deptrac.php analyze examples/SkipViolations.yml
+```
+```text
+Start to create an AstMap for 1 Files.
+ ..
+AstMap created.
+start emitting dependencies "InheritanceDependencyEmitter"
+start emitting dependencies "BasicDependencyEmitter"
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+[SKIPPED] Library\LibClass::11 must not depend on Core\CoreClass (Library on Core)
+
+Found 0 Violations and 1 Violations skipped
+``` 
+
 
 ## Ruleset (Allowing Dependencies)
 

@@ -98,12 +98,14 @@ class AnalyzeCommand extends Command
         /** @var RulesetEngine\RulesetViolation[] $violations */
         $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
 
+        $skippedViolations = $this->rulesetEngine->getSkippedViolations($violations, $configuration->getSkipViolations());
+
         $this->printFormattingStart($output);
 
         foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
             try {
                 $formatter->finish(
-                    new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver),
+                    new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver, $skippedViolations),
                     $output,
                     $this->formatterFactory->getOutputFormatterInput($formatter, $input)
                 );
@@ -112,7 +114,7 @@ class AnalyzeCommand extends Command
             }
         }
 
-        return count($violations) ? 1 : 0;
+        return (count($violations) - count($skippedViolations)) ? 1 : 0;
     }
 
     protected function printBanner(OutputInterface $output): void

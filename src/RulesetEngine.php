@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
+use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
@@ -44,5 +45,22 @@ class RulesetEngine
         }
 
         return $violations;
+    }
+
+    /**
+     * @param RulesetViolation[] $violations
+     *
+     * @return RulesetViolation[]
+     */
+    public function getSkippedViolations(array $violations, ConfigurationSkippedViolation $configurationSkipViolation): array
+    {
+        return \array_values(
+            \array_filter($violations, function ($violation) use ($configurationSkipViolation) {
+                /** @var RulesetViolation $violation */
+                $dep = $violation->getDependency();
+
+                return $configurationSkipViolation->isViolationSkipped($dep->getClassA(), $dep->getClassB());
+            })
+        );
     }
 }

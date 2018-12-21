@@ -92,23 +92,26 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
                 $violationsByClassName[$violation->getDependency()->getClassA()][] = $violation;
             }
 
+            $skippedViolationsByLayer = $dependencyContext->getSkippedViolationsByLayerName($layer);
+
             $testSuite = $xmlDoc->createElement('testsuite');
             $testSuite->appendChild(new \DOMAttr('id', (string) ++$layerIndex));
             $testSuite->appendChild(new \DOMAttr('package', ''));
             $testSuite->appendChild(new \DOMAttr('name', $layer));
             $testSuite->appendChild(new \DOMAttr('hostname', 'localhost'));
             $testSuite->appendChild(new \DOMAttr('tests', (string) count($violationsByClassName)));
-            $testSuite->appendChild(new \DOMAttr('failures', (string) count($violationsByLayer)));
+            $testSuite->appendChild(new \DOMAttr('failures', (string) (count($violationsByLayer) - count($skippedViolationsByLayer))));
+            $testSuite->appendChild(new \DOMAttr('skipped', (string) count($skippedViolationsByLayer)));
             $testSuite->appendChild(new \DOMAttr('errors', '0'));
             $testSuite->appendChild(new \DOMAttr('time', '0'));
 
             $testSuites->appendChild($testSuite);
 
-            $this->addTestCase($layer, $violationsByClassName, $xmlDoc, $testSuite);
+            $this->addTestCase($layer, $violationsByClassName, $xmlDoc, $testSuite, $skippedViolationsByLayer);
         }
     }
 
-    private function addTestCase(string $layer, array $violationsByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite): void
+    private function addTestCase(string $layer, array $violationsByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite, array $skippedViolationsByLayer): void
     {
         foreach ($violationsByClassName as $className => $violations) {
             $testCase = $xmlDoc->createElement('testcase');
@@ -117,7 +120,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $testCase->appendChild(new \DOMAttr('time', '0'));
 
             foreach ($violations as $violation) {
-                $this->addFailure($violation, $xmlDoc, $testCase);
+                if (\in_array($violation, $skippedViolationsByLayer, true)) {
+                    $this->addSkipped($xmlDoc, $testCase);
+                } else {
+                    $this->addFailure($violation, $xmlDoc, $testCase);
+                }
             }
 
             $testSuite->appendChild($testCase);
@@ -142,5 +149,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $error->appendChild(new \DOMAttr('type', 'WARNING'));
 
         $testCase->appendChild($error);
+    }
+
+    private function addSkipped(\DOMDocument $xmlDoc, \DOMElement $testCase): void
+    {
+        $skipped = $xmlDoc->createElement('skipped');
+        $testCase->appendChild($skipped);
     }
 }
