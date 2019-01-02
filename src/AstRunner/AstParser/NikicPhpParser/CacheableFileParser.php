@@ -14,6 +14,7 @@ class CacheableFileParser implements FileParserInterface
     private $cacheFile;
     private $loaded = false;
     private $jsonDecoder;
+    private $parsedFiles = [];
 
     public function __construct(FileParser $parser)
     {
@@ -29,6 +30,8 @@ class CacheableFileParser implements FileParserInterface
 
         $realPath = $file->getRealPath();
         $hash = sha1_file($realPath);
+
+        $this->parsedFiles[$realPath] = true;
 
         if (isset($this->cache[$realPath]) && $hash === $this->cache[$realPath]['hash']) {
             return $this->cache[$realPath]['ast'];
@@ -74,19 +77,29 @@ class CacheableFileParser implements FileParserInterface
             return;
         }
 
+        $cache = array_filter(
+            $this->cache,
+            function ($key) {
+                return isset($this->parsedFiles[$key]);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $payload = array_map(
+            function (array $data) {
+                $data['ast'] = json_encode($data['ast']);
+
+                return $data;
+            },
+            $cache
+        );
+
         file_put_contents(
             $this->cacheFile,
             json_encode(
                 [
                     'version' => Application::VERSION,
-                    'payload' => array_map(
-                        function (array $data) {
-                            $data['ast'] = json_encode($data['ast']);
-
-                            return $data;
-                        },
-                        $this->cache
-                    ),
+                    'payload' => $payload,
                 ]
             )
         );
