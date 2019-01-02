@@ -1,6 +1,7 @@
 <?php
 
 use SensioLabs\Deptrac\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -9,4 +10,7 @@ if (PHP_VERSION_ID < 70100) {
     exit(1);
 }
 
-(new Application())->run();
+$input = new ArgvInput();
+$cache = !$input->hasParameterOption('--no-cache', true);
+
+(new Application($cache))->run($input);

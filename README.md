@@ -181,6 +181,8 @@ php deptrac.phar analyze depfile.yml
 
 If you run `php deptrac.phar -v` you'll get a more verbose output.
 
+The analyse command runs with a caching mechanism for parsed files by default. This could be disabled with the `--no-cache` option.
+
 
 ## Layers
 

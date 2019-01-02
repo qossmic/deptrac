@@ -6,15 +6,7 @@
     <services>
         <defaults public="false"/>
 
-        <service id="SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber">
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser"/>
-        </service>
-
-        <service id="Symfony\Component\EventDispatcher\EventDispatcher">
-            <call method="addSubscriber">
-                <argument type="service" id="SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber"/>
-            </call>
-        </service>
+        <service id="Symfony\Component\EventDispatcher\EventDispatcher"/>
 
         <service id="SensioLabs\Deptrac\AstRunner\AstRunner">
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
@@ -26,11 +18,6 @@
 
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser">
             <argument type="service" id="sensiolabs.deptrac.astrunner.nikic_php_parser"/>
-        </service>
-
-        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser"
-                 decorates="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser">
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser.inner"/>
         </service>
 
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">

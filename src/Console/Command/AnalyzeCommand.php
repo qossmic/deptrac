@@ -20,6 +20,7 @@ use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -64,9 +65,8 @@ class AnalyzeCommand extends Command
         $this->setName('analyze');
         $this->setAliases(['analyse']);
 
-        $this->getDefinition()->setArguments([
-            new InputArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml'),
-        ]);
+        $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
+        $this->addOption('no-cache', null, InputOption::VALUE_NONE, 'Disable caching mechanisms');
 
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
