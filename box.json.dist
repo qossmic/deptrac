@@ -1,11 +1,11 @@
 {
   "compactors": [
     "KevinGH\\Box\\Compactor\\Json",
-    "KevinGH\\Box\\Compactor\\Php",
-    "KevinGH\\Box\\Compactor\\PhpScoper"
+    "KevinGH\\Box\\Compactor\\Php"
   ],
   "files": [
-    "services.xml"
+    "config/services.xml",
+    "config/cache.xml"
   ],
   "compression": "GZ",
   "main": "deptrac.php",

@@ -12,6 +12,18 @@
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
         </service>
 
+        <service id="sensiolabs.deptrac.astrunner.nikic_php_parser" class="PhpParser\Parser">
+            <factory class="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory" method="createParser"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser">
+            <argument type="service" id="sensiolabs.deptrac.astrunner.nikic_php_parser"/>
+        </service>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\OutputFormatterFactory">
             <argument type="tagged" tag="output_formatter"/>
         </service>
@@ -81,11 +93,12 @@
         <service id="SensioLabs\Deptrac\FileResolver"/>
 
         <!-- COMMANDS -->
-        <service id="SensioLabs\Deptrac\Command\InitCommand" public="true">
+        <service id="SensioLabs\Deptrac\Console\Command\InitCommand" public="true">
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Dumper"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\Command\AnalyzeCommand" public="true">
+        <service id="SensioLabs\Deptrac\Console\Command\AnalyzeCommand" public="true">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"/>
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
             <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>

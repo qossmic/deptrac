@@ -30,6 +30,10 @@ class AstRunner
         $astMap = new AstMap($astParser);
 
         foreach ($files as $file) {
+            if (!$astParser->supports($file)) {
+                continue;
+            }
+
             try {
                 $astMap->addAstFileReference($astParser->parse($file));
 

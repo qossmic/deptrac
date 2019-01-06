@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Command;
+namespace SensioLabs\Deptrac\Console\Command;
 
 use SensioLabs\Deptrac\Configuration\Dumper as ConfigurationDumper;
 use SensioLabs\Deptrac\Configuration\Exception\FileExistsException;

@@ -10,6 +10,8 @@ interface AstParserInterface extends AstReferenceInterface
 {
     public function parse($data): AstFileReferenceInterface;
 
+    public function supports($data): bool;
+
     /**
      * @return AstInheritInterface[]
      */

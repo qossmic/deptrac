@@ -4,6 +4,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.1",
+        "ext-json": "*",
         "graphp/graphviz": "0.2.*",
         "nikic/php-parser": "^4.1",
         "phpdocumentor/graphviz": "~1.0",
