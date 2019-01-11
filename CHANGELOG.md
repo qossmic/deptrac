@@ -2,27 +2,23 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 0.4.0 - TBD
+## 0.4.0 - 2019-01-11
 
 ### Added
 
-- Nothing.
+- [#195](https://github.com/sensiolabs-de/deptrac/pull/195) chaching parsed files
+
+- [#200](https://github.com/sensiolabs-de/deptrac/pull/200) skip class dependency violation (@torinaki)
 
 ### Changed
 
+- [#197](https://github.com/sensiolabs-de/deptrac/pull/197) use progress bar instead printing dots
+
 - [#190](https://github.com/sensiolabs-de/deptrac/pull/190) added several nullable and void type-hints
-
-### Deprecated
-
-- Nothing.
 
 ### Removed
 
 - [#190](https://github.com/sensiolabs-de/deptrac/pull/190) removed support for PHP <7.1
-
-### Fixed
-
-- Nothing.
 
 ## 0.3.0 - 2018-11-05
 
@@ -36,17 +32,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#179](https://github.com/sensiolabs-de/deptrac/pull/179) disabled JUnitFormatter and GraphizFormatter by default
 
-### Deprecated
-
-- Nothing.
-
 ### Removed
 
 - [#177](https://github.com/sensiolabs-de/deptrac/pull/177) Removed the self updating mechanism.
-
-### Fixed
-
-- Nothing.
 
 ## 0.2.0 - 2018-03-24
 
@@ -54,18 +42,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Added DirectoryCollector.
 
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
 ### Removed
 
 - Removed support for PHP < 7.0 and HHVM.
-
-### Fixed
-
-- Nothing.
