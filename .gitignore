@@ -8,3 +8,4 @@ deptrac.version
 junit-report.xml
 .php_cs.cache
 .deptrac.cache
+.idea

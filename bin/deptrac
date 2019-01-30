@@ -1,9 +1,10 @@
+#!/usr/bin/env php
 <?php
 
 use SensioLabs\Deptrac\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 if (PHP_VERSION_ID < 70100) {
     echo 'Required at least PHP version 7.1.0, your version: '.PHP_VERSION."\n";
