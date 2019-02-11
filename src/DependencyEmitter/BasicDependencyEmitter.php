@@ -257,8 +257,8 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
             $uses = $this->getUseStatements($astParser, $fileReference);
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
-                /** @var EmittedDependency[] $uses */
-                $uses = array_merge(
+                /** @var EmittedDependency[] $dependencies */
+                $dependencies = array_merge(
                     $uses,
                     $this->getInstanceOfStatements($astParser, $astClassReference),
                     $this->getParamStatements($astParser, $astClassReference),
@@ -268,7 +268,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                     $this->getReturnTypes($astParser, $astClassReference)
                 );
 
-                foreach ($uses as $emittedDependency) {
+                foreach ($dependencies as $emittedDependency) {
                     $dependencyResult->addDependency(
                         new Dependency(
                             $astClassReference->getClassName(),
