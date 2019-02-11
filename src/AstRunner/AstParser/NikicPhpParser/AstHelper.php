@@ -33,15 +33,13 @@ class AstHelper
             } elseif ($node instanceof Use_) {
                 continue;
             } elseif (is_array($node)) {
-                $collectedNodes = array_merge(
-                    static::findClassLikeNodes($node),
-                    $collectedNodes
-                );
+                foreach (static::findClassLikeNodes($node) as $n) {
+                    $collectedNodes[] = $n;
+                }
             } elseif ($node instanceof Node) {
-                $collectedNodes = array_merge(
-                    static::findClassLikeNodes(static::getSubNodes($node)),
-                    $collectedNodes
-                );
+                foreach (static::findClassLikeNodes(static::getSubNodes($node)) as $n) {
+                    $collectedNodes[] = $n;
+                }
             }
         }
 

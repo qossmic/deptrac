@@ -13,7 +13,6 @@ use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class NikicPhpParser implements AstParserInterface
 {
-    private $traverser;
     private static $inheritanceByClassnameMap = [];
     private static $fileAstMap = [];
 
@@ -26,9 +25,6 @@ class NikicPhpParser implements AstParserInterface
 
     public function __construct(FileParserInterface $fileParser)
     {
-        $this->traverser = new NodeTraverser();
-        $this->traverser->addVisitor(new NameResolver());
-
         $this->fileParser = $fileParser;
     }
 
@@ -48,13 +44,17 @@ class NikicPhpParser implements AstParserInterface
             throw new \LogicException();
         }
 
-        $ast = $this->traverser->traverse(
+        $fileReference = new AstFileReference($data->getRealPath());
+
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new NameResolver());
+        $traverser->addVisitor(new AstClassReferenceResolver($fileReference));
+
+        $ast = $traverser->traverse(
             $this->fileParser->parse($data)
         );
 
         self::$fileAstMap[$data->getRealPath()] = $ast;
-
-        $fileReference = new AstFileReference($data->getRealPath());
 
         foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNode) {
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
@@ -63,7 +63,6 @@ class NikicPhpParser implements AstParserInterface
                 $className = (string) $classLikeNode->name;
             }
 
-            $fileReference->addClassReference($className);
             self::$classAstMap[$className] = $classLikeNode;
         }
 
@@ -94,22 +93,19 @@ class NikicPhpParser implements AstParserInterface
 
         foreach ($nodes as $node) {
             if (is_array($node)) {
-                $collectedNodes = array_merge(
-                    $this->findNodesOfType($node, $type),
-                    $collectedNodes
-                );
+                $nodesOfType = $this->findNodesOfType($node, $type);
+                foreach ($nodesOfType as $n) {
+                    $collectedNodes[] = $n;
+                }
             } elseif ($node instanceof Node) {
                 if (is_a($node, $type, true)) {
                     $collectedNodes[] = $node;
                 }
 
-                $collectedNodes = array_merge(
-                    $this->findNodesOfType(
-                        AstHelper::getSubNodes($node),
-                        $type
-                    ),
-                    $collectedNodes
-                );
+                $nodesOfType = $this->findNodesOfType(AstHelper::getSubNodes($node), $type);
+                foreach ($nodesOfType as $n) {
+                    $collectedNodes[] = $n;
+                }
             }
         }
 

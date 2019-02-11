@@ -5,21 +5,24 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
+use SensioLabs\Deptrac\DependencyEmitter\EmittedDependency;
 
 class AstFileReference implements AstFileReferenceInterface
 {
     private $filepath;
     private $astClassReferences;
+    private $emittedDependencies;
 
     public function __construct(string $filepath)
     {
         $this->filepath = $filepath;
         $this->astClassReferences = [];
+        $this->emittedDependencies = [];
     }
 
-    public function addClassReference(string $className): void
+    public function addClassReference(string $className): AstClassReference
     {
-        $this->astClassReferences[] = new AstClassReference($className, $this);
+        return $this->astClassReferences[] = new AstClassReference($className, $this);
     }
 
     public function getFilepath(): string
@@ -33,5 +36,15 @@ class AstFileReference implements AstFileReferenceInterface
     public function getAstClassReferences(): array
     {
         return $this->astClassReferences;
+    }
+
+    public function getEmittedDependencies(): array
+    {
+        return $this->emittedDependencies;
+    }
+
+    public function addUse(string $class, int $line): void
+    {
+        $this->emittedDependencies[] = new EmittedDependency($class, $line, 'use');
     }
 }
