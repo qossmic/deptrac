@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 
 class BasicDependencyEmitterTest extends TestCase
@@ -15,11 +14,6 @@ class BasicDependencyEmitterTest extends TestCase
     public function testGetName(): void
     {
         static::assertEquals('BasicDependencyEmitter', (new BasicDependencyEmitter())->getName());
-    }
-
-    public function testSupportsParser(): void
-    {
-        static::assertTrue((new BasicDependencyEmitter())->supportsParser($this->prophesize(NikicPhpParser::class)->reveal()));
     }
 
     public function testApplyDependencies(): void

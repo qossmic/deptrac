@@ -8,7 +8,6 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class AstMap
 {
@@ -21,16 +20,6 @@ class AstMap
      * @var AstFileReferenceInterface[]
      */
     private $astFileReferences = [];
-
-    /**
-     * @var AstParserInterface
-     */
-    private $astParser;
-
-    public function __construct(AstParserInterface $astParser)
-    {
-        $this->astParser = $astParser;
-    }
 
     public function addAstFileReference(AstFileReferenceInterface $astFileReference): void
     {
@@ -67,9 +56,14 @@ class AstMap
      */
     public function getClassInherits(string $className): array
     {
-        $buffer = [];
+        $classReference = $this->getClassReferenceByClassName($className);
 
-        foreach ($this->astParser->findInheritanceByClassname($className) as $dep) {
+        if (null === $classReference) {
+            return [];
+        }
+
+        $buffer = [];
+        foreach ($classReference->getInherits() as $dep) {
             $buffer[] = $dep;
 
             foreach ($this->resolveDepsRecursive($dep) as $recDep) {
@@ -102,8 +96,14 @@ class AstMap
             return [];
         }
 
+        $classReference = $this->getClassReferenceByClassName($inheritDependency->getClassName());
+
+        if (null === $classReference) {
+            return [];
+        }
+
         $buffer = [];
-        foreach ($this->astParser->findInheritanceByClassname($inheritDependency->getClassName()) as $inherit) {
+        foreach ($classReference->getInherits() as $inherit) {
             $alreadyResolved[$inheritDependency->getClassName()] = true;
 
             $buffer[] = new FlattenAstInherit($inherit, iterator_to_array($path));

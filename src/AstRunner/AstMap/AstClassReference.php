@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
+namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
 use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
-use SensioLabs\Deptrac\DependencyEmitter\EmittedDependency;
 
 class AstClassReference implements AstClassReferenceInterface
 {
     private $className;
     private $fileReference;
-    private $emittedDependecies;
+    private $emittedDependencies;
+    private $inherits;
 
     public function __construct(string $className, AstFileReference $fileReference = null)
     {
         $this->className = $className;
         $this->fileReference = $fileReference;
-        $this->emittedDependecies = [];
+        $this->emittedDependencies = [];
+        $this->inherits = [];
     }
 
     public function getFileReference(): ?AstFileReferenceInterface
@@ -33,36 +34,46 @@ class AstClassReference implements AstClassReferenceInterface
 
     public function getEmittedDependencies(): array
     {
-        return $this->emittedDependecies;
+        return $this->emittedDependencies;
+    }
+
+    public function getInherits(): array
+    {
+        return $this->inherits;
     }
 
     public function addReturnType(string $class, int $line): void
     {
-        $this->emittedDependecies[] = new EmittedDependency($class, $line, 'returntype');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'returntype');
     }
 
     public function addParameter(string $class, int $line): void
     {
-        $this->emittedDependecies[] = new EmittedDependency($class, $line, 'parameter');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'parameter');
     }
 
     public function addNewStmt(string $class, int $line): void
     {
-        $this->emittedDependecies[] = new EmittedDependency($class, $line, 'new');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'new');
     }
 
     public function addStaticPropertyAccess(string $class, int $line): void
     {
-        $this->emittedDependecies[] = new EmittedDependency($class, $line, 'static_property');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'static_property');
     }
 
     public function addStaticMethodCall(string $class, int $line): void
     {
-        $this->emittedDependecies[] = new EmittedDependency($class, $line, 'static_method');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'static_method');
     }
 
     public function addInstanceof(string $class, int $line): void
     {
-        $this->emittedDependecies[] = new EmittedDependency($class, $line, 'instanceof');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'instanceof');
+    }
+
+    public function addInherit(AstInherit $inherit): void
+    {
+        $this->inherits[] = $inherit;
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstParser;
 
-use SensioLabs\Deptrac\DependencyEmitter\EmittedDependency;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 
 interface AstFileReferenceInterface
 {
@@ -15,6 +15,6 @@ interface AstFileReferenceInterface
      */
     public function getAstClassReferences(): array;
 
-    /** @return EmittedDependency[] */
+    /** @return AstDependency[] */
     public function getEmittedDependencies(): array;
 }

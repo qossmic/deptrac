@@ -6,11 +6,11 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\AstFileReference;
-use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
+use SensioLabs\Deptrac\Collector\Registry;
 
 class DirectoryCollectorTest extends TestCase
 {

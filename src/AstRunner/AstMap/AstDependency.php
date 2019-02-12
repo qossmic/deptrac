@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\DependencyEmitter;
+namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
-class EmittedDependency
+class AstDependency
 {
     private $class;
 

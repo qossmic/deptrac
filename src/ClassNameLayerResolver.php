@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\AstClassReference;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;

@@ -19,17 +19,17 @@ class AstInherit implements AstInheritInterface
 
     public static function newExtends(string $className, int $line): self
     {
-        return new self($className, $line, self::TYPE_EXTENDS);
+        return new self($className, $line, AstInheritInterface::TYPE_EXTENDS);
     }
 
     public static function newImplements(string $className, int $line): self
     {
-        return new self($className, $line, self::TYPE_IMPLEMENTS);
+        return new self($className, $line, AstInheritInterface::TYPE_IMPLEMENTS);
     }
 
     public static function newUses(string $className, int $line): self
     {
-        return new self($className, $line, self::TYPE_USES);
+        return new self($className, $line, AstInheritInterface::TYPE_USES);
     }
 
     public function __toString(): string

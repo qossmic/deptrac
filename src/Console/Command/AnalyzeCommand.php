@@ -89,7 +89,7 @@ class AnalyzeCommand extends Command
 
         $astMap = $this->astRunner->createAstMapByFiles($this->parser, $this->fileResolver->resolve($configuration));
 
-        $dependencyResult = $this->dependencyAnalyzer->analyze($this->parser, $astMap);
+        $dependencyResult = $this->dependencyAnalyzer->analyze($astMap);
 
         $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
             new ClassNameLayerResolver($configuration, $astMap, $this->collectorRegistry, $this->parser)

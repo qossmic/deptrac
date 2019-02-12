@@ -24,7 +24,7 @@ trait EmitterTrait
         );
         $result = new Result();
 
-        $emitter->applyDependencies($parser, $astMap, $result);
+        $emitter->applyDependencies($astMap, $result);
 
         return array_map(
             function (Dependency $d) {

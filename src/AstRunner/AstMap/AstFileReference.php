@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
+namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
-use SensioLabs\Deptrac\DependencyEmitter\EmittedDependency;
 
 class AstFileReference implements AstFileReferenceInterface
 {
@@ -45,6 +44,6 @@ class AstFileReference implements AstFileReferenceInterface
 
     public function addUse(string $class, int $line): void
     {
-        $this->emittedDependencies[] = new EmittedDependency($class, $line, 'use');
+        $this->emittedDependencies[] = new AstDependency($class, $line, 'use');
     }
 }

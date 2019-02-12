@@ -7,15 +7,12 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class NikicPhpParser implements AstParserInterface
 {
-    private static $inheritanceByClassnameMap = [];
-    private static $fileAstMap = [];
-
     /**
      * @var Node\Stmt\ClassLike[]
      */
@@ -54,8 +51,6 @@ class NikicPhpParser implements AstParserInterface
             $this->fileParser->parse($data)
         );
 
-        self::$fileAstMap[$data->getRealPath()] = $ast;
-
         foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNode) {
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
                 $className = $classLikeNode->namespacedName->toString();
@@ -67,14 +62,6 @@ class NikicPhpParser implements AstParserInterface
         }
 
         return $fileReference;
-    }
-
-    /**
-     * @return Node[]
-     */
-    public function getAstByFile(AstFileReferenceInterface $astReference): array
-    {
-        return self::$fileAstMap[$astReference->getFilepath()] ?? [];
     }
 
     public function getAstForClassname(string $className): ?Node
@@ -110,23 +97,5 @@ class NikicPhpParser implements AstParserInterface
         }
 
         return $collectedNodes;
-    }
-
-    /**
-     * @return AstInheritInterface[]
-     */
-    public function findInheritanceByClassname(string $className): array
-    {
-        if (isset(self::$inheritanceByClassnameMap[$className])) {
-            return self::$inheritanceByClassnameMap[$className];
-        }
-
-        if (!isset(self::$classAstMap[$className])) {
-            return self::$inheritanceByClassnameMap[$className] = [];
-        }
-
-        return self::$inheritanceByClassnameMap[$className] = AstHelper::findInheritances(
-            self::$classAstMap[$className]
-        );
     }
 }

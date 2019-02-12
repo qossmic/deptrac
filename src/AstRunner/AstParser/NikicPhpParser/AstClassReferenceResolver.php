@@ -6,6 +6,9 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 
 class AstClassReferenceResolver extends NodeVisitorAbstract
 {
@@ -34,6 +37,27 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         }
 
         $this->currentClassReference = $this->fileReference->addClassReference($className);
+
+        if ($node instanceof Node\Stmt\Class_) {
+            if ($node->extends instanceof Node\Name) {
+                $this->currentClassReference->addInherit(
+                    AstInherit::newExtends($node->extends->toString(), $node->extends->getLine())
+                );
+            }
+            foreach ($node->implements as $implement) {
+                $this->currentClassReference->addInherit(
+                    AstInherit::newImplements($implement->toString(), $implement->getLine())
+                );
+            }
+        }
+
+        if ($node instanceof Node\Stmt\Interface_) {
+            foreach ($node->extends as $extend) {
+                $this->currentClassReference->addInherit(
+                    AstInherit::newExtends($extend->toString(), $extend->getLine())
+                );
+            }
+        }
     }
 
     public function leaveNode(Node $node)
@@ -44,6 +68,14 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
 
         if (null === $this->currentClassReference) {
             return;
+        }
+
+        if ($node instanceof Node\Stmt\TraitUse) {
+            foreach ($node->traits as $trait) {
+                $this->currentClassReference->addInherit(
+                    AstInherit::newUses($trait->toString(), $trait->getLine())
+                );
+            }
         }
 
         if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {

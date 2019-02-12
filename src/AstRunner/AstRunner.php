@@ -27,7 +27,7 @@ class AstRunner
     {
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
 
-        $astMap = new AstMap($astParser);
+        $astMap = new AstMap();
 
         foreach ($files as $file) {
             if (!$astParser->supports($file)) {
