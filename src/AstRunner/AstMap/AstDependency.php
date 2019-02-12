@@ -63,4 +63,9 @@ class AstDependency
     {
         return new self($class, $line, 'instanceof');
     }
+
+    public static function catchStmt(string $class, int $line): self
+    {
+        return new self($class, $line, 'catch');
+    }
 }

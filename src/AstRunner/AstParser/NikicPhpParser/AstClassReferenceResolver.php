@@ -120,5 +120,13 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
                 );
             }
         }
+
+        if ($node instanceof Node\Stmt\Catch_) {
+            foreach ($node->types as $type) {
+                $this->currentClassReference->addDependency(
+                    AstDependency::catchStmt($type->toString(), $type->getLine())
+                );
+            }
+        }
     }
 }
