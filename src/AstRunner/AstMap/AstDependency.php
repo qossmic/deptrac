@@ -33,4 +33,34 @@ class AstDependency
     {
         return $this->type;
     }
+
+    public static function returnType(string $class, int $line): self
+    {
+        return new self($class, $line, 'returntype');
+    }
+
+    public static function parameter(string $class, int $line): self
+    {
+        return new self($class, $line, 'parameter');
+    }
+
+    public static function newStmt(string $class, int $line): self
+    {
+        return new self($class, $line, 'new');
+    }
+
+    public static function staticProperty(string $class, int $line): self
+    {
+        return new self($class, $line, 'static_property');
+    }
+
+    public static function staticMethod(string $class, int $line): self
+    {
+        return new self($class, $line, 'static_method');
+    }
+
+    public static function instanceof(string $class, int $line): self
+    {
+        return new self($class, $line, 'instanceof');
+    }
 }

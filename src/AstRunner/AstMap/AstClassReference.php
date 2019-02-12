@@ -11,14 +11,14 @@ class AstClassReference implements AstClassReferenceInterface
 {
     private $className;
     private $fileReference;
-    private $emittedDependencies;
+    private $dependencies;
     private $inherits;
 
     public function __construct(string $className, AstFileReference $fileReference = null)
     {
         $this->className = $className;
         $this->fileReference = $fileReference;
-        $this->emittedDependencies = [];
+        $this->dependencies = [];
         $this->inherits = [];
     }
 
@@ -32,9 +32,9 @@ class AstClassReference implements AstClassReferenceInterface
         return $this->className;
     }
 
-    public function getEmittedDependencies(): array
+    public function getDependencies(): array
     {
-        return $this->emittedDependencies;
+        return $this->dependencies;
     }
 
     public function getInherits(): array
@@ -42,34 +42,9 @@ class AstClassReference implements AstClassReferenceInterface
         return $this->inherits;
     }
 
-    public function addReturnType(string $class, int $line): void
+    public function addDependency(AstDependency $dependency): void
     {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'returntype');
-    }
-
-    public function addParameter(string $class, int $line): void
-    {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'parameter');
-    }
-
-    public function addNewStmt(string $class, int $line): void
-    {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'new');
-    }
-
-    public function addStaticPropertyAccess(string $class, int $line): void
-    {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'static_property');
-    }
-
-    public function addStaticMethodCall(string $class, int $line): void
-    {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'static_method');
-    }
-
-    public function addInstanceof(string $class, int $line): void
-    {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'instanceof');
+        $this->dependencies[] = $dependency;
     }
 
     public function addInherit(AstInherit $inherit): void

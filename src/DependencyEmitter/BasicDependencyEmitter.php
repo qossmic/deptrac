@@ -23,7 +23,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
                 /** @var AstDependency[] $dependencies */
-                $dependencies = array_merge($uses, $astClassReference->getEmittedDependencies());
+                $dependencies = array_merge($uses, $astClassReference->getDependencies());
 
                 foreach ($dependencies as $emittedDependency) {
                     $dependencyResult->addDependency(

@@ -7,6 +7,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 
@@ -79,35 +80,43 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
-            $this->currentClassReference->addInstanceof($node->class->toString(), $node->class->getLine());
+            $this->currentClassReference->addDependency(
+                AstDependency::instanceof($node->class->toString(), $node->class->getLine())
+            );
         }
 
         if ($node instanceof Node\Param && $node->type instanceof Node\Name) {
-            $this->currentClassReference->addParameter($node->type->toString(), $node->getLine());
+            $this->currentClassReference->addDependency(
+                AstDependency::parameter($node->type->toString(), $node->type->getLine())
+            );
         }
 
         if ($node instanceof Node\Expr\New_ && $node->class instanceof Node\Name) {
-            $this->currentClassReference->addNewStmt($node->class->toString(), $node->class->getLine());
+            $this->currentClassReference->addDependency(
+                AstDependency::newStmt($node->class->toString(), $node->class->getLine())
+            );
         }
 
         if ($node instanceof Node\Expr\StaticPropertyFetch && $node->class instanceof Node\Name) {
-            $this->currentClassReference->addStaticPropertyAccess($node->class->toString(), $node->class->getLine());
+            $this->currentClassReference->addDependency(
+                AstDependency::staticProperty($node->class->toString(), $node->class->getLine())
+            );
         }
 
         if ($node instanceof Node\Expr\StaticCall && $node->class instanceof Node\Name) {
-            $this->currentClassReference->addStaticMethodCall($node->class->toString(), $node->class->getLine());
+            $this->currentClassReference->addDependency(
+                AstDependency::staticMethod($node->class->toString(), $node->class->getLine())
+            );
         }
 
         if ($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) {
             if ($node->returnType instanceof Node\Name) {
-                $this->currentClassReference->addReturnType(
-                    $node->returnType->toString(),
-                    $node->returnType->getLine()
+                $this->currentClassReference->addDependency(
+                    AstDependency::returnType($node->returnType->toString(), $node->returnType->getLine())
                 );
             } elseif ($node->returnType instanceof Node\NullableType) {
-                $this->currentClassReference->addReturnType(
-                    (string) $node->returnType->type,
-                    $node->returnType->getLine()
+                $this->currentClassReference->addDependency(
+                    AstDependency::returnType((string) $node->returnType->type, $node->returnType->getLine())
                 );
             }
         }

@@ -13,7 +13,7 @@ interface AstClassReferenceInterface extends AstReferenceInterface
     public function getClassName(): string;
 
     /** @return \SensioLabs\Deptrac\AstRunner\AstMap\AstDependency[] */
-    public function getEmittedDependencies(): array;
+    public function getDependencies(): array;
 
     /** @return AstInherit[] */
     public function getInherits(): array;
