@@ -8,7 +8,6 @@ use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class NikicPhpParser implements AstParserInterface
@@ -34,11 +33,11 @@ class NikicPhpParser implements AstParserInterface
         return 'php' === strtolower($data->getExtension());
     }
 
-    public function parse($data): AstFileReferenceInterface
+    public function parse($data): AstFileReference
     {
         /** @var \SplFileInfo $data */
         if (!$this->supports($data)) {
-            throw new \LogicException();
+            throw new \LogicException('parser not supported');
         }
 
         $fileReference = new AstFileReference($data->getRealPath());

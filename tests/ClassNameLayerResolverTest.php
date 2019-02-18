@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
@@ -22,7 +22,7 @@ class ClassNameLayerResolverTest extends TestCase
         $collector = $this->prophesize(CollectorInterface::class);
         $collector->satisfy(
             Argument::type('array'),
-            Argument::type(AstClassReferenceInterface::class),
+            Argument::type(AstClassReference::class),
             Argument::type(AstMap::class),
             Argument::type(Registry::class),
             Argument::type(AstParserInterface::class)
@@ -99,21 +99,21 @@ class ClassNameLayerResolverTest extends TestCase
         ]);
 
         $astMap = $this->prophesize(AstMap::class);
-        $collectorFactory = $this->prophesize(Registry::class);
-        $collectorFactory->getCollector('CollectorA')->willReturn(
+        $collectorRegistry = $this->prophesize(Registry::class);
+        $collectorRegistry->getCollector('CollectorA')->willReturn(
             $this->getCollector($collectA, ['type' => 'CollectorA', 'foo' => 'bar'])
         );
-        $collectorFactory->getCollector('CollectorB1')->willReturn(
+        $collectorRegistry->getCollector('CollectorB1')->willReturn(
             $this->getCollector($collectB1, ['type' => 'CollectorB', 'foo' => 'bar'])
         );
-        $collectorFactory->getCollector('CollectorB2')->willReturn(
+        $collectorRegistry->getCollector('CollectorB2')->willReturn(
             $this->getCollector($collectB2, ['type' => 'CollectorB', 'foo' => 'bar'])
         );
 
         $resolver = new ClassNameLayerResolver(
             $configuration->reveal(),
             $astMap->reveal(),
-            $collectorFactory->reveal(),
+            $collectorRegistry->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
         );
 

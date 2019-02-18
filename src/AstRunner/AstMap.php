@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
 
 class AstMap
 {
     /**
-     * @var AstClassReferenceInterface[]
+     * @var AstClassReference[]
      */
     private $astClassReferences = [];
 
     /**
-     * @var AstFileReferenceInterface[]
+     * @var AstFileReference[]
      */
     private $astFileReferences = [];
 
-    public function addAstFileReference(AstFileReferenceInterface $astFileReference): void
+    public function addAstFileReference(AstFileReference $astFileReference): void
     {
         $this->astFileReferences[$astFileReference->getFilepath()] = $astFileReference;
 
@@ -31,7 +31,7 @@ class AstMap
     }
 
     /**
-     * @return AstClassReferenceInterface[]
+     * @return AstClassReference[]
      */
     public function getAstClassReferences(): array
     {
@@ -39,14 +39,14 @@ class AstMap
     }
 
     /**
-     * @return AstFileReferenceInterface[]
+     * @return AstFileReference[]
      */
     public function getAstFileReferences(): array
     {
         return $this->astFileReferences;
     }
 
-    public function getClassReferenceByClassName(string $className): ?AstClassReferenceInterface
+    public function getClassReferenceByClassName(string $className): ?AstClassReference
     {
         return $this->astClassReferences[$className] ?? null;
     }
@@ -118,7 +118,7 @@ class AstMap
         return $buffer;
     }
 
-    private function addAstClassReference(AstClassReferenceInterface $astClassReference): void
+    private function addAstClassReference(AstClassReference $astClassReference): void
     {
         $this->astClassReferences[$astClassReference->getClassName()] = $astClassReference;
     }

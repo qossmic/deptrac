@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
-
-class AstClassReference implements AstClassReferenceInterface
+class AstClassReference
 {
     private $className;
     private $fileReference;
@@ -22,7 +19,7 @@ class AstClassReference implements AstClassReferenceInterface
         $this->inherits = [];
     }
 
-    public function getFileReference(): ?AstFileReferenceInterface
+    public function getFileReference(): ?AstFileReference
     {
         return $this->fileReference;
     }

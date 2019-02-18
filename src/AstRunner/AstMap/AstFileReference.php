@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
-
-class AstFileReference implements AstFileReferenceInterface
+class AstFileReference
 {
     private $filepath;
     private $astClassReferences;

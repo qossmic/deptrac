@@ -6,7 +6,7 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
@@ -21,7 +21,7 @@ class BoolCollectorTest extends TestCase
 
         (new BoolCollector())->satisfy(
             [],
-            $this->createMock(AstClassReferenceInterface::class),
+            $this->createMock(AstClassReference::class),
             $this->createMock(AstMap::class),
             $this->createMock(Registry::class),
             $this->createMock(AstParserInterface::class)
@@ -40,7 +40,7 @@ class BoolCollectorTest extends TestCase
             ->method('satisfy')
             ->with(
                 ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
-                static::isInstanceOf(AstClassReferenceInterface::class),
+                static::isInstanceOf(AstClassReference::class),
                 static::isInstanceOf(AstMap::class),
                 static::isInstanceOf(Registry::class),
                 static::isInstanceOf(AstParserInterface::class)
@@ -177,7 +177,7 @@ class BoolCollectorTest extends TestCase
 
         $stat = (new BoolCollector())->satisfy(
             $configuration,
-            $this->prophesize(AstClassReferenceInterface::class)->reveal(),
+            $this->prophesize(AstClassReference::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
             $collectorFactory->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()

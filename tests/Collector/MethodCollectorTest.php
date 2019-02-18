@@ -8,7 +8,6 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\MethodCollector;
@@ -65,8 +64,7 @@ class MethodCollectorTest extends TestCase
     {
         $className = 'foo';
 
-        $astClassReference = $this->createMock(AstClassReferenceInterface::class);
-        $astClassReference->method('getClassName')->willReturn($className);
+        $astClassReference = new AstMap\AstClassReference($className);
 
         $ast = $this->createMock(Node::class);
 

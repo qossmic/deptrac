@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Collector;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
@@ -18,7 +18,7 @@ class BoolCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReferenceInterface $abstractClassReference,
+        AstClassReference $astClassReference,
         AstMap $astMap,
         Registry $collectorRegistry,
         AstParserInterface $astParser
@@ -40,7 +40,7 @@ class BoolCollector implements CollectorInterface
 
             if (!$collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
-                $abstractClassReference,
+                $astClassReference,
                 $astMap,
                 $collectorRegistry,
                 $astParser
@@ -54,7 +54,7 @@ class BoolCollector implements CollectorInterface
 
             if ($collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
-                $abstractClassReference,
+                $astClassReference,
                 $astMap,
                 $collectorRegistry,
                 $astParser

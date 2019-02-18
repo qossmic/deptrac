@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Collector;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class ClassNameRegexCollector implements CollectorInterface
@@ -17,12 +17,12 @@ class ClassNameRegexCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReferenceInterface $abstractClassReference,
+        AstClassReference $astClassReference,
         AstMap $astMap,
         Registry $collectorRegistry,
         AstParserInterface $astParser
     ): bool {
-        return 1 === preg_match($this->getPattern($configuration), $abstractClassReference->getClassName());
+        return 1 === preg_match($this->getPattern($configuration), $astClassReference->getClassName());
     }
 
     private function getPattern(array $configuration): string

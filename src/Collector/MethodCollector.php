@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\Collector;
 
 use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
@@ -19,7 +19,7 @@ class MethodCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReferenceInterface $classReference,
+        AstClassReference $classReference,
         AstMap $astMap,
         Registry $collectorRegistry,
         AstParserInterface $astParser
