@@ -29,7 +29,7 @@ class MethodCollector implements CollectorInterface
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        $ast = $this->nikicPhpParser->getAstForClassname($classReference->getClassName());
+        $ast = $this->nikicPhpParser->getAstForClassReference($classReference);
 
         /** @var ClassMethod[] $classMethods */
         $classMethods = $this->nikicPhpParser->findNodesOfType((array) $ast, ClassMethod::class);

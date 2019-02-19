@@ -70,7 +70,7 @@ class MethodCollectorTest extends TestCase
         $ast = $this->createMock(Node::class);
 
         $parser = $this->createMock(NikicPhpParser::class);
-        $parser->method('getAstForClassname')->willReturn($ast);
+        $parser->method('getAstForClassReference')->willReturn($ast);
         $parser
             ->method('findNodesOfType')
             ->with((array) $ast, ClassMethod::class)

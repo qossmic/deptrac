@@ -14,7 +14,7 @@ composer-install-dev:
 
 tests: composer-install-dev
 	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c .
-	$(PHP_BIN) deptrac.php analyze examples/Fixture.depfile.yml
+	$(PHP_BIN) deptrac.php analyze examples/Fixture.depfile.yml --no-cache
 
 tests-coverage: composer-install-dev
 	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c . --coverage-html coverage

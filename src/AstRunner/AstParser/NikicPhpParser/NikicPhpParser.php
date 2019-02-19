@@ -7,6 +7,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
@@ -46,8 +47,26 @@ class NikicPhpParser implements AstParserInterface
         $traverser->addVisitor(new NameResolver());
         $traverser->addVisitor(new AstClassReferenceResolver($fileReference));
 
+        $traverser->traverse($this->fileParser->parse($data));
+
+        return $fileReference;
+    }
+
+    public function getAstForClassReference(AstClassReference $classReference): ?Node
+    {
+        if (isset(self::$classAstMap[$classReference->getClassName()])) {
+            return self::$classAstMap[$classReference->getClassName()];
+        }
+
+        if (null === $classReference->getFileReference()) {
+            return null;
+        }
+
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new NameResolver());
+
         $ast = $traverser->traverse(
-            $this->fileParser->parse($data)
+            $this->fileParser->parse(new \SplFileInfo($classReference->getFileReference()->getFilepath()))
         );
 
         foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNode) {
@@ -60,12 +79,7 @@ class NikicPhpParser implements AstParserInterface
             self::$classAstMap[$className] = $classLikeNode;
         }
 
-        return $fileReference;
-    }
-
-    public function getAstForClassname(string $className): ?Node
-    {
-        return self::$classAstMap[$className] ?? null;
+        return self::$classAstMap[$classReference->getClassName()] ?? null;
     }
 
     /**
