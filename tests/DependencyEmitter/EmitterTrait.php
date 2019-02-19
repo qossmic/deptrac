@@ -18,10 +18,7 @@ trait EmitterTrait
     public function getDeps(DependencyEmitterInterface $emitter, \SplFileInfo $fileInfo): array
     {
         $parser = new NikicPhpParser(new FileParser(ParserFactory::createParser()));
-        $astMap = (new AstRunner(new EventDispatcher()))->createAstMapByFiles(
-            $parser,
-            [$fileInfo]
-        );
+        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$fileInfo]);
         $result = new Result();
 
         $emitter->applyDependencies($astMap, $result);

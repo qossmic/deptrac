@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\Collector\Registry;
@@ -24,8 +23,7 @@ class ClassNameLayerResolverTest extends TestCase
             Argument::type('array'),
             Argument::type(AstClassReference::class),
             Argument::type(AstMap::class),
-            Argument::type(Registry::class),
-            Argument::type(AstParserInterface::class)
+            Argument::type(Registry::class)
         )->willReturn($return);
 
         return $collector->reveal();
@@ -113,8 +111,7 @@ class ClassNameLayerResolverTest extends TestCase
         $resolver = new ClassNameLayerResolver(
             $configuration->reveal(),
             $astMap->reveal(),
-            $collectorRegistry->reveal(),
-            $this->prophesize(AstParserInterface::class)->reveal()
+            $collectorRegistry->reveal()
         );
 
         static::assertEquals(

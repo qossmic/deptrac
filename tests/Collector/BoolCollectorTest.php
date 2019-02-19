@@ -42,8 +42,7 @@ class BoolCollectorTest extends TestCase
                 ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
                 static::isInstanceOf(AstClassReference::class),
                 static::isInstanceOf(AstMap::class),
-                static::isInstanceOf(Registry::class),
-                static::isInstanceOf(AstParserInterface::class)
+                static::isInstanceOf(Registry::class)
             )
             ->willReturn($returns);
 

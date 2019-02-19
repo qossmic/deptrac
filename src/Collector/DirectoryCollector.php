@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Collector;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 
 class DirectoryCollector implements CollectorInterface
 {
@@ -16,10 +16,9 @@ class DirectoryCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstMap\AstClassReference $astClassReference,
+        AstClassReference $astClassReference,
         AstMap $astMap,
-        Registry $collectorRegistry,
-        AstParserInterface $astParser
+        Registry $collectorRegistry
     ): bool {
         $fileReference = $astClassReference->getFileReference();
 

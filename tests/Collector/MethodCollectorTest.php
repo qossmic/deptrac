@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\MethodCollector;
@@ -46,7 +47,7 @@ class MethodCollectorTest extends TestCase
 
     public function testType(): void
     {
-        static::assertEquals('method', (new MethodCollector())->getType());
+        static::assertEquals('method', (new MethodCollector($this->createMock(NikicPhpParser::class)))->getType());
     }
 
     private function getClassMethod(string $name): \stdClass
@@ -64,7 +65,7 @@ class MethodCollectorTest extends TestCase
     {
         $className = 'foo';
 
-        $astClassReference = new AstMap\AstClassReference($className);
+        $astClassReference = new AstClassReference($className);
 
         $ast = $this->createMock(Node::class);
 
@@ -75,12 +76,11 @@ class MethodCollectorTest extends TestCase
             ->with((array) $ast, ClassMethod::class)
             ->willReturn($methods);
 
-        $stat = (new MethodCollector())->satisfy(
+        $stat = (new MethodCollector($parser))->satisfy(
             $configuration,
             $astClassReference,
             $this->createMock(AstMap::class),
-            $this->createMock(Registry::class),
-            $parser
+            $this->createMock(Registry::class)
         );
 
         static::assertEquals($expected, $stat);

@@ -6,7 +6,6 @@ namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
@@ -16,18 +15,15 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     protected $configuration;
     protected $astMap;
     protected $collectorRegistry;
-    protected $astParser;
 
     public function __construct(
         Configuration $configuration,
         AstMap $astMap,
-        Registry $collectorRegistry,
-        AstParserInterface $astParser
+        Registry $collectorRegistry
     ) {
         $this->configuration = $configuration;
         $this->astMap = $astMap;
         $this->collectorRegistry = $collectorRegistry;
-        $this->astParser = $astParser;
     }
 
     /**
@@ -49,8 +45,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
                     $configurationCollector->getArgs(),
                     $astClassReference,
                     $this->astMap,
-                    $this->collectorRegistry,
-                    $this->astParser
+                    $this->collectorRegistry
                 )
                 ) {
                     $layers[$configurationLayer->getName()] = true;

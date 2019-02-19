@@ -14,28 +14,30 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class AstRunner
 {
     private $dispatcher;
+    private $astParser;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher, AstParserInterface $astParser)
     {
         $this->dispatcher = $dispatcher;
+        $this->astParser = $astParser;
     }
 
     /**
      * @param \SplFileInfo[] $files
      */
-    public function createAstMapByFiles(AstParserInterface $astParser, array $files): AstMap
+    public function createAstMapByFiles(array $files): AstMap
     {
         $this->dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(count($files)));
 
         $astMap = new AstMap();
 
         foreach ($files as $file) {
-            if (!$astParser->supports($file)) {
+            if (!$this->astParser->supports($file)) {
                 continue;
             }
 
             try {
-                $astMap->addAstFileReference($astParser->parse($file));
+                $astMap->addAstFileReference($this->astParser->parse($file));
 
                 $this->dispatcher->dispatch(AstFileAnalyzedEvent::class, new AstFileAnalyzedEvent($file));
             } catch (\PhpParser\Error $e) {

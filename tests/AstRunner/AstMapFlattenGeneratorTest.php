@@ -36,8 +36,12 @@ class AstMapFlattenGeneratorTest extends TestCase
 
     private function getAstMap(string $fixture): AstMap
     {
-        return (new AstRunner(new EventDispatcher()))->createAstMapByFiles(
-            new NikicPhpParser(new FileParser(ParserFactory::createParser())),
+        $astRunner = new AstRunner(
+            new EventDispatcher(),
+            new NikicPhpParser(new FileParser(ParserFactory::createParser()))
+        );
+
+        return $astRunner->createAstMapByFiles(
             [new \SplFileInfo(__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php')]
         );
     }
