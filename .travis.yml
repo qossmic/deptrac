@@ -66,3 +66,5 @@ jobs:
             script:
                 - $HOME/bin/box compile
                 - php deptrac.phar analyze examples/Fixture.depfile.yml
+                - php deptrac.phar analyze examples/Fixture.depfile.yml # test with cache file
+                - php deptrac.phar analyze examples/Fixture.depfile.yml --no-cache
