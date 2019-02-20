@@ -26,7 +26,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if (!$node instanceof Node\Stmt\ClassLike) {
-            return;
+            return null;
         }
 
         if (isset($node->namespacedName) && $node->namespacedName instanceof Node\Name) {
@@ -34,7 +34,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         } elseif ($node->name instanceof Node\Identifier) {
             $className = $node->name->toString();
         } else {
-            return; // map anonymous classes on current class
+            return null; // map anonymous classes on current class
         }
 
         $this->currentClassReference = $this->fileReference->addClassReference($className);
@@ -59,6 +59,8 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
                 );
             }
         }
+
+        return null;
     }
 
     public function leaveNode(Node $node)
@@ -68,7 +70,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         }
 
         if (null === $this->currentClassReference) {
-            return;
+            return null;
         }
 
         if ($node instanceof Node\Stmt\TraitUse) {
@@ -128,5 +130,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
                 );
             }
         }
+
+        return null;
     }
 }

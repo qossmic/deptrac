@@ -6,6 +6,7 @@ namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
@@ -28,7 +29,10 @@ class AstMapGeneratorTest extends TestCase
     {
         $astRunner = new AstRunner(
             new EventDispatcher(),
-            new NikicPhpParser(new FileParser(ParserFactory::createParser()))
+            new NikicPhpParser(
+                new FileParser(ParserFactory::createParser()),
+                new AstFileReferenceInMemoryCache()
+            )
         );
 
         return $astRunner->createAstMapByFiles(

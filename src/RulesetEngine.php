@@ -22,16 +22,14 @@ class RulesetEngine
             $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
 
             foreach ($layerNames as $layerName) {
+                $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
+
                 foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
                     if ($layerName === $layerNameOfDependency) {
                         continue;
                     }
 
-                    if (in_array(
-                        $layerNameOfDependency,
-                        $configurationRuleset->getAllowedDependencies($layerName),
-                        true
-                    )) {
+                    if (in_array($layerNameOfDependency, $allowedDependencies, true)) {
                         continue;
                     }
 

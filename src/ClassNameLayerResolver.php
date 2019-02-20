@@ -33,21 +33,20 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     {
         $layers = [];
 
+        if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
+            $astClassReference = new AstClassReference($className);
+        }
+
         foreach ($this->configuration->getLayers() as $configurationLayer) {
             foreach ($configurationLayer->getCollectors() as $configurationCollector) {
                 $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
-                    $astClassReference = new AstClassReference($className);
-                }
-
                 if ($collector->satisfy(
                     $configurationCollector->getArgs(),
-                    $astClassReference,
+                    clone $astClassReference,
                     $this->astMap,
                     $this->collectorRegistry
-                )
-                ) {
+                )) {
                     $layers[$configurationLayer->getName()] = true;
                 }
             }
@@ -58,8 +57,11 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
     public function getLayers(): array
     {
-        return array_map(function (ConfigurationLayer $configurationLayer) {
-            return $configurationLayer->getName();
-        }, $this->configuration->getLayers());
+        return array_map(
+            function (ConfigurationLayer $configurationLayer) {
+                return $configurationLayer->getName();
+            },
+            $this->configuration->getLayers()
+        );
     }
 }

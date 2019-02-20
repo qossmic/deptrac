@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Subscriber;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
 use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CacheableFileSubscriber implements EventSubscriberInterface
 {
-    private $cacheableFileParser;
+    private $cache;
 
-    public function __construct(CacheableFileParser $cacheableFileParser)
+    public function __construct(AstFileReferenceFileCache $cache)
     {
-        $this->cacheableFileParser = $cacheableFileParser;
+        $this->cache = $cache;
     }
 
     public static function getSubscribedEvents(): array
@@ -28,11 +28,11 @@ class CacheableFileSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $event): void
     {
-        $this->cacheableFileParser->load();
+        $this->cache->load();
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $event): void
     {
-        $this->cacheableFileParser->write();
+        $this->cache->write();
     }
 }

@@ -9,6 +9,7 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class NikicPhpParser implements AstParserInterface
@@ -19,10 +20,12 @@ class NikicPhpParser implements AstParserInterface
     private static $classAstMap = [];
 
     private $fileParser;
+    private $cache;
 
-    public function __construct(FileParserInterface $fileParser)
+    public function __construct(FileParser $fileParser, AstFileReferenceCacheInterface $cache)
     {
         $this->fileParser = $fileParser;
+        $this->cache = $cache;
     }
 
     public function supports($data): bool
@@ -41,6 +44,10 @@ class NikicPhpParser implements AstParserInterface
             throw new \LogicException('parser not supported');
         }
 
+        if (null !== $fileReference = $this->cache->get($data->getRealPath())) {
+            return $fileReference;
+        }
+
         $fileReference = new AstFileReference($data->getRealPath());
 
         $traverser = new NodeTraverser();
@@ -48,6 +55,8 @@ class NikicPhpParser implements AstParserInterface
         $traverser->addVisitor(new AstClassReferenceResolver($fileReference));
 
         $traverser->traverse($this->fileParser->parse($data));
+
+        $this->cache->set($fileReference);
 
         return $fileReference;
     }
