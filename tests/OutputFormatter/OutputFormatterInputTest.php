@@ -14,11 +14,10 @@ class OutputFormatterInputTest extends TestCase
         static::assertEquals('b', (new OutputFormatterInput(['a' => 'b']))->getOption('a'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetOptionException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         (new OutputFormatterInput(['a' => 'b']))->getOption('c');
     }
 }

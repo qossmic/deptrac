@@ -43,11 +43,10 @@ class ClassNameCollectorTest extends TestCase
         static::assertEquals($expected, $stat);
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testWrongRegexParam(): void
     {
+        $this->expectException(\LogicException::class);
+
         (new ClassNameCollector())->satisfy(
             ['Foo' => 'a'],
             $this->prophesize(AstClassReferenceInterface::class)->reveal(),

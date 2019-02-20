@@ -24,11 +24,10 @@ class RegistryTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetUnknownCollector(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         (new Registry([]))->getCollector('foo');
     }
 }
