@@ -29,7 +29,7 @@ jobs:
                 - composer install -o
                 - wget --no-clobber --output-document=$HOME/bin/php-cs-fixer https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar || true
                 - chmod +x $HOME/bin/php-cs-fixer
-                - wget --no-clobber --output-document=$HOME/bin/phpstan https://github.com/phpstan/phpstan/releases/download/0.10.6/phpstan.phar || true
+                - wget --no-clobber --output-document=$HOME/bin/phpstan https://github.com/phpstan/phpstan/releases/download/0.11.2/phpstan.phar || true
                 - chmod +x $HOME/bin/phpstan
             script:
                 - $HOME/bin/php-cs-fixer fix --config=.php_cs.dist --dry-run --diff -v --using-cache=no
