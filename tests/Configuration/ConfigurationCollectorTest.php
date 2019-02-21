@@ -9,9 +9,10 @@ use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
 class ConfigurationCollectorTest extends TestCase
 {
-    /** @expectedException \InvalidArgumentException */
     public function testInvalidFromArray(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         ConfigurationCollector::fromArray([]);
     }
 

@@ -121,11 +121,10 @@ class OutputFormatterFactoryTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testGetFormatterByNameNotFound(): void
     {
+        $this->expectException(\LogicException::class);
+
         (new OutputFormatterFactory([]))->getFormatterByName('formatter1');
     }
 }
