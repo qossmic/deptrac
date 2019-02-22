@@ -27,7 +27,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
     {
         $this->load();
 
-        $filepath = realpath($filepath);
+        $filepath = $this->normalizeFilepath($filepath);
 
         if (!isset($this->cache[$filepath])) {
             return false;
@@ -48,7 +48,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
     {
         $this->load();
 
-        $filepath = realpath($filepath);
+        $filepath = $this->normalizeFilepath($filepath);
 
         if ($this->has($filepath)) {
             $this->parsedFiles[$filepath] = true;
@@ -63,7 +63,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
     {
         $this->load();
 
-        $filepath = realpath($fileReference->getFilepath());
+        $filepath = $this->normalizeFilepath($fileReference->getFilepath());
 
         $this->parsedFiles[$filepath] = true;
 
@@ -83,7 +83,13 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
             return;
         }
 
-        $cache = json_decode(file_get_contents($this->cacheFile), true);
+        $contents = file_get_contents($this->cacheFile);
+
+        if (false === $contents) {
+            throw new FileCouldNotBeReadException($this->cacheFile);
+        }
+
+        $cache = json_decode($contents, true);
 
         $this->loaded = true;
 
@@ -93,14 +99,17 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
 
         $this->cache = array_map(
             function (array $data) {
-                $data['reference'] = unserialize($data['reference'], [
-                    'allowed_classes' => [
-                        AstFileReference::class,
-                        AstClassReference::class,
-                        AstInherit::class,
-                        AstDependency::class,
-                    ],
-                ]);
+                $data['reference'] = unserialize(
+                    $data['reference'],
+                    [
+                        'allowed_classes' => [
+                            AstFileReference::class,
+                            AstClassReference::class,
+                            AstInherit::class,
+                            AstDependency::class,
+                        ],
+                    ]
+                );
 
                 return $data;
             },
@@ -140,5 +149,16 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
                 ]
             )
         );
+    }
+
+    private function normalizeFilepath(string $filepath): string
+    {
+        $normalized = realpath($filepath);
+
+        if (false === $normalized) {
+            throw new FileNotExistsException($filepath);
+        }
+
+        return $normalized;
     }
 }
