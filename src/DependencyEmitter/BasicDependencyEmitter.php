@@ -19,7 +19,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void
     {
         foreach ($astMap->getAstFileReferences() as $fileReference) {
-            $uses = $fileReference->getEmittedDependencies();
+            $uses = $fileReference->getDependencies();
 
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
                 /** @var AstDependency[] $dependencies */

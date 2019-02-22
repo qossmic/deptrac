@@ -34,6 +34,11 @@ class AstDependency
         return $this->type;
     }
 
+    public static function useStmt(string $class, int $line): self
+    {
+        return new self($class, $line, 'use');
+    }
+
     public static function returnType(string $class, int $line): self
     {
         return new self($class, $line, 'returntype');

@@ -55,11 +55,11 @@ class InheritanceFlatterTest extends TestCase
         $astMap->getClassInherits('classB')->willReturn([]);
         $astMap->getClassInherits('classBaum')->willReturn([]);
         $astMap->getClassInherits('classWeihnachtsbaum')->willReturn([
-            AstInherit::newUses('classBaum', 3),
+            AstInherit::newTraitUse('classBaum', 3),
         ]);
         $astMap->getClassInherits('classGeschmückterWeihnachtsbaum')->willReturn([
             new FlattenAstInherit(AstMap\AstInherit::newExtends('classBaum', 3), [
-                AstInherit::newUses('classWeihnachtsbaum', 3),
+                AstInherit::newTraitUse('classWeihnachtsbaum', 3),
             ]),
         ]);
 

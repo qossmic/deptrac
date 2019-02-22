@@ -29,11 +29,17 @@ class AstClassReference
         return $this->className;
     }
 
+    /**
+     * @return AstDependency[]
+     */
     public function getDependencies(): array
     {
         return $this->dependencies;
     }
 
+    /**
+     * @return AstInherit[]
+     */
     public function getInherits(): array
     {
         return $this->inherits;

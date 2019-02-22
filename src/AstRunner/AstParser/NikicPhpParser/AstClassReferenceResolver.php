@@ -66,7 +66,9 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         if ($node instanceof Node\Stmt\UseUse) {
-            $this->fileReference->addUse($node->name->toString(), $node->name->getLine());
+            $this->fileReference->addDependency(
+                AstDependency::useStmt($node->name->toString(), $node->name->getLine())
+            );
         }
 
         if (null === $this->currentClassReference) {
@@ -76,7 +78,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         if ($node instanceof Node\Stmt\TraitUse) {
             foreach ($node->traits as $trait) {
                 $this->currentClassReference->addInherit(
-                    AstInherit::newUses($trait->toString(), $trait->getLine())
+                    AstInherit::newTraitUse($trait->toString(), $trait->getLine())
                 );
             }
         }

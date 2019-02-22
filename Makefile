@@ -24,3 +24,6 @@ php-cs-check:																	## run cs fixer (dry-run)
 
 php-cs-fix:																		## run cs fixer
 	PHP_CS_FIXER_FUTURE_MODE=1 php-cs-fixer fix --allow-risky=yes
+
+phpstan:
+	phpstan analyse

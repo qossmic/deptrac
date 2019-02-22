@@ -27,7 +27,7 @@ class AstInherit implements AstInheritInterface
         return new self($className, $line, AstInheritInterface::TYPE_IMPLEMENTS);
     }
 
-    public static function newUses(string $className, int $line): self
+    public static function newTraitUse(string $className, int $line): self
     {
         return new self($className, $line, AstInheritInterface::TYPE_USES);
     }

@@ -8,13 +8,13 @@ class AstFileReference
 {
     private $filepath;
     private $astClassReferences;
-    private $emittedDependencies;
+    private $dependencies;
 
     public function __construct(string $filepath)
     {
         $this->filepath = $filepath;
         $this->astClassReferences = [];
-        $this->emittedDependencies = [];
+        $this->dependencies = [];
     }
 
     public function addClassReference(string $className): AstClassReference
@@ -35,13 +35,16 @@ class AstFileReference
         return $this->astClassReferences;
     }
 
-    public function getEmittedDependencies(): array
+    /**
+     * @return AstDependency[]
+     */
+    public function getDependencies(): array
     {
-        return $this->emittedDependencies;
+        return $this->dependencies;
     }
 
-    public function addUse(string $class, int $line): void
+    public function addDependency(AstDependency $dependency): void
     {
-        $this->emittedDependencies[] = new AstDependency($class, $line, 'use');
+        $this->dependencies[] = $dependency;
     }
 }
