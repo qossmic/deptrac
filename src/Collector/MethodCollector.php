@@ -6,12 +6,18 @@ namespace SensioLabs\Deptrac\Collector;
 
 use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 
 class MethodCollector implements CollectorInterface
 {
+    private $nikicPhpParser;
+
+    public function __construct(NikicPhpParser $nikicPhpParser)
+    {
+        $this->nikicPhpParser = $nikicPhpParser;
+    }
+
     public function getType(): string
     {
         return 'method';
@@ -19,19 +25,14 @@ class MethodCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReferenceInterface $classReference,
+        AstClassReference $classReference,
         AstMap $astMap,
-        Registry $collectorRegistry,
-        AstParserInterface $astParser
+        Registry $collectorRegistry
     ): bool {
-        if (!$astParser instanceof NikicPhpParser) {
-            return false;
-        }
-
-        $ast = $astParser->getAstForClassname($classReference->getClassName());
+        $ast = $this->nikicPhpParser->getAstForClassReference($classReference);
 
         /** @var ClassMethod[] $classMethods */
-        $classMethods = $astParser->findNodesOfType((array) $ast, ClassMethod::class);
+        $classMethods = $this->nikicPhpParser->findNodesOfType((array) $ast, ClassMethod::class);
         $pattern = $this->getPattern($configuration);
 
         foreach ($classMethods as $classMethod) {

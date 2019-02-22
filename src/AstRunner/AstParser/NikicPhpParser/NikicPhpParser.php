@@ -7,29 +7,25 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class NikicPhpParser implements AstParserInterface
 {
-    private $traverser;
-    private static $inheritanceByClassnameMap = [];
-    private static $fileAstMap = [];
-
     /**
      * @var Node\Stmt\ClassLike[]
      */
     private static $classAstMap = [];
 
     private $fileParser;
+    private $cache;
 
-    public function __construct(FileParserInterface $fileParser)
+    public function __construct(FileParser $fileParser, AstFileReferenceCacheInterface $cache)
     {
-        $this->traverser = new NodeTraverser();
-        $this->traverser->addVisitor(new NameResolver());
-
         $this->fileParser = $fileParser;
+        $this->cache = $cache;
     }
 
     public function supports($data): bool
@@ -41,20 +37,46 @@ class NikicPhpParser implements AstParserInterface
         return 'php' === strtolower($data->getExtension());
     }
 
-    public function parse($data): AstFileReferenceInterface
+    public function parse($data): AstFileReference
     {
         /** @var \SplFileInfo $data */
         if (!$this->supports($data)) {
-            throw new \LogicException();
+            throw new \LogicException('parser not supported');
         }
 
-        $ast = $this->traverser->traverse(
-            $this->fileParser->parse($data)
-        );
-
-        self::$fileAstMap[$data->getRealPath()] = $ast;
+        if (null !== $fileReference = $this->cache->get($data->getRealPath())) {
+            return $fileReference;
+        }
 
         $fileReference = new AstFileReference($data->getRealPath());
+
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new NameResolver());
+        $traverser->addVisitor(new AstClassReferenceResolver($fileReference));
+
+        $traverser->traverse($this->fileParser->parse($data));
+
+        $this->cache->set($fileReference);
+
+        return $fileReference;
+    }
+
+    public function getAstForClassReference(AstClassReference $classReference): ?Node
+    {
+        if (isset(self::$classAstMap[$classReference->getClassName()])) {
+            return self::$classAstMap[$classReference->getClassName()];
+        }
+
+        if (null === $classReference->getFileReference()) {
+            return null;
+        }
+
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor(new NameResolver());
+
+        $ast = $traverser->traverse(
+            $this->fileParser->parse(new \SplFileInfo($classReference->getFileReference()->getFilepath()))
+        );
 
         foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNode) {
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
@@ -63,24 +85,10 @@ class NikicPhpParser implements AstParserInterface
                 $className = (string) $classLikeNode->name;
             }
 
-            $fileReference->addClassReference($className);
             self::$classAstMap[$className] = $classLikeNode;
         }
 
-        return $fileReference;
-    }
-
-    /**
-     * @return Node[]
-     */
-    public function getAstByFile(AstFileReferenceInterface $astReference): array
-    {
-        return self::$fileAstMap[$astReference->getFilepath()] ?? [];
-    }
-
-    public function getAstForClassname(string $className): ?Node
-    {
-        return self::$classAstMap[$className] ?? null;
+        return self::$classAstMap[$classReference->getClassName()] ?? null;
     }
 
     /**
@@ -94,43 +102,22 @@ class NikicPhpParser implements AstParserInterface
 
         foreach ($nodes as $node) {
             if (is_array($node)) {
-                $collectedNodes = array_merge(
-                    $this->findNodesOfType($node, $type),
-                    $collectedNodes
-                );
+                $nodesOfType = $this->findNodesOfType($node, $type);
+                foreach ($nodesOfType as $n) {
+                    $collectedNodes[] = $n;
+                }
             } elseif ($node instanceof Node) {
                 if (is_a($node, $type, true)) {
                     $collectedNodes[] = $node;
                 }
 
-                $collectedNodes = array_merge(
-                    $this->findNodesOfType(
-                        AstHelper::getSubNodes($node),
-                        $type
-                    ),
-                    $collectedNodes
-                );
+                $nodesOfType = $this->findNodesOfType(AstHelper::getSubNodes($node), $type);
+                foreach ($nodesOfType as $n) {
+                    $collectedNodes[] = $n;
+                }
             }
         }
 
         return $collectedNodes;
-    }
-
-    /**
-     * @return AstInheritInterface[]
-     */
-    public function findInheritanceByClassname(string $className): array
-    {
-        if (isset(self::$inheritanceByClassnameMap[$className])) {
-            return self::$inheritanceByClassnameMap[$className];
-        }
-
-        if (!isset(self::$classAstMap[$className])) {
-            return self::$inheritanceByClassnameMap[$className] = [];
-        }
-
-        return self::$inheritanceByClassnameMap[$className] = AstHelper::findInheritances(
-            self::$classAstMap[$className]
-        );
     }
 }

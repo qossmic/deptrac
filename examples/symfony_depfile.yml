@@ -1,203 +1,228 @@
 paths:
-  - /tmp/08137051b
+    - /tmp/symfony
+
 exclude_files:
-  - .*test.*
+    - .*test.*
+
 layers:
-  - name: Asset
-    collectors:
-      - type: bool
-        must:
-          - type: className
-            regex: .*Asset.*
-        must_not:
-          - type: className
-            regex: .*Assetic.*
-  - name: DebugBundle
-    collectors:
-      - type: className
-        regex: .*DebugBundle\\.*
-  - name: FrameworkBundle
-    collectors:
-      - type: className
-        regex: .*FrameworkBundle\\.*
-  - name: SecurityBundle
-    collectors:
-      - type: className
-        regex: .*SecurityBundle\\.*
-  - name: TwigBundle
-    collectors:
-      - type: className
-        regex: .*TwigBundle\\.*
-  - name: WebProfilerBundle
-    collectors:
-      - type: className
-        regex: .*WebProfilerBundle\\.*
-  - name: BrowserKit
-    collectors:
-      - type: className
-        regex: .*Component\\BrowserKit.*
-  - name: ClassLoader
-    collectors:
-      - type: className
-        regex: .*Component\\ClassLoader.*
-  - name: Config
-    collectors:
-      - type: className
-        regex: .*Component\\Config.*
-  - name: Console
-    collectors:
-      - type: className
-        regex: .*Component\\Console.*
-  - name: CssSelector
-    collectors:
-      - type: className
-        regex: .*Component\\CssSelector.*
-  - name: Debug
-    collectors:
-      - type: className
-        regex: .*Component\\Debug.*
-  - name: DependencyInjection
-    collectors:
-      - type: className
-        regex: .*Component\\DependencyInjection.*
-  - name: DomCrawler
-    collectors:
-      - type: className
-        regex: .*Component\\DomCrawler.*
-  - name: EventDispatcher
-    collectors:
-      - type: className
-        regex: .*Component\\EventDispatcher.*
-  - name: ExpressionLanguage
-    collectors:
-      - type: className
-        regex: .*Component\\ExpressionLanguage.*
-  - name: Filesystem
-    collectors:
-      - type: className
-        regex: .*Component\\Filesystem.*
-  - name: Finder
-    collectors:
-      - type: className
-        regex: .*Component\\Finder.*
-  - name: Form
-    collectors:
-      - type: className
-        regex: .*Component\\Form.*
-  - name: HttpFoundation
-    collectors:
-      - type: className
-        regex: .*Component\\HttpFoundation.*
-  - name: HttpKernel
-    collectors:
-      - type: className
-        regex: .*Component\\HttpKernel.*
-  - name: Intl
-    collectors:
-      - type: className
-        regex: .*Component\\Intl.*
-  - name: Ldap
-    collectors:
-      - type: className
-        regex: .*Component\\Ldap.*
-  - name: Locale
-    collectors:
-      - type: className
-        regex: .*Component\\Locale.*
-  - name: OptionsResolver
-    collectors:
-      - type: className
-        regex: .*Component\\OptionsResolver.*
-  - name: Process
-    collectors:
-      - type: className
-        regex: .*Component\\Process.*
-  - name: PropertyAccess
-    collectors:
-      - type: className
-        regex: .*Component\\PropertyAccess.*
-  - name: PropertyInfo
-    collectors:
-      - type: className
-        regex: .*Component\\PropertyInfo.*
-  - name: Routing
-    collectors:
-      - type: className
-        regex: .*Component\\Routing.*
-  - name: Security
-    collectors:
-      - type: className
-        regex: .*Component\\Security.*
-  - name: Serializer
-    collectors:
-      - type: className
-        regex: .*Component\\Serializer.*
-  - name: Stopwatch
-    collectors:
-      - type: className
-        regex: .*Component\\Stopwatch.*
-  - name: Templating
-    collectors:
-      - type: className
-        regex: .*Component\\Templating.*
-  - name: Translation
-    collectors:
-      - type: className
-        regex: .*Component\\Translation.*
-  - name: Validator
-    collectors:
-      - type: className
-        regex: .*Component\\Validator.*
-  - name: VarDumper
-    collectors:
-      - type: className
-        regex: .*Component\\VarDumper.*
-  - name: Yaml
-    collectors:
-      - type: className
-        regex: .*Component\\Yaml.*
-  - name: FrameworkBundle
-    collectors:
-      - type: className
-        regex: .*Bundle\\FrameworkBundle.*
-  - name: DebugBundle
-    collectors:
-      - type: className
-        regex: .*Bundle\\DebugBundle.*
-  - name: SecurityBundle
-    collectors:
-      - type: className
-        regex: .*Bundle\\SecurityBundle.*
-  - name: TwigBundle
-    collectors:
-      - type: className
-        regex: .*Bundle\\TwigBundle.*
-  - name: WebProfilerBundle
-    collectors:
-      - type: className
-        regex: .*Bundle\\WebProfilerBundle.*
-  - name: DoctrineBridge
-    collectors:
-      - type: className
-        regex: .*Bridge\\Doctrine.*
-  - name: MonologBridge
-    collectors:
-      - type: className
-        regex: .*Bridge\\Monolog.*
-  - name: PhpUnitBridge
-    collectors:
-      - type: className
-        regex: .*Bridge\\PhpUnit.*
-  - name: ProxyManagerBridge
-    collectors:
-      - type: className
-        regex: .*Bridge\\ProxyManager.*
-  - name: SwiftmailerBridge
-    collectors:
-      - type: className
-        regex: .*Bridge\\Swiftmailer.*
-  - name: TwigBridge
-    collectors:
-      - type: className
-        regex: .*Bridge\\Twig.*
-ruleset: []
+    -   name: Asset
+        collectors:
+            -   type: bool
+                must:
+                    -   type: className
+                        regex: .*Asset.*
+                must_not:
+                    -   type: className
+                        regex: .*Assetic.*
+    -   name: DebugBundle
+        collectors:
+            -   type: className
+                regex: .*DebugBundle\\.*
+    -   name: FrameworkBundle
+        collectors:
+            -   type: className
+                regex: .*FrameworkBundle\\.*
+    -   name: SecurityBundle
+        collectors:
+            -   type: className
+                regex: .*SecurityBundle\\.*
+    -   name: TwigBundle
+        collectors:
+            -   type: className
+                regex: .*TwigBundle\\.*
+    -   name: WebProfilerBundle
+        collectors:
+            -   type: className
+                regex: .*WebProfilerBundle\\.*
+    -   name: BrowserKit
+        collectors:
+            -   type: className
+                regex: .*Component\\BrowserKit.*
+    -   name: ClassLoader
+        collectors:
+            -   type: className
+                regex: .*Component\\ClassLoader.*
+    -   name: Config
+        collectors:
+            -   type: className
+                regex: .*Component\\Config.*
+    -   name: Console
+        collectors:
+            -   type: className
+                regex: .*Component\\Console.*
+    -   name: CssSelector
+        collectors:
+            -   type: className
+                regex: .*Component\\CssSelector.*
+    -   name: Debug
+        collectors:
+            -   type: className
+                regex: .*Component\\Debug.*
+    -   name: DependencyInjection
+        collectors:
+            -   type: className
+                regex: .*Component\\DependencyInjection.*
+    -   name: DomCrawler
+        collectors:
+            -   type: className
+                regex: .*Component\\DomCrawler.*
+    -   name: EventDispatcher
+        collectors:
+            -   type: className
+                regex: .*Component\\EventDispatcher.*
+    -   name: ExpressionLanguage
+        collectors:
+            -   type: className
+                regex: .*Component\\ExpressionLanguage.*
+    -   name: Filesystem
+        collectors:
+            -   type: className
+                regex: .*Component\\Filesystem.*
+    -   name: Finder
+        collectors:
+            -   type: className
+                regex: .*Component\\Finder.*
+    -   name: Form
+        collectors:
+            -   type: className
+                regex: .*Component\\Form.*
+    -   name: HttpFoundation
+        collectors:
+            -   type: className
+                regex: .*Component\\HttpFoundation.*
+    -   name: HttpKernel
+        collectors:
+            -   type: className
+                regex: .*Component\\HttpKernel.*
+    -   name: Intl
+        collectors:
+            -   type: className
+                regex: .*Component\\Intl.*
+    -   name: Ldap
+        collectors:
+            -   type: className
+                regex: .*Component\\Ldap.*
+    -   name: Locale
+        collectors:
+            -   type: className
+                regex: .*Component\\Locale.*
+    -   name: OptionsResolver
+        collectors:
+            -   type: className
+                regex: .*Component\\OptionsResolver.*
+    -   name: Process
+        collectors:
+            -   type: className
+                regex: .*Component\\Process.*
+    -   name: PropertyAccess
+        collectors:
+            -   type: className
+                regex: .*Component\\PropertyAccess.*
+    -   name: PropertyInfo
+        collectors:
+            -   type: className
+                regex: .*Component\\PropertyInfo.*
+    -   name: Routing
+        collectors:
+            -   type: className
+                regex: .*Component\\Routing.*
+    -   name: Security
+        collectors:
+            -   type: className
+                regex: .*Component\\Security.*
+    -   name: Serializer
+        collectors:
+            -   type: className
+                regex: .*Component\\Serializer.*
+    -   name: Stopwatch
+        collectors:
+            -   type: className
+                regex: .*Component\\Stopwatch.*
+    -   name: Templating
+        collectors:
+            -   type: className
+                regex: .*Component\\Templating.*
+    -   name: Translation
+        collectors:
+            -   type: className
+                regex: .*Component\\Translation.*
+    -   name: Validator
+        collectors:
+            -   type: className
+                regex: .*Component\\Validator.*
+    -   name: VarDumper
+        collectors:
+            -   type: className
+                regex: .*Component\\VarDumper.*
+    -   name: Yaml
+        collectors:
+            -   type: className
+                regex: .*Component\\Yaml.*
+    -   name: FrameworkBundle
+        collectors:
+            -   type: className
+                regex: .*Bundle\\FrameworkBundle.*
+    -   name: DebugBundle
+        collectors:
+            -   type: className
+                regex: .*Bundle\\DebugBundle.*
+    -   name: SecurityBundle
+        collectors:
+            -   type: className
+                regex: .*Bundle\\SecurityBundle.*
+    -   name: TwigBundle
+        collectors:
+            -   type: className
+                regex: .*Bundle\\TwigBundle.*
+    -   name: WebProfilerBundle
+        collectors:
+            -   type: className
+                regex: .*Bundle\\WebProfilerBundle.*
+    -   name: DoctrineBridge
+        collectors:
+            -   type: className
+                regex: .*Bridge\\Doctrine.*
+    -   name: MonologBridge
+        collectors:
+            -   type: className
+                regex: .*Bridge\\Monolog.*
+    -   name: PhpUnitBridge
+        collectors:
+            -   type: className
+                regex: .*Bridge\\PhpUnit.*
+    -   name: ProxyManagerBridge
+        collectors:
+            -   type: className
+                regex: .*Bridge\\ProxyManager.*
+    -   name: SwiftmailerBridge
+        collectors:
+            -   type: className
+                regex: .*Bridge\\Swiftmailer.*
+    -   name: TwigBridge
+        collectors:
+            -   type: className
+                regex: .*Bridge\\Twig.*
+
+ruleset:
+    DependencyInjection:
+        - Config
+        - ExpressionLanguage
+    DoctrineBridge:
+        - Config
+        - DependencyInjection
+        - Form
+        - HttpFoundation
+        - OptionsResolver
+        - Validator
+    HttpKernel:
+        - Config
+        - DependencyInjection
+        - EventDispatcher
+        - HttpFoundation
+    Form:
+        - OptionsResolver
+    Translation:
+        - HttpFoundation
+    TwigBridge:
+        - HttpFoundation
+        - Form

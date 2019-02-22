@@ -6,7 +6,7 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
 use SensioLabs\Deptrac\Collector\Registry;
@@ -29,12 +29,9 @@ class ClassNameRegexCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, string $className, bool $expected): void
     {
-        $astClassReference = $this->prophesize(AstClassReferenceInterface::class);
-        $astClassReference->getClassName()->willReturn($className);
-
         $stat = (new ClassNameRegexCollector())->satisfy(
             $configuration,
-            $astClassReference->reveal(),
+            new AstClassReference($className),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()
@@ -49,7 +46,7 @@ class ClassNameRegexCollectorTest extends TestCase
 
         (new ClassNameRegexCollector())->satisfy(
             ['Foo' => 'a'],
-            $this->prophesize(AstClassReferenceInterface::class)->reveal(),
+            $this->prophesize(AstClassReference::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal(),
             $this->prophesize(AstParserInterface::class)->reveal()

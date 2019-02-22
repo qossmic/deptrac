@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
@@ -16,18 +15,15 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     protected $configuration;
     protected $astMap;
     protected $collectorRegistry;
-    protected $astParser;
 
     public function __construct(
         Configuration $configuration,
         AstMap $astMap,
-        Registry $collectorRegistry,
-        AstParserInterface $astParser
+        Registry $collectorRegistry
     ) {
         $this->configuration = $configuration;
         $this->astMap = $astMap;
         $this->collectorRegistry = $collectorRegistry;
-        $this->astParser = $astParser;
     }
 
     /**
@@ -37,22 +33,20 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     {
         $layers = [];
 
+        if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
+            $astClassReference = new AstClassReference($className);
+        }
+
         foreach ($this->configuration->getLayers() as $configurationLayer) {
             foreach ($configurationLayer->getCollectors() as $configurationCollector) {
                 $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
-                    $astClassReference = new AstClassReference($className);
-                }
-
                 if ($collector->satisfy(
                     $configurationCollector->getArgs(),
-                    $astClassReference,
+                    clone $astClassReference,
                     $this->astMap,
-                    $this->collectorRegistry,
-                    $this->astParser
-                )
-                ) {
+                    $this->collectorRegistry
+                )) {
                     $layers[$configurationLayer->getName()] = true;
                 }
             }
@@ -63,8 +57,11 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
     public function getLayers(): array
     {
-        return array_map(function (ConfigurationLayer $configurationLayer) {
-            return $configurationLayer->getName();
-        }, $this->configuration->getLayers());
+        return array_map(
+            function (ConfigurationLayer $configurationLayer) {
+                return $configurationLayer->getName();
+            },
+            $this->configuration->getLayers()
+        );
     }
 }

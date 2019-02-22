@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Dependency;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -30,13 +29,13 @@ class Analyzer
         }
     }
 
-    public function analyze(AstParserInterface $parser, AstMap $astMap): Result
+    public function analyze(AstMap $astMap): Result
     {
         $result = new Result();
 
         foreach ($this->emitters as $emitter) {
             $this->dispatcher->dispatch(Events::PRE_EMIT, new PreEmitEvent($emitter->getName()));
-            $emitter->applyDependencies($parser, $astMap, $result);
+            $emitter->applyDependencies($astMap, $result);
         }
         $this->dispatcher->dispatch(Events::POST_EMIT);
 

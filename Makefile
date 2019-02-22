@@ -14,7 +14,7 @@ composer-install-dev:
 
 tests: composer-install-dev
 	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c .
-	$(PHP_BIN) deptrac.php analyze examples/Fixture.depfile.yml
+	$(PHP_BIN) deptrac.php analyze examples/Fixture.depfile.yml --no-cache
 
 tests-coverage: composer-install-dev
 	$(PHP_BIN) ./vendor/phpunit/phpunit/phpunit -c . --coverage-html coverage
@@ -24,3 +24,6 @@ php-cs-check:																	## run cs fixer (dry-run)
 
 php-cs-fix:																		## run cs fixer
 	PHP_CS_FIXER_FUTURE_MODE=1 php-cs-fixer fix --allow-risky=yes
+
+phpstan:
+	phpstan analyse

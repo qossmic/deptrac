@@ -10,7 +10,13 @@
 
         <service id="SensioLabs\Deptrac\AstRunner\AstRunner">
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"/>
         </service>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache"/>
+
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"
+                 alias="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache"/>
 
         <service id="sensiolabs.deptrac.astrunner.nikic_php_parser" class="PhpParser\Parser">
             <factory class="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory" method="createParser"/>
@@ -22,6 +28,7 @@
 
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"/>
         </service>
 
         <service id="SensioLabs\Deptrac\OutputFormatterFactory">
@@ -55,6 +62,7 @@
         </service>
 
         <service id="SensioLabs\Deptrac\Collector\MethodCollector">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"/>
             <tag name="collector"/>
         </service>
 
@@ -98,7 +106,6 @@
         </service>
 
         <service id="SensioLabs\Deptrac\Console\Command\AnalyzeCommand" public="true">
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser"/>
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
             <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>

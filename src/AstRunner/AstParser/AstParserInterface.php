@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstParser;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
-interface AstParserInterface extends AstReferenceInterface
+interface AstParserInterface
 {
-    public function parse($data): AstFileReferenceInterface;
+    public function parse($data): AstFileReference;
 
     public function supports($data): bool;
-
-    /**
-     * @return AstInheritInterface[]
-     */
-    public function findInheritanceByClassname(string $className): array;
 }

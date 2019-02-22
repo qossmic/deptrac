@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
+use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
@@ -17,14 +18,14 @@ trait EmitterTrait
 {
     public function getDeps(DependencyEmitterInterface $emitter, \SplFileInfo $fileInfo): array
     {
-        $parser = new NikicPhpParser(new FileParser(ParserFactory::createParser()));
-        $astMap = (new AstRunner(new EventDispatcher()))->createAstMapByFiles(
-            $parser,
-            [$fileInfo]
+        $parser = new NikicPhpParser(
+            new FileParser(ParserFactory::createParser()),
+            new AstFileReferenceInMemoryCache()
         );
+        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$fileInfo]);
         $result = new Result();
 
-        $emitter->applyDependencies($parser, $astMap, $result);
+        $emitter->applyDependencies($astMap, $result);
 
         return array_map(
             function (Dependency $d) {

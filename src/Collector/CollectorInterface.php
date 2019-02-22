@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Collector;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 
 interface CollectorInterface
 {
@@ -24,9 +23,8 @@ interface CollectorInterface
      */
     public function satisfy(
         array $configuration,
-        AstClassReferenceInterface $abstractClassReference,
+        AstClassReference $astClassReference,
         AstMap $astMap,
-        Registry $collectorRegistry,
-        AstParserInterface $astParser
+        Registry $collectorRegistry
     ): bool;
 }

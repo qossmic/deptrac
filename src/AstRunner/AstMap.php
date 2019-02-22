@@ -4,35 +4,24 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
 use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstClassReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 
 class AstMap
 {
     /**
-     * @var AstClassReferenceInterface[]
+     * @var AstClassReference[]
      */
     private $astClassReferences = [];
 
     /**
-     * @var AstFileReferenceInterface[]
+     * @var AstFileReference[]
      */
     private $astFileReferences = [];
 
-    /**
-     * @var AstParserInterface
-     */
-    private $astParser;
-
-    public function __construct(AstParserInterface $astParser)
-    {
-        $this->astParser = $astParser;
-    }
-
-    public function addAstFileReference(AstFileReferenceInterface $astFileReference): void
+    public function addAstFileReference(AstFileReference $astFileReference): void
     {
         $this->astFileReferences[$astFileReference->getFilepath()] = $astFileReference;
 
@@ -42,7 +31,7 @@ class AstMap
     }
 
     /**
-     * @return AstClassReferenceInterface[]
+     * @return AstClassReference[]
      */
     public function getAstClassReferences(): array
     {
@@ -50,14 +39,14 @@ class AstMap
     }
 
     /**
-     * @return AstFileReferenceInterface[]
+     * @return AstFileReference[]
      */
     public function getAstFileReferences(): array
     {
         return $this->astFileReferences;
     }
 
-    public function getClassReferenceByClassName(string $className): ?AstClassReferenceInterface
+    public function getClassReferenceByClassName(string $className): ?AstClassReference
     {
         return $this->astClassReferences[$className] ?? null;
     }
@@ -67,9 +56,14 @@ class AstMap
      */
     public function getClassInherits(string $className): array
     {
-        $buffer = [];
+        $classReference = $this->getClassReferenceByClassName($className);
 
-        foreach ($this->astParser->findInheritanceByClassname($className) as $dep) {
+        if (null === $classReference) {
+            return [];
+        }
+
+        $buffer = [];
+        foreach ($classReference->getInherits() as $dep) {
             $buffer[] = $dep;
 
             foreach ($this->resolveDepsRecursive($dep) as $recDep) {
@@ -102,8 +96,14 @@ class AstMap
             return [];
         }
 
+        $classReference = $this->getClassReferenceByClassName($inheritDependency->getClassName());
+
+        if (null === $classReference) {
+            return [];
+        }
+
         $buffer = [];
-        foreach ($this->astParser->findInheritanceByClassname($inheritDependency->getClassName()) as $inherit) {
+        foreach ($classReference->getInherits() as $inherit) {
             $alreadyResolved[$inheritDependency->getClassName()] = true;
 
             $buffer[] = new FlattenAstInherit($inherit, iterator_to_array($path));
@@ -118,7 +118,7 @@ class AstMap
         return $buffer;
     }
 
-    private function addAstClassReference(AstClassReferenceInterface $astClassReference): void
+    private function addAstClassReference(AstClassReference $astClassReference): void
     {
         $this->astClassReferences[$astClassReference->getClassName()] = $astClassReference;
     }

@@ -7,14 +7,13 @@
         <defaults public="false"/>
 
         <service id="SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber">
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache"/>
             <tag name="event_subscriber"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser"
-                 decorates="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser">
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\CacheableFileParser.inner"/>
-        </service>
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache"/>
 
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"
+                 alias="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache"/>
     </services>
 </container>
