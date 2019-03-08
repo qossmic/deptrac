@@ -65,6 +65,10 @@ jobs:
                 - chmod +x $HOME/bin/box
             script:
                 - $HOME/bin/box compile
-                - php deptrac.phar analyze examples/Fixture.depfile.yml
-                - php deptrac.phar analyze examples/Fixture.depfile.yml # test with cache file
                 - php deptrac.phar analyze examples/Fixture.depfile.yml --no-cache
+                - "[ ! -f '.deptrac.cache' ]"
+                - php deptrac.phar analyze examples/Fixture.depfile.yml
+                - "[ -f '.deptrac.cache' ]"
+                - php deptrac.phar analyze examples/Fixture.depfile.yml # test with cache file
+                - php deptrac.phar analyze examples/Fixture.depfile.yml --cache-file=.deptrac.cache2
+                - "[ -f '.deptrac.cache2' ]"

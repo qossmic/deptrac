@@ -17,10 +17,10 @@ class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
     private $loaded = false;
     private $parsedFiles = [];
 
-    public function __construct()
+    public function __construct(string $cacheFile)
     {
         $this->cache = [];
-        $this->cacheFile = getcwd().'/.deptrac.cache';
+        $this->cacheFile = $cacheFile;
     }
 
     public function has(string $filepath): bool
