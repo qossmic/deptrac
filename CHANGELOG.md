@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.5.0 - TBD
+
+### Changed
+
+- [#215](https://github.com/sensiolabs-de/deptrac/pull/215) Enhancement: Apply @PHPUnit60Migration:risky ruleset
+
+- [#214](https://github.com/sensiolabs-de/deptrac/pull/214) Enhancement: Update phpstan/phpstan
+
+### Fixed
+
+- [#216](https://github.com/sensiolabs-de/deptrac/pull/216) Fix: Remove sudo configuration
+
+- [#213](https://github.com/sensiolabs-de/deptrac/pull/213) Enhancement: Reference phpunit.xsd as installed with composer
+
+- [#211](https://github.com/sensiolabs-de/deptrac/pull/211) improved caching mechanism
+
+- [#210](https://github.com/sensiolabs-de/deptrac/pull/210) don't apply dependencies from prev classes to current class when file contains more than one class
+
 ## 0.4.0 - 2019-01-11
 
 ### Added
