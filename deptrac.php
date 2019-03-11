@@ -10,7 +10,4 @@ if (PHP_VERSION_ID < 70100) {
     exit(1);
 }
 
-$input = new ArgvInput();
-$cache = !$input->hasParameterOption('--no-cache', true);
-
-(new Application($cache))->run($input);
+(new Application())->run();

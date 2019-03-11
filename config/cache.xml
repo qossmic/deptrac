@@ -11,7 +11,9 @@
             <tag name="event_subscriber"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache"/>
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache">
+            <argument type="string">%deptrac.cache_file%</argument>
+        </service>
 
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"
                  alias="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache"/>

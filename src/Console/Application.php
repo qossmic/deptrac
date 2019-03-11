@@ -8,6 +8,9 @@ use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Command\InitCommand;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
@@ -17,11 +20,19 @@ final class Application extends BaseApplication
 {
     public const VERSION = '@git-version@';
 
-    public function __construct(bool $cache = true)
+    public function __construct()
     {
         parent::__construct('deptrac', self::VERSION);
 
-        $container = $this->buildContainer($cache);
+        $this->getDefinition()->addOptions([
+            new InputOption('--no-cache', null, InputOption::VALUE_NONE, 'Disable caching mechanisms'),
+            new InputOption('--cache-file', null, InputOption::VALUE_REQUIRED, '', '.deptrac.cache'),
+        ]);
+    }
+
+    public function doRun(InputInterface $input, OutputInterface $output): int
+    {
+        $container = $this->buildContainer($input);
 
         /** @var InitCommand $initCommand */
         $initCommand = $container->get(InitCommand::class);
@@ -30,11 +41,12 @@ final class Application extends BaseApplication
         $analyzeCommand = $container->get(AnalyzeCommand::class);
 
         $this->addCommands([$initCommand, $analyzeCommand]);
-
         $this->setDefaultCommand('analyze');
+
+        return parent::doRun($input, $output);
     }
 
-    private function buildContainer(bool $cache): ContainerBuilder
+    private function buildContainer(InputInterface $input): ContainerBuilder
     {
         $container = new ContainerBuilder();
         $container->addCompilerPass(
@@ -44,7 +56,12 @@ final class Application extends BaseApplication
         $fileLoader = new XmlFileLoader($container, new FileLocator(__DIR__));
         $fileLoader->load(__DIR__.'/../../config/services.xml');
 
-        if (true === $cache) {
+        if (false === $input->hasParameterOption('--no-cache')) {
+            $container->setParameter(
+                'deptrac.cache_file',
+                $input->getParameterOption('--cache-file', getcwd().'/.deptrac.cache')
+            );
+
             $fileLoader->load(__DIR__.'/../../config/cache.xml');
         }
 
