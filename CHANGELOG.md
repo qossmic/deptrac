@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ## 0.5.0 - TBD
 
+### Added
+
+- [#219](https://github.com/sensiolabs-de/deptrac/pull/219) added input parameter option for cache file
+
 ### Changed
 
 - [#215](https://github.com/sensiolabs-de/deptrac/pull/215) Enhancement: Apply @PHPUnit60Migration:risky ruleset
@@ -23,8 +27,6 @@ All notable changes to this project will be documented in this file, in reverse 
 ## 0.4.0 - 2019-01-11
 
 ### Added
-
-- [#219](https://github.com/sensiolabs-de/deptrac/pull/219) added input parameter option for cache file
 
 - [#195](https://github.com/sensiolabs-de/deptrac/pull/195) chaching parsed files
 
