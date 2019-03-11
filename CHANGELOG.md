@@ -24,6 +24,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
+- [#219](https://github.com/sensiolabs-de/deptrac/pull/219) added input parameter option for cache file
+
 - [#195](https://github.com/sensiolabs-de/deptrac/pull/195) chaching parsed files
 
 - [#200](https://github.com/sensiolabs-de/deptrac/pull/200) skip class dependency violation (@torinaki)
