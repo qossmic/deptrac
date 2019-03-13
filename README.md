@@ -146,11 +146,13 @@ We do not recommend installing this repository via Composer. Instead please use 
 
 You can install Deptrac with [Phive](https://phar.io/#Install)
 
-`phive install -g sensiolabs-de/deptrac --force-accept-unsigned`
+`phive install -g sensiolabs-de/deptrac
+
+and accept the key with fingerprint `088B 7289 7980 555C 6E4E F669 3C52 E7DE D5E2 D9EE`
 
 To upgrade Deptrac use the following command:
 
-`phive update -g sensiolabs-de/deptrac --force-accept-unsigned`
+`phive update -g sensiolabs-de/deptrac
 
 ### Optional Dependency: Graphviz
 
