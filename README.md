@@ -129,7 +129,7 @@ Download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/rele
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.3.0/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.5.0/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
@@ -146,13 +146,13 @@ We do not recommend installing this repository via Composer. Instead please use 
 
 You can install Deptrac with [Phive](https://phar.io/#Install)
 
-`phive install -g sensiolabs-de/deptrac
+`phive install -g sensiolabs-de/deptrac`
 
 and accept the key with fingerprint `088B 7289 7980 555C 6E4E F669 3C52 E7DE D5E2 D9EE`
 
 To upgrade Deptrac use the following command:
 
-`phive update -g sensiolabs-de/deptrac
+`phive update -g sensiolabs-de/deptrac`
 
 ### Optional Dependency: Graphviz
 
