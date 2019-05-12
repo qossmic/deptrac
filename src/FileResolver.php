@@ -28,6 +28,9 @@ class FileResolver
 
         return array_filter($files, function (\SplFileInfo $fileInfo) use ($configuration) {
             foreach ($configuration->getExcludeFiles() as $excludeFiles) {
+                if (preg_match('/^([.A-Za-z\/])+(\.php)$/', $excludeFiles) && $excludeFiles == $fileInfo->getPathname()) {
+                    return false;
+                }
                 if (preg_match('/'.$excludeFiles.'/i', $fileInfo->getPathname())) {
                     return false;
                 }
