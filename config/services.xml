@@ -56,6 +56,10 @@
             <argument type="tagged" tag="output_formatter"/>
         </service>
 
+        <service id="SensioLabs\Deptrac\OutputFormatter\DOTOutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter">
             <tag name="output_formatter"/>
         </service>

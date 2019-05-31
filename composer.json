@@ -18,7 +18,7 @@
         "ext-json": "*",
         "graphp/graphviz": "0.2.*",
         "nikic/php-parser": "^4.2",
-        "phpdocumentor/graphviz": "^1.0",
+        "phpdocumentor/graphviz": "^2.0@dev",
         "phpstan/phpdoc-parser": "^0.3.3",
         "symfony/config": "^4.3",
         "symfony/console": "^4.3",
