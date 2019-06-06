@@ -1,7 +1,7 @@
 PHP_BIN      := php
 COMPOSER_BIN := composer
 BOX_BIN      := box
-SHA1SUM		 := sha1sum
+SHA1SUM      := sha1sum
 
 .PHONY: build composer-install-dev tests tests-coverage
 
