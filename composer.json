@@ -3,7 +3,7 @@
     "description": "Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.",
     "license": "MIT",
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "ext-json": "*",
         "graphp/graphviz": "0.2.*",
         "nikic/php-parser": "^4.1",
