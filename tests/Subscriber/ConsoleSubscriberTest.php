@@ -21,7 +21,7 @@ class ConsoleSubscriberTest extends TestCase
         $dispatcher->addSubscriber(new ConsoleSubscriber($formatter));
 
         $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        static::assertContains('9999999', $formatter->fetch());
+        static::assertStringContainsString('9999999', $formatter->fetch());
     }
 
     public function testOnPreCreateAstMapEventWithDefaultVerbosity(): void
@@ -32,6 +32,6 @@ class ConsoleSubscriberTest extends TestCase
         $dispatcher->addSubscriber(new ConsoleSubscriber($formatter));
 
         $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        static::assertContains('.', $formatter->fetch());
+        static::assertStringContainsString('.', $formatter->fetch());
     }
 }
