@@ -46,7 +46,7 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         if ($violationCount > $skippedViolationCount) {
             $output->writeln(
                 sprintf(
-                    "\nFound <error>%s Violations</error>".($skippedViolationCount ? ' and %s Violations skipped' : ''),
+                    'Found <error>%s Violations</error>'.($skippedViolationCount ? ' and %s Violations skipped' : ''),
                     $violationCount - $skippedViolationCount,
                     $skippedViolationCount
                 )
@@ -54,7 +54,7 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         } else {
             $output->writeln(
                 sprintf(
-                    "\nFound <info>%s Violations</info>".($skippedViolationCount ? ' and %s Violations skipped' : ''),
+                    'Found <info>%s Violations</info>'.($skippedViolationCount ? ' and %s Violations skipped' : ''),
                     $violationCount - $skippedViolationCount,
                     $skippedViolationCount
                 )

@@ -19,6 +19,7 @@ use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -62,13 +63,20 @@ class AnalyzeCommand extends Command
 
         $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
+        $this->addOption('no-banner', null, InputOption::VALUE_NONE, 'Do not show banner');
+        $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         ini_set('memory_limit', '-1');
 
-        $this->printBanner($output);
+        $noBanner = $input->getOption('no-banner');
+        $noProgress = $input->getOption('no-progress');
+
+        if (!$noBanner) {
+            $this->printBanner($output);
+        }
 
         try {
             $configuration = $this->configurationLoader->load($input->getArgument('depfile'));
@@ -78,7 +86,7 @@ class AnalyzeCommand extends Command
             return 1;
         }
 
-        $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
+        $this->dispatcher->addSubscriber(new ConsoleSubscriber($output, $noProgress));
 
         $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
 
@@ -124,12 +132,16 @@ class AnalyzeCommand extends Command
 
     protected function printCollectViolations(OutputInterface $output): void
     {
-        $output->writeln('<info>collecting violations.</info>');
+        if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln('<info>collecting violations.</info>');
+        }
     }
 
     protected function printFormattingStart(OutputInterface $output): void
     {
-        $output->writeln('<info>formatting dependencies.</info>');
+        if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln('<info>formatting dependencies.</info>');
+        }
     }
 
     protected function printFormatterException(OutputInterface $output, string $formatterName, \Exception $exception): void
