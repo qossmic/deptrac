@@ -20,7 +20,7 @@ jobs:
         -   stage: test
             name: Static analysis
             language: php
-            php: 7.1
+            php: 7.2
             before_install:
                 - phpenv config-rm xdebug.ini
             install:
@@ -32,13 +32,6 @@ jobs:
             script:
                 - $HOME/bin/php-cs-fixer fix --config=.php_cs.dist --dry-run --diff -v --using-cache=no
                 - $HOME/bin/phpstan analyze
-
-        -   stage: test
-            name: Unit tests (7.1)
-            language: php
-            php: 7.1
-            install:
-                - make tests
 
         -   stage: test
             name: Unit tests (7.2)
@@ -54,9 +47,16 @@ jobs:
             install:
                 - make tests
 
+#        -   stage: test
+#            name: Unit tests (7.4)
+#            language: php
+#            php: 7.4snapshot
+#            install:
+#                - make tests
+
         -   stage: build
             language: php
-            php: 7.1
+            php: 7.2
             before_install:
                 - phpenv config-rm xdebug.ini
             install:
