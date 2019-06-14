@@ -22,7 +22,7 @@ class JUnitOutputFormatterTest extends TestCase
 {
     private static $actual_junit_report_file = 'actual-junit-report.xml';
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists(__DIR__.'/data/'.static::$actual_junit_report_file)) {
             unlink(__DIR__.'/data/'.static::$actual_junit_report_file);
