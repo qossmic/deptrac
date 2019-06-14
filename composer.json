@@ -6,20 +6,25 @@
         "php": "^7.2",
         "ext-json": "*",
         "graphp/graphviz": "0.2.*",
-        "nikic/php-parser": "^4.1",
-        "phpdocumentor/graphviz": "~1.0",
-        "symfony/config": "^4.2",
-        "symfony/console": "^4.2",
-        "symfony/dependency-injection": "^4.2",
-        "symfony/event-dispatcher": "^4.2",
-        "symfony/finder": "^4.2",
-        "symfony/options-resolver": "^4.2",
-        "symfony/yaml": "^4.2"
+        "nikic/php-parser": "^4.2",
+        "phpdocumentor/graphviz": "^1.0",
+        "symfony/config": "^4.3",
+        "symfony/console": "^4.3",
+        "symfony/dependency-injection": "^4.3",
+        "symfony/event-dispatcher": "^4.3",
+        "symfony/finder": "^4.3",
+        "symfony/options-resolver": "^4.3",
+        "symfony/yaml": "^4.3"
     },
     "authors": [
         {
             "name": "timglabisch",
             "email": "tim.glabisch@sensiolabs.de"
+        },
+        {
+            "name": "Simon Mönch",
+            "email": "simon.moench@sensiolabs.de",
+            "role": "maintainer"
         }
     ],
     "require-dev": {
