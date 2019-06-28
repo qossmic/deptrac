@@ -12,6 +12,7 @@ class DependencyContext
 {
     /** @var AstMap */
     private $astMap;
+
     /** @var RulesetViolation[] */
     private $violations;
 
@@ -25,10 +26,8 @@ class DependencyContext
     private $skippedViolations;
 
     /**
-     * DependencyContext constructor.
-     *
-     * @param RulesetEngine\RulesetViolation[] $violations
-     * @param RulesetEngine\RulesetViolation[] $skippedViolations
+     * @param RulesetViolation[] $violations
+     * @param RulesetViolation[] $skippedViolations
      */
     public function __construct(
         AstMap $astMap,
@@ -50,7 +49,7 @@ class DependencyContext
     }
 
     /**
-     * @return RulesetEngine\RulesetViolation[]
+     * @return RulesetViolation[]
      */
     public function getViolations(): array
     {
