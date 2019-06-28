@@ -18,11 +18,14 @@ class ConsoleSubscriber implements EventSubscriberInterface
 {
     protected $output;
 
+    private $noProgress;
+
     private $progressBar;
 
-    public function __construct(OutputInterface $output)
+    public function __construct(OutputInterface $output, $noProgress = false)
     {
         $this->output = $output;
+        $this->noProgress = $noProgress;
     }
 
     public static function getSubscribedEvents(): array
@@ -41,24 +44,34 @@ class ConsoleSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
-        $this->output->writeln(sprintf(
-            'Start to create an AstMap for <info>%u</info> Files.',
-            $preCreateAstMapEvent->getExpectedFileCount()
-        ));
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln(
+                sprintf(
+                    'Start to create an AstMap for <info>%u</info> Files.',
+                    $preCreateAstMapEvent->getExpectedFileCount()
+                )
+            );
+        }
 
-        if ($this->output->getVerbosity() < OutputInterface::VERBOSITY_VERBOSE) {
+        if (!$this->noProgress && $this->output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
             $this->progressBar = new ProgressBar($this->output, $preCreateAstMapEvent->getExpectedFileCount());
         }
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
-        $this->output->writeln("\nAstMap created.");
+        if ($this->progressBar instanceof ProgressBar) {
+            $this->progressBar->finish();
+            $this->progressBar->clear();
+        }
+        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+            $this->output->writeln('AstMap created.');
+        }
     }
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent): void
     {
-        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_VERBOSE) {
             $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()));
         } elseif ($this->progressBar instanceof ProgressBar) {
             $this->progressBar->advance();
@@ -76,21 +89,29 @@ class ConsoleSubscriber implements EventSubscriberInterface
 
     public function onPreDependencyEmit(PreEmitEvent $event): void
     {
-        $this->output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()));
+        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $this->output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()));
+        }
     }
 
     public function onPostDependencyEmit(): void
     {
-        $this->output->writeln('<info>end emitting dependencies</info>');
+        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $this->output->writeln('<info>end emitting dependencies</info>');
+        }
     }
 
     public function onPreDependencyFlatten(): void
     {
-        $this->output->writeln('<info>start flatten dependencies</info>');
+        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $this->output->writeln('<info>start flatten dependencies</info>');
+        }
     }
 
     public function onPostDependencyFlatten(): void
     {
-        $this->output->writeln('<info>end flatten dependencies</info>');
+        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
+            $this->output->writeln('<info>end flatten dependencies</info>');
+        }
     }
 }

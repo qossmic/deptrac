@@ -18,20 +18,12 @@ class ConsoleSubscriberTest extends TestCase
         $dispatcher = new EventDispatcher();
         $formatter = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
 
-        $dispatcher->addSubscriber(new ConsoleSubscriber($formatter));
+        $dispatcher->addSubscriber(new ConsoleSubscriber($formatter, false));
 
         $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        static::assertStringContainsString('9999999', $formatter->fetch());
-    }
+        $result = $formatter->fetch();
 
-    public function testOnPreCreateAstMapEventWithDefaultVerbosity(): void
-    {
-        $dispatcher = new EventDispatcher();
-        $formatter = new BufferedOutput();
-
-        $dispatcher->addSubscriber(new ConsoleSubscriber($formatter));
-
-        $dispatcher->dispatch(PreCreateAstMapEvent::class, new PreCreateAstMapEvent(9999999));
-        static::assertStringContainsString('.', $formatter->fetch());
+        static::assertStringContainsString('9999999', $result);
+        static::assertStringContainsString('.', $result);
     }
 }
