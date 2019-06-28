@@ -16,6 +16,7 @@ use SensioLabs\Deptrac\FileResolver;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
 use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
+use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -71,10 +72,7 @@ class AnalyzeCommand extends Command
     {
         ini_set('memory_limit', '-1');
 
-        $noBanner = $input->getOption('no-banner');
-        $noProgress = $input->getOption('no-progress');
-
-        if (!$noBanner) {
+        if (!$input->getOption('no-banner')) {
             $this->printBanner($output);
         }
 
@@ -86,7 +84,11 @@ class AnalyzeCommand extends Command
             return 1;
         }
 
-        $this->dispatcher->addSubscriber(new ConsoleSubscriber($output, $noProgress));
+        $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
+
+        if (!$input->getOption('no-progress')) {
+            $this->dispatcher->addSubscriber(new ProgressSubscriber($output));
+        }
 
         $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
 

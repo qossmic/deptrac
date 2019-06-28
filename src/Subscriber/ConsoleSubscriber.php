@@ -10,22 +10,16 @@ use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Dependency\Events as DependencyEvents;
 use SensioLabs\Deptrac\Dependency\PreEmitEvent;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleSubscriber implements EventSubscriberInterface
 {
-    protected $output;
+    private $output;
 
-    private $noProgress;
-
-    private $progressBar;
-
-    public function __construct(OutputInterface $output, $noProgress = false)
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
-        $this->noProgress = $noProgress;
     }
 
     public static function getSubscribedEvents(): array
@@ -52,18 +46,10 @@ class ConsoleSubscriber implements EventSubscriberInterface
                 )
             );
         }
-
-        if (!$this->noProgress && $this->output->getVerbosity() <= OutputInterface::VERBOSITY_VERBOSE) {
-            $this->progressBar = new ProgressBar($this->output, $preCreateAstMapEvent->getExpectedFileCount());
-        }
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
-        if ($this->progressBar instanceof ProgressBar) {
-            $this->progressBar->finish();
-            $this->progressBar->clear();
-        }
         if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
             $this->output->writeln('AstMap created.');
         }
@@ -73,8 +59,6 @@ class ConsoleSubscriber implements EventSubscriberInterface
     {
         if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_VERBOSE) {
             $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()));
-        } elseif ($this->progressBar instanceof ProgressBar) {
-            $this->progressBar->advance();
         }
     }
 
