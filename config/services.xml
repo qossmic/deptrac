@@ -36,6 +36,10 @@
             <tag name="class_dependency_resolver"/>
         </service>
 
+        <service id="SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver">
+            <tag name="class_dependency_resolver"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\OutputFormatterFactory">
             <argument type="tagged" tag="output_formatter"/>
         </service>
