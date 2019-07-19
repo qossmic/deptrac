@@ -61,7 +61,7 @@ jobs:
                 - phpenv config-rm xdebug.ini
             install:
                 - composer install -o
-                - wget --no-clobber --output-document=$HOME/bin/box https://github.com/humbug/box/releases/download/3.4.0/box.phar || true
+                - wget --no-clobber --output-document=$HOME/bin/box https://github.com/humbug/box/releases/download/3.8.0/box.phar || true
                 - chmod +x $HOME/bin/box
             script:
                 - $HOME/bin/box compile
