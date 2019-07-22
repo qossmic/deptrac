@@ -83,4 +83,9 @@ class AstDependency
     {
         return new self($class, $line, 'throw');
     }
+
+    public static function constFetch(string $class, int $line): self
+    {
+        return new self($class, $line, 'const');
+    }
 }
