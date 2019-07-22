@@ -64,7 +64,7 @@ class AstDependency
         return new self($class, $line, 'static_method');
     }
 
-    public static function instanceof(string $class, int $line): self
+    public static function instanceofExpr(string $class, int $line): self
     {
         return new self($class, $line, 'instanceof');
     }
@@ -72,5 +72,15 @@ class AstDependency
     public static function catchStmt(string $class, int $line): self
     {
         return new self($class, $line, 'catch');
+    }
+
+    public static function variable(string $class, int $line): self
+    {
+        return new self($class, $line, 'variable');
+    }
+
+    public static function throwStmt(string $class, int $line): self
+    {
+        return new self($class, $line, 'throw');
     }
 }

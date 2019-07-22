@@ -11,6 +11,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 
 class NikicPhpParser implements AstParserInterface
 {
@@ -19,13 +20,29 @@ class NikicPhpParser implements AstParserInterface
      */
     private static $classAstMap = [];
 
+    /**
+     * @var FileParser
+     */
     private $fileParser;
+
+    /**
+     * @var AstFileReferenceCacheInterface
+     */
     private $cache;
 
-    public function __construct(FileParser $fileParser, AstFileReferenceCacheInterface $cache)
-    {
+    /**
+     * @var ClassDependencyResolver[]
+     */
+    private $classDependencyResolvers;
+
+    public function __construct(
+        FileParser $fileParser,
+        AstFileReferenceCacheInterface $cache,
+        iterable $classDependencyResolvers = []
+    ) {
         $this->fileParser = $fileParser;
         $this->cache = $cache;
+        $this->classDependencyResolvers = $classDependencyResolvers;
     }
 
     public function supports($data): bool
@@ -52,7 +69,7 @@ class NikicPhpParser implements AstParserInterface
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NameResolver());
-        $traverser->addVisitor(new AstClassReferenceResolver($fileReference));
+        $traverser->addVisitor(new AstClassReferenceResolver($fileReference, $this->classDependencyResolvers));
 
         $traverser->traverse($this->fileParser->parse($data));
 

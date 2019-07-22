@@ -10,6 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 
 class AstClassReferenceResolver extends NodeVisitorAbstract
 {
@@ -18,9 +19,16 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
     /** @var AstClassReference */
     private $currentClassReference;
 
-    public function __construct(AstFileReference $fileReference)
+    /** @var ClassDependencyResolver[] */
+    private $classDependencyResolvers;
+
+    /**
+     * @param ClassDependencyResolver[] $classDependencyResolvers
+     */
+    public function __construct(AstFileReference $fileReference, iterable $classDependencyResolvers)
     {
         $this->fileReference = $fileReference;
+        $this->classDependencyResolvers = $classDependencyResolvers;
     }
 
     public function enterNode(Node $node)
@@ -85,7 +93,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
 
         if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
             $this->currentClassReference->addDependency(
-                AstDependency::instanceof($node->class->toString(), $node->class->getLine())
+                AstDependency::instanceofExpr($node->class->toString(), $node->class->getLine())
             );
         }
 
@@ -131,6 +139,10 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
                     AstDependency::catchStmt($type->toString(), $type->getLine())
                 );
             }
+        }
+
+        foreach ($this->classDependencyResolvers as $resolver) {
+            $resolver->processNode($node, $this->currentClassReference);
         }
 
         return null;
