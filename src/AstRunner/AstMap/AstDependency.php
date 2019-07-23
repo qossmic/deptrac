@@ -88,4 +88,14 @@ class AstDependency
     {
         return new self($class, $line, 'const');
     }
+
+    public static function anonymousClassExtends(string $class, int $line): self
+    {
+        return new self($class, $line, 'anonymous_class_extends');
+    }
+
+    public static function anonymousClassImplements(string $class, int $line): self
+    {
+        return new self($class, $line, 'anonymous_class_implements');
+    }
 }
