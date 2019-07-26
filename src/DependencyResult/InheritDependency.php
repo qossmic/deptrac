@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\DependencyResult;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 
 class InheritDependency implements DependencyInterface
 {
@@ -13,7 +13,7 @@ class InheritDependency implements DependencyInterface
     private $path;
     private $originalDependency;
 
-    public function __construct(string $classA, string $classB, DependencyInterface $originalDependency, AstInheritInterface $path)
+    public function __construct(string $classA, string $classB, DependencyInterface $originalDependency, AstInherit $path)
     {
         $this->classA = $classA;
         $this->classB = $classB;
@@ -36,7 +36,7 @@ class InheritDependency implements DependencyInterface
         return $this->classB;
     }
 
-    public function getPath(): AstInheritInterface
+    public function getPath(): AstInherit
     {
         return $this->path;
     }

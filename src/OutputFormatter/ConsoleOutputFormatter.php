@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
@@ -94,7 +94,7 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function formatPath(AstInheritInterface $astInherit, InheritDependency $dependency)
+    private function formatPath(AstInherit $astInherit, InheritDependency $dependency)
     {
         $buffer = [];
         foreach ($astInherit->getPath() as $p) {

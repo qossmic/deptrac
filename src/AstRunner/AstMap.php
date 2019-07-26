@@ -6,8 +6,7 @@ namespace SensioLabs\Deptrac\AstRunner;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
-use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 
 class AstMap
 {
@@ -52,9 +51,9 @@ class AstMap
     }
 
     /**
-     * @return AstInheritInterface[]
+     * @return AstInherit[]|iterable
      */
-    public function getClassInherits(string $className): array
+    public function getClassInherits(string $className): iterable
     {
         $classReference = $this->getClassReferenceByClassName($className);
 
@@ -62,26 +61,20 @@ class AstMap
             return [];
         }
 
-        $buffer = [];
         foreach ($classReference->getInherits() as $dep) {
-            $buffer[] = $dep;
-
-            foreach ($this->resolveDepsRecursive($dep) as $recDep) {
-                $buffer[] = $recDep;
-            }
+            yield $dep;
+            yield from $this->resolveDepsRecursive($dep);
         }
-
-        return $buffer;
     }
 
     /**
-     * @return AstInheritInterface[]
+     * @return AstInherit[]|iterable
      */
     private function resolveDepsRecursive(
-        AstInheritInterface $inheritDependency,
+        AstInherit $inheritDependency,
         \ArrayObject $alreadyResolved = null,
         \SplStack $path = null
-    ): array {
+    ): iterable {
         if (null === $alreadyResolved) {
             $alreadyResolved = new \ArrayObject();
         }
@@ -102,20 +95,18 @@ class AstMap
             return [];
         }
 
-        $buffer = [];
         foreach ($classReference->getInherits() as $inherit) {
             $alreadyResolved[$inheritDependency->getClassName()] = true;
 
-            $buffer[] = new FlattenAstInherit($inherit, iterator_to_array($path));
+            yield $inherit->withPath(iterator_to_array($path));
+
             $path->push($inherit);
-            foreach ($this->resolveDepsRecursive($inherit, $alreadyResolved, $path) as $dep) {
-                $buffer[] = $dep;
-            }
+
+            yield from $this->resolveDepsRecursive($inherit, $alreadyResolved, $path);
+
             unset($alreadyResolved[$inheritDependency->getClassName()]);
             $path->pop();
         }
-
-        return $buffer;
     }
 
     private function addAstClassReference(AstClassReference $astClassReference): void

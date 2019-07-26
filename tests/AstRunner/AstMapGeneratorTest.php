@@ -40,21 +40,6 @@ class AstMapGeneratorTest extends TestCase
         );
     }
 
-    private function getDirectInherits($class, AstMap $astMap)
-    {
-        return array_map(
-            function (AstMap\AstInherit $v) {
-                return $v->__toString();
-            },
-            array_filter(
-                $astMap->getClassInherits($class),
-                function (AstMap\AstInheritInterface $v) {
-                    return $v instanceof AstMap\AstInherit;
-                }
-            )
-        );
-    }
-
     public function testBasicDependencyClass(): void
     {
         $astMap = $this->getAstMap('BasicDependencyClass');
@@ -64,7 +49,7 @@ class AstMapGeneratorTest extends TestCase
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassA::9 (Extends)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::9 (Implements)',
             ],
-            $this->getDirectInherits(BasicDependencyClassB::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyClassB::class)->getInherits()
         );
 
         static::assertArrayValuesEquals(
@@ -72,7 +57,7 @@ class AstMapGeneratorTest extends TestCase
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::13 (Implements)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceB::13 (Implements)',
             ],
-            $this->getDirectInherits(BasicDependencyClassC::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyClassC::class)->getInherits()
         );
     }
 
@@ -82,17 +67,17 @@ class AstMapGeneratorTest extends TestCase
 
         static::assertArrayValuesEquals(
             [],
-            $this->getDirectInherits(BasicDependencyTraitA::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyTraitA::class)->getInherits()
         );
 
         static::assertArrayValuesEquals(
             [],
-            $this->getDirectInherits(BasicDependencyTraitB::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyTraitB::class)->getInherits()
         );
 
         static::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::7 (Uses)'],
-            $this->getDirectInherits(BasicDependencyTraitC::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyTraitC::class)->getInherits()
         );
 
         static::assertArrayValuesEquals(
@@ -100,12 +85,12 @@ class AstMapGeneratorTest extends TestCase
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::10 (Uses)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::11 (Uses)',
             ],
-            $this->getDirectInherits(BasicDependencyTraitD::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyTraitD::class)->getInherits()
         );
 
         static::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::15 (Uses)'],
-            $this->getDirectInherits(BasicDependencyTraitClass::class, $astMap)
+            $astMap->getClassReferenceByClassName(BasicDependencyTraitClass::class)->getInherits()
         );
     }
 }

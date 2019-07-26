@@ -61,7 +61,7 @@ class DependencyContext
      */
     public function getViolationsByLayerName(string $layerName): array
     {
-        return array_filter($this->violations, function (RulesetViolation $violation) use ($layerName) {
+        return array_filter($this->violations, static function (RulesetViolation $violation) use ($layerName) {
             return $violation->getLayerA() === $layerName;
         });
     }
@@ -84,7 +84,7 @@ class DependencyContext
         return array_values(
             array_filter(
                 $this->skippedViolations,
-                function (RulesetViolation $violation) use ($layerName) {
+                static function (RulesetViolation $violation) use ($layerName) {
                     return $violation->getLayerA() === $layerName;
                 }
             )

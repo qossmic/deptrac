@@ -7,7 +7,6 @@ namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
@@ -34,13 +33,11 @@ class ConsoleOutputFormatterTest extends TestCase
                         'ClassA',
                         'ClassB',
                         new Dependency('OriginalA', 12, 'OriginalB'),
-                        new FlattenAstInherit(
-                            AstInherit::newExtends('ClassInheritA', 3), [
-                                AstInherit::newExtends('ClassInheritB', 4),
-                                AstInherit::newExtends('ClassInheritC', 5),
-                                AstInherit::newExtends('ClassInheritD', 6),
-                            ]
-                        )
+                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
+                            AstInherit::newExtends('ClassInheritB', 4),
+                            AstInherit::newExtends('ClassInheritC', 5),
+                            AstInherit::newExtends('ClassInheritD', 6),
+                        ])
                     ),
                     'LayerA',
                     'LayerB'
@@ -76,8 +73,7 @@ class ConsoleOutputFormatterTest extends TestCase
         ];
 
         yield [
-            [
-            ],
+            [],
             [],
             '
 
