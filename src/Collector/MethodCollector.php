@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Collector;
 
-use PhpParser\Node\Stmt\ClassMethod;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
@@ -29,13 +28,15 @@ class MethodCollector implements CollectorInterface
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        $ast = $this->nikicPhpParser->getAstForClassReference($classReference);
-
-        /** @var ClassMethod[] $classMethods */
-        $classMethods = $this->nikicPhpParser->findNodesOfType((array) $ast, ClassMethod::class);
         $pattern = $this->getPattern($configuration);
 
-        foreach ($classMethods as $classMethod) {
+        $classLike = $this->nikicPhpParser->getAstForClassReference($classReference);
+
+        if (null === $classLike) {
+            return false;
+        }
+
+        foreach ($classLike->getMethods() as $classMethod) {
             if (1 === preg_match($pattern, (string) $classMethod->name)) {
                 return true;
             }

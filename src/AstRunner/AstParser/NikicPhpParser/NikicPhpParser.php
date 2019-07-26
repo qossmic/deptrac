@@ -6,6 +6,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
@@ -78,7 +79,7 @@ class NikicPhpParser implements AstParserInterface
         return $fileReference;
     }
 
-    public function getAstForClassReference(AstClassReference $classReference): ?Node
+    public function getAstForClassReference(AstClassReference $classReference): ?Node\Stmt\ClassLike
     {
         if (isset(self::$classAstMap[$classReference->getClassName()])) {
             return self::$classAstMap[$classReference->getClassName()];
@@ -88,14 +89,23 @@ class NikicPhpParser implements AstParserInterface
             return null;
         }
 
+        $finding = new FindingVisitor(
+            static function (Node $node) {
+                return $node instanceof Node\Stmt\ClassLike;
+            }
+        );
+
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NameResolver());
-
-        $ast = $traverser->traverse(
+        $traverser->addVisitor($finding);
+        $traverser->traverse(
             $this->fileParser->parse(new \SplFileInfo($classReference->getFileReference()->getFilepath()))
         );
 
-        foreach (AstHelper::findClassLikeNodes($ast) as $classLikeNode) {
+        /** @var Node\Stmt\ClassLike[] $classLikeNodes */
+        $classLikeNodes = $finding->getFoundNodes();
+
+        foreach ($classLikeNodes as $classLikeNode) {
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
                 $className = $classLikeNode->namespacedName->toString();
             } else {
@@ -106,35 +116,5 @@ class NikicPhpParser implements AstParserInterface
         }
 
         return self::$classAstMap[$classReference->getClassName()] ?? null;
-    }
-
-    /**
-     * @param Node[]|array<Node[]> $nodes
-     *
-     * @return Node[]
-     */
-    public function findNodesOfType(array $nodes, string $type): array
-    {
-        $collectedNodes = [];
-
-        foreach ($nodes as $node) {
-            if (is_array($node)) {
-                $nodesOfType = $this->findNodesOfType($node, $type);
-                foreach ($nodesOfType as $n) {
-                    $collectedNodes[] = $n;
-                }
-            } elseif ($node instanceof Node) {
-                if (is_a($node, $type, true)) {
-                    $collectedNodes[] = $node;
-                }
-
-                $nodesOfType = $this->findNodesOfType(AstHelper::getSubNodes($node), $type);
-                foreach ($nodesOfType as $n) {
-                    $collectedNodes[] = $n;
-                }
-            }
-        }
-
-        return $collectedNodes;
     }
 }
