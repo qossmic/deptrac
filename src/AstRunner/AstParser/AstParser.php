@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
-interface AstParserInterface
+interface AstParser
 {
     public function parse($data): AstFileReference;
 

@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
-class AstFileReferenceInMemoryCache implements AstFileReferenceCacheInterface
+class AstFileReferenceInMemoryCache implements AstFileReferenceCache
 {
     private $cache = [];
 

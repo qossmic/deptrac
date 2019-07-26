@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
 use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
 use SensioLabs\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
@@ -16,7 +16,7 @@ class AstRunner
     private $dispatcher;
     private $astParser;
 
-    public function __construct(EventDispatcherInterface $dispatcher, AstParserInterface $astParser)
+    public function __construct(EventDispatcherInterface $dispatcher, AstParser $astParser)
     {
         $this->dispatcher = $dispatcher;
         $this->astParser = $astParser;
