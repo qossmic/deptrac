@@ -7,7 +7,6 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\Collector\Registry;
@@ -23,8 +22,7 @@ class BoolCollectorTest extends TestCase
             [],
             $this->createMock(AstClassReference::class),
             $this->createMock(AstMap::class),
-            $this->createMock(Registry::class),
-            $this->createMock(AstParserInterface::class)
+            $this->createMock(Registry::class)
         );
     }
 
@@ -178,8 +176,7 @@ class BoolCollectorTest extends TestCase
             $configuration,
             $this->prophesize(AstClassReference::class)->reveal(),
             $this->prophesize(AstMap::class)->reveal(),
-            $collectorFactory->reveal(),
-            $this->prophesize(AstParserInterface::class)->reveal()
+            $collectorFactory->reveal()
         );
 
         static::assertEquals($expected, $stat);
