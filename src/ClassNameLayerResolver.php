@@ -58,7 +58,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     public function getLayers(): array
     {
         return array_map(
-            function (ConfigurationLayer $configurationLayer) {
+            static function (ConfigurationLayer $configurationLayer) {
                 return $configurationLayer->getName();
             },
             $this->configuration->getLayers()

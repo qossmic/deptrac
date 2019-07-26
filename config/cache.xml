@@ -15,7 +15,7 @@
             <argument type="string">%deptrac.cache_file%</argument>
         </service>
 
-        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache"
                  alias="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache"/>
     </services>
 </container>

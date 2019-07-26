@@ -22,6 +22,7 @@ class TypeResolver
         'iterable',
         'void',
         'object',
+        'mixed',
     ];
 
     private $nameScope;

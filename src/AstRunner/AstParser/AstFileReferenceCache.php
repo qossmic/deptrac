@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
-interface AstFileReferenceCacheInterface
+interface AstFileReferenceCache
 {
     public function has(string $filepath): bool;
 

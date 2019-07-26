@@ -10,11 +10,11 @@ use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParserInterface;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
+use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 
-class NikicPhpParser implements AstParserInterface
+class NikicPhpParser implements AstParser
 {
     /**
      * @var Node\Stmt\ClassLike[]
@@ -27,7 +27,7 @@ class NikicPhpParser implements AstParserInterface
     private $fileParser;
 
     /**
-     * @var AstFileReferenceCacheInterface
+     * @var AstFileReferenceCache
      */
     private $cache;
 
@@ -38,7 +38,7 @@ class NikicPhpParser implements AstParserInterface
 
     public function __construct(
         FileParser $fileParser,
-        AstFileReferenceCacheInterface $cache,
+        AstFileReferenceCache $cache,
         iterable $classDependencyResolvers = []
     ) {
         $this->fileParser = $fileParser;

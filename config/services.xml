@@ -15,7 +15,7 @@
 
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache"/>
 
-        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"
+        <service id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache"
                  alias="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache"/>
 
         <service id="sensiolabs.deptrac.astrunner.nikic_php_parser" class="PhpParser\Parser">
@@ -28,7 +28,7 @@
 
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser"/>
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCacheInterface"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache"/>
             <argument type="tagged" tag="class_dependency_resolver"/>
         </service>
 

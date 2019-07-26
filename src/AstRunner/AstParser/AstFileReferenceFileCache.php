@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\Console\Application;
 
-class AstFileReferenceFileCache implements AstFileReferenceCacheInterface
+class AstFileReferenceFileCache implements AstFileReferenceCache
 {
     private $cache;
     private $cacheFile;
