@@ -519,15 +519,15 @@ layers:
       - type: bool
         must:
           - type: className
-            regex: .*Foo\\Asset.*
+            regex: .*Foo\\.*
           - type: className
-            regex: .*Bar\\Asset.*
+            regex: .*\\Asset.*
         must_not:
           - type: className
             regex: .*Assetic.*
 ```
 
-Every class that contains `Foo\Asset` OR `Bar\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
+Every class that contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
 
 
 ### More Collectors
