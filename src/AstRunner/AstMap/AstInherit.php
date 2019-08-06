@@ -4,32 +4,38 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
-class AstInherit implements AstInheritInterface
+class AstInherit
 {
+    private const TYPE_EXTENDS = 1;
+    private const TYPE_IMPLEMENTS = 2;
+    private const TYPE_USES = 3;
+
     private $className;
     private $line;
     private $type;
+    private $path;
 
     private function __construct(string $className, int $line, int $type)
     {
         $this->className = $className;
         $this->line = $line;
         $this->type = $type;
+        $this->path = [];
     }
 
     public static function newExtends(string $className, int $line): self
     {
-        return new self($className, $line, AstInheritInterface::TYPE_EXTENDS);
+        return new self($className, $line, static::TYPE_EXTENDS);
     }
 
     public static function newImplements(string $className, int $line): self
     {
-        return new self($className, $line, AstInheritInterface::TYPE_IMPLEMENTS);
+        return new self($className, $line, static::TYPE_IMPLEMENTS);
     }
 
     public static function newTraitUse(string $className, int $line): self
     {
-        return new self($className, $line, AstInheritInterface::TYPE_USES);
+        return new self($className, $line, static::TYPE_USES);
     }
 
     public function __toString(): string
@@ -48,7 +54,18 @@ class AstInherit implements AstInheritInterface
                 $type = 'Unknown';
         }
 
-        return "{$this->className}::{$this->line} ($type)";
+        $description = "{$this->className}::{$this->line} ($type)";
+
+        if (0 === count($this->path)) {
+            return $description;
+        }
+
+        $buffer = '';
+        foreach ($this->path as $v) {
+            $buffer = ((string) $v).' -> '.$buffer;
+        }
+
+        return $description.' (path: '.rtrim($buffer, ' -> ').')';
     }
 
     public function getClassName(): string
@@ -67,10 +84,21 @@ class AstInherit implements AstInheritInterface
     }
 
     /**
-     * @return AstInheritInterface[]
+     * @return AstInherit[]
      */
     public function getPath(): array
     {
-        return [];
+        return $this->path;
+    }
+
+    /**
+     * @param AstInherit[] $path
+     */
+    public function withPath(array $path): self
+    {
+        $self = clone $this;
+        $self->path = $path;
+
+        return $self;
     }
 }

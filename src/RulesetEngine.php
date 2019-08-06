@@ -53,7 +53,7 @@ class RulesetEngine
     public function getSkippedViolations(array $violations, ConfigurationSkippedViolation $configurationSkipViolation): array
     {
         return \array_values(
-            \array_filter($violations, function ($violation) use ($configurationSkipViolation) {
+            \array_filter($violations, static function ($violation) use ($configurationSkipViolation) {
                 /** @var RulesetViolation $violation */
                 $dep = $violation->getDependency();
 

@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\AstRunner\AstMap\FlattenAstInherit;
 use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyResult\Dependency;
@@ -58,17 +57,20 @@ class InheritanceFlatterTest extends TestCase
             AstInherit::newTraitUse('classBaum', 3),
         ]);
         $astMap->getClassInherits('classGeschmückterWeihnachtsbaum')->willReturn([
-            new FlattenAstInherit(AstMap\AstInherit::newExtends('classBaum', 3), [
+            AstMap\AstInherit::newExtends('classBaum', 3)->withPath([
                 AstInherit::newTraitUse('classWeihnachtsbaum', 3),
             ]),
         ]);
 
         (new InheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);
 
-        $inheritDeps = array_filter($dependencyResult->getDependenciesAndInheritDependencies(), function ($v) {
-            return $v instanceof InheritDependency;
-        });
+        $inheritDeps = array_filter(
+            $dependencyResult->getDependenciesAndInheritDependencies(),
+            static function ($v) {
+                return $v instanceof InheritDependency;
+            }
+        );
 
-        static::assertCount(1, $inheritDeps);
+        static::assertCount(2, $inheritDeps);
     }
 }

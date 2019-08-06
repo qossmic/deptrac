@@ -50,21 +50,16 @@ class AstMapFlattenGeneratorTest extends TestCase
         );
     }
 
-    private function getInheritedInherits(string $class, AstMap $astMap)
+    private function getInheritedInherits(string $class, AstMap $astMap): array
     {
-        return array_values(
-            array_map(
-                function (AstMap\FlattenAstInherit $v) {
-                    return $v->__toString();
-                },
-                array_filter(
-                    $astMap->getClassInherits($class),
-                    function (AstMap\AstInheritInterface $v) {
-                        return $v instanceof AstMap\FlattenAstInherit;
-                    }
-                )
-            )
-        );
+        $inherits = [];
+        foreach ($astMap->getClassInherits($class) as $v) {
+            if (count($v->getPath()) > 0) {
+                $inherits[] = (string) $v;
+            }
+        }
+
+        return $inherits;
     }
 
     public function testBasicInheritance(): void

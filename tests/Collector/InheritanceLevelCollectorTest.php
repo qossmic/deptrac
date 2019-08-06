@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInheritInterface;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
 
@@ -30,17 +30,17 @@ class InheritanceLevelCollectorTest extends TestCase
      */
     public function testSatisfy(int $pathLevel, int $levelConfig, bool $expected): void
     {
-        $classInherit = $this->prophesize(AstInheritInterface::class);
+        $classInherit = $this->prophesize(AstInherit::class);
         $classInherit->getPath()
             ->willReturn(array_fill(0, $pathLevel, 1));
 
         $astMap = $this->prophesize(AstMap::class);
-        $astMap->getClassInherits(AstInheritInterface::class)
+        $astMap->getClassInherits(AstInherit::class)
             ->willReturn([$classInherit->reveal()]);
 
         $classReference = $this->prophesize(AstClassReference::class);
         $classReference->getClassName()
-            ->willReturn(AstInheritInterface::class);
+            ->willReturn(AstInherit::class);
 
         $stat = (new InheritanceLevelCollector())->satisfy(
             ['level' => $levelConfig],
