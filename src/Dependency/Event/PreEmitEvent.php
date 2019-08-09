@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Dependency;
+namespace SensioLabs\Deptrac\Dependency\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
-class PreEmitEvent extends Event
+final class PreEmitEvent extends Event
 {
     private $emitterName;
 

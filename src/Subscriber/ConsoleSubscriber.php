@@ -8,8 +8,10 @@ use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
 use SensioLabs\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use SensioLabs\Deptrac\Dependency\Events as DependencyEvents;
-use SensioLabs\Deptrac\Dependency\PreEmitEvent;
+use SensioLabs\Deptrac\Dependency\Event\PostEmitEvent;
+use SensioLabs\Deptrac\Dependency\Event\PostFlattenEvent;
+use SensioLabs\Deptrac\Dependency\Event\PreEmitEvent;
+use SensioLabs\Deptrac\Dependency\Event\PreFlattenEvent;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -29,10 +31,10 @@ class ConsoleSubscriber implements EventSubscriberInterface
             PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
             AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
             AstFileSyntaxErrorEvent::class => 'onAstFileSyntaxErrorEvent',
-            DependencyEvents::PRE_EMIT => 'onPreDependencyEmit',
-            DependencyEvents::POST_EMIT => 'onPostDependencyEmit',
-            DependencyEvents::PRE_FLATTEN => 'onPreDependencyFlatten',
-            DependencyEvents::POST_FLATTEN => 'onPostDependencyFlatten',
+            PreEmitEvent::class => 'onPreDependencyEmit',
+            PostEmitEvent::class => 'onPostDependencyEmit',
+            PreFlattenEvent::class => 'onPreDependencyFlatten',
+            PostFlattenEvent::class => 'onPostDependencyFlatten',
         ];
     }
 
