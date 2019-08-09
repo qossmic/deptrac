@@ -8,7 +8,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class Analyzer
+class Resolver
 {
     private $dispatcher;
     private $inheritanceFlatter;
@@ -29,7 +29,7 @@ class Analyzer
         }
     }
 
-    public function analyze(AstMap $astMap): Result
+    public function resolve(AstMap $astMap): Result
     {
         $result = new Result();
 

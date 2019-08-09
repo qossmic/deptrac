@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Dependency;
 
-use SensioLabs\Deptrac\DependencyResult\Dependency;
-use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
-
 class Result
 {
+    /** @var array<string, Dependency[]> */
     private $dependencies = [];
 
+    /** @var array<string, InheritDependency[]> */
     private $inheritDependencies = [];
 
-    public function addDependency(DependencyInterface $dependency): self
+    public function addDependency(Dependency $dependency): self
     {
         if (!isset($this->dependencies[$dependency->getClassA()])) {
             $this->dependencies[$dependency->getClassA()] = [];
@@ -24,7 +23,7 @@ class Result
         return $this;
     }
 
-    public function addInheritDependency(DependencyInterface $dependency): self
+    public function addInheritDependency(InheritDependency $dependency): self
     {
         if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
             $this->inheritDependencies[$dependency->getClassA()] = [];
@@ -44,7 +43,7 @@ class Result
     }
 
     /**
-     * @return Dependency[]
+     * @return DependencyInterface[]
      */
     public function getDependenciesAndInheritDependencies(): array
     {

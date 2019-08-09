@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
 
 class ResultTest extends TestCase
 {
@@ -26,7 +28,7 @@ class ResultTest extends TestCase
     {
         $dependencyResult = new Result();
         $dependencyResult->addDependency($dep1 = new Dependency('A', 12, 'B'));
-        $dependencyResult->addInheritDependency($dep2 = new Dependency('A', 12, 'B'));
+        $dependencyResult->addInheritDependency($dep2 = new InheritDependency('A', 'B', $dep1, AstInherit::newExtends('B', 12)));
         static::assertEquals([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
     }
 }

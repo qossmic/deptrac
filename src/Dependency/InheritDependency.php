@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\DependencyResult;
+namespace SensioLabs\Deptrac\Dependency;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 

@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
 use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
 use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\RulesetEngine;
 
 class RulesetEngineTest extends TestCase

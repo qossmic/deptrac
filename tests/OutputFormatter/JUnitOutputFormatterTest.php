@@ -10,8 +10,8 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
+use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
@@ -141,9 +141,9 @@ class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new DependencyContext(
                 $this->prophesize(AstMap::class)->reveal(),
-                $violations,
                 $this->prophesize(Result::class)->reveal(),
                 $classNameResolver->reveal(),
+                $violations,
                 $skippedViolations
             ),
             $output,

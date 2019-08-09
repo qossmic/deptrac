@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Dependency;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
 
 class InheritanceFlatter
 {

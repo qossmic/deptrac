@@ -9,9 +9,9 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
+use SensioLabs\Deptrac\Dependency\DependencyInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
@@ -28,7 +28,7 @@ trait EmitterTrait
         $emitter->applyDependencies($astMap, $result);
 
         return array_map(
-            static function (Dependency $d) {
+            static function (DependencyInterface $d) {
                 return $d->getClassA().':'.$d->getClassALine().' on '.$d->getClassB();
             },
             $result->getDependenciesAndInheritDependencies()

@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\DependencyEmitter;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {

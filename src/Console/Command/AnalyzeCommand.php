@@ -4,17 +4,10 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Console\Command;
 
-use SensioLabs\Deptrac\AstRunner\AstRunner;
-use SensioLabs\Deptrac\ClassNameLayerResolver;
-use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
-use SensioLabs\Deptrac\Collector\Registry;
+use SensioLabs\Deptrac\Analyser;
 use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
 use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
-use SensioLabs\Deptrac\Dependency\Analyzer as DependencyAnalyzer;
-use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\FileResolver;
 use SensioLabs\Deptrac\OutputFormatterFactory;
-use SensioLabs\Deptrac\RulesetEngine;
 use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Command\Command;
@@ -26,33 +19,21 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyzeCommand extends Command
 {
+    private $analyser;
     private $configurationLoader;
-    private $fileResolver;
     private $dispatcher;
-    private $astRunner;
     private $formatterFactory;
-    private $rulesetEngine;
-    private $collectorRegistry;
-    private $dependencyAnalyzer;
 
     public function __construct(
+        Analyser $analyser,
         ConfigurationLoader $configurationLoader,
-        FileResolver $fileResolver,
         EventDispatcherInterface $dispatcher,
-        AstRunner $astRunner,
-        OutputFormatterFactory $formatterFactory,
-        RulesetEngine $rulesetEngine,
-        Registry $collectorRegistry,
-        DependencyAnalyzer $dependencyAnalyzer
+        OutputFormatterFactory $formatterFactory
     ) {
+        $this->analyser = $analyser;
         $this->configurationLoader = $configurationLoader;
-        $this->fileResolver = $fileResolver;
         $this->dispatcher = $dispatcher;
-        $this->astRunner = $astRunner;
         $this->formatterFactory = $formatterFactory;
-        $this->rulesetEngine = $rulesetEngine;
-        $this->collectorRegistry = $collectorRegistry;
-        $this->dependencyAnalyzer = $dependencyAnalyzer;
 
         parent::__construct();
     }
@@ -90,27 +71,15 @@ class AnalyzeCommand extends Command
             $this->dispatcher->addSubscriber(new ProgressSubscriber($output));
         }
 
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
-
-        $dependencyResult = $this->dependencyAnalyzer->analyze($astMap);
-
-        $classNameLayerResolver = new ClassNameLayerResolverCacheDecorator(
-            new ClassNameLayerResolver($configuration, $astMap, $this->collectorRegistry)
-        );
-
         $this->printCollectViolations($output);
-
-        /** @var RulesetEngine\RulesetViolation[] $violations */
-        $violations = $this->rulesetEngine->getViolations($dependencyResult, $classNameLayerResolver, $configuration->getRuleset());
-
-        $skippedViolations = $this->rulesetEngine->getSkippedViolations($violations, $configuration->getSkipViolations());
+        $dependencyContext = $this->analyser->analyse($configuration);
 
         $this->printFormattingStart($output);
 
         foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
             try {
                 $formatter->finish(
-                    new DependencyContext($astMap, $violations, $dependencyResult, $classNameLayerResolver, $skippedViolations),
+                    $dependencyContext,
                     $output,
                     $this->formatterFactory->getOutputFormatterInput($formatter, $input)
                 );
@@ -119,7 +88,7 @@ class AnalyzeCommand extends Command
             }
         }
 
-        return (count($violations) - count($skippedViolations)) ? 1 : 0;
+        return $dependencyContext->hasViolations() ? 1 : 0;
     }
 
     protected function printBanner(OutputInterface $output): void

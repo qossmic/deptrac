@@ -10,8 +10,8 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
 use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
+use SensioLabs\Deptrac\Dependency\InheritDependency;
 
 class InheritanceFlatterTest extends TestCase
 {
