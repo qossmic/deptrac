@@ -31,15 +31,15 @@ class DependencyContext
      */
     public function __construct(
         AstMap $astMap,
-        array $violations,
         Result $dependencyResult,
         ClassNameLayerResolverInterface $classNameLayerResolver,
+        array $violations,
         array $skippedViolations = []
     ) {
         $this->astMap = $astMap;
-        $this->violations = $violations;
         $this->dependencyResult = $dependencyResult;
         $this->classNameLayerResolver = $classNameLayerResolver;
+        $this->violations = $violations;
         $this->skippedViolations = $skippedViolations;
     }
 
@@ -102,5 +102,10 @@ class DependencyContext
     public function isViolationSkipped(RulesetViolation $violation): bool
     {
         return \in_array($violation, $this->skippedViolations, true);
+    }
+
+    public function hasViolations(): bool
+    {
+        return (count($this->violations) - count($this->skippedViolations)) > 0;
     }
 }

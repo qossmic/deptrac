@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\DependencyResult;
+namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
 
 class DependencyTest extends TestCase
 {

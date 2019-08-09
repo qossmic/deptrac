@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\DependencyResult\Dependency;
+use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class DependencyContextTest extends TestCase
@@ -18,9 +18,9 @@ class DependencyContextTest extends TestCase
     {
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
-            [1, 2, 3],
             $dependencyResult = $this->prophesize(Result::class)->reveal(),
-            $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal()
+            $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
+            [1, 2, 3]
         );
 
         static::assertSame($astMap, $context->getAstMap());
@@ -31,7 +31,7 @@ class DependencyContextTest extends TestCase
 
     public function testIsViolationSkipped(): void
     {
-        $violations = [
+        $skippedViolations = [
             new RulesetViolation(
                 new Dependency('ClassA', 12, 'ClassB'),
                 'LayerA',
@@ -40,17 +40,17 @@ class DependencyContextTest extends TestCase
         ];
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
-            [],
             $dependencyResult = $this->prophesize(Result::class)->reveal(),
             $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
-            $violations
+            [],
+            $skippedViolations
         );
-        $this->assertSame($violations, $context->getSkippedViolations());
+        $this->assertSame($skippedViolations, $context->getSkippedViolations());
     }
 
     public function testGetSkippedViolationsByLayerName(): void
     {
-        $violations = [
+        $skippedViolations = [
             new RulesetViolation(
                 new Dependency('ClassA', 12, 'ClassB'),
                 'LayerA',
@@ -64,10 +64,10 @@ class DependencyContextTest extends TestCase
         ];
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
-            [],
             $dependencyResult = $this->prophesize(Result::class)->reveal(),
             $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
-            $violations
+            [],
+            $skippedViolations
         );
         $this->assertSame([$matchedViolation], $context->getSkippedViolationsByLayerName('LayerC'));
         $this->assertSame([], $context->getSkippedViolationsByLayerName('LayerB'));
@@ -75,7 +75,7 @@ class DependencyContextTest extends TestCase
 
     public function testGetSkippedViolations(): void
     {
-        $violations = [
+        $skippedViolations = [
             new RulesetViolation(
                 new Dependency('ClassA', 12, 'ClassB'),
                 'LayerA',
@@ -89,11 +89,11 @@ class DependencyContextTest extends TestCase
         ];
         $context = new DependencyContext(
             $astMap = $this->prophesize(AstMap::class)->reveal(),
-            [],
             $dependencyResult = $this->prophesize(Result::class)->reveal(),
             $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
-            $violations
+            [],
+            $skippedViolations
         );
-        $this->assertSame($violations, $context->getSkippedViolations());
+        $this->assertSame($skippedViolations, $context->getSkippedViolations());
     }
 }

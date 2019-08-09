@@ -44,6 +44,14 @@
             <tag name="class_dependency_resolver"/>
         </service>
 
+        <service id="SensioLabs\Deptrac\Analyser">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstRunner"/>
+            <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
+            <argument type="service" id="SensioLabs\Deptrac\Dependency\Resolver"/>
+            <argument type="service" id="SensioLabs\Deptrac\Collector\Registry"/>
+            <argument type="service" id="SensioLabs\Deptrac\RulesetEngine"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\OutputFormatterFactory">
             <argument type="tagged" tag="output_formatter"/>
         </service>
@@ -95,7 +103,7 @@
 
         <service id="SensioLabs\Deptrac\Configuration\Loader"/>
 
-        <service id="SensioLabs\Deptrac\Dependency\Analyzer">
+        <service id="SensioLabs\Deptrac\Dependency\Resolver">
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
             <argument type="service" id="SensioLabs\Deptrac\Dependency\InheritanceFlatter"/>
             <argument type="tagged" tag="dependency_emitter"/>
@@ -119,14 +127,10 @@
         </service>
 
         <service id="SensioLabs\Deptrac\Console\Command\AnalyzeCommand" public="true">
+            <argument type="service" id="SensioLabs\Deptrac\Analyser"/>
             <argument type="service" id="SensioLabs\Deptrac\Configuration\Loader"/>
-            <argument type="service" id="SensioLabs\Deptrac\FileResolver"/>
             <argument type="service" id="Symfony\Component\EventDispatcher\EventDispatcher"/>
-            <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstRunner"/>
             <argument type="service" id="SensioLabs\Deptrac\OutputFormatterFactory"/>
-            <argument type="service" id="SensioLabs\Deptrac\RulesetEngine"/>
-            <argument type="service" id="SensioLabs\Deptrac\Collector\Registry"/>
-            <argument type="service" id="SensioLabs\Deptrac\Dependency\Analyzer"/>
         </service>
 
     </services>

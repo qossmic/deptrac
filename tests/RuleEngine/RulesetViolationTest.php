@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\RuleEngine;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
+use SensioLabs\Deptrac\Dependency\DependencyInterface;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class RulesetViolationTest extends TestCase

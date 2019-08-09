@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\DependencyResult;
+namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\DependencyResult\DependencyInterface;
-use SensioLabs\Deptrac\DependencyResult\InheritDependency;
+use SensioLabs\Deptrac\Dependency\DependencyInterface;
+use SensioLabs\Deptrac\Dependency\InheritDependency;
 
 class InheritDependencyTest extends TestCase
 {
