@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.6.0 - 2019-xx-xx
+
+### Changed
+
+- [#228] improve file exclusion, Thanks to [@smoench]
+- [#235] Improve console output of analyze command., Thanks to [@temp]
+- [#245] refactor/improve method collector, Thanks to [@smoench]
+- [#244] dependency updates, Thanks to [@smoench]
+- [#243] anonymous class resolver, Thanks to [@smoench]
+- [#242] upgrade box to v3.8, Thanks to [@smoench]
+- [#241] class constant resolver, Thanks to [@smoench]
+- [#236] split progressbar to its own subscriber, Thanks to [@smoench]
+- [#247] refactor inherits resolving, Thanks to [@smoench]
+- [#234] upgrade to symfony 4.3, Thanks to [@smoench]
+- [#233] upgrade to phpunit 8, Thanks to [@smoench]
+- [#232] increase minimum php version to 7.2, Thanks to [@smoench]
+- [#246] naming + improvements, Thanks to [@smoench]
+- [#224] annotation dependency resolver, Thanks to [@smoench]
+- [#248] Update documentation on bool collector to describe actual behaviour, Thanks to [@rpkamp]
+
+### Fixed
+
+- [#230] Fix alignment, Thanks to [@BackEndTea]
+- [#223] Fix outdated graphviz download link in README, Thanks to [@LeoVie]
+
 ## 0.5.0 - 2019-03-15
 
 ### Added
