@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Dependency;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\Dependency\Event\PostEmitEvent;
+use SensioLabs\Deptrac\Dependency\Event\PostFlattenEvent;
+use SensioLabs\Deptrac\Dependency\Event\PreEmitEvent;
+use SensioLabs\Deptrac\Dependency\Event\PreFlattenEvent;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -34,14 +38,14 @@ class Resolver
         $result = new Result();
 
         foreach ($this->emitters as $emitter) {
-            $this->dispatcher->dispatch(Events::PRE_EMIT, new PreEmitEvent($emitter->getName()));
+            $this->dispatcher->dispatch(new PreEmitEvent($emitter->getName()));
             $emitter->applyDependencies($astMap, $result);
         }
-        $this->dispatcher->dispatch(Events::POST_EMIT);
+        $this->dispatcher->dispatch(new PostEmitEvent());
 
-        $this->dispatcher->dispatch(Events::PRE_FLATTEN);
+        $this->dispatcher->dispatch(new PreFlattenEvent());
         $this->inheritanceFlatter->flattenDependencies($astMap, $result);
-        $this->dispatcher->dispatch(Events::POST_FLATTEN);
+        $this->dispatcher->dispatch(new PostFlattenEvent());
 
         return $result;
     }

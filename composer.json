@@ -2,6 +2,17 @@
     "name": "sensiolabs-de/deptrac",
     "description": "Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim Glabisch",
+            "email": "tim.glabisch@sensiolabs.de"
+        },
+        {
+            "name": "Simon Mönch",
+            "email": "simon.moench@sensiolabs.de",
+            "role": "maintainer"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "ext-json": "*",
@@ -17,19 +28,11 @@
         "symfony/options-resolver": "^4.3",
         "symfony/yaml": "^4.3"
     },
-    "authors": [
-        {
-            "name": "timglabisch",
-            "email": "tim.glabisch@sensiolabs.de"
-        },
-        {
-            "name": "Simon Mönch",
-            "email": "simon.moench@sensiolabs.de",
-            "role": "maintainer"
-        }
-    ],
     "require-dev": {
         "phpunit/phpunit": "^8.2.1"
+    },
+    "suggest": {
+        "ext-dom": "For using the JUnit output formatter"
     },
     "autoload": {
         "psr-4": {
