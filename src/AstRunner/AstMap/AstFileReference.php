@@ -19,7 +19,11 @@ class AstFileReference
 
     public function addClassReference(string $className): AstClassReference
     {
-        return $this->astClassReferences[] = new AstClassReference($className, $this);
+        $astClassReference = new AstClassReference($className, $this);
+
+        $this->astClassReferences[] = $astClassReference;
+
+        return $astClassReference;
     }
 
     public function getFilepath(): string
