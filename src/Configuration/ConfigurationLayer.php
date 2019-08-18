@@ -21,7 +21,7 @@ class ConfigurationLayer
         ])->resolve($arr);
 
         return new static(
-            array_map(function ($v) {
+            array_map(function ($v): ConfigurationCollector {
                 return ConfigurationCollector::fromArray($v);
             }, $options['collectors']),
             $options['name']

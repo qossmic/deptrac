@@ -52,7 +52,7 @@ class OutputFormatterFactory
      */
     public function getActiveFormatters(InputInterface $input): array
     {
-        return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input) {
+        return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input): bool {
             return $this->isFormatterActive($formatter, $input);
         }));
     }
@@ -91,7 +91,7 @@ class OutputFormatterFactory
             $name,
             implode(
                 ', ',
-                array_map(function (OutputFormatterInterface $f) {
+                array_map(function (OutputFormatterInterface $f): string {
                     return $f->getName();
                 }, $this->formatters)
             )
