@@ -31,7 +31,7 @@ class Configuration
         ->resolve($arr);
 
         return new static(
-            array_map(function ($v): ConfigurationLayer {
+            array_map(static function ($v): ConfigurationLayer {
                 return ConfigurationLayer::fromArray($v);
             }, $options['layers']),
             ConfigurationRuleset::fromArray($options['ruleset']),
