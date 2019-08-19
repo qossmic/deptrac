@@ -90,7 +90,7 @@ class NikicPhpParser implements AstParser
         }
 
         $finding = new FindingVisitor(
-            static function (Node $node) {
+            static function (Node $node): bool {
                 return $node instanceof Node\Stmt\ClassLike;
             }
         );
