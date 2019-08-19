@@ -91,7 +91,7 @@ class OutputFormatterFactory
             $name,
             implode(
                 ', ',
-                array_map(function (OutputFormatterInterface $f): string {
+                array_map(static function (OutputFormatterInterface $f): string {
                     return $f->getName();
                 }, $this->formatters)
             )

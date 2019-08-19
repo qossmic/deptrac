@@ -98,7 +98,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
         }
 
         $this->cache = array_map(
-            function (array $data): array {
+            static function (array $data): array {
                 $data['reference'] = unserialize(
                     $data['reference'],
                     [
@@ -132,7 +132,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
         );
 
         $payload = array_map(
-            function (array $data): array {
+            static function (array $data): array {
                 $data['reference'] = serialize($data['reference']);
 
                 return $data;
