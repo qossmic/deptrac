@@ -7,6 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
 use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
+use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use SensioLabs\Deptrac\Configuration\Loader;
 
 /**
@@ -32,6 +33,17 @@ final class LoaderTest extends TestCase
         $loader = new Loader();
 
         self::expectException(FileCannotBeParsedAsYamlException::class);
+
+        $loader->load($file);
+    }
+
+    public function testLoadThrowsParsedYamlIsNotAnArrayExceptionWhenFileDoesNotContainYamlThatCanBeParsedToAnArray(): void
+    {
+        $file = __DIR__.'/Fixtures/does-not-contain-array.yml';
+
+        $loader = new Loader();
+
+        self::expectException(ParsedYamlIsNotAnArrayException::class);
 
         $loader->load($file);
     }
