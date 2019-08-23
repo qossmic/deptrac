@@ -32,10 +32,13 @@ class NikicPhpParser implements AstParser
     private $cache;
 
     /**
-     * @var ClassDependencyResolver[]
+     * @var iterable|ClassDependencyResolver[]
      */
     private $classDependencyResolvers;
 
+    /**
+     * @param iterable|ClassDependencyResolver[] $classDependencyResolvers
+     */
     public function __construct(
         FileParser $fileParser,
         AstFileReferenceCache $cache,

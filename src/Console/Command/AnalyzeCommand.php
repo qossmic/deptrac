@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Console\Command;
 
 use SensioLabs\Deptrac\Analyser;
-use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
 use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
+use SensioLabs\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
@@ -57,13 +57,12 @@ class AnalyzeCommand extends Command
             $this->printBanner($output);
         }
 
-        try {
-            $configuration = $this->configurationLoader->load($input->getArgument('depfile'));
-        } catch (MissingFileException $e) {
-            $this->printConfigMissingError($output, $input->getArgument('depfile'));
-
-            return 1;
+        $file = $input->getArgument('depfile');
+        if (!is_string($file)) {
+            throw SingleDepfileIsRequiredException::fromArgument($file);
         }
+
+        $configuration = $this->configurationLoader->load($file);
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
 
@@ -94,11 +93,6 @@ class AnalyzeCommand extends Command
     protected function printBanner(OutputInterface $output): void
     {
         $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
-    }
-
-    protected function printConfigMissingError(OutputInterface $output, string $file): void
-    {
-        $output->writeln(sprintf('depfile "%s" not found, run "deptrac init" to create one.', $file));
     }
 
     protected function printCollectViolations(OutputInterface $output): void
