@@ -19,11 +19,11 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
     /** @var AstClassReference */
     private $currentClassReference;
 
-    /** @var ClassDependencyResolver[] */
+    /** @var iterable|ClassDependencyResolver[] */
     private $classDependencyResolvers;
 
     /**
-     * @param ClassDependencyResolver[] $classDependencyResolvers
+     * @param iterable|ClassDependencyResolver[] $classDependencyResolvers
      */
     public function __construct(AstFileReference $fileReference, iterable $classDependencyResolvers)
     {

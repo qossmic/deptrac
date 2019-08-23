@@ -6,7 +6,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\MissingFileException;
+use SensioLabs\Deptrac\Configuration\Exception\FileDoesNotExistsException;
 use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use SensioLabs\Deptrac\Configuration\Loader;
 
@@ -15,13 +15,13 @@ use SensioLabs\Deptrac\Configuration\Loader;
  */
 final class LoaderTest extends TestCase
 {
-    public function testLoadThrowsMissingFileExceptionWhenFileDoesNotExist(): void
+    public function testLoadThrowsFileDoesNotExistsExceptionWhenFileDoesNotExist(): void
     {
         $file = __DIR__.'/../../examples/non-existent-file.yml';
 
         $loader = new Loader();
 
-        self::expectException(MissingFileException::class);
+        $this->expectException(FileDoesNotExistsException::class);
 
         $loader->load($file);
     }
@@ -32,7 +32,7 @@ final class LoaderTest extends TestCase
 
         $loader = new Loader();
 
-        self::expectException(FileCannotBeParsedAsYamlException::class);
+        $this->expectException(FileCannotBeParsedAsYamlException::class);
 
         $loader->load($file);
     }
@@ -43,7 +43,7 @@ final class LoaderTest extends TestCase
 
         $loader = new Loader();
 
-        self::expectException(ParsedYamlIsNotAnArrayException::class);
+        $this->expectException(ParsedYamlIsNotAnArrayException::class);
 
         $loader->load($file);
     }

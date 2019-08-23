@@ -31,6 +31,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
      */
     public function getLayersByClassName(string $className): array
     {
+        /** @var array<string, bool> $layers */
         $layers = [];
 
         if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
@@ -52,7 +53,10 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
             }
         }
 
-        return array_keys($layers);
+        /** @var string[] $layerNames */
+        $layerNames = array_keys($layers);
+
+        return $layerNames;
     }
 
     public function getLayers(): array
