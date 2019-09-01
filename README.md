@@ -5,7 +5,7 @@
 
 ## What is Deptrac
 
-Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.
+Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers in your PHP projects.
 
 For example, you can define a rule like "controllers may not depend on models".
 To ensure this, deptrac analyzes your code to find any usages of models in your controllers and will show you where
