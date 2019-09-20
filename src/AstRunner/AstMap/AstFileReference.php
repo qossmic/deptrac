@@ -7,7 +7,11 @@ namespace SensioLabs\Deptrac\AstRunner\AstMap;
 class AstFileReference
 {
     private $filepath;
+
+    /** @var AstClassReference[] */
     private $astClassReferences;
+
+    /** @var AstDependency[] */
     private $dependencies;
 
     public function __construct(string $filepath)

@@ -12,6 +12,7 @@ use SensioLabs\Deptrac\Console\Application;
 
 class AstFileReferenceFileCache implements AstFileReferenceCache
 {
+    /** @var array<string, array> */
     private $cache;
     private $cacheFile;
     private $loaded = false;

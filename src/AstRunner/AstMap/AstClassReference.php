@@ -8,7 +8,11 @@ class AstClassReference
 {
     private $className;
     private $fileReference;
+
+    /** @var AstDependency[] */
     private $dependencies;
+
+    /** @var AstInherit[] */
     private $inherits;
 
     public function __construct(string $className, AstFileReference $fileReference = null)
