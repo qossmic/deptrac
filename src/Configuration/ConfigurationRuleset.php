@@ -6,15 +6,19 @@ namespace SensioLabs\Deptrac\Configuration;
 
 class ConfigurationRuleset
 {
-    private $layerMap = [];
+    /** @var array<string, string[]> */
+    private $layerMap;
 
+    /**
+     * @param array<string, string[]> $arr
+     */
     public static function fromArray(array $arr): self
     {
         return new static($arr);
     }
 
     /**
-     * @param string[] $layerMap
+     * @param array<string, string[]> $layerMap
      */
     private function __construct(array $layerMap)
     {

@@ -22,7 +22,7 @@ class FileParser
     public function parse(\SplFileInfo $data): array
     {
         return (array) $this->parser->parse(
-            file_get_contents($data->getPathname())
+            (string) file_get_contents($data->getPathname())
         );
     }
 }

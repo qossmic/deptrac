@@ -13,6 +13,8 @@ class AstInherit
     private $className;
     private $line;
     private $type;
+
+    /** @var AstInherit[] */
     private $path;
 
     private function __construct(string $className, int $line, int $type)

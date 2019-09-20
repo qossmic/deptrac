@@ -9,15 +9,19 @@ namespace SensioLabs\Deptrac\Configuration;
  */
 class ConfigurationSkippedViolation
 {
-    private $classesDeps = [];
+    /** @var array<string, string[]> */
+    private $classesDeps;
 
+    /**
+     * @param array<string, string[]> $arr
+     */
     public static function fromArray(array $arr): self
     {
         return new static($arr);
     }
 
     /**
-     * @param string[] $classesDeps
+     * @param array<string, string[]> $classesDeps
      */
     private function __construct(array $classesDeps)
     {
