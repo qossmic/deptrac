@@ -40,28 +40,26 @@ class ConsoleSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
-        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $this->output->writeln(
-                sprintf(
-                    'Start to create an AstMap for <info>%u</info> Files.',
-                    $preCreateAstMapEvent->getExpectedFileCount()
-                )
-            );
-        }
+        $this->output->writeln(
+            sprintf(
+                'Start to create an AstMap for <info>%u</info> Files.',
+                $preCreateAstMapEvent->getExpectedFileCount()
+            ),
+            OutputInterface::VERBOSITY_VERBOSE
+        );
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
-        if ($this->output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
-            $this->output->writeln('AstMap created.');
-        }
+        $this->output->writeln('AstMap created.', OutputInterface::VERBOSITY_VERBOSE);
     }
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent): void
     {
-        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_VERBOSE) {
-            $this->output->writeln(sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()));
-        }
+        $this->output->writeln(
+            sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()),
+            OutputInterface::VERBOSITY_VERBOSE
+        );
     }
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent): void
@@ -75,29 +73,24 @@ class ConsoleSubscriber implements EventSubscriberInterface
 
     public function onPreDependencyEmit(PreEmitEvent $event): void
     {
-        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $this->output->writeln(sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()));
-        }
+        $this->output->writeln(
+            sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()),
+            OutputInterface::VERBOSITY_VERBOSE
+        );
     }
 
     public function onPostDependencyEmit(): void
     {
-        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $this->output->writeln('<info>end emitting dependencies</info>');
-        }
+        $this->output->writeln('<info>end emitting dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 
     public function onPreDependencyFlatten(): void
     {
-        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $this->output->writeln('<info>start flatten dependencies</info>');
-        }
+        $this->output->writeln('<info>start flatten dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 
     public function onPostDependencyFlatten(): void
     {
-        if ($this->output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $this->output->writeln('<info>end flatten dependencies</info>');
-        }
+        $this->output->writeln('<info>end flatten dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 }

@@ -97,16 +97,12 @@ class AnalyzeCommand extends Command
 
     protected function printCollectViolations(OutputInterface $output): void
     {
-        if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $output->writeln('<info>collecting violations.</info>');
-        }
+        $output->writeln('<info>collecting violations.</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 
     protected function printFormattingStart(OutputInterface $output): void
     {
-        if ($output->getVerbosity() > OutputInterface::VERBOSITY_NORMAL) {
-            $output->writeln('<info>formatting dependencies.</info>');
-        }
+        $output->writeln('<info>formatting dependencies.</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 
     protected function printFormatterException(OutputInterface $output, string $formatterName, \Exception $exception): void
