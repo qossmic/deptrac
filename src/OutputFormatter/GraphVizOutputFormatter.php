@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Allowed;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Rule;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Uncovered;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {
-    protected $eventDispatcher;
-
     private static $argument_display = 'display';
     private static $argument_dump_image = 'dump-image';
     private static $argument_dump_dot = 'dump-dot';
@@ -46,19 +46,14 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     public function finish(
-        DependencyContext $dependencyContext,
+        Context $context,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $layerViolations = $this->calculateViolations($dependencyContext->getViolations());
+        $layerViolations = $this->calculateViolations($context->violations());
+        $layersDependOnLayers = $this->calculateLayerDependencies($context->all());
 
-        $layersDependOnLayers = $this->calculateLayerDependencies(
-            $dependencyContext->getAstMap(),
-            $dependencyContext->getDependencyResult(),
-            $dependencyContext->getClassNameLayerResolver()
-        );
-
-        $graph = new \Fhaculty\Graph\Graph();
+        $graph = new Graph();
 
         /** @var Vertex[] $vertices */
         $vertices = [];
@@ -112,7 +107,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param RulesetViolation[] $violations
+     * @param Violation[] $violations
      */
     private function calculateViolations(array $violations): array
     {
@@ -132,47 +127,35 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         return $layerViolations;
     }
 
-    private function calculateLayerDependencies(
-        AstMap $astMap,
-        Result $dependencyResult,
-        ClassNameLayerResolverInterface $classNameLayerResolver
-    ): array {
+    /**
+     * @param Rule[] $rules
+     */
+    private function calculateLayerDependencies(array $rules): array
+    {
         $layersDependOnLayers = [];
 
-        // all classes
-        foreach ($astMap->getAstClassReferences() as $classReferences) {
-            foreach ($classNameLayerResolver->getLayersByClassName(
-                $classReferences->getClassName()
-            ) as $classReferenceLayer) {
-                $layersDependOnLayers[$classReferenceLayer] = [];
-            }
-        }
+        foreach ($rules as $rule) {
+            if ($rule instanceof Violation
+                || $rule instanceof SkippedViolation
+                || $rule instanceof Allowed
+            ) {
+                $layerA = $rule->getLayerA();
+                $layerB = $rule->getLayerB();
 
-        // dependencies
-        foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layersA = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
-            $layersB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
-
-            if (empty($layersB)) {
-                continue;
-            }
-
-            foreach ($layersA as $layerA) {
                 if (!isset($layersDependOnLayers[$layerA])) {
                     $layersDependOnLayers[$layerA] = [];
                 }
 
-                foreach ($layersB as $layerB) {
-                    if ($layerA === $layerB) {
-                        continue;
-                    }
+                if (!isset($layersDependOnLayers[$layerA][$layerB])) {
+                    $layersDependOnLayers[$layerA][$layerB] = 1;
+                    continue;
+                }
 
-                    if (!isset($layersDependOnLayers[$layerA][$layerB])) {
-                        $layersDependOnLayers[$layerA][$layerB] = 1;
-                        continue;
-                    }
-
-                    ++$layersDependOnLayers[$layerA][$layerB];
+                ++$layersDependOnLayers[$layerA][$layerB];
+            } elseif ($rule instanceof Uncovered) {
+                $layer = $rule->getLayer();
+                if (!isset($layersDependOnLayers[$layer])) {
+                    $layersDependOnLayers[$layer] = [];
                 }
             }
         }

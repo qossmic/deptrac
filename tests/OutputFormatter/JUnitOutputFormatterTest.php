@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class JUnitOutputFormatterTest extends TestCase
@@ -37,11 +35,7 @@ class JUnitOutputFormatterTest extends TestCase
     {
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                new RulesetViolation(
+                new Violation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
@@ -56,42 +50,28 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            [],
             'expected-junit-report_1.xml',
         ];
 
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                new RulesetViolation(
+                new Violation(
                     new Dependency('OriginalA', 12, 'OriginalB'),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             'expected-junit-report_2.xml',
         ];
 
         yield [
-            [
-            ],
-            [
-            ],
             [],
             'expected-junit-report_3.xml',
         ];
 
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                $violations = new RulesetViolation(
+                new SkippedViolation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
@@ -105,7 +85,7 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerA',
                     'LayerB'
                 ),
-                new RulesetViolation(
+                new Violation(
                     new InheritDependency(
                         'ClassC',
                         'ClassD',
@@ -120,9 +100,6 @@ class JUnitOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            [
-                $violations,
-            ],
             'expected-junit-report-with-skipped-violations.xml',
         ];
     }
@@ -130,22 +107,13 @@ class JUnitOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $layers, array $violations, array $skippedViolations, $expectedOutputFile): void
+    public function testBasic(array $rules, string $expectedOutputFile): void
     {
-        $classNameResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
-        $classNameResolver->getLayers()->willReturn($layers);
-
         $output = new BufferedOutput();
 
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new DependencyContext(
-                $this->prophesize(AstMap::class)->reveal(),
-                $this->prophesize(Result::class)->reveal(),
-                $classNameResolver->reveal(),
-                $violations,
-                $skippedViolations
-            ),
+            new Context($rules),
             $output,
             new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])
         );

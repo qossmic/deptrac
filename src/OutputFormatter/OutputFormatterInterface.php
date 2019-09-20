@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\DependencyContext;
+use SensioLabs\Deptrac\RulesetEngine\Context;
 use Symfony\Component\Console\Output\OutputInterface;
 
 interface OutputFormatterInterface
@@ -28,7 +28,7 @@ interface OutputFormatterInterface
      * Renders the final result.
      */
     public function finish(
-        DependencyContext $dependencyContext,
+        Context $context,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void;
