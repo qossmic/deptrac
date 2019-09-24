@@ -5,24 +5,73 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
+use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ProgressSubscriberTest extends TestCase
 {
-    public function testOnPreCreateAstMapEventWithVerboseVerbosity(): void
+    public function testSubscribedEvents(): void
     {
-        $dispatcher = new EventDispatcher();
-        $formatter = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        static::assertSame(
+            [
+                PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
+                PostCreateAstMapEvent::class => ['onPostCreateAstMapEvent', 1],
+                AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
+            ],
+            ProgressSubscriber::getSubscribedEvents()
+        );
+    }
 
-        $dispatcher->addSubscriber(new ProgressSubscriber($formatter));
+    public function testProgress(): void
+    {
+        $formatter = new BufferedOutput();
+        $subscriber = new ProgressSubscriber($formatter);
 
-        $dispatcher->dispatch(new PreCreateAstMapEvent(9999999));
-        $result = $formatter->fetch();
+        $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(1));
+        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent(new \SplFileInfo('foo.php')));
+        $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
-        static::assertStringContainsString('9999999', $result);
+        $expectedOutput = <<<OUT
+ 0/1 [>---------------------------]   0%
+ 1/1 [============================] 100%
+
+OUT;
+
+        static::assertSame($expectedOutput, $formatter->fetch());
+    }
+
+    public function testOnAstFileAnalyzedEvent(): void
+    {
+        $formatter = new BufferedOutput();
+        $subscriber = new ProgressSubscriber($formatter);
+
+        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent(new \SplFileInfo('foo.php')));
+
+        $expectedOutput = <<<OUT
+
+    1 [->--------------------------]
+OUT;
+
+        static::assertSame($expectedOutput, $formatter->fetch());
+    }
+
+    public function testOnPostCreateAstMapEvent(): void
+    {
+        $formatter = new BufferedOutput();
+        $subscriber = new ProgressSubscriber($formatter);
+
+        $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(1));
+        $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
+
+        $expectedOutput = <<<OUT
+ 0/1 [>---------------------------]   0%
+ 1/1 [============================] 100%
+
+OUT;
+
+        static::assertSame($expectedOutput, $formatter->fetch());
     }
 }
