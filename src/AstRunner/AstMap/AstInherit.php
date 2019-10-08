@@ -64,7 +64,7 @@ class AstInherit
 
         $buffer = '';
         foreach ($this->path as $v) {
-            $buffer = ((string) $v).' -> '.$buffer;
+            $buffer = $v.' -> '.$buffer;
         }
 
         return $description.' (path: '.rtrim($buffer, ' -> ').')';

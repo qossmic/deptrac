@@ -79,17 +79,17 @@ class ConsoleSubscriber implements EventSubscriberInterface
         );
     }
 
-    public function onPostDependencyEmit(): void
+    public function onPostDependencyEmit(PostEmitEvent $event): void
     {
         $this->output->writeln('<info>end emitting dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 
-    public function onPreDependencyFlatten(): void
+    public function onPreDependencyFlatten(PreFlattenEvent $event): void
     {
         $this->output->writeln('<info>start flatten dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
     }
 
-    public function onPostDependencyFlatten(): void
+    public function onPostDependencyFlatten(PostFlattenEvent $event): void
     {
         $this->output->writeln('<info>end flatten dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
     }

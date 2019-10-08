@@ -45,7 +45,7 @@ class AstRunner
             }
         }
 
-        $this->dispatcher->dispatch(new PostCreateAstMapEvent($astMap));
+        $this->dispatcher->dispatch(new PostCreateAstMapEvent());
 
         return $astMap;
     }

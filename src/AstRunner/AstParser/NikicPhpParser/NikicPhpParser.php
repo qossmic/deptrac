@@ -62,7 +62,7 @@ class NikicPhpParser implements AstParser
     {
         /** @var \SplFileInfo $data */
         if (!$this->supports($data)) {
-            throw new \LogicException('parser not supported');
+            throw new \LogicException('data not supported');
         }
 
         if (null !== $fileReference = $this->cache->get($data->getRealPath())) {

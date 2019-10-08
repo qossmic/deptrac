@@ -9,3 +9,4 @@ junit-report.xml
 .php_cs.cache
 .deptrac.cache
 .phpunit.result.cache
+infection.log
