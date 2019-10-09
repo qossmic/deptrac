@@ -11,4 +11,6 @@ interface DependencyInterface
     public function getClassALine(): int;
 
     public function getClassB(): string;
+
+    public function getFilename(): string;
 }

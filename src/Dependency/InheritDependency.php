@@ -12,13 +12,15 @@ class InheritDependency implements DependencyInterface
     private $classB;
     private $path;
     private $originalDependency;
+    private $filename;
 
-    public function __construct(string $classA, string $classB, DependencyInterface $originalDependency, AstInherit $path)
+    public function __construct(string $filename, string $classA, string $classB, DependencyInterface $originalDependency, AstInherit $path)
     {
         $this->classA = $classA;
         $this->classB = $classB;
         $this->originalDependency = $originalDependency;
         $this->path = $path;
+        $this->filename = $filename;
     }
 
     public function getClassA(): string
@@ -45,4 +47,10 @@ class InheritDependency implements DependencyInterface
     {
         return $this->originalDependency;
     }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
 }

@@ -33,7 +33,7 @@ class DependencyContextTest extends TestCase
     {
         $skippedViolations = [
             new RulesetViolation(
-                new Dependency('ClassA', 12, 'ClassB'),
+                new Dependency('ClassA.php','ClassA', 12, 'ClassB'),
                 'LayerA',
                 'LayerB'
             ),
@@ -52,12 +52,12 @@ class DependencyContextTest extends TestCase
     {
         $skippedViolations = [
             new RulesetViolation(
-                new Dependency('ClassA', 12, 'ClassB'),
+                new Dependency('ClassA.php','ClassA', 12, 'ClassB'),
                 'LayerA',
                 'LayerB'
             ),
             $matchedViolation = new RulesetViolation(
-                new Dependency('ClassA', 12, 'ClassB'),
+                new Dependency('ClassA.php','ClassA', 12, 'ClassB'),
                 'LayerC',
                 'LayerD'
             ),
@@ -77,12 +77,12 @@ class DependencyContextTest extends TestCase
     {
         $skippedViolations = [
             new RulesetViolation(
-                new Dependency('ClassA', 12, 'ClassB'),
+                new Dependency('ClassA.php', 'ClassA', 12, 'ClassB'),
                 'LayerA',
                 'LayerB'
             ),
             $matchedViolation = new RulesetViolation(
-                new Dependency('ClassA', 12, 'ClassB'),
+                new Dependency('ClassA.php','ClassA', 12, 'ClassB'),
                 'LayerC',
                 'LayerD'
             ),

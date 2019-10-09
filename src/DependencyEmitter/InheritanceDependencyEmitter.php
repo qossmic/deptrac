@@ -21,6 +21,7 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
                 $dependencyResult->addDependency(
                     new Dependency(
+                        $classReference->getFileReference()->getFilepath(),
                         $classReference->getClassName(),
                         $inherit->getLine(),
                         $inherit->getClassName()

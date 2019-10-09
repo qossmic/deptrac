@@ -17,7 +17,7 @@ class RulesetEngineTest extends TestCase
     private function createDependencies(array $fromTo): iterable
     {
         foreach ($fromTo as $from => $to) {
-            yield new Dependency($from, 0, $to);
+            yield new Dependency($from . '.php', $from, 0, $to);
         }
     }
 
@@ -178,7 +178,7 @@ class RulesetEngineTest extends TestCase
             'not matched violations' => [
                 [
                     new RulesetEngine\RulesetViolation(
-                        new Dependency('ClassA', 12, 'ClassD'),
+                        new Dependency('ClassA.php','ClassA', 12, 'ClassD'),
                         'LayerA',
                         'LayerB'
                     ),
@@ -194,12 +194,12 @@ class RulesetEngineTest extends TestCase
             'has matched violations' => [
                 [
                     new RulesetEngine\RulesetViolation(
-                        new Dependency('ClassA', 12, 'ClassD'),
+                        new Dependency('ClassA.php','ClassA', 12, 'ClassD'),
                         'LayerA',
                         'LayerB'
                     ),
                     $matchedViolation = new RulesetEngine\RulesetViolation(
-                        new Dependency('ClassA', 12, 'ClassB'),
+                        new Dependency('ClassA.php','ClassA', 12, 'ClassB'),
                         'LayerA',
                         'LayerB'
                     ),

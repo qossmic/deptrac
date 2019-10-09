@@ -28,6 +28,7 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                 foreach ($dependencies as $emittedDependency) {
                     $dependencyResult->addDependency(
                         new Dependency(
+                            $astClassReference->getFileReference()->getFilepath(),
                             $astClassReference->getClassName(),
                             $emittedDependency->getLine(),
                             $emittedDependency->getClass()

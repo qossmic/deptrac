@@ -16,6 +16,7 @@ class InheritanceFlatter
             foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
                 foreach ($dependencyResult->getDependenciesByClass($inherit->getClassName()) as $dep) {
                     $dependencyResult->addInheritDependency(new InheritDependency(
+                        $classReference->getClassName() . '.php',
                         $classReference->getClassName(),
                         $dep->getClassB(),
                         $dep,

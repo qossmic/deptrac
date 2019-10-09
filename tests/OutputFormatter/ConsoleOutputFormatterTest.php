@@ -30,9 +30,10 @@ class ConsoleOutputFormatterTest extends TestCase
             [
                 new RulesetViolation(
                     new InheritDependency(
+                        'ClassA.php',
                         'ClassA',
                         'ClassB',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
+                        new Dependency('OriginalA.php', 'OriginalA', 12, 'OriginalB'),
                         AstInherit::newExtends('ClassInheritA', 3)->withPath([
                             AstInherit::newExtends('ClassInheritB', 4),
                             AstInherit::newExtends('ClassInheritC', 5),
@@ -59,7 +60,7 @@ class ConsoleOutputFormatterTest extends TestCase
         yield [
             [
                 new RulesetViolation(
-                    new Dependency('OriginalA', 12, 'OriginalB'),
+                    new Dependency('OriginalA.php','OriginalA', 12, 'OriginalB'),
                     'LayerA',
                     'LayerB'
                 ),
@@ -84,7 +85,7 @@ class ConsoleOutputFormatterTest extends TestCase
         yield [
             [
                 $violation = new RulesetViolation(
-                    new Dependency('OriginalA', 12, 'OriginalB'),
+                    new Dependency('OriginalA.php','OriginalA', 12, 'OriginalB'),
                     'LayerA',
                     'LayerB'
                 ),
