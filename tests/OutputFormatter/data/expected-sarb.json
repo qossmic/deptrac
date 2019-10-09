@@ -1,0 +1,14 @@
+[
+  {
+    "file" : "/home/project/Person.php",
+    "line" : 12,
+    "type" : "Layer A on Layer B",
+    "message" : "Acme\\Entity\\Person:12 must not depend on Acme\\Controller\\User (Layer A on Layer B)"
+  },
+  {
+    "file" : "/home/project/User.php",
+    "line" : 8,
+    "type" : "Layer A on Layer B",
+    "message" : "Acme\\Entity\\User:8 must not depend on Acme\\Controller\\Course (Layer A on Layer B)"
+  }
+]

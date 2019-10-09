@@ -68,6 +68,10 @@
             <tag name="output_formatter"/>
         </service>
 
+        <service id="SensioLabs\Deptrac\OutputFormatter\SarbOutputFormatter">
+            <tag name="output_formatter"/>
+        </service>
+
         <service id="SensioLabs\Deptrac\RulesetEngine"/>
 
         <service id="SensioLabs\Deptrac\Collector\Registry">
