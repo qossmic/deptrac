@@ -47,12 +47,12 @@ jobs:
             install:
                 - make tests
 
-#        -   stage: test
-#            name: Unit tests (7.4)
-#            language: php
-#            php: 7.4snapshot
-#            install:
-#                - make tests
+        -   stage: test
+            name: Unit tests (7.4)
+            language: php
+            php: 7.4snapshot
+            install:
+                - make tests
 
         -   stage: build
             language: php
