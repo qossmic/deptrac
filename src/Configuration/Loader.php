@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Configuration;
 
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\FileDoesNotExistsException;
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeReadException;
+use SensioLabs\Deptrac\Configuration\Exception\FileDoesNotExistsException;
 use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
+use SensioLabs\Deptrac\DependencyContext;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 use Symfony\Component\Console\Output\OutputInterface;
 

@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\MethodCollector;
+use SensioLabs\Deptrac\Collector\Registry;
 
 class MethodCollectorTest extends TestCase
 {

@@ -2,7 +2,7 @@ PHP_BIN      := php
 COMPOSER_BIN := composer
 BOX_BIN      := box
 
-.PHONY: build composer-install-dev tests tests-coverage
+.PHONY: build composer-install-dev tests tests-coverage gpg php-cs-check php-cs-fix phpstan
 
 build: tests
 	$(BOX_BIN) compile
@@ -25,3 +25,7 @@ php-cs-fix:																		## run cs fixer
 
 phpstan:
 	phpstan analyse
+
+gpg:
+	gpg --detach-sign --armor --output deptrac.phar.asc deptrac.phar
+	gpg --verify deptrac.phar.asc deptrac.phar

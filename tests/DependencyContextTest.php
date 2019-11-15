@@ -7,9 +7,9 @@ namespace Tests\SensioLabs\Deptrac;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
 
 class DependencyContextTest extends TestCase
