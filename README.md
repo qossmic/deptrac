@@ -1,5 +1,7 @@
 # Deptrac
 
+![](https://github.com/sensiolabs-de/deptrac/workflows/Continuous%20Integration/badge.svg?branch=master)
+
 ## What is Deptrac
 
 Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers in your PHP projects.
