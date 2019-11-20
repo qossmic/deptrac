@@ -8,10 +8,10 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
-use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\Dependency\Dependency;
+use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
+use SensioLabs\Deptrac\Dependency\Result;
 
 class InheritanceFlatterTest extends TestCase
 {

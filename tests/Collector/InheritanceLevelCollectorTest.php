@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
+use SensioLabs\Deptrac\Collector\Registry;
 
 class InheritanceLevelCollectorTest extends TestCase
 {

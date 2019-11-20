@@ -1,6 +1,7 @@
 vendor/*
 coverage/*
 deptrac.phar
+deptrac.phar.asc
 depfile.yml
 phpunit.xml
 box.json
