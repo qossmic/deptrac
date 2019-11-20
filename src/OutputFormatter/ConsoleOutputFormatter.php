@@ -6,11 +6,13 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
-use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Rule;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConsoleOutputFormatter implements OutputFormatterInterface
+final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
     public function getName(): string
     {
@@ -28,73 +30,96 @@ class ConsoleOutputFormatter implements OutputFormatterInterface
     }
 
     public function finish(
-        DependencyContext $dependencyContext,
+        Context $context,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        foreach ($dependencyContext->getViolations() as $violation) {
-            if ($violation->getDependency() instanceof InheritDependency) {
-                $this->handleInheritDependency($violation, $output, $dependencyContext->isViolationSkipped($violation));
+        foreach ($context->all() as $rule) {
+            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            $this->handleDependency($violation, $output, $dependencyContext->isViolationSkipped($violation));
+            if ($rule->getDependency() instanceof InheritDependency) {
+                $this->handleInheritDependency($rule, $output);
+                continue;
+            }
+
+            $this->handleDependency($rule, $output);
         }
 
-        $violationCount = \count($dependencyContext->getViolations());
-        $skippedViolationCount = \count($dependencyContext->getSkippedViolations());
-        if ($violationCount > $skippedViolationCount) {
-            $output->writeln(
-                sprintf(
-                    'Found <error>%s Violations</error>'.($skippedViolationCount ? ' and %s Violations skipped' : ''),
-                    $violationCount - $skippedViolationCount,
-                    $skippedViolationCount
-                )
-            );
-        } else {
-            $output->writeln(
-                sprintf(
-                    'Found <info>%s Violations</info>'.($skippedViolationCount ? ' and %s Violations skipped' : ''),
-                    $violationCount - $skippedViolationCount,
-                    $skippedViolationCount
-                )
-            );
-        }
+        $violationCount = \count($context->violations());
+        $skippedViolationCount = \count($context->skippedViolations());
+        $uncoveredCount = \count($context->uncovered());
+        $allowedCount = \count($context->allowed());
+
+        $output->writeln('');
+        $output->writeln('Report:');
+        $output->writeln(
+            sprintf(
+                '<%1$s>Violations: %2$d</%1$s>',
+                $violationCount > 0 ? 'error' : 'info',
+                $violationCount
+            )
+        );
+        $output->writeln(
+            sprintf(
+                '<%1$s>Skipped violations: %2$d</%1$s>',
+                $skippedViolationCount > 0 ? 'comment' : 'info',
+                $skippedViolationCount
+            )
+        );
+        $output->writeln(
+            sprintf(
+                '<%1$s>Uncovered: %2$d</%1$s>',
+                $uncoveredCount > 0 ? 'comment' : 'info',
+                $uncoveredCount
+            )
+        );
+        $output->writeln(sprintf('<info>Allowed: %d</info>', $allowedCount));
     }
 
-    private function handleInheritDependency(RulesetViolation $violation, OutputInterface $output, bool $isSkipped)
+    /**
+     * @param Violation|SkippedViolation $rule
+     */
+    private function handleInheritDependency(Rule $rule, OutputInterface $output): void
     {
         /** @var InheritDependency $dependency */
-        $dependency = $violation->getDependency();
+        $dependency = $rule->getDependency();
+
         $output->writeln(
             sprintf(
                 "%s<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
-                $isSkipped ? '[SKIPPED] ' : '',
+                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
                 $dependency->getClassA(),
                 $dependency->getClassB(),
-                $violation->getLayerA(),
-                $violation->getLayerB(),
+                $rule->getLayerA(),
+                $rule->getLayerB(),
                 $this->formatPath($dependency->getPath(), $dependency)
             )
         );
     }
 
-    private function handleDependency(RulesetViolation $violation, OutputInterface $output, bool $isSkipped)
+    /**
+     * @param Violation|SkippedViolation $rule
+     */
+    private function handleDependency(Rule $rule, OutputInterface $output): void
     {
+        $dependency = $rule->getDependency();
+
         $output->writeln(
             sprintf(
                 '%s<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
-                $isSkipped ? '[SKIPPED] ' : '',
-                $violation->getDependency()->getClassA(),
-                $violation->getDependency()->getClassALine(),
-                $violation->getDependency()->getClassB(),
-                $violation->getLayerA(),
-                $violation->getLayerB()
+                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
+                $dependency->getClassA(),
+                $dependency->getClassALine(),
+                $dependency->getClassB(),
+                $rule->getLayerA(),
+                $rule->getLayerB()
             )
         );
     }
 
-    private function formatPath(AstInherit $astInherit, InheritDependency $dependency)
+    private function formatPath(AstInherit $astInherit, InheritDependency $dependency): string
     {
         $buffer = [];
         foreach ($astInherit->getPath() as $p) {

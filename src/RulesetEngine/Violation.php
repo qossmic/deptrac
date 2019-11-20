@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\RulesetEngine;
 
 use SensioLabs\Deptrac\Dependency\DependencyInterface;
 
-class RulesetViolation
+final class Violation implements Rule
 {
     private $dependency;
     private $layerA;

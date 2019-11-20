@@ -1,0 +1,4 @@
+digraph {
+  "LayerA" -> "LayerB" [label=2 color="red"]
+  "LayerA" -> "LayerC"
+}

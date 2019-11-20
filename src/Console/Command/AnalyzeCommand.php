@@ -71,14 +71,14 @@ class AnalyzeCommand extends Command
         }
 
         $this->printCollectViolations($output);
-        $dependencyContext = $this->analyser->analyse($configuration);
+        $context = $this->analyser->analyse($configuration);
 
         $this->printFormattingStart($output);
 
         foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
             try {
                 $formatter->finish(
-                    $dependencyContext,
+                    $context,
                     $output,
                     $this->formatterFactory->getOutputFormatterInput($formatter, $input)
                 );
@@ -87,7 +87,7 @@ class AnalyzeCommand extends Command
             }
         }
 
-        return $dependencyContext->hasViolations() ? 1 : 0;
+        return $context->hasViolations() ? 1 : 0;
     }
 
     protected function printBanner(OutputInterface $output): void

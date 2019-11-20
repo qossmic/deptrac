@@ -6,8 +6,7 @@ namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
-use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
+use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine;
@@ -37,7 +36,6 @@ class RulesetEngineTest extends TestCase
                 'LayerA' => [
                     'LayerB',
                 ],
-                'LayerC' => [],
             ],
             0,
         ];
@@ -140,9 +138,9 @@ class RulesetEngineTest extends TestCase
     /**
      * @dataProvider dependencyProvider
      */
-    public function testGetViolationsButNoViolations(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, int $expectedCount): void
+    public function testProcess(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, int $expectedCount): void
     {
-        $dependencyResult = (new Result());
+        $dependencyResult = new Result();
         foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
             $dependencyResult->addDependency($dep);
         }
@@ -152,67 +150,54 @@ class RulesetEngineTest extends TestCase
             $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
         }
 
-        static::assertCount(
-            $expectedCount,
-            (new RulesetEngine())->getViolations(
-                $dependencyResult,
-                $classNameLayerResolver->reveal(),
-                ConfigurationRuleset::fromArray($rulesetConfiguration)
-            )
+        $configuration = Configuration::fromArray([
+            'layers' => [],
+            'paths' => [],
+            'ruleset' => $rulesetConfiguration,
+        ]);
+
+        $context = (new RulesetEngine())->process(
+            $dependencyResult,
+            $classNameLayerResolver->reveal(),
+            $configuration
         );
+
+        static::assertCount($expectedCount, $context->violations());
     }
 
     public function provideTestGetSkippedViolations(): array
     {
         return [
-            'empty violations' => [
-                [],
+            'not skipped violations' => [
                 [
-                    'ClassA' => [
-                        'ClassB',
-                        'ClassC',
-                    ],
+                    'ClassA' => 'ClassB',
+                    'ClassB' => 'ClassA',
+                ],
+                [
+                    'ClassA' => ['LayerA'],
+                    'ClassB' => ['LayerB'],
                 ],
                 [],
+                0,
             ],
-            'not matched violations' => [
+            'has skipped violations' => [
                 [
-                    new RulesetEngine\RulesetViolation(
-                        new Dependency('ClassA', 12, 'ClassD'),
-                        'LayerA',
-                        'LayerB'
-                    ),
+                    'ClassA' => 'ClassB',
+                    'ClassB' => 'ClassA',
+                ],
+                [
+                    'ClassA' => ['LayerA'],
+                    'ClassB' => ['LayerB'],
                 ],
                 [
                     'ClassA' => [
                         'ClassB',
-                        'ClassC',
+                    ],
+                    'ClassB' => [
+                        'ClassA',
                     ],
                 ],
-                [],
-            ],
-            'has matched violations' => [
-                [
-                    new RulesetEngine\RulesetViolation(
-                        new Dependency('ClassA', 12, 'ClassD'),
-                        'LayerA',
-                        'LayerB'
-                    ),
-                    $matchedViolation = new RulesetEngine\RulesetViolation(
-                        new Dependency('ClassA', 12, 'ClassB'),
-                        'LayerA',
-                        'LayerB'
-                    ),
-                ],
-                [
-                    'ClassA' => [
-                        'ClassB',
-                        'ClassC',
-                    ],
-                ],
-                [
-                    $matchedViolation,
-                ],
+                2,
             ],
         ];
     }
@@ -220,14 +205,31 @@ class RulesetEngineTest extends TestCase
     /**
      * @dataProvider provideTestGetSkippedViolations
      */
-    public function testGetSkippedViolations(array $violations, array $skippedViolationsConfig, array $expectedSkippedViolations): void
+    public function testGetSkippedViolations(array $dependenciesAsArray, array $classesInLayers, array $skippedViolationsConfig, int $expectedSkippedViolationCount): void
     {
-        static::assertSame(
-            $expectedSkippedViolations,
-            (new RulesetEngine())->getSkippedViolations(
-                $violations,
-                ConfigurationSkippedViolation::fromArray($skippedViolationsConfig)
-            )
+        $dependencyResult = new Result();
+        foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
+            $dependencyResult->addDependency($dep);
+        }
+
+        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
+        foreach ($classesInLayers as $classInLayer => $layers) {
+            $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
+        }
+
+        $configuration = Configuration::fromArray([
+            'layers' => [],
+            'paths' => [],
+            'ruleset' => [],
+            'skip_violations' => $skippedViolationsConfig,
+        ]);
+
+        $context = (new RulesetEngine())->process(
+            $dependencyResult,
+            $classNameLayerResolver->reveal(),
+            $configuration
         );
+
+        static::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
     }
 }

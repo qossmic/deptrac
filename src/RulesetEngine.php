@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac;
 
-use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
-use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
+use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Allowed;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Uncovered;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 
 class RulesetEngine
 {
-    /**
-     * @return RulesetViolation[]
-     */
-    public function getViolations(Result $dependencyResult, ClassNameLayerResolverInterface $classNameLayerResolver, ConfigurationRuleset $configurationRuleset): array
-    {
-        $violations = [];
+    public function process(
+        Result $dependencyResult,
+        ClassNameLayerResolverInterface $classNameLayerResolver,
+        Configuration $configuration
+    ): Context {
+        $rules = [];
+
+        $configurationRuleset = $configuration->getRuleset();
+        $configurationSkippedViolation = $configuration->getSkipViolations();
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
             $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
@@ -24,41 +30,33 @@ class RulesetEngine
             foreach ($layerNames as $layerName) {
                 $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
 
-                foreach ($classNameLayerResolver->getLayersByClassName($dependency->getClassB()) as $layerNameOfDependency) {
+                $layersNamesClassB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
+
+                if (0 === count($layersNamesClassB)) {
+                    $rules[] = new Uncovered($dependency, $layerName);
+                    continue;
+                }
+
+                foreach ($layersNamesClassB as $layerNameOfDependency) {
                     if ($layerName === $layerNameOfDependency) {
                         continue;
                     }
 
                     if (in_array($layerNameOfDependency, $allowedDependencies, true)) {
+                        $rules[] = new Allowed($dependency, $layerName, $layerNameOfDependency);
                         continue;
                     }
 
-                    $violations[] = new RulesetViolation(
-                        $dependency,
-                        $layerName,
-                        $layerNameOfDependency
-                    );
+                    if ($configurationSkippedViolation->isViolationSkipped($dependency->getClassA(), $dependency->getClassB())) {
+                        $rules[] = new SkippedViolation($dependency, $layerName, $layerNameOfDependency);
+                        continue;
+                    }
+
+                    $rules[] = new Violation($dependency, $layerName, $layerNameOfDependency);
                 }
             }
         }
 
-        return $violations;
-    }
-
-    /**
-     * @param RulesetViolation[] $violations
-     *
-     * @return RulesetViolation[]
-     */
-    public function getSkippedViolations(array $violations, ConfigurationSkippedViolation $configurationSkipViolation): array
-    {
-        return \array_values(
-            \array_filter($violations, static function ($violation) use ($configurationSkipViolation): bool {
-                /** @var RulesetViolation $violation */
-                $dep = $violation->getDependency();
-
-                return $configurationSkipViolation->isViolationSkipped($dep->getClassA(), $dep->getClassB());
-            })
-        );
+        return new Context($rules);
     }
 }
