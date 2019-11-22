@@ -52,7 +52,7 @@ OUT;
 
         $expectedOutput = <<<OUT
 
-    1 [->--------------------------]
+    1 [>---------------------------]
 OUT;
 
         static::assertSame($expectedOutput, $formatter->fetch());
