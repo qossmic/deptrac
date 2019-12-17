@@ -19,7 +19,7 @@ class ResolverTest extends TestCase
 {
     public function testResolve(): void
     {
-        $astMap = new AstMap();
+        $astMap = new AstMap([]);
 
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->method('dispatch')->withConsecutive(
