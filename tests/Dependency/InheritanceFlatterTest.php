@@ -7,7 +7,9 @@ namespace Tests\SensioLabs\Deptrac\Dependency;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
@@ -54,12 +56,13 @@ class InheritanceFlatterTest extends TestCase
         $astMap->getClassInherits('classB')->willReturn([]);
         $astMap->getClassInherits('classBaum')->willReturn([]);
         $astMap->getClassInherits('classWeihnachtsbaum')->willReturn([
-            AstInherit::newTraitUse('classBaum', 3),
+            AstInherit::newTraitUse('classBaum', new FileOccurrence(new AstFileReference('classWeihnachtsbaum.php'), 3)),
         ]);
         $astMap->getClassInherits('classGeschmückterWeihnachtsbaum')->willReturn([
-            AstMap\AstInherit::newExtends('classBaum', 3)->withPath([
-                AstInherit::newTraitUse('classWeihnachtsbaum', 3),
-            ]),
+            AstMap\AstInherit::newExtends('classBaum', new FileOccurrence(new AstFileReference('classGeschmückterWeihnachtsbaum.php'), 3))
+                ->withPath([
+                    AstInherit::newTraitUse('classWeihnachtsbaum', new FileOccurrence(new AstFileReference('classBaum.php'), 3)),
+                ]),
         ]);
 
         (new InheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);

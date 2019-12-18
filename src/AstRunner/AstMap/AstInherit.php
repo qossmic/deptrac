@@ -11,33 +11,33 @@ class AstInherit
     private const TYPE_USES = 3;
 
     private $className;
-    private $line;
+    private $fileOccurrence;
     private $type;
 
     /** @var AstInherit[] */
     private $path;
 
-    private function __construct(string $className, int $line, int $type)
+    private function __construct(string $className, FileOccurrence $fileOccurrence, int $type)
     {
         $this->className = $className;
-        $this->line = $line;
+        $this->fileOccurrence = $fileOccurrence;
         $this->type = $type;
         $this->path = [];
     }
 
-    public static function newExtends(string $className, int $line): self
+    public static function newExtends(string $className, FileOccurrence $fileOccurrence): self
     {
-        return new self($className, $line, static::TYPE_EXTENDS);
+        return new self($className, $fileOccurrence, static::TYPE_EXTENDS);
     }
 
-    public static function newImplements(string $className, int $line): self
+    public static function newImplements(string $className, FileOccurrence $fileOccurrence): self
     {
-        return new self($className, $line, static::TYPE_IMPLEMENTS);
+        return new self($className, $fileOccurrence, static::TYPE_IMPLEMENTS);
     }
 
-    public static function newTraitUse(string $className, int $line): self
+    public static function newTraitUse(string $className, FileOccurrence $fileOccurrence): self
     {
-        return new self($className, $line, static::TYPE_USES);
+        return new self($className, $fileOccurrence, static::TYPE_USES);
     }
 
     public function __toString(): string
@@ -56,7 +56,7 @@ class AstInherit
                 $type = 'Unknown';
         }
 
-        $description = "{$this->className}::{$this->line} ($type)";
+        $description = "{$this->className}::{$this->fileOccurrence->getLine()} ($type)";
 
         if (0 === count($this->path)) {
             return $description;
@@ -75,9 +75,9 @@ class AstInherit
         return $this->className;
     }
 
-    public function getLine(): int
+    public function getFileOccurrence(): FileOccurrence
     {
-        return $this->line;
+        return $this->fileOccurrence;
     }
 
     public function getType(): int

@@ -6,8 +6,9 @@ namespace SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Node;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
 interface ClassDependencyResolver
 {
-    public function processNode(Node $node, AstClassReference $astClassReference): void;
+    public function processNode(Node $node, AstFileReference $fileReference, AstClassReference $astClassReference): void;
 }

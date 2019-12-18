@@ -152,9 +152,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $dependency = $violation->getDependency();
 
         $message = sprintf(
-            '%s:%s must not depend on %s (%s on %s)',
+            '%s:%d must not depend on %s (%s on %s)',
             $dependency->getClassA(),
-            $dependency->getClassALine(),
+            $dependency->getFileOccurrence()->getLine(),
             $dependency->getClassB(),
             $violation->getLayerA(),
             $violation->getLayerB()

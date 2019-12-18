@@ -22,8 +22,8 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
                 $dependencyResult->addDependency(
                     new Dependency(
                         $classReference->getClassName(),
-                        $inherit->getLine(),
-                        $inherit->getClassName()
+                        $inherit->getClassName(),
+                        $inherit->getFileOccurrence()
                     )
                 );
             }
