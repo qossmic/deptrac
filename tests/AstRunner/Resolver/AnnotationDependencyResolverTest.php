@@ -19,7 +19,7 @@ class AnnotationDependencyResolverTest extends TestCase
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
-            [new AnnotationDependencyResolver()]
+            new AnnotationDependencyResolver()
         );
 
         $filePath = __DIR__.'/fixtures/AnnotationDependency.php';

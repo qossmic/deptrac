@@ -32,17 +32,14 @@ class NikicPhpParser implements AstParser
     private $cache;
 
     /**
-     * @var iterable|ClassDependencyResolver[]
+     * @var ClassDependencyResolver[]
      */
     private $classDependencyResolvers;
 
-    /**
-     * @param iterable|ClassDependencyResolver[] $classDependencyResolvers
-     */
     public function __construct(
         FileParser $fileParser,
         AstFileReferenceCache $cache,
-        iterable $classDependencyResolvers = []
+        ClassDependencyResolver ...$classDependencyResolvers
     ) {
         $this->fileParser = $fileParser;
         $this->cache = $cache;
@@ -73,7 +70,7 @@ class NikicPhpParser implements AstParser
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NameResolver());
-        $traverser->addVisitor(new AstClassReferenceResolver($fileReference, $this->classDependencyResolvers));
+        $traverser->addVisitor(new AstClassReferenceResolver($fileReference, ...$this->classDependencyResolvers));
 
         $traverser->traverse($this->fileParser->parse($data));
 

@@ -19,7 +19,7 @@ class ClassConstantResolverTest extends TestCase
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
-            [new ClassConstantResolver()]
+            new ClassConstantResolver()
         );
 
         $filePath = __DIR__.'/fixtures/ClassConst.php';

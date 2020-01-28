@@ -29,20 +29,16 @@
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser"/>
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache"/>
-            <argument type="tagged" tag="class_dependency_resolver"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver">
-            <tag name="class_dependency_resolver"/>
-        </service>
+        <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver"/>
 
-        <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver">
-            <tag name="class_dependency_resolver"/>
-        </service>
+        <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver"/>
 
-        <service id="SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver">
-            <tag name="class_dependency_resolver"/>
-        </service>
+        <service id="SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver"/>
 
         <service id="SensioLabs\Deptrac\Analyser">
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstRunner"/>
