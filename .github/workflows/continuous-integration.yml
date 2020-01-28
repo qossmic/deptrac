@@ -18,9 +18,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v2
 
       - name: PHP-CS-Fixer
         uses: docker://oskarstark/php-cs-fixer-ga:2.15.4
@@ -34,12 +32,10 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v2
 
       - name: "Disable Xdebug"
-        run: php7.3 --ini | grep xdebug | sed 's/,$//' | xargs sudo rm
+        run: php7.4 --ini | grep xdebug | sed 's/,$//' | xargs sudo rm
 
       - name: "Cache dependencies installed with composer"
         uses: actions/cache@v1
@@ -50,7 +46,7 @@ jobs:
             composer-cache-
 
       - name: "Install dependencies with composer"
-        run: php7.3 $(which composer) install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: php7.4 $(which composer) install --no-interaction --no-progress --no-suggest --optimize-autoloader
 
       - name: PHPStan
         uses: docker://oskarstark/phpstan-ga:0.11.19.1
@@ -68,9 +64,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v2
 
       - name: "Cache dependencies installed with composer"
         uses: actions/cache@v1
@@ -81,10 +75,10 @@ jobs:
             composer-cache-
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@master
+        uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
-          extension-csv: mbstring, xml, ctype, iconv
+          extensions: mbstring, xml, ctype, iconv
           coverage: none
 
       - name: "Run tests"
@@ -97,9 +91,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
+        uses: actions/checkout@v2
 
       - name: "Cache dependencies installed with composer"
         uses: actions/cache@v1
@@ -110,10 +102,10 @@ jobs:
             composer-cache-
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@master
+        uses: shivammathur/setup-php@v1
         with:
           php-version: "7.2"
-          extension-csv: mbstring, xml, ctype, iconv
+          extensions: mbstring, xml, ctype, iconv
           coverage: none
 
       - name: "Install dependencies with composer"
