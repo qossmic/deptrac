@@ -5,7 +5,7 @@
             <skipped/>
         </testcase>
         <testcase classname="ClassC" name="LayerA - ClassC" time="0">
-            <failure message="ClassC:0 must not depend on ClassD (LayerA on LayerB)" type="WARNING"/>
+            <failure message="ClassC:12 must not depend on ClassD (LayerA on LayerB)" type="WARNING"/>
         </testcase>
     </testsuite>
 </testsuites>

@@ -29,8 +29,8 @@ class BasicDependencyEmitter implements DependencyEmitterInterface
                     $dependencyResult->addDependency(
                         new Dependency(
                             $astClassReference->getClassName(),
-                            $emittedDependency->getLine(),
-                            $emittedDependency->getClass()
+                            $emittedDependency->getClass(),
+                            $emittedDependency->getFileOccurrence()
                         )
                     );
                 }
