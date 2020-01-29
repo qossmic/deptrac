@@ -19,7 +19,7 @@ class AnonymousClassResolverTest extends TestCase
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
-            [new AnonymousClassResolver()]
+            new AnonymousClassResolver()
         );
 
         $filePath = __DIR__.'/fixtures/AnonymousClass.php';
