@@ -2,3 +2,5 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     level: max
     paths: [src]
+    ignoreErrors:
+        - '/Parameter #1 $id of method Fhaculty\Graph\Graph::createVertex() expects int|null, string given./'

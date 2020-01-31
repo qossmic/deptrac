@@ -27,6 +27,9 @@ class OutputFormatterOption
         $this->default = $default;
     }
 
+    /**
+     * @param mixed|null $default
+     */
     public static function newValueOption(string $name, string $description, $default = null): self
     {
         return new self($name, InputOption::VALUE_OPTIONAL, $description, $default);
@@ -47,6 +50,9 @@ class OutputFormatterOption
         return $this->description;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function getDefault()
     {
         return $this->default;

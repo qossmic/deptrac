@@ -62,11 +62,12 @@ class NikicPhpParser implements AstParser
             throw new \LogicException('data not supported');
         }
 
-        if (null !== $fileReference = $this->cache->get($data->getRealPath())) {
+        $realPath = (string) $data->getRealPath();
+        if (null !== $fileReference = $this->cache->get($realPath)) {
             return $fileReference;
         }
 
-        $fileReference = new AstFileReference($data->getRealPath());
+        $fileReference = new AstFileReference($realPath);
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NameResolver());

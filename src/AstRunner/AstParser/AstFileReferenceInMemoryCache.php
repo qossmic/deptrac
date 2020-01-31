@@ -8,6 +8,9 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
 class AstFileReferenceInMemoryCache implements AstFileReferenceCache
 {
+    /**
+     * @var array<string, AstFileReference>
+     */
     private $cache = [];
 
     public function has(string $filepath): bool
@@ -26,7 +29,7 @@ class AstFileReferenceInMemoryCache implements AstFileReferenceCache
 
     public function set(AstFileReference $fileReference): void
     {
-        $filepath = realpath($fileReference->getFilepath());
+        $filepath = (string) realpath($fileReference->getFilepath());
 
         $this->cache[$filepath] = $fileReference;
     }

@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {
-    private static $argument_display = 'display';
-    private static $argument_dump_image = 'dump-image';
-    private static $argument_dump_dot = 'dump-dot';
-    private static $argument_dump_html = 'dump-html';
+    private const ARGUMENT_DISPLAY = 'display';
+    private const ARGUMENT_DUMP_IMAGE = 'dump-image';
+    private const ARGUMENT_DUMP_DOT = 'dump-dot';
+    private const ARGUMENT_DUMP_HTML = 'dump-html';
 
     public function getName(): string
     {
@@ -38,10 +38,10 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::$argument_display, 'should try to open graphviz image', true),
-            OutputFormatterOption::newValueOption(static::$argument_dump_image, 'path to a dumped png file', ''),
-            OutputFormatterOption::newValueOption(static::$argument_dump_dot, 'path to a dumped dot file', ''),
-            OutputFormatterOption::newValueOption(static::$argument_dump_html, 'path to a dumped html file', ''),
+            OutputFormatterOption::newValueOption(static::ARGUMENT_DISPLAY, 'should try to open graphviz image', true),
+            OutputFormatterOption::newValueOption(static::ARGUMENT_DUMP_IMAGE, 'path to a dumped png file', ''),
+            OutputFormatterOption::newValueOption(static::ARGUMENT_DUMP_DOT, 'path to a dumped dot file', ''),
+            OutputFormatterOption::newValueOption(static::ARGUMENT_DUMP_HTML, 'path to a dumped html file', ''),
         ];
     }
 
@@ -84,23 +84,23 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        $display = $outputFormatterInput->getOption(static::$argument_display);
+        $display = $outputFormatterInput->getOption(static::ARGUMENT_DISPLAY);
         if (true === filter_var($display, FILTER_VALIDATE_BOOLEAN)) {
             (new GraphViz())->display($graph);
         }
 
-        if ($dumpImagePath = $outputFormatterInput->getOption(static::$argument_dump_image)) {
+        if ($dumpImagePath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_IMAGE)) {
             $imagePath = (new GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
             $output->writeln('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
-        if ($dumpDotPath = $outputFormatterInput->getOption(static::$argument_dump_dot)) {
+        if ($dumpDotPath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_DOT)) {
             file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
             $output->writeln('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
-        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::$argument_dump_html)) {
+        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_HTML)) {
             file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
             $output->writeln('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
@@ -108,6 +108,8 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     /**
      * @param Violation[] $violations
+     *
+     * @return array<string, array<string, int>>
      */
     private function calculateViolations(array $violations): array
     {
@@ -129,6 +131,8 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     /**
      * @param Rule[] $rules
+     *
+     * @return array<string, array<string, int>>
      */
     private function calculateLayerDependencies(array $rules): array
     {

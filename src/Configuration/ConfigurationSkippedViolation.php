@@ -7,7 +7,7 @@ namespace SensioLabs\Deptrac\Configuration;
 /**
  * @author Dmitry Balabka <dmitry.balabka@gmail.com>
  */
-class ConfigurationSkippedViolation
+final class ConfigurationSkippedViolation
 {
     /** @var array<string, string[]> */
     private $classesDeps;

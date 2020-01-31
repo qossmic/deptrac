@@ -69,16 +69,17 @@ class AstMap
     }
 
     /**
-     * @return AstInherit[]|iterable
+     * @param \ArrayObject<string, bool>|null $alreadyResolved
+     *
+     * @return iterable<AstInherit>
      */
     private function resolveDepsRecursive(
         AstInherit $inheritDependency,
         \ArrayObject $alreadyResolved = null,
         \SplStack $path = null
     ): iterable {
-        if (null === $alreadyResolved) {
-            $alreadyResolved = new \ArrayObject();
-        }
+        $alreadyResolved = $alreadyResolved ?? new \ArrayObject();
+
         if (null === $path) {
             $path = new \SplStack();
             $path->push($inheritDependency);

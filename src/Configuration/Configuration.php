@@ -14,7 +14,10 @@ class Configuration
     private $ruleset;
     private $skipViolations;
 
-    public static function fromArray(array $arr): self
+    /**
+     * @param array<string, mixed> $args
+     */
+    public static function fromArray(array $args): self
     {
         $options = (new OptionsResolver())->setRequired([
             'layers',
@@ -28,9 +31,9 @@ class Configuration
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
         ->addAllowedTypes('skip_violations', 'array')
-        ->resolve($arr);
+        ->resolve($args);
 
-        return new static(
+        return new self(
             array_map(static function ($v): ConfigurationLayer {
                 return ConfigurationLayer::fromArray($v);
             }, $options['layers']),

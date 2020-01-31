@@ -19,6 +19,11 @@ class OutputFormatterInput
         $this->options = $options;
     }
 
+    /**
+     * @throws \InvalidArgumentException on not configured option
+     *
+     * @return mixed
+     */
     public function getOption(string $name)
     {
         if (!isset($this->options[$name])) {

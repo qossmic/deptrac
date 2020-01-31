@@ -22,6 +22,9 @@ class ProgressSubscriber implements EventSubscriberInterface
         $this->output = $output;
     }
 
+    /**
+     * @return array<string, string|array>
+     */
     public static function getSubscribedEvents(): array
     {
         return [

@@ -25,6 +25,9 @@ class DirectoryCollector implements CollectorInterface
         return $fileReference && 1 === preg_match($this->getPattern($configuration), $fileReference->getFilepath());
     }
 
+    /**
+     * @param array<string, string> $configuration
+     */
     private function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex'])) {

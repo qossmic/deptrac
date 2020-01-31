@@ -6,19 +6,22 @@ namespace SensioLabs\Deptrac\Configuration;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ConfigurationLayer
+final class ConfigurationLayer
 {
     /** @var ConfigurationCollector[] */
     private $collectors;
 
     private $name;
 
-    public static function fromArray(array $arr): self
+    /**
+     * @param array<string, mixed> $args
+     */
+    public static function fromArray(array $args): self
     {
         $options = (new OptionsResolver())->setRequired([
             'name',
             'collectors',
-        ])->resolve($arr);
+        ])->resolve($args);
 
         return new static(
             array_map(static function ($v): ConfigurationCollector {
