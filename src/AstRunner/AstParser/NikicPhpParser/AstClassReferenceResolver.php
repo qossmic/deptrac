@@ -10,8 +10,8 @@ use PhpParser\NodeVisitorAbstract;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\NameScope;
@@ -20,14 +20,14 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
 {
     private $fileReference;
 
-    /** @var AstClassReference */
-    private $currentClassReference;
-
     /** @var ClassDependencyResolver[] */
     private $classDependencyResolvers;
 
-    /** @var Context */
+    /** @var NameScope */
     private $currentTypeContext;
+
+    /** @var ClassReferenceBuilder */
+    private $currentClassReferenceBuilder;
 
     public function __construct(AstFileReference $fileReference, ClassDependencyResolver ...$classDependencyResolvers)
     {
@@ -47,42 +47,31 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         }
 
         if (isset($node->namespacedName) && $node->namespacedName instanceof Node\Name) {
-            $className = ClassLikeName::fromString($node->namespacedName->toString());
+            $className = $node->namespacedName->toString();
         } elseif ($node->name instanceof Node\Identifier) {
-            $className = ClassLikeName::fromString($node->name->toString());
+            $className = $node->name->toString();
         } else {
             return null; // map anonymous classes on current class
         }
 
-        $this->currentClassReference = $this->fileReference->addClassReference($className);
+        if (null !== $this->currentClassReferenceBuilder) {
+            $this->currentClassReferenceBuilder->build();
+        }
+
+        $this->currentClassReferenceBuilder = ClassReferenceBuilder::create($this->fileReference, $className);
 
         if ($node instanceof Node\Stmt\Class_) {
             if ($node->extends instanceof Node\Name) {
-                $this->currentClassReference->addInherit(
-                    AstInherit::newExtends(
-                        ClassLikeName::fromString($node->extends->toString()),
-                        new FileOccurrence($this->fileReference, $node->extends->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->extends($node->extends->toString(), $node->extends->getLine());
             }
             foreach ($node->implements as $implement) {
-                $this->currentClassReference->addInherit(
-                    AstInherit::newImplements(
-                        ClassLikeName::fromString($implement->toString()),
-                        new FileOccurrence($this->fileReference, $implement->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->implements($implement->toString(), $implement->getLine());
             }
         }
 
         if ($node instanceof Node\Stmt\Interface_) {
             foreach ($node->extends as $extend) {
-                $this->currentClassReference->addInherit(
-                    AstInherit::newExtends(
-                        ClassLikeName::fromString($extend->toString()),
-                        new FileOccurrence($this->fileReference, $extend->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->extends($extend->toString(), $extend->getLine());
             }
         }
 
@@ -101,101 +90,61 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
             );
         }
 
-        if (null === $this->currentClassReference) {
+        if (null === $this->currentClassReferenceBuilder) {
             return null;
         }
 
         if ($node instanceof Node\Stmt\TraitUse) {
             foreach ($node->traits as $trait) {
-                $this->currentClassReference->addInherit(
-                    AstInherit::newTraitUse(
-                        ClassLikeName::fromString($trait->toString()),
-                        new FileOccurrence($this->fileReference, $trait->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->trait($trait->toString(), $trait->getLine());
             }
         }
 
         if ($node instanceof Node\Expr\Instanceof_ && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReference->addDependency(
-                AstDependency::instanceofExpr(
-                    ClassLikeName::fromString($node->class->toString()),
-                    new FileOccurrence($this->fileReference, $node->class->getLine())
-                )
-            );
+            $this->currentClassReferenceBuilder->instanceof($node->class->toString(), $node->class->getLine());
         }
 
         if ($node instanceof Node\Param && $this->isQualifiedClassName($node->type)) {
-            $this->currentClassReference->addDependency(
-                AstDependency::parameter(
-                    ClassLikeName::fromString($node->type->toString()),
-                    new FileOccurrence($this->fileReference, $node->type->getLine())
-                )
-            );
+            $this->currentClassReferenceBuilder->parameter($node->type->toString(), $node->type->getLine());
         }
 
         if ($node instanceof Node\Expr\New_ && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReference->addDependency(
-                AstDependency::newStmt(
-                    ClassLikeName::fromString($node->class->toString()),
-                    new FileOccurrence($this->fileReference, $node->class->getLine())
-                )
-            );
+            $this->currentClassReferenceBuilder->newStatement($node->class->toString(), $node->class->getLine());
         }
 
         if ($node instanceof Node\Expr\StaticPropertyFetch && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReference->addDependency(
-                AstDependency::staticProperty(
-                    ClassLikeName::fromString($node->class->toString()),
-                    new FileOccurrence($this->fileReference, $node->class->getLine())
-                )
-            );
+            $this->currentClassReferenceBuilder->staticProperty($node->class->toString(), $node->class->getLine());
         }
 
         if ($node instanceof Node\Expr\StaticCall && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReference->addDependency(
-                AstDependency::staticMethod(
-                    ClassLikeName::fromString($node->class->toString()),
-                    new FileOccurrence($this->fileReference, $node->class->getLine())
-                )
-            );
+            $this->currentClassReferenceBuilder->staticMethod($node->class->toString(), $node->class->getLine());
         }
 
         if ($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) {
             if ($this->isQualifiedClassName($node->returnType)) {
-                $this->currentClassReference->addDependency(
-                    AstDependency::returnType(
-                        ClassLikeName::fromString($node->returnType->toString()),
-                        new FileOccurrence($this->fileReference, $node->returnType->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->returnType($node->returnType->toString(), $node->returnType->getLine());
             } elseif ($node->returnType instanceof Node\NullableType && $this->isQualifiedClassName($node->returnType->type)) {
-                $this->currentClassReference->addDependency(
-                    AstDependency::returnType(
-                        ClassLikeName::fromString((string) $node->returnType->type),
-                        new FileOccurrence($this->fileReference, $node->returnType->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->returnType($node->returnType->type->toString(), $node->returnType->getLine());
             }
         }
 
         if ($node instanceof Node\Stmt\Catch_) {
             foreach ($node->types as $type) {
-                if (!$this->isQualifiedClassName($type)) {
-                    continue;
-                }
-
-                $this->currentClassReference->addDependency(
-                    AstDependency::catchStmt(
-                        ClassLikeName::fromString($type->toString()),
-                        new FileOccurrence($this->fileReference, $type->getLine())
-                    )
-                );
+                $this->currentClassReferenceBuilder->catchStmt($type->toString(), $type->getLine());
             }
         }
 
         foreach ($this->classDependencyResolvers as $resolver) {
-            $resolver->processNode($node, $this->fileReference, $this->currentClassReference, $this->currentTypeContext);
+            $resolver->processNode($node, $this->currentClassReferenceBuilder, $this->currentTypeContext);
+        }
+
+        return null;
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+        if (null !== $this->currentClassReferenceBuilder) {
+            $this->currentClassReferenceBuilder->build();
         }
 
         return null;

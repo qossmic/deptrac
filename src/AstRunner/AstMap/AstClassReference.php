@@ -15,12 +15,16 @@ class AstClassReference
     /** @var AstInherit[] */
     private $inherits;
 
-    public function __construct(ClassLikeName $className, AstFileReference $fileReference = null)
+    /**
+     * @param AstInherit[]    $inherits
+     * @param AstDependency[] $dependencies
+     */
+    public function __construct(ClassLikeName $className, AstFileReference $fileReference = null, array $inherits = [], array $dependencies = [])
     {
         $this->className = $className;
         $this->fileReference = $fileReference;
-        $this->dependencies = [];
-        $this->inherits = [];
+        $this->dependencies = $dependencies;
+        $this->inherits = $inherits;
     }
 
     public function getFileReference(): ?AstFileReference

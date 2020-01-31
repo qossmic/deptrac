@@ -11,11 +11,7 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class AnnotationDependencyResolver implements ClassDependencyResolver
 {
@@ -34,7 +30,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         $this->typeResolver = $typeResolver;
     }
 
-    public function processNode(Node $node, AstFileReference $fileReference, AstClassReference $astClassReference, NameScope $nameScope): void
+    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, NameScope $nameScope): void
     {
         if (!$node instanceof Node\Stmt\Property
             && !$node instanceof Node\Expr\Variable
@@ -55,12 +51,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolveType($tag->type, $nameScope);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(
-                    AstDependency::parameter(
-                        ClassLikeName::fromString($type),
-                        new FileOccurrence($fileReference, $docComment->getLine())
-                    )
-                );
+                $classReferenceBuilder->parameter($type, $docComment->getLine());
             }
         }
 
@@ -68,12 +59,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolveType($tag->type, $nameScope);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(
-                    AstDependency::variable(
-                        ClassLikeName::fromString($type),
-                        new FileOccurrence($fileReference, $docComment->getLine())
-                    )
-                );
+                $classReferenceBuilder->variable($type, $docComment->getLine());
             }
         }
 
@@ -81,12 +67,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolveType($tag->type, $nameScope);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(
-                    AstDependency::returnType(
-                        ClassLikeName::fromString($type),
-                        new FileOccurrence($fileReference, $docComment->getLine())
-                    )
-                );
+                $classReferenceBuilder->returnType($type, $docComment->getLine());
             }
         }
 
@@ -94,12 +75,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolveType($tag->type, $nameScope);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(
-                    AstDependency::throwStmt(
-                        ClassLikeName::fromString($type),
-                        new FileOccurrence($fileReference, $docComment->getLine())
-                    )
-                );
+                $classReferenceBuilder->throwStatement($type, $docComment->getLine());
             }
         }
     }

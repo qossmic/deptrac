@@ -10,7 +10,7 @@ class AstDependency
     private $fileOccurrence;
     private $type;
 
-    public function __construct(ClassLikeName $class, FileOccurrence $fileOccurrence, string $type)
+    private function __construct(ClassLikeName $class, FileOccurrence $fileOccurrence, string $type)
     {
         $this->class = $class;
         $this->fileOccurrence = $fileOccurrence;
