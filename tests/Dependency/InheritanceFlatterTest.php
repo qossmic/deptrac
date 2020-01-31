@@ -9,6 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
@@ -20,7 +21,7 @@ class InheritanceFlatterTest extends TestCase
     private function getAstReference($className)
     {
         $astClass = $this->prophesize(AstClassReference::class);
-        $astClass->getClassName()->willReturn($className);
+        $astClass->getClassName()->willReturn(ClassLikeName::fromString($className));
 
         return $astClass->reveal();
     }
@@ -28,8 +29,8 @@ class InheritanceFlatterTest extends TestCase
     private function getDependency($className)
     {
         $dep = $this->prophesize(Dependency::class);
-        $dep->getClassA()->willReturn($className);
-        $dep->getClassB()->willReturn($className.'_b');
+        $dep->getClassA()->willReturn(ClassLikeName::fromString($className));
+        $dep->getClassB()->willReturn(ClassLikeName::fromString($className.'_b'));
 
         return $dep->reveal();
     }
@@ -56,12 +57,12 @@ class InheritanceFlatterTest extends TestCase
         $astMap->getClassInherits('classB')->willReturn([]);
         $astMap->getClassInherits('classBaum')->willReturn([]);
         $astMap->getClassInherits('classWeihnachtsbaum')->willReturn([
-            AstInherit::newTraitUse('classBaum', new FileOccurrence(new AstFileReference('classWeihnachtsbaum.php'), 3)),
+            AstInherit::newTraitUse(ClassLikeName::fromString('classBaum'), new FileOccurrence(new AstFileReference('classWeihnachtsbaum.php'), 3)),
         ]);
         $astMap->getClassInherits('classGeschmückterWeihnachtsbaum')->willReturn([
-            AstMap\AstInherit::newExtends('classBaum', new FileOccurrence(new AstFileReference('classGeschmückterWeihnachtsbaum.php'), 3))
+            AstMap\AstInherit::newExtends(ClassLikeName::fromString('classBaum'), new FileOccurrence(new AstFileReference('classGeschmückterWeihnachtsbaum.php'), 3))
                 ->withPath([
-                    AstInherit::newTraitUse('classWeihnachtsbaum', new FileOccurrence(new AstFileReference('classBaum.php'), 3)),
+                    AstInherit::newTraitUse(ClassLikeName::fromString('classWeihnachtsbaum'), new FileOccurrence(new AstFileReference('classBaum.php'), 3)),
                 ]),
         ]);
 

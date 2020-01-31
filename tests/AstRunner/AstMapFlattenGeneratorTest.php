@@ -6,6 +6,7 @@ namespace Tests\SensioLabs\Deptrac\AstRunner;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
@@ -53,7 +54,7 @@ class AstMapFlattenGeneratorTest extends TestCase
     private function getInheritedInherits(string $class, AstMap $astMap): array
     {
         $inherits = [];
-        foreach ($astMap->getClassInherits($class) as $v) {
+        foreach ($astMap->getClassInherits(ClassLikeName::fromString($class)) as $v) {
             if (count($v->getPath()) > 0) {
                 $inherits[] = (string) $v;
             }

@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\MethodCollector;
 use SensioLabs\Deptrac\Collector\Registry;
@@ -54,7 +55,7 @@ class MethodCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, array $methods, bool $expected): void
     {
-        $astClassReference = new AstClassReference('foo');
+        $astClassReference = new AstClassReference(ClassLikeName::fromString('foo'));
 
         $classLike = $this->createMock(Node\Stmt\ClassLike::class);
         $classLike->method('getMethods')->willReturn($methods);
@@ -77,7 +78,7 @@ class MethodCollectorTest extends TestCase
 
     public function testClassLikeAstNotFoundDoesNotSatisfy(): void
     {
-        $astClassReference = new AstClassReference('foo');
+        $astClassReference = new AstClassReference(ClassLikeName::fromString('foo'));
         $parser = $this->createMock(NikicPhpParser::class);
         $parser
             ->method('getAstForClassReference')
@@ -96,7 +97,7 @@ class MethodCollectorTest extends TestCase
 
     public function testMissingNameThrowsException(): void
     {
-        $astClassReference = new AstClassReference('foo');
+        $astClassReference = new AstClassReference(ClassLikeName::fromString('foo'));
         $parser = $this->createMock(NikicPhpParser::class);
 
         $this->expectException(\LogicException::class);

@@ -23,7 +23,7 @@ class BasicDependencyEmitterTest extends TestCase
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        static::assertCount(18, $deps);
+        static::assertCount(15, $deps);
         static::assertContains('Foo\Bar:4 on SomeUse', $deps);
         static::assertContains('Foo\Bar:10 on Foo\SomeParam', $deps);
         static::assertContains('Foo\Bar:10 on Foo\SomeClass', $deps);
@@ -37,10 +37,6 @@ class BasicDependencyEmitterTest extends TestCase
         static::assertContains('Foo\Bar:30 on Foo\SomeClass', $deps);
         static::assertContains('Foo\Bar:32 on Foo\SomeClass', $deps);
         static::assertContains('Foo\Bar:36 on Foo\string2', $deps);
-        static::assertContains('Foo\Bar:38 on string', $deps);
-        static::assertContains('Foo\Bar:40 on string', $deps);
         static::assertContains('Foo\Bar:42 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:44 on self', $deps);
-        static::assertContains('Foo\Bar:46 on self', $deps);
     }
 }

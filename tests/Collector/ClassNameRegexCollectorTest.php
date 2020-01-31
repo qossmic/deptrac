@@ -7,6 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
@@ -30,7 +31,7 @@ class ClassNameRegexCollectorTest extends TestCase
     {
         $stat = (new ClassNameRegexCollector())->satisfy(
             $configuration,
-            new AstClassReference($className),
+            new AstClassReference(ClassLikeName::fromString($className)),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );
@@ -44,7 +45,7 @@ class ClassNameRegexCollectorTest extends TestCase
 
         (new ClassNameRegexCollector())->satisfy(
             ['Foo' => 'a'],
-            $this->prophesize(AstClassReference::class)->reveal(),
+            new AstClassReference(ClassLikeName::fromString('Foo')),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );

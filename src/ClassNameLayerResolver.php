@@ -6,6 +6,7 @@ namespace SensioLabs\Deptrac;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
@@ -29,7 +30,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     /**
      * @return string[]
      */
-    public function getLayersByClassName(string $className): array
+    public function getLayersByClassName(ClassLikeName $className): array
     {
         /** @var array<string, bool> $layers */
         $layers = [];

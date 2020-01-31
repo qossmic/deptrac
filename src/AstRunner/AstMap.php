@@ -7,6 +7,7 @@ namespace SensioLabs\Deptrac\AstRunner;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 
 class AstMap
 {
@@ -46,15 +47,15 @@ class AstMap
         return $this->astFileReferences;
     }
 
-    public function getClassReferenceByClassName(string $className): ?AstClassReference
+    public function getClassReferenceByClassName(ClassLikeName $className): ?AstClassReference
     {
-        return $this->astClassReferences[$className] ?? null;
+        return $this->astClassReferences[(string) $className] ?? null;
     }
 
     /**
      * @return AstInherit[]|iterable
      */
-    public function getClassInherits(string $className): iterable
+    public function getClassInherits(ClassLikeName $className): iterable
     {
         $classReference = $this->getClassReferenceByClassName($className);
 
@@ -85,7 +86,9 @@ class AstMap
             $path->push($inheritDependency);
         }
 
-        if (isset($alreadyResolved[$inheritDependency->getClassName()])) {
+        $className = (string) $inheritDependency->getClassName();
+
+        if (isset($alreadyResolved[$className])) {
             $path->pop();
 
             return [];
@@ -98,7 +101,7 @@ class AstMap
         }
 
         foreach ($classReference->getInherits() as $inherit) {
-            $alreadyResolved[$inheritDependency->getClassName()] = true;
+            $alreadyResolved[$className] = true;
 
             yield $inherit->withPath(iterator_to_array($path));
 
@@ -106,14 +109,14 @@ class AstMap
 
             yield from $this->resolveDepsRecursive($inherit, $alreadyResolved, $path);
 
-            unset($alreadyResolved[$inheritDependency->getClassName()]);
+            unset($alreadyResolved[$className]);
             $path->pop();
         }
     }
 
     private function addAstClassReference(AstClassReference $astClassReference): void
     {
-        $this->astClassReferences[$astClassReference->getClassName()] = $astClassReference;
+        $this->astClassReferences[(string) $astClassReference->getClassName()] = $astClassReference;
     }
 
     private function addAstFileReference(AstFileReference $astFileReference): void

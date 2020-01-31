@@ -8,11 +8,12 @@ use PhpParser\Node;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class AnonymousClassResolver implements ClassDependencyResolver
 {
-    public function processNode(Node $node, AstFileReference $astFileReference, AstClassReference $astClassReference): void
+    public function processNode(Node $node, AstFileReference $astFileReference, AstClassReference $astClassReference, NameScope $nameScope): void
     {
         if (!$node instanceof Node\Stmt\Class_ || null !== $node->name) {
             return;
@@ -21,7 +22,7 @@ class AnonymousClassResolver implements ClassDependencyResolver
         if ($node->extends instanceof Node\Name) {
             $astClassReference->addDependency(
                 AstDependency::anonymousClassExtends(
-                    $node->extends->toString(),
+                    ClassLikeName::fromString($node->extends->toString()),
                     new FileOccurrence($astFileReference, $node->extends->getLine())
                 )
             );
@@ -29,7 +30,7 @@ class AnonymousClassResolver implements ClassDependencyResolver
         foreach ($node->implements as $implement) {
             $astClassReference->addDependency(
                 AstDependency::anonymousClassImplements(
-                    $implement->toString(),
+                    ClassLikeName::fromString($implement->toString()),
                     new FileOccurrence($astFileReference, $implement->getLine())
                 )
             );

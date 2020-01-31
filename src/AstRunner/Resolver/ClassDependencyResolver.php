@@ -10,5 +10,5 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
 interface ClassDependencyResolver
 {
-    public function processNode(Node $node, AstFileReference $fileReference, AstClassReference $astClassReference): void;
+    public function processNode(Node $node, AstFileReference $fileReference, AstClassReference $astClassReference, NameScope $nameScope): void;
 }

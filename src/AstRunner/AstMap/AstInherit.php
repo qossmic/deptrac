@@ -17,7 +17,7 @@ class AstInherit
     /** @var AstInherit[] */
     private $path;
 
-    private function __construct(string $className, FileOccurrence $fileOccurrence, int $type)
+    private function __construct(ClassLikeName $className, FileOccurrence $fileOccurrence, int $type)
     {
         $this->className = $className;
         $this->fileOccurrence = $fileOccurrence;
@@ -25,17 +25,17 @@ class AstInherit
         $this->path = [];
     }
 
-    public static function newExtends(string $className, FileOccurrence $fileOccurrence): self
+    public static function newExtends(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
         return new self($className, $fileOccurrence, static::TYPE_EXTENDS);
     }
 
-    public static function newImplements(string $className, FileOccurrence $fileOccurrence): self
+    public static function newImplements(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
         return new self($className, $fileOccurrence, static::TYPE_IMPLEMENTS);
     }
 
-    public static function newTraitUse(string $className, FileOccurrence $fileOccurrence): self
+    public static function newTraitUse(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
         return new self($className, $fileOccurrence, static::TYPE_USES);
     }
@@ -70,7 +70,7 @@ class AstInherit
         return $description.' (path: '.rtrim($buffer, ' -> ').')';
     }
 
-    public function getClassName(): string
+    public function getClassName(): ClassLikeName
     {
         return $this->className;
     }

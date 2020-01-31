@@ -34,7 +34,11 @@
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver"/>
         </service>
 
-        <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver"/>
+        <service id="SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver"/>
+
+        <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver">
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver"/>
+        </service>
 
         <service id="SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver"/>
 

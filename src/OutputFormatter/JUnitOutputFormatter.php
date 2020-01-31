@@ -107,7 +107,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
-                $rulesByClassName[$rule->getDependency()->getClassA()][] = $rule;
+                $rulesByClassName[(string) $rule->getDependency()->getClassA()][] = $rule;
             }
 
             $testSuite = $xmlDoc->createElement('testsuite');

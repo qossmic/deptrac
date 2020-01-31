@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Dependency;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
+
 class Result
 {
     /** @var array<string, Dependency[]> */
@@ -14,22 +16,24 @@ class Result
 
     public function addDependency(Dependency $dependency): self
     {
-        if (!isset($this->dependencies[$dependency->getClassA()])) {
-            $this->dependencies[$dependency->getClassA()] = [];
+        $classLikeName = (string) $dependency->getClassA();
+        if (!isset($this->dependencies[$classLikeName])) {
+            $this->dependencies[$classLikeName] = [];
         }
 
-        $this->dependencies[$dependency->getClassA()][] = $dependency;
+        $this->dependencies[$classLikeName][] = $dependency;
 
         return $this;
     }
 
     public function addInheritDependency(InheritDependency $dependency): self
     {
-        if (!isset($this->inheritDependencies[$dependency->getClassA()])) {
-            $this->inheritDependencies[$dependency->getClassA()] = [];
+        $classLikeName = (string) $dependency->getClassA();
+        if (!isset($this->inheritDependencies[$classLikeName])) {
+            $this->inheritDependencies[$classLikeName] = [];
         }
 
-        $this->inheritDependencies[$dependency->getClassA()][] = $dependency;
+        $this->inheritDependencies[$classLikeName][] = $dependency;
 
         return $this;
     }
@@ -37,9 +41,9 @@ class Result
     /**
      * @return Dependency[]
      */
-    public function getDependenciesByClass(string $className): array
+    public function getDependenciesByClass(ClassLikeName $className): array
     {
-        return $this->dependencies[$className] ?? [];
+        return $this->dependencies[(string) $className] ?? [];
     }
 
     /**

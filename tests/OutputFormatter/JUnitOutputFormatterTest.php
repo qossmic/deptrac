@@ -7,6 +7,7 @@ namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
@@ -35,17 +36,24 @@ class JUnitOutputFormatterTest extends TestCase
 
     public function basicDataProvider(): iterable
     {
+        $originalA = ClassLikeName::fromString('OriginalA');
+        $originalB = ClassLikeName::fromString('OriginalB');
+        $classInheritA = ClassLikeName::fromString('ClassInheritA');
+        $classInheritB = ClassLikeName::fromString('ClassInheritB');
+        $classInheritC = ClassLikeName::fromString('ClassInheritC');
+        $classInheritD = ClassLikeName::fromString('ClassInheritD');
+
         yield [
             [
                 new Violation(
                     new InheritDependency(
-                        'ClassA',
-                        'ClassB',
-                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
-                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
-                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('foo.php'), 4)),
-                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('foo.php'), 5)),
-                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('foo.php'), 6)),
+                        ClassLikeName::fromString('ClassA'),
+                        ClassLikeName::fromString('ClassB'),
+                        new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                        AstInherit::newExtends($classInheritA, new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
+                            AstInherit::newExtends($classInheritB, new FileOccurrence(new AstFileReference('foo.php'), 4)),
+                            AstInherit::newExtends($classInheritC, new FileOccurrence(new AstFileReference('foo.php'), 5)),
+                            AstInherit::newExtends($classInheritD, new FileOccurrence(new AstFileReference('foo.php'), 6)),
                         ])
                     ),
                     'LayerA',
@@ -58,7 +66,7 @@ class JUnitOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
                     'LayerA',
                     'LayerB'
                 ),
@@ -75,13 +83,13 @@ class JUnitOutputFormatterTest extends TestCase
             [
                 new SkippedViolation(
                     new InheritDependency(
-                        'ClassA',
-                        'ClassB',
-                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
-                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
-                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('foo.php'), 4)),
-                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('foo.php'), 5)),
-                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('foo.php'), 6)),
+                        ClassLikeName::fromString('ClassA'),
+                        ClassLikeName::fromString('ClassB'),
+                        new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                        AstInherit::newExtends($classInheritA, new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
+                            AstInherit::newExtends($classInheritB, new FileOccurrence(new AstFileReference('foo.php'), 4)),
+                            AstInherit::newExtends($classInheritC, new FileOccurrence(new AstFileReference('foo.php'), 5)),
+                            AstInherit::newExtends($classInheritD, new FileOccurrence(new AstFileReference('foo.php'), 6)),
                         ])
                     ),
                     'LayerA',
@@ -89,13 +97,13 @@ class JUnitOutputFormatterTest extends TestCase
                 ),
                 new Violation(
                     new InheritDependency(
-                        'ClassC',
-                        'ClassD',
-                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
-                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
-                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('foo.php'), 4)),
-                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('foo.php'), 5)),
-                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('foo.php'), 6)),
+                        ClassLikeName::fromString('ClassC'),
+                        ClassLikeName::fromString('ClassD'),
+                        new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                        AstInherit::newExtends($classInheritA, new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
+                            AstInherit::newExtends($classInheritB, new FileOccurrence(new AstFileReference('foo.php'), 4)),
+                            AstInherit::newExtends($classInheritC, new FileOccurrence(new AstFileReference('foo.php'), 5)),
+                            AstInherit::newExtends($classInheritD, new FileOccurrence(new AstFileReference('foo.php'), 6)),
                         ])
                     ),
                     'LayerA',

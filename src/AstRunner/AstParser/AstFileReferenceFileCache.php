@@ -8,6 +8,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Console\Application;
 
@@ -113,6 +114,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
                             AstClassReference::class,
                             AstInherit::class,
                             AstDependency::class,
+                            ClassLikeName::class,
                             FileOccurrence::class,
                         ],
                     ]

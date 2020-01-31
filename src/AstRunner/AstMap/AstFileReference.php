@@ -21,7 +21,7 @@ class AstFileReference
         $this->dependencies = [];
     }
 
-    public function addClassReference(string $className): AstClassReference
+    public function addClassReference(ClassLikeName $className): AstClassReference
     {
         $astClassReference = new AstClassReference($className, $this);
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
+
 class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInterface
 {
     private $classNameLayerResolver;
@@ -19,13 +21,13 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
         $this->classNameLayerResolver = $classNameLayerResolver;
     }
 
-    public function getLayersByClassName(string $className): array
+    public function getLayersByClassName(ClassLikeName $className): array
     {
-        if (!isset($this->layerNamesByClassCache[$className])) {
-            $this->layerNamesByClassCache[$className] = $this->classNameLayerResolver->getLayersByClassName($className);
+        if (!isset($this->layerNamesByClassCache[(string) $className])) {
+            $this->layerNamesByClassCache[(string) $className] = $this->classNameLayerResolver->getLayersByClassName($className);
         }
 
-        return $this->layerNamesByClassCache[$className];
+        return $this->layerNamesByClassCache[(string) $className];
     }
 
     public function getLayers(): array

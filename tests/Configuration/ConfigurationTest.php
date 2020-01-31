@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\Configuration;
 
 class ConfigurationTest extends TestCase
@@ -94,7 +95,7 @@ class ConfigurationTest extends TestCase
             ],
         ]);
 
-        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped('FooClass', 'BarClass'));
-        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped('FooClass', 'AnotherClass'));
+        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromString('FooClass'), ClassLikeName::fromString('BarClass')));
+        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromString('FooClass'), ClassLikeName::fromString('AnotherClass')));
     }
 }

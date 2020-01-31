@@ -34,7 +34,7 @@ class ClassConstantResolverTest extends TestCase
         $dependencies = $astClassReferences[1]->getDependencies();
         static::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\ClassA',
-            $dependencies[0]->getClass()
+            (string) $dependencies[0]->getClassLikeName()
         );
         static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilenpath());
         static::assertSame(15, $dependencies[0]->getFileOccurrence()->getLine());

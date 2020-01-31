@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\ClassNameLayerResolver;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\Collector\Registry;
@@ -16,7 +17,7 @@ use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ClassNameLayerResolverTest extends TestCase
 {
-    private function getCollector($return)
+    private function getCollector(bool $return)
     {
         $collector = $this->prophesize(CollectorInterface::class);
         $collector->satisfy(
@@ -99,13 +100,13 @@ class ClassNameLayerResolverTest extends TestCase
         $astMap = $this->prophesize(AstMap::class);
         $collectorRegistry = $this->prophesize(Registry::class);
         $collectorRegistry->getCollector('CollectorA')->willReturn(
-            $this->getCollector($collectA, ['type' => 'CollectorA', 'foo' => 'bar'])
+            $this->getCollector($collectA)
         );
         $collectorRegistry->getCollector('CollectorB1')->willReturn(
-            $this->getCollector($collectB1, ['type' => 'CollectorB', 'foo' => 'bar'])
+            $this->getCollector($collectB1)
         );
         $collectorRegistry->getCollector('CollectorB2')->willReturn(
-            $this->getCollector($collectB2, ['type' => 'CollectorB', 'foo' => 'bar'])
+            $this->getCollector($collectB2)
         );
 
         $resolver = new ClassNameLayerResolver(
@@ -116,7 +117,7 @@ class ClassNameLayerResolverTest extends TestCase
 
         static::assertEquals(
             $expectedLayers,
-            $resolver->getLayersByClassName('classA')
+            $resolver->getLayersByClassName(ClassLikeName::fromString('classA'))
         );
     }
 }

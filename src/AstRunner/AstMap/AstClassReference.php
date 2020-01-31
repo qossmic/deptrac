@@ -15,7 +15,7 @@ class AstClassReference
     /** @var AstInherit[] */
     private $inherits;
 
-    public function __construct(string $className, AstFileReference $fileReference = null)
+    public function __construct(ClassLikeName $className, AstFileReference $fileReference = null)
     {
         $this->className = $className;
         $this->fileReference = $fileReference;
@@ -28,7 +28,7 @@ class AstClassReference
         return $this->fileReference;
     }
 
-    public function getClassName(): string
+    public function getClassName(): ClassLikeName
     {
         return $this->className;
     }

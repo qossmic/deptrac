@@ -7,6 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
@@ -30,7 +31,7 @@ class DirectoryCollectorTest extends TestCase
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
         $fileReference = new AstFileReference($filePath);
-        $astClassReference = $fileReference->addClassReference('Test');
+        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromString('Test'));
 
         $stat = (new DirectoryCollector())->satisfy(
             $configuration,
@@ -45,7 +46,7 @@ class DirectoryCollectorTest extends TestCase
     public function testMissingRegexThrowsException(): void
     {
         $fileReference = new AstFileReference('/some/path/to/file.php');
-        $astClassReference = $fileReference->addClassReference('Test');
+        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromString('Test'));
 
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('DirectoryCollector needs the regex configuration.');
