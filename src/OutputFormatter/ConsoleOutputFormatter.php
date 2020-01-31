@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
+    private const REPORT_UNCOVERED = 'report-uncovered';
+
     public function getName(): string
     {
         return 'console';
@@ -21,7 +23,9 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     public function configureOptions(): array
     {
-        return [];
+        return [
+            OutputFormatterOption::newValueOption(static::REPORT_UNCOVERED, 'report uncovered dependencies', false),
+        ];
     }
 
     public function enabledByDefault(): bool
@@ -39,14 +43,60 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                 continue;
             }
 
-            if ($rule->getDependency() instanceof InheritDependency) {
-                $this->handleInheritDependency($rule, $output);
-                continue;
-            }
-
-            $this->handleDependency($rule, $output);
+            $this->printViolation($rule, $output);
         }
 
+        if (true === $outputFormatterInput->getOptionAsBoolean(static::REPORT_UNCOVERED)) {
+            $this->printUncovered($context, $output);
+        }
+
+        $this->printSummary($context, $output);
+    }
+
+    /**
+     * @param Violation|SkippedViolation $rule
+     */
+    private function printViolation(Rule $rule, OutputInterface $output): void
+    {
+        $dependency = $rule->getDependency();
+
+        $output->writeln(
+            sprintf(
+                '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
+                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
+                $dependency->getClassLikeNameA()->toString(),
+                $dependency->getClassLikeNameB()->toString(),
+                $rule->getLayerA(),
+                $rule->getLayerB()
+            )
+        );
+        $this->printFileOccurrence($output, $dependency->getFileOccurrence());
+
+        if ($dependency instanceof InheritDependency) {
+            $this->printInheritPath($output, $dependency);
+        }
+    }
+
+    private function printInheritPath(OutputInterface $output, InheritDependency $dependency): void
+    {
+        $buffer = [];
+        $astInherit = $dependency->getInheritPath();
+        foreach ($astInherit->getPath() as $p) {
+            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+        }
+
+        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf(
+            "\t%s::%d",
+            $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
+            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+        );
+
+        $output->writeln(implode(" -> \n", $buffer));
+    }
+
+    private function printSummary(Context $context, OutputInterface $output): void
+    {
         $violationCount = \count($context->violations());
         $skippedViolationCount = \count($context->skippedViolations());
         $uncoveredCount = \count($context->uncovered());
@@ -78,61 +128,34 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $output->writeln(sprintf('<info>Allowed: %d</info>', $allowedCount));
     }
 
-    /**
-     * @param Violation|SkippedViolation $rule
-     */
-    private function handleInheritDependency(Rule $rule, OutputInterface $output): void
+    private function printUncovered(Context $context, OutputInterface $output): void
     {
-        /** @var InheritDependency $dependency */
-        $dependency = $rule->getDependency();
-
-        $output->writeln(
-            sprintf(
-                "%s<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
-                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getClassLikeNameA()->toString(),
-                $dependency->getClassLikeNameB()->toString(),
-                $rule->getLayerA(),
-                $rule->getLayerB(),
-                $this->formatPath($dependency->getInheritPath(), $dependency)
-            )
-        );
-    }
-
-    /**
-     * @param Violation|SkippedViolation $rule
-     */
-    private function handleDependency(Rule $rule, OutputInterface $output): void
-    {
-        $dependency = $rule->getDependency();
-
-        $output->writeln(
-            sprintf(
-                '%s<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
-                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getClassLikeNameA()->toString(),
-                $dependency->getFileOccurrence()->getLine(),
-                $dependency->getClassLikeNameB()->toString(),
-                $rule->getLayerA(),
-                $rule->getLayerB()
-            )
-        );
-    }
-
-    private function formatPath(AstInherit $astInherit, InheritDependency $dependency): string
-    {
-        $buffer = [];
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+        $uncovered = $context->uncovered();
+        if ([] === $uncovered) {
+            return;
         }
 
-        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
-        $buffer[] = sprintf(
-            "\t%s::%d",
-            $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
-        );
+        $output->writeln('<comment>Uncovered dependencies:</comment>');
+        foreach ($uncovered as $u) {
+            $dependency = $u->getDependency();
+            $output->writeln(
+                sprintf(
+                    '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
+                    $dependency->getClassLikeNameA()->toString(),
+                    $dependency->getClassLikeNameB()->toString(),
+                    $u->getLayer()
+                )
+            );
+            $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
-        return implode(" -> \n", $buffer);
+            if ($dependency instanceof InheritDependency) {
+                $this->printInheritPath($output, $dependency);
+            }
+        }
+    }
+
+    private function printFileOccurrence(OutputInterface $output, FileOccurrence $fileOccurrence): void
+    {
+        $output->writeln($fileOccurrence->getFilenpath().'::'.$fileOccurrence->getLine());
     }
 }

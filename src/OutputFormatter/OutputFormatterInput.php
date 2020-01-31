@@ -32,4 +32,9 @@ class OutputFormatterInput
 
         return $this->options[$name];
     }
+
+    public function getOptionAsBoolean(string $name): bool
+    {
+        return true === filter_var($this->getOption($name), FILTER_VALIDATE_BOOLEAN);
+    }
 }

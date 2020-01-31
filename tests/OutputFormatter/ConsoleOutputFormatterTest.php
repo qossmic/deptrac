@@ -50,6 +50,7 @@ class ConsoleOutputFormatterTest extends TestCase
             ],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
+                originalA.php::12
                 ClassInheritD::6 ->
                 ClassInheritC::5 ->
                 ClassInheritB::4 ->
@@ -73,7 +74,8 @@ class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             '
-                OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
+                OriginalA must not depend on OriginalB (LayerA on LayerB)
+                originalA.php::12
 
                 Report:
                 Violations: 1
@@ -103,7 +105,8 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            '[SKIPPED] OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
+            '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
+            originalA.php::12
             
             Report:
             Violations: 0
@@ -125,7 +128,7 @@ class ConsoleOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $output,
-            new OutputFormatterInput([])
+            new OutputFormatterInput(['report-uncovered' => false])
         );
 
         $o = $output->fetch();
@@ -137,7 +140,7 @@ class ConsoleOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        static::assertCount(0, (new ConsoleOutputFormatter())->configureOptions());
+        static::assertCount(1, (new ConsoleOutputFormatter())->configureOptions());
     }
 
     private function normalize($str)
