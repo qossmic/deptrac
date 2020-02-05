@@ -10,7 +10,7 @@ class AstInherit
     private const TYPE_IMPLEMENTS = 2;
     private const TYPE_USES = 3;
 
-    private $className;
+    private $classLikeName;
     private $fileOccurrence;
     private $type;
 
@@ -19,7 +19,7 @@ class AstInherit
 
     private function __construct(ClassLikeName $className, FileOccurrence $fileOccurrence, int $type)
     {
-        $this->className = $className;
+        $this->classLikeName = $className;
         $this->fileOccurrence = $fileOccurrence;
         $this->type = $type;
         $this->path = [];
@@ -56,7 +56,7 @@ class AstInherit
                 $type = 'Unknown';
         }
 
-        $description = "{$this->className}::{$this->fileOccurrence->getLine()} ($type)";
+        $description = "{$this->classLikeName->toString()}::{$this->fileOccurrence->getLine()} ($type)";
 
         if (0 === count($this->path)) {
             return $description;
@@ -70,9 +70,9 @@ class AstInherit
         return $description.' (path: '.rtrim($buffer, ' -> ').')';
     }
 
-    public function getClassName(): ClassLikeName
+    public function getClassLikeName(): ClassLikeName
     {
-        return $this->className;
+        return $this->classLikeName;
     }
 
     public function getFileOccurrence(): FileOccurrence

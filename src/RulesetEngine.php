@@ -25,12 +25,12 @@ class RulesetEngine
         $configurationSkippedViolation = $configuration->getSkipViolations();
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassA());
+            $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameA());
 
             foreach ($layerNames as $layerName) {
                 $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
 
-                $layersNamesClassB = $classNameLayerResolver->getLayersByClassName($dependency->getClassB());
+                $layersNamesClassB = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameB());
 
                 if (0 === count($layersNamesClassB)) {
                     $rules[] = new Uncovered($dependency, $layerName);
@@ -47,7 +47,7 @@ class RulesetEngine
                         continue;
                     }
 
-                    if ($configurationSkippedViolation->isViolationSkipped($dependency->getClassA(), $dependency->getClassB())) {
+                    if ($configurationSkippedViolation->isViolationSkipped($dependency->getClassLikeNameA(), $dependency->getClassLikeNameB())) {
                         $rules[] = new SkippedViolation($dependency, $layerName, $layerNameOfDependency);
                         continue;
                     }

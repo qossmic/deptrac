@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
-class FileOccurrence
+final class FileOccurrence
 {
     /**
      * @var AstFileReference

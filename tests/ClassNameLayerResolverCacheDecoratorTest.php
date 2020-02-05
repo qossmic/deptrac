@@ -13,7 +13,7 @@ class ClassNameLayerResolverCacheDecoratorTest extends TestCase
 {
     public function testGetLayersByClassName(): void
     {
-        $classLikeName = ClassLikeName::fromString('foo');
+        $classLikeName = ClassLikeName::fromFQCN('foo');
         $decorated = $this->prophesize(ClassNameLayerResolverInterface::class);
         $decorated->getLayersByClassName($classLikeName)->willReturn(['bar']);
 

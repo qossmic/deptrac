@@ -30,12 +30,9 @@ final class ConfigurationSkippedViolation
         $this->classesDeps = $classesDeps;
     }
 
-    public function isViolationSkipped(ClassLikeName $classA, ClassLikeName $classB): bool
+    public function isViolationSkipped(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB): bool
     {
-        $classLikeNameA = (string) $classA;
-        $classLikeNameB = (string) $classB;
-
-        return isset($this->classesDeps[$classLikeNameA])
-            && \in_array($classLikeNameB, $this->classesDeps[$classLikeNameA], true);
+        return isset($this->classesDeps[$classLikeNameA->toString()])
+            && \in_array($classLikeNameB->toString(), $this->classesDeps[$classLikeNameA->toString()], true);
     }
 }

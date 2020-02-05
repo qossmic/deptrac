@@ -20,8 +20,8 @@ class RulesetEngineTest extends TestCase
     {
         foreach ($fromTo as $from => $to) {
             yield new Dependency(
-                ClassLikeName::fromString($from),
-                ClassLikeName::fromString($to),
+                ClassLikeName::fromFQCN($from),
+                ClassLikeName::fromFQCN($to),
                 new FileOccurrence(new AstFileReference('foo.php'), 0)
             );
         }
@@ -154,7 +154,7 @@ class RulesetEngineTest extends TestCase
 
         $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromString($classInLayer))->willReturn($layers);
+            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([
@@ -221,7 +221,7 @@ class RulesetEngineTest extends TestCase
 
         $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromString($classInLayer))->willReturn($layers);
+            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([

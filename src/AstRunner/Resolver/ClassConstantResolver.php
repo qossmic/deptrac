@@ -16,6 +16,6 @@ class ClassConstantResolver implements ClassDependencyResolver
             return;
         }
 
-        $classReferenceBuilder->constFetch($node->class->toString(), $node->class->getLine());
+        $classReferenceBuilder->constFetch($node->class->toCodeString(), $node->class->getLine());
     }
 }

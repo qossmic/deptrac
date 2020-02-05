@@ -14,10 +14,10 @@ class DependencyTest extends TestCase
 {
     public function testGetSet(): void
     {
-        $dependency = new Dependency(ClassLikeName::fromString('a'), ClassLikeName::fromString('b'), new FileOccurrence(new AstFileReference('/foo.php'), 23));
-        static::assertEquals('a', $dependency->getClassA());
-        static::assertEquals('/foo.php', $dependency->getFileOccurrence()->getFilenpath());
-        static::assertEquals(23, $dependency->getFileOccurrence()->getLine());
-        static::assertEquals('b', $dependency->getClassB());
+        $dependency = new Dependency(ClassLikeName::fromFQCN('a'), ClassLikeName::fromFQCN('b'), new FileOccurrence(new AstFileReference('/foo.php'), 23));
+        static::assertSame('a', $dependency->getClassLikeNameA()->toString());
+        static::assertSame('/foo.php', $dependency->getFileOccurrence()->getFilenpath());
+        static::assertSame(23, $dependency->getFileOccurrence()->getLine());
+        static::assertSame('b', $dependency->getClassLikeNameB()->toString());
     }
 }

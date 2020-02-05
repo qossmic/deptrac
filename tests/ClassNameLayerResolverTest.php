@@ -117,7 +117,7 @@ class ClassNameLayerResolverTest extends TestCase
 
         static::assertEquals(
             $expectedLayers,
-            $resolver->getLayersByClassName(ClassLikeName::fromString('classA'))
+            $resolver->getLayersByClassName(ClassLikeName::fromFQCN('classA'))
         );
     }
 }

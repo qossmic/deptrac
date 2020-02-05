@@ -23,11 +23,11 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
 
     public function getLayersByClassName(ClassLikeName $className): array
     {
-        if (!isset($this->layerNamesByClassCache[(string) $className])) {
-            $this->layerNamesByClassCache[(string) $className] = $this->classNameLayerResolver->getLayersByClassName($className);
+        if (!isset($this->layerNamesByClassCache[$className->toString()])) {
+            $this->layerNamesByClassCache[$className->toString()] = $this->classNameLayerResolver->getLayersByClassName($className);
         }
 
-        return $this->layerNamesByClassCache[(string) $className];
+        return $this->layerNamesByClassCache[$className->toString()];
     }
 
     public function getLayers(): array

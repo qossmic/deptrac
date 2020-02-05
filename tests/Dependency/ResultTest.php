@@ -17,9 +17,9 @@ class ResultTest extends TestCase
 {
     public function testAddDependency(): void
     {
-        $classA = ClassLikeName::fromString('A');
-        $classB = ClassLikeName::fromString('B');
-        $classC = ClassLikeName::fromString('C');
+        $classA = ClassLikeName::fromFQCN('A');
+        $classB = ClassLikeName::fromFQCN('B');
+        $classC = ClassLikeName::fromFQCN('C');
 
         $dependencyResult = new Result();
         $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence(new AstFileReference('a.php'), 12)));
@@ -33,8 +33,8 @@ class ResultTest extends TestCase
 
     public function testGetDependenciesAndInheritDependencies(): void
     {
-        $classA = ClassLikeName::fromString('A');
-        $classB = ClassLikeName::fromString('B');
+        $classA = ClassLikeName::fromFQCN('A');
+        $classB = ClassLikeName::fromFQCN('B');
 
         $dependencyResult = new Result();
         $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence(new AstFileReference('a.php'), 12)));

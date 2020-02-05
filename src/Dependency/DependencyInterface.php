@@ -9,9 +9,9 @@ use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 interface DependencyInterface
 {
-    public function getClassA(): ClassLikeName;
+    public function getClassLikeNameA(): ClassLikeName;
 
-    public function getClassB(): ClassLikeName;
+    public function getClassLikeNameB(): ClassLikeName;
 
     public function getFileOccurrence(): FileOccurrence;
 }

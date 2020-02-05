@@ -9,25 +9,25 @@ use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class Dependency implements DependencyInterface
 {
-    private $classB;
-    private $classA;
+    private $classLikeNameB;
+    private $classLikeNameA;
     private $fileOccurrence;
 
-    public function __construct(ClassLikeName $classA, ClassLikeName $classB, FileOccurrence $fileOccurrence)
+    public function __construct(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB, FileOccurrence $fileOccurrence)
     {
-        $this->classA = $classA;
-        $this->classB = $classB;
+        $this->classLikeNameA = $classLikeNameA;
+        $this->classLikeNameB = $classLikeNameB;
         $this->fileOccurrence = $fileOccurrence;
     }
 
-    public function getClassA(): ClassLikeName
+    public function getClassLikeNameA(): ClassLikeName
     {
-        return $this->classA;
+        return $this->classLikeNameA;
     }
 
-    public function getClassB(): ClassLikeName
+    public function getClassLikeNameB(): ClassLikeName
     {
-        return $this->classB;
+        return $this->classLikeNameB;
     }
 
     public function getFileOccurrence(): FileOccurrence

@@ -35,7 +35,7 @@ class AnnotationDependencyResolverTest extends TestCase
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
-            (string) $annotationDependency[0]->getClassLikeName()
+            $annotationDependency[0]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $annotationDependency[0]->getFileOccurrence()->getFilenpath());
         static::assertSame(9, $annotationDependency[0]->getFileOccurrence()->getLine());
@@ -43,7 +43,7 @@ class AnnotationDependencyResolverTest extends TestCase
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
-            (string) $annotationDependency[1]->getClassLikeName()
+            $annotationDependency[1]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $annotationDependency[1]->getFileOccurrence()->getFilenpath());
         static::assertSame(23, $annotationDependency[1]->getFileOccurrence()->getLine());
@@ -51,7 +51,7 @@ class AnnotationDependencyResolverTest extends TestCase
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
-            (string) $annotationDependency[2]->getClassLikeName()
+            $annotationDependency[2]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $annotationDependency[2]->getFileOccurrence()->getFilenpath());
         static::assertSame(26, $annotationDependency[2]->getFileOccurrence()->getLine());
@@ -59,7 +59,7 @@ class AnnotationDependencyResolverTest extends TestCase
 
         static::assertSame(
             'Symfony\Component\Console\Exception\RuntimeException',
-            (string) $annotationDependency[3]->getClassLikeName()
+            $annotationDependency[3]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $annotationDependency[3]->getFileOccurrence()->getFilenpath());
         static::assertSame(29, $annotationDependency[3]->getFileOccurrence()->getLine());
@@ -67,7 +67,7 @@ class AnnotationDependencyResolverTest extends TestCase
 
         static::assertSame(
             'Symfony\Component\Finder\SplFileInfo',
-            (string) $annotationDependency[4]->getClassLikeName()
+            $annotationDependency[4]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $annotationDependency[4]->getFileOccurrence()->getFilenpath());
         static::assertSame(14, $annotationDependency[4]->getFileOccurrence()->getLine());
@@ -75,7 +75,7 @@ class AnnotationDependencyResolverTest extends TestCase
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
-            (string) $annotationDependency[5]->getClassLikeName()
+            $annotationDependency[5]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $annotationDependency[5]->getFileOccurrence()->getFilenpath());
         static::assertSame(14, $annotationDependency[5]->getFileOccurrence()->getLine());

@@ -45,7 +45,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 
                 if ($collector->satisfy(
                     $configurationCollector->getArgs(),
-                    clone $astClassReference,
+                    $astClassReference,
                     $this->astMap,
                     $this->collectorRegistry
                 )) {

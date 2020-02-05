@@ -23,16 +23,16 @@ class ConfigurationSkippedViolationTest extends TestCase
                 'DependencyClass2',
             ],
         ]);
-        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromString('ClassWithOneDep'), ClassLikeName::fromString('DependencyClass')));
-        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromString('ClassWithEmptyDeps'), ClassLikeName::fromString('DependencyClass')));
-        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromString('ClassWithMultipleDeps'), ClassLikeName::fromString('DependencyClass1')));
-        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromString('ClassWithMultipleDeps'), ClassLikeName::fromString('DependencyClass2')));
+        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithOneDep'), ClassLikeName::fromFQCN('DependencyClass')));
+        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithEmptyDeps'), ClassLikeName::fromFQCN('DependencyClass')));
+        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass1')));
+        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass2')));
     }
 
     public function testFromArrayWithEmptyArrayAcceptable(): void
     {
         $configuration = ConfigurationSkippedViolation::fromArray([]);
-        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromString('AnyClass'), ClassLikeName::fromString('AnotherAnyClass')));
+        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('AnyClass'), ClassLikeName::fromFQCN('AnotherAnyClass')));
     }
 
     public function testFromArrayRequireOneArgument(): void

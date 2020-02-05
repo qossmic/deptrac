@@ -20,7 +20,7 @@ class InheritanceLevelCollector implements CollectorInterface
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        $classInherits = $astMap->getClassInherits($astClassReference->getClassName());
+        $classInherits = $astMap->getClassInherits($astClassReference->getClassLikeName());
 
         foreach ($classInherits as $classInherit) {
             if (count($classInherit->getPath()) >= $configuration['level']) {

@@ -54,7 +54,7 @@ class AstMapFlattenGeneratorTest extends TestCase
     private function getInheritedInherits(string $class, AstMap $astMap): array
     {
         $inherits = [];
-        foreach ($astMap->getClassInherits(ClassLikeName::fromString($class)) as $v) {
+        foreach ($astMap->getClassInherits(ClassLikeName::fromFQCN($class)) as $v) {
             if (count($v->getPath()) > 0) {
                 $inherits[] = (string) $v;
             }

@@ -27,21 +27,21 @@ class ConsoleOutputFormatterTest extends TestCase
 
     public function basicDataProvider(): iterable
     {
-        $originalA = ClassLikeName::fromString('OriginalA');
-        $originalB = ClassLikeName::fromString('OriginalB');
+        $originalA = ClassLikeName::fromFQCN('OriginalA');
+        $originalB = ClassLikeName::fromFQCN('OriginalB');
 
         yield [
             [
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromString('ClassA'),
-                        ClassLikeName::fromString('ClassB'),
+                        ClassLikeName::fromFQCN('ClassA'),
+                        ClassLikeName::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('originalA.php'), 12)),
-                        AstInherit::newExtends(ClassLikeName::fromString('ClassInheritA'), new FileOccurrence(new AstFileReference('originalA.php'), 3))
+                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), new FileOccurrence(new AstFileReference('originalA.php'), 3))
                             ->withPath([
-                                AstInherit::newExtends(ClassLikeName::fromString('ClassInheritB'), new FileOccurrence(new AstFileReference('originalA.php'), 4)),
-                                AstInherit::newExtends(ClassLikeName::fromString('ClassInheritC'), new FileOccurrence(new AstFileReference('originalA.php'), 5)),
-                                AstInherit::newExtends(ClassLikeName::fromString('ClassInheritD'), new FileOccurrence(new AstFileReference('originalA.php'), 6)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), new FileOccurrence(new AstFileReference('originalA.php'), 4)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), new FileOccurrence(new AstFileReference('originalA.php'), 5)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), new FileOccurrence(new AstFileReference('originalA.php'), 6)),
                             ])
                     ),
                     'LayerA',

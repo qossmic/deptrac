@@ -82,7 +82,7 @@ class NikicPhpParser implements AstParser
 
     public function getAstForClassReference(AstClassReference $classReference): ?Node\Stmt\ClassLike
     {
-        $classLikeName = (string) $classReference->getClassName();
+        $classLikeName = $classReference->getClassLikeName()->toString();
 
         if (isset(self::$classAstMap[$classLikeName])) {
             return self::$classAstMap[$classLikeName];

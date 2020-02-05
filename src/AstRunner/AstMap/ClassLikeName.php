@@ -13,12 +13,12 @@ final class ClassLikeName
 
     private function __construct(string $className)
     {
-        $this->className = ltrim($className, '\\');
+        $this->className = $className;
     }
 
-    public static function fromString(string $className): self
+    public static function fromFQCN(string $className): self
     {
-        return new self($className);
+        return new self(ltrim($className, '\\'));
     }
 
     public function match(string $pattern): bool
@@ -26,7 +26,7 @@ final class ClassLikeName
         return 1 === preg_match($pattern, $this->className);
     }
 
-    public function __toString()
+    public function toString(): string
     {
         return $this->className;
     }

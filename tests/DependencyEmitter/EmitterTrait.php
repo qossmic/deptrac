@@ -29,7 +29,11 @@ trait EmitterTrait
 
         return array_map(
             static function (DependencyInterface $d) {
-                return $d->getClassA().':'.$d->getFileOccurrence()->getLine().' on '.$d->getClassB();
+                return sprintf('%s:%d on %s',
+                    $d->getClassLikeNameA()->toString(),
+                    $d->getFileOccurrence()->getLine(),
+                    $d->getClassLikeNameB()->toString()
+                );
             },
             $result->getDependenciesAndInheritDependencies()
         );

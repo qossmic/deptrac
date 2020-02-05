@@ -31,7 +31,7 @@ class DirectoryCollectorTest extends TestCase
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
         $fileReference = new AstFileReference($filePath);
-        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromString('Test'));
+        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromFQCN('Test'));
 
         $stat = (new DirectoryCollector())->satisfy(
             $configuration,
@@ -46,7 +46,7 @@ class DirectoryCollectorTest extends TestCase
     public function testMissingRegexThrowsException(): void
     {
         $fileReference = new AstFileReference('/some/path/to/file.php');
-        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromString('Test'));
+        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromFQCN('Test'));
 
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('DirectoryCollector needs the regex configuration.');

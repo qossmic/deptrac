@@ -95,7 +95,7 @@ class ConfigurationTest extends TestCase
             ],
         ]);
 
-        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromString('FooClass'), ClassLikeName::fromString('BarClass')));
-        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromString('FooClass'), ClassLikeName::fromString('AnotherClass')));
+        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('BarClass')));
+        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('AnotherClass')));
     }
 }

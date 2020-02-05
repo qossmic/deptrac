@@ -10,22 +10,22 @@ use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class InheritDependency implements DependencyInterface
 {
-    private $classA;
-    private $classB;
+    private $classLikeNameA;
+    private $classLikeNameB;
     private $path;
     private $originalDependency;
 
-    public function __construct(ClassLikeName $classA, ClassLikeName $classB, DependencyInterface $originalDependency, AstInherit $path)
+    public function __construct(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB, DependencyInterface $originalDependency, AstInherit $path)
     {
-        $this->classA = $classA;
-        $this->classB = $classB;
+        $this->classLikeNameA = $classLikeNameA;
+        $this->classLikeNameB = $classLikeNameB;
         $this->originalDependency = $originalDependency;
         $this->path = $path;
     }
 
-    public function getClassA(): ClassLikeName
+    public function getClassLikeNameA(): ClassLikeName
     {
-        return $this->classA;
+        return $this->classLikeNameA;
     }
 
     public function getFileOccurrence(): FileOccurrence
@@ -33,9 +33,9 @@ class InheritDependency implements DependencyInterface
         return $this->getOriginalDependency()->getFileOccurrence();
     }
 
-    public function getClassB(): ClassLikeName
+    public function getClassLikeNameB(): ClassLikeName
     {
-        return $this->classB;
+        return $this->classLikeNameB;
     }
 
     public function getInheritPath(): AstInherit

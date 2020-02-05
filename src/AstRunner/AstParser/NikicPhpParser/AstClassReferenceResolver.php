@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
-use phpDocumentor\Reflection\Types\Context;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
@@ -39,7 +37,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
     public function enterNode(Node $node)
     {
         if ($node instanceof Node\Stmt\Namespace_) {
-            $this->currentTypeContext = new NameScope($node->name ? $node->name->toString() : 'global');
+            $this->currentTypeContext = new NameScope($node->name ? $node->name->toCodeString() : 'global');
         }
 
         if (!$node instanceof Node\Stmt\ClassLike) {
@@ -47,9 +45,9 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         }
 
         if (isset($node->namespacedName) && $node->namespacedName instanceof Node\Name) {
-            $className = $node->namespacedName->toString();
+            $className = $node->namespacedName->toCodeString();
         } elseif ($node->name instanceof Node\Identifier) {
-            $className = $node->name->toString();
+            $className = $node->name->toCodeString();
         } else {
             return null; // map anonymous classes on current class
         }
@@ -62,16 +60,16 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
 
         if ($node instanceof Node\Stmt\Class_) {
             if ($node->extends instanceof Node\Name) {
-                $this->currentClassReferenceBuilder->extends($node->extends->toString(), $node->extends->getLine());
+                $this->currentClassReferenceBuilder->extends($node->extends->toCodeString(), $node->extends->getLine());
             }
             foreach ($node->implements as $implement) {
-                $this->currentClassReferenceBuilder->implements($implement->toString(), $implement->getLine());
+                $this->currentClassReferenceBuilder->implements($implement->toCodeString(), $implement->getLine());
             }
         }
 
         if ($node instanceof Node\Stmt\Interface_) {
             foreach ($node->extends as $extend) {
-                $this->currentClassReferenceBuilder->extends($extend->toString(), $extend->getLine());
+                $this->currentClassReferenceBuilder->extends($extend->toCodeString(), $extend->getLine());
             }
         }
 
@@ -81,10 +79,10 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         if ($node instanceof Node\Stmt\UseUse) {
-            $this->currentTypeContext->addUse($node->name->toString(), $node->getAlias()->toString());
+            $this->currentTypeContext->addUse($node->name->toCodeString(), $node->getAlias()->toString());
             $this->fileReference->addDependency(
                 AstDependency::useStmt(
-                    ClassLikeName::fromString($node->name->toString()),
+                    ClassLikeName::fromFQCN($node->name->toCodeString()),
                     new FileOccurrence($this->fileReference, $node->name->getLine())
                 )
             );
@@ -96,41 +94,41 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
 
         if ($node instanceof Node\Stmt\TraitUse) {
             foreach ($node->traits as $trait) {
-                $this->currentClassReferenceBuilder->trait($trait->toString(), $trait->getLine());
+                $this->currentClassReferenceBuilder->trait($trait->toCodeString(), $trait->getLine());
             }
         }
 
-        if ($node instanceof Node\Expr\Instanceof_ && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReferenceBuilder->instanceof($node->class->toString(), $node->class->getLine());
+        if ($node instanceof Node\Expr\Instanceof_ && $this->isQualifiedType($node->class)) {
+            $this->currentClassReferenceBuilder->instanceof($node->class->toCodeString(), $node->class->getLine());
         }
 
-        if ($node instanceof Node\Param && $this->isQualifiedClassName($node->type)) {
-            $this->currentClassReferenceBuilder->parameter($node->type->toString(), $node->type->getLine());
+        if ($node instanceof Node\Param && $this->isQualifiedType($node->type)) {
+            $this->currentClassReferenceBuilder->parameter($node->type->toCodeString(), $node->type->getLine());
         }
 
-        if ($node instanceof Node\Expr\New_ && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReferenceBuilder->newStatement($node->class->toString(), $node->class->getLine());
+        if ($node instanceof Node\Expr\New_ && $this->isQualifiedType($node->class)) {
+            $this->currentClassReferenceBuilder->newStatement($node->class->toCodeString(), $node->class->getLine());
         }
 
-        if ($node instanceof Node\Expr\StaticPropertyFetch && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReferenceBuilder->staticProperty($node->class->toString(), $node->class->getLine());
+        if ($node instanceof Node\Expr\StaticPropertyFetch && $this->isQualifiedType($node->class)) {
+            $this->currentClassReferenceBuilder->staticProperty($node->class->toCodeString(), $node->class->getLine());
         }
 
-        if ($node instanceof Node\Expr\StaticCall && $this->isQualifiedClassName($node->class)) {
-            $this->currentClassReferenceBuilder->staticMethod($node->class->toString(), $node->class->getLine());
+        if ($node instanceof Node\Expr\StaticCall && $this->isQualifiedType($node->class)) {
+            $this->currentClassReferenceBuilder->staticMethod($node->class->toCodeString(), $node->class->getLine());
         }
 
         if ($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) {
-            if ($this->isQualifiedClassName($node->returnType)) {
-                $this->currentClassReferenceBuilder->returnType($node->returnType->toString(), $node->returnType->getLine());
-            } elseif ($node->returnType instanceof Node\NullableType && $this->isQualifiedClassName($node->returnType->type)) {
-                $this->currentClassReferenceBuilder->returnType($node->returnType->type->toString(), $node->returnType->getLine());
+            if ($this->isQualifiedType($node->returnType)) {
+                $this->currentClassReferenceBuilder->returnType($node->returnType->toCodeString(), $node->returnType->getLine());
+            } elseif ($node->returnType instanceof Node\NullableType && $this->isQualifiedType($node->returnType->type)) {
+                $this->currentClassReferenceBuilder->returnType($node->returnType->type->toCodeString(), $node->returnType->getLine());
             }
         }
 
         if ($node instanceof Node\Stmt\Catch_) {
             foreach ($node->types as $type) {
-                $this->currentClassReferenceBuilder->catchStmt($type->toString(), $type->getLine());
+                $this->currentClassReferenceBuilder->catchStmt($type->toCodeString(), $type->getLine());
             }
         }
 
@@ -150,7 +148,7 @@ class AstClassReferenceResolver extends NodeVisitorAbstract
         return null;
     }
 
-    private function isQualifiedClassName($type): bool
+    private function isQualifiedType($type): bool
     {
         if (null === $type) {
             return false;

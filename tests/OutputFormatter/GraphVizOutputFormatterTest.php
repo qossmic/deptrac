@@ -29,13 +29,13 @@ class GraphVizOutputFormatterTest extends TestCase
         $dotFile = __DIR__.'/data/graphviz.dot';
 
         $fileOccurrenceA = new FileOccurrence(new AstFileReference('classA.php'), 0);
-        $classA = ClassLikeName::fromString('ClassA');
+        $classA = ClassLikeName::fromFQCN('ClassA');
 
         $context = new Context([
-            new Violation(new Dependency($classA, ClassLikeName::fromString('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
-            new Violation(new Dependency(ClassLikeName::fromString('ClassAB'), ClassLikeName::fromString('ClassBA'), new FileOccurrence(new AstFileReference('classAB.php'), 1)), 'LayerA', 'LayerB'),
-            new Allowed(new Dependency($classA, ClassLikeName::fromString('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
-            new Uncovered(new Dependency($classA, ClassLikeName::fromString('ClassD'), $fileOccurrenceA), 'LayerC'),
+            new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
+            new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), new FileOccurrence(new AstFileReference('classAB.php'), 1)), 'LayerA', 'LayerB'),
+            new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
+            new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
         ]);
 
         $output = new BufferedOutput();

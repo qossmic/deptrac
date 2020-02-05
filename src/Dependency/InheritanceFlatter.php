@@ -13,11 +13,11 @@ class InheritanceFlatter
         Result $dependencyResult
     ): void {
         foreach ($astMap->getAstClassReferences() as $classReference) {
-            foreach ($astMap->getClassInherits($classReference->getClassName()) as $inherit) {
-                foreach ($dependencyResult->getDependenciesByClass($inherit->getClassName()) as $dep) {
+            foreach ($astMap->getClassInherits($classReference->getClassLikeName()) as $inherit) {
+                foreach ($dependencyResult->getDependenciesByClass($inherit->getClassLikeName()) as $dep) {
                     $dependencyResult->addInheritDependency(new InheritDependency(
-                        $classReference->getClassName(),
-                        $dep->getClassB(),
+                        $classReference->getClassLikeName(),
+                        $dep->getClassLikeNameB(),
                         $dep,
                         $inherit
                     ));

@@ -36,19 +36,19 @@ class JUnitOutputFormatterTest extends TestCase
 
     public function basicDataProvider(): iterable
     {
-        $originalA = ClassLikeName::fromString('OriginalA');
-        $originalB = ClassLikeName::fromString('OriginalB');
-        $classInheritA = ClassLikeName::fromString('ClassInheritA');
-        $classInheritB = ClassLikeName::fromString('ClassInheritB');
-        $classInheritC = ClassLikeName::fromString('ClassInheritC');
-        $classInheritD = ClassLikeName::fromString('ClassInheritD');
+        $originalA = ClassLikeName::fromFQCN('OriginalA');
+        $originalB = ClassLikeName::fromFQCN('OriginalB');
+        $classInheritA = ClassLikeName::fromFQCN('ClassInheritA');
+        $classInheritB = ClassLikeName::fromFQCN('ClassInheritB');
+        $classInheritC = ClassLikeName::fromFQCN('ClassInheritC');
+        $classInheritD = ClassLikeName::fromFQCN('ClassInheritD');
 
         yield [
             [
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromString('ClassA'),
-                        ClassLikeName::fromString('ClassB'),
+                        ClassLikeName::fromFQCN('ClassA'),
+                        ClassLikeName::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
                         AstInherit::newExtends($classInheritA, new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
                             AstInherit::newExtends($classInheritB, new FileOccurrence(new AstFileReference('foo.php'), 4)),
@@ -83,8 +83,8 @@ class JUnitOutputFormatterTest extends TestCase
             [
                 new SkippedViolation(
                     new InheritDependency(
-                        ClassLikeName::fromString('ClassA'),
-                        ClassLikeName::fromString('ClassB'),
+                        ClassLikeName::fromFQCN('ClassA'),
+                        ClassLikeName::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
                         AstInherit::newExtends($classInheritA, new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
                             AstInherit::newExtends($classInheritB, new FileOccurrence(new AstFileReference('foo.php'), 4)),
@@ -97,8 +97,8 @@ class JUnitOutputFormatterTest extends TestCase
                 ),
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromString('ClassC'),
-                        ClassLikeName::fromString('ClassD'),
+                        ClassLikeName::fromFQCN('ClassC'),
+                        ClassLikeName::fromFQCN('ClassD'),
                         new Dependency($originalA, $originalB, new FileOccurrence(new AstFileReference('foo.php'), 12)),
                         AstInherit::newExtends($classInheritA, new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
                             AstInherit::newExtends($classInheritB, new FileOccurrence(new AstFileReference('foo.php'), 4)),

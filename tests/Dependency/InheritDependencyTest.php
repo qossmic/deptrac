@@ -16,21 +16,21 @@ class InheritDependencyTest extends TestCase
 {
     public function testGetSet(): void
     {
-        $classA = ClassLikeName::fromString('a');
-        $classB = ClassLikeName::fromString('b');
+        $classLikeNameA = ClassLikeName::fromFQCN('a');
+        $classLikeNameB = ClassLikeName::fromFQCN('b');
 
         $fileOccurrence = new FileOccurrence(new AstFileReference('a.php'), 1);
         $dependency = new InheritDependency(
-            $classA,
-            $classB,
-            $dep = new Dependency($classA, $classB, $fileOccurrence),
-            $astInherit = AstInherit::newExtends($classB, $fileOccurrence)
+            $classLikeNameA,
+            $classLikeNameB,
+            $dep = new Dependency($classLikeNameA, $classLikeNameB, $fileOccurrence),
+            $astInherit = AstInherit::newExtends($classLikeNameB, $fileOccurrence)
         );
 
-        static::assertEquals('a', $dependency->getClassA());
-        static::assertEquals('b', $dependency->getClassB());
-        static::assertEquals(1, $dependency->getFileOccurrence()->getLine());
-        static::assertEquals($dep, $dependency->getOriginalDependency());
+        static::assertSame($classLikeNameA, $dependency->getClassLikeNameA());
+        static::assertSame($classLikeNameB, $dependency->getClassLikeNameB());
+        static::assertSame(1, $dependency->getFileOccurrence()->getLine());
+        static::assertSame($dep, $dependency->getOriginalDependency());
         static::assertSame($astInherit, $dependency->getInheritPath());
     }
 }

@@ -36,12 +36,12 @@ class InheritanceLevelCollectorTest extends TestCase
             ->willReturn(array_fill(0, $pathLevel, 1));
 
         $astMap = $this->prophesize(AstMap::class);
-        $astMap->getClassInherits(AstInherit::class)
+        $astMap->getClassInherits(ClassLikeName::fromFQCN(AstInherit::class))
             ->willReturn([$classInherit->reveal()]);
 
         $stat = (new InheritanceLevelCollector())->satisfy(
             ['level' => $levelConfig],
-            new AstClassReference(ClassLikeName::fromString(AstInherit::class)),
+            new AstClassReference(ClassLikeName::fromFQCN(AstInherit::class)),
             $astMap->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );

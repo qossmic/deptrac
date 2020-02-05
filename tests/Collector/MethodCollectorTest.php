@@ -55,7 +55,7 @@ class MethodCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, array $methods, bool $expected): void
     {
-        $astClassReference = new AstClassReference(ClassLikeName::fromString('foo'));
+        $astClassReference = new AstClassReference(ClassLikeName::fromFQCN('foo'));
 
         $classLike = $this->createMock(Node\Stmt\ClassLike::class);
         $classLike->method('getMethods')->willReturn($methods);
@@ -78,7 +78,7 @@ class MethodCollectorTest extends TestCase
 
     public function testClassLikeAstNotFoundDoesNotSatisfy(): void
     {
-        $astClassReference = new AstClassReference(ClassLikeName::fromString('foo'));
+        $astClassReference = new AstClassReference(ClassLikeName::fromFQCN('foo'));
         $parser = $this->createMock(NikicPhpParser::class);
         $parser
             ->method('getAstForClassReference')
@@ -97,7 +97,7 @@ class MethodCollectorTest extends TestCase
 
     public function testMissingNameThrowsException(): void
     {
-        $astClassReference = new AstClassReference(ClassLikeName::fromString('foo'));
+        $astClassReference = new AstClassReference(ClassLikeName::fromFQCN('foo'));
         $parser = $this->createMock(NikicPhpParser::class);
 
         $this->expectException(\LogicException::class);

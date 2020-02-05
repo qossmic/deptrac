@@ -16,7 +16,7 @@ class Result
 
     public function addDependency(Dependency $dependency): self
     {
-        $classLikeName = (string) $dependency->getClassA();
+        $classLikeName = $dependency->getClassLikeNameA()->toString();
         if (!isset($this->dependencies[$classLikeName])) {
             $this->dependencies[$classLikeName] = [];
         }
@@ -28,7 +28,7 @@ class Result
 
     public function addInheritDependency(InheritDependency $dependency): self
     {
-        $classLikeName = (string) $dependency->getClassA();
+        $classLikeName = $dependency->getClassLikeNameA()->toString();
         if (!isset($this->inheritDependencies[$classLikeName])) {
             $this->inheritDependencies[$classLikeName] = [];
         }
@@ -41,9 +41,9 @@ class Result
     /**
      * @return Dependency[]
      */
-    public function getDependenciesByClass(ClassLikeName $className): array
+    public function getDependenciesByClass(ClassLikeName $classLikeName): array
     {
-        return $this->dependencies[(string) $className] ?? [];
+        return $this->dependencies[$classLikeName->toString()] ?? [];
     }
 
     /**

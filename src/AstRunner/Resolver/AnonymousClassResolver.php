@@ -16,10 +16,10 @@ class AnonymousClassResolver implements ClassDependencyResolver
         }
 
         if ($node->extends instanceof Node\Name) {
-            $classReferenceBuilder->anonymousClassExtends($node->extends->toString(), $node->extends->getLine());
+            $classReferenceBuilder->anonymousClassExtends($node->extends->toCodeString(), $node->extends->getLine());
         }
         foreach ($node->implements as $implement) {
-            $classReferenceBuilder->anonymousClassImplements($implement->toString(), $implement->getLine());
+            $classReferenceBuilder->anonymousClassImplements($implement->toCodeString(), $implement->getLine());
         }
     }
 }

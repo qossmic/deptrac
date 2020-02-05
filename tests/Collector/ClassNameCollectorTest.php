@@ -30,7 +30,7 @@ class ClassNameCollectorTest extends TestCase
     {
         $stat = (new ClassNameCollector())->satisfy(
             $configuration,
-            new AstClassReference(AstMap\ClassLikeName::fromString($className)),
+            new AstClassReference(AstMap\ClassLikeName::fromFQCN($className)),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );
@@ -44,7 +44,7 @@ class ClassNameCollectorTest extends TestCase
 
         (new ClassNameCollector())->satisfy(
             ['Foo' => 'a'],
-            new AstClassReference(AstMap\ClassLikeName::fromString('Foo')),
+            new AstClassReference(AstMap\ClassLikeName::fromFQCN('Foo')),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );
