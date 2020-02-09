@@ -29,6 +29,7 @@
         <service id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser">
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser"/>
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache"/>
+            <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver"/>
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver"/>
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver"/>
             <argument type="service" id="SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver"/>

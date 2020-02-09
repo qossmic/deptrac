@@ -17,10 +17,12 @@ class AnnotationDependencyResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {
+        $typeResolver = new TypeResolver();
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
-            new AnnotationDependencyResolver(new TypeResolver())
+            new TypeResolver(),
+            new AnnotationDependencyResolver($typeResolver)
         );
 
         $filePath = __DIR__.'/fixtures/AnnotationDependency.php';

@@ -9,5 +9,5 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 interface ClassDependencyResolver
 {
-    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, NameScope $nameScope): void;
+    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void;
 }

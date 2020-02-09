@@ -30,7 +30,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         $this->typeResolver = $typeResolver;
     }
 
-    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, NameScope $nameScope): void
+    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
         if (!$node instanceof Node\Stmt\Property
             && !$node instanceof Node\Expr\Variable
@@ -48,7 +48,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         $docNode = $this->docParser->parse($tokens);
 
         foreach ($docNode->getParamTagValues() as $tag) {
-            $types = $this->typeResolver->resolveType($tag->type, $nameScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->parameter($type, $docComment->getLine());
@@ -56,7 +56,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         }
 
         foreach ($docNode->getVarTagValues() as $tag) {
-            $types = $this->typeResolver->resolveType($tag->type, $nameScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->variable($type, $docComment->getLine());
@@ -64,7 +64,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         }
 
         foreach ($docNode->getReturnTagValues() as $tag) {
-            $types = $this->typeResolver->resolveType($tag->type, $nameScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->returnType($type, $docComment->getLine());
@@ -72,7 +72,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         }
 
         foreach ($docNode->getThrowsTagValues() as $tag) {
-            $types = $this->typeResolver->resolveType($tag->type, $nameScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->throwStatement($type, $docComment->getLine());

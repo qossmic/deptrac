@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 
 class NikicPhpParserTest extends TestCase
 {
@@ -16,26 +17,16 @@ class NikicPhpParserTest extends TestCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->parser = new NikicPhpParser(
             $this->createMock(FileParser::class),
-            $this->createMock(AstFileReferenceCache::class)
+            $this->createMock(AstFileReferenceCache::class),
+            $this->createMock(TypeResolver::class)
         );
-    }
-
-    public function testSupport(): void
-    {
-        static::assertTrue($this->parser->supports(new \SplFileInfo('foo.php')));
-        static::assertTrue($this->parser->supports(new \SplFileInfo('FOO.PHP')));
-        static::assertFalse($this->parser->supports(new \SplFileInfo('FOO.html')));
-        static::assertFalse($this->parser->supports(new \stdClass()));
     }
 
     public function testParseWithInvalidData(): void
     {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('data not supported');
+        $this->expectException(\TypeError::class);
         $this->parser->parse(new \stdClass());
     }
 }

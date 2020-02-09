@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class AnonymousClassResolver implements ClassDependencyResolver
 {
-    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, NameScope $nameScope): void
+    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
         if (!$node instanceof Node\Stmt\Class_ || null !== $node->name) {
             return;

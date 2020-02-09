@@ -12,6 +12,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\SensioLabs\Deptrac\AstRunner\ArrayAsserts;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassB;
@@ -32,7 +33,8 @@ class AstMapGeneratorTest extends TestCase
             new EventDispatcher(),
             new NikicPhpParser(
                 new FileParser(ParserFactory::createParser()),
-                new AstFileReferenceInMemoryCache()
+                new AstFileReferenceInMemoryCache(),
+                new TypeResolver()
             )
         );
 

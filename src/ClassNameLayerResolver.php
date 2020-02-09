@@ -9,7 +9,6 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
@@ -58,15 +57,5 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
         $layerNames = array_keys($layers);
 
         return $layerNames;
-    }
-
-    public function getLayers(): array
-    {
-        return array_map(
-            static function (ConfigurationLayer $configurationLayer): string {
-                return $configurationLayer->getName();
-            },
-            $this->configuration->getLayers()
-        );
     }
 }

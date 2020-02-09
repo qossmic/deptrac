@@ -9,6 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\Dependency\DependencyInterface;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
@@ -20,7 +21,8 @@ trait EmitterTrait
     {
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
-            new AstFileReferenceInMemoryCache()
+            new AstFileReferenceInMemoryCache(),
+            new TypeResolver()
         );
         $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$fileInfo]);
         $result = new Result();

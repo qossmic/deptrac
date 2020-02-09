@@ -12,9 +12,4 @@ interface ClassNameLayerResolverInterface
      * @return string[]
      */
     public function getLayersByClassName(ClassLikeName $className): array;
-
-    /**
-     * @return string[]
-     */
-    public function getLayers(): array;
 }

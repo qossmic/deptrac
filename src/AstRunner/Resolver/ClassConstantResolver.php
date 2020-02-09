@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class ClassConstantResolver implements ClassDependencyResolver
 {
-    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, NameScope $nameScope): void
+    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
         if (!$node instanceof ClassConstFetch || !$node->class instanceof Node\Name || $node->class->isSpecialClassName()) {
             return;
