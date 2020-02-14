@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyContext;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\OutputFormatter\XMLOutputFormatter;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class XMLOutputFormatterTest extends TestCase
@@ -38,91 +38,70 @@ class XMLOutputFormatterTest extends TestCase
     {
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                new RulesetViolation(
+                new Violation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('ClassA.php'), 3))->withPath([
+                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('ClassInheritA.php'), 4)),
+                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('ClassInheritB.php'), 5)),
+                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('ClassInheritC.php'), 6)),
                         ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             'expected-xml-report_1.xml',
         ];
 
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                new RulesetViolation(
-                    new Dependency('OriginalA', 12, 'OriginalB'),
+                new Violation(
+                    new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             'expected-xml-report_2.xml',
         ];
 
         yield [
-            [
-            ],
-            [
-            ],
             [],
             'expected-xml-report_3.xml',
         ];
 
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                $violations = new RulesetViolation(
+                $violations = new SkippedViolation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('ClassA.php'), 3))->withPath([
+                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('ClassInheritA.php'), 4)),
+                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('ClassInheritB.php'), 5)),
+                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('ClassInheritC.php'), 6)),
                         ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
-                new RulesetViolation(
+                new SkippedViolation(
                     new InheritDependency(
                         'ClassC',
                         'ClassD',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('ClassA.php'), 3))->withPath([
+                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('ClassInheritA.php'), 4)),
+                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('ClassInheritB.php'), 5)),
+                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('ClassInheritC.php'), 6)),
                         ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
-            ],
-            [
-                $violations,
             ],
             'expected-xml-report-with-skipped-violations.xml',
         ];
@@ -131,22 +110,13 @@ class XMLOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $layers, array $violations, array $skippedViolations, $expectedOutputFile): void
+    public function testBasic(array $rules, $expectedOutputFile): void
     {
-        $classNameResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
-        $classNameResolver->getLayers()->willReturn($layers);
-
         $output = new BufferedOutput();
 
         $formatter = new XMLOutputFormatter();
         $formatter->finish(
-            new DependencyContext(
-                $this->prophesize(AstMap::class)->reveal(),
-                $this->prophesize(Result::class)->reveal(),
-                $classNameResolver->reveal(),
-                $violations,
-                $skippedViolations
-            ),
+            new Context($rules),
             $output,
             new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_xml_report_file])
         );
