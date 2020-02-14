@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Dependency;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class InheritDependency implements DependencyInterface
 {
@@ -26,9 +27,9 @@ class InheritDependency implements DependencyInterface
         return $this->classA;
     }
 
-    public function getClassALine(): int
+    public function getFileOccurrence(): FileOccurrence
     {
-        return 0;
+        return $this->getOriginalDependency()->getFileOccurrence();
     }
 
     public function getClassB(): string
@@ -36,7 +37,7 @@ class InheritDependency implements DependencyInterface
         return $this->classB;
     }
 
-    public function getPath(): AstInherit
+    public function getInheritPath(): AstInherit
     {
         return $this->path;
     }

@@ -13,6 +13,8 @@ use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class AnnotationDependencyResolver implements ClassDependencyResolver
 {
@@ -25,7 +27,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
     }
 
-    public function processNode(Node $node, AstClassReference $astClassReference): void
+    public function processNode(Node $node, AstFileReference $fileReference, AstClassReference $astClassReference): void
     {
         if (!$node instanceof Node\Stmt\Property
             && !$node instanceof Node\Expr\Variable
@@ -47,7 +49,12 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $typeResolver->resolveType($tag->type);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(AstDependency::parameter($type, $docComment->getLine()));
+                $astClassReference->addDependency(
+                    AstDependency::parameter(
+                        $type,
+                        new FileOccurrence($fileReference, $docComment->getLine())
+                    )
+                );
             }
         }
 
@@ -55,7 +62,12 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $typeResolver->resolveType($tag->type);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(AstDependency::variable($type, $docComment->getLine()));
+                $astClassReference->addDependency(
+                    AstDependency::variable(
+                        $type,
+                        new FileOccurrence($fileReference, $docComment->getLine())
+                    )
+                );
             }
         }
 
@@ -63,7 +75,12 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $typeResolver->resolveType($tag->type);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(AstDependency::returnType($type, $docComment->getLine()));
+                $astClassReference->addDependency(
+                    AstDependency::returnType(
+                        $type,
+                        new FileOccurrence($fileReference, $docComment->getLine())
+                    )
+                );
             }
         }
 
@@ -71,7 +88,12 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $typeResolver->resolveType($tag->type);
 
             foreach ($types as $type) {
-                $astClassReference->addDependency(AstDependency::throwStmt($type, $docComment->getLine()));
+                $astClassReference->addDependency(
+                    AstDependency::throwStmt(
+                        $type,
+                        new FileOccurrence($fileReference, $docComment->getLine())
+                    )
+                );
             }
         }
     }

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyContext;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class ConsoleOutputFormatterTest extends TestCase
@@ -28,22 +28,22 @@ class ConsoleOutputFormatterTest extends TestCase
     {
         yield [
             [
-                new RulesetViolation(
+                new Violation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
-                        ])
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('originalA.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('originalA.php'), 3))
+                            ->withPath([
+                                AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('originalA.php'), 4)),
+                                AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('originalA.php'), 5)),
+                                AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('originalA.php'), 6)),
+                            ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
                 ClassInheritD::6 ->
@@ -52,48 +52,60 @@ class ConsoleOutputFormatterTest extends TestCase
                 ClassInheritA::3 ->
                 OriginalB::12
 
-                Found 1 Violations
+                Report:
+                Violations: 1
+                Skipped violations: 0
+                Uncovered: 0
+                Allowed: 0
             ',
         ];
 
         yield [
             [
-                new RulesetViolation(
-                    new Dependency('OriginalA', 12, 'OriginalB'),
+                new Violation(
+                    new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('originalA.php'), 12)),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             '
                 OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
 
-                Found 1 Violations
+                Report:
+                Violations: 1
+                Skipped violations: 0
+                Uncovered: 0
+                Allowed: 0
             ',
         ];
 
         yield [
             [],
-            [],
             '
 
-                Found 0 Violations
+                Report:
+                Violations: 0
+                Skipped violations: 0
+                Uncovered: 0
+                Allowed: 0
             ',
         ];
 
         yield [
             [
-                $violation = new RulesetViolation(
-                    new Dependency('OriginalA', 12, 'OriginalB'),
+                new SkippedViolation(
+                    new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('originalA.php'), 12)),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [
-                $violation,
-            ],
             '[SKIPPED] OriginalA::12 must not depend on OriginalB (LayerA on LayerB)
-            Found 0 Violations and 1 Violations skipped
+            
+            Report:
+            Violations: 0
+            Skipped violations: 1
+            Uncovered: 0
+            Allowed: 0
             ',
         ];
     }
@@ -101,19 +113,13 @@ class ConsoleOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $violations, array $skippedViolations, string $expectedOutput): void
+    public function testBasic(array $rules, string $expectedOutput): void
     {
         $output = new BufferedOutput();
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new DependencyContext(
-                $this->prophesize(AstMap::class)->reveal(),
-                $this->prophesize(Result::class)->reveal(),
-                $this->prophesize(ClassNameLayerResolverInterface::class)->reveal(),
-                $violations,
-                $skippedViolations
-            ),
+            new Context($rules),
             $output,
             new OutputFormatterInput([])
         );

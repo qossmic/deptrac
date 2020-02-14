@@ -2,28 +2,47 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 0.6.0 - 2019-xx-xx
+## 0.6.0 - 2019-10-18
 
 ### Changed
 
-- [#228](https://github.com/sensiolabs-de/deptrac/pull/228) improve file exclusion, Thanks to @smoench
+- [#255](https://github.com/sensiolabs-de/deptrac/pull/255) Enhancement: Add return type declarations to closures, Thanks to [@localheinz]
+- [#257](https://github.com/sensiolabs-de/deptrac/pull/257) adds missing dependency resolver test, Thanks to [@smoench]
+- [#267](https://github.com/sensiolabs-de/deptrac/pull/267) improve tests, Thanks to [@smoench]
+- [#262](https://github.com/sensiolabs-de/deptrac/pull/262) dependency updates, Thanks to [@smoench]
+- [#261](https://github.com/sensiolabs-de/deptrac/pull/261) Update README.md, Thanks to [@dbrumann]
+- [#259](https://github.com/sensiolabs-de/deptrac/pull/259) phpstan level max, Thanks to [@smoench]
+- [#258](https://github.com/sensiolabs-de/deptrac/pull/258) Enhancement: Throw exception when configuration can be parsed as yaml, but does not contain array, Thanks to [@localheinz]
+- [#263](https://github.com/sensiolabs-de/deptrac/pull/263) phpstan - inferPrivatePropertyTypeFromConstructor, Thanks to [@smoench]
+- [#264](https://github.com/sensiolabs-de/deptrac/pull/264) simplify console output mode (verbose), Thanks to [@smoench]
+- [#254](https://github.com/sensiolabs-de/deptrac/pull/254) Enhancement: Enable static_lambda fixer, Thanks to [@localheinz]
+- [#253](https://github.com/sensiolabs-de/deptrac/pull/253) Enhancement: Keep rules sorted in .php_cs.dist, Thanks to [@localheinz]
+- [#252](https://github.com/sensiolabs-de/deptrac/pull/252) Enhancement: Introduce temporary variable, Thanks to [@localheinz]
+- [#251](https://github.com/sensiolabs-de/deptrac/pull/251) Enhancement: Update phpstan/phpstan, Thanks to [@localheinz]
+- [#250](https://github.com/sensiolabs-de/deptrac/pull/250) use event classes for emitted and flattened dependencies, Thanks to [@smoench]
+- [#249](https://github.com/sensiolabs-de/deptrac/pull/249) refactor dependencies resolution, Thanks to [@smoench]
+- [#247](https://github.com/sensiolabs-de/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
+- [#256](https://github.com/sensiolabs-de/deptrac/pull/256) Enhancement: Throw exception when configuration cannot be parsed as yaml, Thanks to [@localheinz]
+- [#228](https://github.com/sensiolabs-de/deptrac/pull/228) improve file exclusion, Thanks to [@smoench]
 - [#235](https://github.com/sensiolabs-de/deptrac/pull/235) Improve console output of analyze command., Thanks to @temp
-- [#245](https://github.com/sensiolabs-de/deptrac/pull/245) refactor/improve method collector, Thanks to @smoench
-- [#244](https://github.com/sensiolabs-de/deptrac/pull/244) dependency updates, Thanks to @smoench
-- [#243](https://github.com/sensiolabs-de/deptrac/pull/243) anonymous class resolver, Thanks to @smoench
-- [#242](https://github.com/sensiolabs-de/deptrac/pull/242) upgrade box to v3.8, Thanks to @smoench
-- [#241](https://github.com/sensiolabs-de/deptrac/pull/241) class constant resolver, Thanks to @smoench
-- [#236](https://github.com/sensiolabs-de/deptrac/pull/236) split progressbar to its own subscriber, Thanks to @smoench
-- [#247](https://github.com/sensiolabs-de/deptrac/pull/247) refactor inherits resolving, Thanks to @smoench
-- [#234](https://github.com/sensiolabs-de/deptrac/pull/234) upgrade to symfony 4.3, Thanks to @smoench
-- [#233](https://github.com/sensiolabs-de/deptrac/pull/233) upgrade to phpunit 8, Thanks to @smoench
-- [#232](https://github.com/sensiolabs-de/deptrac/pull/232) increase minimum php version to 7.2, Thanks to @smoench
-- [#246](https://github.com/sensiolabs-de/deptrac/pull/246) naming + improvements, Thanks to @smoench
-- [#224](https://github.com/sensiolabs-de/deptrac/pull/224) annotation dependency resolver, Thanks to @smoench
+- [#245](https://github.com/sensiolabs-de/deptrac/pull/245) refactor/improve method collector, Thanks to [@smoench]
+- [#244](https://github.com/sensiolabs-de/deptrac/pull/244) dependency updates, Thanks to [@smoench]
+- [#243](https://github.com/sensiolabs-de/deptrac/pull/243) anonymous class resolver, Thanks to [@smoench]
+- [#242](https://github.com/sensiolabs-de/deptrac/pull/242) upgrade box to v3.8, Thanks to [@smoench]
+- [#241](https://github.com/sensiolabs-de/deptrac/pull/241) class constant resolver, Thanks to [@smoench]
+- [#236](https://github.com/sensiolabs-de/deptrac/pull/236) split progressbar to its own subscriber, Thanks to [@smoench]
+- [#247](https://github.com/sensiolabs-de/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
+- [#234](https://github.com/sensiolabs-de/deptrac/pull/234) upgrade to symfony 4.3, Thanks to [@smoench]
+- [#233](https://github.com/sensiolabs-de/deptrac/pull/233) upgrade to phpunit 8, Thanks to [@smoench]
+- [#232](https://github.com/sensiolabs-de/deptrac/pull/232) increase minimum php version to 7.2, Thanks to [@smoench]
+- [#246](https://github.com/sensiolabs-de/deptrac/pull/246) naming + improvements, Thanks to [@smoench]
+- [#224](https://github.com/sensiolabs-de/deptrac/pull/224) annotation dependency resolver, Thanks to [@smoench]
 - [#248](https://github.com/sensiolabs-de/deptrac/pull/248) Update documentation on bool collector to describe actual behaviour, Thanks to @rpkamp
 
 ### Fixed
 
+- [#265](https://github.com/sensiolabs-de/deptrac/pull/265) Bugfix: classes in other namespaces are resolved in same namespace, Thanks to [@smoench]
+- [#227](https://github.com/sensiolabs-de/deptrac/pull/227) Fix: Remove non-applicable exclude configuration, Thanks to [@localheinz]
 - [#230](https://github.com/sensiolabs-de/deptrac/pull/230) Fix alignment, Thanks to @BackEndTea
 - [#223](https://github.com/sensiolabs-de/deptrac/pull/223) Fix outdated graphviz download link in README, Thanks to @LeoVie
 
@@ -92,3 +111,8 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Removed
 
 - Removed support for PHP < 7.0 and HHVM.
+
+
+[@smoench]: https://github.com/smoench
+[@localheinz]: https://github.com/localheinz
+[@dbrumann]: https://github.com/dbrumann

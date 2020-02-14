@@ -19,10 +19,11 @@ class AnonymousClassResolverTest extends TestCase
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
-            [new AnonymousClassResolver()]
+            new AnonymousClassResolver()
         );
 
-        $astFileReference = $parser->parse(new SplFileInfo(__DIR__.'/fixtures/AnonymousClass.php'));
+        $filePath = __DIR__.'/fixtures/AnonymousClass.php';
+        $astFileReference = $parser->parse(new SplFileInfo($filePath));
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 
@@ -37,14 +38,16 @@ class AnonymousClassResolverTest extends TestCase
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\ClassA',
             $dependencies[0]->getClass()
         );
-        static::assertSame(19, $dependencies[0]->getLine());
+        static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilenpath());
+        static::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
         static::assertSame('anonymous_class_extends', $dependencies[0]->getType());
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\InterfaceC',
             $dependencies[1]->getClass()
         );
-        static::assertSame(19, $dependencies[1]->getLine());
+        static::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilenpath());
+        static::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());
         static::assertSame('anonymous_class_implements', $dependencies[1]->getType());
     }
 }

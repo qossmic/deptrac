@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Dependency;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+
 class Dependency implements DependencyInterface
 {
-    protected $classA;
-    protected $classALine;
-    protected $classB;
+    private $classB;
+    private $classA;
+    private $fileOccurrence;
 
-    public function __construct(string $classA, int $classALine, string $classB)
+    public function __construct(string $classA, string $classB, FileOccurrence $fileOccurrence)
     {
         $this->classA = $classA;
-        $this->classALine = $classALine;
         $this->classB = $classB;
+        $this->fileOccurrence = $fileOccurrence;
     }
 
     public function getClassA(): string
@@ -22,13 +24,13 @@ class Dependency implements DependencyInterface
         return $this->classA;
     }
 
-    public function getClassALine(): int
-    {
-        return $this->classALine;
-    }
-
     public function getClassB(): string
     {
         return $this->classB;
+    }
+
+    public function getFileOccurrence(): FileOccurrence
+    {
+        return $this->fileOccurrence;
     }
 }

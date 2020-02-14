@@ -27,9 +27,9 @@ class AstRunner
      */
     public function createAstMapByFiles(array $files): AstMap
     {
-        $this->dispatcher->dispatch(new PreCreateAstMapEvent(count($files)));
+        $references = [];
 
-        $astMap = new AstMap();
+        $this->dispatcher->dispatch(new PreCreateAstMapEvent(count($files)));
 
         foreach ($files as $file) {
             if (!$this->astParser->supports($file)) {
@@ -37,7 +37,7 @@ class AstRunner
             }
 
             try {
-                $astMap->addAstFileReference($this->astParser->parse($file));
+                $references[] = $this->astParser->parse($file);
 
                 $this->dispatcher->dispatch(new AstFileAnalyzedEvent($file));
             } catch (\PhpParser\Error $e) {
@@ -45,6 +45,7 @@ class AstRunner
             }
         }
 
+        $astMap = new AstMap($references);
         $this->dispatcher->dispatch(new PostCreateAstMapEvent());
 
         return $astMap;

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyContext;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class JUnitOutputFormatterTest extends TestCase
@@ -37,91 +37,70 @@ class JUnitOutputFormatterTest extends TestCase
     {
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                new RulesetViolation(
+                new Violation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
+                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('foo.php'), 4)),
+                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('foo.php'), 5)),
+                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('foo.php'), 6)),
                         ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             'expected-junit-report_1.xml',
         ];
 
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                new RulesetViolation(
-                    new Dependency('OriginalA', 12, 'OriginalB'),
+                new Violation(
+                    new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
             'expected-junit-report_2.xml',
         ];
 
         yield [
-            [
-            ],
-            [
-            ],
             [],
             'expected-junit-report_3.xml',
         ];
 
         yield [
             [
-                'LayerA',
-                'LayerB',
-            ],
-            [
-                $violations = new RulesetViolation(
+                new SkippedViolation(
                     new InheritDependency(
                         'ClassA',
                         'ClassB',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
+                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('foo.php'), 4)),
+                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('foo.php'), 5)),
+                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('foo.php'), 6)),
                         ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
-                new RulesetViolation(
+                new Violation(
                     new InheritDependency(
                         'ClassC',
                         'ClassD',
-                        new Dependency('OriginalA', 12, 'OriginalB'),
-                        AstInherit::newExtends('ClassInheritA', 3)->withPath([
-                            AstInherit::newExtends('ClassInheritB', 4),
-                            AstInherit::newExtends('ClassInheritC', 5),
-                            AstInherit::newExtends('ClassInheritD', 6),
+                        new Dependency('OriginalA', 'OriginalB', new FileOccurrence(new AstFileReference('foo.php'), 12)),
+                        AstInherit::newExtends('ClassInheritA', new FileOccurrence(new AstFileReference('foo.php'), 3))->withPath([
+                            AstInherit::newExtends('ClassInheritB', new FileOccurrence(new AstFileReference('foo.php'), 4)),
+                            AstInherit::newExtends('ClassInheritC', new FileOccurrence(new AstFileReference('foo.php'), 5)),
+                            AstInherit::newExtends('ClassInheritD', new FileOccurrence(new AstFileReference('foo.php'), 6)),
                         ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
-            ],
-            [
-                $violations,
             ],
             'expected-junit-report-with-skipped-violations.xml',
         ];
@@ -130,22 +109,13 @@ class JUnitOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $layers, array $violations, array $skippedViolations, $expectedOutputFile): void
+    public function testBasic(array $rules, string $expectedOutputFile): void
     {
-        $classNameResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
-        $classNameResolver->getLayers()->willReturn($layers);
-
         $output = new BufferedOutput();
 
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new DependencyContext(
-                $this->prophesize(AstMap::class)->reveal(),
-                $this->prophesize(Result::class)->reveal(),
-                $classNameResolver->reveal(),
-                $violations,
-                $skippedViolations
-            ),
+            new Context($rules),
             $output,
             new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])
         );

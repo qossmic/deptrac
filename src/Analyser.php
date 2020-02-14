@@ -6,6 +6,7 @@ use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Dependency\Resolver;
+use SensioLabs\Deptrac\RulesetEngine\Context;
 
 class Analyser
 {
@@ -29,7 +30,7 @@ class Analyser
         $this->rulesetEngine = $rulesetEngine;
     }
 
-    public function analyse(Configuration $configuration): DependencyContext
+    public function analyse(Configuration $configuration): Context
     {
         $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
         $dependencyResult = $this->resolver->resolve($astMap);
@@ -38,24 +39,10 @@ class Analyser
             new ClassNameLayerResolver($configuration, $astMap, $this->collectorRegistry)
         );
 
-        /** @var RulesetEngine\RulesetViolation[] $violations */
-        $violations = $this->rulesetEngine->getViolations(
+        return $this->rulesetEngine->process(
             $dependencyResult,
             $classNameLayerResolver,
-            $configuration->getRuleset()
-        );
-
-        $skippedViolations = $this->rulesetEngine->getSkippedViolations(
-            $violations,
-            $configuration->getSkipViolations()
-        );
-
-        return new DependencyContext(
-            $astMap,
-            $dependencyResult,
-            $classNameLayerResolver,
-            $violations,
-            $skippedViolations
+            $configuration
         );
     }
 }

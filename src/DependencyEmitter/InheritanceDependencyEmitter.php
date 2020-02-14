@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\DependencyEmitter;
 
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\Dependency\Dependency;
+use SensioLabs\Deptrac\Dependency\Result;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {
@@ -22,8 +22,8 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
                 $dependencyResult->addDependency(
                     new Dependency(
                         $classReference->getClassName(),
-                        $inherit->getLine(),
-                        $inherit->getClassName()
+                        $inherit->getClassName(),
+                        $inherit->getFileOccurrence()
                     )
                 );
             }

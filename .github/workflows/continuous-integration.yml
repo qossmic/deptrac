@@ -1,0 +1,142 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - "**"
+
+name: "Continuous Integration"
+
+jobs:
+  coding-standards:
+    name: "Coding Standards"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: PHP-CS-Fixer
+        uses: docker://oskarstark/php-cs-fixer-ga:2.15.4
+        with:
+          args: --diff --diff-format=udiff --using-cache=no --verbose --dry-run
+
+  static-code-analysis:
+    name: "Static Code Analysis"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Disable Xdebug"
+        run: php7.4 --ini | grep xdebug | sed 's/,$//' | xargs sudo rm
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-cache-
+
+      - name: "Install dependencies with composer"
+        run: php7.4 $(which composer) install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: PHPStan
+        uses: docker://oskarstark/phpstan-ga:0.11.19.1
+        with:
+          args: analyse
+
+  tests:
+    name: "PHP ${{ matrix.php-versions }} Test"
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: ["7.2", "7.3", "7.4"]
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-cache-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+
+      - name: "Run tests"
+        run: make tests
+
+  build:
+    name: "Build"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-cache-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: "7.2"
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+
+      - name: "Install dependencies with composer"
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: "Download humbug/box"
+        run: wget --no-clobber --output-document=./box https://github.com/humbug/box/releases/download/3.8.3/box.phar || true
+
+      - name: "Make humbug/box executable"
+        run: chmod +x ./box
+
+      - name: "Compile deptrac phar"
+        run: ./box compile
+
+      - name: "Run deptrac phar without cache"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yml --no-cache
+
+      - name: "Cache file should not exist"
+        run: "[ ! -f '.deptrac.cache' ]"
+
+      - name: "Run deptrac phar with cache enabled"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yml
+
+      - name: "Cache file should exist"
+        run: "[ -f '.deptrac.cache' ]"
+
+      - name: "Run deptrac phar again with cache enabled to be sure the cache file could be reused"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yml
+
+      - name: "Run deptrac phar with custom cache file output"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yml --cache-file=.deptrac.cache2
+
+      - name: "Custom cache file should exist"
+        run: "[ -f '.deptrac.cache2' ]"

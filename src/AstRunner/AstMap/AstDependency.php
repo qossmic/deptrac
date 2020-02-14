@@ -7,15 +7,13 @@ namespace SensioLabs\Deptrac\AstRunner\AstMap;
 class AstDependency
 {
     private $class;
-
-    private $line;
-
+    private $fileOccurrence;
     private $type;
 
-    public function __construct(string $class, int $line, string $type)
+    public function __construct(string $class, FileOccurrence $fileOccurrence, string $type)
     {
         $this->class = $class;
-        $this->line = $line;
+        $this->fileOccurrence = $fileOccurrence;
         $this->type = $type;
     }
 
@@ -24,9 +22,9 @@ class AstDependency
         return $this->class;
     }
 
-    public function getLine(): int
+    public function getFileOccurrence(): FileOccurrence
     {
-        return $this->line;
+        return $this->fileOccurrence;
     }
 
     public function getType(): string
@@ -34,68 +32,68 @@ class AstDependency
         return $this->type;
     }
 
-    public static function useStmt(string $class, int $line): self
+    public static function useStmt(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'use');
+        return new self($class, $fileOccurrence, 'use');
     }
 
-    public static function returnType(string $class, int $line): self
+    public static function returnType(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'returntype');
+        return new self($class, $fileOccurrence, 'returntype');
     }
 
-    public static function parameter(string $class, int $line): self
+    public static function parameter(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'parameter');
+        return new self($class, $fileOccurrence, 'parameter');
     }
 
-    public static function newStmt(string $class, int $line): self
+    public static function newStmt(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'new');
+        return new self($class, $fileOccurrence, 'new');
     }
 
-    public static function staticProperty(string $class, int $line): self
+    public static function staticProperty(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'static_property');
+        return new self($class, $fileOccurrence, 'static_property');
     }
 
-    public static function staticMethod(string $class, int $line): self
+    public static function staticMethod(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'static_method');
+        return new self($class, $fileOccurrence, 'static_method');
     }
 
-    public static function instanceofExpr(string $class, int $line): self
+    public static function instanceofExpr(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'instanceof');
+        return new self($class, $fileOccurrence, 'instanceof');
     }
 
-    public static function catchStmt(string $class, int $line): self
+    public static function catchStmt(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'catch');
+        return new self($class, $fileOccurrence, 'catch');
     }
 
-    public static function variable(string $class, int $line): self
+    public static function variable(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'variable');
+        return new self($class, $fileOccurrence, 'variable');
     }
 
-    public static function throwStmt(string $class, int $line): self
+    public static function throwStmt(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'throw');
+        return new self($class, $fileOccurrence, 'throw');
     }
 
-    public static function constFetch(string $class, int $line): self
+    public static function constFetch(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'const');
+        return new self($class, $fileOccurrence, 'const');
     }
 
-    public static function anonymousClassExtends(string $class, int $line): self
+    public static function anonymousClassExtends(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'anonymous_class_extends');
+        return new self($class, $fileOccurrence, 'anonymous_class_extends');
     }
 
-    public static function anonymousClassImplements(string $class, int $line): self
+    public static function anonymousClassImplements(string $class, FileOccurrence $fileOccurrence): self
     {
-        return new self($class, $line, 'anonymous_class_implements');
+        return new self($class, $fileOccurrence, 'anonymous_class_implements');
     }
 }

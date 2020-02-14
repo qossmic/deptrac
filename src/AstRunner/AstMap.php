@@ -20,12 +20,13 @@ class AstMap
      */
     private $astFileReferences = [];
 
-    public function addAstFileReference(AstFileReference $astFileReference): void
+    /**
+     * @param AstFileReference[] $astFileReferences
+     */
+    public function __construct(array $astFileReferences)
     {
-        $this->astFileReferences[$astFileReference->getFilepath()] = $astFileReference;
-
-        foreach ($astFileReference->getAstClassReferences() as $astClassReference) {
-            $this->addAstClassReference($astClassReference);
+        foreach ($astFileReferences as $astFileReference) {
+            $this->addAstFileReference($astFileReference);
         }
     }
 
@@ -112,5 +113,14 @@ class AstMap
     private function addAstClassReference(AstClassReference $astClassReference): void
     {
         $this->astClassReferences[$astClassReference->getClassName()] = $astClassReference;
+    }
+
+    private function addAstFileReference(AstFileReference $astFileReference): void
+    {
+        $this->astFileReferences[$astFileReference->getFilepath()] = $astFileReference;
+
+        foreach ($astFileReference->getAstClassReferences() as $astClassReference) {
+            $this->addAstClassReference($astClassReference);
+        }
     }
 }

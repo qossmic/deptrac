@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\DependencyContext;
-use SensioLabs\Deptrac\RulesetEngine\RulesetViolation;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Rule;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class JUnitOutputFormatter implements OutputFormatterInterface
@@ -38,11 +40,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
      * @throws \Exception
      */
     public function finish(
-        DependencyContext $dependencyContext,
+        Context $context,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $xml = $this->createXml($dependencyContext);
+        $xml = $this->createXml($context);
 
         if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml)) {
             file_put_contents($dumpXmlPath, $xml);
@@ -53,7 +55,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     /**
      * @throws \Exception
      */
-    private function createXml(DependencyContext $dependencyContext): string
+    private function createXml(Context $context): string
     {
         if (!class_exists(\DOMDocument::class)) {
             throw new \Exception('Unable to create xml file (php-xml needs to be installed)');
@@ -62,68 +64,82 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $xmlDoc = new \DOMDocument('1.0', 'UTF-8');
         $xmlDoc->formatOutput = true;
 
-        $this->addTestSuites($dependencyContext, $xmlDoc);
+        $this->addTestSuites($context, $xmlDoc);
 
         return $xmlDoc->saveXML();
     }
 
-    private function addTestSuites(DependencyContext $dependencyContext, \DOMDocument $xmlDoc): void
+    private function addTestSuites(Context $context, \DOMDocument $xmlDoc): void
     {
         $testSuites = $xmlDoc->createElement('testsuites');
 
         $xmlDoc->appendChild($testSuites);
 
-        $this->addTestSuite($dependencyContext, $xmlDoc, $testSuites);
+        $this->addTestSuite($context, $xmlDoc, $testSuites);
     }
 
-    private function addTestSuite(DependencyContext $dependencyContext, \DOMDocument $xmlDoc, \DOMElement $testSuites): void
+    private function addTestSuite(Context $context, \DOMDocument $xmlDoc, \DOMElement $testSuites): void
     {
-        $layers = $dependencyContext->getClassNameLayerResolver()->getLayers();
-
-        $layerIndex = 0;
-        foreach ($layers as $layer) {
-            $violationsByLayer = $dependencyContext->getViolationsByLayerName($layer);
-            if (0 === count($violationsByLayer)) {
+        $layers = [];
+        foreach ($context->all() as $rule) {
+            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            $violationsByClassName = [];
-            foreach ($violationsByLayer as $violation) {
-                $violationsByClassName[$violation->getDependency()->getClassA()][] = $violation;
+            $layers[$rule->getLayerA()][] = $rule;
+        }
+
+        $layerIndex = 0;
+        foreach ($layers as $layer => $rules) {
+            /** @var Violation[] $violationsByLayer */
+            $violationsByLayer = array_filter($rules, static function (Rule $rule) {
+                return $rule instanceof Violation;
+            });
+
+            /** @var SkippedViolation[] $skippedViolationsByLayer */
+            $skippedViolationsByLayer = array_filter($rules, static function (Rule $rule) {
+                return $rule instanceof SkippedViolation;
+            });
+
+            if (0 === count($violationsByLayer) && 0 === count($skippedViolationsByLayer)) {
+                continue;
             }
 
-            $skippedViolationsByLayer = $dependencyContext->getSkippedViolationsByLayerName($layer);
+            $rulesByClassName = [];
+            foreach ($rules as $rule) {
+                $rulesByClassName[$rule->getDependency()->getClassA()][] = $rule;
+            }
 
             $testSuite = $xmlDoc->createElement('testsuite');
             $testSuite->appendChild(new \DOMAttr('id', (string) ++$layerIndex));
             $testSuite->appendChild(new \DOMAttr('package', ''));
             $testSuite->appendChild(new \DOMAttr('name', $layer));
             $testSuite->appendChild(new \DOMAttr('hostname', 'localhost'));
-            $testSuite->appendChild(new \DOMAttr('tests', (string) count($violationsByClassName)));
-            $testSuite->appendChild(new \DOMAttr('failures', (string) (count($violationsByLayer) - count($skippedViolationsByLayer))));
+            $testSuite->appendChild(new \DOMAttr('tests', (string) count($rulesByClassName)));
+            $testSuite->appendChild(new \DOMAttr('failures', (string) count($violationsByLayer)));
             $testSuite->appendChild(new \DOMAttr('skipped', (string) count($skippedViolationsByLayer)));
             $testSuite->appendChild(new \DOMAttr('errors', '0'));
             $testSuite->appendChild(new \DOMAttr('time', '0'));
 
             $testSuites->appendChild($testSuite);
 
-            $this->addTestCase($layer, $violationsByClassName, $xmlDoc, $testSuite, $skippedViolationsByLayer);
+            $this->addTestCase($layer, $rulesByClassName, $xmlDoc, $testSuite);
         }
     }
 
-    private function addTestCase(string $layer, array $violationsByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite, array $skippedViolationsByLayer): void
+    private function addTestCase(string $layer, array $rulesByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite): void
     {
-        foreach ($violationsByClassName as $className => $violations) {
+        foreach ($rulesByClassName as $className => $rules) {
             $testCase = $xmlDoc->createElement('testcase');
             $testCase->appendChild(new \DOMAttr('name', $layer.' - '.$className));
             $testCase->appendChild(new \DOMAttr('classname', $className));
             $testCase->appendChild(new \DOMAttr('time', '0'));
 
-            foreach ($violations as $violation) {
-                if (\in_array($violation, $skippedViolationsByLayer, true)) {
+            foreach ($rules as $rule) {
+                if ($rule instanceof SkippedViolation) {
                     $this->addSkipped($xmlDoc, $testCase);
-                } else {
-                    $this->addFailure($violation, $xmlDoc, $testCase);
+                } elseif ($rule instanceof Violation) {
+                    $this->addFailure($rule, $xmlDoc, $testCase);
                 }
             }
 
@@ -131,14 +147,14 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function addFailure(RulesetViolation $violation, \DOMDocument $xmlDoc, \DOMElement $testCase): void
+    private function addFailure(Violation $violation, \DOMDocument $xmlDoc, \DOMElement $testCase): void
     {
         $dependency = $violation->getDependency();
 
         $message = sprintf(
-            '%s:%s must not depend on %s (%s on %s)',
+            '%s:%d must not depend on %s (%s on %s)',
             $dependency->getClassA(),
-            $dependency->getClassALine(),
+            $dependency->getFileOccurrence()->getLine(),
             $dependency->getClassB(),
             $violation->getLayerA(),
             $violation->getLayerB()
