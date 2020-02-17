@@ -21,6 +21,10 @@ class AstFileReference
         $this->dependencies = [];
     }
 
+    /**
+     * @param AstInherit[] $inherits
+     * @param AstDependency[] $dependencies
+     */
     public function addClassReference(ClassLikeName $className, array $inherits = [], array $dependencies = []): AstClassReference
     {
         $astClassReference = new AstClassReference($className, $this, $inherits, $dependencies);

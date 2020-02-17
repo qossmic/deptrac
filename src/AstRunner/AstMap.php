@@ -72,7 +72,7 @@ class AstMap
     }
 
     /**
-     * @param ArrayObject|null $alreadyResolved
+     * @param ArrayObject<string, true>|null $alreadyResolved
      *
      * @return iterable<AstInherit>
      */

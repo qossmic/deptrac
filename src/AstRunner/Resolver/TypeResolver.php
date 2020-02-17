@@ -43,6 +43,9 @@ class TypeResolver
         return array_merge([], ...$types);
     }
 
+    /**
+     * @return string[]
+     */
     private function resolvePHPParserType(TypeScope $typeScope, NodeAbstract $node): array
     {
         if ($node instanceof Node\Name && $node->isSpecialClassName()) {
@@ -87,6 +90,9 @@ class TypeResolver
         return $this->resolveString((string) $type, $nameScope);
     }
 
+    /**
+     * @return string[]
+     */
     public function resolveString(string $type, TypeScope $nameScope): array
     {
         $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
@@ -95,6 +101,9 @@ class TypeResolver
         return $this->resolveReflectionType($resolvedType);
     }
 
+    /**
+     * @return string[]
+     */
     private function resolveReflectionType(Type $resolvedType): array
     {
         if ($resolvedType instanceof Object_) {
