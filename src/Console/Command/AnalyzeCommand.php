@@ -45,17 +45,12 @@ class AnalyzeCommand extends Command
 
         $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
-        $this->addOption('no-banner', null, InputOption::VALUE_NONE, 'Do not show banner');
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         ini_set('memory_limit', '-1');
-
-        if (!$input->getOption('no-banner')) {
-            $this->printBanner($output);
-        }
 
         $file = $input->getArgument('depfile');
         if (!is_string($file)) {
@@ -88,11 +83,6 @@ class AnalyzeCommand extends Command
         }
 
         return $context->hasViolations() ? 1 : 0;
-    }
-
-    protected function printBanner(OutputInterface $output): void
-    {
-        $output->writeln("\n<comment>deptrac is alpha, not production ready.\nplease help us and report feedback / bugs.</comment>\n");
     }
 
     protected function printCollectViolations(OutputInterface $output): void
