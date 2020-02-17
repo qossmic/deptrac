@@ -4,21 +4,28 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Configuration;
 
-class ConfigurationCollector
+final class ConfigurationCollector
 {
     private $type;
 
+    /** @var array<string, string> */
     private $args;
 
-    public static function fromArray(array $arr): self
+    /**
+     * @param array<string, string> $args
+     */
+    public static function fromArray(array $args): self
     {
-        if (!isset($arr['type'])) {
+        if (!isset($args['type'])) {
             throw new \InvalidArgumentException('Collector needs a type.');
         }
 
-        return new static($arr['type'], $arr);
+        return new static($args['type'], $args);
     }
 
+    /**
+     * @param array<string, string> $args
+     */
     private function __construct(string $type, array $args)
     {
         $this->type = $type;
@@ -30,6 +37,9 @@ class ConfigurationCollector
         return $this->type;
     }
 
+    /**
+     * @return array<string, string> $args
+     */
     public function getArgs(): array
     {
         return $this->args;

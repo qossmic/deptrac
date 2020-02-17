@@ -16,7 +16,11 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
     /** @var array<string, array> */
     private $cache;
     private $cacheFile;
+
+    /** @var bool */
     private $loaded = false;
+
+    /** @var array<string, bool> */
     private $parsedFiles = [];
 
     public function __construct(string $cacheFile)
@@ -128,7 +132,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
 
         $cache = array_filter(
             $this->cache,
-            function ($key): bool {
+            function (string $key): bool {
                 return isset($this->parsedFiles[$key]);
             },
             ARRAY_FILTER_USE_KEY

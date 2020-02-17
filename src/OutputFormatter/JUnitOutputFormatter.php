@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
-    private static $argument_dump_xml = 'dump-xml';
+    private const DUMP_XML = 'dump-xml';
 
     public function getName(): string
     {
@@ -25,7 +25,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::$argument_dump_xml, 'path to a dumped xml file', './junit-report.xml'),
+            OutputFormatterOption::newValueOption(static::DUMP_XML, 'path to a dumped xml file', './junit-report.xml'),
         ];
     }
 
@@ -46,7 +46,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($context);
 
-        if ($dumpXmlPath = $outputFormatterInput->getOption(static::$argument_dump_xml)) {
+        if ($dumpXmlPath = $outputFormatterInput->getOption(static::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);
             $output->writeln('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
         }
@@ -66,7 +66,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $this->addTestSuites($context, $xmlDoc);
 
-        return $xmlDoc->saveXML();
+        return (string) $xmlDoc->saveXML();
     }
 
     private function addTestSuites(Context $context, \DOMDocument $xmlDoc): void
@@ -127,6 +127,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         }
     }
 
+    /**
+     * @param array<string, Rule[]> $rulesByClassName
+     */
     private function addTestCase(string $layer, array $rulesByClassName, \DOMDocument $xmlDoc, \DOMElement $testSuite): void
     {
         foreach ($rulesByClassName as $className => $rules) {

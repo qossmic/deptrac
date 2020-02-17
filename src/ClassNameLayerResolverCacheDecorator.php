@@ -8,7 +8,10 @@ class ClassNameLayerResolverCacheDecorator implements ClassNameLayerResolverInte
 {
     private $classNameLayerResolver;
 
+    /** @var array<string, string[]> */
     private $layerNamesByClassCache = [];
+
+    /** @var string[] */
     private $layerNamesCache = [];
 
     public function __construct(ClassNameLayerResolverInterface $classNameLayerResolver)

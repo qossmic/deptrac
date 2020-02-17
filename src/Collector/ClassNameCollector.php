@@ -23,6 +23,9 @@ class ClassNameCollector implements CollectorInterface
         return 1 === preg_match($this->getPattern($configuration), $astClassReference->getClassName());
     }
 
+    /**
+     * @param array<string, string> $configuration
+     */
     private function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex'])) {

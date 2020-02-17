@@ -8,7 +8,13 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 
 interface AstParser
 {
+    /**
+     * @param mixed $data
+     */
     public function parse($data): AstFileReference;
 
+    /**
+     * @param mixed $data
+     */
     public function supports($data): bool;
 }

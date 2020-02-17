@@ -45,6 +45,9 @@ class MethodCollector implements CollectorInterface
         return false;
     }
 
+    /**
+     * @param array<string, string> $configuration
+     */
     private function getPattern(array $configuration): string
     {
         if (!isset($configuration['name'])) {

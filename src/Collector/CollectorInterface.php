@@ -19,7 +19,7 @@ interface CollectorInterface
     public function getType(): string;
 
     /**
-     * @param array $configuration List of arguments passed for this collector declaration
+     * @param array<string, mixed> $configuration List of arguments passed for this collector declaration
      */
     public function satisfy(
         array $configuration,

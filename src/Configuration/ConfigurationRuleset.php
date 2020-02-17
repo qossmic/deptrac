@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Configuration;
 
-class ConfigurationRuleset
+final class ConfigurationRuleset
 {
     /** @var array<string, string[]> */
     private $layerMap;

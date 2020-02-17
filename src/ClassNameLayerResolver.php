@@ -12,9 +12,9 @@ use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
-    protected $configuration;
-    protected $astMap;
-    protected $collectorRegistry;
+    private $configuration;
+    private $astMap;
+    private $collectorRegistry;
 
     public function __construct(
         Configuration $configuration,

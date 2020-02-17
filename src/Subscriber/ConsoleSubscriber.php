@@ -24,6 +24,9 @@ class ConsoleSubscriber implements EventSubscriberInterface
         $this->output = $output;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [
