@@ -6,6 +6,7 @@ namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 use SensioLabs\Deptrac\Configuration\Configuration;
@@ -18,7 +19,11 @@ class RulesetEngineTest extends TestCase
     private function createDependencies(array $fromTo): iterable
     {
         foreach ($fromTo as $from => $to) {
-            yield new Dependency($from, $to, new FileOccurrence(new AstFileReference('foo.php'), 0));
+            yield new Dependency(
+                ClassLikeName::fromFQCN($from),
+                ClassLikeName::fromFQCN($to),
+                new FileOccurrence(new AstFileReference('foo.php'), 0)
+            );
         }
     }
 
@@ -149,7 +154,7 @@ class RulesetEngineTest extends TestCase
 
         $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
+            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([
@@ -216,7 +221,7 @@ class RulesetEngineTest extends TestCase
 
         $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName($classInLayer)->willReturn($layers);
+            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([

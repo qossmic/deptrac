@@ -20,7 +20,7 @@ class ClassNameRegexCollector implements CollectorInterface
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        return 1 === preg_match($this->getPattern($configuration), $astClassReference->getClassName());
+        return $astClassReference->getClassLikeName()->match($this->getPattern($configuration));
     }
 
     /**

@@ -10,32 +10,32 @@ class AstInherit
     private const TYPE_IMPLEMENTS = 2;
     private const TYPE_USES = 3;
 
-    private $className;
+    private $classLikeName;
     private $fileOccurrence;
     private $type;
 
     /** @var AstInherit[] */
     private $path;
 
-    private function __construct(string $className, FileOccurrence $fileOccurrence, int $type)
+    private function __construct(ClassLikeName $className, FileOccurrence $fileOccurrence, int $type)
     {
-        $this->className = $className;
+        $this->classLikeName = $className;
         $this->fileOccurrence = $fileOccurrence;
         $this->type = $type;
         $this->path = [];
     }
 
-    public static function newExtends(string $className, FileOccurrence $fileOccurrence): self
+    public static function newExtends(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
         return new self($className, $fileOccurrence, static::TYPE_EXTENDS);
     }
 
-    public static function newImplements(string $className, FileOccurrence $fileOccurrence): self
+    public static function newImplements(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
         return new self($className, $fileOccurrence, static::TYPE_IMPLEMENTS);
     }
 
-    public static function newTraitUse(string $className, FileOccurrence $fileOccurrence): self
+    public static function newTraitUse(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
         return new self($className, $fileOccurrence, static::TYPE_USES);
     }
@@ -56,7 +56,7 @@ class AstInherit
                 $type = 'Unknown';
         }
 
-        $description = "{$this->className}::{$this->fileOccurrence->getLine()} ($type)";
+        $description = "{$this->classLikeName->toString()}::{$this->fileOccurrence->getLine()} ($type)";
 
         if (0 === count($this->path)) {
             return $description;
@@ -70,9 +70,9 @@ class AstInherit
         return $description.' (path: '.rtrim($buffer, ' -> ').')';
     }
 
-    public function getClassName(): string
+    public function getClassLikeName(): ClassLikeName
     {
-        return $this->className;
+        return $this->classLikeName;
     }
 
     public function getFileOccurrence(): FileOccurrence

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\AstRunner;
 
+use ArrayObject;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
+use SplStack;
 
 class AstMap
 {
@@ -46,17 +49,17 @@ class AstMap
         return $this->astFileReferences;
     }
 
-    public function getClassReferenceByClassName(string $className): ?AstClassReference
+    public function getClassReferenceByClassName(ClassLikeName $className): ?AstClassReference
     {
-        return $this->astClassReferences[$className] ?? null;
+        return $this->astClassReferences[$className->toString()] ?? null;
     }
 
     /**
      * @return AstInherit[]|iterable
      */
-    public function getClassInherits(string $className): iterable
+    public function getClassInherits(ClassLikeName $classLikeName): iterable
     {
-        $classReference = $this->getClassReferenceByClassName($className);
+        $classReference = $this->getClassReferenceByClassName($classLikeName);
 
         if (null === $classReference) {
             return [];
@@ -69,36 +72,38 @@ class AstMap
     }
 
     /**
-     * @param \ArrayObject<string, bool>|null $alreadyResolved
+     * @param ArrayObject<string, true>|null $alreadyResolved
      *
      * @return iterable<AstInherit>
      */
     private function resolveDepsRecursive(
         AstInherit $inheritDependency,
-        \ArrayObject $alreadyResolved = null,
-        \SplStack $path = null
+        ArrayObject $alreadyResolved = null,
+        SplStack $path = null
     ): iterable {
-        $alreadyResolved = $alreadyResolved ?? new \ArrayObject();
+        $alreadyResolved = $alreadyResolved ?? new ArrayObject();
 
         if (null === $path) {
-            $path = new \SplStack();
+            $path = new SplStack();
             $path->push($inheritDependency);
         }
 
-        if (isset($alreadyResolved[$inheritDependency->getClassName()])) {
+        $className = $inheritDependency->getClassLikeName()->toString();
+
+        if (isset($alreadyResolved[$className])) {
             $path->pop();
 
             return [];
         }
 
-        $classReference = $this->getClassReferenceByClassName($inheritDependency->getClassName());
+        $classReference = $this->getClassReferenceByClassName($inheritDependency->getClassLikeName());
 
         if (null === $classReference) {
             return [];
         }
 
         foreach ($classReference->getInherits() as $inherit) {
-            $alreadyResolved[$inheritDependency->getClassName()] = true;
+            $alreadyResolved[$className] = true;
 
             yield $inherit->withPath(iterator_to_array($path));
 
@@ -106,14 +111,14 @@ class AstMap
 
             yield from $this->resolveDepsRecursive($inherit, $alreadyResolved, $path);
 
-            unset($alreadyResolved[$inheritDependency->getClassName()]);
+            unset($alreadyResolved[$className]);
             $path->pop();
         }
     }
 
     private function addAstClassReference(AstClassReference $astClassReference): void
     {
-        $this->astClassReferences[$astClassReference->getClassName()] = $astClassReference;
+        $this->astClassReferences[$astClassReference->getClassLikeName()->toString()] = $astClassReference;
     }
 
     private function addAstFileReference(AstFileReference $astFileReference): void

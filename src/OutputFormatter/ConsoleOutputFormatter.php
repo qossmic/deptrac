@@ -90,8 +90,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             sprintf(
                 "%s<info>%s</info> must not depend on <info>%s</info> (%s on %s) \n%s",
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getClassA(),
-                $dependency->getClassB(),
+                $dependency->getClassLikeNameA()->toString(),
+                $dependency->getClassLikeNameB()->toString(),
                 $rule->getLayerA(),
                 $rule->getLayerB(),
                 $this->formatPath($dependency->getInheritPath(), $dependency)
@@ -110,9 +110,9 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             sprintf(
                 '%s<info>%s</info>::%s must not depend on <info>%s</info> (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getClassA(),
+                $dependency->getClassLikeNameA()->toString(),
                 $dependency->getFileOccurrence()->getLine(),
-                $dependency->getClassB(),
+                $dependency->getClassLikeNameB()->toString(),
                 $rule->getLayerA(),
                 $rule->getLayerB()
             )
@@ -123,13 +123,13 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     {
         $buffer = [];
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassName(), $p->getFileOccurrence()->getLine()));
+            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
         }
 
-        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassName(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             "\t%s::%d",
-            $dependency->getOriginalDependency()->getClassB(),
+            $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 

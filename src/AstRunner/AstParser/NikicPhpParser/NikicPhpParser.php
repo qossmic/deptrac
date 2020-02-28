@@ -13,6 +13,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 
 class NikicPhpParser implements AstParser
 {
@@ -32,48 +33,48 @@ class NikicPhpParser implements AstParser
     private $cache;
 
     /**
+     * @var TypeResolver
+     */
+    private $typeResolver;
+
+    /**
      * @var ClassDependencyResolver[]
      */
     private $classDependencyResolvers;
 
+    /**
+     * @var NodeTraverser
+     */
+    private $traverser;
+
     public function __construct(
         FileParser $fileParser,
         AstFileReferenceCache $cache,
+        TypeResolver $typeResolver,
         ClassDependencyResolver ...$classDependencyResolvers
     ) {
         $this->fileParser = $fileParser;
         $this->cache = $cache;
+        $this->typeResolver = $typeResolver;
         $this->classDependencyResolvers = $classDependencyResolvers;
+
+        $this->traverser = new NodeTraverser();
+        $this->traverser->addVisitor(new NameResolver());
     }
 
-    public function supports($data): bool
+    public function parse(\SplFileInfo $data): AstFileReference
     {
-        if (!$data instanceof \SplFileInfo) {
-            return false;
-        }
-
-        return 'php' === strtolower($data->getExtension());
-    }
-
-    public function parse($data): AstFileReference
-    {
-        /** @var \SplFileInfo $data */
-        if (!$this->supports($data)) {
-            throw new \LogicException('data not supported');
-        }
-
         $realPath = (string) $data->getRealPath();
         if (null !== $fileReference = $this->cache->get($realPath)) {
             return $fileReference;
         }
 
         $fileReference = new AstFileReference($realPath);
+        $visitor = new ClassReferenceVisitor($fileReference, $this->typeResolver, ...$this->classDependencyResolvers);
 
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new NameResolver());
-        $traverser->addVisitor(new AstClassReferenceResolver($fileReference, ...$this->classDependencyResolvers));
-
-        $traverser->traverse($this->fileParser->parse($data));
+        $this->traverser->addVisitor($visitor);
+        $this->traverser->traverse($this->fileParser->parse($data));
+        $this->traverser->removeVisitor($visitor);
 
         $this->cache->set($fileReference);
 
@@ -82,29 +83,30 @@ class NikicPhpParser implements AstParser
 
     public function getAstForClassReference(AstClassReference $classReference): ?Node\Stmt\ClassLike
     {
-        if (isset(self::$classAstMap[$classReference->getClassName()])) {
-            return self::$classAstMap[$classReference->getClassName()];
+        $classLikeName = $classReference->getClassLikeName()->toString();
+
+        if (isset(self::$classAstMap[$classLikeName])) {
+            return self::$classAstMap[$classLikeName];
         }
 
         if (null === $classReference->getFileReference()) {
             return null;
         }
 
-        $finding = new FindingVisitor(
+        $findingVisitor = new FindingVisitor(
             static function (Node $node): bool {
                 return $node instanceof Node\Stmt\ClassLike;
             }
         );
 
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor(new NameResolver());
-        $traverser->addVisitor($finding);
-        $traverser->traverse(
+        $this->traverser->addVisitor($findingVisitor);
+        $this->traverser->traverse(
             $this->fileParser->parse(new \SplFileInfo($classReference->getFileReference()->getFilepath()))
         );
+        $this->traverser->removeVisitor($findingVisitor);
 
         /** @var Node\Stmt\ClassLike[] $classLikeNodes */
-        $classLikeNodes = $finding->getFoundNodes();
+        $classLikeNodes = $findingVisitor->getFoundNodes();
 
         foreach ($classLikeNodes as $classLikeNode) {
             if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
@@ -116,6 +118,6 @@ class NikicPhpParser implements AstParser
             self::$classAstMap[$className] = $classLikeNode;
         }
 
-        return self::$classAstMap[$classReference->getClassName()] ?? null;
+        return self::$classAstMap[$classLikeName] ?? null;
     }
 }

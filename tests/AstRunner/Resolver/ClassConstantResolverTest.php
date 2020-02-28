@@ -10,6 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
 class ClassConstantResolverTest extends TestCase
@@ -19,6 +20,7 @@ class ClassConstantResolverTest extends TestCase
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
+            new TypeResolver(),
             new ClassConstantResolver()
         );
 
@@ -34,7 +36,7 @@ class ClassConstantResolverTest extends TestCase
         $dependencies = $astClassReferences[1]->getDependencies();
         static::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\ClassA',
-            $dependencies[0]->getClass()
+            $dependencies[0]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilenpath());
         static::assertSame(15, $dependencies[0]->getFileOccurrence()->getLine());

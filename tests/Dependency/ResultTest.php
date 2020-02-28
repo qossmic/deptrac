@@ -7,6 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Dependency;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
@@ -16,21 +17,28 @@ class ResultTest extends TestCase
 {
     public function testAddDependency(): void
     {
+        $classA = ClassLikeName::fromFQCN('A');
+        $classB = ClassLikeName::fromFQCN('B');
+        $classC = ClassLikeName::fromFQCN('C');
+
         $dependencyResult = new Result();
-        $dependencyResult->addDependency($dep1 = new Dependency('A', 'B', new FileOccurrence(new AstFileReference('a.php'), 12)));
-        $dependencyResult->addDependency($dep2 = new Dependency('B', 'C', new FileOccurrence(new AstFileReference('b.php'), 12)));
-        $dependencyResult->addDependency($dep3 = new Dependency('A', 'C', new FileOccurrence(new AstFileReference('a.php'), 12)));
-        static::assertSame([$dep1, $dep3], $dependencyResult->getDependenciesByClass('A'));
-        static::assertSame([$dep2], $dependencyResult->getDependenciesByClass('B'));
-        static::assertSame([], $dependencyResult->getDependenciesByClass('C'));
+        $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence(new AstFileReference('a.php'), 12)));
+        $dependencyResult->addDependency($dep2 = new Dependency($classB, $classC, new FileOccurrence(new AstFileReference('b.php'), 12)));
+        $dependencyResult->addDependency($dep3 = new Dependency($classA, $classC, new FileOccurrence(new AstFileReference('a.php'), 12)));
+        static::assertSame([$dep1, $dep3], $dependencyResult->getDependenciesByClass($classA));
+        static::assertSame([$dep2], $dependencyResult->getDependenciesByClass($classB));
+        static::assertSame([], $dependencyResult->getDependenciesByClass($classC));
         static::assertCount(3, $dependencyResult->getDependenciesAndInheritDependencies());
     }
 
     public function testGetDependenciesAndInheritDependencies(): void
     {
+        $classA = ClassLikeName::fromFQCN('A');
+        $classB = ClassLikeName::fromFQCN('B');
+
         $dependencyResult = new Result();
-        $dependencyResult->addDependency($dep1 = new Dependency('A', 'B', new FileOccurrence(new AstFileReference('a.php'), 12)));
-        $dependencyResult->addInheritDependency($dep2 = new InheritDependency('A', 'B', $dep1, AstInherit::newExtends('B', new FileOccurrence(new AstFileReference('a.php'), 12))));
+        $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence(new AstFileReference('a.php'), 12)));
+        $dependencyResult->addInheritDependency($dep2 = new InheritDependency($classA, $classB, $dep1, AstInherit::newExtends($classB, new FileOccurrence(new AstFileReference('a.php'), 12))));
         static::assertEquals([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
     }
 }

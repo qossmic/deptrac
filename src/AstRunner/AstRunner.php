@@ -32,10 +32,6 @@ class AstRunner
         $this->dispatcher->dispatch(new PreCreateAstMapEvent(count($files)));
 
         foreach ($files as $file) {
-            if (!$this->astParser->supports($file)) {
-                continue;
-            }
-
             try {
                 $references[] = $this->astParser->parse($file);
 

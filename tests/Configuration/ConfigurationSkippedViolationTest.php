@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
 
 class ConfigurationSkippedViolationTest extends TestCase
@@ -22,19 +23,19 @@ class ConfigurationSkippedViolationTest extends TestCase
                 'DependencyClass2',
             ],
         ]);
-        $this->assertTrue($configuration->isViolationSkipped('ClassWithOneDep', 'DependencyClass'));
-        $this->assertFalse($configuration->isViolationSkipped('ClassWithEmptyDeps', 'DependencyClass'));
-        $this->assertTrue($configuration->isViolationSkipped('ClassWithMultipleDeps', 'DependencyClass1'));
-        $this->assertTrue($configuration->isViolationSkipped('ClassWithMultipleDeps', 'DependencyClass2'));
+        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithOneDep'), ClassLikeName::fromFQCN('DependencyClass')));
+        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithEmptyDeps'), ClassLikeName::fromFQCN('DependencyClass')));
+        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass1')));
+        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass2')));
     }
 
-    public function testFromArrayWithEmptyArrayAcceptable()
+    public function testFromArrayWithEmptyArrayAcceptable(): void
     {
         $configuration = ConfigurationSkippedViolation::fromArray([]);
-        $this->assertFalse($configuration->isViolationSkipped('AnyClass', 'AnotherAnyClass'));
+        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('AnyClass'), ClassLikeName::fromFQCN('AnotherAnyClass')));
     }
 
-    public function testFromArrayRequireOneArgument()
+    public function testFromArrayRequireOneArgument(): void
     {
         $this->expectException(\TypeError::class);
         ConfigurationSkippedViolation::fromArray();

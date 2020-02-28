@@ -6,11 +6,13 @@ namespace Tests\SensioLabs\Deptrac\AstRunner;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB;
@@ -41,7 +43,8 @@ class AstMapFlattenGeneratorTest extends TestCase
             new EventDispatcher(),
             new NikicPhpParser(
                 new FileParser(ParserFactory::createParser()),
-                new AstFileReferenceInMemoryCache()
+                new AstFileReferenceInMemoryCache(),
+                new TypeResolver()
             )
         );
 
@@ -53,7 +56,7 @@ class AstMapFlattenGeneratorTest extends TestCase
     private function getInheritedInherits(string $class, AstMap $astMap): array
     {
         $inherits = [];
-        foreach ($astMap->getClassInherits($class) as $v) {
+        foreach ($astMap->getClassInherits(ClassLikeName::fromFQCN($class)) as $v) {
             if (count($v->getPath()) > 0) {
                 $inherits[] = (string) $v;
             }

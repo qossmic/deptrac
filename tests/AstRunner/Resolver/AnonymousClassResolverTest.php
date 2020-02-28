@@ -10,6 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
 class AnonymousClassResolverTest extends TestCase
@@ -19,6 +20,7 @@ class AnonymousClassResolverTest extends TestCase
         $parser = new NikicPhpParser(
             new FileParser(ParserFactory::createParser()),
             new AstFileReferenceInMemoryCache(),
+            new TypeResolver(),
             new AnonymousClassResolver()
         );
 
@@ -36,7 +38,7 @@ class AnonymousClassResolverTest extends TestCase
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\ClassA',
-            $dependencies[0]->getClass()
+            $dependencies[0]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilenpath());
         static::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
@@ -44,7 +46,7 @@ class AnonymousClassResolverTest extends TestCase
 
         static::assertSame(
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\InterfaceC',
-            $dependencies[1]->getClass()
+            $dependencies[1]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilenpath());
         static::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());

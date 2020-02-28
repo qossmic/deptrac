@@ -6,24 +6,16 @@ namespace SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class ClassConstantResolver implements ClassDependencyResolver
 {
-    public function processNode(Node $node, AstFileReference $astFileReference, AstClassReference $astClassReference): void
+    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof ClassConstFetch || !$node->class instanceof Node\Name) {
+        if (!$node instanceof ClassConstFetch || !$node->class instanceof Node\Name || $node->class->isSpecialClassName()) {
             return;
         }
 
-        $astClassReference->addDependency(
-            AstDependency::constFetch(
-                $node->class->toString(),
-                new FileOccurrence($astFileReference, $node->class->getLine())
-            )
-        );
+        $classReferenceBuilder->constFetch($node->class->toCodeString(), $node->class->getLine());
     }
 }

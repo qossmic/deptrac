@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Dependency;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 interface DependencyInterface
 {
-    public function getClassA(): string;
+    public function getClassLikeNameA(): ClassLikeName;
 
-    public function getClassB(): string;
+    public function getClassLikeNameB(): ClassLikeName;
 
     public function getFileOccurrence(): FileOccurrence;
 }
