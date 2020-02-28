@@ -2,7 +2,7 @@ paths:
     - /tmp/symfony
 
 exclude_files:
-    - .*test.*
+    - 'Tests'
 
 layers:
     -   name: Asset
