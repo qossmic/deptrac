@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -82,11 +84,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     {
         $layers = [];
         foreach ($context->all() as $rule) {
-            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
-                continue;
+            if ($rule instanceof Allowed || $rule instanceof Violation || $rule instanceof SkippedViolation) {
+                $layers[$rule->getLayerA()][] = $rule;
+            } elseif ($rule instanceof Uncovered) {
+                $layers[$rule->getLayer()][] = $rule;
             }
-
-            $layers[$rule->getLayerA()][] = $rule;
         }
 
         $layerIndex = 0;
@@ -100,10 +102,6 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $skippedViolationsByLayer = array_filter($rules, static function (Rule $rule) {
                 return $rule instanceof SkippedViolation;
             });
-
-            if (0 === count($violationsByLayer) && 0 === count($skippedViolationsByLayer)) {
-                continue;
-            }
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
@@ -143,6 +141,8 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
                     $this->addSkipped($xmlDoc, $testCase);
                 } elseif ($rule instanceof Violation) {
                     $this->addFailure($rule, $xmlDoc, $testCase);
+                } elseif ($rule instanceof Uncovered) {
+                    $this->addWarning($rule, $xmlDoc, $testCase);
                 }
             }
 
@@ -174,5 +174,24 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     {
         $skipped = $xmlDoc->createElement('skipped');
         $testCase->appendChild($skipped);
+    }
+
+    private function addWarning(Uncovered $rule, \DOMDocument $xmlDoc, \DOMElement $testCase): void
+    {
+        $dependency = $rule->getDependency();
+
+        $message = sprintf(
+            '%s:%d has uncovered dependency on %s (%s)',
+            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getFileOccurrence()->getLine(),
+            $dependency->getClassLikeNameB()->toString(),
+            $rule->getLayer()
+        );
+
+        $error = $xmlDoc->createElement('warning');
+        $error->appendChild(new \DOMAttr('message', $message));
+        $error->appendChild(new \DOMAttr('type', 'WARNING'));
+
+        $testCase->appendChild($error);
     }
 }
