@@ -86,16 +86,7 @@ class OutputFormatterFactory
             return $formatter;
         }
 
-        throw new \LogicException(sprintf(
-            'Formatter %s does not exists, did you mean %s?',
-            $name,
-            implode(
-                ', ',
-                array_map(static function (OutputFormatterInterface $f): string {
-                    return $f->getName();
-                }, $this->formatters)
-            )
-        ));
+        throw new \LogicException(sprintf('Formatter %s does not exists, did you mean %s?', $name, implode(', ', array_map(static function (OutputFormatterInterface $f): string { return $f->getName(); }, $this->formatters))));
     }
 
     private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool

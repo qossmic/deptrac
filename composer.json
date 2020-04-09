@@ -16,6 +16,7 @@
     "require": {
         "php": "^7.2.5",
         "ext-json": "*",
+        "composer/xdebug-handler": "^1.4",
         "graphp/graphviz": "0.2.*",
         "nikic/php-parser": "^4.3",
         "phpdocumentor/graphviz": "^1.0",
