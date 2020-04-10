@@ -25,11 +25,7 @@ class Registry
     public function getCollector(string $type): CollectorInterface
     {
         if (!isset($this->collectors[$type])) {
-            throw new \InvalidArgumentException(sprintf(
-                'unknown collector type "%s", possible collectors are %s',
-                $type,
-                implode(', ', array_keys($this->collectors))
-            ));
+            throw new \InvalidArgumentException(sprintf('unknown collector type "%s", possible collectors are %s', $type, implode(', ', array_keys($this->collectors))));
         }
 
         return $this->collectors[$type];

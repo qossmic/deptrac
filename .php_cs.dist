@@ -2,7 +2,8 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in([__DIR__.'/src', __DIR__.'/tests'])
-    ->exclude('Fixtures');
+    ->exclude('Fixtures')
+    ->append([__DIR__.'/deptrac.php']);
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
