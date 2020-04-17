@@ -16,7 +16,7 @@ class BoolCollectorTest extends TestCase
     public function testSatisfy(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('bool collector must have a must or a must_not attribute');
+        $this->expectExceptionMessage('"bool" collector must have a "must" or a "must_not" attribute.');
 
         (new BoolCollector())->satisfy(
             [],
