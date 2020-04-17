@@ -74,7 +74,7 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
         if ($node instanceof Node\Stmt\Interface_) {
             foreach ($node->extends as $extend) {
-                $this->currentClassReferenceBuilder->extends($extend->toCodeString(), $extend->getLine());
+                $this->currentClassReferenceBuilder->implements($extend->toCodeString(), $extend->getLine());
             }
         }
 

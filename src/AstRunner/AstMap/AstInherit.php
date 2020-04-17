@@ -85,6 +85,11 @@ class AstInherit
         return $this->type;
     }
 
+    public function isImplements(): bool
+    {
+        return self::TYPE_IMPLEMENTS === $this->type;
+    }
+
     /**
      * @return AstInherit[]
      */

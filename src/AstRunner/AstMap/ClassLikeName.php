@@ -30,4 +30,9 @@ final class ClassLikeName
     {
         return $this->className;
     }
+
+    public function equals(ClassLikeName $classLikeName): bool
+    {
+        return $this->className === $classLikeName->className;
+    }
 }
