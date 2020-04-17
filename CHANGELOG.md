@@ -2,7 +2,37 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 0.6.0 - 2019-10-18
+## [0.7.0] - 2020-xx-xx
+
+### Added
+
+- [#294] adds composer/xdebug-handler, Thanks to [@smoench]
+- [#270] add xml formatter, Thanks to [@timglabisch]
+
+### Changed
+
+- [#283] improve analysing performance, Thanks to [@smoench]
+- [#278] make AstMap immutable, Thanks to [@smoench]
+- [#271] test on PHP 7.4, Thanks to [@smoench]
+- [#272] Update README.md, Thanks to [@radimvaculik]
+- [#274] use github actions, Thanks to [@smoench]
+- [#275] use checkout fetch depth one, Thanks to [@smoench]
+- [#276] upgrade to symfony 5.0, Thanks to [@smoench]
+- [#281] update actions config, Thanks to [@smoench]
+- [#279] resolve file occurrences of dependencies, Thanks to [@smoench]
+- [#292] dependency updates, Thanks to [@smoench]
+- [#284] update dependencies, Thanks to [@smoench]
+- [#286] use latest phpstan version, Thanks to [@smoench]
+- [#287] refactor type resolving, Thanks to [@smoench]
+- [#289] dependency updates, Thanks to [@smoench]
+- [#290] jUnit: report successful + uncovered testcases, Thanks to [@smoench]
+- [#266] POC: track uncovered dependencies, Thanks to [@smoench]
+
+### Removed
+
+- [#288] remove banner, Thanks to [@smoench]
+
+## [0.6.0] - 2019-10-18
 
 ### Changed
 
@@ -24,7 +54,7 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#247](https://github.com/sensiolabs-de/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
 - [#256](https://github.com/sensiolabs-de/deptrac/pull/256) Enhancement: Throw exception when configuration cannot be parsed as yaml, Thanks to [@localheinz]
 - [#228](https://github.com/sensiolabs-de/deptrac/pull/228) improve file exclusion, Thanks to [@smoench]
-- [#235](https://github.com/sensiolabs-de/deptrac/pull/235) Improve console output of analyze command., Thanks to @temp
+- [#235](https://github.com/sensiolabs-de/deptrac/pull/235) Improve console output of analyze command., Thanks to [@temp]
 - [#245](https://github.com/sensiolabs-de/deptrac/pull/245) refactor/improve method collector, Thanks to [@smoench]
 - [#244](https://github.com/sensiolabs-de/deptrac/pull/244) dependency updates, Thanks to [@smoench]
 - [#243](https://github.com/sensiolabs-de/deptrac/pull/243) anonymous class resolver, Thanks to [@smoench]
@@ -37,16 +67,16 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#232](https://github.com/sensiolabs-de/deptrac/pull/232) increase minimum php version to 7.2, Thanks to [@smoench]
 - [#246](https://github.com/sensiolabs-de/deptrac/pull/246) naming + improvements, Thanks to [@smoench]
 - [#224](https://github.com/sensiolabs-de/deptrac/pull/224) annotation dependency resolver, Thanks to [@smoench]
-- [#248](https://github.com/sensiolabs-de/deptrac/pull/248) Update documentation on bool collector to describe actual behaviour, Thanks to @rpkamp
+- [#248](https://github.com/sensiolabs-de/deptrac/pull/248) Update documentation on bool collector to describe actual behaviour, Thanks to [@rpkamp]
 
 ### Fixed
 
 - [#265](https://github.com/sensiolabs-de/deptrac/pull/265) Bugfix: classes in other namespaces are resolved in same namespace, Thanks to [@smoench]
 - [#227](https://github.com/sensiolabs-de/deptrac/pull/227) Fix: Remove non-applicable exclude configuration, Thanks to [@localheinz]
-- [#230](https://github.com/sensiolabs-de/deptrac/pull/230) Fix alignment, Thanks to @BackEndTea
-- [#223](https://github.com/sensiolabs-de/deptrac/pull/223) Fix outdated graphviz download link in README, Thanks to @LeoVie
+- [#230](https://github.com/sensiolabs-de/deptrac/pull/230) Fix alignment, Thanks to [@BackEndTea]
+- [#223](https://github.com/sensiolabs-de/deptrac/pull/223) Fix outdated graphviz download link in README, Thanks to [@LeoVie]
 
-## 0.5.0 - 2019-03-15
+## [0.5.0] - 2019-03-15
 
 ### Added
 
@@ -54,7 +84,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#215](https://github.com/sensiolabs-de/deptrac/pull/215) Enhancement: Apply @PHPUnit60Migration:risky ruleset
+- [#215](https://github.com/sensiolabs-de/deptrac/pull/215) Enhancement: Apply `@PHPUnit60Migration:risky` ruleset
 
 - [#214](https://github.com/sensiolabs-de/deptrac/pull/214) Enhancement: Update phpstan/phpstan
 
@@ -68,7 +98,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#210](https://github.com/sensiolabs-de/deptrac/pull/210) don't apply dependencies from prev classes to current class when file contains more than one class
 
-## 0.4.0 - 2019-01-11
+## [0.4.0] - 2019-01-11
 
 ### Added
 
@@ -86,7 +116,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#190](https://github.com/sensiolabs-de/deptrac/pull/190) removed support for PHP <7.1
 
-## 0.3.0 - 2018-11-05
+## [0.3.0] - 2018-11-05
 
 ### Added
 
@@ -102,7 +132,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#177](https://github.com/sensiolabs-de/deptrac/pull/177) Removed the self updating mechanism.
 
-## 0.2.0 - 2018-03-24
+## [0.2.0] - 2018-03-24
 
 ### Added
 
@@ -112,7 +142,38 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Removed support for PHP < 7.0 and HHVM.
 
-
 [@smoench]: https://github.com/smoench
 [@localheinz]: https://github.com/localheinz
 [@dbrumann]: https://github.com/dbrumann
+[@temp]: https://github.com/temp
+[@rpkamp]: https://github.com/rpkamp
+[@LeoVie]: https://github.com/LeoVie
+[@BackEndTea]: https://github.com/BackEndTea
+[@timglabisch]: https://github.com/timglabisch
+[@radimvaculik]: https://github.com/radimvaculik
+
+[#294]: https://github.com/sensiolabs-de/deptrac/pull/294
+[#292]: https://github.com/sensiolabs-de/deptrac/pull/292
+[#290]: https://github.com/sensiolabs-de/deptrac/pull/290
+[#289]: https://github.com/sensiolabs-de/deptrac/pull/289
+[#288]: https://github.com/sensiolabs-de/deptrac/pull/288
+[#287]: https://github.com/sensiolabs-de/deptrac/pull/287
+[#286]: https://github.com/sensiolabs-de/deptrac/pull/286
+[#284]: https://github.com/sensiolabs-de/deptrac/pull/284
+[#283]: https://github.com/sensiolabs-de/deptrac/pull/283
+[#281]: https://github.com/sensiolabs-de/deptrac/pull/281
+[#279]: https://github.com/sensiolabs-de/deptrac/pull/279
+[#278]: https://github.com/sensiolabs-de/deptrac/pull/278
+[#276]: https://github.com/sensiolabs-de/deptrac/pull/276
+[#275]: https://github.com/sensiolabs-de/deptrac/pull/275
+[#274]: https://github.com/sensiolabs-de/deptrac/pull/274
+[#272]: https://github.com/sensiolabs-de/deptrac/pull/272
+[#271]: https://github.com/sensiolabs-de/deptrac/pull/271
+[#270]: https://github.com/sensiolabs-de/deptrac/pull/270
+[#266]: https://github.com/sensiolabs-de/deptrac/pull/266
+
+[0.7.0]: https://github.com/sensiolabs-de/deptrac/compare/0.6.0...0.7.0
+[0.6.0]: https://github.com/sensiolabs-de/deptrac/compare/0.5.0...0.6.0
+[0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
+[0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
+[0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
