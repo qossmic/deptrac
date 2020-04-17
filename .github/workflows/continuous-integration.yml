@@ -140,3 +140,9 @@ jobs:
 
       - name: "Custom cache file should exist"
         run: "[ -f '.deptrac.cache2' ]"
+
+      - name: "Upload phar file artifact"
+        uses: actions/upload-artifact@v1
+        with:
+          name: deptrac.phar
+          path: deptrac.phar
