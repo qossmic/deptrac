@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -53,8 +53,8 @@ final class Application extends BaseApplication
             new RegisterListenersPass(EventDispatcher::class, 'event_listener', 'event_subscriber')
         );
 
-        $fileLoader = new XmlFileLoader($container, new FileLocator(__DIR__));
-        $fileLoader->load(__DIR__.'/../../config/services.xml');
+        $fileLoader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config/'));
+        $fileLoader->load('services.php');
 
         if (false === $input->hasParameterOption('--no-cache')) {
             $container->setParameter(
@@ -62,7 +62,7 @@ final class Application extends BaseApplication
                 $input->getParameterOption('--cache-file', getcwd().'/.deptrac.cache')
             );
 
-            $fileLoader->load(__DIR__.'/../../config/cache.xml');
+            $fileLoader->load('cache.php');
         }
 
         $container->compile();
