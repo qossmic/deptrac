@@ -14,6 +14,12 @@ class OutputFormatterInputTest extends TestCase
         static::assertEquals('b', (new OutputFormatterInput(['a' => 'b']))->getOption('a'));
     }
 
+    public function testGetOptionAsBoolean(): void
+    {
+        static::assertTrue((new OutputFormatterInput(['a' => '1']))->getOptionAsBoolean('a'));
+        static::assertFalse((new OutputFormatterInput(['a' => '0']))->getOptionAsBoolean('a'));
+    }
+
     public function testGetOptionException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
