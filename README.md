@@ -575,7 +575,8 @@ examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\My
 Supported options:
 
 ```
---formatter-console=         to disable the console fomatter, set this option to "false" [default: true]
+--formatter-console=                    to disable the console formatter, set this argument to "false" [default: true]
+--formatter-console-report-uncovered=   report uncovered dependencies [default: false]
 ```
 
 
