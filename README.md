@@ -35,6 +35,7 @@ this rule was violated.
     1. [`directory` Collector](#directory-collector)
     1. [`bool` Collector](#bool-collector)
     1. [`method` Collector](#method-collector)
+    1. [`implements` Collector](#implments-collector)
     1. [More Collectors](#more-collectors)
 1. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
@@ -546,6 +547,17 @@ layers:
 Every class having a method that matches the regular expression `.*foo`, e.g. `getFoo()` or `setFoo()` becomes a part
 of the *Foo services* layer.
 
+### `implements` Collector
+
+The `implements` collector allows collecting classes by matching recursively for a fully qualified interface name. 
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: implements
+        name: 'App\SomeInterface'
+```
 
 ### More Collectors
 

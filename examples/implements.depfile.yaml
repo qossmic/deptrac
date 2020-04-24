@@ -1,0 +1,8 @@
+paths: ["./examples/Implements/"]
+exclude_files: []
+layers:
+  - name: Foo
+    collectors:
+      - type: implements
+        implements: examples\Implements_\Baz
+ruleset: []

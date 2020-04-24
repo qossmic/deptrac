@@ -117,23 +117,23 @@ class AstMapFlattenGeneratorTest extends TestCase
         );
 
         static::assertArrayValuesEquals(
-            ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends))'],
+            ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements))'],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceC::class, $astMap)
         );
 
         static::assertArrayValuesEquals(
             [
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Extends))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements))',
             ],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceD::class, $astMap)
         );
 
         static::assertArrayValuesEquals(
             [
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Extends))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Implements))',
             ],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceE::class, $astMap)
         );
@@ -160,18 +160,18 @@ class AstMapFlattenGeneratorTest extends TestCase
 
         static::assertArrayValuesEquals(
             [
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Extends))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
             ],
             $this->getInheritedInherits(MultipleInteritanceB::class, $astMap)
         );
 
         static::assertArrayValuesEquals(
             [
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::8 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Extends))',
-                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Extends))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::8 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
+                'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Implements))',
             ],
             $this->getInheritedInherits(MultipleInteritanceC::class, $astMap)
         );
