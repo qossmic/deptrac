@@ -2,15 +2,21 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## [0.7.0] - 2020-xx-xx
+## [0.7.0] - 2020-05-02
 
 ### Added
 
+- [#298] adds implements collector, Thanks to [@smoench]
+- [#297] Add doc for MethodCollector and misc, Thanks to [@smoench]
 - [#294] adds composer/xdebug-handler, Thanks to [@smoench]
+- [#285] report uncovered dependencies, Thanks to [@smoench]
 - [#270] add xml formatter, Thanks to [@timglabisch]
 
 ### Changed
 
+- [#300] adds file reference builder, Thanks to [@smoench]
+- [#296] use php config files, Thanks to [@smoench]
+- [#295] upload phar artifact, Thanks to [@smoench]
 - [#283] improve analysing performance, Thanks to [@smoench]
 - [#278] make AstMap immutable, Thanks to [@smoench]
 - [#271] test on PHP 7.4, Thanks to [@smoench]
@@ -177,3 +183,10 @@ All notable changes to this project will be documented in this file, in reverse 
 [0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
+
+[#300]: https://github.com/sensiolabs-de/deptrac/pull/300
+[#298]: https://github.com/sensiolabs-de/deptrac/pull/298
+[#297]: https://github.com/sensiolabs-de/deptrac/pull/297
+[#296]: https://github.com/sensiolabs-de/deptrac/pull/296
+[#295]: https://github.com/sensiolabs-de/deptrac/pull/295
+[#285]: https://github.com/sensiolabs-de/deptrac/pull/285
