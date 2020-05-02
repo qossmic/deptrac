@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
@@ -18,8 +17,8 @@ class InheritDependencyTest extends TestCase
     {
         $classLikeNameA = ClassLikeName::fromFQCN('a');
         $classLikeNameB = ClassLikeName::fromFQCN('b');
+        $fileOccurrence = FileOccurrence::fromFilepath('a.php', 1);
 
-        $fileOccurrence = new FileOccurrence(new AstFileReference('a.php'), 1);
         $dependency = new InheritDependency(
             $classLikeNameA,
             $classLikeNameB,

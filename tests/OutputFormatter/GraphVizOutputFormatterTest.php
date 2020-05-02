@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
@@ -28,12 +27,12 @@ class GraphVizOutputFormatterTest extends TestCase
     {
         $dotFile = __DIR__.'/data/graphviz.dot';
 
-        $fileOccurrenceA = new FileOccurrence(new AstFileReference('classA.php'), 0);
+        $fileOccurrenceA = FileOccurrence::fromFilepath('classA.php', 0);
         $classA = ClassLikeName::fromFQCN('ClassA');
 
         $context = new Context([
             new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
-            new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), new FileOccurrence(new AstFileReference('classAB.php'), 1)), 'LayerA', 'LayerB'),
+            new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), FileOccurrence::fromFilepath('classAB.php', 1)), 'LayerA', 'LayerB'),
             new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
             new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
         ]);

@@ -6,32 +6,26 @@ namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
 class AstFileReference
 {
+    /** @var string */
     private $filepath;
 
     /** @var AstClassReference[] */
-    private $astClassReferences;
+    private $classReferences;
 
     /** @var AstDependency[] */
     private $dependencies;
 
-    public function __construct(string $filepath)
+    /**
+     * @param AstDependency[]     $dependencies
+     * @param AstClassReference[] $classReferences
+     */
+    public function __construct(string $filepath, array $dependencies, array $classReferences)
     {
         $this->filepath = $filepath;
-        $this->astClassReferences = [];
-        $this->dependencies = [];
-    }
-
-    /**
-     * @param AstInherit[]    $inherits
-     * @param AstDependency[] $dependencies
-     */
-    public function addClassReference(ClassLikeName $className, array $inherits = [], array $dependencies = []): AstClassReference
-    {
-        $astClassReference = new AstClassReference($className, $this, $inherits, $dependencies);
-
-        $this->astClassReferences[] = $astClassReference;
-
-        return $astClassReference;
+        $this->dependencies = $dependencies;
+        $this->classReferences = array_map(function (AstClassReference $classReference) {
+            return $classReference->withFileReference($this);
+        }, $classReferences);
     }
 
     public function getFilepath(): string
@@ -44,7 +38,7 @@ class AstFileReference
      */
     public function getAstClassReferences(): array
     {
-        return $this->astClassReferences;
+        return $this->classReferences;
     }
 
     /**
@@ -53,10 +47,5 @@ class AstFileReference
     public function getDependencies(): array
     {
         return $this->dependencies;
-    }
-
-    public function addDependency(AstDependency $dependency): void
-    {
-        $this->dependencies[] = $dependency;
     }
 }

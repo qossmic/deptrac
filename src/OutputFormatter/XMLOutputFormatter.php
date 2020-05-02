@@ -95,7 +95,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
 
         $fileOccurrence = $dependency->getFileOccurrence();
         $occurrence = $xmlDoc->createElement('occurrence');
-        $occurrence->setAttribute('file', $fileOccurrence->getFilenpath());
+        $occurrence->setAttribute('file', $fileOccurrence->getFilepath());
         $occurrence->setAttribute('line', (string) $fileOccurrence->getLine());
         $entry->appendChild($occurrence);
 

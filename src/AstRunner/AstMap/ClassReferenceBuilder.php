@@ -6,8 +6,8 @@ namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
 final class ClassReferenceBuilder
 {
-    /** @var AstFileReference */
-    private $fileReference;
+    /** @var string */
+    private $filepath;
 
     /** @var string */
     private $classLikeName;
@@ -18,20 +18,21 @@ final class ClassReferenceBuilder
     /** @var AstDependency[] */
     private $dependencies = [];
 
-    private function __construct(AstFileReference $fileReference, string $classLikeName)
+    private function __construct(string $filepath, string $classLikeName)
     {
-        $this->fileReference = $fileReference;
+        $this->filepath = $filepath;
         $this->classLikeName = $classLikeName;
     }
 
-    public static function create(AstFileReference $fileReference, string $classLikeName): self
+    public static function create(string $filepath, string $classLikeName): self
     {
-        return new static($fileReference, $classLikeName);
+        return new static($filepath, $classLikeName);
     }
 
+    /** @internal */
     public function build(): AstClassReference
     {
-        return $this->fileReference->addClassReference(
+        return new AstClassReference(
             ClassLikeName::fromFQCN($this->classLikeName),
             $this->inherits,
             $this->dependencies
@@ -42,7 +43,7 @@ final class ClassReferenceBuilder
     {
         $this->inherits[] = AstInherit::newExtends(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -52,7 +53,7 @@ final class ClassReferenceBuilder
     {
         $this->inherits[] = AstInherit::newImplements(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -62,7 +63,7 @@ final class ClassReferenceBuilder
     {
         $this->inherits[] = AstInherit::newTraitUse(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -72,7 +73,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::instanceofExpr(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -82,7 +83,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::parameter(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -92,7 +93,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::newStmt(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -102,7 +103,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::staticProperty(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -112,7 +113,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::staticMethod(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -122,7 +123,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::returnType(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -132,7 +133,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::catchStmt(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -142,7 +143,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::variable(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -152,7 +153,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::throwStmt(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -162,7 +163,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::anonymousClassExtends(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -172,7 +173,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::anonymousClassImplements(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;
@@ -182,7 +183,7 @@ final class ClassReferenceBuilder
     {
         $this->dependencies[] = AstDependency::constFetch(
             ClassLikeName::fromFQCN($classLikeName),
-            new FileOccurrence($this->fileReference, $occursAtLine)
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
         );
 
         return $this;

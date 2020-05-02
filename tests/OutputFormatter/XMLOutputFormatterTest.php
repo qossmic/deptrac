@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
@@ -43,11 +42,11 @@ class XMLOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeName::fromFQCN('ClassA'),
                         ClassLikeName::fromFQCN('ClassB'),
-                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), new FileOccurrence(new AstFileReference('ClassA.php'), 3))->withPath([
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), new FileOccurrence(new AstFileReference('ClassInheritA.php'), 4)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), new FileOccurrence(new AstFileReference('ClassInheritB.php'), 5)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), new FileOccurrence(new AstFileReference('ClassInheritC.php'), 6)),
+                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
                         ])
                     ),
                     'LayerA',
@@ -60,7 +59,7 @@ class XMLOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
+                    new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
                     'LayerA',
                     'LayerB'
                 ),
@@ -79,11 +78,11 @@ class XMLOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeName::fromFQCN('ClassA'),
                         ClassLikeName::fromFQCN('ClassB'),
-                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), new FileOccurrence(new AstFileReference('ClassA.php'), 3))->withPath([
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), new FileOccurrence(new AstFileReference('ClassInheritA.php'), 4)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), new FileOccurrence(new AstFileReference('ClassInheritB.php'), 5)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), new FileOccurrence(new AstFileReference('ClassInheritC.php'), 6)),
+                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
                         ])
                     ),
                     'LayerA',
@@ -93,11 +92,11 @@ class XMLOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeName::fromFQCN('ClassC'),
                         ClassLikeName::fromFQCN('ClassD'),
-                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), new FileOccurrence(new AstFileReference('ClassA.php'), 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), new FileOccurrence(new AstFileReference('ClassA.php'), 3))->withPath([
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), new FileOccurrence(new AstFileReference('ClassInheritA.php'), 4)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), new FileOccurrence(new AstFileReference('ClassInheritB.php'), 5)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), new FileOccurrence(new AstFileReference('ClassInheritC.php'), 6)),
+                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
+                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
                         ])
                     ),
                     'LayerA',

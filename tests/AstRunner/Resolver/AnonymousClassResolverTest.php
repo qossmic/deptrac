@@ -40,7 +40,7 @@ class AnonymousClassResolverTest extends TestCase
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
-        static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilenpath());
+        static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
         static::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
         static::assertSame('anonymous_class_extends', $dependencies[0]->getType());
 
@@ -48,7 +48,7 @@ class AnonymousClassResolverTest extends TestCase
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\InterfaceC',
             $dependencies[1]->getClassLikeName()->toString()
         );
-        static::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilenpath());
+        static::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());
         static::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());
         static::assertSame('anonymous_class_implements', $dependencies[1]->getType());
     }

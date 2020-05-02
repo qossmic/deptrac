@@ -6,7 +6,10 @@ namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
 class AstClassReference
 {
+    /** @var ClassLikeName */
     private $classLikeName;
+
+    /** @var AstFileReference|null */
     private $fileReference;
 
     /** @var AstDependency[] */
@@ -19,17 +22,24 @@ class AstClassReference
      * @param AstInherit[]    $inherits
      * @param AstDependency[] $dependencies
      */
-    public function __construct(ClassLikeName $classLikeName, AstFileReference $fileReference = null, array $inherits = [], array $dependencies = [])
+    public function __construct(ClassLikeName $classLikeName, array $inherits = [], array $dependencies = [])
     {
         $this->classLikeName = $classLikeName;
-        $this->fileReference = $fileReference;
         $this->dependencies = $dependencies;
         $this->inherits = $inherits;
     }
 
+    public function withFileReference(AstFileReference $astFileReference): self
+    {
+        $instance = clone $this;
+        $instance->fileReference = $astFileReference;
+
+        return $instance;
+    }
+
     public function getFileReference(): ?AstFileReference
     {
-        return $this->fileReference ? clone $this->fileReference : null;
+        return $this->fileReference;
     }
 
     public function getClassLikeName(): ClassLikeName

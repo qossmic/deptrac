@@ -6,18 +6,15 @@ namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeScope;
 
 class ClassReferenceVisitor extends NodeVisitorAbstract
 {
-    private $fileReference;
+    /** @var FileReferenceBuilder */
+    private $fileReferenceBuilder;
 
     /** @var ClassDependencyResolver[] */
     private $classDependencyResolvers;
@@ -25,16 +22,13 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
     /** @var TypeScope */
     private $currentTypeScope;
 
-    /** @var ClassReferenceBuilder */
-    private $currentClassReferenceBuilder;
-
     /** @var TypeResolver */
     private $typeResolver;
 
-    public function __construct(AstFileReference $fileReference, TypeResolver $typeResolver, ClassDependencyResolver ...$classDependencyResolvers)
+    public function __construct(FileReferenceBuilder $fileReferenceBuilder, TypeResolver $typeResolver, ClassDependencyResolver ...$classDependencyResolvers)
     {
         $this->currentTypeScope = new TypeScope('');
-        $this->fileReference = $fileReference;
+        $this->fileReferenceBuilder = $fileReferenceBuilder;
         $this->classDependencyResolvers = $classDependencyResolvers;
         $this->typeResolver = $typeResolver;
     }
@@ -57,24 +51,20 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
             return null; // map anonymous classes on current class
         }
 
-        if (null !== $this->currentClassReferenceBuilder) {
-            $this->currentClassReferenceBuilder->build();
-        }
-
-        $this->currentClassReferenceBuilder = ClassReferenceBuilder::create($this->fileReference, $className);
+        $classReferenceBuilder = $this->fileReferenceBuilder->newClassLike($className);
 
         if ($node instanceof Node\Stmt\Class_) {
             if ($node->extends instanceof Node\Name) {
-                $this->currentClassReferenceBuilder->extends($node->extends->toCodeString(), $node->extends->getLine());
+                $classReferenceBuilder->extends($node->extends->toCodeString(), $node->extends->getLine());
             }
             foreach ($node->implements as $implement) {
-                $this->currentClassReferenceBuilder->implements($implement->toCodeString(), $implement->getLine());
+                $classReferenceBuilder->implements($implement->toCodeString(), $implement->getLine());
             }
         }
 
         if ($node instanceof Node\Stmt\Interface_) {
             foreach ($node->extends as $extend) {
-                $this->currentClassReferenceBuilder->implements($extend->toCodeString(), $extend->getLine());
+                $classReferenceBuilder->implements($extend->toCodeString(), $extend->getLine());
             }
         }
 
@@ -85,68 +75,65 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
     {
         if ($node instanceof Node\Stmt\UseUse) {
             $this->currentTypeScope->addUse($node->name->toCodeString(), $node->getAlias()->toString());
-            $this->fileReference->addDependency(
-                AstDependency::useStmt(
-                    ClassLikeName::fromFQCN($node->name->toCodeString()),
-                    new FileOccurrence($this->fileReference, $node->name->getLine())
-                )
-            );
+            $this->fileReferenceBuilder->use($node->name->toCodeString(), $node->name->getLine());
         }
 
-        if (null === $this->currentClassReferenceBuilder) {
+        if (!$this->fileReferenceBuilder->hasCurrentClassLike()) {
             return null;
         }
 
+        $classReferenceBuilder = $this->fileReferenceBuilder->currentClassLike();
+
         if ($node instanceof Node\Stmt\TraitUse) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
-                $this->currentClassReferenceBuilder->trait($classLikeName, $node->getLine());
+                $classReferenceBuilder->trait($classLikeName, $node->getLine());
             }
         }
 
         if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReferenceBuilder->instanceof($classLikeName, $node->class->getLine());
+                $classReferenceBuilder->instanceof($classLikeName, $node->class->getLine());
             }
         }
 
         if ($node instanceof Node\Param && null !== $node->type) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->type) as $classLikeName) {
-                $this->currentClassReferenceBuilder->parameter($classLikeName, $node->type->getLine());
+                $classReferenceBuilder->parameter($classLikeName, $node->type->getLine());
             }
         }
 
         if ($node instanceof Node\Expr\New_ && $node->class instanceof Node\Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReferenceBuilder->newStatement($classLikeName, $node->class->getLine());
+                $classReferenceBuilder->newStatement($classLikeName, $node->class->getLine());
             }
         }
 
         if ($node instanceof Node\Expr\StaticPropertyFetch && $node->class instanceof Node\Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReferenceBuilder->staticProperty($classLikeName, $node->class->getLine());
+                $classReferenceBuilder->staticProperty($classLikeName, $node->class->getLine());
             }
         }
 
         if ($node instanceof Node\Expr\StaticCall && $node->class instanceof Node\Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReferenceBuilder->staticMethod($classLikeName, $node->class->getLine());
+                $classReferenceBuilder->staticMethod($classLikeName, $node->class->getLine());
             }
         }
 
         if (($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) && null !== $node->returnType) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->returnType) as $classLikeName) {
-                $this->currentClassReferenceBuilder->returnType($classLikeName, $node->returnType->getLine());
+                $classReferenceBuilder->returnType($classLikeName, $node->returnType->getLine());
             }
         }
 
         if ($node instanceof Node\Stmt\Catch_) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->types) as $classLikeName) {
-                $this->currentClassReferenceBuilder->catchStmt($classLikeName, $node->getLine());
+                $classReferenceBuilder->catchStmt($classLikeName, $node->getLine());
             }
         }
 
         foreach ($this->classDependencyResolvers as $resolver) {
-            $resolver->processNode($node, $this->currentClassReferenceBuilder, $this->currentTypeScope);
+            $resolver->processNode($node, $classReferenceBuilder, $this->currentTypeScope);
         }
 
         return null;
@@ -154,10 +141,6 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
     public function afterTraverse(array $nodes)
     {
-        if (null !== $this->currentClassReferenceBuilder) {
-            $this->currentClassReferenceBuilder->build();
-        }
-
         return null;
     }
 }

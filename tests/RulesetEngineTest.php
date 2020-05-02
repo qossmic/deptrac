@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
@@ -22,7 +21,7 @@ class RulesetEngineTest extends TestCase
             yield new Dependency(
                 ClassLikeName::fromFQCN($from),
                 ClassLikeName::fromFQCN($to),
-                new FileOccurrence(new AstFileReference('foo.php'), 0)
+                FileOccurrence::fromFilepath('foo.php', 0)
             );
         }
     }

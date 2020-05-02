@@ -28,23 +28,25 @@ class ImplementsCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, bool $expected): void
     {
-        $fooFileReference = new AstMap\AstFileReference('foo.php');
-        $fooClassReference = AstMap\ClassReferenceBuilder::create($fooFileReference, 'App\Foo')
-            ->implements('App\Bar', 2)
-            ->build();
+        $fooFileReferenceBuilder = AstMap\FileReferenceBuilder::create('foo.php');
+        $fooFileReferenceBuilder
+            ->newClassLike('App\Foo')
+            ->implements('App\Bar', 2);
+        $fooFileReference = $fooFileReferenceBuilder->build();
 
-        $barFileReference = new AstMap\AstFileReference('bar.php');
-        AstMap\ClassReferenceBuilder::create($barFileReference, 'App\Bar')
-            ->implements('App\Baz', 2)
-            ->build();
+        $barFileReferenceBuilder = AstMap\FileReferenceBuilder::create('bar.php');
+        $barFileReferenceBuilder
+            ->newClassLike('App\Bar')
+            ->implements('App\Baz', 2);
+        $barFileReference = $barFileReferenceBuilder->build();
 
-        $bazFileReference = new AstMap\AstFileReference('baz.php');
-        AstMap\ClassReferenceBuilder::create($bazFileReference, 'App\Baz')
-            ->build();
+        $bazFileReferenceBuilder = AstMap\FileReferenceBuilder::create('baz.php');
+        $bazFileReferenceBuilder->newClassLike('App\Baz');
+        $bazFileReference = $bazFileReferenceBuilder->build();
 
         $stat = (new ImplementsCollector())->satisfy(
             $configuration,
-            $fooClassReference,
+            $fooFileReference->getAstClassReferences()[0],
             new AstMap([$fooFileReference, $barFileReference, $bazFileReference]),
             $this->createMock(Registry::class)
         );
