@@ -6,24 +6,26 @@ namespace SensioLabs\Deptrac\AstRunner\AstMap;
 
 final class FileOccurrence
 {
-    /**
-     * @var AstFileReference
-     */
-    private $fileReference;
-    /**
-     * @var int
-     */
+    /** @var string */
+    private $filepath;
+
+    /** @var int */
     private $line;
 
-    public function __construct(AstFileReference $fileReference, int $line)
+    private function __construct(string $filepath, int $line)
     {
-        $this->fileReference = $fileReference;
+        $this->filepath = $filepath;
         $this->line = $line;
     }
 
-    public function getFilenpath(): string
+    public static function fromFilepath(string $filepath, int $occursAtLine): self
     {
-        return $this->fileReference->getFilepath();
+        return new self($filepath, $occursAtLine);
+    }
+
+    public function getFilepath(): string
+    {
+        return $this->filepath;
     }
 
     public function getLine(): int

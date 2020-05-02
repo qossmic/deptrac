@@ -10,6 +10,7 @@ use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use SensioLabs\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
@@ -69,13 +70,14 @@ class NikicPhpParser implements AstParser
             return $fileReference;
         }
 
-        $fileReference = new AstFileReference($realPath);
-        $visitor = new ClassReferenceVisitor($fileReference, $this->typeResolver, ...$this->classDependencyResolvers);
+        $fileReferenceBuilder = FileReferenceBuilder::create($realPath);
+        $visitor = new ClassReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->classDependencyResolvers);
 
         $this->traverser->addVisitor($visitor);
         $this->traverser->traverse($this->fileParser->parse($data));
         $this->traverser->removeVisitor($visitor);
 
+        $fileReference = $fileReferenceBuilder->build();
         $this->cache->set($fileReference);
 
         return $fileReference;

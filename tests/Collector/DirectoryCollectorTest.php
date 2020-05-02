@@ -6,8 +6,6 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
@@ -30,14 +28,15 @@ class DirectoryCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
-        $fileReference = new AstFileReference($filePath);
-        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromFQCN('Test'));
+        $fileReferenceBuilder = AstMap\FileReferenceBuilder::create($filePath);
+        $fileReferenceBuilder->newClassLike('Test');
+        $fileReference = $fileReferenceBuilder->build();
 
         $stat = (new DirectoryCollector())->satisfy(
             $configuration,
-            $astClassReference,
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $fileReference->getAstClassReferences()[0],
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
 
         static::assertSame($expected, $stat);
@@ -45,17 +44,18 @@ class DirectoryCollectorTest extends TestCase
 
     public function testMissingRegexThrowsException(): void
     {
-        $fileReference = new AstFileReference('/some/path/to/file.php');
-        $astClassReference = $fileReference->addClassReference(ClassLikeName::fromFQCN('Test'));
+        $fileReferenceBuilder = AstMap\FileReferenceBuilder::create('/some/path/to/file.php');
+        $fileReferenceBuilder->newClassLike('Test');
+        $fileReference = $fileReferenceBuilder->build();
 
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('DirectoryCollector needs the regex configuration.');
 
         (new DirectoryCollector())->satisfy(
             [],
-            $astClassReference,
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $fileReference->getAstClassReferences()[0],
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
     }
 }
