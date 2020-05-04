@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## [0.7.1] - 2020-05-04
+
+### Fixed
+
+- [#302] Bugfix: cover more DocBlock types
+
 ## [0.7.0] - 2020-05-02
 
 ### Added
@@ -158,6 +164,12 @@ All notable changes to this project will be documented in this file, in reverse 
 [@timglabisch]: https://github.com/timglabisch
 [@radimvaculik]: https://github.com/radimvaculik
 
+[#302]: https://github.com/sensiolabs-de/deptrac/pull/302
+[#300]: https://github.com/sensiolabs-de/deptrac/pull/300
+[#298]: https://github.com/sensiolabs-de/deptrac/pull/298
+[#297]: https://github.com/sensiolabs-de/deptrac/pull/297
+[#296]: https://github.com/sensiolabs-de/deptrac/pull/296
+[#295]: https://github.com/sensiolabs-de/deptrac/pull/295
 [#294]: https://github.com/sensiolabs-de/deptrac/pull/294
 [#292]: https://github.com/sensiolabs-de/deptrac/pull/292
 [#290]: https://github.com/sensiolabs-de/deptrac/pull/290
@@ -165,6 +177,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#288]: https://github.com/sensiolabs-de/deptrac/pull/288
 [#287]: https://github.com/sensiolabs-de/deptrac/pull/287
 [#286]: https://github.com/sensiolabs-de/deptrac/pull/286
+[#285]: https://github.com/sensiolabs-de/deptrac/pull/285
 [#284]: https://github.com/sensiolabs-de/deptrac/pull/284
 [#283]: https://github.com/sensiolabs-de/deptrac/pull/283
 [#281]: https://github.com/sensiolabs-de/deptrac/pull/281
@@ -178,15 +191,9 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.7.1]: https://github.com/sensiolabs-de/deptrac/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/sensiolabs-de/deptrac/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/sensiolabs-de/deptrac/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
-
-[#300]: https://github.com/sensiolabs-de/deptrac/pull/300
-[#298]: https://github.com/sensiolabs-de/deptrac/pull/298
-[#297]: https://github.com/sensiolabs-de/deptrac/pull/297
-[#296]: https://github.com/sensiolabs-de/deptrac/pull/296
-[#295]: https://github.com/sensiolabs-de/deptrac/pull/295
-[#285]: https://github.com/sensiolabs-de/deptrac/pull/285
