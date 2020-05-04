@@ -11,7 +11,14 @@ use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Object_;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
+use PHPStan\PhpDocParser\Ast\ConstExpr\ConstFetchNode;
+use PHPStan\PhpDocParser\Ast\Type\ArrayShapeItemNode;
+use PHPStan\PhpDocParser\Ast\Type\ArrayShapeNode;
 use PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\CallableTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\CallableTypeParameterNode;
+use PHPStan\PhpDocParser\Ast\Type\ConstTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
@@ -70,24 +77,46 @@ class TypeResolver
     /**
      * @return string[]
      */
-    public function resolvePHPStanDocParserType(TypeNode $type, TypeScope $nameScope): array
+    public function resolvePHPStanDocParserType(TypeNode $type, TypeScope $typeScope): array
     {
         if ($type instanceof IdentifierTypeNode) {
-            return $this->resolveString($type->name, $nameScope);
+            return $this->resolveString($type->name, $typeScope);
+        }
+        if ($type instanceof ConstTypeNode && $type->constExpr instanceof ConstFetchNode) {
+            return $this->resolveString($type->constExpr->className, $typeScope);
         }
         if ($type instanceof NullableTypeNode) {
-            return $this->resolvePHPStanDocParserType($type->type, $nameScope);
+            return $this->resolvePHPStanDocParserType($type->type, $typeScope);
         }
         if ($type instanceof ArrayTypeNode) {
-            return $this->resolvePHPStanDocParserType($type->type, $nameScope);
+            return $this->resolvePHPStanDocParserType($type->type, $typeScope);
         }
         if ($type instanceof UnionTypeNode || $type instanceof IntersectionTypeNode) {
-            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($nameScope) {
-                return $this->resolvePHPStanDocParserType($typeNode, $nameScope);
+            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope) {
+                return $this->resolvePHPStanDocParserType($typeNode, $typeScope);
             }, $type->types));
         }
+        if ($type instanceof GenericTypeNode) {
+            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope) {
+                return $this->resolvePHPStanDocParserType($typeNode, $typeScope);
+            }, $type->genericTypes));
+        }
+        if ($type instanceof ArrayShapeNode) {
+            return array_merge([], ...array_map(function (ArrayShapeItemNode $itemNode) use ($typeScope) {
+                return $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope);
+            }, $type->items)
+            );
+        }
+        if ($type instanceof CallableTypeNode) {
+            return array_merge(
+                $this->resolvePHPStanDocParserType($type->returnType, $typeScope),
+                ...array_map(function (CallableTypeParameterNode $parameterNode) use ($typeScope) {
+                    return $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope);
+                }, $type->parameters)
+            );
+        }
 
-        return $this->resolveString((string) $type, $nameScope);
+        return $this->resolveString((string) $type, $typeScope);
     }
 
     /**
