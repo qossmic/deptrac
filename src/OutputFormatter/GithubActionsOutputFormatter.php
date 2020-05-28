@@ -1,17 +1,14 @@
 <?php
 
-
 namespace SensioLabs\Deptrac\OutputFormatter;
-
 
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
-
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getName(): string
     {
@@ -19,7 +16,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function configureOptions(): array
     {
@@ -32,11 +29,11 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function finish(Context $context, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
-        foreach($context->violations() as $rule) {
+        foreach ($context->violations() as $rule) {
             $dependency = $rule->getDependency();
             $output->writeln(sprintf(
                 '::error file=%s,line=%s::%s must not depend on %s (%s on %s)',
