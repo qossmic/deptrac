@@ -4,6 +4,9 @@ namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
+use SensioLabs\Deptrac\RulesetEngine\Context;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class GithubActionsOutputFormatterTest extends TestCase
 {
@@ -12,8 +15,24 @@ class GithubActionsOutputFormatterTest extends TestCase
         static::assertEquals('github-actions', (new GithubActionsOutputFormatter())->getName());
     }
 
-    public function testFinish()
+    public function testFinish(): void
     {
-        $this->markTestIncomplete('Not Implemented');
+        $rules = [];
+        $expectedOutput = '';
+
+        $output = new BufferedOutput();
+
+        $formatter = new GithubActionsOutputFormatter();
+        $formatter->finish(
+            new Context($rules),
+            $output,
+            new OutputFormatterInput([])
+        );
+
+        $o = $output->fetch();
+        static::assertEquals(
+            $expectedOutput,
+            $o
+        );
     }
 }
