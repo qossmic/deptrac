@@ -43,8 +43,8 @@ class GithubActionsOutputFormatterTest extends TestCase
 
     public function finishProvider()
     {
-        $originalA = ClassLikeName::fromFQCN('OriginalA');
-        $originalB = ClassLikeName::fromFQCN('OriginalB');
+        $originalA = ClassLikeName::fromFQCN('\ACME\OriginalA');
+        $originalB = ClassLikeName::fromFQCN('\ACME\OriginalB');
 
         yield 'No Rules, No Output' => [
             [],
@@ -59,7 +59,7 @@ class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            "::error file=originalA.php,line=12::OriginalA must not depend on OriginalB (LayerA on LayerB)\n",
+            "::error file=originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
         yield 'Skipped Violation' => [
@@ -70,7 +70,7 @@ class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            "::warning file=originalA.php,line=12::[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)\n",
+            "::warning file=originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
     }
 }
