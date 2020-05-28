@@ -9,6 +9,7 @@ use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -50,7 +51,7 @@ class GithubActionsOutputFormatterTest extends TestCase
             '',
         ];
 
-        yield 'Simple Layer Violation' => [
+        yield 'Simple Violation' => [
             [
                 new Violation(
                     new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
@@ -59,6 +60,17 @@ class GithubActionsOutputFormatterTest extends TestCase
                 ),
             ],
             "::error file=originalA.php,line=12::OriginalA must not depend on OriginalB (LayerA on LayerB)\n",
+        ];
+
+        yield 'Skipped Violation' => [
+            [
+                new SkippedViolation(
+                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    'LayerA',
+                    'LayerB'
+                ),
+            ],
+            "::warning file=originalA.php,line=12::OriginalA must not depend on OriginalB (LayerA on LayerB)\n",
         ];
     }
 }

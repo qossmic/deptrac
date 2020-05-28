@@ -3,6 +3,9 @@
 namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Rule;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GithubActionsOutputFormatter implements OutputFormatterInterface
@@ -33,10 +36,15 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(Context $context, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
-        foreach ($context->violations() as $rule) {
+        foreach ($context->all() as $rule) {
+            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
+                continue;
+            }
+
             $dependency = $rule->getDependency();
             $output->writeln(sprintf(
-                '::error file=%s,line=%s::%s must not depend on %s (%s on %s)',
+                '::%s file=%s,line=%s::%s must not depend on %s (%s on %s)',
+                $this->determineLogLevel($rule),
                 $dependency->getFileOccurrence()->getFilepath(),
                 $dependency->getFileOccurrence()->getLine(),
                 $dependency->getClassLikeNameA()->toString(),
@@ -44,6 +52,18 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
                 $rule->getLayerA(),
                 $rule->getLayerB()
             ));
+        }
+    }
+
+    public function determineLogLevel(Rule $rule): string
+    {
+        switch (get_class($rule)) {
+            case Violation::class:
+                return 'error';
+            case SkippedViolation::class:
+                return 'warning';
+            default:
+                return 'debug';
         }
     }
 }
