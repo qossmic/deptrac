@@ -60,7 +60,7 @@ class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            "::error file=originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
+            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
         yield 'Skipped Violation' => [
@@ -71,7 +71,7 @@ class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            "::warning file=originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
+            "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
     }
 }

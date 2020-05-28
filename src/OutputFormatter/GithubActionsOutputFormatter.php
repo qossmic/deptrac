@@ -45,7 +45,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
             $output->writeln(sprintf(
                 '::%s file=%s,line=%s::%s%s must not depend on %s (%s on %s)',
                 $this->determineLogLevel($rule),
-                basename($dependency->getFileOccurrence()->getFilepath()),
+                $dependency->getFileOccurrence()->getFilepath(),
                 $dependency->getFileOccurrence()->getLine(),
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
                 $dependency->getClassLikeNameA()->toString(),
