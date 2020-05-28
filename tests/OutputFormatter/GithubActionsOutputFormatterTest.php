@@ -70,7 +70,7 @@ class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            "::warning file=originalA.php,line=12::OriginalA must not depend on OriginalB (LayerA on LayerB)\n",
+            "::warning file=originalA.php,line=12::[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)\n",
         ];
     }
 }
