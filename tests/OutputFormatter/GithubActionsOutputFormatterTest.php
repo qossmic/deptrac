@@ -43,18 +43,19 @@ class GithubActionsOutputFormatterTest extends TestCase
 
     public function finishProvider()
     {
-        $originalA = ClassLikeName::fromFQCN('\ACME\OriginalA');
-        $originalB = ClassLikeName::fromFQCN('\ACME\OriginalB');
-
         yield 'No Rules, No Output' => [
             [],
             '',
         ];
 
+        $originalA = ClassLikeName::fromFQCN('\ACME\OriginalA');
+        $originalB = ClassLikeName::fromFQCN('\ACME\OriginalB');
+        $originalAOccurrence = FileOccurrence::fromFilepath('/home/testuser/originalA.php', 12);
+
         yield 'Simple Violation' => [
             [
                 new Violation(
-                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, $originalAOccurrence),
                     'LayerA',
                     'LayerB'
                 ),
@@ -65,7 +66,7 @@ class GithubActionsOutputFormatterTest extends TestCase
         yield 'Skipped Violation' => [
             [
                 new SkippedViolation(
-                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, $originalAOccurrence),
                     'LayerA',
                     'LayerB'
                 ),
