@@ -36,5 +36,17 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(Context $context, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
+        foreach($context->violations() as $rule) {
+            $dependency = $rule->getDependency();
+            $output->writeln(sprintf(
+                '::error file=%s,line=%s::%s must not depend on %s (%s on %s)',
+                $dependency->getFileOccurrence()->getFilepath(),
+                $dependency->getFileOccurrence()->getLine(),
+                $dependency->getClassLikeNameA()->toString(),
+                $dependency->getClassLikeNameB()->toString(),
+                $rule->getLayerA(),
+                $rule->getLayerB()
+            ));
+        }
     }
 }
