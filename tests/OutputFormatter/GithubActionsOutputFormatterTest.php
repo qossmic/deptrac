@@ -3,13 +3,13 @@
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\OutputFormatter\GithubWorkflowOutputFormatter;
+use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 
-class GithubWorkflowOutputFormatterTest extends TestCase
+class GithubActionsOutputFormatterTest extends TestCase
 {
     public function testGetName()
     {
-        static::assertEquals('github-workflow', (new GithubWorkflowOutputFormatter())->getName());
+        static::assertEquals('github-actions', (new GithubActionsOutputFormatter())->getName());
     }
 
     public function testFinish()

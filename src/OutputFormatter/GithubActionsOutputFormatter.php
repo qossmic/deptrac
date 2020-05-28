@@ -7,7 +7,7 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GithubWorkflowOutputFormatter implements OutputFormatterInterface
+class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
 
     /**
@@ -15,7 +15,7 @@ class GithubWorkflowOutputFormatter implements OutputFormatterInterface
      */
     public function getName(): string
     {
-        return 'github-workflow';
+        return 'github-actions';
     }
 
     /**
