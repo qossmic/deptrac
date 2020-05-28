@@ -15,11 +15,11 @@ class GithubActionsOutputFormatterTest extends TestCase
         static::assertEquals('github-actions', (new GithubActionsOutputFormatter())->getName());
     }
 
-    public function testFinish(): void
+    /**
+     * @dataProvider finishProvider
+     */
+    public function testFinish(array $rules, string $expectedOutput): void
     {
-        $rules = [];
-        $expectedOutput = '';
-
         $output = new BufferedOutput();
 
         $formatter = new GithubActionsOutputFormatter();
@@ -34,5 +34,13 @@ class GithubActionsOutputFormatterTest extends TestCase
             $expectedOutput,
             $o
         );
+    }
+
+    public function finishProvider()
+    {
+        yield 'No Rules, No Output' => [
+            [],
+            '',
+        ];
     }
 }
