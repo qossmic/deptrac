@@ -62,6 +62,11 @@ final class Context
         });
     }
 
+    public function hasUncovered(): bool
+    {
+        return count($this->uncovered()) > 0;
+    }
+
     /**
      * @return Allowed[]
      */
