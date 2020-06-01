@@ -46,7 +46,7 @@ class AnalyzeCommand extends Command
         $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar');
-        $this->addOption('fail-on-uncovered', false, InputOption::VALUE_NONE, 'Fails if any uncovered dependecy is found');
+        $this->addOption('fail-on-uncovered', null, InputOption::VALUE_NONE, 'Fails if any uncovered dependecy is found');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
