@@ -556,7 +556,7 @@ layers:
   - name: Foo
     collectors:
       - type: implements
-        name: 'App\SomeInterface'
+        implements: 'App\SomeInterface'
 ```
 
 ### More Collectors
