@@ -63,14 +63,16 @@ class RulesetEngine
         return new Context($rules);
     }
 
-    private function isInternalClass(ClassLikeName $classLikeName)
+    private function isInternalClass(ClassLikeName $classLikeName): bool
     {
-        try {
-            $reflection = new \ReflectionClass($classLikeName->toString());
+        $className = $classLikeName->toString();
 
-            return $reflection->isInternal();
-        } catch(\ReflectionException $e) {
+        if (!class_exists($className)) {
             return false;
         }
+
+        $reflection = new \ReflectionClass($className);
+
+        return $reflection->isInternal();
     }
 }
