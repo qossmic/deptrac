@@ -1,0 +1,9 @@
+paths: ["./examples/Uncovered/"]
+layers:
+  - name: Core
+    collectors:
+      - type: className
+        regex: Core
+
+ruleset:
+  Core: ~
