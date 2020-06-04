@@ -238,4 +238,60 @@ class RulesetEngineTest extends TestCase
 
         static::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
     }
+
+    public function provideTestGetUncovered(): array
+    {
+        return [
+            'uncovered' => [
+                [
+                    'ClassA' => 'ClassB',
+                ],
+                [
+                    'ClassA' => ['LayerA'],
+                    'ClassB' => [],
+                ],
+                1,
+            ],
+            'internal classes are not counted towards uncovered cases' => [
+                [
+                    'ClassA' => 'DateTime',
+                ],
+                [
+                    'ClassA' => ['LayerA'],
+                    'DateTime' => [],
+                ],
+                0,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestGetUncovered
+     */
+    public function testGetUncovered(array $dependenciesAsArray, array $classesInLayers, int $expectedUncoveredCount): void
+    {
+        $dependencyResult = new Result();
+        foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
+            $dependencyResult->addDependency($dep);
+        }
+
+        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
+        foreach ($classesInLayers as $classInLayer => $layers) {
+            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
+        }
+
+        $configuration = Configuration::fromArray([
+            'layers' => [],
+            'paths' => [],
+            'ruleset' => [],
+        ]);
+
+        $context = (new RulesetEngine())->process(
+            $dependencyResult,
+            $classNameLayerResolver->reveal(),
+            $configuration
+        );
+
+        static::assertCount($expectedUncoveredCount, $context->uncovered());
+    }
 }

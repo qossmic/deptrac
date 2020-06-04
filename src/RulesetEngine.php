@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
@@ -33,7 +34,9 @@ class RulesetEngine
                 $layersNamesClassB = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameB());
 
                 if (0 === count($layersNamesClassB)) {
-                    $rules[] = new Uncovered($dependency, $layerName);
+                    if (!$this->isInternalClass($dependency->getClassLikeNameB())) {
+                        $rules[] = new Uncovered($dependency, $layerName);
+                    }
                     continue;
                 }
 
@@ -58,5 +61,16 @@ class RulesetEngine
         }
 
         return new Context($rules);
+    }
+
+    private function isInternalClass(ClassLikeName $classLikeName)
+    {
+        try {
+            $reflection = new \ReflectionClass($classLikeName->toString());
+
+            return $reflection->isInternal();
+        } catch(\ReflectionException $e) {
+            return false;
+        }
     }
 }
