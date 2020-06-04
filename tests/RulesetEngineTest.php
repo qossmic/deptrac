@@ -255,10 +255,14 @@ class RulesetEngineTest extends TestCase
             'internal classes are not counted towards uncovered cases' => [
                 [
                     'ClassA' => 'DateTime',
+                    'ClassA' => 'Throwable',
+                    'ClassA' => 'Exception',
                 ],
                 [
                     'ClassA' => ['LayerA'],
                     'DateTime' => [],
+                    'Throwable' => [],
+                    'Exception' => [],
                 ],
                 0,
             ],
