@@ -142,6 +142,9 @@ jobs:
       - name: "Custom cache file should exist"
         run: "[ -f '.deptrac.cache2' ]"
 
+      - name: "Run deptrac phar with --fail-on-uncovered"
+        run: sh .github/workflows/test-flag-fail-on-uncovered.sh
+
       - name: "Upload phar file artifact"
         uses: actions/upload-artifact@v2
         with:
