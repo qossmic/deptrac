@@ -64,7 +64,7 @@ class RulesetEngine
 
     private function isInternalClass(string $class): bool
     {
-        if (is_a($class, \Throwable::class, true)) {
+        if (\Throwable::class === $class) {
             return true;
         }
 

@@ -13,6 +13,14 @@ use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine;
 
+class CustomError extends \Error
+{
+}
+
+class CustomException extends \Exception
+{
+}
+
 class RulesetEngineTest extends TestCase
 {
     private function createDependencies(array $fromTo): iterable
@@ -255,16 +263,37 @@ class RulesetEngineTest extends TestCase
             'internal classes are not counted towards uncovered cases' => [
                 [
                     'ClassA' => 'DateTime',
+                ],
+                [
+                    'ClassA' => ['LayerA'],
+                    'DateTime' => [],
+                ],
+                0,
+            ],
+            'internal exceptions are not counted towards uncovered cases' => [
+                [
                     'ClassA' => 'Throwable',
                     'ClassA' => 'Exception',
                 ],
                 [
                     'ClassA' => ['LayerA'],
-                    'DateTime' => [],
                     'Throwable' => [],
                     'Exception' => [],
                 ],
                 0,
+            ],
+            'custom exceptions are counted towards uncovered cases' => [
+                [
+                    'ClassA' => CustomError::class,
+                    'ClassB' => CustomException::class,
+                ],
+                [
+                    'ClassA' => ['LayerA'],
+                    'ClassB' => ['LayerB'],
+                    CustomError::class => [],
+                    CustomException::class => [],
+                ],
+                2,
             ],
         ];
     }
