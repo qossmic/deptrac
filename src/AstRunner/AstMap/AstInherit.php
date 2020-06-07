@@ -90,6 +90,16 @@ class AstInherit
         return self::TYPE_IMPLEMENTS === $this->type;
     }
 
+    public function isExtends(): bool
+    {
+        return self::TYPE_EXTENDS === $this->type;
+    }
+
+    public function isUses(): bool
+    {
+        return self::TYPE_USES === $this->type;
+    }
+
     /**
      * @return AstInherit[]
      */

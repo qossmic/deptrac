@@ -549,7 +549,7 @@ of the *Foo services* layer.
 
 ### `implements` Collector
 
-The `implements` collector allows collecting classes by matching recursively for a fully qualified interface name. 
+The `implements` collector allows collecting classes implementing a specified interface by matching recursively for a fully qualified interface name.
 
 ```yaml
 layers:
@@ -557,6 +557,42 @@ layers:
     collectors:
       - type: implements
         implements: 'App\SomeInterface'
+```
+
+### `extends` Collector
+
+The `extends` collector allows collecting classes extending a specified class by matching recursively for a fully qualified class or interface name.
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: extends
+        extends: 'App\SomeClass'
+```
+
+### `uses` Collector
+
+The `uses` collector allows collecting classes using a specified trait by matching recursively for a fully qualified trait name.
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: uses
+        uses: 'App\SomeTrait'
+```
+
+### `inherits` Collector
+
+The `inherits` collector allows collecting classes inheriting from a specified class, whether by implementing an interface, extending another class or by using a trait, by matching recursively for a fully qualified class name.
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: inherits
+        inherits: 'App\SomeInterface'
 ```
 
 ### More Collectors
