@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures;
+namespace Tests\SensioLabs\Deptrac\AstRunner\Fixtures\BasicInheritance;
 
 class FixtureBasicInheritanceA { }
 class FixtureBasicInheritanceB extends FixtureBasicInheritanceA { }

@@ -23,10 +23,14 @@ class InheritanceDependencyEmitterTest extends TestCase
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        static::assertCount(4, $deps);
-        static::assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
-        static::assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
-        static::assertContains('Foo\Bar:6 on BarInterface2', $deps);
-        static::assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
+        static::assertSame(
+            [
+                'Foo\Bar:26 on Foo\BarExtends',
+                'Foo\Bar:26 on Foo\BarInterface1',
+                'Foo\Bar:26 on BarInterface2',
+                'Foo\Bar:28 on Foo\SomeTrait',
+            ],
+            $deps
+        );
     }
 }

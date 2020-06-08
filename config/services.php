@@ -12,8 +12,14 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\CatchStmtResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\InstanceofResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\NewExprResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\StaticCallResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\StaticPropertyFetchResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\VariableDocCommentResolver;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
@@ -80,7 +86,13 @@ return static function (di\ContainerConfigurator $container): void {
         ->set(AnnotationDependencyResolver::class)
         ->args([di\ref(TypeResolver::class)]);
     $services->set(AnonymousClassResolver::class);
+    $services->set(CatchStmtResolver::class);
     $services->set(ClassConstantResolver::class);
+    $services->set(InstanceofResolver::class);
+    $services->set(NewExprResolver::class);
+    $services->set(StaticCallResolver::class);
+    $services->set(StaticPropertyFetchResolver::class);
+    $services->set(VariableDocCommentResolver::class);
     $services->set(TypeResolver::class);
 
     $services

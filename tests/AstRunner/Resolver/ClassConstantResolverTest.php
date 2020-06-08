@@ -6,6 +6,7 @@ namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use SensioLabs\Deptrac\AstRunner\AstParser\BetterReflection\Parser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
@@ -17,14 +18,9 @@ class ClassConstantResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {
-        $parser = new NikicPhpParser(
-            new FileParser(ParserFactory::createParser()),
-            new AstFileReferenceInMemoryCache(),
-            new TypeResolver(),
-            new ClassConstantResolver()
-        );
+        $parser = new Parser(new TypeResolver());
 
-        $filePath = __DIR__.'/fixtures/ClassConst.php';
+        $filePath = __DIR__.'/Fixtures/ClassConst.php';
         $astFileReference = $parser->parse(new SplFileInfo($filePath));
 
         $astClassReferences = $astFileReference->getAstClassReferences();
@@ -35,7 +31,7 @@ class ClassConstantResolverTest extends TestCase
 
         $dependencies = $astClassReferences[1]->getDependencies();
         static::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\fixtures\ClassA',
+            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());

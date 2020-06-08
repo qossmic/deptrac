@@ -1,48 +1,91 @@
 <?php
 
-namespace Foo;
-use SomeUse;
+namespace {
 
-class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
-
-    use SomeTrait;
-
-    public function foo(SomeParam $someParam, $lala): SomeClass
+    interface BarInterface2
     {
-        new SomeClass();
-        new \SomeOtherClass();
+    }
+}
 
-        $foo = function(SomeOtherParam $someOtherParam) {
+namespace Foo {
 
-        };
+    use SomeUse;
 
-        assert ($foo instanceof SomeInstanceOf);
-
-        SomeClass::staticMethodCall();
-
-        SomeClass::$staticPropertyAccess;
+    interface BarInterface1
+    {
     }
 
-    public function baz(): ?\Some\NamespacedClass {}
-
-    public function foobar(): void
+    class BarExtends
     {
-        new class { public function foo(): SomeClass {} };
+    }
 
-        function () : SomeClass {};
+    trait SomeTrait
+    {
+    }
 
-        function () : string {};
+    class Bar extends BarExtends implements BarInterface1, \BarInterface2
+    {
+        use SomeTrait;
 
-        function () : string2 {};
+        public function foo(SomeParam $someParam, $lala): SomeClass
+        {
+            new SomeClass();
+            new \SomeOtherClass();
 
-        function () : \string {};
+            $foo = function (SomeOtherParam $someOtherParam) {
 
-        function () : ?string {};
+            };
 
-        function () : ?SomeClass {};
+            assert($foo instanceof SomeInstanceOf);
 
-        function () : self {};
+            SomeClass::staticMethodCall();
 
-        function () : ?self {};
+            SomeClass::$staticPropertyAccess;
+        }
+
+        public function baz(): ?\Some\NamespacedClass
+        {
+        }
+
+        public function foobar(): void
+        {
+            new class {
+                public function foo(): SomeClass
+                {
+                }
+            };
+
+            function (): SomeClass
+            {
+            };
+
+            function (): string
+            {
+            };
+
+            function (): string2
+            {
+            };
+
+            function (): string
+            {
+            };
+
+            function (): ?string
+            {
+            };
+
+            function (): ?SomeClass
+            {
+            };
+
+            function (): self
+            {
+            };
+
+            function (): ?self
+            {
+            };
+        }
     }
 }

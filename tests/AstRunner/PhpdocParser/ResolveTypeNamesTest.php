@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Tests\SensioLabs\Deptrac\AstRunner\PhpdocParser;
 
+use phpDocumentor\Reflection\Types\Context;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeScope;
+use SensioLabs\Deptrac\AstRunner\PhpdocParser\ResolveTypeNames;
 
-class TypeResolverTest extends TestCase
+class ResolveTypeNamesTest extends TestCase
 {
     /**
      * @var Lexer
@@ -40,8 +40,7 @@ class TypeResolverTest extends TestCase
         $tokens = new TokenIterator($this->lexer->tokenize($doc));
         $typeNode = $this->typeParser->parse($tokens);
 
-        $typeResolver = new TypeResolver();
-        $resolvedTypes = $typeResolver->resolvePHPStanDocParserType($typeNode, new TypeScope('\\Test\\'));
+        $resolvedTypes = (new ResolveTypeNames())($typeNode, new Context('\\Test\\'));
 
         static::assertSame($types, $resolvedTypes);
     }

@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
+use SensioLabs\Deptrac\AstRunner\AstParser\BetterReflection\Parser;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
@@ -17,14 +13,9 @@ class AnonymousClassResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {
-        $parser = new NikicPhpParser(
-            new FileParser(ParserFactory::createParser()),
-            new AstFileReferenceInMemoryCache(),
-            new TypeResolver(),
-            new AnonymousClassResolver()
-        );
+        $parser = new Parser(new TypeResolver());
 
-        $filePath = __DIR__.'/fixtures/AnonymousClass.php';
+        $filePath = __DIR__.'/Fixtures/AnonymousClass.php';
         $astFileReference = $parser->parse(new SplFileInfo($filePath));
 
         $astClassReferences = $astFileReference->getAstClassReferences();
@@ -37,7 +28,7 @@ class AnonymousClassResolverTest extends TestCase
         $dependencies = $astClassReferences[2]->getDependencies();
 
         static::assertSame(
-            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\ClassA',
+            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
@@ -45,7 +36,7 @@ class AnonymousClassResolverTest extends TestCase
         static::assertSame('anonymous_class_extends', $dependencies[0]->getType());
 
         static::assertSame(
-            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\InterfaceC',
+            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures\InterfaceC',
             $dependencies[1]->getClassLikeName()->toString()
         );
         static::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());

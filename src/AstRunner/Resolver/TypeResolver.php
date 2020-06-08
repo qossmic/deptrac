@@ -40,11 +40,11 @@ class TypeResolver
     /**
      * @return string[]
      */
-    public function resolvePHPParserTypes(TypeScope $typeScope, NodeAbstract ...$nodes): array
+    public function resolvePHPParserTypes(Context $context, NodeAbstract ...$nodes): array
     {
         $types = [];
         foreach ($nodes as $node) {
-            $types[] = $this->resolvePHPParserType($typeScope, $node);
+            $types[] = $this->resolvePHPParserType($context, $node);
         }
 
         return array_merge([], ...$types);
@@ -53,78 +53,33 @@ class TypeResolver
     /**
      * @return string[]
      */
-    private function resolvePHPParserType(TypeScope $typeScope, NodeAbstract $node): array
+    private function resolvePHPParserType(Context $context, NodeAbstract $node): array
     {
         if ($node instanceof Node\Name && $node->isSpecialClassName()) {
             return [];
         }
 
         if ($node instanceof Node\Name) {
-            return $this->resolveString($node->toCodeString(), $typeScope);
+            return $this->resolveString($node->toCodeString(), $context);
         }
 
         if ($node instanceof Node\NullableType) {
-            return $this->resolvePHPParserType($typeScope, $node->type);
+            return $this->resolvePHPParserType($context, $node->type);
         }
 
         if ($node instanceof Node\UnionType) {
-            return $this->resolvePHPParserTypes($typeScope, ...$node->types);
+            return $this->resolvePHPParserTypes($context, ...$node->types);
         }
 
         return [];
     }
 
-    /**
-     * @return string[]
-     */
-    public function resolvePHPStanDocParserType(TypeNode $type, TypeScope $typeScope): array
-    {
-        if ($type instanceof IdentifierTypeNode) {
-            return $this->resolveString($type->name, $typeScope);
-        }
-        if ($type instanceof ConstTypeNode && $type->constExpr instanceof ConstFetchNode) {
-            return $this->resolveString($type->constExpr->className, $typeScope);
-        }
-        if ($type instanceof NullableTypeNode) {
-            return $this->resolvePHPStanDocParserType($type->type, $typeScope);
-        }
-        if ($type instanceof ArrayTypeNode) {
-            return $this->resolvePHPStanDocParserType($type->type, $typeScope);
-        }
-        if ($type instanceof UnionTypeNode || $type instanceof IntersectionTypeNode) {
-            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope) {
-                return $this->resolvePHPStanDocParserType($typeNode, $typeScope);
-            }, $type->types));
-        }
-        if ($type instanceof GenericTypeNode) {
-            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope) {
-                return $this->resolvePHPStanDocParserType($typeNode, $typeScope);
-            }, $type->genericTypes));
-        }
-        if ($type instanceof ArrayShapeNode) {
-            return array_merge([], ...array_map(function (ArrayShapeItemNode $itemNode) use ($typeScope) {
-                return $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope);
-            }, $type->items)
-            );
-        }
-        if ($type instanceof CallableTypeNode) {
-            return array_merge(
-                $this->resolvePHPStanDocParserType($type->returnType, $typeScope),
-                ...array_map(function (CallableTypeParameterNode $parameterNode) use ($typeScope) {
-                    return $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope);
-                }, $type->parameters)
-            );
-        }
-
-        return $this->resolveString((string) $type, $typeScope);
-    }
 
     /**
      * @return string[]
      */
-    public function resolveString(string $type, TypeScope $nameScope): array
+    public function resolveString(string $type, Context $context): array
     {
-        $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
         $resolvedType = $this->typeResolver->resolve($type, $context);
 
         return $this->resolveReflectionType($resolvedType);

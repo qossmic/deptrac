@@ -23,20 +23,22 @@ class BasicDependencyEmitterTest extends TestCase
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        static::assertCount(15, $deps);
-        static::assertContains('Foo\Bar:4 on SomeUse', $deps);
-        static::assertContains('Foo\Bar:10 on Foo\SomeParam', $deps);
-        static::assertContains('Foo\Bar:10 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:12 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:13 on SomeOtherClass', $deps);
-        static::assertContains('Foo\Bar:15 on Foo\SomeOtherParam', $deps);
-        static::assertContains('Foo\Bar:19 on Foo\SomeInstanceOf', $deps);
-        static::assertContains('Foo\Bar:21 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:23 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:26 on Some\NamespacedClass', $deps);
-        static::assertContains('Foo\Bar:30 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:32 on Foo\SomeClass', $deps);
-        static::assertContains('Foo\Bar:36 on Foo\string2', $deps);
-        static::assertContains('Foo\Bar:42 on Foo\SomeClass', $deps);
+        static::assertSame(
+            [
+                'Foo\Bar:30 on Foo\SomeParam',
+                'Foo\Bar:30 on Foo\SomeClass',
+                'Foo\Bar:32 on Foo\SomeClass',
+                'Foo\Bar:33 on SomeOtherClass',
+                'Foo\Bar:35 on Foo\SomeOtherParam',
+                'Foo\Bar:39 on Foo\SomeInstanceOf',
+                'Foo\Bar:41 on Foo\SomeClass',
+                'Foo\Bar:43 on Foo\SomeClass',
+                'Foo\Bar:46 on Some\NamespacedClass',
+                'Foo\Bar:58 on Foo\SomeClass',
+                'Foo\Bar:66 on Foo\string2',
+                'Foo\Bar:78 on Foo\SomeClass',
+            ],
+            $deps
+        );
     }
 }

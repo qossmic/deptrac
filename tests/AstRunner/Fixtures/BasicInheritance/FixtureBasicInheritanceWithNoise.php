@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures;
+namespace Tests\SensioLabs\Deptrac\AstRunner\Fixtures\BasicInheritance;
 
-use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseFoo1 as foo1;
+use Tests\SensioLabs\Deptrac\AstRunner\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseFoo1 as foo1;
 
 class FixtureBasicInheritanceWithNoiseFoo1 {}
 class FixtureBasicInheritanceWithNoiseFoo2 {}

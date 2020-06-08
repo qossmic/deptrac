@@ -188,4 +188,14 @@ final class ClassReferenceBuilder
 
         return $this;
     }
+
+    public function property(string $classLikeName, int $occursAtLine): self
+    {
+        $this->dependencies[] = AstDependency::property(
+            ClassLikeName::fromFQCN($classLikeName),
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
+        );
+
+        return $this;
+    }
 }

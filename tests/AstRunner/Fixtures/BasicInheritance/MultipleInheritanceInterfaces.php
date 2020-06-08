@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures;
+namespace Tests\SensioLabs\Deptrac\AstRunner\Fixtures\BasicInheritance;
 
 interface MultipleInteritanceA1 { } // []
 interface MultipleInteritanceA2 { } // []

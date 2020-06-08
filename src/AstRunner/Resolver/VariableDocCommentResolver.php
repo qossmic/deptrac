@@ -9,7 +9,7 @@ use PhpParser\Node;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 use SensioLabs\Deptrac\AstRunner\PhpdocParser\ResolveNodeDocCommentTypes;
 
-class AnnotationDependencyResolver implements ClassDependencyResolver
+class VariableDocCommentResolver implements ClassDependencyResolver
 {
     private $resolveNodeDocCommentTypes;
 
@@ -20,7 +20,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
 
     public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, Context $context): void
     {
-        if (!$node instanceof Node\Stmt\Property && !$node instanceof Node\Stmt\ClassMethod) {
+        if (!$node instanceof Node\Expr\Variable) {
             return;
         }
 

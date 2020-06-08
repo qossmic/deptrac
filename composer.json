@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-json": "*",
         "composer/xdebug-handler": "^1.4",
         "graphp/graphviz": "0.2.*",
@@ -22,6 +22,7 @@
         "phpdocumentor/graphviz": "^1.0",
         "phpdocumentor/type-resolver": "^1.0",
         "phpstan/phpdoc-parser": "^0.4.3",
+        "roave/better-reflection": "^4.5",
         "symfony/config": "^5.0",
         "symfony/console": "^5.0",
         "symfony/dependency-injection": "^5.0",
