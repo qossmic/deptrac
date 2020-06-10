@@ -6,23 +6,23 @@ namespace Tests\SensioLabs\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\Collector\ImplementsCollector;
 use SensioLabs\Deptrac\Collector\Registry;
+use SensioLabs\Deptrac\Collector\UsesCollector;
 
-class ImplementsCollectorTest extends TestCase
+class UsesCollectorTest extends TestCase
 {
     public function testGetType(): void
     {
-        static::assertEquals('implements', (new ImplementsCollector())->getType());
+        static::assertEquals('uses', (new UsesCollector())->getType());
     }
 
     public function dataProviderSatisfy(): iterable
     {
-        yield [['implements' => 'App\FizTrait'], false];
-        yield [['implements' => 'App\Bar'], true];
-        yield [['implements' => 'App\Baz'], true];
-        yield [['implements' => 'App\Foo'], false];
-        yield [['implements' => 'App\None'], false];
+        yield [['uses' => 'App\FizTrait'], true];
+        yield [['uses' => 'App\Bar'], false];
+        yield [['uses' => 'App\Baz'], false];
+        yield [['uses' => 'App\Foo'], false];
+        yield [['uses' => 'App\None'], false];
     }
 
     /**
@@ -58,7 +58,7 @@ class ImplementsCollectorTest extends TestCase
             ->trait('App\FizTrait', 4);
         $fooBarFileReference = $fooBarFileReferenceBuilder->build();
 
-        $stat = (new ImplementsCollector())->satisfy(
+        $stat = (new UsesCollector())->satisfy(
             $configuration,
             $fooBarFileReference->getAstClassReferences()[0],
             new AstMap([$fooFileReference, $barFileReference, $bazFileReference, $fooBarFileReference, $fizTraitFileReference]),
