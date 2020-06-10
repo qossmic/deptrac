@@ -238,4 +238,59 @@ class RulesetEngineTest extends TestCase
 
         static::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
     }
+
+    public function provideTestIgnoreUncoveredInternalClasses(): iterable
+    {
+        yield [
+            ['ClassA' => 'RuntimeException'],
+            [
+                'ClassA' => ['LayerA'],
+                'RuntimeException' => [],
+            ],
+            'ignoreUncoveredInternalClasses' => true,
+            0,
+        ];
+
+        yield [
+            ['ClassA' => 'RuntimeException'],
+            [
+                'ClassA' => ['LayerA'],
+                'RuntimeException' => [],
+            ],
+            'ignoreUncoveredInternalClasses' => false,
+            1,
+        ];
+    }
+
+    /**
+     * @dataProvider provideTestIgnoreUncoveredInternalClasses
+     */
+    public function testIgnoreUncoveredInternalClasses(array $dependenciesAsArray, array $classesInLayers, bool $ignoreUncoveredInternalClasses, int $expectedUncoveredCount): void
+    {
+        $dependencyResult = new Result();
+        foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
+            $dependencyResult->addDependency($dep);
+        }
+
+        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
+        foreach ($classesInLayers as $classInLayer => $layers) {
+            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
+        }
+
+        $configuration = Configuration::fromArray([
+            'layers' => [],
+            'paths' => [],
+            'ruleset' => [],
+            'skip_violations' => [],
+            'ignore_uncovered_internal_classes' => $ignoreUncoveredInternalClasses,
+        ]);
+
+        $context = (new RulesetEngine())->process(
+            $dependencyResult,
+            $classNameLayerResolver->reveal(),
+            $configuration
+        );
+
+        static::assertCount($expectedUncoveredCount, $context->uncovered());
+    }
 }

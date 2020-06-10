@@ -18,6 +18,7 @@
         "ext-json": "*",
         "composer/xdebug-handler": "^1.4",
         "graphp/graphviz": "0.2.*",
+        "jetbrains/phpstorm-stubs": "2019.3",
         "nikic/php-parser": "^4.3",
         "phpdocumentor/graphviz": "^1.0",
         "phpdocumentor/type-resolver": "^1.0",
