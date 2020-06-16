@@ -19,8 +19,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#308] Fixes key for implements Collector, Thanks to [@dbrumann]
 
-<!-- dumped content end -->
-
 ## [0.7.1] - 2020-05-04
 
 ### Fixed

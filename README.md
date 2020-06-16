@@ -35,12 +35,13 @@ this rule was violated.
     1. [`directory` Collector](#directory-collector)
     1. [`bool` Collector](#bool-collector)
     1. [`method` Collector](#method-collector)
-    1. [`implements` Collector](#implments-collector)
+    1. [`implements` Collector](#implements-collector)
     1. [More Collectors](#more-collectors)
 1. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
+1. [Uncovered dependencies](#uncovered-dependencies)
 1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
 
@@ -528,7 +529,7 @@ layers:
             regex: .*Assetic.*
 ```
 
-Every class that contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
+Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
 
 
 ### `method` Collector
@@ -681,9 +682,14 @@ Supported options:
 --formatter-junit-dump-xml=     path to a dumped xml file [default: "./junit-report.xml"]
 ```
 
+## Uncovered dependencies
+
+Deptrac collects uncovered dependencies which could be reported with [Console Formatter](#console-formatter).
+By default, internal php classes will be ignored. This could be changed by adding `ignore_uncovered_internal_classes: false` to your depfile.
+
+Use `--fail-on-uncovered` option to fail on uncovered dependencies.
 
 ## Build Deptrac
-
 
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
