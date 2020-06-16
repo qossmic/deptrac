@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
+- [#315] upgrade to symfony 5.1, Thanks to [@smoench]
 - [#303] update github actions, Thanks to [@smoench]
 
 ### Fixed
@@ -183,6 +184,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [@jtaylor100]: https://github.com/jtaylor100
 [@hugochinchilla]: https://github.com/hugochinchilla
 
+[#315]: https://github.com/sensiolabs-de/deptrac/pull/315
 [#314]: https://github.com/sensiolabs-de/deptrac/pull/314
 [#311]: https://github.com/sensiolabs-de/deptrac/pull/311
 [#308]: https://github.com/sensiolabs-de/deptrac/pull/308
@@ -217,10 +219,10 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.8.0]: https://github.com/sensiolabs-de/deptrac/compare/0.7.1...0.8.0
 [0.7.1]: https://github.com/sensiolabs-de/deptrac/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/sensiolabs-de/deptrac/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/sensiolabs-de/deptrac/compare/0.5.0...0.6.0
 [0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
-[0.8.0]: https://github.com/sensiolabs-de/deptrac/compare/0.7.1...0.8.0
