@@ -695,7 +695,7 @@ To build deptrac, clone this repository and ensure you have the build dependenci
 
 - PHP in version 7.2 or above
 - [Composer](https://getcomposer.org/)
-- [Box](https://github.com/humbug/box)
+- [PHIVE](https://phar.io/)
 - make
 
 `cd` into your cloned directory, and call `make build`.
