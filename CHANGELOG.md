@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## [0.8.0] - 2020-06-xx
+## [0.8.0] - 2020-06-19
 
 ### Added
 
@@ -13,6 +13,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
+- [#316] install tools with phive, Thanks to [@smoench]
 - [#315] upgrade to symfony 5.1, Thanks to [@smoench]
 - [#303] update github actions, Thanks to [@smoench]
 
@@ -184,6 +185,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [@jtaylor100]: https://github.com/jtaylor100
 [@hugochinchilla]: https://github.com/hugochinchilla
 
+[#316]: https://github.com/sensiolabs-de/deptrac/pull/316
 [#315]: https://github.com/sensiolabs-de/deptrac/pull/315
 [#314]: https://github.com/sensiolabs-de/deptrac/pull/314
 [#311]: https://github.com/sensiolabs-de/deptrac/pull/311
