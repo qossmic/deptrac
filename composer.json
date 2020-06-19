@@ -32,7 +32,6 @@
         "symfony/yaml": "^5.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5"
     },
     "suggest": {
         "ext-dom": "For using the JUnit output formatter"
