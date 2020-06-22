@@ -35,12 +35,13 @@ this rule was violated.
     1. [`directory` Collector](#directory-collector)
     1. [`bool` Collector](#bool-collector)
     1. [`method` Collector](#method-collector)
-    1. [`implements` Collector](#implments-collector)
+    1. [`implements` Collector](#implements-collector)
     1. [More Collectors](#more-collectors)
 1. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
+1. [Uncovered dependencies](#uncovered-dependencies)
 1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
 
@@ -130,7 +131,7 @@ Download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/rele
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.7.0/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.8.0/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
@@ -528,7 +529,7 @@ layers:
             regex: .*Assetic.*
 ```
 
-Every class that contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
+Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part of the *Asset* layer.
 
 
 ### `method` Collector
@@ -549,7 +550,7 @@ of the *Foo services* layer.
 
 ### `implements` Collector
 
-The `implements` collector allows collecting classes by matching recursively for a fully qualified interface name. 
+The `implements` collector allows collecting classes implementing a specified interface by matching recursively for a fully qualified interface name.
 
 ```yaml
 layers:
@@ -557,6 +558,42 @@ layers:
     collectors:
       - type: implements
         implements: 'App\SomeInterface'
+```
+
+### `extends` Collector
+
+The `extends` collector allows collecting classes extending a specified class by matching recursively for a fully qualified class or interface name.
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: extends
+        extends: 'App\SomeClass'
+```
+
+### `uses` Collector
+
+The `uses` collector allows collecting classes using a specified trait by matching recursively for a fully qualified trait name.
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: uses
+        uses: 'App\SomeTrait'
+```
+
+### `inherits` Collector
+
+The `inherits` collector allows collecting classes inheriting from a specified class, whether by implementing an interface, extending another class or by using a trait, by matching recursively for a fully qualified class name.
+
+```yaml
+layers:
+  - name: Foo
+    collectors:
+      - type: inherits
+        inherits: 'App\SomeInterface'
 ```
 
 ### More Collectors
@@ -645,15 +682,20 @@ Supported options:
 --formatter-junit-dump-xml=     path to a dumped xml file [default: "./junit-report.xml"]
 ```
 
+## Uncovered dependencies
+
+Deptrac collects uncovered dependencies which could be reported with [Console Formatter](#console-formatter).
+By default, internal php classes will be ignored. This could be changed by adding `ignore_uncovered_internal_classes: false` to your depfile.
+
+Use `--fail-on-uncovered` option to fail on uncovered dependencies.
 
 ## Build Deptrac
-
 
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
 - PHP in version 7.2 or above
 - [Composer](https://getcomposer.org/)
-- [Box](https://github.com/humbug/box)
+- [PHIVE](https://phar.io/)
 - make
 
 `cd` into your cloned directory, and call `make build`.

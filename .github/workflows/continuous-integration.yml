@@ -20,10 +20,29 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: PHP-CS-Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga:2.16.3.1
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
         with:
-          args: --diff --diff-format=udiff --using-cache=no --verbose --dry-run
+          path: |
+            ~~/.phive
+            ./tools
+          key: ${{ runner.os }}-phive-cache-${{ hashFiles('**/.phive/phars.xml') }}
+          restore-keys: |
+            phive-cache-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: phive
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
+      - name: "Check cs"
+        run: make php-cs-check
 
   static-code-analysis:
     name: "Static Code Analysis"
@@ -34,24 +53,40 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: "Disable Xdebug"
-        run: php7.4 --ini | grep xdebug | sed 's/,$//' | xargs sudo rm
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~~/.phive
+            ./tools
+          key: ${{ runner.os }}-phive-cache-${{ hashFiles('**/.phive/phars.xml') }}
+          restore-keys: |
+            phive-cache-
 
       - name: "Cache dependencies installed with composer"
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.composer/cache
           key: composer-cache-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             composer-cache-
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: phive
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
       - name: "Install dependencies with composer"
-        run: php7.4 $(which composer) install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
 
       - name: PHPStan
-        uses: docker://oskarstark/phpstan-ga:0.12.25
-        with:
-          args: analyse
+        run: make phpstan
 
   tests:
     name: "PHP ${{ matrix.php-versions }} Test"
@@ -66,8 +101,18 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~~/.phive
+            ./tools
+          key: ${{ runner.os }}-phive-cache-${{ hashFiles('**/.phive/phars.xml') }}
+          restore-keys: |
+            phive-cache-
+
       - name: "Cache dependencies installed with composer"
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.composer/cache
           key: composer-cache-${{ hashFiles('**/composer.lock') }}
@@ -80,6 +125,10 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv
           coverage: none
+          tools: phive
+
+      - name: "Install tools with phive"
+        run: make tools-install
 
       - name: "Run tests"
         run: make tests
@@ -93,8 +142,18 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~~/.phive
+            ./tools
+          key: ${{ runner.os }}-phive-cache-${{ hashFiles('**/.phive/phars.xml') }}
+          restore-keys: |
+            phive-cache-
+
       - name: "Cache dependencies installed with composer"
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ~/.composer/cache
           key: composer-cache-${{ hashFiles('**/composer.lock') }}
@@ -108,18 +167,16 @@ jobs:
           extensions: mbstring, xml, ctype, iconv
           ini-values: phar.readonly=0
           coverage: none
+          tools: phive
+
+      - name: "Install tools with phive"
+        run: make tools-install
 
       - name: "Install dependencies with composer"
         run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
 
-      - name: "Download humbug/box"
-        run: wget --no-clobber --output-document=./box https://github.com/humbug/box/releases/download/3.8.4/box.phar || true
-
-      - name: "Make humbug/box executable"
-        run: chmod +x ./box
-
       - name: "Compile deptrac phar"
-        run: ./box compile
+        run: ./tools/box compile
 
       - name: "Run deptrac phar without cache"
         run: php deptrac.phar analyze examples/Fixture.depfile.yml --no-cache
@@ -141,6 +198,9 @@ jobs:
 
       - name: "Custom cache file should exist"
         run: "[ -f '.deptrac.cache2' ]"
+
+      - name: "Run deptrac phar with --fail-on-uncovered"
+        run: sh .github/workflows/test-flag-fail-on-uncovered.sh
 
       - name: "Upload phar file artifact"
         uses: actions/upload-artifact@v2

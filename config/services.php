@@ -38,15 +38,18 @@ use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\Deptrac\FileResolver;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
+use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\XMLOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
-use Symfony\Component\DependencyInjection\Loader\Configurator as di;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-return static function (di\ContainerConfigurator $container): void {
+return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->defaults()
@@ -56,8 +59,8 @@ return static function (di\ContainerConfigurator $container): void {
 
     $services->set(AstRunner::class)
         ->args([
-            di\ref(EventDispatcher::class),
-            di\ref(NikicPhpParser::class),
+            service(EventDispatcher::class),
+            service(NikicPhpParser::class),
         ]);
 
     $services->set(AstFileReferenceInMemoryCache::class);
@@ -69,22 +72,22 @@ return static function (di\ContainerConfigurator $container): void {
 
     $services
         ->set(FileParser::class)
-        ->args([di\ref(Parser::class)]);
+        ->args([service(Parser::class)]);
 
     $services
         ->set(NikicPhpParser::class)
         ->args([
-            di\ref(FileParser::class),
-            di\ref(AstFileReferenceCache::class),
-            di\ref(TypeResolver::class),
-            di\ref(AnnotationDependencyResolver::class),
-            di\ref(AnonymousClassResolver::class),
-            di\ref(ClassConstantResolver::class),
+            service(FileParser::class),
+            service(AstFileReferenceCache::class),
+            service(TypeResolver::class),
+            service(AnnotationDependencyResolver::class),
+            service(AnonymousClassResolver::class),
+            service(ClassConstantResolver::class),
         ]);
 
     $services
         ->set(AnnotationDependencyResolver::class)
-        ->args([di\ref(TypeResolver::class)]);
+        ->args([service(TypeResolver::class)]);
     $services->set(AnonymousClassResolver::class);
     $services->set(CatchStmtResolver::class);
     $services->set(ClassConstantResolver::class);
@@ -98,11 +101,11 @@ return static function (di\ContainerConfigurator $container): void {
     $services
         ->set(Analyser::class)
         ->args([
-            di\ref(AstRunner::class),
-            di\ref(FileResolver::class),
-            di\ref(Resolver::class),
-            di\ref(Registry::class),
-            di\ref(RulesetEngine::class),
+            service(AstRunner::class),
+            service(FileResolver::class),
+            service(Resolver::class),
+            service(Registry::class),
+            service(RulesetEngine::class),
         ]);
 
     $services->set(RulesetEngine::class);
@@ -115,9 +118,12 @@ return static function (di\ContainerConfigurator $container): void {
     /* Formatters */
     $services
         ->set(OutputFormatterFactory::class)
-        ->args([di\tagged_iterator('output_formatter')]);
+        ->args([tagged_iterator('output_formatter')]);
     $services
         ->set(ConsoleOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(GithubActionsOutputFormatter::class)
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputFormatter::class)
@@ -132,7 +138,7 @@ return static function (di\ContainerConfigurator $container): void {
     /* Collectors */
     $services
         ->set(Registry::class)
-        ->args([di\tagged_iterator('collector')]);
+        ->args([tagged_iterator('collector')]);
     $services
         ->set(BoolCollector::class)
         ->tag('collector');
@@ -153,16 +159,16 @@ return static function (di\ContainerConfigurator $container): void {
         ->tag('collector');
     $services
         ->set(MethodCollector::class)
-        ->args([di\ref(NikicPhpParser::class)])
+        ->args([service(NikicPhpParser::class)])
         ->tag('collector');
 
     /* Dependency resolving */
     $services
         ->set(Resolver::class)
         ->args([
-            di\ref(EventDispatcher::class),
-            di\ref(InheritanceFlatter::class),
-            di\tagged_iterator('dependency_emitter'),
+            service(EventDispatcher::class),
+            service(InheritanceFlatter::class),
+            tagged_iterator('dependency_emitter'),
         ]);
     $services->set(InheritanceFlatter::class);
     $services
@@ -175,16 +181,16 @@ return static function (di\ContainerConfigurator $container): void {
     /* Commands */
     $services
         ->set(InitCommand::class)
-        ->args([di\ref(Dumper::class)])
+        ->args([service(Dumper::class)])
         ->public();
 
     $services
         ->set(AnalyzeCommand::class)
         ->args([
-            di\ref(Analyser::class),
-            di\ref(Loader::class),
-            di\ref(EventDispatcher::class),
-            di\ref(OutputFormatterFactory::class),
+            service(Analyser::class),
+            service(Loader::class),
+            service(EventDispatcher::class),
+            service(OutputFormatterFactory::class),
         ])
         ->public();
 };
