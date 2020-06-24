@@ -32,7 +32,10 @@ final class ResolveTypeNames
         $this->typeResolver = new TypeResolver();
     }
 
-    public function __invoke(TypeNode $type, Context $context)
+    /**
+     * @return string[]
+     */
+    public function __invoke(TypeNode $type, Context $context): array
     {
         if ($type instanceof IdentifierTypeNode) {
             return $this->resolveString($type->name, $context);

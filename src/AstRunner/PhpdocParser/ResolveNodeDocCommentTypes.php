@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\AstRunner\PhpdocParser;
 
 use phpDocumentor\Reflection\Types\Context;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\NodeAbstract;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
@@ -27,7 +27,7 @@ final class ResolveNodeDocCommentTypes
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
     }
 
-    public function __invoke(ClassReferenceBuilder $builder, NodeAbstract $node, Context $context): void
+    public function __invoke(ClassReferenceBuilder $builder, Node $node, Context $context): void
     {
         if (null === $docComment = $node->getDocComment()) {
             return;

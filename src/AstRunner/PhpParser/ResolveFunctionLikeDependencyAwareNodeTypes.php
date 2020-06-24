@@ -6,7 +6,7 @@ namespace SensioLabs\Deptrac\AstRunner\PhpParser;
 
 use phpDocumentor\Reflection\Types\Context;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\FunctionLike;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitorAbstract;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
@@ -22,7 +22,7 @@ use SensioLabs\Deptrac\AstRunner\Resolver\StaticPropertyFetchResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\VariableDocCommentResolver;
 
-final class ResolveClassMethodDependencyAwareNodeTypes
+final class ResolveFunctionLikeDependencyAwareNodeTypes
 {
     /**
      * @var ClassDependencyResolver[]
@@ -46,15 +46,21 @@ final class ResolveClassMethodDependencyAwareNodeTypes
 
     public function __invoke(
         ClassReferenceBuilder $classReferenceBuilder,
-        ClassMethod $classMethod,
+        FunctionLike $classMethod,
         Context $context
     ): void {
+        $nodes = $classMethod->getStmts();
+
+        if (null === $nodes) {
+            return;
+        }
+
         $nodeTraverser = new NodeTraverser();
         $nodeTraverser->addVisitor(
             new class($classReferenceBuilder, $context, ...$this->classDependencyResolvers) extends NodeVisitorAbstract {
-                private $classReferenceBuilder;
-                private $context;
-                private $classDependencyResolvers;
+                private ClassReferenceBuilder $classReferenceBuilder;
+                private Context $context;
+                private array $classDependencyResolvers;
 
                 public function __construct(
                     ClassReferenceBuilder $classReferenceBuilder,
@@ -76,6 +82,6 @@ final class ResolveClassMethodDependencyAwareNodeTypes
                 }
             }
         );
-        $nodeTraverser->traverse($classMethod->stmts);
+        $nodeTraverser->traverse($nodes);
     }
 }

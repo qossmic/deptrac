@@ -16,7 +16,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
 use SensioLabs\Deptrac\AstRunner\PhpdocParser\ResolveNodeDocCommentTypes;
-use SensioLabs\Deptrac\AstRunner\PhpParser\ResolveClassMethodDependencyAwareNodeTypes;
+use SensioLabs\Deptrac\AstRunner\PhpParser\ResolveFunctionLikeDependencyAwareNodeTypes;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
@@ -25,7 +25,7 @@ class Parser implements AstParser
     private Locator $locator;
     private NamespaceNodeToReflectionTypeContext $namespaceNodeToReflectionTypeContext;
     private ResolveNodeDocCommentTypes $resolveNodeDocCommentTypes;
-    private ResolveClassMethodDependencyAwareNodeTypes $resolveClassMethodDependencyAwareNodeTypes;
+    private ResolveFunctionLikeDependencyAwareNodeTypes $resolveClassMethodDependencyAwareNodeTypes;
 
     public function __construct(TypeResolver $typeResolver)
     {
@@ -33,12 +33,12 @@ class Parser implements AstParser
 
         $this->namespaceNodeToReflectionTypeContext = new NamespaceNodeToReflectionTypeContext();
         $this->resolveNodeDocCommentTypes = new ResolveNodeDocCommentTypes();
-        $this->resolveClassMethodDependencyAwareNodeTypes = new ResolveClassMethodDependencyAwareNodeTypes($typeResolver);
+        $this->resolveClassMethodDependencyAwareNodeTypes = new ResolveFunctionLikeDependencyAwareNodeTypes($typeResolver);
     }
 
     public function parse(SplFileInfo $data): AstFileReference
     {
-        $realPath = $data->getRealPath();
+        $realPath = (string)$data->getRealPath();
         $reflector = new ClassReflector(new SingleFileSourceLocator($realPath, $this->locator));
 
         $fileReferenceBuilder = FileReferenceBuilder::create($realPath);
