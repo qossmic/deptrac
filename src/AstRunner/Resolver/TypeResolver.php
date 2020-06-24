@@ -11,19 +11,6 @@ use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Object_;
 use PhpParser\Node;
 use PhpParser\NodeAbstract;
-use PHPStan\PhpDocParser\Ast\ConstExpr\ConstFetchNode;
-use PHPStan\PhpDocParser\Ast\Type\ArrayShapeItemNode;
-use PHPStan\PhpDocParser\Ast\Type\ArrayShapeNode;
-use PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\CallableTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\CallableTypeParameterNode;
-use PHPStan\PhpDocParser\Ast\Type\ConstTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\GenericTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\TypeNode;
-use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 
 class TypeResolver
 {
@@ -73,7 +60,6 @@ class TypeResolver
 
         return [];
     }
-
 
     /**
      * @return string[]

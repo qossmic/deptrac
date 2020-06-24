@@ -5,12 +5,7 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\BetterReflection\Parser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 

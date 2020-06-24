@@ -91,7 +91,7 @@ final class ResolveTypeNames
             );
         }
 
-        return $this->resolveString((string)$type, $context);
+        return $this->resolveString((string) $type, $context);
     }
 
     /**
@@ -110,7 +110,7 @@ final class ResolveTypeNames
     private function resolveReflectionType(Type $resolvedType): array
     {
         if ($resolvedType instanceof Object_) {
-            return ($fqsen = $resolvedType->getFqsen()) ? [(string)$fqsen] : [];
+            return ($fqsen = $resolvedType->getFqsen()) ? [(string) $fqsen] : [];
         }
 
         if ($resolvedType instanceof Compound) {

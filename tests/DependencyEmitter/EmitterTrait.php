@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\BetterReflection\Parser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\Dependency\DependencyInterface;
