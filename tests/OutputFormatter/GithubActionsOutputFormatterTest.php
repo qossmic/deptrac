@@ -12,6 +12,7 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Tests\SensioLabs\Deptrac\EmptyEnv;
 
 class GithubActionsOutputFormatterTest extends TestCase
 {
@@ -73,5 +74,10 @@ class GithubActionsOutputFormatterTest extends TestCase
             ],
             "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
+    }
+
+    public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
+    {
+        static::assertFalse((new GithubActionsOutputFormatter(new EmptyEnv()))->enabledByDefault());
     }
 }

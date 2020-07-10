@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
@@ -10,6 +11,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
+    private $env;
+
+    public function __construct(Env $env = null)
+    {
+        $this->env = $env ?? new Env();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +36,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
 
     public function enabledByDefault(): bool
     {
-        return false;
+        return false !== $this->env->get('GITHUB_ACTIONS');
     }
 
     /**

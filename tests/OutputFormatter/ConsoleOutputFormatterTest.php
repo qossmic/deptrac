@@ -16,12 +16,13 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Tests\SensioLabs\Deptrac\EmptyEnv;
 
 class ConsoleOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {
-        static::assertEquals('console', (new ConsoleOutputFormatter())->getName());
+        static::assertEquals('console', (new ConsoleOutputFormatter(new EmptyEnv()))->getName());
     }
 
     public function basicDataProvider(): iterable
@@ -123,7 +124,7 @@ class ConsoleOutputFormatterTest extends TestCase
     {
         $output = new BufferedOutput();
 
-        $formatter = new ConsoleOutputFormatter();
+        $formatter = new ConsoleOutputFormatter(new EmptyEnv());
         $formatter->finish(
             new Context($rules),
             $output,
@@ -139,11 +140,16 @@ class ConsoleOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        static::assertCount(1, (new ConsoleOutputFormatter())->configureOptions());
+        static::assertCount(1, (new ConsoleOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 
     private function normalize($str)
     {
         return str_replace(["\r", "\t", "\n", ' '], '', $str);
+    }
+
+    public function testConsoleOutputFormatterIsEnabledByDefault(): void
+    {
+        static::assertTrue((new ConsoleOutputFormatter(new EmptyEnv()))->enabledByDefault());
     }
 }
