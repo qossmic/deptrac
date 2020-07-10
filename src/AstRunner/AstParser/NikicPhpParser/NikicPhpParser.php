@@ -91,7 +91,9 @@ class NikicPhpParser implements AstParser
             return self::$classAstMap[$classLikeName];
         }
 
-        if (null === $classReference->getFileReference()) {
+        $astFileReference = $classReference->getFileReference();
+
+        if (null === $astFileReference) {
             return null;
         }
 
@@ -102,9 +104,7 @@ class NikicPhpParser implements AstParser
         );
 
         $this->traverser->addVisitor($findingVisitor);
-        $this->traverser->traverse(
-            $this->fileParser->parse(new \SplFileInfo($classReference->getFileReference()->getFilepath()))
-        );
+        $this->traverser->traverse($this->fileParser->parse(new \SplFileInfo($astFileReference->getFilepath())));
         $this->traverser->removeVisitor($findingVisitor);
 
         /** @var Node\Stmt\ClassLike[] $classLikeNodes */
