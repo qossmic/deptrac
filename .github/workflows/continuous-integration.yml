@@ -44,8 +44,8 @@ jobs:
       - name: "Check cs"
         run: make php-cs-check
 
-  static-code-analysis:
-    name: "Static Code Analysis"
+  static-code-analysis-phpstan:
+    name: "Static Code Analysis by PHPStan"
 
     runs-on: ubuntu-latest
 
@@ -87,6 +87,50 @@ jobs:
 
       - name: PHPStan
         run: make phpstan
+
+  static-code-analysis-psalm:
+    name: "Static Code Analysis by Psalm"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~~/.phive
+            ./tools
+          key: ${{ runner.os }}-phive-cache-${{ hashFiles('**/.phive/phars.xml') }}
+          restore-keys: |
+            phive-cache-
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v2
+        with:
+          path: ~/.composer/cache
+          key: composer-cache-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            composer-cache-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: phive
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
+      - name: "Install dependencies with composer"
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: Psalm
+        run: make psalm
 
   tests:
     name: "PHP ${{ matrix.php-versions }} Test"
