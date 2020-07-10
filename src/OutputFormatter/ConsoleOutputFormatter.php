@@ -17,6 +17,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
     private const REPORT_UNCOVERED = 'report-uncovered';
 
+    /** @var Env */
     private $env;
 
     public function __construct(Env $env = null)
@@ -38,7 +39,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     public function enabledByDefault(): bool
     {
-        return !(false !== $this->env->get('GITHUB_ACTIONS'));
+        return false === $this->env->get('GITHUB_ACTIONS');
     }
 
     public function finish(

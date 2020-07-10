@@ -14,9 +14,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver
 {
+    /** @var EventDispatcherInterface */
     private $dispatcher;
+    /** @var InheritanceFlatter */
     private $inheritanceFlatter;
-
     /** @var DependencyEmitterInterface[] */
     private $emitters;
 
@@ -28,6 +29,7 @@ class Resolver
         $this->dispatcher = $dispatcher;
         $this->inheritanceFlatter = $inheritanceFlatter;
 
+        $this->emitters = [];
         foreach ($emitters as $emitter) {
             $this->addEmitter($emitter);
         }

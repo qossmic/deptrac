@@ -11,6 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
+    /** @var Env */
     private $env;
 
     public function __construct(Env $env = null)
