@@ -76,7 +76,7 @@ class GithubActionsOutputFormatterTest extends TestCase
         ];
     }
 
-    public function testGithubActionsOutputFormatterIsActiveByDefault(): void
+    public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
     {
         static::assertFalse((new GithubActionsOutputFormatter(new EmptyEnv()))->enabledByDefault());
     }
