@@ -148,7 +148,7 @@ class ConsoleOutputFormatterTest extends TestCase
         return str_replace(["\r", "\t", "\n", ' '], '', $str);
     }
 
-    public function testConsoleOutputFormatterIsActiveByDefault(): void
+    public function testConsoleOutputFormatterIsEnabledByDefault(): void
     {
         static::assertTrue((new ConsoleOutputFormatter(new EmptyEnv()))->enabledByDefault());
     }
