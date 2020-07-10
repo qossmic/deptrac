@@ -38,7 +38,7 @@ class Parser implements AstParser
 
     public function parse(SplFileInfo $data): AstFileReference
     {
-        $realPath = (string)$data->getRealPath();
+        $realPath = (string) $data->getRealPath();
         $reflector = new ClassReflector(new SingleFileSourceLocator($realPath, $this->locator));
 
         $fileReferenceBuilder = FileReferenceBuilder::create($realPath);

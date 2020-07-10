@@ -52,9 +52,12 @@ class OutputFormatterFactory
      */
     public function getActiveFormatters(InputInterface $input): array
     {
-        return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input): bool {
-            return $this->isFormatterActive($formatter, $input);
-        }));
+        return array_values(
+            array_filter(
+                $this->formatters,
+                fn (OutputFormatterInterface $formatter) => $this->isFormatterActive($formatter, $input)
+            )
+        );
     }
 
     public function getOutputFormatterInput(OutputFormatterInterface $outputFormatter, InputInterface $input): OutputFormatterInput
@@ -86,7 +89,7 @@ class OutputFormatterFactory
             return $formatter;
         }
 
-        throw new \LogicException(sprintf('Formatter %s does not exists, did you mean %s?', $name, implode(', ', array_map(static function (OutputFormatterInterface $f): string { return $f->getName(); }, $this->formatters))));
+        throw new \LogicException(sprintf('Formatter %s does not exists, did you mean %s?', $name, implode(', ', array_map(static fn (OutputFormatterInterface $f) => $f->getName(), $this->formatters))));
     }
 
     private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool
@@ -116,8 +119,10 @@ class OutputFormatterFactory
         );
     }
 
-    private function createFormatterArgumentOption(OutputFormatterInterface $formatter, OutputFormatterOption $formatterArgument): InputOption
-    {
+    private function createFormatterArgumentOption(
+        OutputFormatterInterface $formatter,
+        OutputFormatterOption $formatterArgument
+    ): InputOption {
         return new InputOption(
             'formatter-'.$formatter->getName().'-'.$formatterArgument->getName(),
             null,

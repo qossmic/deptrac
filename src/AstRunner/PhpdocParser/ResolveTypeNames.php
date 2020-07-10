@@ -53,9 +53,7 @@ final class ResolveTypeNames
             return array_merge(
                 [],
                 ...array_map(
-                    function (TypeNode $typeNode) use ($context) {
-                        return $this->__invoke($typeNode, $context);
-                    },
+                    fn (TypeNode $typeNode) => $this->__invoke($typeNode, $context),
                     $type->types
                 )
             );
@@ -64,9 +62,7 @@ final class ResolveTypeNames
             return array_merge(
                 [],
                 ...array_map(
-                    function (TypeNode $typeNode) use ($context) {
-                        return $this->__invoke($typeNode, $context);
-                    },
+                    fn (TypeNode $typeNode) => $this->__invoke($typeNode, $context),
                     $type->genericTypes
                 )
             );
@@ -75,9 +71,7 @@ final class ResolveTypeNames
             return array_merge(
                 [],
                 ...array_map(
-                    function (ArrayShapeItemNode $itemNode) use ($context) {
-                        return $this->__invoke($itemNode->valueType, $context);
-                    },
+                    fn (ArrayShapeItemNode $itemNode) => $this->__invoke($itemNode->valueType, $context),
                     $type->items
                 )
             );
@@ -86,9 +80,7 @@ final class ResolveTypeNames
             return array_merge(
                 $this->__invoke($type->returnType, $context),
                 ...array_map(
-                    function (CallableTypeParameterNode $parameterNode) use ($context) {
-                        return $this->__invoke($parameterNode->type, $context);
-                    },
+                    fn (CallableTypeParameterNode $parameterNode) => $this->__invoke($parameterNode->type, $context),
                     $type->parameters
                 )
             );
@@ -120,11 +112,9 @@ final class ResolveTypeNames
             return array_merge(
                 [],
                 ...array_map(
-                function (Type $type) {
-                    return $this->resolveReflectionType($type);
-                },
-                iterator_to_array($resolvedType)
-            )
+                    fn (Type $type) => $this->resolveReflectionType($type),
+                    iterator_to_array($resolvedType)
+                )
             );
         }
 

@@ -43,9 +43,7 @@ class Configuration
         ->resolve($args);
 
         $instance = new self();
-        $instance->layers = array_map(static function ($v): ConfigurationLayer {
-            return ConfigurationLayer::fromArray($v);
-        }, $options['layers']);
+        $instance->layers = array_map(static fn ($v) => ConfigurationLayer::fromArray($v), $options['layers']);
         $instance->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
         $instance->paths = $options['paths'];
         $instance->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);

@@ -23,9 +23,7 @@ class AstFileReference
     {
         $this->filepath = $filepath;
         $this->dependencies = $dependencies;
-        $this->classReferences = array_map(function (AstClassReference $classReference) {
-            return $classReference->withFileReference($this);
-        }, $classReferences);
+        $this->classReferences = array_map(fn (AstClassReference $classReference) => $classReference->withFileReference($this), $classReferences);
     }
 
     public function getFilepath(): string

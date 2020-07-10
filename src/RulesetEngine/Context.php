@@ -32,9 +32,7 @@ final class Context
      */
     public function violations(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
-            return $rule instanceof Violation;
-        });
+        return array_filter($this->rules, static fn (Rule $rule) => $rule instanceof Violation);
     }
 
     public function hasViolations(): bool
@@ -47,9 +45,7 @@ final class Context
      */
     public function skippedViolations(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
-            return $rule instanceof SkippedViolation;
-        });
+        return array_filter($this->rules, static fn (Rule $rule) => $rule instanceof SkippedViolation);
     }
 
     /**
@@ -57,9 +53,7 @@ final class Context
      */
     public function uncovered(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
-            return $rule instanceof Uncovered;
-        });
+        return array_filter($this->rules, static fn (Rule $rule) => $rule instanceof Uncovered);
     }
 
     public function hasUncovered(): bool
@@ -72,8 +66,6 @@ final class Context
      */
     public function allowed(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
-            return $rule instanceof Allowed;
-        });
+        return array_filter($this->rules, static fn (Rule $rule) => $rule instanceof Allowed);
     }
 }

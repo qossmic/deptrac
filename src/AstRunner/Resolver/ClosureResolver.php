@@ -25,9 +25,7 @@ class ClosureResolver implements ClassDependencyResolver
 
         $params = array_filter(
             array_map(
-                static function (Node\Param $param) {
-                    return $param->type;
-                },
+                static fn (Node\Param $param) => $param->type,
                 $node->params
             )
         );
