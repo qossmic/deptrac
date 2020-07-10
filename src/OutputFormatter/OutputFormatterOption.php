@@ -8,9 +8,13 @@ use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterOption
 {
+    /** @var string */
     private $name;
+    /** @var int|null */
     private $mode;
+    /** @var string */
     private $description;
+    /** @var mixed|null */
     private $default;
 
     /**

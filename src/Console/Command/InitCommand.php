@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InitCommand extends Command
 {
+    /** @var ConfigurationDumper */
     private $dumper;
 
     public function __construct(ConfigurationDumper $dumper)

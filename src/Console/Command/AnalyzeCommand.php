@@ -19,9 +19,13 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyzeCommand extends Command
 {
+    /** @var Analyser */
     private $analyser;
+    /** @var ConfigurationLoader */
     private $configurationLoader;
+    /** @var EventDispatcherInterface */
     private $dispatcher;
+    /** @var OutputFormatterFactory */
     private $formatterFactory;
 
     public function __construct(

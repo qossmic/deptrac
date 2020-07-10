@@ -10,10 +10,12 @@ class AstInherit
     private const TYPE_IMPLEMENTS = 2;
     private const TYPE_USES = 3;
 
+    /** @var ClassLikeName */
     private $classLikeName;
+    /** @var FileOccurrence */
     private $fileOccurrence;
+    /** @var int */
     private $type;
-
     /** @var AstInherit[] */
     private $path;
 

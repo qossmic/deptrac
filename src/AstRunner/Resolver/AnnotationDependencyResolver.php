@@ -15,12 +15,11 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class AnnotationDependencyResolver implements ClassDependencyResolver
 {
+    /** @var Lexer */
     private $lexer;
+    /** @var PhpDocParser */
     private $docParser;
-
-    /**
-     * @var TypeResolver
-     */
+    /** @var TypeResolver */
     private $typeResolver;
 
     public function __construct(TypeResolver $typeResolver)
@@ -51,7 +50,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
-                $classReferenceBuilder->parameter($type, $docComment->getLine());
+                $classReferenceBuilder->parameter($type, $docComment->getStartLine());
             }
         }
 
@@ -59,7 +58,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
-                $classReferenceBuilder->variable($type, $docComment->getLine());
+                $classReferenceBuilder->variable($type, $docComment->getStartLine());
             }
         }
 
@@ -67,7 +66,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
-                $classReferenceBuilder->returnType($type, $docComment->getLine());
+                $classReferenceBuilder->returnType($type, $docComment->getStartLine());
             }
         }
 
@@ -75,7 +74,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
 
             foreach ($types as $type) {
-                $classReferenceBuilder->throwStatement($type, $docComment->getLine());
+                $classReferenceBuilder->throwStatement($type, $docComment->getStartLine());
             }
         }
     }

@@ -13,7 +13,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressSubscriber implements EventSubscriberInterface
 {
+    /** @var ProgressBar */
     private $progressBar;
+    /** @var OutputInterface */
     private $output;
 
     public function __construct(OutputInterface $output)

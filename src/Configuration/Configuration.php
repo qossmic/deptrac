@@ -42,21 +42,19 @@ class Configuration
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
         ->resolve($args);
 
-        $instance = new self();
-        $instance->layers = array_map(static function ($v): ConfigurationLayer {
-            return ConfigurationLayer::fromArray($v);
-        }, $options['layers']);
-        $instance->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
-        $instance->paths = $options['paths'];
-        $instance->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
-        $instance->excludeFiles = (array) $options['exclude_files'];
-        $instance->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
-
-        return $instance;
+        return new self($options);
     }
 
-    private function __construct()
+    private function __construct(array $options)
     {
+        $this->layers = array_map(static function (array $v): ConfigurationLayer {
+            return ConfigurationLayer::fromArray($v);
+        }, $options['layers']);
+        $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
+        $this->paths = $options['paths'];
+        $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
+        $this->excludeFiles = (array) $options['exclude_files'];
+        $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
     }
 
     /**

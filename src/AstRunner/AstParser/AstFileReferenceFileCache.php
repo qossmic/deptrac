@@ -16,11 +16,10 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
 {
     /** @var array<string, array> */
     private $cache;
+    /** @var string */
     private $cacheFile;
-
     /** @var bool */
     private $loaded = false;
-
     /** @var array<string, bool> */
     private $parsedFiles = [];
 
