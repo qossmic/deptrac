@@ -12,6 +12,9 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
+use SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\SensioLabs\Deptrac\AstRunner\ArrayAsserts;
@@ -29,23 +32,27 @@ class AstMapGeneratorTest extends TestCase
 
     private function getAstMap(string $fixture): AstMap
     {
+        $typeResolver = new TypeResolver();
         $astRunner = new AstRunner(
             new EventDispatcher(),
             new NikicPhpParser(
                 new FileParser(ParserFactory::createParser()),
                 new AstFileReferenceInMemoryCache(),
-                new TypeResolver()
+                $typeResolver,
+                new AnnotationDependencyResolver($typeResolver),
+                new AnonymousClassResolver(),
+                new ClassConstantResolver()
             )
         );
 
         return $astRunner->createAstMapByFiles(
-            [new \SplFileInfo(__DIR__.'/Fixtures/BasicDependency/'.$fixture.'.php')]
+            [new \SplFileInfo($fixture)]
         );
     }
 
     public function testBasicDependencyClass(): void
     {
-        $astMap = $this->getAstMap('BasicDependencyClass');
+        $astMap = $this->getAstMap(__DIR__.'/Fixtures/BasicDependency/BasicDependencyClass.php');
 
         static::assertArrayValuesEquals(
             [
@@ -66,7 +73,7 @@ class AstMapGeneratorTest extends TestCase
 
     public function testBasicTraitsClass(): void
     {
-        $astMap = $this->getAstMap('BasicDependencyTraits');
+        $astMap = $this->getAstMap(__DIR__.'/Fixtures/BasicDependency/BasicDependencyTraits.php');
 
         static::assertArrayValuesEquals(
             [],
@@ -94,6 +101,25 @@ class AstMapGeneratorTest extends TestCase
         static::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::15 (Uses)'],
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyTraitClass::class)))
+        );
+    }
+
+    public function testIssue319(): void
+    {
+        $astMap = $this->getAstMap(__DIR__.'/Fixtures/Issue319.php');
+
+        static::assertSame(
+            [
+                'Foo\Exception',
+                'Foo\RuntimeException',
+                'LogicException',
+            ],
+            array_map(
+                static function (AstMap\AstDependency $dependency) {
+                    return $dependency->getClassLikeName()->toString();
+                },
+                $astMap->getAstFileReferences()[__DIR__.'/Fixtures/Issue319.php']->getDependencies()
+            )
         );
     }
 

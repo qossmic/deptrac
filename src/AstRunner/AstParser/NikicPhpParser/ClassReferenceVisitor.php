@@ -73,9 +73,21 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        if ($node instanceof Node\Stmt\UseUse) {
-            $this->currentTypeScope->addUse($node->name->toCodeString(), $node->getAlias()->toString());
-            $this->fileReferenceBuilder->use($node->name->toCodeString(), $node->name->getLine());
+        if ($node instanceof Node\Stmt\Use_ && Node\Stmt\Use_::TYPE_NORMAL === $node->type) {
+            foreach ($node->uses as $use) {
+                $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
+                $this->fileReferenceBuilder->use($use->name->toString(), $use->name->getLine());
+            }
+        }
+
+        if ($node instanceof Node\Stmt\GroupUse) {
+            foreach ($node->uses as $use) {
+                if (Node\Stmt\Use_::TYPE_NORMAL === $use->type) {
+                    $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
+                    $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
+                    $this->fileReferenceBuilder->use($classLikeName, $use->name->getLine());
+                }
+            }
         }
 
         if (!$this->fileReferenceBuilder->hasCurrentClassLike()) {
