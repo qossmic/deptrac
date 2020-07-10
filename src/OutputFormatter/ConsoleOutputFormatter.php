@@ -6,6 +6,7 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
+use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
@@ -15,6 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
     private const REPORT_UNCOVERED = 'report-uncovered';
+
+    private $env;
+
+    public function __construct(Env $env = null)
+    {
+        $this->env = $env ?? new Env();
+    }
 
     public function getName(): string
     {
@@ -30,7 +38,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     public function enabledByDefault(): bool
     {
-        return true;
+        return !(false !== $this->env->get('GITHUB_ACTIONS'));
     }
 
     public function finish(
