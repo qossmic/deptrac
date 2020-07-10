@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## [0.8.1] - 2020-07-10
+
+### Added
+
+- [#321] Add Psalm, Thanks to [@DanielBadura]
+
+### Changed
+
+- [#324] Enable GithubActionsOutputFormatter by default in GithubActions environment, Thanks to [@jschaedl]
+- [#323] psalm level 2, Thanks to [@smoench]
+- [#322] differentiate between possible use types, Thanks to [@smoench]
+
 ## [0.8.0] - 2020-06-19
 
 ### Added
@@ -184,7 +196,13 @@ All notable changes to this project will be documented in this file, in reverse 
 [@radimvaculik]: https://github.com/radimvaculik
 [@jtaylor100]: https://github.com/jtaylor100
 [@hugochinchilla]: https://github.com/hugochinchilla
+[@jschaedl]: https://github.com/jschaedl
+[@DanielBadura]: https://github.com/DanielBadura
 
+[#324]: https://github.com/sensiolabs-de/deptrac/pull/324
+[#323]: https://github.com/sensiolabs-de/deptrac/pull/323
+[#322]: https://github.com/sensiolabs-de/deptrac/pull/322
+[#321]: https://github.com/sensiolabs-de/deptrac/pull/321
 [#316]: https://github.com/sensiolabs-de/deptrac/pull/316
 [#315]: https://github.com/sensiolabs-de/deptrac/pull/315
 [#314]: https://github.com/sensiolabs-de/deptrac/pull/314
@@ -221,6 +239,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.8.1]: https://github.com/sensiolabs-de/deptrac/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/sensiolabs-de/deptrac/compare/0.7.1...0.8.0
 [0.7.1]: https://github.com/sensiolabs-de/deptrac/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/sensiolabs-de/deptrac/compare/0.6.0...0.7.0
