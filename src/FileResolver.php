@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac;
 
+use Iterator;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
@@ -24,11 +25,13 @@ class FileResolver
             ->ignoreVCS(true)
             ->notPath($configuration->getExcludeFiles());
 
-        $finder = new PathNameFilterIterator(
-            $finder->getIterator(),
-            [],
-            $configuration->getExcludeFiles()
-        );
+        $customFilterIterator = $finder->getIterator();
+
+        if (!$customFilterIterator instanceof Iterator) {
+            throw new \RuntimeException('unable to create an interator for the configured paths');
+        }
+
+        $finder = new PathNameFilterIterator($customFilterIterator, [], $configuration->getExcludeFiles());
 
         return iterator_to_array($finder);
     }
