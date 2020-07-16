@@ -29,17 +29,17 @@ class AstInherit
 
     public static function newExtends(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
-        return new self($className, $fileOccurrence, static::TYPE_EXTENDS);
+        return new self($className, $fileOccurrence, self::TYPE_EXTENDS);
     }
 
     public static function newImplements(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
-        return new self($className, $fileOccurrence, static::TYPE_IMPLEMENTS);
+        return new self($className, $fileOccurrence, self::TYPE_IMPLEMENTS);
     }
 
     public static function newTraitUse(ClassLikeName $className, FileOccurrence $fileOccurrence): self
     {
-        return new self($className, $fileOccurrence, static::TYPE_USES);
+        return new self($className, $fileOccurrence, self::TYPE_USES);
     }
 
     public function __toString(): string

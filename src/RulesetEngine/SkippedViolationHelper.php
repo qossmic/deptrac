@@ -39,6 +39,9 @@ final class SkippedViolationHelper
         return $matched;
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public function unmatchedSkippedViolations(): array
     {
         return array_filter($this->unmatchedSkippedViolation);

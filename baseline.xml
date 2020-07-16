@@ -1,5 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.18.2@19aa905f7c3c7350569999a93c40ae91ae4e1626">
+<files psalm-version="4.3.1@2feba22a005a18bf31d4c7b9bdb9252c73897476">
+  <file src="src/AstRunner/AstParser/NikicPhpParser/ClassReferenceVisitor.php">
+    <MixedArgument occurrences="1">
+      <code>$className</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$className</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>toCodeString</code>
+    </MixedMethodCall>
+  </file>
+  <file src="src/AstRunner/AstParser/NikicPhpParser/NikicPhpParser.php">
+    <MixedArrayOffset occurrences="1">
+      <code>self::$classAstMap[$className]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="1">
+      <code>$className</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>?Node\Stmt\ClassLike</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="1">
+      <code>toCodeString</code>
+    </MixedMethodCall>
+    <MixedPropertyTypeCoercion occurrences="1">
+      <code>self::$classAstMap</code>
+    </MixedPropertyTypeCoercion>
+    <MixedReturnStatement occurrences="1">
+      <code>self::$classAstMap[$classLikeName] ?? null</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Collector/BoolCollector.php">
+    <MixedArgument occurrences="2">
+      <code>$v</code>
+      <code>$v</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$v</code>
+      <code>$v</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Collector/ClassNameCollector.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$configuration</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/Collector/DirectoryCollector.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$configuration</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/Collector/MethodCollector.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$configuration</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/Configuration/Configuration.php">
+    <MixedArgument occurrences="6">
+      <code>$options['layers']</code>
+      <code>$options['ruleset']</code>
+      <code>$options['ruleset']</code>
+      <code>$options['ruleset']</code>
+      <code>$options['skip_violations']</code>
+      <code>$unknownLayerNames</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$v</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$this-&gt;paths</code>
+    </MixedAssignment>
+    <MixedPropertyTypeCoercion occurrences="1">
+      <code>(array) $options['exclude_files']</code>
+    </MixedPropertyTypeCoercion>
+  </file>
+  <file src="src/Configuration/ConfigurationLayer.php">
+    <MixedArgument occurrences="2">
+      <code>$options['collectors']</code>
+      <code>$options['name']</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$v</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/Configuration/Loader.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$data</code>
+    </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/Configuration/Loader/YmlFileLoader.php">
+    <MixedArgument occurrences="2">
+      <code>$data</code>
+      <code>Yaml::parse($importContent)</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$data['baseline']</code>
+    </MixedArrayAccess>
+    <MixedOperand occurrences="1">
+      <code>$data['baseline']</code>
+    </MixedOperand>
+  </file>
+  <file src="src/FileResolver.php">
+    <MixedReturnTypeCoercion occurrences="2">
+      <code>SplFileInfo[]</code>
+      <code>iterator_to_array($finder)</code>
+    </MixedReturnTypeCoercion>
+  </file>
+  <file src="src/OutputFormatter/BaselineOutputFormatter.php">
+    <MixedArgument occurrences="2">
+      <code>$baselineFile</code>
+      <code>$baselineFile</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$baselineFile</code>
+    </MixedAssignment>
+  </file>
   <file src="src/OutputFormatter/ConsoleOutputFormatter.php">
     <DeprecatedConstant occurrences="3">
       <code>self::LEGACY_REPORT_UNCOVERED</code>
@@ -33,5 +149,58 @@
       <code>$layer</code>
       <code>$layerDependOn</code>
     </InvalidScalarArgument>
+    <MixedArgument occurrences="6">
+      <code>$dumpDotPath</code>
+      <code>$dumpDotPath</code>
+      <code>$dumpHtmlPath</code>
+      <code>$dumpHtmlPath</code>
+      <code>$dumpImagePath</code>
+      <code>$dumpImagePath</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="9">
+      <code>$dumpDotPath</code>
+      <code>$dumpDotPath</code>
+      <code>$dumpHtmlPath</code>
+      <code>$dumpHtmlPath</code>
+      <code>$dumpImagePath</code>
+      <code>$dumpImagePath</code>
+      <code>$legacyDumpDot</code>
+      <code>$legacyDumpHtml</code>
+      <code>$legacyDumpImage</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/OutputFormatter/JUnitOutputFormatter.php">
+    <MixedArgument occurrences="2">
+      <code>$dumpXmlPath</code>
+      <code>$dumpXmlPath</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="3">
+      <code>$dumpXmlPath</code>
+      <code>$dumpXmlPath</code>
+      <code>$legacyDumpXml</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/OutputFormatter/XMLOutputFormatter.php">
+    <MixedArgument occurrences="2">
+      <code>$dumpXmlPath</code>
+      <code>$dumpXmlPath</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="3">
+      <code>$dumpXmlPath</code>
+      <code>$dumpXmlPath</code>
+      <code>$legacyDumpXml</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/PathNameFilterIterator.php">
+    <MixedArgument occurrences="2">
+      <code>$filename</code>
+      <code>$filename</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$filename</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>getPathname</code>
+    </MixedMethodCall>
   </file>
 </files>
