@@ -14,3 +14,4 @@ ruleset:
 skip_violations:
   Library\LibClass:
     - Core\CoreClass
+
