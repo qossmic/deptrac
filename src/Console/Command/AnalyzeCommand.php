@@ -59,7 +59,7 @@ class AnalyzeCommand extends Command
 
         $file = $input->getArgument('depfile');
 
-        if ($file === null) {
+        if (null === $file) {
             $file = $this->getDefaultFile($output);
         }
 
