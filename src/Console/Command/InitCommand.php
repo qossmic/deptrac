@@ -29,12 +29,12 @@ class InitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->dumper->dump('depfile.yml');
+            $this->dumper->dump('depfile.yaml');
             $output->writeln('depfile <info>dumped.</info>');
 
             return 0;
         } catch (FileExistsException $e) {
-            $output->writeln('<error>depfile.yml already exists</error>');
+            $output->writeln('<error>depfile.yaml already exists</error>');
 
             return 1;
         }
