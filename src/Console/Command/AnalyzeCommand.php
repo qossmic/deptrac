@@ -47,7 +47,7 @@ class AnalyzeCommand extends Command
         $this->setName('analyze');
         $this->setAliases(['analyse']);
 
-        $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile', getcwd().'/depfile.yml');
+        $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile');
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar');
         $this->addOption('fail-on-uncovered', null, InputOption::VALUE_NONE, 'Fails if any uncovered dependecy is found');
@@ -58,6 +58,11 @@ class AnalyzeCommand extends Command
         ini_set('memory_limit', '-1');
 
         $file = $input->getArgument('depfile');
+
+        if ($file === null) {
+            $file = $this->getDefaultFile($output);
+        }
+
         if (!is_string($file)) {
             throw SingleDepfileIsRequiredException::fromArgument($file);
         }
@@ -115,5 +120,26 @@ class AnalyzeCommand extends Command
         ];
         $output->writeln($this->getHelper('formatter')->formatBlock($errorMessages, 'error'));
         $output->writeln('');
+    }
+
+    protected function getDefaultFile(OutputInterface $output): string
+    {
+        $oldDefaultFile = getcwd().'/depfile.yml';
+
+        if (is_file($oldDefaultFile)) {
+            $errorMessages = [
+                '',
+                'Old default file detected.',
+                'The default file changed from depfile.yml to depfile.yaml.',
+                'You are getting this message because you are using deptrac without the file argument and the old default file.',
+                'Deptrac loads for now the old file. Please update your file extension from yml to yaml.',
+                '',
+            ];
+            $output->writeln($this->getHelper('formatter')->formatBlock($errorMessages, 'comment'));
+
+            return $oldDefaultFile;
+        }
+
+        return getcwd().'/depfile.yaml';
     }
 }
