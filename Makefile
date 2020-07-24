@@ -21,7 +21,7 @@ composer-install:
 
 tests: composer-install
 	$(PHPUNIT_BIN) -c .
-	$(PHP_BIN) deptrac.php analyze examples/Fixture.depfile.yml --no-cache
+	$(PHP_BIN) deptrac.php analyze examples/Fixture.depfile.yaml --no-cache
 
 tests-coverage: composer-install
 	$(PHPUNIT_BIN) -c . --coverage-html coverage

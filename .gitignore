@@ -3,7 +3,7 @@ coverage/*
 tools/
 deptrac.phar
 deptrac.phar.asc
-depfile.yml
+depfile.yaml
 phpunit.xml
 box.json
 deptrac.version

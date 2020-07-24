@@ -17,7 +17,7 @@ final class LoaderTest extends TestCase
 {
     public function testLoadThrowsFileDoesNotExistsExceptionWhenFileDoesNotExist(): void
     {
-        $file = __DIR__.'/../../examples/non-existent-file.yml';
+        $file = __DIR__.'/../../examples/non-existent-file.yaml';
 
         $loader = new Loader();
 

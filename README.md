@@ -55,7 +55,7 @@ this rule was violated.
 The easiest way to get started is to download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases).
 
 At first, you need a so called *depfile*, which is written in YAML.
-You can generate a bootstrapped `depfile.yml` with
+You can generate a bootstrapped `depfile.yaml` with
 
 ```bash
 php deptrac.phar init
@@ -73,7 +73,7 @@ In this file you define (mainly) three things:
 Let's have a look at the generated file:
 
 ```yaml
-# depfile.yml
+# depfile.yaml
 paths:
   - ./src
 exclude_files:
@@ -181,7 +181,7 @@ To execute deptrac, run
 php deptrac.phar
 
 # which is equivalent to
-php deptrac.phar analyze depfile.yml
+php deptrac.phar analyze depfile.yaml
 ```
 
 If you run `php deptrac.phar -v` you'll get a more verbose output.
@@ -247,7 +247,7 @@ As we defined our layers, we can generate a dependency graph for the example con
 (Make sure that [*Graphviz*](#optional-dependency-graphviz) (dot) is installed on your system)
 
 ```bash
-php deptrac.php analyze examples/ModelController1.depfile.yml
+php deptrac.php analyze examples/ModelController1.depfile.yaml
 ```
 
 After deptrac has finished, an image should be opened:
@@ -298,7 +298,7 @@ class SomeController
 After running deptrac for this example
 
 ```bash
-php deptrac.php analyze examples/ModelController2.depfile.yml
+php deptrac.php analyze examples/ModelController2.depfile.yaml
 ```
 
 we will get this output:
