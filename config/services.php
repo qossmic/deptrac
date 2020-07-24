@@ -18,10 +18,13 @@ use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
+use SensioLabs\Deptrac\Collector\ExtendsCollector;
 use SensioLabs\Deptrac\Collector\ImplementsCollector;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
+use SensioLabs\Deptrac\Collector\InheritsCollector;
 use SensioLabs\Deptrac\Collector\MethodCollector;
 use SensioLabs\Deptrac\Collector\Registry;
+use SensioLabs\Deptrac\Collector\UsesCollector;
 use SensioLabs\Deptrac\Configuration\Dumper;
 use SensioLabs\Deptrac\Configuration\Loader;
 use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
@@ -144,6 +147,15 @@ return static function (ContainerConfigurator $container): void {
         ->tag('collector');
     $services
         ->set(ImplementsCollector::class)
+        ->tag('collector');
+    $services
+        ->set(ExtendsCollector::class)
+        ->tag('collector');
+    $services
+        ->set(InheritsCollector::class)
+        ->tag('collector');
+    $services
+        ->set(UsesCollector::class)
         ->tag('collector');
     $services
         ->set(MethodCollector::class)
