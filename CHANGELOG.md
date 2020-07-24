@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## [0.8.2] - 2020-07-24
+
+### Added
+
+- [#338] Add option to report uncovered dependencies for GitHubActionFormatter, Thanks to [@jschaedl]
+- [#335] Add missing Collectors into the container, Thanks to [@DanielBadura]
+
+### Changed
+
+- [#347] Bump symfony/finder from 5.1.2 to 5.1.3
+- [#346] Bump symfony/console from 5.1.2 to 5.1.3
+- [#345] Bump symfony/yaml from 5.1.2 to 5.1.3
+- [#344] Bump symfony/dependency-injection from 5.1.2 to 5.1.3
+- [#343] Bump symfony/config from 5.1.2 to 5.1.3
+- [#342] Bump nikic/php-parser from 4.5.0 to 4.6.0
+- [#341] Bump phpdocumentor/type-resolver from 1.1.0 to 1.3.0
+- [#340] Bump symfony/options-resolver from 5.1.2 to 5.1.3
+- [#339] Bump symfony/event-dispatcher from 5.1.2 to 5.1.3
+- [#336] ignore (psalm) pseudo types, Thanks to [@smoench]
+- [#334] Change default file to depfile.yaml, Thanks to [@DanielBadura]
+
 ## [0.8.1] - 2020-07-10
 
 ### Added
@@ -199,6 +220,19 @@ All notable changes to this project will be documented in this file, in reverse 
 [@jschaedl]: https://github.com/jschaedl
 [@DanielBadura]: https://github.com/DanielBadura
 
+[#347]: https://github.com/sensiolabs-de/deptrac/pull/347
+[#346]: https://github.com/sensiolabs-de/deptrac/pull/346
+[#345]: https://github.com/sensiolabs-de/deptrac/pull/345
+[#344]: https://github.com/sensiolabs-de/deptrac/pull/344
+[#343]: https://github.com/sensiolabs-de/deptrac/pull/343
+[#342]: https://github.com/sensiolabs-de/deptrac/pull/342
+[#341]: https://github.com/sensiolabs-de/deptrac/pull/341
+[#340]: https://github.com/sensiolabs-de/deptrac/pull/340
+[#339]: https://github.com/sensiolabs-de/deptrac/pull/339
+[#338]: https://github.com/sensiolabs-de/deptrac/pull/338
+[#336]: https://github.com/sensiolabs-de/deptrac/pull/336
+[#335]: https://github.com/sensiolabs-de/deptrac/pull/335
+[#334]: https://github.com/sensiolabs-de/deptrac/pull/334
 [#324]: https://github.com/sensiolabs-de/deptrac/pull/324
 [#323]: https://github.com/sensiolabs-de/deptrac/pull/323
 [#322]: https://github.com/sensiolabs-de/deptrac/pull/322
@@ -239,6 +273,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.8.2]: https://github.com/sensiolabs-de/deptrac/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/sensiolabs-de/deptrac/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/sensiolabs-de/deptrac/compare/0.7.1...0.8.0
 [0.7.1]: https://github.com/sensiolabs-de/deptrac/compare/0.7.0...0.7.1

@@ -8,7 +8,7 @@ Deptrac is a static code analysis tool that helps to enforce rules for dependenc
 
 For example, you can define a rule like "controllers may not depend on models".
 To ensure this, deptrac analyzes your code to find any usages of models in your controllers and will show you where
-this rule was violated.
+this rule has been violated.
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
@@ -55,7 +55,7 @@ this rule was violated.
 The easiest way to get started is to download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases).
 
 At first, you need a so called *depfile*, which is written in YAML.
-You can generate a bootstrapped `depfile.yaml` with
+You can generate a bootstrapped `depfile.yaml` with:
 
 ```bash
 php deptrac.phar init
@@ -132,7 +132,7 @@ Download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/rele
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.8.1/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.8.2/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
