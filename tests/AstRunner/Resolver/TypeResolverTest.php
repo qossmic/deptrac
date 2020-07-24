@@ -53,5 +53,9 @@ class TypeResolverTest extends TestCase
         yield ['doc' => 'callable(A&...$a=, B&...=, C): Foo', 'types' => ['\\Test\\Foo', '\\Test\\A', '\\Test\\B', '\\Test\\C']];
         yield ['doc' => 'Foo::FOO_CONSTANT', 'types' => ['\\Test\\Foo']];
         yield ['doc' => 'array{a: Foo}', 'types' => ['\\Test\\Foo']];
+        yield ['doc' => 'array-key', 'types' => []];
+        yield ['doc' => 'trait-string', 'types' => []];
+        yield ['doc' => 'callable-string', 'types' => []];
+        yield ['doc' => 'numeric-string', 'types' => []];
     }
 }
