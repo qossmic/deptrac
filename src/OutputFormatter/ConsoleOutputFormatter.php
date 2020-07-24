@@ -11,7 +11,12 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableCell;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Terminal;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
@@ -47,13 +52,30 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
+        $grouped = [];
+        $maxColumnWidth = 0;
         foreach ($context->all() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            $this->printViolation($rule, $output);
+            $filepath = $rule->getDependency()->getFileOccurrence()->getFilepath();
+            $maxColumnWidth = max($maxColumnWidth, strlen($filepath));
+            $grouped[$filepath][] = $rule;
         }
+
+        foreach ($grouped as $filepath => $rules) {
+            $table = new Table($output);
+            $table->setHeaders(['Line', 'Reason', $filepath]);
+            $table->setColumnMaxWidth(2, $maxColumnWidth);
+
+            foreach ($rules as $rule) {
+                $this->printViolation($rule, $table);
+            }
+
+            $table->render();
+        }
+
 
         if (true === $outputFormatterInput->getOptionAsBoolean(static::REPORT_UNCOVERED)) {
             $this->printUncovered($context, $output);
@@ -65,11 +87,13 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     /**
      * @param Violation|SkippedViolation $rule
      */
-    private function printViolation(Rule $rule, OutputInterface $output): void
+    private function printViolation(Rule $rule, Table $table): void
     {
         $dependency = $rule->getDependency();
 
-        $output->writeln(
+        $table->addRow([
+            $dependency->getFileOccurrence()->getLine(),
+            $rule instanceof SkippedViolation ? '<warning>Skipped</warning>' : '<error>Violation</error>',
             sprintf(
                 '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
@@ -78,12 +102,12 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                 $rule->getLayerA(),
                 $rule->getLayerB()
             )
-        );
-        $this->printFileOccurrence($output, $dependency->getFileOccurrence());
-
-        if ($dependency instanceof InheritDependency) {
-            $this->printInheritPath($output, $dependency);
-        }
+        ]);
+//        $this->printFileOccurrence($output, $dependency->getFileOccurrence());
+//
+//        if ($dependency instanceof InheritDependency) {
+//            $this->printInheritPath($output, $dependency);
+//        }
     }
 
     private function printInheritPath(OutputInterface $output, InheritDependency $dependency): void
