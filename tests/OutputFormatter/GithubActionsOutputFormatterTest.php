@@ -10,6 +10,7 @@ use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Tests\SensioLabs\Deptrac\EmptyEnv;
@@ -32,7 +33,7 @@ class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $output,
-            new OutputFormatterInput([])
+            new OutputFormatterInput(['report-uncovered' => true])
         );
 
         $o = $output->fetch();
@@ -74,10 +75,25 @@ class GithubActionsOutputFormatterTest extends TestCase
             ],
             "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
+
+        yield 'Uncovered Dependency' => [
+            [
+                new Uncovered(
+                    new Dependency($originalA, $originalB, $originalAOccurrence),
+                    'LayerA'
+                ),
+            ],
+            "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
+        ];
     }
 
     public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
     {
         static::assertFalse((new GithubActionsOutputFormatter(new EmptyEnv()))->enabledByDefault());
+    }
+
+    public function testGetOptions(): void
+    {
+        static::assertCount(1, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 }
