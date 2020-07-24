@@ -14,6 +14,7 @@ use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Tests\SensioLabs\Deptrac\EmptyEnv;
@@ -115,6 +116,25 @@ class ConsoleOutputFormatterTest extends TestCase
             Allowed: 0
             ',
         ];
+
+        yield [
+            [
+                new Uncovered(
+                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    'LayerA'
+                ),
+            ],
+            '
+                Uncovered dependencies:
+                OriginalA has uncovered dependency on OriginalB (LayerA)
+                originalA.php::12
+                Report:
+                Violations: 0
+                Skipped violations: 0
+                Uncovered: 1
+                Allowed: 0
+            ',
+        ];
     }
 
     /**
@@ -128,7 +148,7 @@ class ConsoleOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $output,
-            new OutputFormatterInput(['report-uncovered' => false])
+            new OutputFormatterInput(['report-uncovered' => true])
         );
 
         $o = $output->fetch();

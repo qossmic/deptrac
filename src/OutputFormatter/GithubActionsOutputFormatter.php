@@ -11,6 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
+    private const REPORT_UNCOVERED = 'report-uncovered';
+
     /** @var Env */
     private $env;
 
@@ -32,7 +34,9 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function configureOptions(): array
     {
-        return [];
+        return [
+            OutputFormatterOption::newValueOption(static::REPORT_UNCOVERED, 'report uncovered dependencies', false),
+        ];
     }
 
     public function enabledByDefault(): bool
@@ -63,9 +67,13 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
                 $rule->getLayerB()
             ));
         }
+
+        if (true === $outputFormatterInput->getOptionAsBoolean(static::REPORT_UNCOVERED)) {
+            $this->printUncovered($context, $output);
+        }
     }
 
-    public function determineLogLevel(Rule $rule): string
+    private function determineLogLevel(Rule $rule): string
     {
         switch (get_class($rule)) {
             case Violation::class:
@@ -74,6 +82,28 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
                 return 'warning';
             default:
                 return 'debug';
+        }
+    }
+
+    private function printUncovered(Context $context, OutputInterface $output): void
+    {
+        $uncovered = $context->uncovered();
+        if ([] === $uncovered) {
+            return;
+        }
+
+        foreach ($uncovered as $u) {
+            $dependency = $u->getDependency();
+            $output->writeln(
+                sprintf(
+                    '::warning file=%s,line=%s::%s has uncovered dependency on %s (%s)',
+                    $dependency->getFileOccurrence()->getFilepath(),
+                    $dependency->getFileOccurrence()->getLine(),
+                    $dependency->getClassLikeNameA()->toString(),
+                    $dependency->getClassLikeNameB()->toString(),
+                    $u->getLayer()
+                )
+            );
         }
     }
 }

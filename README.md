@@ -41,6 +41,7 @@ this rule was violated.
     1. [Console Formatter](#console-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
+    1. [GitHubActions Formatter](#githubactions-formatter)
 1. [Uncovered dependencies](#uncovered-dependencies)
 1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
@@ -680,6 +681,22 @@ Supported options:
 ```
 --formatter-junit=              to activate the JUnit fomatter, set this option to "true" [default: false]
 --formatter-junit-dump-xml=     path to a dumped xml file [default: "./junit-report.xml"]
+```
+
+### GitHubActions Formatter
+
+The GithubActions formatter is a console formater, which dumps basic information in github-actions format to *STDOUT*.
+This formatter is enabled by default while running in a github actions environment. To disable the formatter just use `--formatter-github-actions=false`.
+
+```
+::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)
+```
+
+Supported options:
+
+```
+--formatter-github-actions=                to enable the github-actions formatter, set this argument to "true" [default: false]
+--formatter-console-report-uncovered=      report uncovered dependencies [default: false]
 ```
 
 ## Uncovered dependencies
