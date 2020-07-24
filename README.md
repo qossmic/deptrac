@@ -682,6 +682,22 @@ Supported options:
 --formatter-junit-dump-xml=     path to a dumped xml file [default: "./junit-report.xml"]
 ```
 
+### GithubActions Formatter
+
+The GithubActions formatter is a console formater, which dumps basic information in github-actions format to *STDOUT*.
+This formatter is enabled by default while running in a github actions environment. To disable the formatter just use `--formatter-github-actions=false`.
+
+```
+::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)
+```
+
+Supported options:
+
+```
+--formatter-github-actions=                to enable the github-actions formatter, set this argument to "true" [default: false]
+--formatter-console-report-uncovered=      report uncovered dependencies [default: false]
+```
+
 ## Uncovered dependencies
 
 Deptrac collects uncovered dependencies which could be reported with [Console Formatter](#console-formatter).
