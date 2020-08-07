@@ -38,26 +38,50 @@ class ConsoleOutputFormatterTest extends TestCase
                         ClassLikeName::fromFQCN('ClassA'),
                         ClassLikeName::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('originalA.php', 3))
-                            ->withPath([
-                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('originalA.php', 4)),
-                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('originalA.php', 5)),
-                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('originalA.php', 6)),
-                            ])
+                        AstInherit::newExtends(
+                            ClassLikeName::fromFQCN('ClassInheritA'),
+                            FileOccurrence::fromFilepath('originalA.php', 3)
+                        )
+                            ->withPath(
+                                [
+                                    AstInherit::newExtends(
+                                        ClassLikeName::fromFQCN('ClassInheritB'),
+                                        FileOccurrence::fromFilepath('originalA.php', 4)
+                                    ),
+                                    AstInherit::newExtends(
+                                        ClassLikeName::fromFQCN('ClassInheritC'),
+                                        FileOccurrence::fromFilepath('originalA.php', 5)
+                                    ),
+                                    AstInherit::newExtends(
+                                        ClassLikeName::fromFQCN('ClassInheritD'),
+                                        FileOccurrence::fromFilepath('originalA.php', 6)
+                                    ),
+                                ]
+                            )
                     ),
                     'LayerA',
                     'LayerB'
                 ),
             ],
             '
-                ClassA must not depend on ClassB (LayerA on LayerB)
-                originalA.php::12
-                ClassInheritD::6 ->
-                ClassInheritC::5 ->
-                ClassInheritB::4 ->
-                ClassInheritA::3 ->
-                OriginalB::12
-
+                +------+-----------+---------------+
+                | Line | Reason    | originalA.php |
+                +------+-----------+---------------+
+                | 12   | Violation | ClassA must n |
+                |      |           | ot depend on  |
+                |      |           | ClassB (Layer |
+                |      |           | A on LayerB)  |
+                |      |           | ClassInheritD |
+                |      |           | ::6 ->        |
+                |      |           | ClassInheritC |
+                |      |           | ::5 ->        |
+                |      |           | ClassInheritB |
+                |      |           | ::4 ->        |
+                |      |           | ClassInheritA |
+                |      |           | ::3 ->        |
+                |      |           | OriginalB::12 |
+                +------+-----------+---------------+
+                
                 Report:
                 Violations: 1
                 Skipped violations: 0
@@ -75,9 +99,16 @@ class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             '
-                OriginalA must not depend on OriginalB (LayerA on LayerB)
-                originalA.php::12
-
+                +------+-----------+---------------+
+                | Line | Reason    | originalA.php |
+                +------+-----------+---------------+
+                | 12   | Violation | OriginalA mus |
+                |      |           | t not depend  |
+                |      |           | on OriginalB  |
+                |      |           | (LayerA on La |
+                |      |           | yerB)         |
+                +------+-----------+---------------+
+                
                 Report:
                 Violations: 1
                 Skipped violations: 0
@@ -106,14 +137,23 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
-            originalA.php::12
-            
-            Report:
-            Violations: 0
-            Skipped violations: 1
-            Uncovered: 0
-            Allowed: 0
+            '
+                +------+----------------------------+---------------+
+                | Line | Reason                     | originalA.php |
+                +------+----------------------------+---------------+
+                | 12   | <warning>Skipped</warning> | [SKIPPED] Ori |
+                |      |                            | ginalA must n |
+                |      |                            | ot depend on  |
+                |      |                            | OriginalB (La |
+                |      |                            | yerA on Layer |
+                |      |                            | B)            |
+                +------+----------------------------+---------------+
+                
+                Report:
+                Violations: 0
+                Skipped violations: 1
+                Uncovered: 0
+                Allowed: 0
             ',
         ];
 
@@ -125,9 +165,16 @@ class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             '
-                Uncovered dependencies:
-                OriginalA has uncovered dependency on OriginalB (LayerA)
-                originalA.php::12
+                +------+-----------+---------------+
+                | Line | Reason    | originalA.php |
+                +------+-----------+---------------+
+                | 12   | Uncovered | OriginalA has |
+                |      |           |  uncovered de |
+                |      |           | pendency on O |
+                |      |           | riginalB (Lay |
+                |      |           | erA)          |
+                +------+-----------+---------------+
+                
                 Report:
                 Violations: 0
                 Skipped violations: 0
