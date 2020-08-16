@@ -108,7 +108,7 @@ With the `exclude_files` section, you can specify one or more regular expression
 the most common being probably anything containing the "test" word in the path.
 
 We defined three `layers` in the example: *Controller*, *Repository* and *Service*.
-Deptrac is using so called `collectors` to group classes into `layers` (in this case by the name of the class).
+Deptrac is using so called `collectors` to group classes into `layers`. You can define it by the name of the class or by the FQCN.
 
 The `ruleset` section defines, how these layers may or may not depend on other layers.
 In the example, every class of the *Controller* layer may depend on classes that reside in the *Service* layer,
@@ -596,9 +596,11 @@ layers:
         inherits: 'App\SomeInterface'
 ```
 
-### More Collectors
+### Custom Collectors
 
-As deptrac is in a very early state, feel free to contribute your own collector.
+You can even create custom collectors in your project by implementing the `CollectorInterface`.
+As soon as a unknown collector is referenced in the config file deptrac will try to load the class in your project.
+With this you can create collectors specific for your usecase. And more people can use these custom collectors per default if you contribute them back to deptrac!
 
 
 ## Formatters
