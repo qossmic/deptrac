@@ -598,7 +598,7 @@ layers:
 
 ### Custom Collectors
 
-You can even create custom collectors in your project by implementing the `CollectorInterface`.
+You can even create custom collectors in your project by implementing the `SensioLabs\Deptrac\Collector\CollectorInterface`.
 As soon as a unknown collector is referenced in the config file deptrac will try to load the class in your project.
 With this you can create collectors specific for your usecase. And more people can use these custom collectors per default if you contribute them back to deptrac!
 
