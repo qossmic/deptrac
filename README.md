@@ -36,7 +36,7 @@ this rule was violated.
     1. [`bool` Collector](#bool-collector)
     1. [`method` Collector](#method-collector)
     1. [`implements` Collector](#implements-collector)
-    1. [More Collectors](#more-collectors)
+    1. [Custom Collectors](#custom-collectors)
 1. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
