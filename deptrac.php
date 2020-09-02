@@ -10,6 +10,12 @@ if (PHP_VERSION_ID < 70205) {
     exit(1);
 }
 
+$autoloaderInWorkingDirectory = getcwd().'/vendor/autoload.php';
+
+if (is_file($autoloaderInWorkingDirectory)) {
+    require_once $autoloaderInWorkingDirectory;
+}
+
 $xdebug = new XdebugHandler('DEPTRAC', '--ansi');
 $xdebug->check();
 unset($xdebug);

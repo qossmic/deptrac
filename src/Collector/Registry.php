@@ -24,11 +24,24 @@ class Registry
      */
     public function getCollector(string $type): CollectorInterface
     {
-        if (!isset($this->collectors[$type])) {
-            throw new \InvalidArgumentException(sprintf('unknown collector type "%s", possible collectors are %s', $type, implode(', ', array_keys($this->collectors))));
+        if (array_key_exists($type, $this->collectors)) {
+            return $this->collectors[$type];
         }
 
-        return $this->collectors[$type];
+        foreach ($this->collectors as $collector) {
+            if (get_class($collector) === $type) {
+                return $collector;
+            }
+        }
+
+        if (class_exists($type) && is_subclass_of($type, CollectorInterface::class)) {
+            $collector = new $type();
+            $this->addCollector($collector);
+
+            return $collector;
+        }
+
+        throw new \InvalidArgumentException(sprintf('unknown collector type "%s", possible collectors are %s', $type, implode(', ', array_keys($this->collectors))));
     }
 
     private function addCollector(CollectorInterface $collector): void

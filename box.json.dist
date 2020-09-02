@@ -5,5 +5,8 @@
   ],
   "compression": "GZ",
   "main": "deptrac.php",
-  "git-version": "git-version"
+  "git-version": "git-version",
+  "compactors" : [
+      "KevinGH\\Box\\Compactor\\PhpScoper"
+  ]
 }

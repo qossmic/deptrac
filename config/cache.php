@@ -16,7 +16,7 @@ return static function (di\ContainerConfigurator $container): void {
 
     $services
         ->set(CacheableFileSubscriber::class)
-        ->args([di\ref(AstFileReferenceCache::class)])
+        ->args([di\service(AstFileReferenceCache::class)])
         ->tag('event_subscriber');
 
     $services
