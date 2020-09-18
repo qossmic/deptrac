@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
@@ -43,14 +44,14 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
      */
     public function finish(
         Context $context,
-        OutputInterface $output,
+        Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $xml = $this->createXml($context);
 
         if ($dumpXmlPath = $outputFormatterInput->getOption(static::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);
-            $output->writeln('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
+            $output->writeLineFormatted('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
         }
     }
 

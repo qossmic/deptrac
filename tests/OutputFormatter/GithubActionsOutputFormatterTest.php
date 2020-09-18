@@ -5,6 +5,8 @@ namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Symfony\Style;
+use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
@@ -12,7 +14,9 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Tests\SensioLabs\Deptrac\EmptyEnv;
 
 class GithubActionsOutputFormatterTest extends TestCase
@@ -27,20 +31,16 @@ class GithubActionsOutputFormatterTest extends TestCase
      */
     public function testFinish(array $rules, string $expectedOutput): void
     {
-        $output = new BufferedOutput();
+        $bufferedOutput = new BufferedOutput();
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
             new Context($rules),
-            $output,
+            $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(['report-uncovered' => true])
         );
 
-        $o = $output->fetch();
-        static::assertEquals(
-            $expectedOutput,
-            $o
-        );
+        static::assertEquals($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function finishProvider()
@@ -95,5 +95,13 @@ class GithubActionsOutputFormatterTest extends TestCase
     public function testGetOptions(): void
     {
         static::assertCount(1, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
+    }
+
+    private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput
+    {
+        return new SymfonyOutput(
+            $bufferedOutput,
+            new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
+        );
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
@@ -12,8 +13,6 @@ use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Output\OutputInterface;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
@@ -46,37 +45,37 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         Context $context,
-        OutputInterface $output,
+        Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        $maxColumnWidth = 0;
+        $reportUncovered = true === $outputFormatterInput->getOptionAsBoolean(self::REPORT_UNCOVERED);
+
         foreach ($context->all() as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
 
-            $filepath = $rule->getDependency()->getFileOccurrence()->getFilepath();
-            $maxColumnWidth = max($maxColumnWidth, strlen($filepath));
-            $groupedRules[$filepath][] = $rule;
+            if ($rule instanceof Violation || $rule instanceof SkippedViolation) {
+                $groupedRules[$rule->getLayerA()][] = $rule;
+            } elseif ($reportUncovered && $rule instanceof Uncovered) {
+                $groupedRules[$rule->getLayer()][] = $rule;
+            }
         }
 
-        $reportUncovered = true === $outputFormatterInput->getOptionAsBoolean(self::REPORT_UNCOVERED);
+        $style = $output->getStyle();
 
-        foreach ($groupedRules as $filepath => $rules) {
-            $table = new Table($output);
-            $table->setHeaders(['Line', 'Reason', $filepath]);
-            $table->setColumnMaxWidth(2, $maxColumnWidth);
-
+        foreach ($groupedRules as $layer => $rules) {
+            $rows = [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Violation || $rule instanceof SkippedViolation) {
-                    $this->printViolation($rule, $table);
-                } elseif ($rule instanceof Uncovered && $reportUncovered) {
-                    $this->printUncovered($rule, $table);
+                    $rows[] = $this->violationRow($rule);
+                } elseif ($reportUncovered && $rule instanceof Uncovered) {
+                    $rows[] = $this->uncoveredRow($rule);
                 }
             }
 
-            $table->render();
+            $style->table(['Reason', $layer], $rows);
         }
 
         $this->printSummary($context, $output);
@@ -85,29 +84,32 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     /**
      * @param Violation|SkippedViolation $rule
      */
-    private function printViolation(Rule $rule, Table $table): void
+    private function violationRow(Rule $rule): array
     {
         $dependency = $rule->getDependency();
 
-        $table->addRow([
-            $dependency->getFileOccurrence()->getLine(),
-            $rule instanceof SkippedViolation ? '<warning>Skipped</warning>' : '<error>Violation</error>',
-            sprintf(
-                '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
-                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getClassLikeNameA()->toString(),
-                $dependency->getClassLikeNameB()->toString(),
-                $rule->getLayerA(),
-                $rule->getLayerB()
-            ),
-        ]);
+        $message = sprintf(
+            '%s<info>%s</info> must not depend on <info>%s</info> (%s)',
+            $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
+            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getClassLikeNameB()->toString(),
+            $rule->getLayerB()
+        );
 
         if ($dependency instanceof InheritDependency) {
-            $this->printInheritPath($table, $dependency);
+            $message .= "\n".$this->formatInheritPath($dependency);
         }
+
+        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
+        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+
+        return [
+            $rule instanceof SkippedViolation ? '<warning>Skipped</warning>' : '<error>Violation</error>',
+            $message
+        ];
     }
 
-    private function printInheritPath(Table $table, InheritDependency $dependency): void
+    private function formatInheritPath(InheritDependency $dependency): string
     {
         $buffer = [];
         $astInherit = $dependency->getInheritPath();
@@ -122,59 +124,64 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
-        $table->addRow(['', '', implode(" -> \n", $buffer)]);
+        return implode(" -> \n", $buffer);
     }
 
-    private function printSummary(Context $context, OutputInterface $output): void
+    private function printSummary(Context $context, Output $output): void
     {
         $violationCount = \count($context->violations());
         $skippedViolationCount = \count($context->skippedViolations());
         $uncoveredCount = \count($context->uncovered());
         $allowedCount = \count($context->allowed());
 
-        $output->writeln('');
-        $output->writeln('Report:');
-        $output->writeln(
+        $style = $output->getStyle();
+
+        $style->newLine();
+        $output->writeLineFormatted('Report:');
+        $output->writeLineFormatted(
             sprintf(
                 '<%1$s>Violations: %2$d</%1$s>',
                 $violationCount > 0 ? 'error' : 'info',
                 $violationCount
             )
         );
-        $output->writeln(
+        $output->writeLineFormatted(
             sprintf(
                 '<%1$s>Skipped violations: %2$d</%1$s>',
                 $skippedViolationCount > 0 ? 'comment' : 'info',
                 $skippedViolationCount
             )
         );
-        $output->writeln(
+        $output->writeLineFormatted(
             sprintf(
                 '<%1$s>Uncovered: %2$d</%1$s>',
                 $uncoveredCount > 0 ? 'comment' : 'info',
                 $uncoveredCount
             )
         );
-        $output->writeln(sprintf('<info>Allowed: %d</info>', $allowedCount));
+        $output->writeLineFormatted(sprintf('<info>Allowed: %d</info>', $allowedCount));
     }
 
-    private function printUncovered(Uncovered $rule, Table $table): void
+    private function uncoveredRow(Uncovered $rule): array
     {
         $dependency = $rule->getDependency();
 
-        $table->addRow([
-            $dependency->getFileOccurrence()->getLine(),
-            '<comment>Uncovered</comment>',
-            sprintf(
-                '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
-                $dependency->getClassLikeNameA()->toString(),
-                $dependency->getClassLikeNameB()->toString(),
-                $rule->getLayer()
-            ),
-        ]);
+        $message = sprintf(
+            '<info>%s</info> has uncovered dependency on <info>%s</info>',
+            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getClassLikeNameB()->toString()
+        );
 
         if ($dependency instanceof InheritDependency) {
-            $this->printInheritPath($table, $dependency);
+            $message .= "\n".$this->formatInheritPath($dependency);
         }
+
+        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
+        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+
+        return [
+            '<comment>Uncovered</comment>',
+            $message
+        ];
     }
 }

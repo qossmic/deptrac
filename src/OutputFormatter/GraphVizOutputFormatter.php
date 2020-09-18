@@ -7,6 +7,7 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
@@ -47,7 +48,7 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         Context $context,
-        OutputInterface $output,
+        Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $layerViolations = $this->calculateViolations($context->violations());
@@ -92,17 +93,17 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         if ($dumpImagePath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_IMAGE)) {
             $imagePath = (new GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
-            $output->writeln('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+            $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_DOT)) {
             file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
-            $output->writeln('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
+            $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_HTML)) {
             file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
-            $output->writeln('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
+            $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
     }
 

@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Symfony\Style;
+use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
@@ -16,7 +18,9 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Tests\SensioLabs\Deptrac\EmptyEnv;
 
 class ConsoleOutputFormatterTest extends TestCase
@@ -63,31 +67,25 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            '
-                +------+-----------+---------------+
-                | Line | Reason    | originalA.php |
-                +------+-----------+---------------+
-                | 12   | Violation | ClassA must n |
-                |      |           | ot depend on  |
-                |      |           | ClassB (Layer |
-                |      |           | A on LayerB)  |
-                |      |           | ClassInheritD |
-                |      |           | ::6 ->        |
-                |      |           | ClassInheritC |
-                |      |           | ::5 ->        |
-                |      |           | ClassInheritB |
-                |      |           | ::4 ->        |
-                |      |           | ClassInheritA |
-                |      |           | ::3 ->        |
-                |      |           | OriginalB::12 |
-                +------+-----------+---------------+
-                
-                Report:
-                Violations: 1
-                Skipped violations: 0
-                Uncovered: 0
-                Allowed: 0
-            ',
+            ' ----------- ------------------------------------------- 
+  Reason      LayerA                                     
+ ----------- ------------------------------------------- 
+  Violation   ClassA must not depend on ClassB (LayerB)  
+              ClassInheritD::6 ->                        
+              ClassInheritC::5 ->                        
+              ClassInheritB::4 ->                        
+              ClassInheritA::3 ->                        
+              OriginalB::12                              
+              originalA.php:12                           
+ ----------- ------------------------------------------- 
+
+
+Report:
+Violations: 1
+Skipped violations: 0
+Uncovered: 0
+Allowed: 0
+',
         ];
 
         yield [
@@ -98,35 +96,31 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            '
-                +------+-----------+---------------+
-                | Line | Reason    | originalA.php |
-                +------+-----------+---------------+
-                | 12   | Violation | OriginalA mus |
-                |      |           | t not depend  |
-                |      |           | on OriginalB  |
-                |      |           | (LayerA on La |
-                |      |           | yerB)         |
-                +------+-----------+---------------+
-                
-                Report:
-                Violations: 1
-                Skipped violations: 0
-                Uncovered: 0
-                Allowed: 0
-            ',
+            ' ----------- ------------------------------------------------- 
+  Reason      LayerA                                           
+ ----------- ------------------------------------------------- 
+  Violation   OriginalA must not depend on OriginalB (LayerB)  
+              originalA.php:12                                 
+ ----------- ------------------------------------------------- 
+
+
+Report:
+Violations: 1
+Skipped violations: 0
+Uncovered: 0
+Allowed: 0
+',
         ];
 
         yield [
             [],
             '
-
-                Report:
-                Violations: 0
-                Skipped violations: 0
-                Uncovered: 0
-                Allowed: 0
-            ',
+Report:
+Violations: 0
+Skipped violations: 0
+Uncovered: 0
+Allowed: 0
+',
         ];
 
         yield [
@@ -137,24 +131,20 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            '
-                +------+----------------------------+---------------+
-                | Line | Reason                     | originalA.php |
-                +------+----------------------------+---------------+
-                | 12   | <warning>Skipped</warning> | [SKIPPED] Ori |
-                |      |                            | ginalA must n |
-                |      |                            | ot depend on  |
-                |      |                            | OriginalB (La |
-                |      |                            | yerA on Layer |
-                |      |                            | B)            |
-                +------+----------------------------+---------------+
-                
-                Report:
-                Violations: 0
-                Skipped violations: 1
-                Uncovered: 0
-                Allowed: 0
-            ',
+            ' ---------------------------- ----------------------------------------------------------- 
+  Reason                       LayerA                                                     
+ ---------------------------- ----------------------------------------------------------- 
+  <warning>Skipped</warning>   [SKIPPED] OriginalA must not depend on OriginalB (LayerB)  
+                               originalA.php:12                                           
+ ---------------------------- ----------------------------------------------------------- 
+
+
+Report:
+Violations: 0
+Skipped violations: 1
+Uncovered: 0
+Allowed: 0
+',
         ];
 
         yield [
@@ -164,23 +154,20 @@ class ConsoleOutputFormatterTest extends TestCase
                     'LayerA'
                 ),
             ],
-            '
-                +------+-----------+---------------+
-                | Line | Reason    | originalA.php |
-                +------+-----------+---------------+
-                | 12   | Uncovered | OriginalA has |
-                |      |           |  uncovered de |
-                |      |           | pendency on O |
-                |      |           | riginalB (Lay |
-                |      |           | erA)          |
-                +------+-----------+---------------+
-                
-                Report:
-                Violations: 0
-                Skipped violations: 0
-                Uncovered: 1
-                Allowed: 0
-            ',
+            ' ----------- ------------------------------------------------- 
+  Reason      LayerA                                           
+ ----------- ------------------------------------------------- 
+  Uncovered   OriginalA has uncovered dependency on OriginalB  
+              originalA.php:12                                 
+ ----------- ------------------------------------------------- 
+
+
+Report:
+Violations: 0
+Skipped violations: 0
+Uncovered: 1
+Allowed: 0
+',
         ];
     }
 
@@ -189,7 +176,11 @@ class ConsoleOutputFormatterTest extends TestCase
      */
     public function testBasic(array $rules, string $expectedOutput): void
     {
-        $output = new BufferedOutput();
+        $bufferedOutput = new BufferedOutput();
+        $output = new SymfonyOutput(
+            $bufferedOutput,
+            new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
+        );
 
         $formatter = new ConsoleOutputFormatter(new EmptyEnv());
         $formatter->finish(
@@ -198,11 +189,7 @@ class ConsoleOutputFormatterTest extends TestCase
             new OutputFormatterInput(['report-uncovered' => true])
         );
 
-        $o = $output->fetch();
-        static::assertEquals(
-            $this->normalize($expectedOutput),
-            $this->normalize($o)
-        );
+        static::assertEquals($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function testGetOptions(): void

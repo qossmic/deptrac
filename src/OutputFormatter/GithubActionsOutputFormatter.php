@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
@@ -47,7 +48,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function finish(Context $context, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
+    public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
         foreach ($context->all() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
@@ -55,7 +56,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
             }
 
             $dependency = $rule->getDependency();
-            $output->writeln(sprintf(
+            $output->writeLineFormatted(sprintf(
                 '::%s file=%s,line=%s::%s%s must not depend on %s (%s on %s)',
                 $this->determineLogLevel($rule),
                 $dependency->getFileOccurrence()->getFilepath(),
@@ -85,7 +86,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printUncovered(Context $context, OutputInterface $output): void
+    private function printUncovered(Context $context, Output $output): void
     {
         $uncovered = $context->uncovered();
         if ([] === $uncovered) {
@@ -94,7 +95,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
 
         foreach ($uncovered as $u) {
             $dependency = $u->getDependency();
-            $output->writeln(
+            $output->writeLineFormatted(
                 sprintf(
                     '::warning file=%s,line=%s::%s has uncovered dependency on %s (%s)',
                     $dependency->getFileOccurrence()->getFilepath(),

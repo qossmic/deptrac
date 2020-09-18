@@ -7,6 +7,8 @@ namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Symfony\Style;
+use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
@@ -14,7 +16,9 @@ use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GraphVizOutputFormatterTest extends TestCase
 {
@@ -37,7 +41,7 @@ class GraphVizOutputFormatterTest extends TestCase
             new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
         ]);
 
-        $output = new BufferedOutput();
+        $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput([
             'display' => false,
             'dump-image' => false,
@@ -45,11 +49,19 @@ class GraphVizOutputFormatterTest extends TestCase
             'dump-html' => false,
         ]);
 
-        (new GraphVizOutputFormatter())->finish($context, $output, $input);
+        (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        static::assertSame(sprintf("Script dumped to %s\n", $dotFile), $output->fetch());
+        static::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         static::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
+    }
+
+    private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput
+    {
+        return new SymfonyOutput(
+            $bufferedOutput,
+            new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
+        );
     }
 }

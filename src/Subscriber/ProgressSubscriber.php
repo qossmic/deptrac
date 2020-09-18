@@ -7,20 +7,16 @@ namespace SensioLabs\Deptrac\Subscriber;
 use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Output\OutputInterface;
+use SensioLabs\Deptrac\Console\Output;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressSubscriber implements EventSubscriberInterface
 {
-    /** @var ProgressBar */
-    private $progressBar;
-    /** @var OutputInterface */
+    /** @var Output */
     private $output;
 
-    public function __construct(OutputInterface $output)
+    public function __construct(Output $output)
     {
-        $this->progressBar = new ProgressBar($output);
         $this->output = $output;
     }
 
@@ -38,17 +34,16 @@ class ProgressSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
-        $this->progressBar->start($preCreateAstMapEvent->getExpectedFileCount());
+        $this->output->getStyle()->progressStart($preCreateAstMapEvent->getExpectedFileCount());
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
-        $this->progressBar->finish();
-        $this->output->writeln('');
+        $this->output->getStyle()->progressFinish();
     }
 
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent): void
     {
-        $this->progressBar->advance();
+        $this->output->getStyle()->progressAdvance();
     }
 }

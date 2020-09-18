@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Symfony\Style;
+use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
@@ -15,7 +17,9 @@ use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class JUnitOutputFormatterTest extends TestCase
 {
@@ -118,12 +122,10 @@ class JUnitOutputFormatterTest extends TestCase
      */
     public function testBasic(array $rules, string $expectedOutputFile): void
     {
-        $output = new BufferedOutput();
-
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
             new Context($rules),
-            $output,
+            $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])
         );
 
@@ -136,5 +138,13 @@ class JUnitOutputFormatterTest extends TestCase
     public function testGetOptions(): void
     {
         static::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
+    }
+
+    private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput
+    {
+        return new SymfonyOutput(
+            $bufferedOutput,
+            new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
+        );
     }
 }
