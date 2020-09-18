@@ -105,7 +105,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
         return [
             $rule instanceof SkippedViolation ? '<warning>Skipped</warning>' : '<error>Violation</error>',
-            $message
+            $message,
         ];
     }
 
@@ -181,7 +181,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
         return [
             '<comment>Uncovered</comment>',
-            $message
+            $message,
         ];
     }
 }

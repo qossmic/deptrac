@@ -14,7 +14,6 @@ use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class GraphVizOutputFormatter implements OutputFormatterInterface
 {

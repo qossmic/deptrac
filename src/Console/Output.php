@@ -6,7 +6,6 @@ namespace SensioLabs\Deptrac\Console;
 
 interface Output
 {
-
     public function writeFormatted(string $message): void;
 
     public function writeLineFormatted(string $message): void;
@@ -18,5 +17,4 @@ interface Output
     public function isVerbose(): bool;
 
     public function isDebug(): bool;
-
 }

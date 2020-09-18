@@ -8,7 +8,6 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
