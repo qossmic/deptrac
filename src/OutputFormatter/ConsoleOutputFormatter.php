@@ -68,10 +68,10 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         foreach ($groupedRules as $layer => $rules) {
             $rows = [];
             foreach ($rules as $rule) {
-                if ($rule instanceof Violation || $rule instanceof SkippedViolation) {
-                    $rows[] = $this->violationRow($rule);
-                } elseif ($reportUncovered && $rule instanceof Uncovered) {
+                if ($rule instanceof Uncovered) {
                     $rows[] = $this->uncoveredRow($rule);
+                } else {
+                    $rows[] = $this->violationRow($rule);
                 }
             }
 
