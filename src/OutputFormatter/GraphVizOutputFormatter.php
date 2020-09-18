@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
-use Fhaculty\Graph\Graph;
-use Fhaculty\Graph\Vertex;
+use Graphp\Graph\Graph;
+use Graphp\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
@@ -61,12 +61,12 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         // create a vertices
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             if (!isset($vertices[$layer])) {
-                $vertices[$layer] = $graph->createVertex($layer);
+                $vertices[$layer] = $graph->createVertex(['id' => $layer]);
             }
 
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
                 if (!isset($vertices[$layerDependOn])) {
-                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
+                    $vertices[$layerDependOn] = $graph->createVertex(['id' => $layerDependOn]);
                 }
             }
         }
@@ -74,10 +74,9 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         // createEdges
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
+                $edge = $graph->createEdgeDirected($vertices[$layer], $vertices[$layerDependOn]);
 
                 if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
                     $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
                     $edge->setAttribute('graphviz.color', 'red');
                 }

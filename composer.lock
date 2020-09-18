@@ -4,53 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "987955601c30c5bcf9f2121db23fef1e",
+    "content-hash": "1026d1f3f515eab5ef4cae4bd1c4b8a2",
     "packages": [
-        {
-            "name": "clue/graph",
-            "version": "v0.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/graphp/graph.git",
-                "reference": "07ce1e2f6d5be2ff600ce13660b25f25cf928c66"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/graphp/graph/zipball/07ce1e2f6d5be2ff600ce13660b25f25cf928c66",
-                "reference": "07ce1e2f6d5be2ff600ce13660b25f25cf928c66",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0 || ^5.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.4 || ^5.7 || ^4.8.35"
-            },
-            "suggest": {
-                "graphp/algorithms": "Common graph algorithms, such as Dijkstra and Moore-Bellman-Ford (shortest path), minimum spanning tree (MST), Kruskal, Prim and many more..",
-                "graphp/graphviz": "GraphViz graph drawing / DOT output"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Fhaculty\\Graph\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "GraPHP is the mathematical graph/network library written in PHP.",
-            "homepage": "https://github.com/graphp/graph",
-            "keywords": [
-                "edge",
-                "graph",
-                "mathematical",
-                "network",
-                "vertex"
-            ],
-            "time": "2019-10-02T09:10:26+00:00"
-        },
         {
             "name": "composer/xdebug-handler",
             "version": "1.4.3",
@@ -110,25 +65,70 @@
             "time": "2020-08-19T10:27:58+00:00"
         },
         {
-            "name": "graphp/graphviz",
-            "version": "v0.2.2",
+            "name": "graphp/graph",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/graphp/graphviz.git",
-                "reference": "5cc4466223ca46fffa196d1e762fae164319c229"
+                "url": "https://github.com/graphp/graph.git",
+                "reference": "214de4572f0fa8a452addcf6135f87bfd3dec4ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/graphp/graphviz/zipball/5cc4466223ca46fffa196d1e762fae164319c229",
-                "reference": "5cc4466223ca46fffa196d1e762fae164319c229",
+                "url": "https://api.github.com/repos/graphp/graph/zipball/214de4572f0fa8a452addcf6135f87bfd3dec4ab",
+                "reference": "214de4572f0fa8a452addcf6135f87bfd3dec4ab",
                 "shasum": ""
             },
             "require": {
-                "clue/graph": "~0.9.0|~0.8.0",
+                "php": "^7.0 || ^5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
+            },
+            "suggest": {
+                "graphp/algorithms": "Common graph algorithms, such as Dijkstra and Moore-Bellman-Ford (shortest path), minimum spanning tree (MST), Kruskal, Prim and many more..",
+                "graphp/graphviz": "GraphViz graph drawing / DOT output"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Graphp\\Graph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "GraPHP is the mathematical graph/network library written in PHP.",
+            "homepage": "https://github.com/graphp/graph",
+            "keywords": [
+                "edge",
+                "graph",
+                "mathematical",
+                "network",
+                "vertex"
+            ],
+            "time": "2020-08-17T16:18:02+00:00"
+        },
+        {
+            "name": "graphp/graphviz",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/graphp/graphviz.git",
+                "reference": "b2b7644a7059ebcdeb2ea58fee134fcfa9e8baf2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/graphp/graphviz/zipball/b2b7644a7059ebcdeb2ea58fee134fcfa9e8baf2",
+                "reference": "b2b7644a7059ebcdeb2ea58fee134fcfa9e8baf2",
+                "shasum": ""
+            },
+            "require": {
+                "graphp/graph": "dev-master#81eef65 as 1.0.0",
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.4 || ^5.7 || ^4.8.35"
+                "phpunit/phpunit": "^9.3 || ^5.7 || ^4.8.35"
             },
             "type": "library",
             "autoload": {
@@ -149,7 +149,7 @@
                 "graphp",
                 "graphviz"
             ],
-            "time": "2019-10-04T13:30:55+00:00"
+            "time": "2020-09-09T16:11:27+00:00"
         },
         {
             "name": "jetbrains/phpstorm-stubs",
@@ -837,16 +837,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.1.3",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "5e20b83385a77593259c9f8beb2c43cd03b2ac14"
+                "reference": "5fa56b4074d1ae755beb55617ddafe6f5d78f665"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/5e20b83385a77593259c9f8beb2c43cd03b2ac14",
-                "reference": "5e20b83385a77593259c9f8beb2c43cd03b2ac14",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/5fa56b4074d1ae755beb55617ddafe6f5d78f665",
+                "reference": "5fa56b4074d1ae755beb55617ddafe6f5d78f665",
                 "shasum": ""
             },
             "require": {
@@ -855,7 +855,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -897,7 +897,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-06T08:49:21+00:00"
+            "time": "2020-09-07T11:33:47+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -987,16 +987,16 @@
         },
         {
             "name": "symfony/event-dispatcher-contracts",
-            "version": "v2.1.3",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher-contracts.git",
-                "reference": "f6f613d74cfc5a623fc36294d3451eb7fa5a042b"
+                "reference": "0ba7d54483095a198fa51781bc608d17e84dffa2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/f6f613d74cfc5a623fc36294d3451eb7fa5a042b",
-                "reference": "f6f613d74cfc5a623fc36294d3451eb7fa5a042b",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher-contracts/zipball/0ba7d54483095a198fa51781bc608d17e84dffa2",
+                "reference": "0ba7d54483095a198fa51781bc608d17e84dffa2",
                 "shasum": ""
             },
             "require": {
@@ -1009,7 +1009,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -1059,7 +1059,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-06T13:23:11+00:00"
+            "time": "2020-09-07T11:33:47+00:00"
         },
         {
             "name": "symfony/filesystem",
@@ -1728,16 +1728,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v2.1.3",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "58c7475e5457c5492c26cc740cc0ad7464be9442"
+                "reference": "d15da7ba4957ffb8f1747218be9e1a121fd298a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/58c7475e5457c5492c26cc740cc0ad7464be9442",
-                "reference": "58c7475e5457c5492c26cc740cc0ad7464be9442",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/d15da7ba4957ffb8f1747218be9e1a121fd298a1",
+                "reference": "d15da7ba4957ffb8f1747218be9e1a121fd298a1",
                 "shasum": ""
             },
             "require": {
@@ -1750,7 +1750,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -1800,7 +1800,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-06T13:23:11+00:00"
+            "time": "2020-09-07T11:33:47+00:00"
         },
         {
             "name": "symfony/string",
@@ -1968,7 +1968,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "graphp/graphviz": 20,
+        "graphp/graph": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
