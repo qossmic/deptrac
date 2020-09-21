@@ -43,7 +43,7 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        if (isset($node->namespacedName) && $node->namespacedName instanceof Node\Name) {
+        if (isset($node->namespacedName)) {
             $className = $node->namespacedName->toCodeString();
         } elseif ($node->name instanceof Node\Identifier) {
             $className = $node->name->toString();

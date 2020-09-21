@@ -39,11 +39,11 @@ final class XMLOutputFormatter implements OutputFormatterInterface
      * @throws \Exception
      */
     public function finish(
-        Context $dependencyContext,
+        Context $context,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $xml = $this->createXml($dependencyContext);
+        $xml = $this->createXml($context);
 
         if ($dumpXmlPath = $outputFormatterInput->getOption(self::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);

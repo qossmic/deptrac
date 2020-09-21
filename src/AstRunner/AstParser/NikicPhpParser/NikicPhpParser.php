@@ -111,7 +111,7 @@ class NikicPhpParser implements AstParser
         $classLikeNodes = $findingVisitor->getFoundNodes();
 
         foreach ($classLikeNodes as $classLikeNode) {
-            if (isset($classLikeNode->namespacedName) && $classLikeNode->namespacedName instanceof Node\Name) {
+            if (isset($classLikeNode->namespacedName)) {
                 $className = $classLikeNode->namespacedName->toString();
             } else {
                 $className = (string) $classLikeNode->name;
