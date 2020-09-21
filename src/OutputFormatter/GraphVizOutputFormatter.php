@@ -74,12 +74,13 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         // createEdges
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
+                $edge = $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
 
                 if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge = $vertices[$layer]->getEdgesTo($vertices[$layerDependOn])->getEdgeFirst();
                     $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
                     $edge->setAttribute('graphviz.color', 'red');
+                } else {
+                    $edge->setAttribute('graphviz.label', $layerDependOnCount);
                 }
             }
         }
