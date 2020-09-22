@@ -12,6 +12,11 @@ class SomeClass
     private $someOtherClass;
 
     /**
+     * @var \Uncovered\Dependency
+     */
+    private $uncovered;
+
+    /**
      * @param SomeOtherClass $someOtherClass
      */
     public function __construct(SomeOtherClass $someOtherClass)

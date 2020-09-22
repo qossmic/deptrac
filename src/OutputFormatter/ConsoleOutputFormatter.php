@@ -89,8 +89,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $dependency = $rule->getDependency();
 
         $message = sprintf(
-            '%s<info>%s</info> must not depend on <info>%s</info> (%s)',
-            $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
+            '<info>%s</info> must not depend on <info>%s</info> (%s)',
             $dependency->getClassLikeNameA()->toString(),
             $dependency->getClassLikeNameB()->toString(),
             $rule->getLayerB()
@@ -104,7 +103,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
 
         return [
-            $rule instanceof SkippedViolation ? '<warning>Skipped</warning>' : '<error>Violation</error>',
+            $rule instanceof SkippedViolation ? '<comment>Skipped</comment>' : '<error>Violation</error>',
             $message,
         ];
     }
