@@ -34,6 +34,7 @@ use SensioLabs\Deptrac\Dependency\Resolver;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\Deptrac\FileResolver;
+use SensioLabs\Deptrac\OutputFormatter\BaselineOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
@@ -128,6 +129,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(XMLOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(BaselineOutputFormatter::class)
         ->tag('output_formatter');
 
     /* Collectors */
