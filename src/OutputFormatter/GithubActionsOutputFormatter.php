@@ -2,6 +2,7 @@
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Context;
@@ -9,9 +10,10 @@ use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 
-class GithubActionsOutputFormatter implements OutputFormatterInterface
+final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
-    private const REPORT_UNCOVERED = 'report-uncovered';
+    /** @deprecated */
+    public const LEGACY_REPORT_UNCOVERED = 'formatter-github-actions-report-uncovered';
 
     /** @var Env */
     private $env;
@@ -35,7 +37,7 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::REPORT_UNCOVERED, 'report uncovered dependencies', false),
+            OutputFormatterOption::newValueOption(self::LEGACY_REPORT_UNCOVERED, '<fg=yellow>[DEPRECATED]</> report uncovered dependencies', false),
         ];
     }
 
@@ -49,6 +51,14 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
+        $legacyReportUncovered = $outputFormatterInput->getOptionAsBoolean(self::LEGACY_REPORT_UNCOVERED);
+
+        if ($legacyReportUncovered) {
+            $output->writeLineFormatted(sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--%s</>. ⚠️️', self::LEGACY_REPORT_UNCOVERED));
+            $output->writeLineFormatted(sprintf('   Please use the new option <fg=cyan>--%s</> instead.', AnalyzeCommand::OPTION_REPORT_UNCOVERED));
+            $output->writeLineFormatted('');
+        }
+
         foreach ($context->all() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
@@ -68,7 +78,8 @@ class GithubActionsOutputFormatter implements OutputFormatterInterface
             ));
         }
 
-        if (true === $outputFormatterInput->getOptionAsBoolean(static::REPORT_UNCOVERED)) {
+        if ($legacyReportUncovered
+            || $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED)) {
             $this->printUncovered($context, $output);
         }
     }

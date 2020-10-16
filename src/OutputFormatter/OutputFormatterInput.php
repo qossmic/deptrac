@@ -26,7 +26,7 @@ class OutputFormatterInput
      */
     public function getOption(string $name)
     {
-        if (!isset($this->options[$name])) {
+        if (!array_key_exists($name, $this->options)) {
             throw new \InvalidArgumentException('option '.$name.' is not configured.');
         }
 

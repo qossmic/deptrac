@@ -29,27 +29,42 @@ class Style implements OutputStyle
         $this->symfonyStyle->section($message);
     }
 
-    public function success(string $message): void
+    /**
+     * {@inheritdoc}
+     */
+    public function success($message): void
     {
         $this->symfonyStyle->success($message);
     }
 
-    public function error(string $message): void
+    /**
+     * {@inheritdoc}
+     */
+    public function error($message): void
     {
         $this->symfonyStyle->error($message);
     }
 
-    public function warning(string $message): void
+    /**
+     * {@inheritdoc}
+     */
+    public function warning($message): void
     {
         $this->symfonyStyle->warning($message);
     }
 
-    public function note(string $message): void
+    /**
+     * {@inheritdoc}
+     */
+    public function note($message): void
     {
         $this->symfonyStyle->note($message);
     }
 
-    public function caution(string $message): void
+    /**
+     * {@inheritdoc}
+     */
+    public function caution($message): void
     {
         $this->symfonyStyle->caution($message);
     }

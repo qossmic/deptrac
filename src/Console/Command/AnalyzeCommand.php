@@ -9,6 +9,8 @@ use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
 use SensioLabs\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use SensioLabs\Deptrac\Console\Symfony\Style;
 use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
+use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
@@ -22,6 +24,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyzeCommand extends Command
 {
+    public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
+
     /** @var Analyser */
     private $analyser;
     /** @var ConfigurationLoader */
@@ -51,26 +55,36 @@ class AnalyzeCommand extends Command
         $this->setAliases(['analyse']);
 
         $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile');
-        $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
+        $this->addOption(
+            'formatter',
+            null,
+            InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
+            sprintf(
+                'Format in which to print the result of the analysis. Possible: ["%s"]',
+                implode('", "', $this->formatterFactory->getFormatterNames())
+            )
+        );
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar');
-        $this->addOption('fail-on-uncovered', null, InputOption::VALUE_NONE, 'Fails if any uncovered dependecy is found');
+        $this->addOption('fail-on-uncovered', null, InputOption::VALUE_NONE, 'Fails if any uncovered dependency is found');
+        $this->addOption(self::OPTION_REPORT_UNCOVERED, null, InputOption::VALUE_NONE, 'Report uncovered dependencies');
+        $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         ini_set('memory_limit', '-1');
 
+        $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+
         $file = $input->getArgument('depfile');
 
         if (null === $file) {
-            $file = $this->getDefaultFile($output);
+            $file = $this->getDefaultFile($symfonyOutput);
         }
 
         if (!is_string($file)) {
             throw SingleDepfileIsRequiredException::fromArgument($file);
         }
-
-        $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
 
         $configuration = $this->configurationLoader->load($file);
 
@@ -80,20 +94,30 @@ class AnalyzeCommand extends Command
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
 
-        $this->printCollectViolations($output);
+        $this->printCollectViolations($symfonyOutput);
         $context = $this->analyser->analyse($configuration);
 
-        $this->printFormattingStart($output);
+        $this->printFormattingStart($symfonyOutput);
 
-        foreach ($this->formatterFactory->getActiveFormatters($input) as $formatter) {
+        /** @var string[] $formats */
+        $formats = (array) $input->getOption('formatter');
+
+        if ($formats) {
+            $formatters = $this->formatterFactory->getFormattersByNames($formats);
+        } else { // BC
+            $formatters = $this->formatterFactory->getActiveFormatters($input);
+            $this->printDeprecationsForLegacyFormatterOptions($symfonyOutput, $formatters);
+        }
+
+        if ([] === $formatters) {
+            $formatters = $this->formatterFactory->getFormattersEnabledByDefault();
+        }
+
+        foreach ($formatters as $formatter) {
             try {
-                $formatter->finish(
-                    $context,
-                    $symfonyOutput,
-                    $this->formatterFactory->getOutputFormatterInput($formatter, $input)
-                );
+                $formatter->finish($context, $symfonyOutput, new OutputFormatterInput($input->getOptions()));
             } catch (\Exception $ex) {
-                $this->printFormatterException($output, $formatter->getName(), $ex);
+                $this->printFormatterException($symfonyOutput, $formatter->getName(), $ex);
             }
         }
 
@@ -104,47 +128,65 @@ class AnalyzeCommand extends Command
         return $context->hasViolations() ? 1 : 0;
     }
 
-    protected function printCollectViolations(OutputInterface $output): void
+    protected function printCollectViolations(SymfonyOutput $output): void
     {
-        $output->writeln('<info>collecting violations.</info>', OutputInterface::VERBOSITY_VERBOSE);
+        if ($output->isVerbose()) {
+            $output->writeLineFormatted('<info>collecting violations.</info>');
+        }
     }
 
-    protected function printFormattingStart(OutputInterface $output): void
+    protected function printFormattingStart(SymfonyOutput $output): void
     {
-        $output->writeln('<info>formatting dependencies.</info>', OutputInterface::VERBOSITY_VERBOSE);
+        if ($output->isVerbose()) {
+            $output->writeLineFormatted('<info>formatting dependencies.</info>');
+        }
     }
 
-    protected function printFormatterException(OutputInterface $output, string $formatterName, \Exception $exception): void
+    protected function printFormatterException(SymfonyOutput $output, string $formatterName, \Exception $exception): void
     {
-        $output->writeln('');
-        $errorMessages = [
+        $output->writeLineFormatted('');
+        $output->getStyle()->error([
             '',
             sprintf('Output formatter %s threw an Exception:', $formatterName),
             sprintf('Message: %s', $exception->getMessage()),
             '',
-        ];
-        $output->writeln($this->getHelper('formatter')->formatBlock($errorMessages, 'error'));
-        $output->writeln('');
+        ]);
+        $output->writeLineFormatted('');
     }
 
-    protected function getDefaultFile(OutputInterface $output): string
+    protected function getDefaultFile(SymfonyOutput $output): string
     {
         $oldDefaultFile = getcwd().'/depfile.yml';
 
         if (is_file($oldDefaultFile)) {
-            $errorMessages = [
+            $output->writeLineFormatted([
                 '',
-                'Old default file detected.',
-                'The default file changed from depfile.yml to depfile.yaml.',
-                'You are getting this message because you are using deptrac without the file argument and the old default file.',
-                'Deptrac loads for now the old file. Please update your file extension from yml to yaml.',
+                '⚠️  Old default file detected. ⚠️',
+                '   The default file changed from <fg=cyan>depfile.yml</> to <fg=cyan>depfile.yaml</>.',
+                '   You are getting this message because you are using deptrac without the file argument and the old default file.',
+                '   Deptrac loads for now the old file. Please update your file extension from <fg=cyan>yml</> to <fg=cyan>yaml</>.',
                 '',
-            ];
-            $output->writeln($this->getHelper('formatter')->formatBlock($errorMessages, 'comment'));
+            ]);
 
             return $oldDefaultFile;
         }
 
         return getcwd().'/depfile.yaml';
+    }
+
+    /**
+     * @param OutputFormatterInterface[] $formatters
+     */
+    private function printDeprecationsForLegacyFormatterOptions(SymfonyOutput $output, array $formatters): void
+    {
+        foreach ($formatters as $formatter) {
+            $name = $formatter->getName();
+            $output->writeLineFormatted([
+                sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--formatter-%s</>. ⚠️️', $name),
+                sprintf('   Please use the new option <fg=cyan>--formatter=%s</> instead.', $name),
+                '   Multiple options are allowed.',
+                '',
+            ]);
+        }
     }
 }

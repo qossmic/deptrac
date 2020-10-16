@@ -8,6 +8,10 @@ use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterOption
 {
+    public const NONE = InputOption::VALUE_NONE;
+    public const REQUIRED = InputOption::VALUE_REQUIRED;
+    public const OPTIONAL = InputOption::VALUE_OPTIONAL;
+
     /** @var string */
     private $name;
     /** @var int|null */
@@ -18,10 +22,10 @@ class OutputFormatterOption
     private $default;
 
     /**
-     * @param string $name        The argument name
-     * @param int    $mode        The argument mode: self::REQUIRED or self::OPTIONAL
-     * @param string $description A description text
-     * @param mixed  $default     The default value (for self::OPTIONAL mode only)
+     * @param string   $name        The argument name
+     * @param int|null $mode        The argument mode: self::REQUIRED or self::OPTIONAL
+     * @param string   $description A description text
+     * @param mixed    $default     The default value (for self::OPTIONAL mode only)
      */
     private function __construct(string $name, int $mode = null, string $description = '', $default = null)
     {
@@ -34,9 +38,9 @@ class OutputFormatterOption
     /**
      * @param mixed|null $default
      */
-    public static function newValueOption(string $name, string $description, $default = null): self
+    public static function newValueOption(string $name, string $description, $default = null, int $mode = self::OPTIONAL): self
     {
-        return new self($name, InputOption::VALUE_OPTIONAL, $description, $default);
+        return new self($name, $mode, $description, $default);
     }
 
     public function getName(): string

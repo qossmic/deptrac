@@ -12,15 +12,30 @@ interface OutputStyle
 
     public function section(string $message): void;
 
-    public function success(string $message): void;
+    /**
+     * @param string|string[] $message
+     */
+    public function success($message): void;
 
-    public function error(string $message): void;
+    /**
+     * @param string|string[] $message
+     */
+    public function error($message): void;
 
-    public function warning(string $message): void;
+    /**
+     * @param string|string[] $message
+     */
+    public function warning($message): void;
 
-    public function note(string $message): void;
+    /**
+     * @param string|string[] $message
+     */
+    public function note($message): void;
 
-    public function caution(string $message): void;
+    /**
+     * @param string|string[] $message
+     */
+    public function caution($message): void;
 
     /**
      * @param string|array|TableSeparator ...$list

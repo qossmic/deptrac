@@ -15,10 +15,10 @@ final class OutputFormatterFactoryTest extends TestCase
 {
     private function createNamedFormatter($name)
     {
-        $formatter = $this->prophesize(OutputFormatterInterface::class);
-        $formatter->getName()->willReturn($name);
+        $formatter = $this->createMock(OutputFormatterInterface::class);
+        $formatter->method('getName')->willReturn($name);
 
-        return $formatter->reveal();
+        return $formatter;
     }
 
     public function testGetFormatterByName(): void
@@ -34,48 +34,48 @@ final class OutputFormatterFactoryTest extends TestCase
 
     public function testGetFormatterOptions(): void
     {
-        $formatter1 = $this->prophesize(OutputFormatterInterface::class);
-        $formatter1->enabledByDefault()->willReturn(true);
-        $formatter1->getName()->willReturn('foo1');
-        $formatter1->configureOptions()->willReturn([
+        $formatter1 = $this->createMock(OutputFormatterInterface::class);
+        $formatter1->method('enabledByDefault')->willReturn(true);
+        $formatter1->method('getName')->willReturn('foo1');
+        $formatter1->method('configureOptions')->willReturn([
             OutputFormatterOption::newValueOption('f1-n1', 'f1-n1-desc', 'f1-n1-default'),
         ]);
 
-        $formatter2 = $this->prophesize(OutputFormatterInterface::class);
-        $formatter2->enabledByDefault()->willReturn(true);
-        $formatter2->getName()->willReturn('foo2');
-        $formatter2->configureOptions()->willReturn([
+        $formatter2 = $this->createMock(OutputFormatterInterface::class);
+        $formatter2->method('enabledByDefault')->willReturn(true);
+        $formatter2->method('getName')->willReturn('foo2');
+        $formatter2->method('configureOptions')->willReturn([
             OutputFormatterOption::newValueOption('f2-n1', 'f2-n1-desc', 'f2-n1-default'),
             OutputFormatterOption::newValueOption('f2-n2', 'f2-n2-desc', 'f2-n2-default'),
         ]);
 
-        $formatter3 = $this->prophesize(OutputFormatterInterface::class);
-        $formatter3->enabledByDefault()->willReturn(true);
-        $formatter3->getName()->willReturn('foo3');
-        $formatter3->configureOptions()->willReturn([]);
+        $formatter3 = $this->createMock(OutputFormatterInterface::class);
+        $formatter3->method('enabledByDefault')->willReturn(true);
+        $formatter3->method('getName')->willReturn('foo3');
+        $formatter3->method('configureOptions')->willReturn([]);
 
         $formatterFactory = new OutputFormatterFactory([
-            $formatter1->reveal(),
-            $formatter2->reveal(),
-            $formatter3->reveal(),
+            $formatter1,
+            $formatter2,
+            $formatter3,
         ]);
 
         /** @var $arguments InputArgument[] */
-        $arguments = $formatterFactory->getFormatterOptions('foo1');
+        $arguments = $formatterFactory->getFormatterOptions();
 
         self::assertEquals('formatter-foo1', $arguments[0]->getName());
 
-        self::assertEquals('formatter-foo1-f1-n1', $arguments[1]->getName());
+        self::assertEquals('f1-n1', $arguments[1]->getName());
         self::assertEquals('f1-n1-default', $arguments[1]->getDefault());
         self::assertEquals('f1-n1-desc', $arguments[1]->getDescription());
 
         self::assertEquals('formatter-foo2', $arguments[2]->getName());
 
-        self::assertEquals('formatter-foo2-f2-n1', $arguments[3]->getName());
+        self::assertEquals('f2-n1', $arguments[3]->getName());
         self::assertEquals('f2-n1-default', $arguments[3]->getDefault());
         self::assertEquals('f2-n1-desc', $arguments[3]->getDescription());
 
-        self::assertEquals('formatter-foo2-f2-n2', $arguments[4]->getName());
+        self::assertEquals('f2-n2', $arguments[4]->getName());
         self::assertEquals('f2-n2-default', $arguments[4]->getDefault());
         self::assertEquals('f2-n2-desc', $arguments[4]->getDescription());
 
@@ -90,35 +90,15 @@ final class OutputFormatterFactoryTest extends TestCase
             $this->createNamedFormatter('f3'),
         ]));
 
-        $input = $this->prophesize(InputInterface::class);
-        $input->getOption('formatter-f1')->willReturn(true);
-        $input->getOption('formatter-f2')->willReturn(true);
-        $input->getOption('formatter-f3')->willReturn(false);
+        $input = $this->createMock(InputInterface::class);
+        $input->method('getOption')->withConsecutive(
+            ['formatter-f1'],
+            ['formatter-f2'],
+            ['formatter-f3']
+        )
+        ->willReturnOnConsecutiveCalls(true, true, false);
 
-        self::assertCount(2, $formatter->getActiveFormatters($input->reveal()));
-    }
-
-    public function testGetOutputFormatterInput(): void
-    {
-        $formatter = (new OutputFormatterFactory([
-            $f1 = $this->createNamedFormatter('f1'),
-            $f2 = $this->createNamedFormatter('f2'),
-            $f3 = $this->createNamedFormatter('f3'),
-        ]));
-
-        $input = $this->prophesize(InputInterface::class);
-        $input->getOptions()->willReturn([
-            'formatter-f1-lalelu' => 'jupp',
-            'formatter-f3' => '',
-        ]);
-
-        self::assertEquals('jupp', $formatter->getOutputFormatterInput($f1, $input->reveal())->getOption('lalelu'));
-
-        try {
-            $formatter->getOutputFormatterInput($f2, $input->reveal())->getOption('lalelu');
-            $this->fail('expected exception');
-        } catch (\InvalidArgumentException $e) {
-        }
+        self::assertCount(2, $formatter->getActiveFormatters($input));
     }
 
     public function testGetFormatterByNameNotFound(): void
@@ -126,5 +106,44 @@ final class OutputFormatterFactoryTest extends TestCase
         $this->expectException(\LogicException::class);
 
         (new OutputFormatterFactory([]))->getFormatterByName('formatter1');
+    }
+
+    public function testGetFormattersByNames(): void
+    {
+        $formatterFactory = new OutputFormatterFactory([
+            $formatter1 = $this->createNamedFormatter('formatter1'),
+            $formatter2 = $this->createNamedFormatter('formatter2'),
+        ]);
+
+        self::assertSame([$formatter1], $formatterFactory->getFormattersByNames(['formatter1']));
+        self::assertSame(
+            [$formatter1, $formatter2],
+            $formatterFactory->getFormattersByNames(['formatter1', 'formatter2'])
+        );
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Following formatters ["invalid", "invalid2"] are not supported.');
+        $formatterFactory->getFormattersByNames(['invalid', 'invalid2']);
+    }
+
+    public function testGetFormattersEnabledByDefault(): void
+    {
+        $formatter1 = $this->createMock(OutputFormatterInterface::class);
+        $formatter1->method('enabledByDefault')->willReturn(true);
+        $formatter1->method('getName')->willReturn('foo1');
+        $formatter1->method('configureOptions')->willReturn([]);
+
+        $formatter2 = $this->createMock(OutputFormatterInterface::class);
+        $formatter2->method('enabledByDefault')->willReturn(true);
+        $formatter2->method('getName')->willReturn('foo2');
+        $formatter2->method('configureOptions')->willReturn([]);
+
+        $formatter3 = $this->createMock(OutputFormatterInterface::class);
+        $formatter3->method('enabledByDefault')->willReturn(false);
+        $formatter3->method('getName')->willReturn('foo3');
+        $formatter3->method('configureOptions')->willReturn([]);
+
+        $formatterFactory = new OutputFormatterFactory([$formatter1, $formatter2, $formatter3]);
+        self::assertSame([$formatter1, $formatter2], $formatterFactory->getFormattersEnabledByDefault());
     }
 }

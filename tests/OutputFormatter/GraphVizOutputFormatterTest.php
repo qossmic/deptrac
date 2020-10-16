@@ -43,10 +43,14 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput([
-            'display' => false,
-            'dump-image' => false,
-            'dump-dot' => $dotFile,
-            'dump-html' => false,
+            GraphVizOutputFormatter::DISPLAY => false,
+            GraphVizOutputFormatter::DUMP_IMAGE => false,
+            GraphVizOutputFormatter::DUMP_DOT => $dotFile,
+            GraphVizOutputFormatter::DUMP_HTML => false,
+            GraphVizOutputFormatter::LEGACY_DISPLAY => false,
+            GraphVizOutputFormatter::LEGACY_DUMP_IMAGE => false,
+            GraphVizOutputFormatter::LEGACY_DUMP_DOT => false,
+            GraphVizOutputFormatter::LEGACY_DUMP_HTML => false,
         ]);
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);

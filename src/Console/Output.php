@@ -8,7 +8,10 @@ interface Output
 {
     public function writeFormatted(string $message): void;
 
-    public function writeLineFormatted(string $message): void;
+    /**
+     * @param string|string[] $message
+     */
+    public function writeLineFormatted($message): void;
 
     public function writeRaw(string $message): void;
 

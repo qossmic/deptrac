@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
@@ -16,8 +17,6 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 final class TableOutputFormatter implements OutputFormatterInterface
 {
-    private const REPORT_UNCOVERED = 'report-uncovered';
-
     public function getName(): string
     {
         return 'table';
@@ -25,9 +24,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
     public function configureOptions(): array
     {
-        return [
-            OutputFormatterOption::newValueOption(self::REPORT_UNCOVERED, 'report uncovered dependencies', false),
-        ];
+        return [];
     }
 
     public function enabledByDefault(): bool
@@ -41,7 +38,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        $reportUncovered = true === $outputFormatterInput->getOptionAsBoolean(self::REPORT_UNCOVERED);
+        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
 
         foreach ($context->all() as $rule) {
             if ($rule instanceof Allowed) {
