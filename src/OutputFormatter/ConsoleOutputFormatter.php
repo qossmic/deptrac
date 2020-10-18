@@ -33,7 +33,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::REPORT_UNCOVERED, 'report uncovered dependencies', false),
+            OutputFormatterOption::newValueOption(self::REPORT_UNCOVERED, 'report uncovered dependencies', false),
         ];
     }
 
@@ -55,7 +55,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $this->printViolation($rule, $output);
         }
 
-        if (true === $outputFormatterInput->getOptionAsBoolean(static::REPORT_UNCOVERED)) {
+        if (true === $outputFormatterInput->getOptionAsBoolean(self::REPORT_UNCOVERED)) {
             $this->printUncovered($context, $output);
         }
 

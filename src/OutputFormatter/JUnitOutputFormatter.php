@@ -27,7 +27,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::DUMP_XML, 'path to a dumped xml file', './junit-report.xml'),
+            OutputFormatterOption::newValueOption(self::DUMP_XML, 'path to a dumped xml file', './junit-report.xml'),
         ];
     }
 
@@ -48,7 +48,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($context);
 
-        if ($dumpXmlPath = $outputFormatterInput->getOption(static::DUMP_XML)) {
+        if ($dumpXmlPath = $outputFormatterInput->getOption(self::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);
             $output->writeln('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
         }
