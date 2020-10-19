@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Console;
 
+use Symfony\Component\Console\Helper\TableSeparator;
+
 interface OutputStyle
 {
     public function title(string $message): void;
@@ -19,6 +21,11 @@ interface OutputStyle
     public function note(string $message): void;
 
     public function caution(string $message): void;
+
+    /**
+     * @param string|array|TableSeparator ...$list
+     */
+    public function definitionList(...$list): void;
 
     /**
      * @param mixed[] $headers

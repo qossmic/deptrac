@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\Console\Symfony;
 
 use SensioLabs\Deptrac\Console\OutputStyle;
-use Symfony\Component\Console\Style\StyleInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @internal
@@ -14,7 +14,7 @@ class Style implements OutputStyle
 {
     private $symfonyStyle;
 
-    public function __construct(StyleInterface $symfonyStyle)
+    public function __construct(SymfonyStyle $symfonyStyle)
     {
         $this->symfonyStyle = $symfonyStyle;
     }
@@ -52,6 +52,14 @@ class Style implements OutputStyle
     public function caution(string $message): void
     {
         $this->symfonyStyle->caution($message);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function definitionList(...$list): void
+    {
+        $this->symfonyStyle->definitionList(...$list);
     }
 
     public function table(array $headers, array $rows): void

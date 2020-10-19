@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Env;
-use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
@@ -48,34 +47,16 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $groupedRules = [];
-        $reportUncovered = true === $outputFormatterInput->getOptionAsBoolean(self::REPORT_UNCOVERED);
-
         foreach ($context->all() as $rule) {
-            if ($rule instanceof Allowed) {
+            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if ($rule instanceof Violation || $rule instanceof SkippedViolation) {
-                $groupedRules[$rule->getLayerA()][] = $rule;
-            } elseif ($reportUncovered && $rule instanceof Uncovered) {
-                $groupedRules[$rule->getLayer()][] = $rule;
-            }
+            $this->printViolation($rule, $output);
         }
 
-        $style = $output->getStyle();
-
-        foreach ($groupedRules as $layer => $rules) {
-            $rows = [];
-            foreach ($rules as $rule) {
-                if ($rule instanceof Uncovered) {
-                    $rows[] = $this->uncoveredRow($rule);
-                } else {
-                    $rows[] = $this->violationRow($rule);
-                }
-            }
-
-            $style->table(['Reason', $layer], $rows);
+        if (true === $outputFormatterInput->getOptionAsBoolean(static::REPORT_UNCOVERED)) {
+            $this->printUncovered($context, $output);
         }
 
         $this->printSummary($context, $output);
@@ -84,46 +65,43 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     /**
      * @param Violation|SkippedViolation $rule
      */
-    private function violationRow(Rule $rule): array
+    private function printViolation(Rule $rule, Output $output): void
     {
         $dependency = $rule->getDependency();
 
-        $message = sprintf(
-            '<info>%s</info> must not depend on <info>%s</info> (%s)',
-            $dependency->getClassLikeNameA()->toString(),
-            $dependency->getClassLikeNameB()->toString(),
-            $rule->getLayerB()
+        $output->writeLineFormatted(
+            sprintf(
+                '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
+                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
+                $dependency->getClassLikeNameA()->toString(),
+                $dependency->getClassLikeNameB()->toString(),
+                $rule->getLayerA(),
+                $rule->getLayerB()
+            )
         );
+        $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
         if ($dependency instanceof InheritDependency) {
-            $message .= "\n".$this->formatInheritPath($dependency);
+            $this->printInheritPath($output, $dependency);
         }
-
-        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
-        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
-
-        return [
-            $rule instanceof SkippedViolation ? '<comment>Skipped</comment>' : '<error>Violation</error>',
-            $message,
-        ];
     }
 
-    private function formatInheritPath(InheritDependency $dependency): string
+    private function printInheritPath(Output $output, InheritDependency $dependency): void
     {
         $buffer = [];
         $astInherit = $dependency->getInheritPath();
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
         }
 
-        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
-            '%s::%d',
+            "\t%s::%d",
             $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
-        return implode(" -> \n", $buffer);
+        $output->writeLineFormatted(implode(" -> \n", $buffer));
     }
 
     private function printSummary(Context $context, Output $output): void
@@ -133,54 +111,60 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $uncoveredCount = \count($context->uncovered());
         $allowedCount = \count($context->allowed());
 
-        $style = $output->getStyle();
-
-        $style->newLine();
+        $output->writeLineFormatted('');
         $output->writeLineFormatted('Report:');
         $output->writeLineFormatted(
             sprintf(
-                '<%1$s>Violations: %2$d</%1$s>',
-                $violationCount > 0 ? 'error' : 'info',
+                '<fg=%s>Violations: %d</>',
+                $violationCount > 0 ? 'red' : 'default',
                 $violationCount
             )
         );
         $output->writeLineFormatted(
             sprintf(
-                '<%1$s>Skipped violations: %2$d</%1$s>',
-                $skippedViolationCount > 0 ? 'comment' : 'info',
+                '<fg=%s>Skipped violations: %d</>',
+                $skippedViolationCount > 0 ? 'yellow' : 'default',
                 $skippedViolationCount
             )
         );
         $output->writeLineFormatted(
             sprintf(
-                '<%1$s>Uncovered: %2$d</%1$s>',
-                $uncoveredCount > 0 ? 'comment' : 'info',
+                '<fg=%s>Uncovered: %d</>',
+                $uncoveredCount > 0 ? 'yellow' : 'default',
                 $uncoveredCount
             )
         );
         $output->writeLineFormatted(sprintf('<info>Allowed: %d</info>', $allowedCount));
     }
 
-    private function uncoveredRow(Uncovered $rule): array
+    private function printUncovered(Context $context, Output $output): void
     {
-        $dependency = $rule->getDependency();
-
-        $message = sprintf(
-            '<info>%s</info> has uncovered dependency on <info>%s</info>',
-            $dependency->getClassLikeNameA()->toString(),
-            $dependency->getClassLikeNameB()->toString()
-        );
-
-        if ($dependency instanceof InheritDependency) {
-            $message .= "\n".$this->formatInheritPath($dependency);
+        $uncovered = $context->uncovered();
+        if ([] === $uncovered) {
+            return;
         }
 
-        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
-        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+        $output->writeLineFormatted('<comment>Uncovered dependencies:</comment>');
+        foreach ($uncovered as $u) {
+            $dependency = $u->getDependency();
+            $output->writeLineFormatted(
+                sprintf(
+                    '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
+                    $dependency->getClassLikeNameA()->toString(),
+                    $dependency->getClassLikeNameB()->toString(),
+                    $u->getLayer()
+                )
+            );
+            $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
-        return [
-            '<comment>Uncovered</comment>',
-            $message,
-        ];
+            if ($dependency instanceof InheritDependency) {
+                $this->printInheritPath($output, $dependency);
+            }
+        }
+    }
+
+    private function printFileOccurrence(Output $output, FileOccurrence $fileOccurrence): void
+    {
+        $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
     }
 }

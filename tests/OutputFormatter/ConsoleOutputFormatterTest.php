@@ -42,50 +42,32 @@ class ConsoleOutputFormatterTest extends TestCase
                         ClassLikeName::fromFQCN('ClassA'),
                         ClassLikeName::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
-                        AstInherit::newExtends(
-                            ClassLikeName::fromFQCN('ClassInheritA'),
-                            FileOccurrence::fromFilepath('originalA.php', 3)
-                        )
-                            ->withPath(
-                                [
-                                    AstInherit::newExtends(
-                                        ClassLikeName::fromFQCN('ClassInheritB'),
-                                        FileOccurrence::fromFilepath('originalA.php', 4)
-                                    ),
-                                    AstInherit::newExtends(
-                                        ClassLikeName::fromFQCN('ClassInheritC'),
-                                        FileOccurrence::fromFilepath('originalA.php', 5)
-                                    ),
-                                    AstInherit::newExtends(
-                                        ClassLikeName::fromFQCN('ClassInheritD'),
-                                        FileOccurrence::fromFilepath('originalA.php', 6)
-                                    ),
-                                ]
-                            )
+                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('originalA.php', 3))
+                            ->withPath([
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('originalA.php', 4)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('originalA.php', 5)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('originalA.php', 6)),
+                            ])
                     ),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            ' ----------- ------------------------------------------- 
-  Reason      LayerA                                     
- ----------- ------------------------------------------- 
-  Violation   ClassA must not depend on ClassB (LayerB)  
-              ClassInheritD::6 ->                        
-              ClassInheritC::5 ->                        
-              ClassInheritB::4 ->                        
-              ClassInheritA::3 ->                        
-              OriginalB::12                              
-              originalA.php:12                           
- ----------- ------------------------------------------- 
+            '
+                ClassA must not depend on ClassB (LayerA on LayerB)
+                originalA.php::12
+                ClassInheritD::6 ->
+                ClassInheritC::5 ->
+                ClassInheritB::4 ->
+                ClassInheritA::3 ->
+                OriginalB::12
 
-
-Report:
-Violations: 1
-Skipped violations: 0
-Uncovered: 0
-Allowed: 0
-',
+                Report:
+                Violations: 1
+                Skipped violations: 0
+                Uncovered: 0
+                Allowed: 0
+            ',
         ];
 
         yield [
@@ -96,31 +78,28 @@ Allowed: 0
                     'LayerB'
                 ),
             ],
-            ' ----------- ------------------------------------------------- 
-  Reason      LayerA                                           
- ----------- ------------------------------------------------- 
-  Violation   OriginalA must not depend on OriginalB (LayerB)  
-              originalA.php:12                                 
- ----------- ------------------------------------------------- 
+            '
+                OriginalA must not depend on OriginalB (LayerA on LayerB)
+                originalA.php::12
 
-
-Report:
-Violations: 1
-Skipped violations: 0
-Uncovered: 0
-Allowed: 0
-',
+                Report:
+                Violations: 1
+                Skipped violations: 0
+                Uncovered: 0
+                Allowed: 0
+            ',
         ];
 
         yield [
             [],
             '
-Report:
-Violations: 0
-Skipped violations: 0
-Uncovered: 0
-Allowed: 0
-',
+
+                Report:
+                Violations: 0
+                Skipped violations: 0
+                Uncovered: 0
+                Allowed: 0
+            ',
         ];
 
         yield [
@@ -131,20 +110,15 @@ Allowed: 0
                     'LayerB'
                 ),
             ],
-            ' --------- ------------------------------------------------- 
-  Reason    LayerA                                           
- --------- ------------------------------------------------- 
-  Skipped   OriginalA must not depend on OriginalB (LayerB)  
-            originalA.php:12                                 
- --------- ------------------------------------------------- 
-
-
-Report:
-Violations: 0
-Skipped violations: 1
-Uncovered: 0
-Allowed: 0
-',
+            '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
+            originalA.php::12
+            
+            Report:
+            Violations: 0
+            Skipped violations: 1
+            Uncovered: 0
+            Allowed: 0
+            ',
         ];
 
         yield [
@@ -154,20 +128,16 @@ Allowed: 0
                     'LayerA'
                 ),
             ],
-            ' ----------- ------------------------------------------------- 
-  Reason      LayerA                                           
- ----------- ------------------------------------------------- 
-  Uncovered   OriginalA has uncovered dependency on OriginalB  
-              originalA.php:12                                 
- ----------- ------------------------------------------------- 
-
-
-Report:
-Violations: 0
-Skipped violations: 0
-Uncovered: 1
-Allowed: 0
-',
+            '
+                Uncovered dependencies:
+                OriginalA has uncovered dependency on OriginalB (LayerA)
+                originalA.php::12
+                Report:
+                Violations: 0
+                Skipped violations: 0
+                Uncovered: 1
+                Allowed: 0
+            ',
         ];
     }
 
@@ -189,7 +159,11 @@ Allowed: 0
             new OutputFormatterInput(['report-uncovered' => true])
         );
 
-        static::assertEquals($expectedOutput, $bufferedOutput->fetch());
+        $o = $bufferedOutput->fetch();
+        static::assertEquals(
+            $this->normalize($expectedOutput),
+            $this->normalize($o)
+        );
     }
 
     public function testGetOptions(): void
