@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Symfony\Style;
+use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
@@ -16,7 +18,9 @@ use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Tests\SensioLabs\Deptrac\EmptyEnv;
 
 class ConsoleOutputFormatterTest extends TestCase
@@ -142,7 +146,11 @@ class ConsoleOutputFormatterTest extends TestCase
      */
     public function testBasic(array $rules, string $expectedOutput): void
     {
-        $output = new BufferedOutput();
+        $bufferedOutput = new BufferedOutput();
+        $output = new SymfonyOutput(
+            $bufferedOutput,
+            new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
+        );
 
         $formatter = new ConsoleOutputFormatter(new EmptyEnv());
         $formatter->finish(
@@ -151,7 +159,7 @@ class ConsoleOutputFormatterTest extends TestCase
             new OutputFormatterInput(['report-uncovered' => true])
         );
 
-        $o = $output->fetch();
+        $o = $bufferedOutput->fetch();
         static::assertEquals(
             $this->normalize($expectedOutput),
             $this->normalize($o)

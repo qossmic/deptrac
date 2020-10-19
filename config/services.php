@@ -38,6 +38,7 @@ use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\JUnitOutputFormatter;
+use SensioLabs\Deptrac\OutputFormatter\TableOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\XMLOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\RulesetEngine;
@@ -121,6 +122,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(JUnitOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(TableOutputFormatter::class)
         ->tag('output_formatter');
     $services
         ->set(XMLOutputFormatter::class)

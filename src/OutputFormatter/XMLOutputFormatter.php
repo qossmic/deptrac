@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
-use Symfony\Component\Console\Output\OutputInterface;
 
 final class XMLOutputFormatter implements OutputFormatterInterface
 {
@@ -40,14 +40,14 @@ final class XMLOutputFormatter implements OutputFormatterInterface
      */
     public function finish(
         Context $context,
-        OutputInterface $output,
+        Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $xml = $this->createXml($context);
 
         if ($dumpXmlPath = $outputFormatterInput->getOption(self::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);
-            $output->writeln('<info>XML Report dumped to '.realpath($dumpXmlPath).'</info>');
+            $output->writeLineFormatted('<info>XML Report dumped to '.realpath($dumpXmlPath).'</info>');
         }
     }
 

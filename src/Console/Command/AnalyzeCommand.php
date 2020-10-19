@@ -7,6 +7,8 @@ namespace SensioLabs\Deptrac\Console\Command;
 use SensioLabs\Deptrac\Analyser;
 use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
 use SensioLabs\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
+use SensioLabs\Deptrac\Console\Symfony\Style;
+use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\OutputFormatterFactory;
 use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
@@ -15,6 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyzeCommand extends Command
@@ -67,12 +70,14 @@ class AnalyzeCommand extends Command
             throw SingleDepfileIsRequiredException::fromArgument($file);
         }
 
+        $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+
         $configuration = $this->configurationLoader->load($file);
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
 
         if (!$input->getOption('no-progress')) {
-            $this->dispatcher->addSubscriber(new ProgressSubscriber($output));
+            $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
 
         $this->printCollectViolations($output);
@@ -84,7 +89,7 @@ class AnalyzeCommand extends Command
             try {
                 $formatter->finish(
                     $context,
-                    $output,
+                    $symfonyOutput,
                     $this->formatterFactory->getOutputFormatterInput($formatter, $input)
                 );
             } catch (\Exception $ex) {

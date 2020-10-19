@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
-use Symfony\Component\Console\Output\OutputInterface;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
@@ -44,7 +44,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         Context $context,
-        OutputInterface $output,
+        Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         foreach ($context->all() as $rule) {
@@ -65,11 +65,11 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     /**
      * @param Violation|SkippedViolation $rule
      */
-    private function printViolation(Rule $rule, OutputInterface $output): void
+    private function printViolation(Rule $rule, Output $output): void
     {
         $dependency = $rule->getDependency();
 
-        $output->writeln(
+        $output->writeLineFormatted(
             sprintf(
                 '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
@@ -86,7 +86,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printInheritPath(OutputInterface $output, InheritDependency $dependency): void
+    private function printInheritPath(Output $output, InheritDependency $dependency): void
     {
         $buffer = [];
         $astInherit = $dependency->getInheritPath();
@@ -101,53 +101,53 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
-        $output->writeln(implode(" -> \n", $buffer));
+        $output->writeLineFormatted(implode(" -> \n", $buffer));
     }
 
-    private function printSummary(Context $context, OutputInterface $output): void
+    private function printSummary(Context $context, Output $output): void
     {
         $violationCount = \count($context->violations());
         $skippedViolationCount = \count($context->skippedViolations());
         $uncoveredCount = \count($context->uncovered());
         $allowedCount = \count($context->allowed());
 
-        $output->writeln('');
-        $output->writeln('Report:');
-        $output->writeln(
+        $output->writeLineFormatted('');
+        $output->writeLineFormatted('Report:');
+        $output->writeLineFormatted(
             sprintf(
-                '<%1$s>Violations: %2$d</%1$s>',
-                $violationCount > 0 ? 'error' : 'info',
+                '<fg=%s>Violations: %d</>',
+                $violationCount > 0 ? 'red' : 'default',
                 $violationCount
             )
         );
-        $output->writeln(
+        $output->writeLineFormatted(
             sprintf(
-                '<%1$s>Skipped violations: %2$d</%1$s>',
-                $skippedViolationCount > 0 ? 'comment' : 'info',
+                '<fg=%s>Skipped violations: %d</>',
+                $skippedViolationCount > 0 ? 'yellow' : 'default',
                 $skippedViolationCount
             )
         );
-        $output->writeln(
+        $output->writeLineFormatted(
             sprintf(
-                '<%1$s>Uncovered: %2$d</%1$s>',
-                $uncoveredCount > 0 ? 'comment' : 'info',
+                '<fg=%s>Uncovered: %d</>',
+                $uncoveredCount > 0 ? 'yellow' : 'default',
                 $uncoveredCount
             )
         );
-        $output->writeln(sprintf('<info>Allowed: %d</info>', $allowedCount));
+        $output->writeLineFormatted(sprintf('<info>Allowed: %d</info>', $allowedCount));
     }
 
-    private function printUncovered(Context $context, OutputInterface $output): void
+    private function printUncovered(Context $context, Output $output): void
     {
         $uncovered = $context->uncovered();
         if ([] === $uncovered) {
             return;
         }
 
-        $output->writeln('<comment>Uncovered dependencies:</comment>');
+        $output->writeLineFormatted('<comment>Uncovered dependencies:</comment>');
         foreach ($uncovered as $u) {
             $dependency = $u->getDependency();
-            $output->writeln(
+            $output->writeLineFormatted(
                 sprintf(
                     '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
                     $dependency->getClassLikeNameA()->toString(),
@@ -163,8 +163,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printFileOccurrence(OutputInterface $output, FileOccurrence $fileOccurrence): void
+    private function printFileOccurrence(Output $output, FileOccurrence $fileOccurrence): void
     {
-        $output->writeln($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
+        $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
     }
 }

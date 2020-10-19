@@ -39,6 +39,7 @@ this rule has been violated.
     1. [Custom Collectors](#custom-collectors)
 1. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
+    1. [Table Formatter](#table-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
     1. [GitHubActions Formatter](#githubactions-formatter)
@@ -630,6 +631,18 @@ Supported options:
 --formatter-console=                    to disable the console formatter, set this argument to "false" [default: true]
 --formatter-console-report-uncovered=   report uncovered dependencies [default: false]
 ```
+
+### Table Formatter
+
+The table formatter groups results by layers to its own table. It can be activated with `--formatter-table=true`.
+
+Supported options:
+
+```
+--formatter-table=                    to disable the table formatter, set this argument to "false" [default: true]
+--formatter-table-report-uncovered=   report uncovered dependencies [default: false]
+```
+
 
 
 ### Graphviz Formatter
