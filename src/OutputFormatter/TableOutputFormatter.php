@@ -26,7 +26,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::REPORT_UNCOVERED, 'report uncovered dependencies', false),
+            OutputFormatterOption::newValueOption(self::REPORT_UNCOVERED, 'report uncovered dependencies', false),
         ];
     }
 
