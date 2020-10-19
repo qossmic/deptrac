@@ -37,4 +37,23 @@ final class InvalidConfigurationExceptionTest extends TestCase
 
         self::assertSame($message, $exception->getMessage());
     }
+
+    public function testFromUnknownLayerNamesReturnsException(): void
+    {
+        $layerNames = [
+            'foo',
+            'bar',
+        ];
+
+        $exception = InvalidConfigurationException::fromUnknownLayerNames(...$layerNames);
+
+        natsort($layerNames);
+
+        $message = sprintf(
+            'Configuration can not reference rule sets with unknown layer names, got "%s" as unknown.',
+            implode('", "', $layerNames)
+        );
+
+        self::assertSame($message, $exception->getMessage());
+    }
 }

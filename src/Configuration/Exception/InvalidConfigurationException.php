@@ -15,4 +15,14 @@ final class InvalidConfigurationException extends \InvalidArgumentException
             implode('", "', $layerNames)
         ));
     }
+
+    public static function fromUnknownLayerNames(string ...$layerNames): self
+    {
+        natsort($layerNames);
+
+        return new self(sprintf(
+            'Configuration can not reference rule sets with unknown layer names, got "%s" as unknown.',
+            implode('", "', $layerNames)
+        ));
+    }
 }

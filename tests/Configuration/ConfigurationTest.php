@@ -57,6 +57,43 @@ class ConfigurationTest extends TestCase
         ]);
     }
 
+    public function testFromArrayRejectsRulesetUsingUnknownLayerNames(): void
+    {
+        $this->expectException(Exception\InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Configuration can not reference rule sets with unknown layer names, got "quux", "qux" as unknown.');
+
+        Configuration::fromArray([
+            'layers' => [
+                [
+                   'name' => 'foo',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'bar',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'baz',
+                   'collectors' => [],
+                ],
+            ],
+            'paths' => [
+                'src',
+            ],
+            'ruleset' => [
+                'foo' => [
+                    'bar',
+                ],
+                'bar' => null,
+                'baz' => [
+                    'bar',
+                    'qux',
+                ],
+                'quux' => null,
+            ],
+        ]);
+    }
+
     public function testFromArray(): void
     {
         $configuration = Configuration::fromArray([
@@ -66,7 +103,11 @@ class ConfigurationTest extends TestCase
                    'collectors' => [],
                 ],
                 [
-                   'name' => 'some_other_name',
+                   'name' => 'xx',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'yy',
                    'collectors' => [],
                 ],
             ],
@@ -79,15 +120,15 @@ class ConfigurationTest extends TestCase
                 'bar2',
             ],
             'ruleset' => [
-                'lala' => ['xx', 'yy'],
+                'some_name' => ['xx', 'yy'],
             ],
         ]);
 
-        static::assertCount(2, $configuration->getLayers());
+        static::assertCount(3, $configuration->getLayers());
         static::assertEquals('some_name', $configuration->getLayers()[0]->getName());
         static::assertEquals(['foo', 'bar'], $configuration->getPaths());
         static::assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
-        static::assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('lala'));
+        static::assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('some_name'));
         static::assertTrue($configuration->ignoreUncoveredInternalClasses());
     }
 
@@ -109,7 +150,7 @@ class ConfigurationTest extends TestCase
                 'bar',
             ],
             'ruleset' => [
-                'lala' => ['xx', 'yy'],
+                'some_name' => ['some_other_name'],
             ],
         ]);
 
