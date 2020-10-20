@@ -13,6 +13,9 @@ use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine;
 
+/**
+ * @covers \SensioLabs\Deptrac\RulesetEngine
+ */
 class RulesetEngineTest extends TestCase
 {
     private function createDependencies(array $fromTo): iterable
@@ -39,6 +42,16 @@ class RulesetEngineTest extends TestCase
                 'ClassB' => ['LayerB'],
             ],
             [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerB',
+                    'collectors' => [],
+                ],
+            ],
+            [
                 'LayerA' => [
                     'LayerB',
                 ],
@@ -55,6 +68,16 @@ class RulesetEngineTest extends TestCase
                 'ClassB' => ['LayerB'],
             ],
             [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerB',
+                    'collectors' => [],
+                ],
+            ],
+            [
                 'LayerA' => [],
                 'LayerB' => [],
             ],
@@ -69,6 +92,16 @@ class RulesetEngineTest extends TestCase
                 'ClassA' => ['LayerA'],
                 'ClassB' => ['LayerB'],
             ],
+            [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerB',
+                    'collectors' => [],
+                ],
+            ],
             [],
             1,
         ];
@@ -82,6 +115,7 @@ class RulesetEngineTest extends TestCase
                 'ClassB' => [],
             ],
             [],
+            [],
             0,
         ];
 
@@ -92,6 +126,16 @@ class RulesetEngineTest extends TestCase
             [
                 'ClassA' => ['LayerA'],
                 'ClassB' => ['LayerB'],
+            ],
+            [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerB',
+                    'collectors' => [],
+                ],
             ],
             [
                 'LayerA' => ['LayerB'],
@@ -106,6 +150,16 @@ class RulesetEngineTest extends TestCase
             [
                 'ClassA' => ['LayerA'],
                 'ClassB' => ['LayerB'],
+            ],
+            [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerB',
+                    'collectors' => [],
+                ],
             ],
             [
                 'LayerB' => ['LayerA'],
@@ -125,6 +179,24 @@ class RulesetEngineTest extends TestCase
                 'ClassC' => ['LayerC'],
                 'ClassD' => ['LayerD'],
             ],
+            [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerB',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerC',
+                    'collectors' => [],
+                ],
+                [
+                    'name' => 'LayerD',
+                    'collectors' => [],
+                ],
+            ],
             [],
             3,
         ];
@@ -136,6 +208,12 @@ class RulesetEngineTest extends TestCase
             [
                 'ClassA' => ['LayerA'],
             ],
+            [
+                [
+                    'name' => 'LayerA',
+                    'collectors' => [],
+                ],
+            ],
             [],
             0,
         ];
@@ -144,8 +222,13 @@ class RulesetEngineTest extends TestCase
     /**
      * @dataProvider dependencyProvider
      */
-    public function testProcess(array $dependenciesAsArray, array $classesInLayers, array $rulesetConfiguration, int $expectedCount): void
-    {
+    public function testProcess(
+        array $dependenciesAsArray,
+        array $classesInLayers,
+        array $layersConfiguration,
+        array $rulesetConfiguration,
+        int $expectedCount
+    ): void {
         $dependencyResult = new Result();
         foreach ($this->createDependencies($dependenciesAsArray) as $dep) {
             $dependencyResult->addDependency($dep);
@@ -157,7 +240,7 @@ class RulesetEngineTest extends TestCase
         }
 
         $configuration = Configuration::fromArray([
-            'layers' => [],
+            'layers' => $layersConfiguration,
             'paths' => [],
             'ruleset' => $rulesetConfiguration,
         ]);

@@ -68,6 +68,22 @@ class Configuration
             throw Exception\InvalidConfigurationException::fromDuplicateLayerNames(...$duplicateLayerNames);
         }
 
+        $layerNamesUsedInRuleset = array_unique(array_merge(
+            array_keys($options['ruleset']),
+            ...array_values(array_map(static function (?array $rules): array {
+                return (array) $rules;
+            }, $options['ruleset']))
+        ));
+
+        $unknownLayerNames = array_diff(
+            $layerNamesUsedInRuleset,
+            $layerNames
+        );
+
+        if ([] !== $unknownLayerNames) {
+            throw Exception\InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
+        }
+
         $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
         $this->paths = $options['paths'];
         $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
