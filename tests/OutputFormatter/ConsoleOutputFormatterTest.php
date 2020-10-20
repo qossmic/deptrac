@@ -27,7 +27,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {
-        static::assertEquals('console', (new ConsoleOutputFormatter(new EmptyEnv()))->getName());
+        self::assertEquals('console', (new ConsoleOutputFormatter(new EmptyEnv()))->getName());
     }
 
     public function basicDataProvider(): iterable
@@ -160,7 +160,7 @@ final class ConsoleOutputFormatterTest extends TestCase
         );
 
         $o = $bufferedOutput->fetch();
-        static::assertEquals(
+        self::assertEquals(
             $this->normalize($expectedOutput),
             $this->normalize($o)
         );
@@ -168,7 +168,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        static::assertCount(1, (new ConsoleOutputFormatter(new EmptyEnv()))->configureOptions());
+        self::assertCount(1, (new ConsoleOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 
     private function normalize($str)
@@ -178,6 +178,6 @@ final class ConsoleOutputFormatterTest extends TestCase
 
     public function testConsoleOutputFormatterIsEnabledByDefault(): void
     {
-        static::assertTrue((new ConsoleOutputFormatter(new EmptyEnv()))->enabledByDefault());
+        self::assertTrue((new ConsoleOutputFormatter(new EmptyEnv()))->enabledByDefault());
     }
 }

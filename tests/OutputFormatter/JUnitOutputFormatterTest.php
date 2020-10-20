@@ -27,14 +27,14 @@ final class JUnitOutputFormatterTest extends TestCase
 
     public function tearDown(): void
     {
-        if (file_exists(__DIR__.'/data/'.static::$actual_junit_report_file)) {
-            unlink(__DIR__.'/data/'.static::$actual_junit_report_file);
+        if (file_exists(__DIR__.'/data/'.self::$actual_junit_report_file)) {
+            unlink(__DIR__.'/data/'.self::$actual_junit_report_file);
         }
     }
 
     public function testGetName(): void
     {
-        static::assertSame('junit', (new JUnitOutputFormatter())->getName());
+        self::assertSame('junit', (new JUnitOutputFormatter())->getName());
     }
 
     public function basicDataProvider(): iterable
@@ -126,18 +126,18 @@ final class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $this->createSymfonyOutput(new BufferedOutput()),
-            new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.static::$actual_junit_report_file])
+            new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.self::$actual_junit_report_file])
         );
 
-        static::assertXmlFileEqualsXmlFile(
-            __DIR__.'/data/'.static::$actual_junit_report_file,
+        self::assertXmlFileEqualsXmlFile(
+            __DIR__.'/data/'.self::$actual_junit_report_file,
             __DIR__.'/data/'.$expectedOutputFile
         );
     }
 
     public function testGetOptions(): void
     {
-        static::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
+        self::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

@@ -21,7 +21,7 @@ final class ConsoleSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {
-        static::assertSame(
+        self::assertSame(
             [
                 PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
                 PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
@@ -43,7 +43,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
 
-        static::assertSame("Start to create an AstMap for 9999999 Files.\n", $output->fetch());
+        self::assertSame("Start to create an AstMap for 9999999 Files.\n", $output->fetch());
     }
 
     public function testOnPostCreateAstMapEventWithVerboseVerbosity(): void
@@ -53,7 +53,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
-        static::assertSame("AstMap created.\n", $output->fetch());
+        self::assertSame("AstMap created.\n", $output->fetch());
     }
 
     public function testOnAstFileAnalyzedEventWithVerboseVerbosity(): void
@@ -63,7 +63,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent(new \SplFileInfo('foo.php')));
 
-        static::assertSame("Parsing File foo.php\n", $output->fetch());
+        self::assertSame("Parsing File foo.php\n", $output->fetch());
     }
 
     public function testOnAstFileSyntaxErrorEvent(): void
@@ -75,7 +75,7 @@ final class ConsoleSubscriberTest extends TestCase
             new AstFileSyntaxErrorEvent(new \SplFileInfo('foo.php'), 'Invalid')
         );
 
-        static::assertSame("\nSyntax Error on File foo.php\nInvalid\n\n", $output->fetch());
+        self::assertSame("\nSyntax Error on File foo.php\nInvalid\n\n", $output->fetch());
     }
 
     public function testOnPreDependencyEmit(): void
@@ -85,7 +85,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
 
-        static::assertSame("start emitting dependencies \"emitter-name\"\n", $output->fetch());
+        self::assertSame("start emitting dependencies \"emitter-name\"\n", $output->fetch());
     }
 
     public function testOnPostDependencyEmit(): void
@@ -95,7 +95,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostDependencyEmit(new PostEmitEvent());
 
-        static::assertSame("end emitting dependencies\n", $output->fetch());
+        self::assertSame("end emitting dependencies\n", $output->fetch());
     }
 
     public function testOnPreDependencyFlatten(): void
@@ -105,7 +105,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
 
-        static::assertSame("start flatten dependencies\n", $output->fetch());
+        self::assertSame("start flatten dependencies\n", $output->fetch());
     }
 
     public function testOnPostDependencyFlatten(): void
@@ -115,6 +115,6 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostDependencyFlatten(new PostFlattenEvent());
 
-        static::assertSame("end flatten dependencies\n", $output->fetch());
+        self::assertSame("end flatten dependencies\n", $output->fetch());
     }
 }

@@ -24,7 +24,7 @@ final class GraphVizOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {
-        static::assertEquals('graphviz', (new GraphVizOutputFormatter())->getName());
+        self::assertEquals('graphviz', (new GraphVizOutputFormatter())->getName());
     }
 
     public function testFinish(): void
@@ -51,8 +51,8 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        static::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
-        static::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
+        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
     }

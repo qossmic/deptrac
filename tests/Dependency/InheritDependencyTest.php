@@ -26,10 +26,10 @@ final class InheritDependencyTest extends TestCase
             $astInherit = AstInherit::newExtends($classLikeNameB, $fileOccurrence)
         );
 
-        static::assertSame($classLikeNameA, $dependency->getClassLikeNameA());
-        static::assertSame($classLikeNameB, $dependency->getClassLikeNameB());
-        static::assertSame(1, $dependency->getFileOccurrence()->getLine());
-        static::assertSame($dep, $dependency->getOriginalDependency());
-        static::assertSame($astInherit, $dependency->getInheritPath());
+        self::assertSame($classLikeNameA, $dependency->getClassLikeNameA());
+        self::assertSame($classLikeNameB, $dependency->getClassLikeNameB());
+        self::assertSame(1, $dependency->getFileOccurrence()->getLine());
+        self::assertSame($dep, $dependency->getOriginalDependency());
+        self::assertSame($astInherit, $dependency->getInheritPath());
     }
 }

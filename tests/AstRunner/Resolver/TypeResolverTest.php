@@ -43,7 +43,7 @@ final class TypeResolverTest extends TestCase
         $typeResolver = new TypeResolver();
         $resolvedTypes = $typeResolver->resolvePHPStanDocParserType($typeNode, new TypeScope('\\Test\\'));
 
-        static::assertSame($types, $resolvedTypes);
+        self::assertSame($types, $resolvedTypes);
     }
 
     public function docBlockProvider(): iterable

@@ -54,7 +54,7 @@ final class AstMapGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap(__DIR__.'/Fixtures/BasicDependency/BasicDependencyClass.php');
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassA::9 (Extends)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::9 (Implements)',
@@ -62,7 +62,7 @@ final class AstMapGeneratorTest extends TestCase
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyClassB::class)))
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceA::13 (Implements)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassInterfaceB::13 (Implements)',
@@ -75,22 +75,22 @@ final class AstMapGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap(__DIR__.'/Fixtures/BasicDependency/BasicDependencyTraits.php');
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyTraitA::class)))
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyTraitB::class)))
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::7 (Uses)'],
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyTraitC::class)))
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::10 (Uses)',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitB::11 (Uses)',
@@ -98,7 +98,7 @@ final class AstMapGeneratorTest extends TestCase
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyTraitD::class)))
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA::15 (Uses)'],
             $this->getInheritsAsString($astMap->getClassReferenceByClassName(ClassLikeName::fromFQCN(BasicDependencyTraitClass::class)))
         );
@@ -108,7 +108,7 @@ final class AstMapGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap(__DIR__.'/Fixtures/Issue319.php');
 
-        static::assertSame(
+        self::assertSame(
             [
                 'Foo\Exception',
                 'Foo\RuntimeException',

@@ -30,11 +30,11 @@ final class ResolverTest extends TestCase
         );
 
         $inheritanceFlatter = $this->createMock(InheritanceFlatter::class);
-        $inheritanceFlatter->expects(static::once())->method('flattenDependencies');
+        $inheritanceFlatter->expects(self::once())->method('flattenDependencies');
 
         $emitter = $this->createMock(DependencyEmitterInterface::class);
         $emitter->method('getName')->willReturn('emitter');
-        $emitter->expects(static::once())->method('applyDependencies');
+        $emitter->expects(self::once())->method('applyDependencies');
 
         $resolver = new Resolver($dispatcher, $inheritanceFlatter, [$emitter]);
         $resolver->resolve($astMap);

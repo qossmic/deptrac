@@ -23,7 +23,7 @@ final class ConfigurationCollectorTest extends TestCase
             'abc' => 'def',
         ]);
 
-        static::assertEquals('foo', $configurationCollector->getType());
-        static::assertEquals($args, $configurationCollector->getArgs());
+        self::assertEquals('foo', $configurationCollector->getType());
+        self::assertEquals($args, $configurationCollector->getArgs());
     }
 }

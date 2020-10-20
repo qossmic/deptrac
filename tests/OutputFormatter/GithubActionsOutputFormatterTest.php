@@ -23,7 +23,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 {
     public function testGetName()
     {
-        static::assertEquals('github-actions', (new GithubActionsOutputFormatter())->getName());
+        self::assertEquals('github-actions', (new GithubActionsOutputFormatter())->getName());
     }
 
     /**
@@ -40,7 +40,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new OutputFormatterInput(['report-uncovered' => true])
         );
 
-        static::assertEquals($expectedOutput, $bufferedOutput->fetch());
+        self::assertEquals($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function finishProvider()
@@ -89,12 +89,12 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
     public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
     {
-        static::assertFalse((new GithubActionsOutputFormatter(new EmptyEnv()))->enabledByDefault());
+        self::assertFalse((new GithubActionsOutputFormatter(new EmptyEnv()))->enabledByDefault());
     }
 
     public function testGetOptions(): void
     {
-        static::assertCount(1, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
+        self::assertCount(1, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

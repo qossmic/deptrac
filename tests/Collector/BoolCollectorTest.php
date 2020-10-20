@@ -28,7 +28,7 @@ final class BoolCollectorTest extends TestCase
 
     public function testType(): void
     {
-        static::assertEquals('bool', (new BoolCollector())->getType());
+        self::assertEquals('bool', (new BoolCollector())->getType());
     }
 
     private function getCalculatorMock(bool $returns)
@@ -38,9 +38,9 @@ final class BoolCollectorTest extends TestCase
             ->method('satisfy')
             ->with(
                 ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
-                static::isInstanceOf(AstClassReference::class),
-                static::isInstanceOf(AstMap::class),
-                static::isInstanceOf(Registry::class)
+                self::isInstanceOf(AstClassReference::class),
+                self::isInstanceOf(AstMap::class),
+                self::isInstanceOf(Registry::class)
             )
             ->willReturn($returns);
 
@@ -179,6 +179,6 @@ final class BoolCollectorTest extends TestCase
             $collectorFactory->reveal()
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 }

@@ -124,12 +124,12 @@ final class ConfigurationTest extends TestCase
             ],
         ]);
 
-        static::assertCount(3, $configuration->getLayers());
-        static::assertEquals('some_name', $configuration->getLayers()[0]->getName());
-        static::assertEquals(['foo', 'bar'], $configuration->getPaths());
-        static::assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
-        static::assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('some_name'));
-        static::assertTrue($configuration->ignoreUncoveredInternalClasses());
+        self::assertCount(3, $configuration->getLayers());
+        self::assertEquals('some_name', $configuration->getLayers()[0]->getName());
+        self::assertEquals(['foo', 'bar'], $configuration->getPaths());
+        self::assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
+        self::assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('some_name'));
+        self::assertTrue($configuration->ignoreUncoveredInternalClasses());
     }
 
     public function testExcludedFilesAreOptional(): void
@@ -154,7 +154,7 @@ final class ConfigurationTest extends TestCase
             ],
         ]);
 
-        static::assertSame([], $configuration->getExcludeFiles());
+        self::assertSame([], $configuration->getExcludeFiles());
     }
 
     public function testFromWithNullExcludeFiles(): void
@@ -166,7 +166,7 @@ final class ConfigurationTest extends TestCase
             'ruleset' => [],
         ]);
 
-        static::assertEquals([], $configuration->getExcludeFiles());
+        self::assertEquals([], $configuration->getExcludeFiles());
     }
 
     public function testSkipViolations(): void
@@ -184,8 +184,8 @@ final class ConfigurationTest extends TestCase
             ],
         ]);
 
-        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('BarClass')));
-        static::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('AnotherClass')));
+        self::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('BarClass')));
+        self::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('AnotherClass')));
     }
 
     public function testIgnoreUncoveredInternalClassesSetToFalse(): void
@@ -197,6 +197,6 @@ final class ConfigurationTest extends TestCase
             'ignore_uncovered_internal_classes' => false,
         ]);
 
-        static::assertFalse($configuration->ignoreUncoveredInternalClasses());
+        self::assertFalse($configuration->ignoreUncoveredInternalClasses());
     }
 }

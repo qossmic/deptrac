@@ -14,7 +14,7 @@ final class CacheableFileSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {
-        static::assertSame(
+        self::assertSame(
             [
                 PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
                 PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
@@ -26,7 +26,7 @@ final class CacheableFileSubscriberTest extends TestCase
     public function testOnPreCreateAstMapEvent(): void
     {
         $cache = $this->createMock(AstFileReferenceFileCache::class);
-        $cache->expects(static::once())->method('load');
+        $cache->expects(self::once())->method('load');
 
         (new CacheableFileSubscriber($cache))->onPreCreateAstMapEvent(new PreCreateAstMapEvent(1));
     }
@@ -34,7 +34,7 @@ final class CacheableFileSubscriberTest extends TestCase
     public function testOnPostCreateAstMapEvent(): void
     {
         $cache = $this->createMock(AstFileReferenceFileCache::class);
-        $cache->expects(static::once())->method('write');
+        $cache->expects(self::once())->method('write');
 
         (new CacheableFileSubscriber($cache))->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
     }

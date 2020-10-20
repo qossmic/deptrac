@@ -19,7 +19,7 @@ final class ClassNameLayerResolverCacheDecoratorTest extends TestCase
 
         $decorator = new ClassNameLayerResolverCacheDecorator($decorated->reveal());
 
-        static::assertEquals(['bar'], $decorator->getLayersByClassName($classLikeName));
-        static::assertEquals(['bar'], $decorator->getLayersByClassName($classLikeName));
+        self::assertEquals(['bar'], $decorator->getLayersByClassName($classLikeName));
+        self::assertEquals(['bar'], $decorator->getLayersByClassName($classLikeName));
     }
 }

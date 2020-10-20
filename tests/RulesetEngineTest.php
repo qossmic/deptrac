@@ -251,7 +251,7 @@ final class RulesetEngineTest extends TestCase
             $configuration
         );
 
-        static::assertCount($expectedCount, $context->violations());
+        self::assertCount($expectedCount, $context->violations());
     }
 
     public function provideTestGetSkippedViolations(): array
@@ -319,7 +319,7 @@ final class RulesetEngineTest extends TestCase
             $configuration
         );
 
-        static::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
+        self::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
     }
 
     public function provideTestIgnoreUncoveredInternalClasses(): iterable
@@ -374,6 +374,6 @@ final class RulesetEngineTest extends TestCase
             $configuration
         );
 
-        static::assertCount($expectedUncoveredCount, $context->uncovered());
+        self::assertCount($expectedUncoveredCount, $context->uncovered());
     }
 }

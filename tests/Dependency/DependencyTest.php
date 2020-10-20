@@ -18,9 +18,9 @@ final class DependencyTest extends TestCase
             ClassLikeName::fromFQCN('b'),
             FileOccurrence::fromFilepath('/foo.php', 23)
         );
-        static::assertSame('a', $dependency->getClassLikeNameA()->toString());
-        static::assertSame('/foo.php', $dependency->getFileOccurrence()->getFilepath());
-        static::assertSame(23, $dependency->getFileOccurrence()->getLine());
-        static::assertSame('b', $dependency->getClassLikeNameB()->toString());
+        self::assertSame('a', $dependency->getClassLikeNameA()->toString());
+        self::assertSame('/foo.php', $dependency->getFileOccurrence()->getFilepath());
+        self::assertSame(23, $dependency->getFileOccurrence()->getLine());
+        self::assertSame('b', $dependency->getClassLikeNameB()->toString());
     }
 }

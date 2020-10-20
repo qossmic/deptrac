@@ -74,6 +74,6 @@ final class InheritanceFlatterTest extends TestCase
             }
         );
 
-        static::assertCount(2, $inheritDeps);
+        self::assertCount(2, $inheritDeps);
     }
 }

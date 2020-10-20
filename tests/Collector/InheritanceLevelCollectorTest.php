@@ -46,11 +46,11 @@ final class InheritanceLevelCollectorTest extends TestCase
             $this->prophesize(Registry::class)->reveal()
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 
     public function testType(): void
     {
-        static::assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
+        self::assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
     }
 }

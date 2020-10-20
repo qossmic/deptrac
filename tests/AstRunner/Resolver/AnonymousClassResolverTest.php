@@ -29,27 +29,27 @@ final class AnonymousClassResolverTest extends TestCase
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 
-        static::assertCount(3, $astClassReferences);
-        static::assertCount(0, $astClassReferences[0]->getDependencies());
-        static::assertCount(0, $astClassReferences[1]->getDependencies());
-        static::assertCount(2, $astClassReferences[2]->getDependencies());
+        self::assertCount(3, $astClassReferences);
+        self::assertCount(0, $astClassReferences[0]->getDependencies());
+        self::assertCount(0, $astClassReferences[1]->getDependencies());
+        self::assertCount(2, $astClassReferences[2]->getDependencies());
 
         $dependencies = $astClassReferences[2]->getDependencies();
 
-        static::assertSame(
+        self::assertSame(
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
-        static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
-        static::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
-        static::assertSame('anonymous_class_extends', $dependencies[0]->getType());
+        self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
+        self::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
+        self::assertSame('anonymous_class_extends', $dependencies[0]->getType());
 
-        static::assertSame(
+        self::assertSame(
             'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\InterfaceC',
             $dependencies[1]->getClassLikeName()->toString()
         );
-        static::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());
-        static::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());
-        static::assertSame('anonymous_class_implements', $dependencies[1]->getType());
+        self::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());
+        self::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());
+        self::assertSame('anonymous_class_implements', $dependencies[1]->getType());
     }
 }

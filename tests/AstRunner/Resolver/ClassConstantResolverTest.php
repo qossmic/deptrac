@@ -29,17 +29,17 @@ final class ClassConstantResolverTest extends TestCase
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 
-        static::assertCount(2, $astClassReferences);
-        static::assertCount(0, $astClassReferences[0]->getDependencies());
-        static::assertCount(1, $astClassReferences[1]->getDependencies());
+        self::assertCount(2, $astClassReferences);
+        self::assertCount(0, $astClassReferences[0]->getDependencies());
+        self::assertCount(1, $astClassReferences[1]->getDependencies());
 
         $dependencies = $astClassReferences[1]->getDependencies();
-        static::assertSame(
+        self::assertSame(
             'Tests\SensioLabs\Deptrac\Integration\fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
-        static::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
-        static::assertSame(15, $dependencies[0]->getFileOccurrence()->getLine());
-        static::assertSame('const', $dependencies[0]->getType());
+        self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
+        self::assertSame(15, $dependencies[0]->getFileOccurrence()->getLine());
+        self::assertSame('const', $dependencies[0]->getType());
     }
 }

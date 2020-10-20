@@ -115,7 +115,7 @@ final class ClassNameLayerResolverTest extends TestCase
             $collectorRegistry->reveal()
         );
 
-        static::assertEquals(
+        self::assertEquals(
             $expectedLayers,
             $resolver->getLayersByClassName(ClassLikeName::fromFQCN('classA'))
         );

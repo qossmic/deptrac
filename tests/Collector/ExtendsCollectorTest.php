@@ -13,7 +13,7 @@ final class ExtendsCollectorTest extends TestCase
 {
     public function testGetType(): void
     {
-        static::assertEquals('extends', (new ExtendsCollector())->getType());
+        self::assertEquals('extends', (new ExtendsCollector())->getType());
     }
 
     public function dataProviderSatisfy(): iterable
@@ -65,6 +65,6 @@ final class ExtendsCollectorTest extends TestCase
             $this->createMock(Registry::class)
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 }

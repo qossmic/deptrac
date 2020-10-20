@@ -20,7 +20,7 @@ final class ClassNameCollectorTest extends TestCase
 
     public function testType(): void
     {
-        static::assertEquals('className', (new ClassNameCollector())->getType());
+        self::assertEquals('className', (new ClassNameCollector())->getType());
     }
 
     /**
@@ -35,7 +35,7 @@ final class ClassNameCollectorTest extends TestCase
             $this->prophesize(Registry::class)->reveal()
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 
     public function testWrongRegexParam(): void

@@ -28,7 +28,7 @@ final class PathNameFilterIteratorTest extends TestCase
         sort($values);
         sort($resultArray);
 
-        static::assertEquals($resultArray, array_values($values));
+        self::assertEquals($resultArray, array_values($values));
     }
 
     public function getTestFilterData(): array

@@ -19,7 +19,7 @@ final class ProgressSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {
-        static::assertSame(
+        self::assertSame(
             [
                 PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
                 PostCreateAstMapEvent::class => ['onPostCreateAstMapEvent', 1],
@@ -45,7 +45,7 @@ final class ProgressSubscriberTest extends TestCase
 
 OUT;
 
-        static::assertSame($expectedOutput, $bufferedOutput->fetch());
+        self::assertSame($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function testOnPostCreateAstMapEvent(): void
@@ -63,7 +63,7 @@ OUT;
 
 OUT;
 
-        static::assertSame($expectedOutput, $formatter->fetch());
+        self::assertSame($expectedOutput, $formatter->fetch());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

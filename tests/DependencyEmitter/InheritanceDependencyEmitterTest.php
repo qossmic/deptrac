@@ -13,7 +13,7 @@ final class InheritanceDependencyEmitterTest extends TestCase
 
     public function testGetName(): void
     {
-        static::assertEquals('InheritanceDependencyEmitter', (new InheritanceDependencyEmitter())->getName());
+        self::assertEquals('InheritanceDependencyEmitter', (new InheritanceDependencyEmitter())->getName());
     }
 
     public function testApplyDependencies(): void
@@ -23,10 +23,10 @@ final class InheritanceDependencyEmitterTest extends TestCase
             new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
         );
 
-        static::assertCount(4, $deps);
-        static::assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
-        static::assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
-        static::assertContains('Foo\Bar:6 on BarInterface2', $deps);
-        static::assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
+        self::assertCount(4, $deps);
+        self::assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
+        self::assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
+        self::assertContains('Foo\Bar:6 on BarInterface2', $deps);
+        self::assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
     }
 }
