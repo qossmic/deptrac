@@ -12,7 +12,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class InheritanceLevelCollectorTest extends TestCase
+final class InheritanceLevelCollectorTest extends TestCase
 {
     public function dataTests(): array
     {

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\PathNameFilterIterator;
 use SplFileInfo;
 
-class PathNameFilterIteratorTest extends TestCase
+final class PathNameFilterIteratorTest extends TestCase
 {
     /**
      * @dataProvider getTestFilterData

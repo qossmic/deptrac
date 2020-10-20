@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\Collector\InheritsCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class InheritsCollectorTest extends TestCase
+final class InheritsCollectorTest extends TestCase
 {
     public function testGetType(): void
     {

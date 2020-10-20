@@ -33,7 +33,7 @@ use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceC;
 
-class AstMapFlattenGeneratorTest extends TestCase
+final class AstMapFlattenGeneratorTest extends TestCase
 {
     use ArrayAsserts;
 

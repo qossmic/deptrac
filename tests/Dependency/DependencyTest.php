@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 
-class DependencyTest extends TestCase
+final class DependencyTest extends TestCase
 {
     public function testGetSet(): void
     {

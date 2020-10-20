@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 
-class NikicPhpParserTest extends TestCase
+final class NikicPhpParserTest extends TestCase
 {
     /** @var NikicPhpParser */
     private $parser;

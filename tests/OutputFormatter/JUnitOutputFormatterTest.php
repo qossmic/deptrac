@@ -21,7 +21,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class JUnitOutputFormatterTest extends TestCase
+final class JUnitOutputFormatterTest extends TestCase
 {
     private static $actual_junit_report_file = 'actual-junit-report.xml';
 

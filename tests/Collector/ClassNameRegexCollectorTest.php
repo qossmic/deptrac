@@ -11,7 +11,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class ClassNameRegexCollectorTest extends TestCase
+final class ClassNameRegexCollectorTest extends TestCase
 {
     public function dataProviderSatisfy(): iterable
     {

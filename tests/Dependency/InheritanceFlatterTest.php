@@ -15,7 +15,7 @@ use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Dependency\Result;
 
-class InheritanceFlatterTest extends TestCase
+final class InheritanceFlatterTest extends TestCase
 {
     private function getAstClassReference($className)
     {

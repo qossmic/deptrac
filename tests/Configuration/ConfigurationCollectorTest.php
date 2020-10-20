@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
-class ConfigurationCollectorTest extends TestCase
+final class ConfigurationCollectorTest extends TestCase
 {
     public function testInvalidFromArray(): void
     {

@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeScope;
 
-class TypeResolverTest extends TestCase
+final class TypeResolverTest extends TestCase
 {
     /**
      * @var Lexer

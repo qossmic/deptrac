@@ -15,7 +15,7 @@ use SensioLabs\Deptrac\Dependency\Resolver;
 use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class ResolverTest extends TestCase
+final class ResolverTest extends TestCase
 {
     public function testResolve(): void
     {

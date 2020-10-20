@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
-class ConfigurationLayerTest extends TestCase
+final class ConfigurationLayerTest extends TestCase
 {
     public function testFromArray(): void
     {

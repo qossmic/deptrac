@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 
-class InheritanceDependencyEmitterTest extends TestCase
+final class InheritanceDependencyEmitterTest extends TestCase
 {
     use EmitterTrait;
 

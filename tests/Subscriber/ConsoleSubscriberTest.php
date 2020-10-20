@@ -17,7 +17,7 @@ use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ConsoleSubscriberTest extends TestCase
+final class ConsoleSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {

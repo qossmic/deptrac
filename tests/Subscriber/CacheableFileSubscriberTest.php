@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber;
 
-class CacheableFileSubscriberTest extends TestCase
+final class CacheableFileSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {

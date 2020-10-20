@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ProgressSubscriberTest extends TestCase
+final class ProgressSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {

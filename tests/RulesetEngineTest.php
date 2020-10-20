@@ -16,7 +16,7 @@ use SensioLabs\Deptrac\RulesetEngine;
 /**
  * @covers \SensioLabs\Deptrac\RulesetEngine
  */
-class RulesetEngineTest extends TestCase
+final class RulesetEngineTest extends TestCase
 {
     private function createDependencies(array $fromTo): iterable
     {

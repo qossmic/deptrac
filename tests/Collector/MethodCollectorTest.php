@@ -13,7 +13,7 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\MethodCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class MethodCollectorTest extends TestCase
+final class MethodCollectorTest extends TestCase
 {
     public function testType(): void
     {

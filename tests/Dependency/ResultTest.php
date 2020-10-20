@@ -12,7 +12,7 @@ use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Dependency\Result;
 
-class ResultTest extends TestCase
+final class ResultTest extends TestCase
 {
     public function testAddDependency(): void
     {

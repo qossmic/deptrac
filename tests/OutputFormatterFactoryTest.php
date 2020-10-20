@@ -11,7 +11,7 @@ use SensioLabs\Deptrac\OutputFormatterFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
-class OutputFormatterFactoryTest extends TestCase
+final class OutputFormatterFactoryTest extends TestCase
 {
     private function createNamedFormatter($name)
     {

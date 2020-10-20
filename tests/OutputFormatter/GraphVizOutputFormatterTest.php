@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class GraphVizOutputFormatterTest extends TestCase
+final class GraphVizOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {

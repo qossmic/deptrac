@@ -12,7 +12,7 @@ use SensioLabs\Deptrac\Configuration\Exception;
 /**
  * @covers \SensioLabs\Deptrac\Configuration\Configuration
  */
-class ConfigurationTest extends TestCase
+final class ConfigurationTest extends TestCase
 {
     public function testFromArrayRejectsLayersWithDuplicateNames(): void
     {

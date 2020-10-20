@@ -2,8 +2,8 @@
 
 namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures;
 
-class FixtureBasicInheritanceA { }
-class FixtureBasicInheritanceB extends FixtureBasicInheritanceA { }
-class FixtureBasicInheritanceC extends FixtureBasicInheritanceB { }
-class FixtureBasicInheritanceD extends FixtureBasicInheritanceC { }
-class FixtureBasicInheritanceE extends FixtureBasicInheritanceD { }
+final class FixtureBasicInheritanceA { }
+final class FixtureBasicInheritanceB extends FixtureBasicInheritanceA { }
+final class FixtureBasicInheritanceC extends FixtureBasicInheritanceB { }
+final class FixtureBasicInheritanceD extends FixtureBasicInheritanceC { }
+final class FixtureBasicInheritanceE extends FixtureBasicInheritanceD { }

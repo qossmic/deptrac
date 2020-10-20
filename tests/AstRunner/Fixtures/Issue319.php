@@ -9,7 +9,7 @@ use LogicException;
 use function get_class;
 use const PHP_EOL;
 
-class Issue319
+final class Issue319
 {
     public function getClassName(): string
     {

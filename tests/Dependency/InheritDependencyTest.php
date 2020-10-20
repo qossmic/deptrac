@@ -11,7 +11,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Dependency\Dependency;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 
-class InheritDependencyTest extends TestCase
+final class InheritDependencyTest extends TestCase
 {
     public function testGetSet(): void
     {

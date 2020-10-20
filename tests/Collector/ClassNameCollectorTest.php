@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class ClassNameCollectorTest extends TestCase
+final class ClassNameCollectorTest extends TestCase
 {
     public function dataProviderSatisfy(): iterable
     {

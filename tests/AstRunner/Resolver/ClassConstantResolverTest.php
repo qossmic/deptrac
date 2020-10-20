@@ -13,7 +13,7 @@ use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
-class ClassConstantResolverTest extends TestCase
+final class ClassConstantResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {

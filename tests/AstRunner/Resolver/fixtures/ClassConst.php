@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\SensioLabs\Deptrac\Integration\fixtures;
 
-class ClassA
+final class ClassA
 {
 }
 
-class ClassB
+final class ClassB
 {
     public function foo()
     {

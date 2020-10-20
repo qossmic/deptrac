@@ -10,7 +10,7 @@ use SensioLabs\Deptrac\Collector\ClassNameCollector;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class RegistryTest extends TestCase
+final class RegistryTest extends TestCase
 {
     public function testGetCollector(): void
     {

@@ -9,7 +9,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
 use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
 
-class ClassNameLayerResolverCacheDecoratorTest extends TestCase
+final class ClassNameLayerResolverCacheDecoratorTest extends TestCase
 {
     public function testGetLayersByClassName(): void
     {

@@ -26,7 +26,7 @@ use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDep
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitClass;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitD;
 
-class AstMapGeneratorTest extends TestCase
+final class AstMapGeneratorTest extends TestCase
 {
     use ArrayAsserts;
 

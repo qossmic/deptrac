@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Tests\SensioLabs\Deptrac\EmptyEnv;
 
-class GithubActionsOutputFormatterTest extends TestCase
+final class GithubActionsOutputFormatterTest extends TestCase
 {
     public function testGetName()
     {

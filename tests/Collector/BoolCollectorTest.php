@@ -11,7 +11,7 @@ use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\CollectorInterface;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class BoolCollectorTest extends TestCase
+final class BoolCollectorTest extends TestCase
 {
     public function testSatisfy(): void
     {

@@ -13,7 +13,7 @@ use SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
-class AnnotationDependencyResolverTest extends TestCase
+final class AnnotationDependencyResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {

@@ -22,7 +22,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class XMLOutputFormatterTest extends TestCase
+final class XMLOutputFormatterTest extends TestCase
 {
     private static $actual_xml_report_file = 'actual-deptrac-report.xml';
 

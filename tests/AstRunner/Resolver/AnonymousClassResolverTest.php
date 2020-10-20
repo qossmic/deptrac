@@ -13,7 +13,7 @@ use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SplFileInfo;
 
-class AnonymousClassResolverTest extends TestCase
+final class AnonymousClassResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {

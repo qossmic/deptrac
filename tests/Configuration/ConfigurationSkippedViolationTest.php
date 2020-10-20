@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
 
-class ConfigurationSkippedViolationTest extends TestCase
+final class ConfigurationSkippedViolationTest extends TestCase
 {
     public function testFromArray(): void
     {
