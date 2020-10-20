@@ -3,7 +3,7 @@
 namespace Foo;
 use SomeUse;
 
-class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
+final class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
 
     use SomeTrait;
 

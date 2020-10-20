@@ -33,7 +33,7 @@ use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB;
 use Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceC;
 
-class AstMapFlattenGeneratorTest extends TestCase
+final class AstMapFlattenGeneratorTest extends TestCase
 {
     use ArrayAsserts;
 
@@ -69,22 +69,22 @@ class AstMapFlattenGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap('FixtureBasicInheritance');
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(FixtureBasicInheritanceA::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(FixtureBasicInheritanceB::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA::6 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends))'],
             $this->getInheritedInherits(FixtureBasicInheritanceC::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA::6 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceC::8 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends))',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceC::8 (Extends))',
@@ -92,7 +92,7 @@ class AstMapFlattenGeneratorTest extends TestCase
             $this->getInheritedInherits(FixtureBasicInheritanceD::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA::6 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceD::9 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceC::8 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends))',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB::7 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceD::9 (Extends) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceC::8 (Extends))',
@@ -106,22 +106,22 @@ class AstMapFlattenGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap('FixtureBasicInheritanceInterfaces');
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceA::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceB::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements))'],
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceC::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements))',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements))',
@@ -129,7 +129,7 @@ class AstMapFlattenGeneratorTest extends TestCase
             $this->getInheritedInherits(FixtureBasicInheritanceInterfaceD::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceA::6 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements))',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceB::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceD::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceInterfaceC::8 (Implements))',
@@ -143,22 +143,22 @@ class AstMapFlattenGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap('MultipleInheritanceInterfaces');
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(MultipleInteritanceA1::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(MultipleInteritanceA2::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(MultipleInteritanceA::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA2::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
@@ -166,7 +166,7 @@ class AstMapFlattenGeneratorTest extends TestCase
             $this->getInheritedInherits(MultipleInteritanceB::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::7 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Implements) -> Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA::8 (Implements))',
                 'Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceA1::8 (Implements) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\MultipleInteritanceB::9 (Implements))',
@@ -181,17 +181,17 @@ class AstMapFlattenGeneratorTest extends TestCase
     {
         $astMap = $this->getAstMap('FixtureBasicInheritanceWithNoise');
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(FixtureBasicInheritanceWithNoiseA::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             [],
             $this->getInheritedInherits(FixtureBasicInheritanceWithNoiseB::class, $astMap)
         );
 
-        static::assertArrayValuesEquals(
+        self::assertArrayValuesEquals(
             ['Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseA::18 (Extends) (path: Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceWithNoiseB::19 (Extends))'],
             $this->getInheritedInherits(FixtureBasicInheritanceWithNoiseC::class, $astMap)
         );

@@ -11,7 +11,7 @@ use SensioLabs\Deptrac\OutputFormatterFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
-class OutputFormatterFactoryTest extends TestCase
+final class OutputFormatterFactoryTest extends TestCase
 {
     private function createNamedFormatter($name)
     {
@@ -28,8 +28,8 @@ class OutputFormatterFactoryTest extends TestCase
             $formatter2 = $this->createNamedFormatter('formatter2'),
         ]);
 
-        static::assertSame($formatter1, $formatterFactory->getFormatterByName('formatter1'));
-        static::assertSame($formatter2, $formatterFactory->getFormatterByName('formatter2'));
+        self::assertSame($formatter1, $formatterFactory->getFormatterByName('formatter1'));
+        self::assertSame($formatter2, $formatterFactory->getFormatterByName('formatter2'));
     }
 
     public function testGetFormatterOptions(): void
@@ -63,23 +63,23 @@ class OutputFormatterFactoryTest extends TestCase
         /** @var $arguments InputArgument[] */
         $arguments = $formatterFactory->getFormatterOptions('foo1');
 
-        static::assertEquals('formatter-foo1', $arguments[0]->getName());
+        self::assertEquals('formatter-foo1', $arguments[0]->getName());
 
-        static::assertEquals('formatter-foo1-f1-n1', $arguments[1]->getName());
-        static::assertEquals('f1-n1-default', $arguments[1]->getDefault());
-        static::assertEquals('f1-n1-desc', $arguments[1]->getDescription());
+        self::assertEquals('formatter-foo1-f1-n1', $arguments[1]->getName());
+        self::assertEquals('f1-n1-default', $arguments[1]->getDefault());
+        self::assertEquals('f1-n1-desc', $arguments[1]->getDescription());
 
-        static::assertEquals('formatter-foo2', $arguments[2]->getName());
+        self::assertEquals('formatter-foo2', $arguments[2]->getName());
 
-        static::assertEquals('formatter-foo2-f2-n1', $arguments[3]->getName());
-        static::assertEquals('f2-n1-default', $arguments[3]->getDefault());
-        static::assertEquals('f2-n1-desc', $arguments[3]->getDescription());
+        self::assertEquals('formatter-foo2-f2-n1', $arguments[3]->getName());
+        self::assertEquals('f2-n1-default', $arguments[3]->getDefault());
+        self::assertEquals('f2-n1-desc', $arguments[3]->getDescription());
 
-        static::assertEquals('formatter-foo2-f2-n2', $arguments[4]->getName());
-        static::assertEquals('f2-n2-default', $arguments[4]->getDefault());
-        static::assertEquals('f2-n2-desc', $arguments[4]->getDescription());
+        self::assertEquals('formatter-foo2-f2-n2', $arguments[4]->getName());
+        self::assertEquals('f2-n2-default', $arguments[4]->getDefault());
+        self::assertEquals('f2-n2-desc', $arguments[4]->getDescription());
 
-        static::assertCount(6, $arguments);
+        self::assertCount(6, $arguments);
     }
 
     public function testIsFormatterActive(): void
@@ -95,7 +95,7 @@ class OutputFormatterFactoryTest extends TestCase
         $input->getOption('formatter-f2')->willReturn(true);
         $input->getOption('formatter-f3')->willReturn(false);
 
-        static::assertCount(2, $formatter->getActiveFormatters($input->reveal()));
+        self::assertCount(2, $formatter->getActiveFormatters($input->reveal()));
     }
 
     public function testGetOutputFormatterInput(): void
@@ -112,7 +112,7 @@ class OutputFormatterFactoryTest extends TestCase
             'formatter-f3' => '',
         ]);
 
-        static::assertEquals('jupp', $formatter->getOutputFormatterInput($f1, $input->reveal())->getOption('lalelu'));
+        self::assertEquals('jupp', $formatter->getOutputFormatterInput($f1, $input->reveal())->getOption('lalelu'));
 
         try {
             $formatter->getOutputFormatterInput($f2, $input->reveal())->getOption('lalelu');

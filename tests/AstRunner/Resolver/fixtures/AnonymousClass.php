@@ -8,11 +8,11 @@ interface InterfaceC
 {
 }
 
-class ClassA
+final class ClassA
 {
 }
 
-class ClassB
+final class ClassB
 {
     public function foo()
     {

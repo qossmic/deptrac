@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
 
-class ConfigurationSkippedViolationTest extends TestCase
+final class ConfigurationSkippedViolationTest extends TestCase
 {
     public function testFromArray(): void
     {
@@ -23,16 +23,16 @@ class ConfigurationSkippedViolationTest extends TestCase
                 'DependencyClass2',
             ],
         ]);
-        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithOneDep'), ClassLikeName::fromFQCN('DependencyClass')));
-        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithEmptyDeps'), ClassLikeName::fromFQCN('DependencyClass')));
-        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass1')));
-        static::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass2')));
+        self::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithOneDep'), ClassLikeName::fromFQCN('DependencyClass')));
+        self::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithEmptyDeps'), ClassLikeName::fromFQCN('DependencyClass')));
+        self::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass1')));
+        self::assertTrue($configuration->isViolationSkipped(ClassLikeName::fromFQCN('ClassWithMultipleDeps'), ClassLikeName::fromFQCN('DependencyClass2')));
     }
 
     public function testFromArrayWithEmptyArrayAcceptable(): void
     {
         $configuration = ConfigurationSkippedViolation::fromArray([]);
-        static::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('AnyClass'), ClassLikeName::fromFQCN('AnotherAnyClass')));
+        self::assertFalse($configuration->isViolationSkipped(ClassLikeName::fromFQCN('AnyClass'), ClassLikeName::fromFQCN('AnotherAnyClass')));
     }
 
     public function testFromArrayRequireOneArgument(): void

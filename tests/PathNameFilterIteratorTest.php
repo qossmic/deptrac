@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\PathNameFilterIterator;
 use SplFileInfo;
 
-class PathNameFilterIteratorTest extends TestCase
+final class PathNameFilterIteratorTest extends TestCase
 {
     /**
      * @dataProvider getTestFilterData
@@ -28,7 +28,7 @@ class PathNameFilterIteratorTest extends TestCase
         sort($values);
         sort($resultArray);
 
-        static::assertEquals($resultArray, array_values($values));
+        self::assertEquals($resultArray, array_values($values));
     }
 
     public function getTestFilterData(): array

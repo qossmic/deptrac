@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\SensioLabs\Deptrac\Integration\fixtures;
 
-class AnnotationDependency
+final class AnnotationDependency
 {
     /**
      * @var AnnotationDependencyChild
@@ -33,6 +33,6 @@ class AnnotationDependency
     }
 }
 
-class AnnotationDependencyChild
+final class AnnotationDependencyChild
 {
 }

@@ -12,7 +12,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class InheritanceLevelCollectorTest extends TestCase
+final class InheritanceLevelCollectorTest extends TestCase
 {
     public function dataTests(): array
     {
@@ -46,11 +46,11 @@ class InheritanceLevelCollectorTest extends TestCase
             $this->prophesize(Registry::class)->reveal()
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 
     public function testType(): void
     {
-        static::assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
+        self::assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
     }
 }

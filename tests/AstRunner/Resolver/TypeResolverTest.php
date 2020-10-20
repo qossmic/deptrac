@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeScope;
 
-class TypeResolverTest extends TestCase
+final class TypeResolverTest extends TestCase
 {
     /**
      * @var Lexer
@@ -43,7 +43,7 @@ class TypeResolverTest extends TestCase
         $typeResolver = new TypeResolver();
         $resolvedTypes = $typeResolver->resolvePHPStanDocParserType($typeNode, new TypeScope('\\Test\\'));
 
-        static::assertSame($types, $resolvedTypes);
+        self::assertSame($types, $resolvedTypes);
     }
 
     public function docBlockProvider(): iterable

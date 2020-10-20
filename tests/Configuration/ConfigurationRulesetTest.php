@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationRuleset;
 
-class ConfigurationRulesetTest extends TestCase
+final class ConfigurationRulesetTest extends TestCase
 {
     public function testFromArray(): void
     {
@@ -15,8 +15,8 @@ class ConfigurationRulesetTest extends TestCase
            ['foo' => ['bar'], 'lala' => ['xx', 'yy']]
         );
 
-        static::assertEquals(['bar'], $configurationRuleSet->getAllowedDependencies('foo'));
-        static::assertEquals(['xx', 'yy'], $configurationRuleSet->getAllowedDependencies('lala'));
-        static::assertEquals([], $configurationRuleSet->getAllowedDependencies('lalax'));
+        self::assertEquals(['bar'], $configurationRuleSet->getAllowedDependencies('foo'));
+        self::assertEquals(['xx', 'yy'], $configurationRuleSet->getAllowedDependencies('lala'));
+        self::assertEquals([], $configurationRuleSet->getAllowedDependencies('lalax'));
     }
 }

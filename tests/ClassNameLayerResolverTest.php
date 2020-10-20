@@ -15,7 +15,7 @@ use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
-class ClassNameLayerResolverTest extends TestCase
+final class ClassNameLayerResolverTest extends TestCase
 {
     private function getCollector(bool $return)
     {
@@ -115,7 +115,7 @@ class ClassNameLayerResolverTest extends TestCase
             $collectorRegistry->reveal()
         );
 
-        static::assertEquals(
+        self::assertEquals(
             $expectedLayers,
             $resolver->getLayersByClassName(ClassLikeName::fromFQCN('classA'))
         );

@@ -11,7 +11,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Collector\ClassNameRegexCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class ClassNameRegexCollectorTest extends TestCase
+final class ClassNameRegexCollectorTest extends TestCase
 {
     public function dataProviderSatisfy(): iterable
     {
@@ -21,7 +21,7 @@ class ClassNameRegexCollectorTest extends TestCase
 
     public function testType(): void
     {
-        static::assertEquals('classNameRegex', (new ClassNameRegexCollector())->getType());
+        self::assertEquals('classNameRegex', (new ClassNameRegexCollector())->getType());
     }
 
     /**
@@ -36,7 +36,7 @@ class ClassNameRegexCollectorTest extends TestCase
             $this->prophesize(Registry::class)->reveal()
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 
     public function testWrongRegexParam(): void

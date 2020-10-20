@@ -16,7 +16,7 @@ use SensioLabs\Deptrac\RulesetEngine;
 /**
  * @covers \SensioLabs\Deptrac\RulesetEngine
  */
-class RulesetEngineTest extends TestCase
+final class RulesetEngineTest extends TestCase
 {
     private function createDependencies(array $fromTo): iterable
     {
@@ -251,7 +251,7 @@ class RulesetEngineTest extends TestCase
             $configuration
         );
 
-        static::assertCount($expectedCount, $context->violations());
+        self::assertCount($expectedCount, $context->violations());
     }
 
     public function provideTestGetSkippedViolations(): array
@@ -319,7 +319,7 @@ class RulesetEngineTest extends TestCase
             $configuration
         );
 
-        static::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
+        self::assertCount($expectedSkippedViolationCount, $context->skippedViolations());
     }
 
     public function provideTestIgnoreUncoveredInternalClasses(): iterable
@@ -374,6 +374,6 @@ class RulesetEngineTest extends TestCase
             $configuration
         );
 
-        static::assertCount($expectedUncoveredCount, $context->uncovered());
+        self::assertCount($expectedUncoveredCount, $context->uncovered());
     }
 }

@@ -9,11 +9,11 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\Collector\ImplementsCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class ImplementsCollectorTest extends TestCase
+final class ImplementsCollectorTest extends TestCase
 {
     public function testGetType(): void
     {
-        static::assertEquals('implements', (new ImplementsCollector())->getType());
+        self::assertEquals('implements', (new ImplementsCollector())->getType());
     }
 
     public function dataProviderSatisfy(): iterable
@@ -65,6 +65,6 @@ class ImplementsCollectorTest extends TestCase
             $this->createMock(Registry::class)
         );
 
-        static::assertEquals($expected, $stat);
+        self::assertEquals($expected, $stat);
     }
 }

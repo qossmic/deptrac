@@ -9,11 +9,11 @@ use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\Collector\DirectoryCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class DirectoryCollectorTest extends TestCase
+final class DirectoryCollectorTest extends TestCase
 {
     public function testType(): void
     {
-        static::assertSame('directory', (new DirectoryCollector())->getType());
+        self::assertSame('directory', (new DirectoryCollector())->getType());
     }
 
     public function dataProviderSatisfy(): iterable
@@ -39,7 +39,7 @@ class DirectoryCollectorTest extends TestCase
             $this->createMock(Registry::class)
         );
 
-        static::assertSame($expected, $stat);
+        self::assertSame($expected, $stat);
     }
 
     public function testMissingRegexThrowsException(): void

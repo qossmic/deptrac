@@ -13,11 +13,11 @@ use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\Collector\MethodCollector;
 use SensioLabs\Deptrac\Collector\Registry;
 
-class MethodCollectorTest extends TestCase
+final class MethodCollectorTest extends TestCase
 {
     public function testType(): void
     {
-        static::assertSame('method', (new MethodCollector($this->createMock(NikicPhpParser::class)))->getType());
+        self::assertSame('method', (new MethodCollector($this->createMock(NikicPhpParser::class)))->getType());
     }
 
     public function dataProviderSatisfy(): iterable
@@ -73,7 +73,7 @@ class MethodCollectorTest extends TestCase
             $this->createMock(Registry::class)
         );
 
-        static::assertSame($expected, $stat);
+        self::assertSame($expected, $stat);
     }
 
     public function testClassLikeAstNotFoundDoesNotSatisfy(): void
@@ -92,7 +92,7 @@ class MethodCollectorTest extends TestCase
             $this->createMock(Registry::class)
         );
 
-        static::assertFalse($satisfy);
+        self::assertFalse($satisfy);
     }
 
     public function testMissingNameThrowsException(): void

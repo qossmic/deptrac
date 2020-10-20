@@ -20,11 +20,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class GraphVizOutputFormatterTest extends TestCase
+final class GraphVizOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {
-        static::assertEquals('graphviz', (new GraphVizOutputFormatter())->getName());
+        self::assertEquals('graphviz', (new GraphVizOutputFormatter())->getName());
     }
 
     public function testFinish(): void
@@ -51,8 +51,8 @@ class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        static::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
-        static::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
+        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
     }

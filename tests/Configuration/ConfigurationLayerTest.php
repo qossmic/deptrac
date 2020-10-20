@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
 
-class ConfigurationLayerTest extends TestCase
+final class ConfigurationLayerTest extends TestCase
 {
     public function testFromArray(): void
     {
@@ -19,11 +19,11 @@ class ConfigurationLayerTest extends TestCase
             ],
         ]);
 
-        static::assertEquals('some_name', $configurationLayer->getName());
-        static::assertCount(2, $configurationLayer->getCollectors());
-        static::assertEquals('foo1', $configurationLayer->getCollectors()[0]->getType());
-        static::assertEquals(['type' => 'foo1', 'foo' => 'bar'], $configurationLayer->getCollectors()[0]->getArgs());
-        static::assertEquals('foo2', $configurationLayer->getCollectors()[1]->getType());
-        static::assertEquals(['type' => 'foo2', 'foo' => 'bar'], $configurationLayer->getCollectors()[1]->getArgs());
+        self::assertEquals('some_name', $configurationLayer->getName());
+        self::assertCount(2, $configurationLayer->getCollectors());
+        self::assertEquals('foo1', $configurationLayer->getCollectors()[0]->getType());
+        self::assertEquals(['type' => 'foo1', 'foo' => 'bar'], $configurationLayer->getCollectors()[0]->getArgs());
+        self::assertEquals('foo2', $configurationLayer->getCollectors()[1]->getType());
+        self::assertEquals(['type' => 'foo2', 'foo' => 'bar'], $configurationLayer->getCollectors()[1]->getArgs());
     }
 }

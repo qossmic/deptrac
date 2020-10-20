@@ -11,6 +11,6 @@ trait BasicDependencyTraitD {
     use BasicDependencyTraitB;
 }
 
-class BasicDependencyTraitClass {
+final class BasicDependencyTraitClass {
     use BasicDependencyTraitA;
 }

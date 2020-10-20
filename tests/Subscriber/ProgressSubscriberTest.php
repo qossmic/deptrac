@@ -15,11 +15,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ProgressSubscriberTest extends TestCase
+final class ProgressSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
     {
-        static::assertSame(
+        self::assertSame(
             [
                 PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
                 PostCreateAstMapEvent::class => ['onPostCreateAstMapEvent', 1],
@@ -45,7 +45,7 @@ class ProgressSubscriberTest extends TestCase
 
 OUT;
 
-        static::assertSame($expectedOutput, $bufferedOutput->fetch());
+        self::assertSame($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function testOnPostCreateAstMapEvent(): void
@@ -63,7 +63,7 @@ OUT;
 
 OUT;
 
-        static::assertSame($expectedOutput, $formatter->fetch());
+        self::assertSame($expectedOutput, $formatter->fetch());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

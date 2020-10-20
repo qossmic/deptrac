@@ -7,7 +7,7 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\Configuration\ConfigurationCollector;
 
-class ConfigurationCollectorTest extends TestCase
+final class ConfigurationCollectorTest extends TestCase
 {
     public function testInvalidFromArray(): void
     {
@@ -23,7 +23,7 @@ class ConfigurationCollectorTest extends TestCase
             'abc' => 'def',
         ]);
 
-        static::assertEquals('foo', $configurationCollector->getType());
-        static::assertEquals($args, $configurationCollector->getArgs());
+        self::assertEquals('foo', $configurationCollector->getType());
+        self::assertEquals($args, $configurationCollector->getArgs());
     }
 }
