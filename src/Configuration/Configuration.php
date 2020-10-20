@@ -23,6 +23,8 @@ class Configuration
 
     /**
      * @param array<string, mixed> $args
+     *
+     * @throws Exception\InvalidConfigurationException
      */
     public static function fromArray(array $args): self
     {
@@ -45,11 +47,27 @@ class Configuration
         return new self($options);
     }
 
+    /**
+     * @throws Exception\InvalidConfigurationException
+     */
     private function __construct(array $options)
     {
         $this->layers = array_map(static function (array $v): ConfigurationLayer {
             return ConfigurationLayer::fromArray($v);
         }, $options['layers']);
+
+        $layerNames = array_values(array_map(static function (ConfigurationLayer $configurationLayer): string {
+            return $configurationLayer->getName();
+        }, $this->layers));
+
+        $duplicateLayerNames = array_keys(array_filter(array_count_values($layerNames), static function (int $count): bool {
+            return $count > 1;
+        }));
+
+        if ([] !== $duplicateLayerNames) {
+            throw Exception\InvalidConfigurationException::fromDuplicateLayerNames(...$duplicateLayerNames);
+        }
+
         $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
         $this->paths = $options['paths'];
         $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);

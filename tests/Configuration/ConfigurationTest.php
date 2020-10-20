@@ -7,9 +7,56 @@ namespace Tests\SensioLabs\Deptrac\Configuration;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\Configuration;
+use SensioLabs\Deptrac\Configuration\Exception;
 
+/**
+ * @covers \SensioLabs\Deptrac\Configuration\Configuration
+ */
 class ConfigurationTest extends TestCase
 {
+    public function testFromArrayRejectsLayersWithDuplicateNames(): void
+    {
+        $this->expectException(Exception\InvalidConfigurationException::class);
+        $this->expectExceptionMessage('Configuration can not contain multiple layers with the same name, got "baz", "foo" as duplicate.');
+
+        Configuration::fromArray([
+            'layers' => [
+                [
+                   'name' => 'foo',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'foo',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'bar',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'baz',
+                   'collectors' => [],
+                ],
+                [
+                   'name' => 'baz',
+                   'collectors' => [],
+                ],
+            ],
+            'paths' => [
+                'src',
+            ],
+            'ruleset' => [
+                'foo' => [
+                    'bar',
+                ],
+                'bar' => null,
+                'baz' => [
+                    'bar',
+                ],
+            ],
+        ]);
+    }
+
     public function testFromArray(): void
     {
         $configuration = Configuration::fromArray([
@@ -19,7 +66,7 @@ class ConfigurationTest extends TestCase
                    'collectors' => [],
                 ],
                 [
-                   'name' => 'some_name',
+                   'name' => 'some_other_name',
                    'collectors' => [],
                 ],
             ],
@@ -53,7 +100,7 @@ class ConfigurationTest extends TestCase
                    'collectors' => [],
                 ],
                 [
-                   'name' => 'some_name',
+                   'name' => 'some_other_name',
                    'collectors' => [],
                 ],
             ],
