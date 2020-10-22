@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Symfony\Style;
 use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
@@ -205,7 +206,7 @@ class TableOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $output,
-            new OutputFormatterInput(['report-uncovered' => true])
+            new OutputFormatterInput([AnalyzeCommand::OPTION_REPORT_UNCOVERED => true])
         );
 
         static::assertEquals($expectedOutput, $bufferedOutput->fetch());
@@ -213,7 +214,7 @@ class TableOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        static::assertCount(1, (new TableOutputFormatter())->configureOptions());
+        static::assertCount(0, (new TableOutputFormatter())->configureOptions());
     }
 
     public function testConsoleOutputFormatterIsEnabledByDefault(): void

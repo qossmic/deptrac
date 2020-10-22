@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.12.2@7c7ebd068f8acaba211d4a2c707c4ba90874fa26">
+<files psalm-version="3.18.2@19aa905f7c3c7350569999a93c40ae91ae4e1626">
+  <file src="src/OutputFormatter/ConsoleOutputFormatter.php">
+    <DeprecatedConstant occurrences="3">
+      <code>self::LEGACY_REPORT_UNCOVERED</code>
+      <code>self::LEGACY_REPORT_UNCOVERED</code>
+      <code>self::LEGACY_REPORT_UNCOVERED</code>
+    </DeprecatedConstant>
+  </file>
+  <file src="src/OutputFormatter/GithubActionsOutputFormatter.php">
+    <DeprecatedConstant occurrences="3">
+      <code>self::LEGACY_REPORT_UNCOVERED</code>
+      <code>self::LEGACY_REPORT_UNCOVERED</code>
+      <code>self::LEGACY_REPORT_UNCOVERED</code>
+    </DeprecatedConstant>
+  </file>
   <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
+    <DeprecatedConstant occurrences="12">
+      <code>self::LEGACY_DISPLAY</code>
+      <code>self::LEGACY_DISPLAY</code>
+      <code>self::LEGACY_DISPLAY</code>
+      <code>self::LEGACY_DUMP_DOT</code>
+      <code>self::LEGACY_DUMP_DOT</code>
+      <code>self::LEGACY_DUMP_DOT</code>
+      <code>self::LEGACY_DUMP_HTML</code>
+      <code>self::LEGACY_DUMP_HTML</code>
+      <code>self::LEGACY_DUMP_HTML</code>
+      <code>self::LEGACY_DUMP_IMAGE</code>
+      <code>self::LEGACY_DUMP_IMAGE</code>
+      <code>self::LEGACY_DUMP_IMAGE</code>
+    </DeprecatedConstant>
     <InvalidScalarArgument occurrences="2">
       <code>$layer</code>
       <code>$layerDependOn</code>

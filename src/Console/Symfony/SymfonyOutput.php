@@ -29,7 +29,10 @@ class SymfonyOutput implements Output
         $this->symfonyOutput->write($message, false, OutputInterface::OUTPUT_NORMAL);
     }
 
-    public function writeLineFormatted(string $message): void
+    /**
+     * {@inheritdoc}
+     */
+    public function writeLineFormatted($message): void
     {
         $this->symfonyOutput->writeln($message, OutputInterface::OUTPUT_NORMAL);
     }

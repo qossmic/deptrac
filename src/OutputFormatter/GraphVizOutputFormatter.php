@@ -15,16 +15,27 @@ use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 
-class GraphVizOutputFormatter implements OutputFormatterInterface
+final class GraphVizOutputFormatter implements OutputFormatterInterface
 {
-    private const ARGUMENT_DISPLAY = 'display';
-    private const ARGUMENT_DUMP_IMAGE = 'dump-image';
-    private const ARGUMENT_DUMP_DOT = 'dump-dot';
-    private const ARGUMENT_DUMP_HTML = 'dump-html';
+    private const NAME = 'graphviz';
+    private const LEGACY_OPTION_PREFIX = 'formatter-';
+    public const DISPLAY = self::NAME.'-display';
+    public const DUMP_IMAGE = self::NAME.'-dump-image';
+    public const DUMP_DOT = self::NAME.'-dump-dot';
+    public const DUMP_HTML = self::NAME.'-dump-html';
+
+    /** @deprecated  */
+    public const LEGACY_DISPLAY = self::LEGACY_OPTION_PREFIX.self::DISPLAY;
+    /** @deprecated  */
+    public const LEGACY_DUMP_IMAGE = self::LEGACY_OPTION_PREFIX.self::DUMP_IMAGE;
+    /** @deprecated  */
+    public const LEGACY_DUMP_DOT = self::LEGACY_OPTION_PREFIX.self::DUMP_DOT;
+    /** @deprecated  */
+    public const LEGACY_DUMP_HTML = self::LEGACY_OPTION_PREFIX.self::DUMP_HTML;
 
     public function getName(): string
     {
-        return 'graphviz';
+        return self::NAME;
     }
 
     public function enabledByDefault(): bool
@@ -38,10 +49,14 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
     public function configureOptions(): array
     {
         return [
-            OutputFormatterOption::newValueOption(static::ARGUMENT_DISPLAY, 'should try to open graphviz image', true),
-            OutputFormatterOption::newValueOption(static::ARGUMENT_DUMP_IMAGE, 'path to a dumped png file', ''),
-            OutputFormatterOption::newValueOption(static::ARGUMENT_DUMP_DOT, 'path to a dumped dot file', ''),
-            OutputFormatterOption::newValueOption(static::ARGUMENT_DUMP_HTML, 'path to a dumped html file', ''),
+            OutputFormatterOption::newValueOption(self::DISPLAY, 'Should try to open graphviz image.', true),
+            OutputFormatterOption::newValueOption(self::DUMP_IMAGE, 'Path to a dumped png file.'),
+            OutputFormatterOption::newValueOption(self::DUMP_DOT, 'Path to a dumped dot file.'),
+            OutputFormatterOption::newValueOption(self::DUMP_HTML, 'Path to a dumped html file.'),
+            OutputFormatterOption::newValueOption(self::LEGACY_DISPLAY, '<fg=yellow>[DEPRECATED]</> Should try to open graphviz image.'),
+            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_IMAGE, '<fg=yellow>[DEPRECATED]</> Path to a dumped png file.'),
+            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_DOT, '<fg=yellow>[DEPRECATED]</> Path to a dumped dot file.'),
+            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_HTML, '<fg=yellow>[DEPRECATED]</> Path to a dumped html file.'),
         ];
     }
 
@@ -50,6 +65,16 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
+        $legacyDisplay = $outputFormatterInput->getOptionAsBoolean(self::LEGACY_DISPLAY);
+        $legacyDumpImage = $outputFormatterInput->getOption(self::LEGACY_DUMP_IMAGE);
+        $legacyDumpDot = $outputFormatterInput->getOption(self::LEGACY_DUMP_DOT);
+        $legacyDumpHtml = $outputFormatterInput->getOption(self::LEGACY_DUMP_HTML);
+
+        $this->reportDeprecation($legacyDisplay, self::LEGACY_DISPLAY, self::DISPLAY, $output);
+        $this->reportDeprecation(!empty($legacyDumpImage), self::LEGACY_DUMP_IMAGE, self::DUMP_IMAGE, $output);
+        $this->reportDeprecation(!empty($legacyDumpDot), self::LEGACY_DUMP_DOT, self::DUMP_DOT, $output);
+        $this->reportDeprecation(!empty($legacyDumpHtml), self::LEGACY_DUMP_HTML, self::DUMP_HTML, $output);
+
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->all());
 
@@ -85,23 +110,28 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        $display = $outputFormatterInput->getOption(static::ARGUMENT_DISPLAY);
-        if (true === filter_var($display, FILTER_VALIDATE_BOOLEAN)) {
+        if ($legacyDisplay || $outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
             (new GraphViz())->display($graph);
         }
 
-        if ($dumpImagePath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_IMAGE)) {
+        if (($dumpImagePath = $legacyDumpImage)
+            || ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE))
+        ) {
             $imagePath = (new GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
             $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
-        if ($dumpDotPath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_DOT)) {
+        if (($dumpDotPath = $legacyDumpDot)
+            || ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT))
+        ) {
             file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
-        if ($dumpHtmlPath = $outputFormatterInput->getOption(static::ARGUMENT_DUMP_HTML)) {
+        if (($dumpHtmlPath = $legacyDumpHtml)
+            || ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML))
+        ) {
             file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
             $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
@@ -166,5 +196,14 @@ class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         return $layersDependOnLayers;
+    }
+
+    private function reportDeprecation(bool $report, string $legacyOption, string $newOption, Output $output): void
+    {
+        if ($report) {
+            $output->writeLineFormatted(sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--%s</>. ⚠️️', $legacyOption));
+            $output->writeLineFormatted(sprintf('   Please use the new option <fg=cyan>--%s</> instead.', $newOption));
+            $output->writeLineFormatted('');
+        }
     }
 }

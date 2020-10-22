@@ -126,7 +126,10 @@ final class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $this->createSymfonyOutput(new BufferedOutput()),
-            new OutputFormatterInput(['dump-xml' => __DIR__.'/data/'.self::$actual_junit_report_file])
+            new OutputFormatterInput([
+                JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
+                JUnitOutputFormatter::LEGACY_DUMP_XML => false,
+            ])
         );
 
         self::assertXmlFileEqualsXmlFile(
@@ -137,7 +140,7 @@ final class JUnitOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        self::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
+        self::assertCount(2, (new JUnitOutputFormatter())->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

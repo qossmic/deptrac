@@ -5,6 +5,7 @@ namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Symfony\Style;
 use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
@@ -37,7 +38,10 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput(['report-uncovered' => true])
+            new OutputFormatterInput([
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                GithubActionsOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
+            ])
         );
 
         self::assertEquals($expectedOutput, $bufferedOutput->fetch());
