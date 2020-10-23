@@ -9,6 +9,7 @@ use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Error;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
@@ -40,7 +41,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $groupedRules = [];
         $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
 
-        foreach ($context->all() as $rule) {
+        foreach ($context->rules() as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
@@ -65,6 +66,10 @@ final class TableOutputFormatter implements OutputFormatterInterface
             }
 
             $style->table(['Reason', $layer], $rows);
+        }
+
+        if ($context->hasErrors()) {
+            $this->printErrors($context, $output);
         }
 
         $this->printSummary($context, $output);
@@ -155,5 +160,18 @@ final class TableOutputFormatter implements OutputFormatterInterface
             '<fg=yellow>Uncovered</>',
             $message,
         ];
+    }
+
+    private function printErrors(Context $context, Output $output): void
+    {
+        $output->getStyle()->table(
+            ['<fg=red>Errors</>'],
+            array_map(
+                static function (Error $error) {
+                    return [$error->toString()];
+                },
+                $context->errors()
+            )
+        );
     }
 }

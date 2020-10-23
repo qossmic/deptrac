@@ -125,7 +125,7 @@ class AnalyzeCommand extends Command
             return 1;
         }
 
-        return $context->hasViolations() ? 1 : 0;
+        return $context->hasViolations() || $context->hasErrors() ? 1 : 0;
     }
 
     protected function printCollectViolations(SymfonyOutput $output): void

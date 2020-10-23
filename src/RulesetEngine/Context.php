@@ -10,19 +10,25 @@ final class Context
      * @var Rule[]
      */
     private $rules;
+    /**
+     * @var Error[]
+     */
+    private $errors;
 
     /**
-     * @param Rule[] $rules
+     * @param Rule[]  $rules
+     * @param Error[] $errors
      */
-    public function __construct(array $rules)
+    public function __construct(array $rules, array $errors)
     {
         $this->rules = $rules;
+        $this->errors = $errors;
     }
 
     /**
      * @return Rule[]
      */
-    public function all(): array
+    public function rules(): array
     {
         return $this->rules;
     }
@@ -75,5 +81,18 @@ final class Context
         return array_filter($this->rules, static function (Rule $rule) {
             return $rule instanceof Allowed;
         });
+    }
+
+    public function hasErrors(): bool
+    {
+        return \count($this->errors) > 0;
+    }
+
+    /**
+     * @return Error[]
+     */
+    public function errors(): array
+    {
+        return $this->errors;
     }
 }

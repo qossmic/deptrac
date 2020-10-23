@@ -76,7 +76,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $this->reportDeprecation(!empty($legacyDumpHtml), self::LEGACY_DUMP_HTML, self::DUMP_HTML, $output);
 
         $layerViolations = $this->calculateViolations($context->violations());
-        $layersDependOnLayers = $this->calculateLayerDependencies($context->all());
+        $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
 
         $graph = new Graph();
 

@@ -10,7 +10,9 @@ use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Dependency\Result;
 use SensioLabs\Deptrac\RulesetEngine\Allowed;
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Error;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
+use SensioLabs\Deptrac\RulesetEngine\SkippedViolationHelper;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
 
@@ -24,7 +26,7 @@ class RulesetEngine
         $rules = [];
 
         $configurationRuleset = $configuration->getRuleset();
-        $configurationSkippedViolation = $configuration->getSkipViolations();
+        $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
             $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameA());
@@ -51,7 +53,7 @@ class RulesetEngine
                         continue;
                     }
 
-                    if ($configurationSkippedViolation->isViolationSkipped($dependency->getClassLikeNameA(), $dependency->getClassLikeNameB())) {
+                    if ($skippedViolationHelper->isViolationSkipped($dependency->getClassLikeNameA(), $dependency->getClassLikeNameB())) {
                         $rules[] = new SkippedViolation($dependency, $layerName, $layerNameOfDependency);
                         continue;
                     }
@@ -61,7 +63,14 @@ class RulesetEngine
             }
         }
 
-        return new Context($rules);
+        $errors = [];
+        foreach ($skippedViolationHelper->unmatchedSkippedViolations() as $classLikeNameA => $classLikes) {
+            foreach ($classLikes as $classLikeNameB) {
+                $errors[] = new Error(sprintf('Skipped violation "%s" for "%s" was not matched.', $classLikeNameB, $classLikeNameA));
+            }
+        }
+
+        return new Context($rules, $errors);
     }
 
     private function ignoreUncoveredInternalClass(Configuration $configuration, ClassLikeName $classLikeName): bool

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\Configuration\Configuration;
 use SensioLabs\Deptrac\Configuration\Exception;
 
@@ -184,8 +183,12 @@ final class ConfigurationTest extends TestCase
             ],
         ]);
 
-        self::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('BarClass')));
-        self::assertTrue($configuration->getSkipViolations()->isViolationSkipped(ClassLikeName::fromFQCN('FooClass'), ClassLikeName::fromFQCN('AnotherClass')));
+        self::assertSame([
+            'FooClass' => [
+                'BarClass',
+                'AnotherClass',
+            ],
+        ], $configuration->getSkipViolations()->all());
     }
 
     public function testIgnoreUncoveredInternalClassesSetToFalse(): void

@@ -16,6 +16,7 @@ use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\OutputFormatter\TableOutputFormatter;
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Error;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
@@ -67,6 +68,7 @@ class TableOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             ' ----------- ------------------------------------------- 
   Reason      LayerA                                     
  ----------- ------------------------------------------- 
@@ -100,6 +102,7 @@ class TableOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             ' ----------- ------------------------------------------------- 
   Reason      LayerA                                           
  ----------- ------------------------------------------------- 
@@ -122,6 +125,7 @@ class TableOutputFormatterTest extends TestCase
 
         yield [
             [],
+            [],
             '
  -------------------- ----- 
   Report                    
@@ -143,6 +147,7 @@ class TableOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             ' --------- ------------------------------------------------- 
   Reason    LayerA                                           
  --------- ------------------------------------------------- 
@@ -170,6 +175,7 @@ class TableOutputFormatterTest extends TestCase
                     'LayerA'
                 ),
             ],
+            [],
             ' ----------- ------------------------------------------------- 
   Reason      LayerA                                           
  ----------- ------------------------------------------------- 
@@ -189,12 +195,34 @@ class TableOutputFormatterTest extends TestCase
 
 ',
         ];
+
+        yield 'an error occurred' => [
+            [],
+            [new Error('an error occurred')],
+            ' ------------------- 
+  Errors             
+ ------------------- 
+  an error occurred  
+ ------------------- 
+
+
+ -------------------- ----- 
+  Report                    
+ -------------------- ----- 
+  Violations           0    
+  Skipped violations   0    
+  Uncovered            0    
+  Allowed              0    
+ -------------------- ----- 
+
+',
+        ];
     }
 
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $rules, string $expectedOutput): void
+    public function testBasic(array $rules, array $errors, string $expectedOutput): void
     {
         $bufferedOutput = new BufferedOutput();
         $output = new SymfonyOutput(
@@ -204,7 +232,7 @@ class TableOutputFormatterTest extends TestCase
 
         $formatter = new TableOutputFormatter();
         $formatter->finish(
-            new Context($rules),
+            new Context($rules, $errors),
             $output,
             new OutputFormatterInput([AnalyzeCommand::OPTION_REPORT_UNCOVERED => true])
         );
