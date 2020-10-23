@@ -3,12 +3,14 @@
 namespace Tests\SensioLabs\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Symfony\Style;
 use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
 use SensioLabs\Deptrac\Dependency\Dependency;
+use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
@@ -47,7 +49,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         self::assertEquals($expectedOutput, $bufferedOutput->fetch());
     }
 
-    public function finishProvider()
+    public function finishProvider(): iterable
     {
         yield 'No Rules, No Output' => [
             [],
@@ -88,6 +90,27 @@ final class GithubActionsOutputFormatterTest extends TestCase
                 ),
             ],
             "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
+        ];
+
+        yield 'Inherit dependency' => [
+            [
+                new Violation(
+                    new InheritDependency(
+                        ClassLikeName::fromFQCN('ClassA'),
+                        ClassLikeName::fromFQCN('ClassB'),
+                        new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('originalA.php', 3))
+                            ->withPath([
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('originalA.php', 4)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('originalA.php', 5)),
+                                AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('originalA.php', 6)),
+                            ])
+                    ),
+                    'LayerA',
+                    'LayerB'
+                ),
+            ],
+            "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12\n",
         ];
     }
 

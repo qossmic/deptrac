@@ -4,6 +4,7 @@ namespace SensioLabs\Deptrac\OutputFormatter;
 
 use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Output;
+use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\Env;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\Rule;
@@ -63,18 +64,27 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
-
             $dependency = $rule->getDependency();
-            $output->writeLineFormatted(sprintf(
-                '::%s file=%s,line=%s::%s%s must not depend on %s (%s on %s)',
-                $this->determineLogLevel($rule),
-                $dependency->getFileOccurrence()->getFilepath(),
-                $dependency->getFileOccurrence()->getLine(),
+
+            $message = sprintf(
+                '%s%s must not depend on %s (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
                 $dependency->getClassLikeNameA()->toString(),
                 $dependency->getClassLikeNameB()->toString(),
                 $rule->getLayerA(),
                 $rule->getLayerB()
+            );
+
+            if ($dependency instanceof InheritDependency) {
+                $message .= '%0A'.$this->inheritPathMessage($dependency);
+            }
+
+            $output->writeLineFormatted(sprintf(
+                '::%s file=%s,line=%s::%s',
+                $this->determineLogLevel($rule),
+                $dependency->getFileOccurrence()->getFilepath(),
+                $dependency->getFileOccurrence()->getLine(),
+                $message
             ));
         }
 
@@ -116,5 +126,23 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 )
             );
         }
+    }
+
+    private function inheritPathMessage(InheritDependency $dependency): string
+    {
+        $buffer = [];
+        $astInherit = $dependency->getInheritPath();
+        foreach ($astInherit->getPath() as $p) {
+            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+        }
+
+        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf(
+            '%s::%d',
+            $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
+            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+        );
+
+        return implode(' ->%0A', $buffer);
     }
 }
