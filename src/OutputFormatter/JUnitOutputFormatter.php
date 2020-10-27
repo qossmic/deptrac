@@ -93,7 +93,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     private function addTestSuite(Context $context, \DOMDocument $xmlDoc, \DOMElement $testSuites): void
     {
         $layers = [];
-        foreach ($context->all() as $rule) {
+        foreach ($context->rules() as $rule) {
             if ($rule instanceof Allowed || $rule instanceof Violation || $rule instanceof SkippedViolation) {
                 $layers[$rule->getLayerA()][] = $rule;
             } elseif ($rule instanceof Uncovered) {

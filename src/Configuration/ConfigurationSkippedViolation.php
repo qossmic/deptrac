@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Configuration;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-
 /**
  * @author Dmitry Balabka <dmitry.balabka@gmail.com>
  */
@@ -30,9 +28,11 @@ final class ConfigurationSkippedViolation
         $this->classesDeps = $classesDeps;
     }
 
-    public function isViolationSkipped(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB): bool
+    /**
+     * @return array<string, string[]>
+     */
+    public function all(): array
     {
-        return isset($this->classesDeps[$classLikeNameA->toString()])
-            && \in_array($classLikeNameB->toString(), $this->classesDeps[$classLikeNameA->toString()], true);
+        return $this->classesDeps;
     }
 }

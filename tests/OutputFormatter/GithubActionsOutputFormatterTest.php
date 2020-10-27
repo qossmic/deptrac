@@ -14,6 +14,7 @@ use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Error;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
@@ -32,13 +33,13 @@ final class GithubActionsOutputFormatterTest extends TestCase
     /**
      * @dataProvider finishProvider
      */
-    public function testFinish(array $rules, string $expectedOutput): void
+    public function testFinish(array $rules, array $errors, string $expectedOutput): void
     {
         $bufferedOutput = new BufferedOutput();
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules),
+            new Context($rules, $errors),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
@@ -52,6 +53,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
     public function finishProvider(): iterable
     {
         yield 'No Rules, No Output' => [
+            [],
             [],
             '',
         ];
@@ -68,6 +70,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
@@ -79,6 +82,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
@@ -89,6 +93,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
                     'LayerA'
                 ),
             ],
+            [],
             "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
         ];
 
@@ -110,7 +115,14 @@ final class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12\n",
+        ];
+
+        yield 'an error occurred' => [
+            [],
+            [new Error('an error occurred')],
+            "::error ::an error occurred\n",
         ];
     }
 

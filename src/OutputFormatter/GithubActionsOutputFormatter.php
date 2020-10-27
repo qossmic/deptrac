@@ -60,7 +60,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted('');
         }
 
-        foreach ($context->all() as $rule) {
+        foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
@@ -91,6 +91,10 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         if ($legacyReportUncovered
             || $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED)) {
             $this->printUncovered($context, $output);
+        }
+
+        if ($context->hasErrors()) {
+            $this->printErrors($context, $output);
         }
     }
 
@@ -144,5 +148,12 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         );
 
         return implode(' ->%0A', $buffer);
+    }
+
+    private function printErrors(Context $context, Output $output): void
+    {
+        foreach ($context->errors() as $error) {
+            $output->writeLineFormatted('::error ::'.$error->toString());
+        }
     }
 }

@@ -57,7 +57,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted('');
         }
 
-        foreach ($context->all() as $rule) {
+        foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
@@ -68,6 +68,10 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         if ($legacyReportUncovered
             || $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED)) {
             $this->printUncovered($context, $output);
+        }
+
+        if ($context->hasErrors()) {
+            $this->printErrors($context, $output);
         }
 
         $this->printSummary($context, $output);
@@ -177,5 +181,13 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     private function printFileOccurrence(Output $output, FileOccurrence $fileOccurrence): void
     {
         $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
+    }
+
+    private function printErrors(Context $context, Output $output): void
+    {
+        $output->writeLineFormatted('');
+        foreach ($context->errors() as $error) {
+            $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', $error->toString()));
+        }
     }
 }

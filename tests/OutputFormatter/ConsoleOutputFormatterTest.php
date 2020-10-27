@@ -16,6 +16,7 @@ use SensioLabs\Deptrac\Dependency\InheritDependency;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
 use SensioLabs\Deptrac\RulesetEngine\Context;
+use SensioLabs\Deptrac\RulesetEngine\Error;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Uncovered;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
@@ -54,6 +55,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
                 originalA.php::12
@@ -79,6 +81,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             '
                 OriginalA must not depend on OriginalB (LayerA on LayerB)
                 originalA.php::12
@@ -92,6 +95,7 @@ final class ConsoleOutputFormatterTest extends TestCase
         ];
 
         yield [
+            [],
             [],
             '
 
@@ -111,6 +115,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
+            [],
             '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
             originalA.php::12
             
@@ -129,6 +134,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                     'LayerA'
                 ),
             ],
+            [],
             '
                 Uncovered dependencies:
                 OriginalA has uncovered dependency on OriginalB (LayerA)
@@ -140,12 +146,18 @@ final class ConsoleOutputFormatterTest extends TestCase
                 Allowed: 0
             ',
         ];
+
+        yield 'an error occurred' => [
+            [],
+            [new Error('an error occurred')],
+            '[ERROR]anerroroccurredReport:Violations:0Skippedviolations:0Uncovered:0Allowed:0',
+        ];
     }
 
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $rules, string $expectedOutput): void
+    public function testBasic(array $rules, array $errors, string $expectedOutput): void
     {
         $bufferedOutput = new BufferedOutput();
         $output = new SymfonyOutput(
@@ -155,7 +167,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter(new EmptyEnv());
         $formatter->finish(
-            new Context($rules),
+            new Context($rules, $errors),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
