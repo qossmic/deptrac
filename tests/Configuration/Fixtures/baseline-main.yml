@@ -1,0 +1,19 @@
+paths:
+  - src
+
+layers:
+  - name: Dummy
+    collectors:
+      - type: directory
+        regex: src/
+
+ruleset:
+  - dummy
+
+ignore_uncovered_internal_classes: false
+
+skip_violations:
+  DummyClass:
+    - FooClass
+
+baseline: baseline-import.yml

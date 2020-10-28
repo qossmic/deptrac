@@ -27,6 +27,7 @@ use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\UsesCollector;
 use SensioLabs\Deptrac\Configuration\Dumper;
 use SensioLabs\Deptrac\Configuration\Loader;
+use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
 use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Command\InitCommand;
 use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
@@ -105,8 +106,13 @@ return static function (ContainerConfigurator $container): void {
     $services->set(FileResolver::class);
 
     /* Configuration */
+    $services->set(YmlFileLoader::class);
     $services->set(Dumper::class);
-    $services->set(Loader::class);
+    $services
+        ->set(Loader::class)
+        ->args([
+            service(YmlFileLoader::class),
+        ]);
 
     /* Formatters */
     $services

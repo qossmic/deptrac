@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\OutputFormatter;
 
+use SensioLabs\Deptrac\Console\Output;
 use SensioLabs\Deptrac\RulesetEngine\Context;
 use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
 use SensioLabs\Deptrac\RulesetEngine\Violation;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
 final class BaselineOutputFormatter implements OutputFormatterInterface
@@ -21,7 +21,9 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
 
     public function configureOptions(): array
     {
-        return [];
+        return [
+            OutputFormatterOption::newValueOption(self::DUMP_BASELINE, 'path to a dumped baseline file', './depfile.baseline.yml'),
+        ];
     }
 
     public function enabledByDefault(): bool
@@ -31,25 +33,30 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         Context $context,
-        OutputInterface $output,
+        Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedViolations = $this->collectViolations($context);
-        $output->write(
-            Yaml::dump(
-                [
-                    'skip_violations' => $groupedViolations,
-                ],
-                3,
-                2
-            )
-        );
+
+        if ($baselineFile = $outputFormatterInput->getOption(self::DUMP_BASELINE)) {
+            file_put_contents(
+                $baselineFile,
+                Yaml::dump(
+                    [
+                            'skip_violations' => $groupedViolations,
+                    ],
+                    3,
+                    2
+                )
+            );
+            $output->writeLineFormatted('<info>Baseline dumped to '.realpath($baselineFile).'</info>');
+        }
     }
 
     private function collectViolations(Context $context): array
     {
         $violations = [];
-        foreach ($context->all() as $rule) {
+        foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }

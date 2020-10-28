@@ -692,14 +692,22 @@ This formatter is enabled by default while running in a github actions environme
 
 ### Baseline Formatter
 
-The Baseline formatter is a console formater, which generates the `skip_violations` section to *STDOUT*.
+The Baseline formatter is a console formater, which generates the `skip_violations` section to the given File.
 With this formatter it's possible to start on a project with some violations without a failing CI Build.
 
 *Note*: It's not the best solution to ignore all the errors because maybe your current Architecture doesn't allow a change without a new violation.
 
+Supported options:
+
 ```
-# append all violations to your current depfile
-deptrac analyse depfile.yml --formatter-baseline=1 --formatter-console=0 --no-progress >> depfile.yml
+--baseline-dump[=BASELINE-DUMP] path to a dumped baseline file [default: "./depfile.baseline.yml"]
+```
+
+Include the baseline into your existing `depfile.yml`
+
+```yaml
+# depfile.yml
+baseline: depfile.baseline.yml
 ``` 
 
 ## Uncovered dependencies
