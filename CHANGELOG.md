@@ -2,6 +2,89 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+<!-- changelog-linker -->
+
+## [0.9.0] - 2020-10-xx
+
+### Added
+
+- [#403] report unmatched skipped violations, Thanks to [@smoench]
+- [#378] [GraphViz] display depend on count, Thanks to [@smoench]
+- [#338] Add option to report uncovered dependencies for GitHubActionFormatter, Thanks to [@jschaedl]
+- [#337] introduce table output formatter, Thanks to [@smoench]
+- [#336] ignore (psalm) pseudo types, Thanks to [@smoench]
+- [#335] Add missing Collectors into the container, Thanks to [@DanielBadura]
+- [#320] Load Collectors by FQCN, Thanks to [@DanielBadura]
+
+### Fixed
+
+- [#399] Fix: Reject rule sets referencing unknown layers, Thanks to [@localheinz]
+- [#398] Fix: Reject duplicate layer names, Thanks to [@localheinz]
+
+### Changed
+
+- [#402] github actions show inherit path, Thanks to [@smoench]
+- [#401] use composer v2 for CI, Thanks to [@smoench]
+- [#400] Enhancement: Mark test classes as final, Thanks to [@localheinz]
+- [#397] Enhancement: Enable final_static_access fixer, Thanks to [@localheinz]
+- [#396] Simplify formatter options, Thanks to [@smoench]
+- [#334] Change default file to depfile.yaml, Thanks to [@DanielBadura]
+- [#366] Bump symfony/console from 5.1.4 to 5.1.5
+- [#364] Bump symfony/config from 5.1.3 to 5.1.4
+- [#363] Bump symfony/event-dispatcher from 5.1.3 to 5.1.4
+- [#365] Bump symfony/yaml from 5.1.4 to 5.1.5
+- [#411] Bump symfony/options-resolver from 5.1.7 to 5.1.8
+- [#367] Bump symfony/config from 5.1.4 to 5.1.5
+- [#368] Bump symfony/finder from 5.1.4 to 5.1.5
+- [#361] Bump symfony/yaml from 5.1.3 to 5.1.4
+- [#369] Bump symfony/dependency-injection from 5.1.4 to 5.1.5
+- [#362] Bump symfony/dependency-injection from 5.1.3 to 5.1.4
+- [#354] Bump nikic/php-parser from 4.7.0 to 4.8.0
+- [#360] Bump symfony/finder from 5.1.3 to 5.1.4
+- [#359] Bump symfony/options-resolver from 5.1.3 to 5.1.4
+- [#358] Bump symfony/console from 5.1.3 to 5.1.4
+- [#357] Bump nikic/php-parser from 4.9.0 to 4.9.1
+- [#356] Bump composer/xdebug-handler from 1.4.2 to 1.4.3
+- [#355] Bump nikic/php-parser from 4.8.0 to 4.9.0
+- [#371] Bump symfony/event-dispatcher from 5.1.4 to 5.1.5
+- [#350] Bump phpstan/phpdoc-parser from 0.4.8 to 0.4.9
+- [#348] Bump nikic/php-parser from 4.6.0 to 4.7.0
+- [#370] Bump symfony/options-resolver from 5.1.4 to 5.1.5
+- [#372] Bump phpdocumentor/type-resolver from 1.3.0 to 1.4.0
+- [#410] Bump symfony/finder from 5.1.7 to 5.1.8
+- [#374] Bump nikic/php-parser from 4.9.1 to 4.10.0
+- [#409] Bump symfony/config from 5.1.7 to 5.1.8
+- [#408] Bump symfony/event-dispatcher from 5.1.7 to 5.1.8
+- [#407] Bump symfony/dependency-injection from 5.1.7 to 5.1.8
+- [#406] Bump symfony/console from 5.1.7 to 5.1.8
+- [#405] Bump symfony/yaml from 5.1.7 to 5.1.8
+- [#404] Bump composer/xdebug-handler from 1.4.3 to 1.4.4
+- [#394] Bump symfony/dependency-injection from 5.1.6 to 5.1.7
+- [#393] Bump symfony/options-resolver from 5.1.6 to 5.1.7
+- [#392] Bump symfony/finder from 5.1.6 to 5.1.7
+- [#384] Bump symfony/finder from 5.1.5 to 5.1.6
+- [#377] update tools, Thanks to [@smoench]
+- [#379] Bump nikic/php-parser from 4.10.0 to 4.10.1
+- [#380] Bump symfony/options-resolver from 5.1.5 to 5.1.6
+- [#381] Bump symfony/dependency-injection from 5.1.5 to 5.1.6
+- [#382] Bump symfony/event-dispatcher from 5.1.5 to 5.1.6
+- [#383] Bump symfony/config from 5.1.5 to 5.1.6
+- [#385] Bump nikic/php-parser from 4.10.1 to 4.10.2
+- [#391] Bump symfony/event-dispatcher from 5.1.6 to 5.1.7
+- [#386] Bump symfony/yaml from 5.1.5 to 5.1.6
+- [#387] Bump symfony/console from 5.1.5 to 5.1.6
+- [#388] Bump symfony/config from 5.1.6 to 5.1.7
+- [#389] Bump symfony/console from 5.1.6 to 5.1.7
+- [#390] Bump symfony/yaml from 5.1.6 to 5.1.7
+- [#343] Bump symfony/config from 5.1.2 to 5.1.3
+- [#341] Bump phpdocumentor/type-resolver from 1.1.0 to 1.3.0
+- [#346] Bump symfony/console from 5.1.2 to 5.1.3
+- [#345] Bump symfony/yaml from 5.1.2 to 5.1.3
+- [#344] Bump symfony/dependency-injection from 5.1.2 to 5.1.3
+- [#342] Bump nikic/php-parser from 4.5.0 to 4.6.0
+- [#340] Bump symfony/options-resolver from 5.1.2 to 5.1.3
+- [#339] Bump symfony/event-dispatcher from 5.1.2 to 5.1.3
+
 ## [0.8.2] - 2020-07-24
 
 ### Added
@@ -220,6 +303,64 @@ All notable changes to this project will be documented in this file, in reverse 
 [@jschaedl]: https://github.com/jschaedl
 [@DanielBadura]: https://github.com/DanielBadura
 
+[#411]: https://github.com/sensiolabs-de/deptrac/pull/411
+[#410]: https://github.com/sensiolabs-de/deptrac/pull/410
+[#409]: https://github.com/sensiolabs-de/deptrac/pull/409
+[#408]: https://github.com/sensiolabs-de/deptrac/pull/408
+[#407]: https://github.com/sensiolabs-de/deptrac/pull/407
+[#406]: https://github.com/sensiolabs-de/deptrac/pull/406
+[#405]: https://github.com/sensiolabs-de/deptrac/pull/405
+[#404]: https://github.com/sensiolabs-de/deptrac/pull/404
+[#403]: https://github.com/sensiolabs-de/deptrac/pull/403
+[#402]: https://github.com/sensiolabs-de/deptrac/pull/402
+[#401]: https://github.com/sensiolabs-de/deptrac/pull/401
+[#400]: https://github.com/sensiolabs-de/deptrac/pull/400
+[#399]: https://github.com/sensiolabs-de/deptrac/pull/399
+[#398]: https://github.com/sensiolabs-de/deptrac/pull/398
+[#397]: https://github.com/sensiolabs-de/deptrac/pull/397
+[#396]: https://github.com/sensiolabs-de/deptrac/pull/396
+[#394]: https://github.com/sensiolabs-de/deptrac/pull/394
+[#393]: https://github.com/sensiolabs-de/deptrac/pull/393
+[#392]: https://github.com/sensiolabs-de/deptrac/pull/392
+[#391]: https://github.com/sensiolabs-de/deptrac/pull/391
+[#390]: https://github.com/sensiolabs-de/deptrac/pull/390
+[#389]: https://github.com/sensiolabs-de/deptrac/pull/389
+[#388]: https://github.com/sensiolabs-de/deptrac/pull/388
+[#387]: https://github.com/sensiolabs-de/deptrac/pull/387
+[#386]: https://github.com/sensiolabs-de/deptrac/pull/386
+[#385]: https://github.com/sensiolabs-de/deptrac/pull/385
+[#384]: https://github.com/sensiolabs-de/deptrac/pull/384
+[#383]: https://github.com/sensiolabs-de/deptrac/pull/383
+[#382]: https://github.com/sensiolabs-de/deptrac/pull/382
+[#381]: https://github.com/sensiolabs-de/deptrac/pull/381
+[#380]: https://github.com/sensiolabs-de/deptrac/pull/380
+[#379]: https://github.com/sensiolabs-de/deptrac/pull/379
+[#378]: https://github.com/sensiolabs-de/deptrac/pull/378
+[#377]: https://github.com/sensiolabs-de/deptrac/pull/377
+[#374]: https://github.com/sensiolabs-de/deptrac/pull/374
+[#372]: https://github.com/sensiolabs-de/deptrac/pull/372
+[#371]: https://github.com/sensiolabs-de/deptrac/pull/371
+[#370]: https://github.com/sensiolabs-de/deptrac/pull/370
+[#369]: https://github.com/sensiolabs-de/deptrac/pull/369
+[#368]: https://github.com/sensiolabs-de/deptrac/pull/368
+[#367]: https://github.com/sensiolabs-de/deptrac/pull/367
+[#366]: https://github.com/sensiolabs-de/deptrac/pull/366
+[#365]: https://github.com/sensiolabs-de/deptrac/pull/365
+[#364]: https://github.com/sensiolabs-de/deptrac/pull/364
+[#363]: https://github.com/sensiolabs-de/deptrac/pull/363
+[#362]: https://github.com/sensiolabs-de/deptrac/pull/362
+[#361]: https://github.com/sensiolabs-de/deptrac/pull/361
+[#360]: https://github.com/sensiolabs-de/deptrac/pull/360
+[#359]: https://github.com/sensiolabs-de/deptrac/pull/359
+[#358]: https://github.com/sensiolabs-de/deptrac/pull/358
+[#357]: https://github.com/sensiolabs-de/deptrac/pull/357
+[#356]: https://github.com/sensiolabs-de/deptrac/pull/356
+[#355]: https://github.com/sensiolabs-de/deptrac/pull/355
+[#354]: https://github.com/sensiolabs-de/deptrac/pull/354
+[#350]: https://github.com/sensiolabs-de/deptrac/pull/350
+[#348]: https://github.com/sensiolabs-de/deptrac/pull/348
+[#337]: https://github.com/sensiolabs-de/deptrac/pull/337
+[#320]: https://github.com/sensiolabs-de/deptrac/pull/320
 [#347]: https://github.com/sensiolabs-de/deptrac/pull/347
 [#346]: https://github.com/sensiolabs-de/deptrac/pull/346
 [#345]: https://github.com/sensiolabs-de/deptrac/pull/345
@@ -273,6 +414,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.9.0]: https://github.com/sensiolabs-de/deptrac/compare/0.8.2...0.9.0
 [0.8.2]: https://github.com/sensiolabs-de/deptrac/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/sensiolabs-de/deptrac/compare/0.8.0...0.8.1
 [0.8.0]: https://github.com/sensiolabs-de/deptrac/compare/0.7.1...0.8.0
