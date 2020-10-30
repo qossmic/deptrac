@@ -4,39 +4,31 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Configuration;
 
+use SensioLabs\Deptrac\Configuration\Exception\BaselineFileCannotBeReadException;
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeReadException;
 use SensioLabs\Deptrac\Configuration\Exception\FileDoesNotExistsException;
 use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
-use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Yaml;
+use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
 
 class Loader
 {
+    /** @var YmlFileLoader */
+    private $fileLoader;
+
+    public function __construct(YmlFileLoader $fileLoader)
+    {
+        $this->fileLoader = $fileLoader;
+    }
+
     /**
      * @throws FileDoesNotExistsException
      * @throws FileCannotBeParsedAsYamlException
      * @throws ParsedYamlIsNotAnArrayException
+     * @throws BaselineFileCannotBeReadException
      */
     public function load(string $file): Configuration
     {
-        if (!is_file($file)) {
-            throw FileDoesNotExistsException::fromFilename($file);
-        }
-
-        if (false === ($content = file_get_contents($file))) {
-            throw FileCannotBeReadException::fromFilename($file);
-        }
-
-        try {
-            $data = Yaml::parse($content);
-        } catch (ParseException $exception) {
-            throw FileCannotBeParsedAsYamlException::fromFilename($file);
-        }
-
-        if (!is_array($data)) {
-            throw ParsedYamlIsNotAnArrayException::fromFilename($file);
-        }
+        $data = $this->fileLoader->parseFile($file);
 
         return Configuration::fromArray($data);
     }

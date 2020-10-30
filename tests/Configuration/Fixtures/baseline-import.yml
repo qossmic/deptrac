@@ -1,0 +1,3 @@
+skip_violations:
+  DummyClass:
+    - BarClass

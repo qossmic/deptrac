@@ -43,6 +43,7 @@ this rule has been violated.
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
     1. [GitHubActions Formatter](#githubactions-formatter)
+    1. [Baseline Formatter](#baseline-formatter)
 1. [Uncovered dependencies](#uncovered-dependencies)
 1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
@@ -688,6 +689,26 @@ This formatter is enabled by default while running in a github actions environme
 ```
 ::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)
 ```
+
+### Baseline Formatter
+
+The Baseline formatter is a console formater, which generates the `skip_violations` section to the given File.
+With this formatter it's possible to start on a project with some violations without a failing CI Build.
+
+*Note*: It's not the best solution to ignore all the errors because maybe your current Architecture doesn't allow a change without a new violation.
+
+Supported options:
+
+```
+--baseline-dump[=BASELINE-DUMP] path to a dumped baseline file [default: "./depfile.baseline.yml"]
+```
+
+Include the baseline into your existing `depfile.yml`
+
+```yaml
+# depfile.yml
+baseline: depfile.baseline.yml
+``` 
 
 ## Uncovered dependencies
 

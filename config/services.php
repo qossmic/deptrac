@@ -27,6 +27,7 @@ use SensioLabs\Deptrac\Collector\Registry;
 use SensioLabs\Deptrac\Collector\UsesCollector;
 use SensioLabs\Deptrac\Configuration\Dumper;
 use SensioLabs\Deptrac\Configuration\Loader;
+use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
 use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
 use SensioLabs\Deptrac\Console\Command\InitCommand;
 use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
@@ -34,6 +35,7 @@ use SensioLabs\Deptrac\Dependency\Resolver;
 use SensioLabs\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use SensioLabs\Deptrac\FileResolver;
+use SensioLabs\Deptrac\OutputFormatter\BaselineOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
@@ -104,8 +106,13 @@ return static function (ContainerConfigurator $container): void {
     $services->set(FileResolver::class);
 
     /* Configuration */
+    $services->set(YmlFileLoader::class);
     $services->set(Dumper::class);
-    $services->set(Loader::class);
+    $services
+        ->set(Loader::class)
+        ->args([
+            service(YmlFileLoader::class),
+        ]);
 
     /* Formatters */
     $services
@@ -128,6 +135,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(XMLOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(BaselineOutputFormatter::class)
         ->tag('output_formatter');
 
     /* Collectors */
