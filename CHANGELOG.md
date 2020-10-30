@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
-## [0.9.0] - 2020-10-xx
+## [0.9.0] - 2020-10-30
 
 ### Added
 
 - [#403] report unmatched skipped violations, Thanks to [@smoench]
+- [#395] Introduce BaselineOutputFormatter, Thanks to [@marcelthole]
 - [#378] [GraphViz] display depend on count, Thanks to [@smoench]
 - [#337] introduce table output formatter, Thanks to [@smoench]
 - [#320] Load Collectors by FQCN, Thanks to [@DanielBadura]
@@ -412,3 +413,55 @@ All notable changes to this project will be documented in this file, in reverse 
 [0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
+[#395]: https://github.com/sensiolabs-de/deptrac/pull/395
+[#267]: https://github.com/sensiolabs-de/deptrac/pull/267
+[#265]: https://github.com/sensiolabs-de/deptrac/pull/265
+[#264]: https://github.com/sensiolabs-de/deptrac/pull/264
+[#263]: https://github.com/sensiolabs-de/deptrac/pull/263
+[#262]: https://github.com/sensiolabs-de/deptrac/pull/262
+[#261]: https://github.com/sensiolabs-de/deptrac/pull/261
+[#259]: https://github.com/sensiolabs-de/deptrac/pull/259
+[#258]: https://github.com/sensiolabs-de/deptrac/pull/258
+[#257]: https://github.com/sensiolabs-de/deptrac/pull/257
+[#256]: https://github.com/sensiolabs-de/deptrac/pull/256
+[#255]: https://github.com/sensiolabs-de/deptrac/pull/255
+[#254]: https://github.com/sensiolabs-de/deptrac/pull/254
+[#253]: https://github.com/sensiolabs-de/deptrac/pull/253
+[#252]: https://github.com/sensiolabs-de/deptrac/pull/252
+[#251]: https://github.com/sensiolabs-de/deptrac/pull/251
+[#250]: https://github.com/sensiolabs-de/deptrac/pull/250
+[#249]: https://github.com/sensiolabs-de/deptrac/pull/249
+[#248]: https://github.com/sensiolabs-de/deptrac/pull/248
+[#247]: https://github.com/sensiolabs-de/deptrac/pull/247
+[#246]: https://github.com/sensiolabs-de/deptrac/pull/246
+[#245]: https://github.com/sensiolabs-de/deptrac/pull/245
+[#244]: https://github.com/sensiolabs-de/deptrac/pull/244
+[#243]: https://github.com/sensiolabs-de/deptrac/pull/243
+[#242]: https://github.com/sensiolabs-de/deptrac/pull/242
+[#241]: https://github.com/sensiolabs-de/deptrac/pull/241
+[#236]: https://github.com/sensiolabs-de/deptrac/pull/236
+[#235]: https://github.com/sensiolabs-de/deptrac/pull/235
+[#234]: https://github.com/sensiolabs-de/deptrac/pull/234
+[#233]: https://github.com/sensiolabs-de/deptrac/pull/233
+[#232]: https://github.com/sensiolabs-de/deptrac/pull/232
+[#230]: https://github.com/sensiolabs-de/deptrac/pull/230
+[#228]: https://github.com/sensiolabs-de/deptrac/pull/228
+[#227]: https://github.com/sensiolabs-de/deptrac/pull/227
+[#224]: https://github.com/sensiolabs-de/deptrac/pull/224
+[#223]: https://github.com/sensiolabs-de/deptrac/pull/223
+[#219]: https://github.com/sensiolabs-de/deptrac/pull/219
+[#216]: https://github.com/sensiolabs-de/deptrac/pull/216
+[#215]: https://github.com/sensiolabs-de/deptrac/pull/215
+[#214]: https://github.com/sensiolabs-de/deptrac/pull/214
+[#213]: https://github.com/sensiolabs-de/deptrac/pull/213
+[#211]: https://github.com/sensiolabs-de/deptrac/pull/211
+[#210]: https://github.com/sensiolabs-de/deptrac/pull/210
+[#200]: https://github.com/sensiolabs-de/deptrac/pull/200
+[#197]: https://github.com/sensiolabs-de/deptrac/pull/197
+[#195]: https://github.com/sensiolabs-de/deptrac/pull/195
+[#190]: https://github.com/sensiolabs-de/deptrac/pull/190
+[#179]: https://github.com/sensiolabs-de/deptrac/pull/179
+[#177]: https://github.com/sensiolabs-de/deptrac/pull/177
+[#167]: https://github.com/sensiolabs-de/deptrac/pull/167
+[#160]: https://github.com/sensiolabs-de/deptrac/pull/160
+[@marcelthole]: https://github.com/marcelthole

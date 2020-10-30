@@ -134,7 +134,7 @@ Download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/rele
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.8.2/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.9.0/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
