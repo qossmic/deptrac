@@ -10,10 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#403] report unmatched skipped violations, Thanks to [@smoench]
 - [#378] [GraphViz] display depend on count, Thanks to [@smoench]
-- [#338] Add option to report uncovered dependencies for GitHubActionFormatter, Thanks to [@jschaedl]
 - [#337] introduce table output formatter, Thanks to [@smoench]
-- [#336] ignore (psalm) pseudo types, Thanks to [@smoench]
-- [#335] Add missing Collectors into the container, Thanks to [@DanielBadura]
 - [#320] Load Collectors by FQCN, Thanks to [@DanielBadura]
 
 ### Fixed
@@ -28,7 +25,6 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#400] Enhancement: Mark test classes as final, Thanks to [@localheinz]
 - [#397] Enhancement: Enable final_static_access fixer, Thanks to [@localheinz]
 - [#396] Simplify formatter options, Thanks to [@smoench]
-- [#334] Change default file to depfile.yaml, Thanks to [@DanielBadura]
 - [#366] Bump symfony/console from 5.1.4 to 5.1.5
 - [#364] Bump symfony/config from 5.1.3 to 5.1.4
 - [#363] Bump symfony/event-dispatcher from 5.1.3 to 5.1.4
@@ -76,14 +72,6 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#388] Bump symfony/config from 5.1.6 to 5.1.7
 - [#389] Bump symfony/console from 5.1.6 to 5.1.7
 - [#390] Bump symfony/yaml from 5.1.6 to 5.1.7
-- [#343] Bump symfony/config from 5.1.2 to 5.1.3
-- [#341] Bump phpdocumentor/type-resolver from 1.1.0 to 1.3.0
-- [#346] Bump symfony/console from 5.1.2 to 5.1.3
-- [#345] Bump symfony/yaml from 5.1.2 to 5.1.3
-- [#344] Bump symfony/dependency-injection from 5.1.2 to 5.1.3
-- [#342] Bump nikic/php-parser from 4.5.0 to 4.6.0
-- [#340] Bump symfony/options-resolver from 5.1.2 to 5.1.3
-- [#339] Bump symfony/event-dispatcher from 5.1.2 to 5.1.3
 
 ## [0.8.2] - 2020-07-24
 
