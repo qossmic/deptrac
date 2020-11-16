@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.2.5 || ^8.0",
         "ext-json": "*",
         "composer/xdebug-handler": "^1.4",
         "graphp/graphviz": "0.2.*",
@@ -31,8 +31,6 @@
         "symfony/options-resolver": "^5.1",
         "symfony/yaml": "^5.1"
     },
-    "require-dev": {
-    },
     "suggest": {
         "ext-dom": "For using the JUnit output formatter"
     },
@@ -47,6 +45,9 @@
         }
     },
     "config": {
+        "platform": {
+            "php": "7.2.5"
+        },
         "sort-packages": true
     }
 }
