@@ -22,8 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~~/.phive
-            ./tools
+            ~/.phive
           key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
           restore-keys: |
             phive-${{ runner.os }}-${{ matrix.php-version }}-

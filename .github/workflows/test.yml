@@ -26,8 +26,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~~/.phive
-            ./tools
+            ~/.phive
           key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
           restore-keys: |
             phive-${{ runner.os }}-${{ matrix.php-version }}-
@@ -61,7 +60,7 @@ jobs:
 
       - name: "Update PHPUnit for PHP 8"
         if: ${{ matrix.php-version == 8.0 }}
-        run: phive --no-progress update phpunit
+        run: phive --no-progress update --prefer-offline phpunit
 
       - name: "Run tests"
         run: make tests
