@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.10.0] - 2020-11-20
+
+### Added
+- [#417] adds PHP 8 support, Thanks to [@smoench]
+
+### Changed
+
+- [#417] changed emulative lexer to fixed one, Thanks to [@smoench]
+
 ## [0.9.0] - 2020-10-30
 
 ### Added
@@ -292,6 +301,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [@jschaedl]: https://github.com/jschaedl
 [@DanielBadura]: https://github.com/DanielBadura
 
+[#417]: https://github.com/sensiolabs-de/deptrac/pull/417
 [#411]: https://github.com/sensiolabs-de/deptrac/pull/411
 [#410]: https://github.com/sensiolabs-de/deptrac/pull/410
 [#409]: https://github.com/sensiolabs-de/deptrac/pull/409
