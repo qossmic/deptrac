@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
   <phar name="php-cs-fixer" version="^2.16.3" installed="2.16.4" location="./tools/php-cs-fixer" copy="true"/>
-  <phar name="phpunit" version="^8.5.6" installed="8.5.8" location="./tools/phpunit.phar" copy="true"/>
+  <phar name="phpunit" version="^8.5.6||^9.4" installed="8.5.9" location="./tools/phpunit.phar" copy="true"/>
   <phar name="phpstan" version="^0.12.29" installed="0.12.43" location="./tools/phpstan" copy="true"/>
   <phar name="psalm" version="^3.12.2" installed="3.18.2" location="./tools/psalm" copy="true"/>
   <phar name="humbug/box" version="^3.8.4" installed="3.8.5" location="./tools/box" copy="true"/>

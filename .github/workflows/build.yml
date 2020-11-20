@@ -1,0 +1,120 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - "**"
+
+name: "Build"
+
+jobs:
+  build:
+    name: "Build"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.phive
+          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
+          restore-keys: |
+            phive-${{ runner.os }}-${{ matrix.php-version }}-
+            phive-${{ runner.os }}-
+            phive-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.2
+          extensions: mbstring, xml, ctype, iconv
+          ini-values: phar.readonly=0
+          coverage: none
+          tools: phive, composer:v1
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: composer-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
+          restore-keys: |
+            composer-${{ runner.os }}-${{ matrix.php-version }}-
+            composer-${{ runner.os }}-
+            composer-
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
+      - name: "Install dependencies with composer"
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: "Compile deptrac phar"
+        run: ./tools/box compile
+
+      - name: "Upload phar file artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: deptrac.phar
+          path: deptrac.phar
+
+  e2e-tests:
+    name: "Run e2e tests on PHP ${{ matrix.php-version }}"
+
+    needs: build
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [ 7.2, 8.0 ]
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Download deptrac.phar"
+        uses: actions/download-artifact@v1
+        with:
+          name: deptrac.phar
+          path: .
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+
+      - name: "Run deptrac phar without cache"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yaml --no-cache
+
+      - name: "Cache file should not exist"
+        run: "[ ! -f '.deptrac.cache' ]"
+
+      - name: "Run deptrac phar with cache enabled"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yaml
+
+      - name: "Cache file should exist"
+        run: "[ -f '.deptrac.cache' ]"
+
+      - name: "Run deptrac phar again with cache enabled to be sure the cache file could be reused"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yaml
+
+      - name: "Run deptrac phar with custom cache file output"
+        run: php deptrac.phar analyze examples/Fixture.depfile.yaml --cache-file=.deptrac.cache2
+
+      - name: "Custom cache file should exist"
+        run: "[ -f '.deptrac.cache2' ]"
+
+      - name: "Run deptrac phar with --fail-on-uncovered"
+        run: sh .github/workflows/test-flag-fail-on-uncovered.sh

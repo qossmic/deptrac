@@ -13,8 +13,8 @@ build: tools-install tests
 	$(BOX_BIN) compile
 
 tools-install:
-	if [ ! -f $(PHPUNIT_BIN) ]; then gpg --keyserver hkps://keyserver.ubuntu.com --receive-keys E82B2FB314E9906E 4AA394086372C20A 8E730BA25823D8B5 CF1A108D0E7AE720 8A03EA3B385DBAA1; fi
-	if [ ! -f $(PHPUNIT_BIN) ]; then $(PHIVE_BIN) install --copy --trust-gpg-keys E82B2FB314E9906E,4AA394086372C20A,8E730BA25823D8B5,CF1A108D0E7AE720,8A03EA3B385DBAA1 --force-accept-unsigned; fi
+	gpg --keyserver hkps://keyserver.ubuntu.com --receive-keys E82B2FB314E9906E 4AA394086372C20A 8E730BA25823D8B5 CF1A108D0E7AE720 8A03EA3B385DBAA1
+	$(PHIVE_BIN) --no-progress install --copy --trust-gpg-keys E82B2FB314E9906E,4AA394086372C20A,8E730BA25823D8B5,CF1A108D0E7AE720,8A03EA3B385DBAA1 --force-accept-unsigned
 
 composer-install:
 	$(COMPOSER_BIN) install --optimize-autoloader

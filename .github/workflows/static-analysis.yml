@@ -1,0 +1,146 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - "**"
+
+name: "Static analysis"
+
+jobs:
+  coding-standards:
+    name: "Coding Standards"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.phive
+          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
+          restore-keys: |
+            phive-${{ runner.os }}-${{ matrix.php-version }}-
+            phive-${{ runner.os }}-
+            phive-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.2
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: phive
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
+      - name: "Check cs"
+        run: make php-cs-check
+
+  static-code-analysis-phpstan:
+    name: "Static Code Analysis by PHPStan"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.phive
+          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
+          restore-keys: |
+            phive-${{ runner.os }}-${{ matrix.php-version }}-
+            phive-${{ runner.os }}-
+            phive-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.2
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: phive, composer:v2
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: composer-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
+          restore-keys: |
+            composer-${{ runner.os }}-${{ matrix.php-version }}-
+            composer-${{ runner.os }}-
+            composer-
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
+      - name: "Install dependencies with composer"
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: PHPStan
+        run: make phpstan
+
+  static-code-analysis-psalm:
+    name: "Static Code Analysis by Psalm"
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.phive
+          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
+          restore-keys: |
+            phive-${{ runner.os }}-${{ matrix.php-version }}-
+            phive-${{ runner.os }}-
+            phive-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.2
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: phive, composer:v2
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: composer-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
+          restore-keys: |
+            composer-${{ runner.os }}-${{ matrix.php-version }}-
+            composer-${{ runner.os }}-
+            composer-
+
+      - name: "Install tools with phive"
+        run: make tools-install
+
+      - name: "Install dependencies with composer"
+        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+
+      - name: Psalm
+        run: make psalm
