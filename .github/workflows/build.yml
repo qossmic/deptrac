@@ -36,7 +36,7 @@ jobs:
           extensions: mbstring, xml, ctype, iconv
           ini-values: phar.readonly=0
           coverage: none
-          tools: phive, composer:v1
+          tools: phive, composer:v2
 
       - name: Get composer cache directory
         id: composercache
