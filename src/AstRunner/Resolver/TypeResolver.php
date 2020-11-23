@@ -33,6 +33,9 @@ class TypeResolver
         'trait-string',
         'callable-string',
         'numeric-string',
+        'positive-int',
+        'non-empty-array',
+        'callable-array',
     ];
 
     /**

@@ -57,5 +57,8 @@ final class TypeResolverTest extends TestCase
         yield ['doc' => 'trait-string', 'types' => []];
         yield ['doc' => 'callable-string', 'types' => []];
         yield ['doc' => 'numeric-string', 'types' => []];
+        yield ['doc' => 'positive-int', 'types' => []];
+        yield ['doc' => 'non-empty-array<string>', 'types' => []];
+        yield ['doc' => 'callable-array', 'types' => []];
     }
 }
