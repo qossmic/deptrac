@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.10.1] - 2020-12-04
+
+### Added
+
+- [#418] add psalm pseudo-types, Thanks to [@marcosh]
+
+### Changed
+
+- [#428] Bump nikic/php-parser from 4.10.2 to 4.10.3, Thanks to [@dependabot][bot]
+- [#420] update to box v3.9.1, Thanks to [@smoench]
+- [#419] update jetbrains/phpstorm-stubs to v2020.2, Thanks to [@smoench]
+
 ## [0.10.0] - 2020-11-20
 
 ### Added
@@ -300,7 +312,13 @@ All notable changes to this project will be documented in this file, in reverse 
 [@hugochinchilla]: https://github.com/hugochinchilla
 [@jschaedl]: https://github.com/jschaedl
 [@DanielBadura]: https://github.com/DanielBadura
+[@marcelthole]: https://github.com/marcelthole
+[@marcosh]: https://github.com/marcosh
 
+[#428]: https://github.com/sensiolabs-de/deptrac/pull/428
+[#420]: https://github.com/sensiolabs-de/deptrac/pull/420
+[#419]: https://github.com/sensiolabs-de/deptrac/pull/419
+[#418]: https://github.com/sensiolabs-de/deptrac/pull/418
 [#417]: https://github.com/sensiolabs-de/deptrac/pull/417
 [#411]: https://github.com/sensiolabs-de/deptrac/pull/411
 [#410]: https://github.com/sensiolabs-de/deptrac/pull/410
@@ -318,6 +336,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#398]: https://github.com/sensiolabs-de/deptrac/pull/398
 [#397]: https://github.com/sensiolabs-de/deptrac/pull/397
 [#396]: https://github.com/sensiolabs-de/deptrac/pull/396
+[#395]: https://github.com/sensiolabs-de/deptrac/pull/395
 [#394]: https://github.com/sensiolabs-de/deptrac/pull/394
 [#393]: https://github.com/sensiolabs-de/deptrac/pull/393
 [#392]: https://github.com/sensiolabs-de/deptrac/pull/392
@@ -413,6 +432,8 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.10.1]: https://github.com/sensiolabs-de/deptrac/compare/0.10.0...0.10.1
+[0.10.0]: https://github.com/sensiolabs-de/deptrac/compare/0.9.0...0.10.0
 [0.9.0]: https://github.com/sensiolabs-de/deptrac/compare/0.8.2...0.9.0
 [0.8.2]: https://github.com/sensiolabs-de/deptrac/compare/0.8.1...0.8.2
 [0.8.1]: https://github.com/sensiolabs-de/deptrac/compare/0.8.0...0.8.1
@@ -423,55 +444,3 @@ All notable changes to this project will be documented in this file, in reverse 
 [0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
-[#395]: https://github.com/sensiolabs-de/deptrac/pull/395
-[#267]: https://github.com/sensiolabs-de/deptrac/pull/267
-[#265]: https://github.com/sensiolabs-de/deptrac/pull/265
-[#264]: https://github.com/sensiolabs-de/deptrac/pull/264
-[#263]: https://github.com/sensiolabs-de/deptrac/pull/263
-[#262]: https://github.com/sensiolabs-de/deptrac/pull/262
-[#261]: https://github.com/sensiolabs-de/deptrac/pull/261
-[#259]: https://github.com/sensiolabs-de/deptrac/pull/259
-[#258]: https://github.com/sensiolabs-de/deptrac/pull/258
-[#257]: https://github.com/sensiolabs-de/deptrac/pull/257
-[#256]: https://github.com/sensiolabs-de/deptrac/pull/256
-[#255]: https://github.com/sensiolabs-de/deptrac/pull/255
-[#254]: https://github.com/sensiolabs-de/deptrac/pull/254
-[#253]: https://github.com/sensiolabs-de/deptrac/pull/253
-[#252]: https://github.com/sensiolabs-de/deptrac/pull/252
-[#251]: https://github.com/sensiolabs-de/deptrac/pull/251
-[#250]: https://github.com/sensiolabs-de/deptrac/pull/250
-[#249]: https://github.com/sensiolabs-de/deptrac/pull/249
-[#248]: https://github.com/sensiolabs-de/deptrac/pull/248
-[#247]: https://github.com/sensiolabs-de/deptrac/pull/247
-[#246]: https://github.com/sensiolabs-de/deptrac/pull/246
-[#245]: https://github.com/sensiolabs-de/deptrac/pull/245
-[#244]: https://github.com/sensiolabs-de/deptrac/pull/244
-[#243]: https://github.com/sensiolabs-de/deptrac/pull/243
-[#242]: https://github.com/sensiolabs-de/deptrac/pull/242
-[#241]: https://github.com/sensiolabs-de/deptrac/pull/241
-[#236]: https://github.com/sensiolabs-de/deptrac/pull/236
-[#235]: https://github.com/sensiolabs-de/deptrac/pull/235
-[#234]: https://github.com/sensiolabs-de/deptrac/pull/234
-[#233]: https://github.com/sensiolabs-de/deptrac/pull/233
-[#232]: https://github.com/sensiolabs-de/deptrac/pull/232
-[#230]: https://github.com/sensiolabs-de/deptrac/pull/230
-[#228]: https://github.com/sensiolabs-de/deptrac/pull/228
-[#227]: https://github.com/sensiolabs-de/deptrac/pull/227
-[#224]: https://github.com/sensiolabs-de/deptrac/pull/224
-[#223]: https://github.com/sensiolabs-de/deptrac/pull/223
-[#219]: https://github.com/sensiolabs-de/deptrac/pull/219
-[#216]: https://github.com/sensiolabs-de/deptrac/pull/216
-[#215]: https://github.com/sensiolabs-de/deptrac/pull/215
-[#214]: https://github.com/sensiolabs-de/deptrac/pull/214
-[#213]: https://github.com/sensiolabs-de/deptrac/pull/213
-[#211]: https://github.com/sensiolabs-de/deptrac/pull/211
-[#210]: https://github.com/sensiolabs-de/deptrac/pull/210
-[#200]: https://github.com/sensiolabs-de/deptrac/pull/200
-[#197]: https://github.com/sensiolabs-de/deptrac/pull/197
-[#195]: https://github.com/sensiolabs-de/deptrac/pull/195
-[#190]: https://github.com/sensiolabs-de/deptrac/pull/190
-[#179]: https://github.com/sensiolabs-de/deptrac/pull/179
-[#177]: https://github.com/sensiolabs-de/deptrac/pull/177
-[#167]: https://github.com/sensiolabs-de/deptrac/pull/167
-[#160]: https://github.com/sensiolabs-de/deptrac/pull/160
-[@marcelthole]: https://github.com/marcelthole
