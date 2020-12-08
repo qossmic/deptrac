@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.10.2] - 2020-12-08
+
+### Changed
+
+- [#430] update phpstan to 0.12.58, Thanks to [@smoench]
+- [#429] don't scope symfony polyfill's, Thanks to [@smoench]
+- [#427] Bump symfony/dependency-injection from 5.1.8 to 5.2.0
+- [#426] Bump symfony/console from 5.1.8 to 5.2.0
+- [#425] Bump symfony/config from 5.1.8 to 5.2.0
+- [#424] Bump symfony/options-resolver from 5.1.8 to 5.2.0
+- [#423] Bump symfony/event-dispatcher from 5.1.8 to 5.2.0
+- [#422] Bump symfony/finder from 5.1.8 to 5.2.0
+- [#421] Bump symfony/yaml from 5.1.8 to 5.2.0
+
 ## [0.10.1] - 2020-12-04
 
 ### Added
@@ -12,7 +26,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#428] Bump nikic/php-parser from 4.10.2 to 4.10.3, Thanks to [@dependabot][bot]
+- [#428] Bump nikic/php-parser from 4.10.2 to 4.10.3
 - [#420] update to box v3.9.1, Thanks to [@smoench]
 - [#419] update jetbrains/phpstorm-stubs to v2020.2, Thanks to [@smoench]
 
@@ -315,6 +329,15 @@ All notable changes to this project will be documented in this file, in reverse 
 [@marcelthole]: https://github.com/marcelthole
 [@marcosh]: https://github.com/marcosh
 
+[#430]: https://github.com/sensiolabs-de/deptrac/pull/430
+[#429]: https://github.com/sensiolabs-de/deptrac/pull/429
+[#427]: https://github.com/sensiolabs-de/deptrac/pull/427
+[#426]: https://github.com/sensiolabs-de/deptrac/pull/426
+[#425]: https://github.com/sensiolabs-de/deptrac/pull/425
+[#424]: https://github.com/sensiolabs-de/deptrac/pull/424
+[#423]: https://github.com/sensiolabs-de/deptrac/pull/423
+[#422]: https://github.com/sensiolabs-de/deptrac/pull/422
+[#421]: https://github.com/sensiolabs-de/deptrac/pull/421
 [#428]: https://github.com/sensiolabs-de/deptrac/pull/428
 [#420]: https://github.com/sensiolabs-de/deptrac/pull/420
 [#419]: https://github.com/sensiolabs-de/deptrac/pull/419
@@ -432,6 +455,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.10.2]: https://github.com/sensiolabs-de/deptrac/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/sensiolabs-de/deptrac/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/sensiolabs-de/deptrac/compare/0.9.0...0.10.0
 [0.9.0]: https://github.com/sensiolabs-de/deptrac/compare/0.8.2...0.9.0
