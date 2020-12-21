@@ -24,14 +24,14 @@ class ClassNameRegexCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string> $configuration
+     * @param array<string, mixed> $configuration
      */
     private function getPattern(array $configuration): string
     {
-        if (!isset($configuration['regex'])) {
+        if (!isset($configuration['regex']) || !is_string($configuration['regex'])) {
             throw new \LogicException('ClassNameRegexCollector needs the regex configuration.');
         }
 
-        return (string) $configuration['regex'];
+        return $configuration['regex'];
     }
 }
