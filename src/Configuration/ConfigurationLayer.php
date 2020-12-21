@@ -23,7 +23,7 @@ final class ConfigurationLayer
             'collectors',
         ])->resolve($args);
 
-        return new static(
+        return new self(
             array_map(static function (array $v): ConfigurationCollector {
                 return ConfigurationCollector::fromArray($v);
             }, $options['collectors']),

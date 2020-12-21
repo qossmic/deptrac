@@ -17,7 +17,7 @@ final class ConfigurationSkippedViolation
      */
     public static function fromArray(array $arr): self
     {
-        return new static($arr);
+        return new self($arr);
     }
 
     /**

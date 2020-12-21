@@ -20,7 +20,7 @@ final class ConfigurationCollector
             throw new \InvalidArgumentException('Collector needs a type.');
         }
 
-        return new static($args['type'], $args);
+        return new self($args['type'], $args);
     }
 
     /**

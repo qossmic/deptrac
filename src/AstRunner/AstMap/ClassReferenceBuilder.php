@@ -26,7 +26,7 @@ final class ClassReferenceBuilder
 
     public static function create(string $filepath, string $classLikeName): self
     {
-        return new static($filepath, $classLikeName);
+        return new self($filepath, $classLikeName);
     }
 
     /** @internal */
