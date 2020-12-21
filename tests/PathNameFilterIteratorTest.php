@@ -19,7 +19,7 @@ final class PathNameFilterIteratorTest extends TestCase
         $iterator = new PathNameFilterIterator($inner, $matchPatterns, $noMatchPatterns);
 
         $values = array_map(
-            static function (\SplFileInfo $fileInfo) {
+            static function (SplFileInfo $fileInfo) {
                 return str_replace('/', \DIRECTORY_SEPARATOR, $fileInfo->getPathname());
             },
             iterator_to_array($iterator, false)
