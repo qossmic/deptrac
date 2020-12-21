@@ -38,14 +38,14 @@ class ImplementsCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string> $configuration
+     * @param array<string, mixed> $configuration
      */
     private function getInterfaceName(array $configuration): AstMap\ClassLikeName
     {
-        if (!isset($configuration['implements'])) {
+        if (!isset($configuration['implements']) || !is_string($configuration['implements'])) {
             throw new \LogicException('ImplementsCollector needs the interface name as a string.');
         }
 
-        return AstMap\ClassLikeName::fromFQCN((string) $configuration['implements']);
+        return AstMap\ClassLikeName::fromFQCN($configuration['implements']);
     }
 }

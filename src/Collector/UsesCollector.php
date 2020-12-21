@@ -38,14 +38,14 @@ class UsesCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string> $configuration
+     * @param array<string, mixed> $configuration
      */
     private function getInterfaceName(array $configuration): AstMap\ClassLikeName
     {
-        if (!isset($configuration['uses'])) {
+        if (!isset($configuration['uses']) || !is_string($configuration['uses'])) {
             throw new \LogicException('UsesCollector needs the trait name as a string.');
         }
 
-        return AstMap\ClassLikeName::fromFQCN((string) $configuration['uses']);
+        return AstMap\ClassLikeName::fromFQCN($configuration['uses']);
     }
 }

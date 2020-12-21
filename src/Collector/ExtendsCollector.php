@@ -38,14 +38,14 @@ class ExtendsCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string> $configuration
+     * @param array<string, mixed> $configuration
      */
     private function getInterfaceName(array $configuration): AstMap\ClassLikeName
     {
-        if (!isset($configuration['extends'])) {
+        if (!isset($configuration['extends']) || !is_string($configuration['extends'])) {
             throw new \LogicException('ExtendsCollector needs the interface or class name as a string.');
         }
 
-        return AstMap\ClassLikeName::fromFQCN((string) $configuration['extends']);
+        return AstMap\ClassLikeName::fromFQCN($configuration['extends']);
     }
 }
