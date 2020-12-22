@@ -1,1 +1,3 @@
-skip_violations: {  }
+skip_violations:
+  ClassA:
+    ClassB: ClassB
