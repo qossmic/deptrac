@@ -9,7 +9,7 @@ on:
 name: "Tests"
 
 jobs:
-  tests:
+  unit-tests:
     name: "PHP ${{ matrix.php-version }} Test"
 
     runs-on: ubuntu-latest
@@ -64,3 +64,52 @@ jobs:
 
       - name: "Run tests"
         run: make tests
+
+  infection:
+    name: "PHP ${{ matrix.php-version }} Infection"
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [ 7.4 ]
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Cache tools installed with phive"
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.phive
+          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
+          restore-keys: |
+            phive-${{ runner.os }}-${{ matrix.php-version }}-
+            phive-${{ runner.os }}-
+            phive-
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, ctype, iconv
+          coverage: xdebug
+          tools: phive, composer:v2
+
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: composer-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
+          restore-keys: |
+            composer-${{ runner.os }}-${{ matrix.php-version }}-
+            composer-${{ runner.os }}-
+            composer-
+
+      - name: "Run infection"
+        run: make infection
