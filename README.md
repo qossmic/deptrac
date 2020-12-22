@@ -684,7 +684,8 @@ Supported options:
 ### GitHubActions Formatter
 
 The GithubActions formatter is a console formater, which dumps basic information in github-actions format to *STDOUT*.
-This formatter is enabled by default while running in a github actions environment. To disable the formatter just use `--formatter=github-actions`.
+This formatter is enabled by default while running in a github actions environment.
+It can be activated manually with `--formatter=github-actions`.
 
 ```
 ::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)
@@ -696,6 +697,8 @@ The Baseline formatter is a console formater, which generates the `skip_violatio
 With this formatter it's possible to start on a project with some violations without a failing CI Build.
 
 *Note*: It's not the best solution to ignore all the errors because maybe your current Architecture doesn't allow a change without a new violation.
+
+It can be activated with `--formatter=baseline`.
 
 Supported options:
 
