@@ -55,7 +55,7 @@ class AstMap
     }
 
     /**
-     * @return AstInherit[]|iterable
+     * @return iterable<AstInherit>
      */
     public function getClassInherits(ClassLikeName $classLikeName): iterable
     {
@@ -79,19 +79,20 @@ class AstMap
     private function resolveDepsRecursive(
         AstInherit $inheritDependency,
         ArrayObject $alreadyResolved = null,
-        SplStack $path = null
+        SplStack $pathStack = null
     ): iterable {
+        /** @var ArrayObject<string, true> $alreadyResolved */
         $alreadyResolved = $alreadyResolved ?? new ArrayObject();
 
-        if (null === $path) {
-            $path = new SplStack();
-            $path->push($inheritDependency);
+        if (null === $pathStack) {
+            $pathStack = new SplStack();
+            $pathStack->push($inheritDependency);
         }
 
         $className = $inheritDependency->getClassLikeName()->toString();
 
         if (isset($alreadyResolved[$className])) {
-            $path->pop();
+            $pathStack->pop();
 
             return [];
         }
@@ -105,14 +106,16 @@ class AstMap
         foreach ($classReference->getInherits() as $inherit) {
             $alreadyResolved[$className] = true;
 
-            yield $inherit->withPath(iterator_to_array($path));
+            /** @var AstInherit[] $path */
+            $path = iterator_to_array($pathStack);
+            yield $inherit->withPath($path);
 
-            $path->push($inherit);
+            $pathStack->push($inherit);
 
-            yield from $this->resolveDepsRecursive($inherit, $alreadyResolved, $path);
+            yield from $this->resolveDepsRecursive($inherit, $alreadyResolved, $pathStack);
 
             unset($alreadyResolved[$className]);
-            $path->pop();
+            $pathStack->pop();
         }
     }
 

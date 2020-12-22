@@ -19,7 +19,7 @@ use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 class NikicPhpParser implements AstParser
 {
     /**
-     * @var Node\Stmt\ClassLike[]
+     * @var array<string, Node\Stmt\ClassLike>
      */
     private static $classAstMap = [];
 
@@ -112,9 +112,11 @@ class NikicPhpParser implements AstParser
 
         foreach ($classLikeNodes as $classLikeNode) {
             if (isset($classLikeNode->namespacedName)) {
-                $className = $classLikeNode->namespacedName->toString();
+                $className = $classLikeNode->namespacedName->toCodeString();
+            } elseif ($classLikeNode->name instanceof Node\Identifier) {
+                $className = $classLikeNode->name->toString();
             } else {
-                $className = (string) $classLikeNode->name;
+                continue;
             }
 
             self::$classAstMap[$className] = $classLikeNode;
