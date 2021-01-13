@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
@@ -36,7 +35,7 @@ final class AstMapGeneratorTest extends TestCase
         $astRunner = new AstRunner(
             new EventDispatcher(),
             new NikicPhpParser(
-                new FileParser(ParserFactory::createParser()),
+                ParserFactory::createParser(),
                 new AstFileReferenceInMemoryCache(),
                 $typeResolver,
                 new AnnotationDependencyResolver($typeResolver),
@@ -45,9 +44,7 @@ final class AstMapGeneratorTest extends TestCase
             )
         );
 
-        return $astRunner->createAstMapByFiles(
-            [new \SplFileInfo($fixture)]
-        );
+        return $astRunner->createAstMapByFiles([$fixture]);
     }
 
     public function testBasicDependencyClass(): void

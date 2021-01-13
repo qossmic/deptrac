@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Finder;
 class FileResolver
 {
     /**
-     * @return SplFileInfo[]
+     * @return string[]
      */
     public function resolve(Configuration $configuration): array
     {
@@ -33,6 +33,8 @@ class FileResolver
 
         $finder = new PathNameFilterIterator($customFilterIterator, [], $configuration->getExcludeFiles());
 
-        return iterator_to_array($finder);
+        return array_map(static function (SplFileInfo $fileInfo) {
+            return $fileInfo->getRealPath();
+        }, iterator_to_array($finder));
     }
 }

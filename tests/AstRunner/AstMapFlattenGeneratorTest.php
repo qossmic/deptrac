@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstMap;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
@@ -42,15 +41,13 @@ final class AstMapFlattenGeneratorTest extends TestCase
         $astRunner = new AstRunner(
             new EventDispatcher(),
             new NikicPhpParser(
-                new FileParser(ParserFactory::createParser()),
+                ParserFactory::createParser(),
                 new AstFileReferenceInMemoryCache(),
                 new TypeResolver()
             )
         );
 
-        return $astRunner->createAstMapByFiles(
-            [new \SplFileInfo(__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php')]
-        );
+        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php']);
     }
 
     private function getInheritedInherits(string $class, AstMap $astMap): array

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
+use PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 
@@ -18,7 +18,7 @@ final class NikicPhpParserTest extends TestCase
     protected function setUp(): void
     {
         $this->parser = new NikicPhpParser(
-            $this->createMock(FileParser::class),
+            $this->createMock(Parser::class),
             $this->createMock(AstFileReferenceCache::class),
             $this->createMock(TypeResolver::class)
         );
@@ -27,6 +27,6 @@ final class NikicPhpParserTest extends TestCase
     public function testParseWithInvalidData(): void
     {
         $this->expectException(\TypeError::class);
-        $this->parser->parse(new \stdClass());
+        $this->parser->parseFile(new \stdClass());
     }
 }

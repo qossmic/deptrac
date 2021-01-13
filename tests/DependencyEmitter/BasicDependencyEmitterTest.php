@@ -20,7 +20,7 @@ final class BasicDependencyEmitterTest extends TestCase
     {
         $deps = $this->getDeps(
             new BasicDependencyEmitter(),
-            new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
+            __DIR__.'/Fixtures/Foo.php'
         );
 
         self::assertCount(15, $deps);

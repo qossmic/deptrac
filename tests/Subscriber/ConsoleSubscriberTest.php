@@ -61,7 +61,7 @@ final class ConsoleSubscriberTest extends TestCase
         $output = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
 
         $subscriber = new ConsoleSubscriber($output);
-        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent(new \SplFileInfo('foo.php')));
+        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent('foo.php'));
 
         self::assertSame("Parsing File foo.php\n", $output->fetch());
     }
@@ -72,7 +72,7 @@ final class ConsoleSubscriberTest extends TestCase
 
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onAstFileSyntaxErrorEvent(
-            new AstFileSyntaxErrorEvent(new \SplFileInfo('foo.php'), 'Invalid')
+            new AstFileSyntaxErrorEvent('foo.php', 'Invalid')
         );
 
         self::assertSame("\nSyntax Error on File foo.php\nInvalid\n\n", $output->fetch());

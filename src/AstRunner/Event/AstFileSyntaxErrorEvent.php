@@ -12,13 +12,13 @@ class AstFileSyntaxErrorEvent extends Event
 
     private $syntaxError;
 
-    public function __construct(\SplFileInfo $file, string $syntaxError)
+    public function __construct(string $file, string $syntaxError)
     {
         $this->file = $file;
         $this->syntaxError = $syntaxError;
     }
 
-    public function getFile(): \SplFileInfo
+    public function getFile(): string
     {
         return $this->file;
     }

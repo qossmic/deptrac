@@ -8,6 +8,7 @@ use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
+use PhpParser\Parser;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
@@ -15,6 +16,8 @@ use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
+use SensioLabs\Deptrac\File\FileReader;
+use SensioLabs\Deptrac\ShouldNotHappenException;
 
 class NikicPhpParser implements AstParser
 {
@@ -24,9 +27,9 @@ class NikicPhpParser implements AstParser
     private static $classAstMap = [];
 
     /**
-     * @var FileParser
+     * @var Parser
      */
-    private $fileParser;
+    private $parser;
 
     /**
      * @var AstFileReferenceCache
@@ -49,12 +52,12 @@ class NikicPhpParser implements AstParser
     private $traverser;
 
     public function __construct(
-        FileParser $fileParser,
+        Parser $parser,
         AstFileReferenceCache $cache,
         TypeResolver $typeResolver,
         ClassDependencyResolver ...$classDependencyResolvers
     ) {
-        $this->fileParser = $fileParser;
+        $this->parser = $parser;
         $this->cache = $cache;
         $this->typeResolver = $typeResolver;
         $this->classDependencyResolvers = $classDependencyResolvers;
@@ -63,18 +66,22 @@ class NikicPhpParser implements AstParser
         $this->traverser->addVisitor(new NameResolver());
     }
 
-    public function parse(\SplFileInfo $data): AstFileReference
+    public function parseFile(string $file): AstFileReference
     {
-        $realPath = (string) $data->getRealPath();
-        if (null !== $fileReference = $this->cache->get($realPath)) {
+        if (null !== $fileReference = $this->cache->get($file)) {
             return $fileReference;
         }
 
-        $fileReferenceBuilder = FileReferenceBuilder::create($realPath);
+        $fileReferenceBuilder = FileReferenceBuilder::create($file);
         $visitor = new ClassReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->classDependencyResolvers);
 
+        $nodes = $this->parser->parse(FileReader::read($file));
+        if (null === $nodes) {
+            throw new ShouldNotHappenException();
+        }
+
         $this->traverser->addVisitor($visitor);
-        $this->traverser->traverse($this->fileParser->parse($data));
+        $this->traverser->traverse($nodes);
         $this->traverser->removeVisitor($visitor);
 
         $fileReference = $fileReferenceBuilder->build();
@@ -103,8 +110,13 @@ class NikicPhpParser implements AstParser
             }
         );
 
+        $nodes = $this->parser->parse(FileReader::read($astFileReference->getFilepath()));
+        if (null === $nodes) {
+            throw new ShouldNotHappenException();
+        }
+
         $this->traverser->addVisitor($findingVisitor);
-        $this->traverser->traverse($this->fileParser->parse(new \SplFileInfo($astFileReference->getFilepath())));
+        $this->traverser->traverse($nodes);
         $this->traverser->removeVisitor($findingVisitor);
 
         /** @var Node\Stmt\ClassLike[] $classLikeNodes */

@@ -10,12 +10,12 @@ class AstFileAnalyzedEvent extends Event
 {
     private $file;
 
-    public function __construct(\SplFileInfo $file)
+    public function __construct(string $file)
     {
         $this->file = $file;
     }
 
-    public function getFile(): \SplFileInfo
+    public function getFile(): string
     {
         return $this->file;
     }
