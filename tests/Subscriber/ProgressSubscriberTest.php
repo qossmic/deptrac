@@ -35,7 +35,7 @@ final class ProgressSubscriberTest extends TestCase
         $subscriber = new ProgressSubscriber($this->createSymfonyOutput($bufferedOutput));
 
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(1));
-        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent(new \SplFileInfo('foo.php')));
+        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent('foo.php'));
         $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
         $expectedOutput = <<<OUT

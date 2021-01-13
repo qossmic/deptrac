@@ -6,12 +6,10 @@ namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SplFileInfo;
 
 final class AnnotationDependencyResolverTest extends TestCase
 {
@@ -19,14 +17,14 @@ final class AnnotationDependencyResolverTest extends TestCase
     {
         $typeResolver = new TypeResolver();
         $parser = new NikicPhpParser(
-            new FileParser(ParserFactory::createParser()),
+            ParserFactory::createParser(),
             new AstFileReferenceInMemoryCache(),
             new TypeResolver(),
             new AnnotationDependencyResolver($typeResolver)
         );
 
         $filePath = __DIR__.'/fixtures/AnnotationDependency.php';
-        $astFileReference = $parser->parse(new SplFileInfo($filePath));
+        $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
         $annotationDependency = $astClassReferences[0]->getDependencies();

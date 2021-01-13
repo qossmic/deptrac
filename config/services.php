@@ -6,7 +6,6 @@ use PhpParser\Parser;
 use SensioLabs\Deptrac\Analyser;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
@@ -71,13 +70,9 @@ return static function (ContainerConfigurator $container): void {
         ->factory([ParserFactory::class, 'createParser']);
 
     $services
-        ->set(FileParser::class)
-        ->args([service(Parser::class)]);
-
-    $services
         ->set(NikicPhpParser::class)
         ->args([
-            service(FileParser::class),
+            service(Parser::class),
             service(AstFileReferenceCache::class),
             service(TypeResolver::class),
             service(AnnotationDependencyResolver::class),

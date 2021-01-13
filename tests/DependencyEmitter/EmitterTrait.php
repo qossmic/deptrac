@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
 
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\AstRunner;
@@ -17,14 +16,14 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
 {
-    public function getDeps(DependencyEmitterInterface $emitter, \SplFileInfo $fileInfo): array
+    public function getDeps(DependencyEmitterInterface $emitter, string $file): array
     {
         $parser = new NikicPhpParser(
-            new FileParser(ParserFactory::createParser()),
+            ParserFactory::createParser(),
             new AstFileReferenceInMemoryCache(),
             new TypeResolver()
         );
-        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$fileInfo]);
+        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$file]);
         $result = new Result();
 
         $emitter->applyDependencies($astMap, $result);

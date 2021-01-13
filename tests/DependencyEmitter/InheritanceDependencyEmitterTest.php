@@ -20,7 +20,7 @@ final class InheritanceDependencyEmitterTest extends TestCase
     {
         $deps = $this->getDeps(
             new InheritanceDependencyEmitter(),
-            new \SplFileInfo(__DIR__.'/Fixtures/Foo.php')
+            __DIR__.'/Fixtures/Foo.php'
         );
 
         self::assertCount(4, $deps);

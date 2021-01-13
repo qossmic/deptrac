@@ -60,7 +60,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent): void
     {
         $this->output->writeln(
-            sprintf('Parsing File %s', $analyzedEvent->getFile()->getPathname()),
+            sprintf('Parsing File %s', $analyzedEvent->getFile()),
             OutputInterface::VERBOSITY_VERBOSE
         );
     }
@@ -69,7 +69,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
     {
         $this->output->writeln(sprintf(
             "\nSyntax Error on File %s\n<error>%s</error>\n",
-            $astFileSyntaxErrorEvent->getFile()->getPathname(),
+            $astFileSyntaxErrorEvent->getFile(),
             $astFileSyntaxErrorEvent->getSyntaxError()
         ));
     }

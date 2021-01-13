@@ -6,26 +6,24 @@ namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
 use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\FileParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SplFileInfo;
 
 final class AnonymousClassResolverTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {
         $parser = new NikicPhpParser(
-            new FileParser(ParserFactory::createParser()),
+            ParserFactory::createParser(),
             new AstFileReferenceInMemoryCache(),
             new TypeResolver(),
             new AnonymousClassResolver()
         );
 
         $filePath = __DIR__.'/fixtures/AnonymousClass.php';
-        $astFileReference = $parser->parse(new SplFileInfo($filePath));
+        $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 

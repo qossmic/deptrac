@@ -23,7 +23,7 @@ class AstRunner
     }
 
     /**
-     * @param \SplFileInfo[] $files
+     * @param string[] $files
      */
     public function createAstMapByFiles(array $files): AstMap
     {
@@ -33,7 +33,7 @@ class AstRunner
 
         foreach ($files as $file) {
             try {
-                $references[] = $this->astParser->parse($file);
+                $references[] = $this->astParser->parseFile($file);
 
                 $this->dispatcher->dispatch(new AstFileAnalyzedEvent($file));
             } catch (\PhpParser\Error $e) {
