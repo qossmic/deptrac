@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration\Exception;
+namespace Tests\SensioLabs\Deptrac\File;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeReadException;
+use SensioLabs\Deptrac\File\CouldNotReadFileException;
 
 /**
- * @covers \SensioLabs\Deptrac\Configuration\Exception\FileCannotBeReadException
+ * @covers \SensioLabs\Deptrac\File\CouldNotReadFileException
  */
-final class FileCannotBeReadExceptionTest extends TestCase
+final class CouldNotReadFileExceptionTest extends TestCase
 {
     public function testIsRuntimeException(): void
     {
-        $exception = new FileCannotBeReadException();
+        $exception = new CouldNotReadFileException();
 
         self::assertInstanceOf(\RuntimeException::class, $exception);
     }
@@ -23,7 +23,7 @@ final class FileCannotBeReadExceptionTest extends TestCase
     {
         $filename = __FILE__;
 
-        $exception = FileCannotBeReadException::fromFilename($filename);
+        $exception = CouldNotReadFileException::fromFilename($filename);
 
         $message = sprintf(
             'File "%s" cannot be read.',

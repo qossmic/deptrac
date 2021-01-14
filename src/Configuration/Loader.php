@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace SensioLabs\Deptrac\Configuration;
 
-use SensioLabs\Deptrac\Configuration\Exception\BaselineFileCannotBeReadException;
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\FileDoesNotExistsException;
 use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
+use SensioLabs\Deptrac\File\CouldNotReadFileException;
 
 class Loader
 {
@@ -21,10 +20,9 @@ class Loader
     }
 
     /**
-     * @throws FileDoesNotExistsException
+     * @throws CouldNotReadFileException
      * @throws FileCannotBeParsedAsYamlException
      * @throws ParsedYamlIsNotAnArrayException
-     * @throws BaselineFileCannotBeReadException
      */
     public function load(string $file): Configuration
     {
