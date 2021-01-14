@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Tests\SensioLabs\Deptrac\Configuration\Loader;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Exception\BaselineFileCannotBeReadException;
 use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\FileDoesNotExistsException;
 use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
+use SensioLabs\Deptrac\File\CouldNotReadFileException;
 
 /**
  * @covers \SensioLabs\Deptrac\Configuration\Loader
@@ -22,7 +21,7 @@ final class YmlFileLoaderTest extends TestCase
 
         $loader = new YmlFileLoader();
 
-        $this->expectException(FileDoesNotExistsException::class);
+        $this->expectException(CouldNotReadFileException::class);
 
         $loader->parseFile($file);
     }
@@ -55,7 +54,7 @@ final class YmlFileLoaderTest extends TestCase
 
         $loader = new YmlFileLoader();
 
-        $this->expectException(BaselineFileCannotBeReadException::class);
+        $this->expectException(CouldNotReadFileException::class);
         $this->expectExceptionMessageMatches('~non-existent-file\.yaml~');
 
         $loader->parseFile($file);
