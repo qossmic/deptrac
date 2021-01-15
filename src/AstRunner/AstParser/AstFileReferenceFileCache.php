@@ -11,6 +11,7 @@ use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
 use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
 use SensioLabs\Deptrac\Console\Application;
+use SensioLabs\Deptrac\File\FileReader;
 
 class AstFileReferenceFileCache implements AstFileReferenceCache
 {
@@ -89,11 +90,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
             return;
         }
 
-        $contents = file_get_contents($this->cacheFile);
-
-        if (false === $contents) {
-            throw new FileCouldNotBeReadException($this->cacheFile);
-        }
+        $contents = FileReader::read($this->cacheFile);
 
         /** @var array{version: string, payload: array<string, array{hash: string, reference: string}>} $cache */
         $cache = json_decode($contents, true);
