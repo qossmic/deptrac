@@ -12,6 +12,7 @@ use SensioLabs\Deptrac\AstRunner\AstRunner;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
+use SensioLabs\Deptrac\AstRunner\Resolver\PropertyTypeResolver;
 use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
 use SensioLabs\Deptrac\Collector\BoolCollector;
 use SensioLabs\Deptrac\Collector\ClassNameCollector;
@@ -78,6 +79,7 @@ return static function (ContainerConfigurator $container): void {
             service(AnnotationDependencyResolver::class),
             service(AnonymousClassResolver::class),
             service(ClassConstantResolver::class),
+            service(PropertyTypeResolver::class),
         ]);
 
     $services
@@ -86,6 +88,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(AnonymousClassResolver::class);
     $services->set(ClassConstantResolver::class);
     $services->set(TypeResolver::class);
+    $services
+        ->set(PropertyTypeResolver::class)
+        ->args([service(TypeResolver::class)]);
 
     $services
         ->set(Analyser::class)
