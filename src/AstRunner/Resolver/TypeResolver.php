@@ -146,7 +146,7 @@ class TypeResolver
     }
 
     /**
-     * @param \PhpParser\Node\Identifier|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType $type
+     * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType $type
      *
      * @return string[]
      */
@@ -160,6 +160,7 @@ class TypeResolver
         }
         if ($type instanceof Node\UnionType) {
             return array_merge([], ...array_map(function (NodeAbstract $typeNode) {
+                /** @var \PhpParser\Node\Identifier|\PhpParser\Node\Name $typeNode */
                 return $this->resolvePropertyType($typeNode);
             }, $type->types));
         }
