@@ -159,10 +159,14 @@ class TypeResolver
             return $this->resolvePropertyType($type->type);
         }
         if ($type instanceof Node\UnionType) {
-            return array_merge([], ...array_map(function (NodeAbstract $typeNode) {
-                /** @var \PhpParser\Node\Identifier|\PhpParser\Node\Name $typeNode */
-                return $this->resolvePropertyType($typeNode);
-            }, $type->types));
+            return array_merge([], ...array_map(
+                /**
+                 * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name $typeNode
+                 */
+                function ($typeNode) {
+                    return $this->resolvePropertyType($typeNode);
+                },
+            $type->types));
         }
 
         return [];
