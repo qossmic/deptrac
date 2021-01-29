@@ -4,6 +4,49 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.10.3] - 2021-01-29
+
+### Added
+
+- [#456] Support non annotated property type, Thanks to [@sasezaki]
+- [#447] add infection testing, Thanks to [@smoench]
+
+### Changed
+
+- [#468] replace useless specific output file to temp file at test., Thanks to [@sasezaki]
+- [#434] Bump symfony/options-resolver from 5.2.0 to 5.2.1
+- [#435] Bump symfony/event-dispatcher from 5.2.0 to 5.2.1
+- [#436] Bump symfony/finder from 5.2.0 to 5.2.1
+- [#437] Bump nikic/php-parser from 4.10.3 to 4.10.4
+- [#438] Bump symfony/yaml from 5.2.0 to 5.2.1
+- [#439] Bump symfony/console from 5.2.0 to 5.2.1
+- [#440] Bump symfony/config from 5.2.0 to 5.2.1
+- [#441] Bump symfony/dependency-injection from 5.2.0 to 5.2.1
+- [#442] update box to version 3.11.0, Thanks to [@smoench]
+- [#443] update php-cs-fixer to version 2.17.2, Thanks to [@smoench]
+- [#444] update phpstan to version 0.12.64, Thanks to [@smoench]
+- [#445] update phpunit to version 8.5.13, Thanks to [@smoench]
+- [#446] update psalm to version 4.3.1, Thanks to [@smoench]
+- [#450] simplify file parsing, Thanks to [@smoench]
+- [#467] update psalm to v4.4.1, Thanks to [@smoench]
+- [#451] simplify configuration loading, Thanks to [@smoench]
+- [#452] simplify cache file reading, Thanks to [@smoench]
+- [#457] Bump symfony/event-dispatcher from 5.2.1 to 5.2.2
+- [#458] Bump symfony/yaml from 5.2.1 to 5.2.2
+- [#459] Bump symfony/console from 5.2.1 to 5.2.2
+- [#460] Bump symfony/finder from 5.2.1 to 5.2.2
+- [#461] Bump symfony/dependency-injection from 5.2.1 to 5.2.2
+- [#462] Bump symfony/options-resolver from 5.2.1 to 5.2.2
+- [#463] Bump symfony/config from 5.2.1 to 5.2.2
+- [#464] update php-cs-fixer to v2.18.2, Thanks to [@smoench]
+- [#466] update phpstan to v0.12.70, Thanks to [@smoench]
+- [#433] Bump phpstan/phpdoc-parser from 0.4.9 to 0.4.10
+
+### Fixed
+
+- [#469] clean up the temp file even when the test fails, Thanks to [@xabbuh]
+- [#465] Readme: fix typo, Thanks to [@staabm]
+
 ## [0.10.2] - 2020-12-08
 
 ### Changed
@@ -328,7 +371,42 @@ All notable changes to this project will be documented in this file, in reverse 
 [@DanielBadura]: https://github.com/DanielBadura
 [@marcelthole]: https://github.com/marcelthole
 [@marcosh]: https://github.com/marcosh
+[@staabm]: https://github.com/staabm
+[@sasezaki]: https://github.com/sasezaki
+[@xabbuh]: https://github.com/xabbuh
 
+[#469]: https://github.com/sensiolabs-de/deptrac/pull/469
+[#468]: https://github.com/sensiolabs-de/deptrac/pull/468
+[#467]: https://github.com/sensiolabs-de/deptrac/pull/467
+[#466]: https://github.com/sensiolabs-de/deptrac/pull/466
+[#465]: https://github.com/sensiolabs-de/deptrac/pull/465
+[#464]: https://github.com/sensiolabs-de/deptrac/pull/464
+[#463]: https://github.com/sensiolabs-de/deptrac/pull/463
+[#462]: https://github.com/sensiolabs-de/deptrac/pull/462
+[#461]: https://github.com/sensiolabs-de/deptrac/pull/461
+[#460]: https://github.com/sensiolabs-de/deptrac/pull/460
+[#459]: https://github.com/sensiolabs-de/deptrac/pull/459
+[#458]: https://github.com/sensiolabs-de/deptrac/pull/458
+[#457]: https://github.com/sensiolabs-de/deptrac/pull/457
+[#456]: https://github.com/sensiolabs-de/deptrac/pull/456
+[#452]: https://github.com/sensiolabs-de/deptrac/pull/452
+[#451]: https://github.com/sensiolabs-de/deptrac/pull/451
+[#450]: https://github.com/sensiolabs-de/deptrac/pull/450
+[#447]: https://github.com/sensiolabs-de/deptrac/pull/447
+[#446]: https://github.com/sensiolabs-de/deptrac/pull/446
+[#445]: https://github.com/sensiolabs-de/deptrac/pull/445
+[#444]: https://github.com/sensiolabs-de/deptrac/pull/444
+[#443]: https://github.com/sensiolabs-de/deptrac/pull/443
+[#442]: https://github.com/sensiolabs-de/deptrac/pull/442
+[#441]: https://github.com/sensiolabs-de/deptrac/pull/441
+[#440]: https://github.com/sensiolabs-de/deptrac/pull/440
+[#439]: https://github.com/sensiolabs-de/deptrac/pull/439
+[#438]: https://github.com/sensiolabs-de/deptrac/pull/438
+[#437]: https://github.com/sensiolabs-de/deptrac/pull/437
+[#436]: https://github.com/sensiolabs-de/deptrac/pull/436
+[#435]: https://github.com/sensiolabs-de/deptrac/pull/435
+[#434]: https://github.com/sensiolabs-de/deptrac/pull/434
+[#433]: https://github.com/sensiolabs-de/deptrac/pull/433
 [#430]: https://github.com/sensiolabs-de/deptrac/pull/430
 [#429]: https://github.com/sensiolabs-de/deptrac/pull/429
 [#427]: https://github.com/sensiolabs-de/deptrac/pull/427
@@ -455,6 +533,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/sensiolabs-de/deptrac/pull/270
 [#266]: https://github.com/sensiolabs-de/deptrac/pull/266
 
+[0.10.3]: https://github.com/sensiolabs-de/deptrac/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/sensiolabs-de/deptrac/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/sensiolabs-de/deptrac/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/sensiolabs-de/deptrac/compare/0.9.0...0.10.0
@@ -468,3 +547,4 @@ All notable changes to this project will be documented in this file, in reverse 
 [0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
+
