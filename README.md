@@ -230,7 +230,7 @@ layers:
     collectors:
       - type: className
         regex: .*MyNamespace\\.*Controller.*
-ruleset: ~
+ruleset: []
 ```
 
 At first, lets take a closer look at the first layer (named *Models*).
