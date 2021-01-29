@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac;
+namespace Qossmic\Deptrac;
 
 use JetBrains\PHPStormStub\PhpStormStubsMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\RulesetEngine\Allowed;
-use SensioLabs\Deptrac\RulesetEngine\Context;
-use SensioLabs\Deptrac\RulesetEngine\Error;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolationHelper;
-use SensioLabs\Deptrac\RulesetEngine\Uncovered;
-use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\RulesetEngine\Allowed;
+use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\Error;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolationHelper;
+use Qossmic\Deptrac\RulesetEngine\Uncovered;
+use Qossmic\Deptrac\RulesetEngine\Violation;
 
 class RulesetEngine
 {

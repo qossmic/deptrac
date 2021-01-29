@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Dependency\Event;
+namespace Qossmic\Deptrac\Dependency\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

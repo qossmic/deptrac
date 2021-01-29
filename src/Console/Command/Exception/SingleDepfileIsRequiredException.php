@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Console\Command\Exception;
+namespace Qossmic\Deptrac\Console\Command\Exception;
 
 final class SingleDepfileIsRequiredException extends \RuntimeException
 {

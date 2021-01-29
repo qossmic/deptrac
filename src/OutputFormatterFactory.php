@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac;
+namespace Qossmic\Deptrac;
 
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 

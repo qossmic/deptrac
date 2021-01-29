@@ -20,7 +20,7 @@ return [
         iterator_to_array($polyfillsBootstrap)
     ),
     'whitelist' => [
-        'SensioLabs\\Deptrac\\*',
+        'Qossmic\\Deptrac\\*',
         'Symfony\\Polyfill\\*',
     ],
     'whitelist-global-constants' => true,   // bool

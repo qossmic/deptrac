@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class ClassConstantResolver implements ClassDependencyResolver
 {

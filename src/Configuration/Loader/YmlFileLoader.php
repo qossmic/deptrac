@@ -1,10 +1,10 @@
 <?php
 
-namespace SensioLabs\Deptrac\Configuration\Loader;
+namespace Qossmic\Deptrac\Configuration\Loader;
 
-use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
-use SensioLabs\Deptrac\File\FileReader;
+use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
+use Qossmic\Deptrac\File\FileReader;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 

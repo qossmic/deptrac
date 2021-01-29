@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Collector;
+namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Collector\BoolCollector;
-use SensioLabs\Deptrac\Collector\ClassNameCollector;
-use SensioLabs\Deptrac\Collector\CollectorInterface;
-use SensioLabs\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\Collector\BoolCollector;
+use Qossmic\Deptrac\Collector\ClassNameCollector;
+use Qossmic\Deptrac\Collector\CollectorInterface;
+use Qossmic\Deptrac\Collector\Registry;
 
 final class RegistryTest extends TestCase
 {

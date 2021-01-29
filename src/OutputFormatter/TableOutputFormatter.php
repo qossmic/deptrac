@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\OutputFormatter;
+namespace Qossmic\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
-use SensioLabs\Deptrac\Console\Output;
-use SensioLabs\Deptrac\Dependency\InheritDependency;
-use SensioLabs\Deptrac\RulesetEngine\Allowed;
-use SensioLabs\Deptrac\RulesetEngine\Context;
-use SensioLabs\Deptrac\RulesetEngine\Error;
-use SensioLabs\Deptrac\RulesetEngine\Rule;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\Uncovered;
-use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\Dependency\InheritDependency;
+use Qossmic\Deptrac\RulesetEngine\Allowed;
+use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\Error;
+use Qossmic\Deptrac\RulesetEngine\Rule;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
+use Qossmic\Deptrac\RulesetEngine\Uncovered;
+use Qossmic\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Helper\TableSeparator;
 
 final class TableOutputFormatter implements OutputFormatterInterface

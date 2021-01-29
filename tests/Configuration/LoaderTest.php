@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration;
+namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Configuration\Loader;
+use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\Loader;
 
 /**
- * @covers \SensioLabs\Deptrac\Configuration\Loader
+ * @covers \Qossmic\Deptrac\Configuration\Loader
  */
 final class LoaderTest extends TestCase
 {

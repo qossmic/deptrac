@@ -1,12 +1,12 @@
 <?php
 
-namespace SensioLabs\Deptrac;
+namespace Qossmic\Deptrac;
 
-use SensioLabs\Deptrac\AstRunner\AstRunner;
-use SensioLabs\Deptrac\Collector\Registry;
-use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Dependency\Resolver;
-use SensioLabs\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\AstRunner\AstRunner;
+use Qossmic\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Dependency\Resolver;
+use Qossmic\Deptrac\RulesetEngine\Context;
 
 class Analyser
 {

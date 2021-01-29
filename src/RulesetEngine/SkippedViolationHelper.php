@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\RulesetEngine;
+namespace Qossmic\Deptrac\RulesetEngine;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
 
 final class SkippedViolationHelper
 {

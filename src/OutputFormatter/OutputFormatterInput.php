@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\OutputFormatter;
+namespace Qossmic\Deptrac\OutputFormatter;
 
 class OutputFormatterInput
 {

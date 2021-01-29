@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures;
+namespace Tests\Qossmic\Deptrac\AstRunner\Resolver\Fixtures;
 
 interface InterfaceC
 {

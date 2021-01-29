@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\Qossmic\Deptrac;
 
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\PathNameFilterIterator;
+use Qossmic\Deptrac\PathNameFilterIterator;
 use SplFileInfo;
 
 final class PathNameFilterIteratorTest extends TestCase

@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
+namespace Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
-use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SensioLabs\Deptrac\File\FileReader;
-use SensioLabs\Deptrac\ShouldNotHappenException;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
+use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
+use Qossmic\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\File\FileReader;
+use Qossmic\Deptrac\ShouldNotHappenException;
 
 class NikicPhpParser implements AstParser
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Subscriber;
+namespace Qossmic\Deptrac\Subscriber;
 
-use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use SensioLabs\Deptrac\Console\Output;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Console\Output;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressSubscriber implements EventSubscriberInterface

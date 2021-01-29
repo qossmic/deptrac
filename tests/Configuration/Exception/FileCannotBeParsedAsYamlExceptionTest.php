@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration\Exception;
+namespace Tests\Qossmic\Deptrac\Configuration\Exception;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
 
 /**
- * @covers \SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException
+ * @covers \Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException
  */
 final class FileCannotBeParsedAsYamlExceptionTest extends TestCase
 {

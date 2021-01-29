@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
@@ -11,7 +11,7 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class AnnotationDependencyResolver implements ClassDependencyResolver
 {

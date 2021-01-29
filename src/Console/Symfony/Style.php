@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Console\Symfony;
+namespace Qossmic\Deptrac\Console\Symfony;
 
-use SensioLabs\Deptrac\Console\OutputStyle;
+use Qossmic\Deptrac\Console\OutputStyle;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**

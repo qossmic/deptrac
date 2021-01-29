@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.11.0] - xxxx-xx-xx
+
+### Changed
+
+- [#470] deptrac has been moved to the https://github.com/qossmic organization, and the namespace has been renamed to `Qossmic\Deptrac\* `.
+
 ## [0.10.3] - 2021-01-29
 
 ### Added
@@ -250,101 +256,101 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#255](https://github.com/sensiolabs-de/deptrac/pull/255) Enhancement: Add return type declarations to closures, Thanks to [@localheinz]
-- [#257](https://github.com/sensiolabs-de/deptrac/pull/257) adds missing dependency resolver test, Thanks to [@smoench]
-- [#267](https://github.com/sensiolabs-de/deptrac/pull/267) improve tests, Thanks to [@smoench]
-- [#262](https://github.com/sensiolabs-de/deptrac/pull/262) dependency updates, Thanks to [@smoench]
-- [#261](https://github.com/sensiolabs-de/deptrac/pull/261) Update README.md, Thanks to [@dbrumann]
-- [#259](https://github.com/sensiolabs-de/deptrac/pull/259) phpstan level max, Thanks to [@smoench]
-- [#258](https://github.com/sensiolabs-de/deptrac/pull/258) Enhancement: Throw exception when configuration can be parsed as yaml, but does not contain array, Thanks to [@localheinz]
-- [#263](https://github.com/sensiolabs-de/deptrac/pull/263) phpstan - inferPrivatePropertyTypeFromConstructor, Thanks to [@smoench]
-- [#264](https://github.com/sensiolabs-de/deptrac/pull/264) simplify console output mode (verbose), Thanks to [@smoench]
-- [#254](https://github.com/sensiolabs-de/deptrac/pull/254) Enhancement: Enable static_lambda fixer, Thanks to [@localheinz]
-- [#253](https://github.com/sensiolabs-de/deptrac/pull/253) Enhancement: Keep rules sorted in .php_cs.dist, Thanks to [@localheinz]
-- [#252](https://github.com/sensiolabs-de/deptrac/pull/252) Enhancement: Introduce temporary variable, Thanks to [@localheinz]
-- [#251](https://github.com/sensiolabs-de/deptrac/pull/251) Enhancement: Update phpstan/phpstan, Thanks to [@localheinz]
-- [#250](https://github.com/sensiolabs-de/deptrac/pull/250) use event classes for emitted and flattened dependencies, Thanks to [@smoench]
-- [#249](https://github.com/sensiolabs-de/deptrac/pull/249) refactor dependencies resolution, Thanks to [@smoench]
-- [#247](https://github.com/sensiolabs-de/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
-- [#256](https://github.com/sensiolabs-de/deptrac/pull/256) Enhancement: Throw exception when configuration cannot be parsed as yaml, Thanks to [@localheinz]
-- [#228](https://github.com/sensiolabs-de/deptrac/pull/228) improve file exclusion, Thanks to [@smoench]
-- [#235](https://github.com/sensiolabs-de/deptrac/pull/235) Improve console output of analyze command., Thanks to [@temp]
-- [#245](https://github.com/sensiolabs-de/deptrac/pull/245) refactor/improve method collector, Thanks to [@smoench]
-- [#244](https://github.com/sensiolabs-de/deptrac/pull/244) dependency updates, Thanks to [@smoench]
-- [#243](https://github.com/sensiolabs-de/deptrac/pull/243) anonymous class resolver, Thanks to [@smoench]
-- [#242](https://github.com/sensiolabs-de/deptrac/pull/242) upgrade box to v3.8, Thanks to [@smoench]
-- [#241](https://github.com/sensiolabs-de/deptrac/pull/241) class constant resolver, Thanks to [@smoench]
-- [#236](https://github.com/sensiolabs-de/deptrac/pull/236) split progressbar to its own subscriber, Thanks to [@smoench]
-- [#247](https://github.com/sensiolabs-de/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
-- [#234](https://github.com/sensiolabs-de/deptrac/pull/234) upgrade to symfony 4.3, Thanks to [@smoench]
-- [#233](https://github.com/sensiolabs-de/deptrac/pull/233) upgrade to phpunit 8, Thanks to [@smoench]
-- [#232](https://github.com/sensiolabs-de/deptrac/pull/232) increase minimum php version to 7.2, Thanks to [@smoench]
-- [#246](https://github.com/sensiolabs-de/deptrac/pull/246) naming + improvements, Thanks to [@smoench]
-- [#224](https://github.com/sensiolabs-de/deptrac/pull/224) annotation dependency resolver, Thanks to [@smoench]
-- [#248](https://github.com/sensiolabs-de/deptrac/pull/248) Update documentation on bool collector to describe actual behaviour, Thanks to [@rpkamp]
+- [#255](https://github.com/qossmic/deptrac/pull/255) Enhancement: Add return type declarations to closures, Thanks to [@localheinz]
+- [#257](https://github.com/qossmic/deptrac/pull/257) adds missing dependency resolver test, Thanks to [@smoench]
+- [#267](https://github.com/qossmic/deptrac/pull/267) improve tests, Thanks to [@smoench]
+- [#262](https://github.com/qossmic/deptrac/pull/262) dependency updates, Thanks to [@smoench]
+- [#261](https://github.com/qossmic/deptrac/pull/261) Update README.md, Thanks to [@dbrumann]
+- [#259](https://github.com/qossmic/deptrac/pull/259) phpstan level max, Thanks to [@smoench]
+- [#258](https://github.com/qossmic/deptrac/pull/258) Enhancement: Throw exception when configuration can be parsed as yaml, but does not contain array, Thanks to [@localheinz]
+- [#263](https://github.com/qossmic/deptrac/pull/263) phpstan - inferPrivatePropertyTypeFromConstructor, Thanks to [@smoench]
+- [#264](https://github.com/qossmic/deptrac/pull/264) simplify console output mode (verbose), Thanks to [@smoench]
+- [#254](https://github.com/qossmic/deptrac/pull/254) Enhancement: Enable static_lambda fixer, Thanks to [@localheinz]
+- [#253](https://github.com/qossmic/deptrac/pull/253) Enhancement: Keep rules sorted in .php_cs.dist, Thanks to [@localheinz]
+- [#252](https://github.com/qossmic/deptrac/pull/252) Enhancement: Introduce temporary variable, Thanks to [@localheinz]
+- [#251](https://github.com/qossmic/deptrac/pull/251) Enhancement: Update phpstan/phpstan, Thanks to [@localheinz]
+- [#250](https://github.com/qossmic/deptrac/pull/250) use event classes for emitted and flattened dependencies, Thanks to [@smoench]
+- [#249](https://github.com/qossmic/deptrac/pull/249) refactor dependencies resolution, Thanks to [@smoench]
+- [#247](https://github.com/qossmic/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
+- [#256](https://github.com/qossmic/deptrac/pull/256) Enhancement: Throw exception when configuration cannot be parsed as yaml, Thanks to [@localheinz]
+- [#228](https://github.com/qossmic/deptrac/pull/228) improve file exclusion, Thanks to [@smoench]
+- [#235](https://github.com/qossmic/deptrac/pull/235) Improve console output of analyze command., Thanks to [@temp]
+- [#245](https://github.com/qossmic/deptrac/pull/245) refactor/improve method collector, Thanks to [@smoench]
+- [#244](https://github.com/qossmic/deptrac/pull/244) dependency updates, Thanks to [@smoench]
+- [#243](https://github.com/qossmic/deptrac/pull/243) anonymous class resolver, Thanks to [@smoench]
+- [#242](https://github.com/qossmic/deptrac/pull/242) upgrade box to v3.8, Thanks to [@smoench]
+- [#241](https://github.com/qossmic/deptrac/pull/241) class constant resolver, Thanks to [@smoench]
+- [#236](https://github.com/qossmic/deptrac/pull/236) split progressbar to its own subscriber, Thanks to [@smoench]
+- [#247](https://github.com/qossmic/deptrac/pull/247) refactor inherits resolving, Thanks to [@smoench]
+- [#234](https://github.com/qossmic/deptrac/pull/234) upgrade to symfony 4.3, Thanks to [@smoench]
+- [#233](https://github.com/qossmic/deptrac/pull/233) upgrade to phpunit 8, Thanks to [@smoench]
+- [#232](https://github.com/qossmic/deptrac/pull/232) increase minimum php version to 7.2, Thanks to [@smoench]
+- [#246](https://github.com/qossmic/deptrac/pull/246) naming + improvements, Thanks to [@smoench]
+- [#224](https://github.com/qossmic/deptrac/pull/224) annotation dependency resolver, Thanks to [@smoench]
+- [#248](https://github.com/qossmic/deptrac/pull/248) Update documentation on bool collector to describe actual behaviour, Thanks to [@rpkamp]
 
 ### Fixed
 
-- [#265](https://github.com/sensiolabs-de/deptrac/pull/265) Bugfix: classes in other namespaces are resolved in same namespace, Thanks to [@smoench]
-- [#227](https://github.com/sensiolabs-de/deptrac/pull/227) Fix: Remove non-applicable exclude configuration, Thanks to [@localheinz]
-- [#230](https://github.com/sensiolabs-de/deptrac/pull/230) Fix alignment, Thanks to [@BackEndTea]
-- [#223](https://github.com/sensiolabs-de/deptrac/pull/223) Fix outdated graphviz download link in README, Thanks to [@LeoVie]
+- [#265](https://github.com/qossmic/deptrac/pull/265) Bugfix: classes in other namespaces are resolved in same namespace, Thanks to [@smoench]
+- [#227](https://github.com/qossmic/deptrac/pull/227) Fix: Remove non-applicable exclude configuration, Thanks to [@localheinz]
+- [#230](https://github.com/qossmic/deptrac/pull/230) Fix alignment, Thanks to [@BackEndTea]
+- [#223](https://github.com/qossmic/deptrac/pull/223) Fix outdated graphviz download link in README, Thanks to [@LeoVie]
 
 ## [0.5.0] - 2019-03-15
 
 ### Added
 
-- [#219](https://github.com/sensiolabs-de/deptrac/pull/219) added input parameter option for cache file
+- [#219](https://github.com/qossmic/deptrac/pull/219) added input parameter option for cache file
 
 ### Changed
 
-- [#215](https://github.com/sensiolabs-de/deptrac/pull/215) Enhancement: Apply `@PHPUnit60Migration:risky` ruleset
+- [#215](https://github.com/qossmic/deptrac/pull/215) Enhancement: Apply `@PHPUnit60Migration:risky` ruleset
 
-- [#214](https://github.com/sensiolabs-de/deptrac/pull/214) Enhancement: Update phpstan/phpstan
+- [#214](https://github.com/qossmic/deptrac/pull/214) Enhancement: Update phpstan/phpstan
 
 ### Fixed
 
-- [#216](https://github.com/sensiolabs-de/deptrac/pull/216) Fix: Remove sudo configuration
+- [#216](https://github.com/qossmic/deptrac/pull/216) Fix: Remove sudo configuration
 
-- [#213](https://github.com/sensiolabs-de/deptrac/pull/213) Enhancement: Reference phpunit.xsd as installed with composer
+- [#213](https://github.com/qossmic/deptrac/pull/213) Enhancement: Reference phpunit.xsd as installed with composer
 
-- [#211](https://github.com/sensiolabs-de/deptrac/pull/211) improved caching mechanism
+- [#211](https://github.com/qossmic/deptrac/pull/211) improved caching mechanism
 
-- [#210](https://github.com/sensiolabs-de/deptrac/pull/210) don't apply dependencies from prev classes to current class when file contains more than one class
+- [#210](https://github.com/qossmic/deptrac/pull/210) don't apply dependencies from prev classes to current class when file contains more than one class
 
 ## [0.4.0] - 2019-01-11
 
 ### Added
 
-- [#195](https://github.com/sensiolabs-de/deptrac/pull/195) chaching parsed files
+- [#195](https://github.com/qossmic/deptrac/pull/195) chaching parsed files
 
-- [#200](https://github.com/sensiolabs-de/deptrac/pull/200) skip class dependency violation (@torinaki)
+- [#200](https://github.com/qossmic/deptrac/pull/200) skip class dependency violation (@torinaki)
 
 ### Changed
 
-- [#197](https://github.com/sensiolabs-de/deptrac/pull/197) use progress bar instead printing dots
+- [#197](https://github.com/qossmic/deptrac/pull/197) use progress bar instead printing dots
 
-- [#190](https://github.com/sensiolabs-de/deptrac/pull/190) added several nullable and void type-hints
+- [#190](https://github.com/qossmic/deptrac/pull/190) added several nullable and void type-hints
 
 ### Removed
 
-- [#190](https://github.com/sensiolabs-de/deptrac/pull/190) removed support for PHP <7.1
+- [#190](https://github.com/qossmic/deptrac/pull/190) removed support for PHP <7.1
 
 ## [0.3.0] - 2018-11-05
 
 ### Added
 
-- [#160](https://github.com/sensiolabs-de/deptrac/pull/160) new ClassNameRegexCollector was added
+- [#160](https://github.com/qossmic/deptrac/pull/160) new ClassNameRegexCollector was added
 
-- [#167](https://github.com/sensiolabs-de/deptrac/pull/167) Added JUnit report formatter.
+- [#167](https://github.com/qossmic/deptrac/pull/167) Added JUnit report formatter.
 
 ### Changed
 
-- [#179](https://github.com/sensiolabs-de/deptrac/pull/179) disabled JUnitFormatter and GraphizFormatter by default
+- [#179](https://github.com/qossmic/deptrac/pull/179) disabled JUnitFormatter and GraphizFormatter by default
 
 ### Removed
 
-- [#177](https://github.com/sensiolabs-de/deptrac/pull/177) Removed the self updating mechanism.
+- [#177](https://github.com/qossmic/deptrac/pull/177) Removed the self updating mechanism.
 
 ## [0.2.0] - 2018-03-24
 
@@ -375,176 +381,176 @@ All notable changes to this project will be documented in this file, in reverse 
 [@sasezaki]: https://github.com/sasezaki
 [@xabbuh]: https://github.com/xabbuh
 
-[#469]: https://github.com/sensiolabs-de/deptrac/pull/469
-[#468]: https://github.com/sensiolabs-de/deptrac/pull/468
-[#467]: https://github.com/sensiolabs-de/deptrac/pull/467
-[#466]: https://github.com/sensiolabs-de/deptrac/pull/466
-[#465]: https://github.com/sensiolabs-de/deptrac/pull/465
-[#464]: https://github.com/sensiolabs-de/deptrac/pull/464
-[#463]: https://github.com/sensiolabs-de/deptrac/pull/463
-[#462]: https://github.com/sensiolabs-de/deptrac/pull/462
-[#461]: https://github.com/sensiolabs-de/deptrac/pull/461
-[#460]: https://github.com/sensiolabs-de/deptrac/pull/460
-[#459]: https://github.com/sensiolabs-de/deptrac/pull/459
-[#458]: https://github.com/sensiolabs-de/deptrac/pull/458
-[#457]: https://github.com/sensiolabs-de/deptrac/pull/457
-[#456]: https://github.com/sensiolabs-de/deptrac/pull/456
-[#452]: https://github.com/sensiolabs-de/deptrac/pull/452
-[#451]: https://github.com/sensiolabs-de/deptrac/pull/451
-[#450]: https://github.com/sensiolabs-de/deptrac/pull/450
-[#447]: https://github.com/sensiolabs-de/deptrac/pull/447
-[#446]: https://github.com/sensiolabs-de/deptrac/pull/446
-[#445]: https://github.com/sensiolabs-de/deptrac/pull/445
-[#444]: https://github.com/sensiolabs-de/deptrac/pull/444
-[#443]: https://github.com/sensiolabs-de/deptrac/pull/443
-[#442]: https://github.com/sensiolabs-de/deptrac/pull/442
-[#441]: https://github.com/sensiolabs-de/deptrac/pull/441
-[#440]: https://github.com/sensiolabs-de/deptrac/pull/440
-[#439]: https://github.com/sensiolabs-de/deptrac/pull/439
-[#438]: https://github.com/sensiolabs-de/deptrac/pull/438
-[#437]: https://github.com/sensiolabs-de/deptrac/pull/437
-[#436]: https://github.com/sensiolabs-de/deptrac/pull/436
-[#435]: https://github.com/sensiolabs-de/deptrac/pull/435
-[#434]: https://github.com/sensiolabs-de/deptrac/pull/434
-[#433]: https://github.com/sensiolabs-de/deptrac/pull/433
-[#430]: https://github.com/sensiolabs-de/deptrac/pull/430
-[#429]: https://github.com/sensiolabs-de/deptrac/pull/429
-[#427]: https://github.com/sensiolabs-de/deptrac/pull/427
-[#426]: https://github.com/sensiolabs-de/deptrac/pull/426
-[#425]: https://github.com/sensiolabs-de/deptrac/pull/425
-[#424]: https://github.com/sensiolabs-de/deptrac/pull/424
-[#423]: https://github.com/sensiolabs-de/deptrac/pull/423
-[#422]: https://github.com/sensiolabs-de/deptrac/pull/422
-[#421]: https://github.com/sensiolabs-de/deptrac/pull/421
-[#428]: https://github.com/sensiolabs-de/deptrac/pull/428
-[#420]: https://github.com/sensiolabs-de/deptrac/pull/420
-[#419]: https://github.com/sensiolabs-de/deptrac/pull/419
-[#418]: https://github.com/sensiolabs-de/deptrac/pull/418
-[#417]: https://github.com/sensiolabs-de/deptrac/pull/417
-[#411]: https://github.com/sensiolabs-de/deptrac/pull/411
-[#410]: https://github.com/sensiolabs-de/deptrac/pull/410
-[#409]: https://github.com/sensiolabs-de/deptrac/pull/409
-[#408]: https://github.com/sensiolabs-de/deptrac/pull/408
-[#407]: https://github.com/sensiolabs-de/deptrac/pull/407
-[#406]: https://github.com/sensiolabs-de/deptrac/pull/406
-[#405]: https://github.com/sensiolabs-de/deptrac/pull/405
-[#404]: https://github.com/sensiolabs-de/deptrac/pull/404
-[#403]: https://github.com/sensiolabs-de/deptrac/pull/403
-[#402]: https://github.com/sensiolabs-de/deptrac/pull/402
-[#401]: https://github.com/sensiolabs-de/deptrac/pull/401
-[#400]: https://github.com/sensiolabs-de/deptrac/pull/400
-[#399]: https://github.com/sensiolabs-de/deptrac/pull/399
-[#398]: https://github.com/sensiolabs-de/deptrac/pull/398
-[#397]: https://github.com/sensiolabs-de/deptrac/pull/397
-[#396]: https://github.com/sensiolabs-de/deptrac/pull/396
-[#395]: https://github.com/sensiolabs-de/deptrac/pull/395
-[#394]: https://github.com/sensiolabs-de/deptrac/pull/394
-[#393]: https://github.com/sensiolabs-de/deptrac/pull/393
-[#392]: https://github.com/sensiolabs-de/deptrac/pull/392
-[#391]: https://github.com/sensiolabs-de/deptrac/pull/391
-[#390]: https://github.com/sensiolabs-de/deptrac/pull/390
-[#389]: https://github.com/sensiolabs-de/deptrac/pull/389
-[#388]: https://github.com/sensiolabs-de/deptrac/pull/388
-[#387]: https://github.com/sensiolabs-de/deptrac/pull/387
-[#386]: https://github.com/sensiolabs-de/deptrac/pull/386
-[#385]: https://github.com/sensiolabs-de/deptrac/pull/385
-[#384]: https://github.com/sensiolabs-de/deptrac/pull/384
-[#383]: https://github.com/sensiolabs-de/deptrac/pull/383
-[#382]: https://github.com/sensiolabs-de/deptrac/pull/382
-[#381]: https://github.com/sensiolabs-de/deptrac/pull/381
-[#380]: https://github.com/sensiolabs-de/deptrac/pull/380
-[#379]: https://github.com/sensiolabs-de/deptrac/pull/379
-[#378]: https://github.com/sensiolabs-de/deptrac/pull/378
-[#377]: https://github.com/sensiolabs-de/deptrac/pull/377
-[#374]: https://github.com/sensiolabs-de/deptrac/pull/374
-[#372]: https://github.com/sensiolabs-de/deptrac/pull/372
-[#371]: https://github.com/sensiolabs-de/deptrac/pull/371
-[#370]: https://github.com/sensiolabs-de/deptrac/pull/370
-[#369]: https://github.com/sensiolabs-de/deptrac/pull/369
-[#368]: https://github.com/sensiolabs-de/deptrac/pull/368
-[#367]: https://github.com/sensiolabs-de/deptrac/pull/367
-[#366]: https://github.com/sensiolabs-de/deptrac/pull/366
-[#365]: https://github.com/sensiolabs-de/deptrac/pull/365
-[#364]: https://github.com/sensiolabs-de/deptrac/pull/364
-[#363]: https://github.com/sensiolabs-de/deptrac/pull/363
-[#362]: https://github.com/sensiolabs-de/deptrac/pull/362
-[#361]: https://github.com/sensiolabs-de/deptrac/pull/361
-[#360]: https://github.com/sensiolabs-de/deptrac/pull/360
-[#359]: https://github.com/sensiolabs-de/deptrac/pull/359
-[#358]: https://github.com/sensiolabs-de/deptrac/pull/358
-[#357]: https://github.com/sensiolabs-de/deptrac/pull/357
-[#356]: https://github.com/sensiolabs-de/deptrac/pull/356
-[#355]: https://github.com/sensiolabs-de/deptrac/pull/355
-[#354]: https://github.com/sensiolabs-de/deptrac/pull/354
-[#350]: https://github.com/sensiolabs-de/deptrac/pull/350
-[#348]: https://github.com/sensiolabs-de/deptrac/pull/348
-[#337]: https://github.com/sensiolabs-de/deptrac/pull/337
-[#320]: https://github.com/sensiolabs-de/deptrac/pull/320
-[#347]: https://github.com/sensiolabs-de/deptrac/pull/347
-[#346]: https://github.com/sensiolabs-de/deptrac/pull/346
-[#345]: https://github.com/sensiolabs-de/deptrac/pull/345
-[#344]: https://github.com/sensiolabs-de/deptrac/pull/344
-[#343]: https://github.com/sensiolabs-de/deptrac/pull/343
-[#342]: https://github.com/sensiolabs-de/deptrac/pull/342
-[#341]: https://github.com/sensiolabs-de/deptrac/pull/341
-[#340]: https://github.com/sensiolabs-de/deptrac/pull/340
-[#339]: https://github.com/sensiolabs-de/deptrac/pull/339
-[#338]: https://github.com/sensiolabs-de/deptrac/pull/338
-[#336]: https://github.com/sensiolabs-de/deptrac/pull/336
-[#335]: https://github.com/sensiolabs-de/deptrac/pull/335
-[#334]: https://github.com/sensiolabs-de/deptrac/pull/334
-[#324]: https://github.com/sensiolabs-de/deptrac/pull/324
-[#323]: https://github.com/sensiolabs-de/deptrac/pull/323
-[#322]: https://github.com/sensiolabs-de/deptrac/pull/322
-[#321]: https://github.com/sensiolabs-de/deptrac/pull/321
-[#316]: https://github.com/sensiolabs-de/deptrac/pull/316
-[#315]: https://github.com/sensiolabs-de/deptrac/pull/315
-[#314]: https://github.com/sensiolabs-de/deptrac/pull/314
-[#311]: https://github.com/sensiolabs-de/deptrac/pull/311
-[#308]: https://github.com/sensiolabs-de/deptrac/pull/308
-[#307]: https://github.com/sensiolabs-de/deptrac/pull/307
-[#306]: https://github.com/sensiolabs-de/deptrac/pull/306
-[#305]: https://github.com/sensiolabs-de/deptrac/pull/305
-[#303]: https://github.com/sensiolabs-de/deptrac/pull/303
-[#302]: https://github.com/sensiolabs-de/deptrac/pull/302
-[#300]: https://github.com/sensiolabs-de/deptrac/pull/300
-[#298]: https://github.com/sensiolabs-de/deptrac/pull/298
-[#297]: https://github.com/sensiolabs-de/deptrac/pull/297
-[#296]: https://github.com/sensiolabs-de/deptrac/pull/296
-[#295]: https://github.com/sensiolabs-de/deptrac/pull/295
-[#294]: https://github.com/sensiolabs-de/deptrac/pull/294
-[#292]: https://github.com/sensiolabs-de/deptrac/pull/292
-[#290]: https://github.com/sensiolabs-de/deptrac/pull/290
-[#289]: https://github.com/sensiolabs-de/deptrac/pull/289
-[#288]: https://github.com/sensiolabs-de/deptrac/pull/288
-[#287]: https://github.com/sensiolabs-de/deptrac/pull/287
-[#286]: https://github.com/sensiolabs-de/deptrac/pull/286
-[#285]: https://github.com/sensiolabs-de/deptrac/pull/285
-[#284]: https://github.com/sensiolabs-de/deptrac/pull/284
-[#283]: https://github.com/sensiolabs-de/deptrac/pull/283
-[#281]: https://github.com/sensiolabs-de/deptrac/pull/281
-[#279]: https://github.com/sensiolabs-de/deptrac/pull/279
-[#278]: https://github.com/sensiolabs-de/deptrac/pull/278
-[#276]: https://github.com/sensiolabs-de/deptrac/pull/276
-[#275]: https://github.com/sensiolabs-de/deptrac/pull/275
-[#274]: https://github.com/sensiolabs-de/deptrac/pull/274
-[#272]: https://github.com/sensiolabs-de/deptrac/pull/272
-[#271]: https://github.com/sensiolabs-de/deptrac/pull/271
-[#270]: https://github.com/sensiolabs-de/deptrac/pull/270
-[#266]: https://github.com/sensiolabs-de/deptrac/pull/266
+[#469]: https://github.com/qossmic/deptrac/pull/469
+[#468]: https://github.com/qossmic/deptrac/pull/468
+[#467]: https://github.com/qossmic/deptrac/pull/467
+[#466]: https://github.com/qossmic/deptrac/pull/466
+[#465]: https://github.com/qossmic/deptrac/pull/465
+[#464]: https://github.com/qossmic/deptrac/pull/464
+[#463]: https://github.com/qossmic/deptrac/pull/463
+[#462]: https://github.com/qossmic/deptrac/pull/462
+[#461]: https://github.com/qossmic/deptrac/pull/461
+[#460]: https://github.com/qossmic/deptrac/pull/460
+[#459]: https://github.com/qossmic/deptrac/pull/459
+[#458]: https://github.com/qossmic/deptrac/pull/458
+[#457]: https://github.com/qossmic/deptrac/pull/457
+[#456]: https://github.com/qossmic/deptrac/pull/456
+[#452]: https://github.com/qossmic/deptrac/pull/452
+[#451]: https://github.com/qossmic/deptrac/pull/451
+[#450]: https://github.com/qossmic/deptrac/pull/450
+[#447]: https://github.com/qossmic/deptrac/pull/447
+[#446]: https://github.com/qossmic/deptrac/pull/446
+[#445]: https://github.com/qossmic/deptrac/pull/445
+[#444]: https://github.com/qossmic/deptrac/pull/444
+[#443]: https://github.com/qossmic/deptrac/pull/443
+[#442]: https://github.com/qossmic/deptrac/pull/442
+[#441]: https://github.com/qossmic/deptrac/pull/441
+[#440]: https://github.com/qossmic/deptrac/pull/440
+[#439]: https://github.com/qossmic/deptrac/pull/439
+[#438]: https://github.com/qossmic/deptrac/pull/438
+[#437]: https://github.com/qossmic/deptrac/pull/437
+[#436]: https://github.com/qossmic/deptrac/pull/436
+[#435]: https://github.com/qossmic/deptrac/pull/435
+[#434]: https://github.com/qossmic/deptrac/pull/434
+[#433]: https://github.com/qossmic/deptrac/pull/433
+[#430]: https://github.com/qossmic/deptrac/pull/430
+[#429]: https://github.com/qossmic/deptrac/pull/429
+[#427]: https://github.com/qossmic/deptrac/pull/427
+[#426]: https://github.com/qossmic/deptrac/pull/426
+[#425]: https://github.com/qossmic/deptrac/pull/425
+[#424]: https://github.com/qossmic/deptrac/pull/424
+[#423]: https://github.com/qossmic/deptrac/pull/423
+[#422]: https://github.com/qossmic/deptrac/pull/422
+[#421]: https://github.com/qossmic/deptrac/pull/421
+[#428]: https://github.com/qossmic/deptrac/pull/428
+[#420]: https://github.com/qossmic/deptrac/pull/420
+[#419]: https://github.com/qossmic/deptrac/pull/419
+[#418]: https://github.com/qossmic/deptrac/pull/418
+[#417]: https://github.com/qossmic/deptrac/pull/417
+[#411]: https://github.com/qossmic/deptrac/pull/411
+[#410]: https://github.com/qossmic/deptrac/pull/410
+[#409]: https://github.com/qossmic/deptrac/pull/409
+[#408]: https://github.com/qossmic/deptrac/pull/408
+[#407]: https://github.com/qossmic/deptrac/pull/407
+[#406]: https://github.com/qossmic/deptrac/pull/406
+[#405]: https://github.com/qossmic/deptrac/pull/405
+[#404]: https://github.com/qossmic/deptrac/pull/404
+[#403]: https://github.com/qossmic/deptrac/pull/403
+[#402]: https://github.com/qossmic/deptrac/pull/402
+[#401]: https://github.com/qossmic/deptrac/pull/401
+[#400]: https://github.com/qossmic/deptrac/pull/400
+[#399]: https://github.com/qossmic/deptrac/pull/399
+[#398]: https://github.com/qossmic/deptrac/pull/398
+[#397]: https://github.com/qossmic/deptrac/pull/397
+[#396]: https://github.com/qossmic/deptrac/pull/396
+[#395]: https://github.com/qossmic/deptrac/pull/395
+[#394]: https://github.com/qossmic/deptrac/pull/394
+[#393]: https://github.com/qossmic/deptrac/pull/393
+[#392]: https://github.com/qossmic/deptrac/pull/392
+[#391]: https://github.com/qossmic/deptrac/pull/391
+[#390]: https://github.com/qossmic/deptrac/pull/390
+[#389]: https://github.com/qossmic/deptrac/pull/389
+[#388]: https://github.com/qossmic/deptrac/pull/388
+[#387]: https://github.com/qossmic/deptrac/pull/387
+[#386]: https://github.com/qossmic/deptrac/pull/386
+[#385]: https://github.com/qossmic/deptrac/pull/385
+[#384]: https://github.com/qossmic/deptrac/pull/384
+[#383]: https://github.com/qossmic/deptrac/pull/383
+[#382]: https://github.com/qossmic/deptrac/pull/382
+[#381]: https://github.com/qossmic/deptrac/pull/381
+[#380]: https://github.com/qossmic/deptrac/pull/380
+[#379]: https://github.com/qossmic/deptrac/pull/379
+[#378]: https://github.com/qossmic/deptrac/pull/378
+[#377]: https://github.com/qossmic/deptrac/pull/377
+[#374]: https://github.com/qossmic/deptrac/pull/374
+[#372]: https://github.com/qossmic/deptrac/pull/372
+[#371]: https://github.com/qossmic/deptrac/pull/371
+[#370]: https://github.com/qossmic/deptrac/pull/370
+[#369]: https://github.com/qossmic/deptrac/pull/369
+[#368]: https://github.com/qossmic/deptrac/pull/368
+[#367]: https://github.com/qossmic/deptrac/pull/367
+[#366]: https://github.com/qossmic/deptrac/pull/366
+[#365]: https://github.com/qossmic/deptrac/pull/365
+[#364]: https://github.com/qossmic/deptrac/pull/364
+[#363]: https://github.com/qossmic/deptrac/pull/363
+[#362]: https://github.com/qossmic/deptrac/pull/362
+[#361]: https://github.com/qossmic/deptrac/pull/361
+[#360]: https://github.com/qossmic/deptrac/pull/360
+[#359]: https://github.com/qossmic/deptrac/pull/359
+[#358]: https://github.com/qossmic/deptrac/pull/358
+[#357]: https://github.com/qossmic/deptrac/pull/357
+[#356]: https://github.com/qossmic/deptrac/pull/356
+[#355]: https://github.com/qossmic/deptrac/pull/355
+[#354]: https://github.com/qossmic/deptrac/pull/354
+[#350]: https://github.com/qossmic/deptrac/pull/350
+[#348]: https://github.com/qossmic/deptrac/pull/348
+[#337]: https://github.com/qossmic/deptrac/pull/337
+[#320]: https://github.com/qossmic/deptrac/pull/320
+[#347]: https://github.com/qossmic/deptrac/pull/347
+[#346]: https://github.com/qossmic/deptrac/pull/346
+[#345]: https://github.com/qossmic/deptrac/pull/345
+[#344]: https://github.com/qossmic/deptrac/pull/344
+[#343]: https://github.com/qossmic/deptrac/pull/343
+[#342]: https://github.com/qossmic/deptrac/pull/342
+[#341]: https://github.com/qossmic/deptrac/pull/341
+[#340]: https://github.com/qossmic/deptrac/pull/340
+[#339]: https://github.com/qossmic/deptrac/pull/339
+[#338]: https://github.com/qossmic/deptrac/pull/338
+[#336]: https://github.com/qossmic/deptrac/pull/336
+[#335]: https://github.com/qossmic/deptrac/pull/335
+[#334]: https://github.com/qossmic/deptrac/pull/334
+[#324]: https://github.com/qossmic/deptrac/pull/324
+[#323]: https://github.com/qossmic/deptrac/pull/323
+[#322]: https://github.com/qossmic/deptrac/pull/322
+[#321]: https://github.com/qossmic/deptrac/pull/321
+[#316]: https://github.com/qossmic/deptrac/pull/316
+[#315]: https://github.com/qossmic/deptrac/pull/315
+[#314]: https://github.com/qossmic/deptrac/pull/314
+[#311]: https://github.com/qossmic/deptrac/pull/311
+[#308]: https://github.com/qossmic/deptrac/pull/308
+[#307]: https://github.com/qossmic/deptrac/pull/307
+[#306]: https://github.com/qossmic/deptrac/pull/306
+[#305]: https://github.com/qossmic/deptrac/pull/305
+[#303]: https://github.com/qossmic/deptrac/pull/303
+[#302]: https://github.com/qossmic/deptrac/pull/302
+[#300]: https://github.com/qossmic/deptrac/pull/300
+[#298]: https://github.com/qossmic/deptrac/pull/298
+[#297]: https://github.com/qossmic/deptrac/pull/297
+[#296]: https://github.com/qossmic/deptrac/pull/296
+[#295]: https://github.com/qossmic/deptrac/pull/295
+[#294]: https://github.com/qossmic/deptrac/pull/294
+[#292]: https://github.com/qossmic/deptrac/pull/292
+[#290]: https://github.com/qossmic/deptrac/pull/290
+[#289]: https://github.com/qossmic/deptrac/pull/289
+[#288]: https://github.com/qossmic/deptrac/pull/288
+[#287]: https://github.com/qossmic/deptrac/pull/287
+[#286]: https://github.com/qossmic/deptrac/pull/286
+[#285]: https://github.com/qossmic/deptrac/pull/285
+[#284]: https://github.com/qossmic/deptrac/pull/284
+[#283]: https://github.com/qossmic/deptrac/pull/283
+[#281]: https://github.com/qossmic/deptrac/pull/281
+[#279]: https://github.com/qossmic/deptrac/pull/279
+[#278]: https://github.com/qossmic/deptrac/pull/278
+[#276]: https://github.com/qossmic/deptrac/pull/276
+[#275]: https://github.com/qossmic/deptrac/pull/275
+[#274]: https://github.com/qossmic/deptrac/pull/274
+[#272]: https://github.com/qossmic/deptrac/pull/272
+[#271]: https://github.com/qossmic/deptrac/pull/271
+[#270]: https://github.com/qossmic/deptrac/pull/270
+[#266]: https://github.com/qossmic/deptrac/pull/266
 
-[0.10.3]: https://github.com/sensiolabs-de/deptrac/compare/0.10.2...0.10.3
-[0.10.2]: https://github.com/sensiolabs-de/deptrac/compare/0.10.1...0.10.2
-[0.10.1]: https://github.com/sensiolabs-de/deptrac/compare/0.10.0...0.10.1
-[0.10.0]: https://github.com/sensiolabs-de/deptrac/compare/0.9.0...0.10.0
-[0.9.0]: https://github.com/sensiolabs-de/deptrac/compare/0.8.2...0.9.0
-[0.8.2]: https://github.com/sensiolabs-de/deptrac/compare/0.8.1...0.8.2
-[0.8.1]: https://github.com/sensiolabs-de/deptrac/compare/0.8.0...0.8.1
-[0.8.0]: https://github.com/sensiolabs-de/deptrac/compare/0.7.1...0.8.0
-[0.7.1]: https://github.com/sensiolabs-de/deptrac/compare/0.7.0...0.7.1
-[0.7.0]: https://github.com/sensiolabs-de/deptrac/compare/0.6.0...0.7.0
-[0.6.0]: https://github.com/sensiolabs-de/deptrac/compare/0.5.0...0.6.0
-[0.5.0]: https://github.com/sensiolabs-de/deptrac/compare/0.4.0...0.5.0
-[0.4.0]: https://github.com/sensiolabs-de/deptrac/compare/0.3.0...0.4.0
-[0.3.0]: https://github.com/sensiolabs-de/deptrac/compare/0.2.0...0.3.0
+[0.10.3]: https://github.com/qossmic/deptrac/compare/0.10.2...0.10.3
+[0.10.2]: https://github.com/qossmic/deptrac/compare/0.10.1...0.10.2
+[0.10.1]: https://github.com/qossmic/deptrac/compare/0.10.0...0.10.1
+[0.10.0]: https://github.com/qossmic/deptrac/compare/0.9.0...0.10.0
+[0.9.0]: https://github.com/qossmic/deptrac/compare/0.8.2...0.9.0
+[0.8.2]: https://github.com/qossmic/deptrac/compare/0.8.1...0.8.2
+[0.8.1]: https://github.com/qossmic/deptrac/compare/0.8.0...0.8.1
+[0.8.0]: https://github.com/qossmic/deptrac/compare/0.7.1...0.8.0
+[0.7.1]: https://github.com/qossmic/deptrac/compare/0.7.0...0.7.1
+[0.7.0]: https://github.com/qossmic/deptrac/compare/0.6.0...0.7.0
+[0.6.0]: https://github.com/qossmic/deptrac/compare/0.5.0...0.6.0
+[0.5.0]: https://github.com/qossmic/deptrac/compare/0.4.0...0.5.0
+[0.4.0]: https://github.com/qossmic/deptrac/compare/0.3.0...0.4.0
+[0.3.0]: https://github.com/qossmic/deptrac/compare/0.2.0...0.3.0
 

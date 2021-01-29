@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Tests\Qossmic\Deptrac\AstRunner\Resolver;
 
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
@@ -10,8 +10,8 @@ use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeScope;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
 
 final class TypeResolverTest extends TestCase
 {

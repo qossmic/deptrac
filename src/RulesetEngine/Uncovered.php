@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\RulesetEngine;
+namespace Qossmic\Deptrac\RulesetEngine;
 
-use SensioLabs\Deptrac\Dependency\DependencyInterface;
+use Qossmic\Deptrac\Dependency\DependencyInterface;
 
 final class Uncovered implements Rule
 {

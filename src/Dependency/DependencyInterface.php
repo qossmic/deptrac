@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Dependency;
+namespace Qossmic\Deptrac\Dependency;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 interface DependencyInterface
 {

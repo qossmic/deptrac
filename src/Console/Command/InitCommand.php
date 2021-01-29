@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Console\Command;
+namespace Qossmic\Deptrac\Console\Command;
 
-use SensioLabs\Deptrac\Configuration\Dumper as ConfigurationDumper;
-use SensioLabs\Deptrac\Configuration\Exception\FileExistsException;
+use Qossmic\Deptrac\Configuration\Dumper as ConfigurationDumper;
+use Qossmic\Deptrac\Configuration\Exception\FileExistsException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

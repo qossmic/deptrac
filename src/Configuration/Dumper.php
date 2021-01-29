@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Configuration;
+namespace Qossmic\Deptrac\Configuration;
 
-use SensioLabs\Deptrac\Configuration\Exception\FileExistsException;
+use Qossmic\Deptrac\Configuration\Exception\FileExistsException;
 
 class Dumper
 {

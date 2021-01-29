@@ -1,6 +1,6 @@
 # Deptrac
 
-![](https://github.com/sensiolabs-de/deptrac/workflows/Continuous%20Integration/badge.svg?branch=master)
+![](https://github.com/qossmic/deptrac/workflows/Continuous%20Integration/badge.svg?branch=master)
 
 ## What is Deptrac
 
@@ -14,7 +14,6 @@ this rule has been violated.
 
 ## Table of Contents
 
-1. [Introduction Video](#introduction-video)
 1. [Getting Started](#getting-started)
     1. [The Depfile](#the-depfile)
     1. [Explanation](#explanation)
@@ -48,13 +47,9 @@ this rule has been violated.
 1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
 
-## Introduction Video
-
-[![ScreenShot](examples/youtube.png)](https://www.youtube.com/watch?v=T5oWc4ujmOo)
-
 ## Getting Started
 
-The easiest way to get started is to download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases).
+The easiest way to get started is to download the latest [deptrac.phar](https://github.com/qossmic/deptrac/releases).
 
 At first, you need a so called *depfile*, which is written in YAML.
 You can generate a bootstrapped `depfile.yaml` with:
@@ -129,35 +124,35 @@ and raises a violation for this case. The same counts if a *Service* layer class
 
 ### PHAR
 
-Download the latest [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases).
+Download the latest [deptrac.phar](https://github.com/qossmic/deptrac/releases).
  
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS https://github.com/sensiolabs-de/deptrac/releases/download/0.10.3/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/qossmic/deptrac/releases/download/0.10.3/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
 sudo mv deptrac.phar /usr/local/bin/deptrac
 ```
 
-(In this guide, we assume, you have the [deptrac.phar](https://github.com/sensiolabs-de/deptrac/releases) in your project root)
+(In this guide, we assume, you have the [deptrac.phar](https://github.com/qossmic/deptrac/releases) in your project root)
 
 ### Composer
 
-We do not recommend installing this repository via Composer. Instead please use the dedicated distribution repository https://github.com/sensiolabs-de/deptrac-shim.
+We do not recommend installing this repository via Composer. Instead please use the dedicated distribution repository https://github.com/qossmic/deptrac-shim.
 
 ### PHIVE
 
 You can install Deptrac with [Phive](https://phar.io/#Install)
 
-`phive install -g sensiolabs-de/deptrac`
+`phive install -g qossmic/deptrac`
 
-and accept the key with fingerprint `088B 7289 7980 555C 6E4E F669 3C52 E7DE D5E2 D9EE`
+and accept the key with fingerprint `ED42 E915 4E81 A416 E7FB  A19F 4F2A B4D1 1A9A 65F7`
 
 To upgrade Deptrac use the following command:
 
-`phive update -g sensiolabs-de/deptrac`
+`phive update -g qossmic/deptrac`
 
 ### Optional Dependency: Graphviz
 
@@ -601,7 +596,7 @@ layers:
 
 ### Custom Collectors
 
-You can even create custom collectors in your project by implementing the `SensioLabs\Deptrac\Collector\CollectorInterface`.
+You can even create custom collectors in your project by implementing the `Qossmic\Deptrac\Collector\CollectorInterface`.
 As soon as an unknown collector is referenced in the config file deptrac will try to load the class in your project.
 With this you can create collectors specific for your usecase. And more people can use these custom collectors per default if you contribute them back to deptrac!
 
@@ -733,7 +728,7 @@ To build deptrac, clone this repository and ensure you have the build dependenci
 `cd` into your cloned directory, and call `make build`.
 
 ```bash
-git clone https://github.com/sensiolabs-de/deptrac.git
+git clone https://github.com/qossmic/deptrac.git
 cd deptrac
 make build
 ```

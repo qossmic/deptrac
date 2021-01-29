@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac;
+namespace Qossmic\Deptrac;
 
 use Iterator;
-use SensioLabs\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\Configuration;
 use SplFileInfo;
 use Symfony\Component\Finder\Finder;
 

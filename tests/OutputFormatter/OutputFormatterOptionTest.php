@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\OutputFormatter;
+namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
 
 final class OutputFormatterOptionTest extends TestCase
 {

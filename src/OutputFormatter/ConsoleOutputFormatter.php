@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\OutputFormatter;
+namespace Qossmic\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
-use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
-use SensioLabs\Deptrac\Console\Output;
-use SensioLabs\Deptrac\Dependency\InheritDependency;
-use SensioLabs\Deptrac\Env;
-use SensioLabs\Deptrac\RulesetEngine\Context;
-use SensioLabs\Deptrac\RulesetEngine\Rule;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\Dependency\InheritDependency;
+use Qossmic\Deptrac\Env;
+use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\Rule;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
+use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {

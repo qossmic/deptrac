@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Configuration\Exception;
+namespace Qossmic\Deptrac\Configuration\Exception;
 
 final class InvalidConfigurationException extends \InvalidArgumentException
 {

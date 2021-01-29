@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Subscriber;
+namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
-use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
+use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Subscriber\CacheableFileSubscriber;
 
 final class CacheableFileSubscriberTest extends TestCase
 {

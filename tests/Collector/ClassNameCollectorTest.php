@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Collector;
+namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\Collector\ClassNameCollector;
-use SensioLabs\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\Collector\ClassNameCollector;
+use Qossmic\Deptrac\Collector\Registry;
 
 final class ClassNameCollectorTest extends TestCase
 {

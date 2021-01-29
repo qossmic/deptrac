@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration\Exception;
+namespace Tests\Qossmic\Deptrac\Configuration\Exception;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
+use Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 
 /**
- * @covers \SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException
+ * @covers \Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException
  */
 final class ParsedYamlIsNotAnArrayExceptionTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Collector;
+namespace Qossmic\Deptrac\Collector;
 
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
 /**
  * A collector is responsible to tell from an AST node (e.g. a specific class) is part of a layer.

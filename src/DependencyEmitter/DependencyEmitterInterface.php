@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\DependencyEmitter;
+namespace Qossmic\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Dependency\Result;
 
 interface DependencyEmitterInterface
 {

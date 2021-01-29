@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Dependency;
+namespace Qossmic\Deptrac\Dependency;
 
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\Dependency\Event\PostEmitEvent;
-use SensioLabs\Deptrac\Dependency\Event\PostFlattenEvent;
-use SensioLabs\Deptrac\Dependency\Event\PreEmitEvent;
-use SensioLabs\Deptrac\Dependency\Event\PreFlattenEvent;
-use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
+use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
+use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
+use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
+use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver

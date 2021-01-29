@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
+namespace Tests\Qossmic\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use SensioLabs\Deptrac\AstRunner\AstRunner;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SensioLabs\Deptrac\Dependency\DependencyInterface;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
+use Qossmic\Deptrac\AstRunner\AstRunner;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\Dependency\DependencyInterface;
+use Qossmic\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait

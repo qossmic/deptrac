@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Dependency;
+namespace Qossmic\Deptrac\Dependency;
 
-use SensioLabs\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap;
 
 class InheritanceFlatter
 {

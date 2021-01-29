@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures;
+namespace Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures;
 
 interface MultipleInteritanceA1 { } // []
 interface MultipleInteritanceA2 { } // []

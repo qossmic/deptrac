@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\DependencyEmitter;
+namespace Tests\Qossmic\Deptrac\DependencyEmitter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 
 final class InheritanceDependencyEmitterTest extends TestCase
 {

@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\OutputFormatter;
+namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
-use SensioLabs\Deptrac\Console\Symfony\Style;
-use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
-use SensioLabs\Deptrac\Dependency\Dependency;
-use SensioLabs\Deptrac\OutputFormatter\GraphVizOutputFormatter;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
-use SensioLabs\Deptrac\RulesetEngine\Allowed;
-use SensioLabs\Deptrac\RulesetEngine\Context;
-use SensioLabs\Deptrac\RulesetEngine\Uncovered;
-use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Console\Symfony\Style;
+use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\Dependency\Dependency;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
+use Qossmic\Deptrac\RulesetEngine\Allowed;
+use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\Uncovered;
+use Qossmic\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Collector;
+namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\Collector\DirectoryCollector;
-use SensioLabs\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Collector\DirectoryCollector;
+use Qossmic\Deptrac\Collector\Registry;
 
 final class DirectoryCollectorTest extends TestCase
 {
