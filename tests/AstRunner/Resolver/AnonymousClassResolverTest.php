@@ -22,7 +22,7 @@ final class AnonymousClassResolverTest extends TestCase
             new AnonymousClassResolver()
         );
 
-        $filePath = __DIR__.'/fixtures/AnonymousClass.php';
+        $filePath = __DIR__.'/Fixtures/AnonymousClass.php';
         $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
@@ -35,7 +35,7 @@ final class AnonymousClassResolverTest extends TestCase
         $dependencies = $astClassReferences[2]->getDependencies();
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\ClassA',
+            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
@@ -43,7 +43,7 @@ final class AnonymousClassResolverTest extends TestCase
         self::assertSame('anonymous_class_extends', $dependencies[0]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures\InterfaceC',
+            'Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures\InterfaceC',
             $dependencies[1]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());

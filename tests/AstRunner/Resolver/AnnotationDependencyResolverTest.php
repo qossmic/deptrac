@@ -23,7 +23,7 @@ final class AnnotationDependencyResolverTest extends TestCase
             new AnnotationDependencyResolver($typeResolver)
         );
 
-        $filePath = __DIR__.'/fixtures/AnnotationDependency.php';
+        $filePath = __DIR__.'/Fixtures/AnnotationDependency.php';
         $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
@@ -34,7 +34,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertCount(0, $astClassReferences[1]->getDependencies());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
+            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[0]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[0]->getFileOccurrence()->getFilepath());
@@ -42,7 +42,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertSame('variable', $annotationDependency[0]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
+            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[1]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[1]->getFileOccurrence()->getFilepath());
@@ -50,7 +50,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertSame('variable', $annotationDependency[1]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
+            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[2]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[2]->getFileOccurrence()->getFilepath());
@@ -74,7 +74,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertSame('parameter', $annotationDependency[4]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\fixtures\AnnotationDependencyChild',
+            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[5]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[5]->getFileOccurrence()->getFilepath());

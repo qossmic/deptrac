@@ -146,6 +146,33 @@ class TypeResolver
     }
 
     /**
+     * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType $type
+     *
+     * @return string[]
+     */
+    public function resolvePropertyType(NodeAbstract $type): array
+    {
+        if ($type instanceof Node\Name\FullyQualified) {
+            return [(string) $type];
+        }
+        if ($type instanceof Node\NullableType) {
+            return $this->resolvePropertyType($type->type);
+        }
+        if ($type instanceof Node\UnionType) {
+            return array_merge([], ...array_map(
+                /**
+                 * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name $typeNode
+                 */
+                function ($typeNode) {
+                    return $this->resolvePropertyType($typeNode);
+                },
+            $type->types));
+        }
+
+        return [];
+    }
+
+    /**
      * @return string[]
      */
     private function resolveReflectionType(Type $resolvedType): array
