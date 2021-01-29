@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver\fixtures;
+namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver\Fixtures;
 
 interface InterfaceC
 {

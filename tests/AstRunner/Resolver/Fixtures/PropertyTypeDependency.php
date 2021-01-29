@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Integration\fixtures;
+namespace Tests\SensioLabs\Deptrac\Integration\Fixtures;
 
 use \Symfony\Component\Finder\SplFileInfo;
 

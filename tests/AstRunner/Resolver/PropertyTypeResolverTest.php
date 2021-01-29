@@ -22,7 +22,7 @@ final class PropertyTypeResolverTest extends TestCase
             new PropertyTypeResolver($typeResolver)
         );
 
-        $filePath = __DIR__.'/fixtures/PropertyTypeDependency.php';
+        $filePath = __DIR__.'/Fixtures/PropertyTypeDependency.php';
         $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();

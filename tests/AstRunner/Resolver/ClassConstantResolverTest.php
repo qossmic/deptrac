@@ -22,7 +22,7 @@ final class ClassConstantResolverTest extends TestCase
             new ClassConstantResolver()
         );
 
-        $filePath = __DIR__.'/fixtures/ClassConst.php';
+        $filePath = __DIR__.'/Fixtures/ClassConst.php';
         $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
@@ -33,7 +33,7 @@ final class ClassConstantResolverTest extends TestCase
 
         $dependencies = $astClassReferences[1]->getDependencies();
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\fixtures\ClassA',
+            'Tests\SensioLabs\Deptrac\Integration\Fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
