@@ -2,7 +2,7 @@
 <phive xmlns="https://phar.io/phive">
   <phar name="php-cs-fixer" version="^2.16.3" installed="2.18.2" location="./tools/php-cs-fixer" copy="true"/>
   <phar name="phpunit" version="^8.5.13||^9.4" installed="8.5.13" location="./tools/phpunit.phar" copy="true"/>
-  <phar name="phpstan" version="^0.12.29" installed="0.12.64" location="./tools/phpstan" copy="true"/>
+  <phar name="phpstan" version="^0.12.29" installed="0.12.70" location="./tools/phpstan" copy="true"/>
   <phar name="psalm" version="^4.3.0" installed="4.3.1" location="./tools/psalm" copy="true"/>
   <phar name="humbug/box" version="^3.9.1" installed="3.11.0" location="./tools/box" copy="true"/>
   <phar name="infection" version="^0.20.1" installed="0.20.1" location="./tools/infection" copy="true"/>
