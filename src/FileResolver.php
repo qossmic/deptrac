@@ -33,8 +33,11 @@ class FileResolver
 
         $finder = new PathNameFilterIterator($customFilterIterator, [], $configuration->getExcludeFiles());
 
-        return array_map(static function (SplFileInfo $fileInfo) {
-            return $fileInfo->getRealPath();
-        }, iterator_to_array($finder));
+        return array_map(
+            static function (SplFileInfo $fileInfo) {
+                return (string) $fileInfo->getRealPath();
+            },
+            iterator_to_array($finder)
+        );
     }
 }
