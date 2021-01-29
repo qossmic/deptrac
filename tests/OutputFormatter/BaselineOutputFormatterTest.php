@@ -98,7 +98,7 @@ class BaselineOutputFormatterTest extends TestCase
      */
     public function testBasic(array $rules, string $expectedOutput): void
     {
-        $generatedBaselineFile = __DIR__.'/data/generated-baseline.yml';
+        $generatedBaselineFile = tempnam(sys_get_temp_dir(), 'deptrac_');
         $output = new BufferedOutput();
 
         $formatter = new BaselineOutputFormatter();
@@ -112,6 +112,7 @@ class BaselineOutputFormatterTest extends TestCase
             $expectedOutput,
             file_get_contents($generatedBaselineFile)
         );
+        unlink($generatedBaselineFile);
     }
 
     public function testGetOptions(): void
