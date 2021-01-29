@@ -99,20 +99,24 @@ class BaselineOutputFormatterTest extends TestCase
     public function testBasic(array $rules, string $expectedOutput): void
     {
         $generatedBaselineFile = tempnam(sys_get_temp_dir(), 'deptrac_');
-        $output = new BufferedOutput();
 
-        $formatter = new BaselineOutputFormatter();
-        $formatter->finish(
-            new Context($rules, []),
-            $this->createSymfonyOutput($output),
-            new OutputFormatterInput(['baseline-dump' => $generatedBaselineFile])
-        );
+        try {
+            $output = new BufferedOutput();
 
-        static::assertEquals(
-            $expectedOutput,
-            file_get_contents($generatedBaselineFile)
-        );
-        unlink($generatedBaselineFile);
+            $formatter = new BaselineOutputFormatter();
+            $formatter->finish(
+                new Context($rules, []),
+                $this->createSymfonyOutput($output),
+                new OutputFormatterInput(['baseline-dump' => $generatedBaselineFile])
+            );
+
+            static::assertEquals(
+                $expectedOutput,
+                file_get_contents($generatedBaselineFile)
+            );
+        } finally {
+            unlink($generatedBaselineFile);
+        }
     }
 
     public function testGetOptions(): void
