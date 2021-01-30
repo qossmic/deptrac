@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstParser;
+namespace Qossmic\Deptrac\AstRunner\AstParser;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstDependency;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
-use SensioLabs\Deptrac\Console\Application;
-use SensioLabs\Deptrac\File\FileReader;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
+use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Console\Application;
+use Qossmic\Deptrac\File\FileReader;
 
 class AstFileReferenceFileCache implements AstFileReferenceCache
 {

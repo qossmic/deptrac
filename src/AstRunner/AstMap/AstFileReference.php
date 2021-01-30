@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstMap;
+namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 class AstFileReference
 {

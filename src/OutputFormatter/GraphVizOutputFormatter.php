@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\OutputFormatter;
+namespace Qossmic\Deptrac\OutputFormatter;
 
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
-use SensioLabs\Deptrac\Console\Output;
-use SensioLabs\Deptrac\RulesetEngine\Allowed;
-use SensioLabs\Deptrac\RulesetEngine\Context;
-use SensioLabs\Deptrac\RulesetEngine\Rule;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\Uncovered;
-use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\RulesetEngine\Allowed;
+use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\Rule;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
+use Qossmic\Deptrac\RulesetEngine\Uncovered;
+use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class GraphVizOutputFormatter implements OutputFormatterInterface
 {

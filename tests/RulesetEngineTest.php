@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
-use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Dependency\Dependency;
-use SensioLabs\Deptrac\Dependency\Result;
-use SensioLabs\Deptrac\RulesetEngine;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\ClassNameLayerResolverInterface;
+use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Dependency\Dependency;
+use Qossmic\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\RulesetEngine;
 
 /**
- * @covers \SensioLabs\Deptrac\RulesetEngine
+ * @covers \Qossmic\Deptrac\RulesetEngine
  */
 final class RulesetEngineTest extends TestCase
 {

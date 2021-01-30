@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Dependency;
+namespace Tests\Qossmic\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
-use SensioLabs\Deptrac\Dependency\Dependency;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Dependency\Dependency;
 
 final class DependencyTest extends TestCase
 {

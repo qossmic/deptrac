@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Subscriber;
+namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use SensioLabs\Deptrac\Console\Symfony\Style;
-use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
-use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Console\Symfony\Style;
+use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;

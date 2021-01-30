@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency;
+namespace Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency;
 
 final class BasicDependencyClassA {}
 interface BasicDependencyClassInterfaceA {}

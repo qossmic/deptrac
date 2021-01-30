@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterOption;
-use SensioLabs\Deptrac\OutputFormatterFactory;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
+use Qossmic\Deptrac\OutputFormatterFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 

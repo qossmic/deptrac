@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Subscriber;
+namespace Qossmic\Deptrac\Subscriber;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
-use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
+use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CacheableFileSubscriber implements EventSubscriberInterface

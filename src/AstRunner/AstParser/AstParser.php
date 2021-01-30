@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstParser;
+namespace Qossmic\Deptrac\AstRunner\AstParser;
 
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
 
 interface AstParser
 {

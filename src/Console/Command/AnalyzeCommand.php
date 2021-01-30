@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Console\Command;
+namespace Qossmic\Deptrac\Console\Command;
 
-use SensioLabs\Deptrac\Analyser;
-use SensioLabs\Deptrac\Configuration\Loader as ConfigurationLoader;
-use SensioLabs\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
-use SensioLabs\Deptrac\Console\Symfony\Style;
-use SensioLabs\Deptrac\Console\Symfony\SymfonyOutput;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInput;
-use SensioLabs\Deptrac\OutputFormatter\OutputFormatterInterface;
-use SensioLabs\Deptrac\OutputFormatterFactory;
-use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
-use SensioLabs\Deptrac\Subscriber\ProgressSubscriber;
+use Qossmic\Deptrac\Analyser;
+use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
+use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
+use Qossmic\Deptrac\Console\Symfony\Style;
+use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\OutputFormatterFactory;
+use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
+use Qossmic\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration;
+namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Configuration;
-use SensioLabs\Deptrac\Configuration\Exception;
+use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\Exception;
 
 /**
- * @covers \SensioLabs\Deptrac\Configuration\Configuration
+ * @covers \Qossmic\Deptrac\Configuration\Configuration
  */
 final class ConfigurationTest extends TestCase
 {

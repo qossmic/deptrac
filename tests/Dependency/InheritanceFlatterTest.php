@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Dependency;
+namespace Tests\Qossmic\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileOccurrence;
-use SensioLabs\Deptrac\Dependency\Dependency;
-use SensioLabs\Deptrac\Dependency\InheritanceFlatter;
-use SensioLabs\Deptrac\Dependency\InheritDependency;
-use SensioLabs\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Dependency\Dependency;
+use Qossmic\Deptrac\Dependency\InheritanceFlatter;
+use Qossmic\Deptrac\Dependency\InheritDependency;
+use Qossmic\Deptrac\Dependency\Result;
 
 final class InheritanceFlatterTest extends TestCase
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\ClassNameLayerResolverCacheDecorator;
-use SensioLabs\Deptrac\ClassNameLayerResolverInterface;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\ClassNameLayerResolverCacheDecorator;
+use Qossmic\Deptrac\ClassNameLayerResolverInterface;
 
 final class ClassNameLayerResolverCacheDecoratorTest extends TestCase
 {

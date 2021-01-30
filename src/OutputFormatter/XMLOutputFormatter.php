@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\OutputFormatter;
+namespace Qossmic\Deptrac\OutputFormatter;
 
-use SensioLabs\Deptrac\Console\Output;
-use SensioLabs\Deptrac\RulesetEngine\Context;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
+use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class XMLOutputFormatter implements OutputFormatterInterface
 {

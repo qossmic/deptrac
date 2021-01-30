@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner;
+namespace Qossmic\Deptrac\AstRunner;
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstParser;
-use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
-use SensioLabs\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
+use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AstRunner

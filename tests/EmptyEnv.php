@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac;
+namespace Tests\Qossmic\Deptrac;
 
-use SensioLabs\Deptrac\Env;
+use Qossmic\Deptrac\Env;
 
 final class EmptyEnv extends Env
 {

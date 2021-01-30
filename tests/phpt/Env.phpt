@@ -8,7 +8,7 @@ TEST=test
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-$env = new \SensioLabs\Deptrac\Env();
+$env = new \Qossmic\Deptrac\Env();
 
 var_dump($env->get('FOO'));
 var_dump($env->get('BAR'));

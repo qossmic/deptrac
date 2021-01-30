@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Visitor\Fixtures;
+namespace Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures;
 
 final class FixtureBasicInheritanceA { }
 final class FixtureBasicInheritanceB extends FixtureBasicInheritanceA { }

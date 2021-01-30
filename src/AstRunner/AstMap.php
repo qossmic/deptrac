@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner;
+namespace Qossmic\Deptrac\AstRunner;
 
 use ArrayObject;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstFileReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use SplStack;
 
 class AstMap

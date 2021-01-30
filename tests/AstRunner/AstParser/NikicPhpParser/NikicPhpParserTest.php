@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
+namespace Tests\Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 
 final class NikicPhpParserTest extends TestCase
 {

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Collector;
+namespace Tests\Qossmic\Deptrac\Collector;
 
 use PhpParser\Node;
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\Collector\MethodCollector;
-use SensioLabs\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\Collector\MethodCollector;
+use Qossmic\Deptrac\Collector\Registry;
 
 final class MethodCollectorTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Tests\Qossmic\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use SensioLabs\Deptrac\AstRunner\Resolver\ClassConstantResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
+use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 
 final class ClassConstantResolverTest extends TestCase
 {
@@ -33,7 +33,7 @@ final class ClassConstantResolverTest extends TestCase
 
         $dependencies = $astClassReferences[1]->getDependencies();
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\Fixtures\ClassA',
+            'Tests\Qossmic\Deptrac\Integration\Fixtures\ClassA',
             $dependencies[0]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());

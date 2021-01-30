@@ -7,8 +7,8 @@ GITHUB_ACTIONS=true
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-var_dump((new \SensioLabs\Deptrac\OutputFormatter\ConsoleOutputFormatter())->enabledByDefault());
-var_dump((new \SensioLabs\Deptrac\OutputFormatter\GithubActionsOutputFormatter())->enabledByDefault());
+var_dump((new \Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter())->enabledByDefault());
+var_dump((new \Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter())->enabledByDefault());
 
 --EXPECT--
 bool(false)

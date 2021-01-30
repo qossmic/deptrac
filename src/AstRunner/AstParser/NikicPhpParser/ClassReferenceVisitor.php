@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser;
+namespace Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
-use SensioLabs\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
-use SensioLabs\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeScope;
+use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
 
 class ClassReferenceVisitor extends NodeVisitorAbstract
 {

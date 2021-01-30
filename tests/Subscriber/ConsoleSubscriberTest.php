@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Subscriber;
+namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
-use SensioLabs\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use SensioLabs\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use SensioLabs\Deptrac\Dependency\Event\PostEmitEvent;
-use SensioLabs\Deptrac\Dependency\Event\PostFlattenEvent;
-use SensioLabs\Deptrac\Dependency\Event\PreEmitEvent;
-use SensioLabs\Deptrac\Dependency\Event\PreFlattenEvent;
-use SensioLabs\Deptrac\Subscriber\ConsoleSubscriber;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
+use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
+use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
+use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
+use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
+use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 

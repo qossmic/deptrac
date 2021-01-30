@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration;
+namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\ConfigurationLayer;
+use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 
 final class ConfigurationLayerTest extends TestCase
 {

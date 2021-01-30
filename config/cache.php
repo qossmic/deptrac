@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
-use SensioLabs\Deptrac\Subscriber\CacheableFileSubscriber;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
+use Qossmic\Deptrac\Subscriber\CacheableFileSubscriber;
 use Symfony\Component\DependencyInjection\Loader\Configurator as di;
 
 return static function (di\ContainerConfigurator $container): void {

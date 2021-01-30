@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Configuration\Loader;
+namespace Tests\Qossmic\Deptrac\Configuration\Loader;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
-use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
-use SensioLabs\Deptrac\File\CouldNotReadFileException;
+use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
+use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
+use Qossmic\Deptrac\File\CouldNotReadFileException;
 
 /**
- * @covers \SensioLabs\Deptrac\Configuration\Loader
+ * @covers \Qossmic\Deptrac\Configuration\Loader
  */
 final class YmlFileLoaderTest extends TestCase
 {

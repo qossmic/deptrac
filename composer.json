@@ -1,15 +1,14 @@
 {
-    "name": "sensiolabs-de/deptrac",
+    "name": "qossmic/deptrac",
     "description": "Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.",
     "license": "MIT",
     "authors": [
         {
-            "name": "Tim Glabisch",
-            "email": "tim.glabisch@sensiolabs.de"
+            "name": "Tim Glabisch"
         },
         {
             "name": "Simon Mönch",
-            "email": "simon.moench@sensiolabs.de",
+            "email": "simon.moench@qossmic.com",
             "role": "maintainer"
         }
     ],
@@ -36,12 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "SensioLabs\\Deptrac\\": "src/"
+            "Qossmic\\Deptrac\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\SensioLabs\\Deptrac\\": "tests/"
+            "Tests\\Qossmic\\Deptrac\\": "tests/"
         }
     },
     "config": {

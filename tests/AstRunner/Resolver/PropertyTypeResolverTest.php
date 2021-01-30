@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Tests\Qossmic\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use SensioLabs\Deptrac\AstRunner\Resolver\PropertyTypeResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
+use Qossmic\Deptrac\AstRunner\Resolver\PropertyTypeResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Symfony\Component\Finder\SplFileInfo;
 
 final class PropertyTypeResolverTest extends TestCase

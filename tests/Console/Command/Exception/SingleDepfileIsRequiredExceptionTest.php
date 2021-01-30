@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Console\Command\Exception;
+namespace Tests\Qossmic\Deptrac\Console\Command\Exception;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
+use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 
 /**
- * @covers \SensioLabs\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException
+ * @covers \Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException
  */
 final class SingleDepfileIsRequiredExceptionTest extends TestCase
 {

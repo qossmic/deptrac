@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\File;
+namespace Tests\Qossmic\Deptrac\File;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\File\CouldNotReadFileException;
+use Qossmic\Deptrac\File\CouldNotReadFileException;
 
 /**
- * @covers \SensioLabs\Deptrac\File\CouldNotReadFileException
+ * @covers \Qossmic\Deptrac\File\CouldNotReadFileException
  */
 final class CouldNotReadFileExceptionTest extends TestCase
 {

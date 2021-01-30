@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Collector;
+namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstInherit;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\Collector\InheritanceLevelCollector;
-use SensioLabs\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\Collector\InheritanceLevelCollector;
+use Qossmic\Deptrac\Collector\Registry;
 
 final class InheritanceLevelCollectorTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Fixtures;
+namespace Tests\Qossmic\Deptrac\AstRunner\Fixtures;
 
 use Foo\{Exception, RuntimeException};
 use LogicException;

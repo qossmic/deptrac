@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Integration\Fixtures;
+namespace Tests\Qossmic\Deptrac\Integration\Fixtures;
 
 final class ClassA
 {

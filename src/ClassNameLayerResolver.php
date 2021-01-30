@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac;
+namespace Qossmic\Deptrac;
 
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\AstRunner\AstMap\AstClassReference;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\Collector\Registry;
-use SensioLabs\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\Collector\Registry;
+use Qossmic\Deptrac\Configuration\Configuration;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {

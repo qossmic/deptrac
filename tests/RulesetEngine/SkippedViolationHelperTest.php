@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\RulesetEngine;
+namespace Tests\Qossmic\Deptrac\RulesetEngine;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstMap\ClassLikeName;
-use SensioLabs\Deptrac\Configuration\ConfigurationSkippedViolation;
-use SensioLabs\Deptrac\RulesetEngine\SkippedViolationHelper;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
+use Qossmic\Deptrac\RulesetEngine\SkippedViolationHelper;
 
 final class SkippedViolationHelperTest extends TestCase
 {

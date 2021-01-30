@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Configuration;
+namespace Qossmic\Deptrac\Configuration;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

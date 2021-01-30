@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner;
+namespace Tests\Qossmic\Deptrac\AstRunner;
 
 trait ArrayAsserts
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\DependencyEmitter;
+namespace Qossmic\Deptrac\DependencyEmitter;
 
-use SensioLabs\Deptrac\AstRunner\AstMap;
-use SensioLabs\Deptrac\Dependency\Dependency;
-use SensioLabs\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Dependency\Dependency;
+use Qossmic\Deptrac\Dependency\Result;
 
 class InheritanceDependencyEmitter implements DependencyEmitterInterface
 {

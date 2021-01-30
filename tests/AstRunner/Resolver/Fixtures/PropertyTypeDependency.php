@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\Integration\Fixtures;
+namespace Tests\Qossmic\Deptrac\Integration\Fixtures;
 
-use \Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\Finder\SplFileInfo;
 
 final class PropertyTypeDependency
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Console;
+namespace Qossmic\Deptrac\Console;
 
 use Symfony\Component\Console\Helper\TableSeparator;
 

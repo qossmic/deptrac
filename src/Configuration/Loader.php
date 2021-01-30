@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Configuration;
+namespace Qossmic\Deptrac\Configuration;
 
-use SensioLabs\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use SensioLabs\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
-use SensioLabs\Deptrac\Configuration\Loader\YmlFileLoader;
-use SensioLabs\Deptrac\File\CouldNotReadFileException;
+use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
+use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
+use Qossmic\Deptrac\File\CouldNotReadFileException;
 
 class Loader
 {

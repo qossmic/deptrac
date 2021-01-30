@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SensioLabs\Deptrac\Console;
+namespace Qossmic\Deptrac\Console;
 
-use SensioLabs\Deptrac\Console\Command\AnalyzeCommand;
-use SensioLabs\Deptrac\Console\Command\InitCommand;
+use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\InitCommand;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;

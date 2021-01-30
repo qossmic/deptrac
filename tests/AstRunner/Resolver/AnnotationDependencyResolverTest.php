@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\SensioLabs\Deptrac\AstRunner\Resolver;
+namespace Tests\Qossmic\Deptrac\AstRunner\Resolver;
 
 use PHPUnit\Framework\TestCase;
-use SensioLabs\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
-use SensioLabs\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use SensioLabs\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
-use SensioLabs\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
+use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 
 final class AnnotationDependencyResolverTest extends TestCase
 {
@@ -34,7 +34,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertCount(0, $astClassReferences[1]->getDependencies());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
+            'Tests\Qossmic\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[0]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[0]->getFileOccurrence()->getFilepath());
@@ -42,7 +42,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertSame('variable', $annotationDependency[0]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
+            'Tests\Qossmic\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[1]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[1]->getFileOccurrence()->getFilepath());
@@ -50,7 +50,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertSame('variable', $annotationDependency[1]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
+            'Tests\Qossmic\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[2]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[2]->getFileOccurrence()->getFilepath());
@@ -74,7 +74,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         self::assertSame('parameter', $annotationDependency[4]->getType());
 
         self::assertSame(
-            'Tests\SensioLabs\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
+            'Tests\Qossmic\Deptrac\Integration\Fixtures\AnnotationDependencyChild',
             $annotationDependency[5]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[5]->getFileOccurrence()->getFilepath());

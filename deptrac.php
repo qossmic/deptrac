@@ -1,7 +1,7 @@
 <?php
 
 use Composer\XdebugHandler\XdebugHandler;
-use SensioLabs\Deptrac\Console\Application;
+use Qossmic\Deptrac\Console\Application;
 
 if (PHP_VERSION_ID < 70205) {
     echo 'Required at least PHP version 7.2.5, your version: '.PHP_VERSION."\n";
