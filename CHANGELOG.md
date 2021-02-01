@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
-## [0.11.0] - xxxx-xx-xx
+## [0.11.0] - 2021-02-01
+
+### Added
+
+- [#472] Readme: added missing collectors into outline, Thanks to [@staabm]
 
 ### Changed
 
@@ -381,6 +385,8 @@ All notable changes to this project will be documented in this file, in reverse 
 [@sasezaki]: https://github.com/sasezaki
 [@xabbuh]: https://github.com/xabbuh
 
+[#472]: https://github.com/qossmic/deptrac/pull/472
+[#470]: https://github.com/qossmic/deptrac/pull/470
 [#469]: https://github.com/qossmic/deptrac/pull/469
 [#468]: https://github.com/qossmic/deptrac/pull/468
 [#467]: https://github.com/qossmic/deptrac/pull/467
@@ -539,6 +545,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/qossmic/deptrac/pull/270
 [#266]: https://github.com/qossmic/deptrac/pull/266
 
+[0.11.0]: https://github.com/qossmic/deptrac/compare/0.10.3...0.11.0
 [0.10.3]: https://github.com/qossmic/deptrac/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/qossmic/deptrac/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/qossmic/deptrac/compare/0.10.0...0.10.1
