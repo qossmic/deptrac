@@ -361,6 +361,7 @@ formatting dependencies.
 Found 0 Violations and 1 Violations skipped
 ``` 
 
+Use `--report-skipped=false` option to disable reporting skipped violations.
 
 ## Ruleset (Allowing Dependencies)
 
