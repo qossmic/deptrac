@@ -172,7 +172,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                 ConsoleOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
-                'console-print-skipped' => true,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
             ])
         );
 
@@ -208,7 +208,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                 ConsoleOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
-                'console-print-skipped' => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
             ])
         );
 
@@ -231,7 +231,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        self::assertCount(2, (new ConsoleOutputFormatter(new EmptyEnv()))->configureOptions());
+        self::assertCount(1, (new ConsoleOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 
     private function normalize($str)

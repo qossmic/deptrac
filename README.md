@@ -626,8 +626,6 @@ The default formatter is the console formatter, which dumps basic information to
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
 ```
 
-Printing skipped violations can be disabled with `--console-print-skipped=false`.
-
 ### Table Formatter
 
 The table formatter groups results by layers to its own table. It can be activated with `--formatter=table`.

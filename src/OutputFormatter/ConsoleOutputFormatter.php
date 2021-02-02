@@ -18,7 +18,6 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
     /** @deprecated */
     public const LEGACY_REPORT_UNCOVERED = 'formatter-console-report-uncovered';
-    private const PRINT_SKIPPED = 'console-print-skipped';
 
     /** @var Env */
     private $env;
@@ -37,7 +36,6 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     {
         return [
             OutputFormatterOption::newValueOption(self::LEGACY_REPORT_UNCOVERED, '<fg=yellow>[DEPRECATED]</> Report uncovered dependencies.', false),
-            OutputFormatterOption::newValueOption(self::PRINT_SKIPPED, 'Print skipped violations', true),
         ];
     }
 
@@ -59,14 +57,14 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted('');
         }
 
-        $printSkipped = $outputFormatterInput->getOptionAsBoolean(self::PRINT_SKIPPED);
+        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
 
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!$printSkipped && $rule instanceof SkippedViolation) {
+            if (!$reportSkipped && $rule instanceof SkippedViolation) {
                 continue;
             }
 
