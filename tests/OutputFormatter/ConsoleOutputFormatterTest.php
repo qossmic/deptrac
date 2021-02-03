@@ -172,10 +172,57 @@ final class ConsoleOutputFormatterTest extends TestCase
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                 ConsoleOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
             ])
         );
 
         $o = $bufferedOutput->fetch();
+        self::assertEquals(
+            $this->normalize($expectedOutput),
+            $this->normalize($o)
+        );
+    }
+
+    public function testWithoutSkippedViolations(): void
+    {
+        $originalA = ClassLikeName::fromFQCN('OriginalA');
+        $originalB = ClassLikeName::fromFQCN('OriginalB');
+        $rules = [
+            new SkippedViolation(
+                new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                'LayerA',
+                'LayerB'
+            ),
+        ];
+
+        $bufferedOutput = new BufferedOutput();
+        $output = new SymfonyOutput(
+            $bufferedOutput,
+            new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
+        );
+
+        $formatter = new ConsoleOutputFormatter(new EmptyEnv());
+        $formatter->finish(
+            new Context($rules, []),
+            $output,
+            new OutputFormatterInput([
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                ConsoleOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+            ])
+        );
+
+        $o = $bufferedOutput->fetch();
+
+        $expectedOutput = '
+            
+            Report:
+            Violations: 0
+            Skipped violations: 1
+            Uncovered: 0
+            Allowed: 0
+            ';
+
         self::assertEquals(
             $this->normalize($expectedOutput),
             $this->normalize($o)
