@@ -60,10 +60,16 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted('');
         }
 
+        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
+
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
+            if (!$reportSkipped && $rule instanceof SkippedViolation) {
+                continue;
+            }
+
             $dependency = $rule->getDependency();
 
             $message = sprintf(
