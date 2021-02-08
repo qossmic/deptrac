@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
@@ -44,6 +46,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                 GithubActionsOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
             ])
         );
 
@@ -124,6 +127,36 @@ final class GithubActionsOutputFormatterTest extends TestCase
             [new Error('an error occurred')],
             "::error ::an error occurred\n",
         ];
+    }
+
+    public function testWithoutSkippedViolations(): void
+    {
+        $originalA = ClassLikeName::fromFQCN('\ACME\OriginalA');
+        $originalB = ClassLikeName::fromFQCN('\ACME\OriginalB');
+        $originalAOccurrence = FileOccurrence::fromFilepath('/home/testuser/originalA.php', 12);
+
+        $rules = [
+            new SkippedViolation(
+                new Dependency($originalA, $originalB, $originalAOccurrence),
+                'LayerA',
+                'LayerB'
+            ),
+        ];
+
+        $bufferedOutput = new BufferedOutput();
+
+        $formatter = new GithubActionsOutputFormatter();
+        $formatter->finish(
+            new Context($rules, []),
+            $this->createSymfonyOutput($bufferedOutput),
+            new OutputFormatterInput([
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                GithubActionsOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+            ])
+        );
+
+        self::assertEquals('', $bufferedOutput->fetch());
     }
 
     public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
