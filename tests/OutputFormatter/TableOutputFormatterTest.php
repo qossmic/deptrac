@@ -139,7 +139,7 @@ class TableOutputFormatterTest extends TestCase
 ',
         ];
 
-        yield [
+        yield 'skipped violations' => [
             [
                 new SkippedViolation(
                     new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
@@ -168,15 +168,39 @@ class TableOutputFormatterTest extends TestCase
 ',
         ];
 
-        yield [
+        yield 'skipped violations without reporting' => [
             [
+                new SkippedViolation(
+                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    'LayerA',
+                    'LayerB'
+                ),
+            ],
+            [],
+            '
+ -------------------- ----- 
+  Report                    
+ -------------------- ----- 
+  Violations           0    
+  Skipped violations   1    
+  Uncovered            0    
+  Allowed              0    
+ -------------------- ----- 
+
+',
+            'reportUncovered' => true,
+            'reportSkipped' => false,
+        ];
+
+        yield 'uncovered' => [
+            'rules' => [
                 new Uncovered(
                     new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
                     'LayerA'
                 ),
             ],
-            [],
-            ' ----------- ------------------------------------------------- 
+            'errors' => [],
+            'expectedOutput' => ' ----------- ------------------------------------------------- 
   Reason      LayerA                                           
  ----------- ------------------------------------------------- 
   Uncovered   OriginalA has uncovered dependency on OriginalB  
@@ -194,6 +218,28 @@ class TableOutputFormatterTest extends TestCase
  -------------------- ----- 
 
 ',
+        ];
+
+        yield 'uncovered without reporting' => [
+            'rules' => [
+                new Uncovered(
+                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    'LayerA'
+                ),
+            ],
+            'errors' => [],
+            'expectedOutput' => '
+ -------------------- ----- 
+  Report                    
+ -------------------- ----- 
+  Violations           0    
+  Skipped violations   0    
+  Uncovered            1    
+  Allowed              0    
+ -------------------- ----- 
+
+',
+            'reportUncovered' => false,
         ];
 
         yield 'an error occurred' => [
@@ -222,7 +268,7 @@ class TableOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $rules, array $errors, string $expectedOutput): void
+    public function testBasic(array $rules, array $errors, string $expectedOutput, bool $reportUncovered = true, bool $reportSkipped = true): void
     {
         $bufferedOutput = new BufferedOutput();
         $output = new SymfonyOutput(
@@ -234,7 +280,10 @@ class TableOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, $errors),
             $output,
-            new OutputFormatterInput([AnalyzeCommand::OPTION_REPORT_UNCOVERED => true])
+            new OutputFormatterInput([
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+            ])
         );
 
         static::assertEquals($expectedOutput, $bufferedOutput->fetch());

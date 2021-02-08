@@ -40,13 +40,14 @@ final class TableOutputFormatter implements OutputFormatterInterface
     ): void {
         $groupedRules = [];
         $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
+        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
 
         foreach ($context->rules() as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
 
-            if ($rule instanceof Violation || $rule instanceof SkippedViolation) {
+            if ($rule instanceof Violation || ($reportSkipped && $rule instanceof SkippedViolation)) {
                 $groupedRules[$rule->getLayerA()][] = $rule;
             } elseif ($reportUncovered && $rule instanceof Uncovered) {
                 $groupedRules[$rule->getLayer()][] = $rule;
