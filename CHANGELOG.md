@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.11.1] - 2021-02-09
+
+### Added
+
+- [#485] Add support for report skipped option in TableOutputFormatter, Thanks to [@smoench]
+- [#484] Add support for report skipped option in GithubActionsOutputFormatter, Thanks to [@sasezaki]
+- [#471] Add option to not print skipped violations in ConsoleOutputFormatter, Thanks to [@lprzybylek]
+
+### Changed
+
+- [#480] Bump symfony/yaml from 5.2.2 to 5.2.3
+- [#479] Bump symfony/finder from 5.2.2 to 5.2.3
+- [#478] Bump symfony/event-dispatcher from 5.2.2 to 5.2.3
+- [#477] Bump symfony/dependency-injection from 5.2.2 to 5.2.3
+- [#476] Bump symfony/console from 5.2.2 to 5.2.3
+- [#475] Bump symfony/config from 5.2.2 to 5.2.3
+- [#474] Bump symfony/options-resolver from 5.2.2 to 5.2.3
+
+
 ## [0.11.0] - 2021-02-01
 
 ### Added
@@ -384,8 +403,19 @@ All notable changes to this project will be documented in this file, in reverse 
 [@staabm]: https://github.com/staabm
 [@sasezaki]: https://github.com/sasezaki
 [@xabbuh]: https://github.com/xabbuh
+[@lprzybylek]: https://github.com/lprzybylek
 
+[#485]: https://github.com/qossmic/deptrac/pull/485
+[#484]: https://github.com/qossmic/deptrac/pull/484
+[#480]: https://github.com/qossmic/deptrac/pull/480
+[#479]: https://github.com/qossmic/deptrac/pull/479
+[#478]: https://github.com/qossmic/deptrac/pull/478
+[#477]: https://github.com/qossmic/deptrac/pull/477
+[#476]: https://github.com/qossmic/deptrac/pull/476
+[#475]: https://github.com/qossmic/deptrac/pull/475
+[#474]: https://github.com/qossmic/deptrac/pull/474
 [#472]: https://github.com/qossmic/deptrac/pull/472
+[#471]: https://github.com/qossmic/deptrac/pull/471
 [#470]: https://github.com/qossmic/deptrac/pull/470
 [#469]: https://github.com/qossmic/deptrac/pull/469
 [#468]: https://github.com/qossmic/deptrac/pull/468
@@ -545,6 +575,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/qossmic/deptrac/pull/270
 [#266]: https://github.com/qossmic/deptrac/pull/266
 
+[0.11.1]: https://github.com/qossmic/deptrac/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/qossmic/deptrac/compare/0.10.3...0.11.0
 [0.10.3]: https://github.com/qossmic/deptrac/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/qossmic/deptrac/compare/0.10.1...0.10.2
@@ -560,4 +591,3 @@ All notable changes to this project will be documented in this file, in reverse 
 [0.5.0]: https://github.com/qossmic/deptrac/compare/0.4.0...0.5.0
 [0.4.0]: https://github.com/qossmic/deptrac/compare/0.3.0...0.4.0
 [0.3.0]: https://github.com/qossmic/deptrac/compare/0.2.0...0.3.0
-
