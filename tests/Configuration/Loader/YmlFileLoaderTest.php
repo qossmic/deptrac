@@ -11,7 +11,7 @@ use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\File\CouldNotReadFileException;
 
 /**
- * @covers \Qossmic\Deptrac\Configuration\Loader
+ * @covers \Qossmic\Deptrac\Configuration\Loader\YmlFileLoader
  */
 final class YmlFileLoaderTest extends TestCase
 {
@@ -46,31 +46,5 @@ final class YmlFileLoaderTest extends TestCase
         $this->expectException(ParsedYamlIsNotAnArrayException::class);
 
         $loader->parseFile($file);
-    }
-
-    public function testLoadThrowsImportFileCannotBeReadException(): void
-    {
-        $file = __DIR__.'/../Fixtures/non-existent-baseline.yml';
-
-        $loader = new YmlFileLoader();
-
-        $this->expectException(CouldNotReadFileException::class);
-        $this->expectExceptionMessageMatches('~non-existent-file\.yaml~');
-
-        $loader->parseFile($file);
-    }
-
-    public function testLoadWithBaseline(): void
-    {
-        $file = __DIR__.'/../Fixtures/baseline-main.yml';
-
-        $loader = new YmlFileLoader();
-        $configuration = $loader->parseFile($file);
-        self::assertSame([
-            'DummyClass' => [
-                'FooClass',
-                'BarClass',
-            ],
-        ], $configuration['skip_violations']);
     }
 }

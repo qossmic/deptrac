@@ -1,0 +1,12 @@
+paths: ["./examples/Uncovered/"]
+
+use_relative_path_from_depfile: true
+
+layers:
+  - name: Core
+    collectors:
+      - type: className
+        regex: Core
+
+ruleset:
+  Core: ~
