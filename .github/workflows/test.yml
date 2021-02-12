@@ -58,10 +58,6 @@ jobs:
       - name: "Install tools with phive"
         run: make tools-install
 
-      - name: "Update PHPUnit for PHP 8"
-        if: ${{ matrix.php-version == 8.0 }}
-        run: phive --no-progress update phpunit
-
       - name: "Run tests"
         run: make tests
 
