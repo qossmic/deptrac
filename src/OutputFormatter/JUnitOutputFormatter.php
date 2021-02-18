@@ -15,7 +15,6 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
     public const DUMP_XML = 'junit-dump-xml';
-    public const LEGACY_DUMP_XML = 'formatter-junit-dump-xml';
 
     public function getName(): string
     {
@@ -29,7 +28,6 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     {
         return [
             OutputFormatterOption::newValueOption(self::DUMP_XML, 'Path to a dumped xml file.', './junit-report.xml'),
-            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_XML, '<fg=yellow>[DEPRECATED]</> Path to a dumped xml file.'),
         ];
     }
 
@@ -48,17 +46,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $legacyDumpXml = $outputFormatterInput->getOption(self::LEGACY_DUMP_XML);
-
-        if ($legacyDumpXml) {
-            $output->writeLineFormatted(sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--%s</>. ⚠️️', self::LEGACY_DUMP_XML));
-            $output->writeLineFormatted(sprintf('   Please use the new option <fg=cyan>--%s</> instead.', self::DUMP_XML));
-            $output->writeLineFormatted('');
-        }
-
         $xml = $this->createXml($context);
 
-        if (($dumpXmlPath = $legacyDumpXml) || ($dumpXmlPath = $outputFormatterInput->getOption(self::DUMP_XML))) {
+        if ($dumpXmlPath = $outputFormatterInput->getOption(self::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);
             $output->writeLineFormatted('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
         }
