@@ -1,4 +1,4 @@
-paths: ["./examples/Uncovered/"]
+paths: ["./Uncovered/"]
 layers:
   - name: Core
     collectors:

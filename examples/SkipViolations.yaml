@@ -1,4 +1,4 @@
-paths: ["./examples/SkipViolations/"]
+paths: ["./SkipViolations/"]
 layers:
 - name: Core
   collectors:

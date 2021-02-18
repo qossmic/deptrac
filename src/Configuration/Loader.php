@@ -40,7 +40,7 @@ class Loader
         $configs = [];
         $configs[] = $mainConfig = $this->fileLoader->parseFile($absolutePath);
 
-        $useRelativePathFromDepfile = (bool) ($mainConfig['use_relative_path_from_depfile'] ?? false);
+        $useRelativePathFromDepfile = (bool) ($mainConfig['use_relative_path_from_depfile'] ?? true);
         $fileHelper = $useRelativePathFromDepfile ? new FileHelper(dirname($absolutePath)) : $this->workingDirectoryFileHelper;
 
         if (isset($mainConfig['baseline'])) {

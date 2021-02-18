@@ -1,4 +1,7 @@
 paths: ["./examples/Uncovered/"]
+
+use_relative_path_from_depfile: false
+
 layers:
   - name: Core
     collectors:

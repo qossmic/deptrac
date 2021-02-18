@@ -1,4 +1,4 @@
-paths: ["./examples/Layer1/", "./examples/Layer2/"]
+paths: ["./Layer1/", "./Layer2/"]
 exclude_files: []
 layers:
   - name: Controller

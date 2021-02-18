@@ -26,7 +26,7 @@ final class Definition implements ConfigurationInterface
                 ->end()
                 ->scalarNode('baseline')->end()
                 ->booleanNode('ignore_uncovered_internal_classes')->defaultTrue()->end()
-                ->booleanNode('use_relative_path_from_depfile')->defaultFalse()->end()
+                ->booleanNode('use_relative_path_from_depfile')->defaultTrue()->end()
                 ->arrayNode('layers')
                     ->requiresAtLeastOneElement()
                     ->useAttributeAsKey('name', $removeKeyItem = false)

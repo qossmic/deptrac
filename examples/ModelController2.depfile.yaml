@@ -1,4 +1,4 @@
-paths: ["./examples/ModelController2"]
+paths: ["./ModelController2"]
 exclude_files: []
 layers:
   - name: Models

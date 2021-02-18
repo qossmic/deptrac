@@ -14,8 +14,8 @@ build: tools-install tests
 	$(BOX_BIN) compile
 
 tools-install:
-	#gpg --keyserver hkps://keyserver.ubuntu.com --receive-keys E82B2FB314E9906E
-	#gpg --keyserver hkps://keys.openpgp.org --receive-keys 4AA394086372C20A CF1A108D0E7AE720 C5095986493B4AA0 12CE0F1D262429A5
+	gpg --keyserver hkps://keyserver.ubuntu.com --receive-keys E82B2FB314E9906E
+	gpg --keyserver hkps://keys.openpgp.org --receive-keys 4AA394086372C20A CF1A108D0E7AE720 C5095986493B4AA0 12CE0F1D262429A5
 	$(PHIVE_BIN) --no-progress install --copy --trust-gpg-keys E82B2FB314E9906E,4AA394086372C20A,CF1A108D0E7AE720,C5095986493B4AA0,12CE0F1D262429A5 --force-accept-unsigned
 
 composer-install:
