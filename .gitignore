@@ -2,9 +2,9 @@ vendor/*
 coverage/*
 tools/
 .box_dump/
-deptrac.phar
-deptrac.phar.asc
-depfile.yaml
+/deptrac.phar
+/deptrac.phar.asc
+/depfile.yaml
 phpunit.xml
 box.json
 deptrac.version

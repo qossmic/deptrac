@@ -1,7 +1,8 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
     level: max
     paths: [src]
-    ignoreErrors:
-        - '/Parameter #1 \$id of method Fhaculty\\Graph\\Graph\:\:createVertex\(\) expects int\|null, string given\./'

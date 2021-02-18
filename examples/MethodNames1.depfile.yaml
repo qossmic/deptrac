@@ -1,4 +1,4 @@
-paths: ["./examples/MethodNames1/"]
+paths: ["./MethodNames1/"]
 exclude_files: []
 layers:
   - name: SomeA

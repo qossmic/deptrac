@@ -8,9 +8,10 @@ layers:
         regex: src/
 
 ruleset:
-  - dummy
+  Dummy:
 
 ignore_uncovered_internal_classes: false
+use_relative_path_from_depfile: true
 
 skip_violations:
   DummyClass:

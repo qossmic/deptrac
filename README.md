@@ -104,6 +104,8 @@ ruleset:
 
 In the first section, `paths`, you declare where deptrac should look for your code.
 As this is an array of directories, you can specify multiple locations.
+Paths are relative to your depfile. It can be changed to the current working directory with setting following
+option `use_relative_path_from_depfile: false`.
 
 With the `exclude_files` section, you can specify one or more regular expressions for files that should be excluded,
 the most common being probably anything containing the "test" word in the path.
@@ -714,6 +716,15 @@ By default, internal php classes will be ignored. This could be changed by addin
 
 Use `--fail-on-uncovered` option to fail on uncovered dependencies.
 Use `--report-uncovered` option to report uncovered dependencies.
+
+## Import depfiles
+
+It is possible to import other depfile definitions in your depfile as followed:
+
+```yaml
+imports:
+   - some/depfile.yaml
+```
 
 ## Build Deptrac
 

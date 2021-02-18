@@ -4,19 +4,28 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use function dirname;
 use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
 use Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\File\CouldNotReadFileException;
+use Qossmic\Deptrac\File\FileHelper;
+use Symfony\Component\Config\Definition\Processor;
 
 class Loader
 {
     /** @var YmlFileLoader */
     private $fileLoader;
+    /** @var Processor */
+    private $processor;
+    /** @var FileHelper */
+    private $workingDirectoryFileHelper;
 
-    public function __construct(YmlFileLoader $fileLoader)
+    public function __construct(YmlFileLoader $fileLoader, string $workingDirectory)
     {
         $this->fileLoader = $fileLoader;
+        $this->workingDirectoryFileHelper = new FileHelper($workingDirectory);
+        $this->processor = new Processor();
     }
 
     /**
@@ -26,8 +35,33 @@ class Loader
      */
     public function load(string $file): Configuration
     {
-        $data = $this->fileLoader->parseFile($file);
+        $absolutePath = $this->workingDirectoryFileHelper->toAbsolutePath($file);
 
-        return Configuration::fromArray($data);
+        $configs = [];
+        $configs[] = $mainConfig = $this->fileLoader->parseFile($absolutePath);
+
+        $useRelativePathFromDepfile = (bool) ($mainConfig['use_relative_path_from_depfile'] ?? true);
+        $fileHelper = $useRelativePathFromDepfile ? new FileHelper(dirname($absolutePath)) : $this->workingDirectoryFileHelper;
+
+        if (isset($mainConfig['baseline'])) {
+            $configs[] = $this->fileLoader->parseFile($fileHelper->toAbsolutePath($mainConfig['baseline']));
+        }
+
+        if (isset($mainConfig['imports'])) {
+            foreach ((array) $mainConfig['imports'] as $importFile) {
+                $configs[] = $this->fileLoader->parseFile($fileHelper->toAbsolutePath($importFile));
+            }
+        }
+
+        $mergedConfig = $this->processor->processConfiguration(new Definition(), $configs);
+
+        return Configuration::fromArray([
+            'paths' => array_map([$fileHelper, 'toAbsolutePath'], $mergedConfig['paths']),
+            'exclude_files' => $mergedConfig['exclude_files'],
+            'layers' => $mergedConfig['layers'],
+            'ruleset' => $mergedConfig['ruleset'],
+            'skip_violations' => $mergedConfig['skip_violations'],
+            'ignore_uncovered_internal_classes' => $mergedConfig['ignore_uncovered_internal_classes'],
+        ]);
     }
 }

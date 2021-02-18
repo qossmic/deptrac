@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.3.1@2feba22a005a18bf31d4c7b9bdb9252c73897476">
+<files psalm-version="4.x-dev@">
   <file src="src/AstRunner/AstParser/NikicPhpParser/ClassReferenceVisitor.php">
     <MixedArgument occurrences="1">
       <code>$className</code>
@@ -84,28 +84,86 @@
       <code>$v</code>
     </MixedArgumentTypeCoercion>
   </file>
-  <file src="src/Configuration/Loader.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$data</code>
-    </MixedArgumentTypeCoercion>
+  <file src="src/Configuration/Definition.php">
+    <MixedMethodCall occurrences="61">
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayPrototype</code>
+      <code>arrayPrototype</code>
+      <code>arrayPrototype</code>
+      <code>arrayPrototype</code>
+      <code>booleanNode</code>
+      <code>booleanNode</code>
+      <code>cannotBeEmpty</code>
+      <code>cannotBeEmpty</code>
+      <code>children</code>
+      <code>children</code>
+      <code>defaultTrue</code>
+      <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>ignoreExtraKeys</code>
+      <code>isRequired</code>
+      <code>isRequired</code>
+      <code>isRequired</code>
+      <code>requiresAtLeastOneElement</code>
+      <code>requiresAtLeastOneElement</code>
+      <code>requiresAtLeastOneElement</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>useAttributeAsKey</code>
+      <code>useAttributeAsKey</code>
+      <code>useAttributeAsKey</code>
+    </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>children</code>
+    </PossiblyUndefinedMethod>
   </file>
-  <file src="src/Configuration/Loader/YmlFileLoader.php">
-    <MixedArgument occurrences="2">
-      <code>$data</code>
-      <code>Yaml::parse($importContent)</code>
+  <file src="src/Configuration/Loader.php">
+    <MixedArgument occurrences="3">
+      <code>$importFile</code>
+      <code>$mainConfig['baseline']</code>
+      <code>$mergedConfig['paths']</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="1">
-      <code>$data['baseline']</code>
+      <code>$mergedConfig['paths']</code>
     </MixedArrayAccess>
-    <MixedOperand occurrences="1">
-      <code>$data['baseline']</code>
-    </MixedOperand>
-  </file>
-  <file src="src/FileResolver.php">
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>SplFileInfo[]</code>
-      <code>iterator_to_array($finder)</code>
-    </MixedReturnTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$importFile</code>
+    </MixedAssignment>
   </file>
   <file src="src/OutputFormatter/BaselineOutputFormatter.php">
     <MixedArgument occurrences="2">

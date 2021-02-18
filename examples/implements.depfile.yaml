@@ -1,4 +1,4 @@
-paths: ["./examples/Implements/"]
+paths: ["./Implements/"]
 exclude_files: []
 layers:
   - name: Foo

@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Console;
 
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
+use Qossmic\Deptrac\ShouldNotHappenException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,7 +33,11 @@ final class Application extends BaseApplication
 
     public function doRun(InputInterface $input, OutputInterface $output): int
     {
-        $container = $this->buildContainer($input);
+        if (false === ($currentWorkingDirectory = getcwd())) {
+            throw new ShouldNotHappenException();
+        }
+
+        $container = $this->buildContainer($input, $currentWorkingDirectory);
 
         /** @var InitCommand $initCommand */
         $initCommand = $container->get(InitCommand::class);
@@ -46,9 +51,10 @@ final class Application extends BaseApplication
         return parent::doRun($input, $output);
     }
 
-    private function buildContainer(InputInterface $input): ContainerBuilder
+    private function buildContainer(InputInterface $input, string $currentWorkingDirectory): ContainerBuilder
     {
         $container = new ContainerBuilder();
+        $container->setParameter('currentWorkingDirectory', $currentWorkingDirectory);
         $container->addCompilerPass(
             new RegisterListenersPass(EventDispatcher::class, 'event_listener', 'event_subscriber')
         );
