@@ -336,30 +336,25 @@ skip_violations:
   Library\LibClass:
     - Core\CoreClass
 ``` 
-*skip_violations* section contains associative array where a key (`Library\LibClass`) is the name of dependant class 
+*skip_violations* section contains an associative array where a key (`Library\LibClass`) is the name of dependant class 
 and values (`Core\CoreClass`) are dependency classes.
 
 Matched violations will be marked as skipped:
 ```bash
-php deptrac.php analyze examples/SkipViolations.yml
+php deptrac.php analyze examples/SkipViolations.yaml --report-skipped
+1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+
+[SKIPPED] Library\LibClass must not depend on Core\CoreClass (Library on Core)
+/path/examples/SkipViolations/SkipViolations.php::11
+
+[ERROR] Skipped violation "Core\Unmatched" for "Library\LibClass" was not matched.
+
+Report:
+Violations: 0
+Skipped violations: 1
+Uncovered: 0
+Allowed: 1
 ```
-```text
-Start to create an AstMap for 1 Files.
- ..
-AstMap created.
-start emitting dependencies "InheritanceDependencyEmitter"
-start emitting dependencies "BasicDependencyEmitter"
-end emitting dependencies
-start flatten dependencies
-end flatten dependencies
-collecting violations.
-formatting dependencies.
-[SKIPPED] Library\LibClass::11 must not depend on Core\CoreClass (Library on Core)
-
-Found 0 Violations and 1 Violations skipped
-``` 
-
-Use `--report-skipped=false` option to disable reporting skipped violations.
 
 ## Ruleset (Allowing Dependencies)
 
