@@ -45,7 +45,6 @@ final class GithubActionsOutputFormatterTest extends TestCase
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                GithubActionsOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
             ])
         );
@@ -151,7 +150,6 @@ final class GithubActionsOutputFormatterTest extends TestCase
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                GithubActionsOutputFormatter::LEGACY_REPORT_UNCOVERED => false,
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
             ])
         );
@@ -166,7 +164,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        self::assertCount(1, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
+        self::assertCount(0, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

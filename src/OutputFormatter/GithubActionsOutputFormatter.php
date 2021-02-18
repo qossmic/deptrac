@@ -13,9 +13,6 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
-    /** @deprecated */
-    public const LEGACY_REPORT_UNCOVERED = 'formatter-github-actions-report-uncovered';
-
     /** @var Env */
     private $env;
 
@@ -37,9 +34,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function configureOptions(): array
     {
-        return [
-            OutputFormatterOption::newValueOption(self::LEGACY_REPORT_UNCOVERED, '<fg=yellow>[DEPRECATED]</> report uncovered dependencies', false),
-        ];
+        return [];
     }
 
     public function enabledByDefault(): bool
@@ -52,14 +47,6 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
-        $legacyReportUncovered = $outputFormatterInput->getOptionAsBoolean(self::LEGACY_REPORT_UNCOVERED);
-
-        if ($legacyReportUncovered) {
-            $output->writeLineFormatted(sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--%s</>. ⚠️️', self::LEGACY_REPORT_UNCOVERED));
-            $output->writeLineFormatted(sprintf('   Please use the new option <fg=cyan>--%s</> instead.', AnalyzeCommand::OPTION_REPORT_UNCOVERED));
-            $output->writeLineFormatted('');
-        }
-
         $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
 
         foreach ($context->rules() as $rule) {
@@ -94,8 +81,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             ));
         }
 
-        if ($legacyReportUncovered
-            || $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED)) {
+        if ($outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED)) {
             $this->printUncovered($context, $output);
         }
 

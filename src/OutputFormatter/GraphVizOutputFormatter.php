@@ -18,20 +18,10 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 final class GraphVizOutputFormatter implements OutputFormatterInterface
 {
     private const NAME = 'graphviz';
-    private const LEGACY_OPTION_PREFIX = 'formatter-';
     public const DISPLAY = self::NAME.'-display';
     public const DUMP_IMAGE = self::NAME.'-dump-image';
     public const DUMP_DOT = self::NAME.'-dump-dot';
     public const DUMP_HTML = self::NAME.'-dump-html';
-
-    /** @deprecated  */
-    public const LEGACY_DISPLAY = self::LEGACY_OPTION_PREFIX.self::DISPLAY;
-    /** @deprecated  */
-    public const LEGACY_DUMP_IMAGE = self::LEGACY_OPTION_PREFIX.self::DUMP_IMAGE;
-    /** @deprecated  */
-    public const LEGACY_DUMP_DOT = self::LEGACY_OPTION_PREFIX.self::DUMP_DOT;
-    /** @deprecated  */
-    public const LEGACY_DUMP_HTML = self::LEGACY_OPTION_PREFIX.self::DUMP_HTML;
 
     public function getName(): string
     {
@@ -53,10 +43,6 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             OutputFormatterOption::newValueOption(self::DUMP_IMAGE, 'Path to a dumped png file.'),
             OutputFormatterOption::newValueOption(self::DUMP_DOT, 'Path to a dumped dot file.'),
             OutputFormatterOption::newValueOption(self::DUMP_HTML, 'Path to a dumped html file.'),
-            OutputFormatterOption::newValueOption(self::LEGACY_DISPLAY, '<fg=yellow>[DEPRECATED]</> Should try to open graphviz image.'),
-            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_IMAGE, '<fg=yellow>[DEPRECATED]</> Path to a dumped png file.'),
-            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_DOT, '<fg=yellow>[DEPRECATED]</> Path to a dumped dot file.'),
-            OutputFormatterOption::newValueOption(self::LEGACY_DUMP_HTML, '<fg=yellow>[DEPRECATED]</> Path to a dumped html file.'),
         ];
     }
 
@@ -65,16 +51,6 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $legacyDisplay = $outputFormatterInput->getOptionAsBoolean(self::LEGACY_DISPLAY);
-        $legacyDumpImage = $outputFormatterInput->getOption(self::LEGACY_DUMP_IMAGE);
-        $legacyDumpDot = $outputFormatterInput->getOption(self::LEGACY_DUMP_DOT);
-        $legacyDumpHtml = $outputFormatterInput->getOption(self::LEGACY_DUMP_HTML);
-
-        $this->reportDeprecation($legacyDisplay, self::LEGACY_DISPLAY, self::DISPLAY, $output);
-        $this->reportDeprecation(!empty($legacyDumpImage), self::LEGACY_DUMP_IMAGE, self::DUMP_IMAGE, $output);
-        $this->reportDeprecation(!empty($legacyDumpDot), self::LEGACY_DUMP_DOT, self::DUMP_DOT, $output);
-        $this->reportDeprecation(!empty($legacyDumpHtml), self::LEGACY_DUMP_HTML, self::DUMP_HTML, $output);
-
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
 
@@ -110,28 +86,22 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        if ($legacyDisplay || $outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
+        if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
             (new GraphViz())->display($graph);
         }
 
-        if (($dumpImagePath = $legacyDumpImage)
-            || ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE))
-        ) {
+        if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
             $imagePath = (new GraphViz())->createImageFile($graph);
             rename($imagePath, $dumpImagePath);
             $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
-        if (($dumpDotPath = $legacyDumpDot)
-            || ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT))
-        ) {
+        if ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT)) {
             file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
-        if (($dumpHtmlPath = $legacyDumpHtml)
-            || ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML))
-        ) {
+        if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
             file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
             $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
@@ -196,14 +166,5 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         return $layersDependOnLayers;
-    }
-
-    private function reportDeprecation(bool $report, string $legacyOption, string $newOption, Output $output): void
-    {
-        if ($report) {
-            $output->writeLineFormatted(sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--%s</>. ⚠️️', $legacyOption));
-            $output->writeLineFormatted(sprintf('   Please use the new option <fg=cyan>--%s</> instead.', $newOption));
-            $output->writeLineFormatted('');
-        }
     }
 }
