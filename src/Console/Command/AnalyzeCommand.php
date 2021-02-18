@@ -68,7 +68,7 @@ class AnalyzeCommand extends Command
         $this->addOption('no-progress', null, InputOption::VALUE_NONE, 'Do not show progress bar');
         $this->addOption('fail-on-uncovered', null, InputOption::VALUE_NONE, 'Fails if any uncovered dependency is found');
         $this->addOption(self::OPTION_REPORT_UNCOVERED, null, InputOption::VALUE_NONE, 'Report uncovered dependencies');
-        $this->addOption(self::OPTION_REPORT_SKIPPED, null, InputOption::VALUE_OPTIONAL, 'Report skipped violations', true);
+        $this->addOption(self::OPTION_REPORT_SKIPPED, null, InputOption::VALUE_NONE, 'Report skipped violations');
         $this->getDefinition()->addOptions($this->formatterFactory->getFormatterOptions());
     }
 
