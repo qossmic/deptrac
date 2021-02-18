@@ -722,6 +722,15 @@ By default, internal php classes will be ignored. This could be changed by addin
 Use `--fail-on-uncovered` option to fail on uncovered dependencies.
 Use `--report-uncovered` option to report uncovered dependencies.
 
+## Import depfiles
+
+It is possible to import other depfile definitions in your depfile as followed:
+
+```yaml
+imports:
+   - some/depfile.yaml
+```
+
 ## Build Deptrac
 
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
