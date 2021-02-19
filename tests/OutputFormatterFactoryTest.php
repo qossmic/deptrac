@@ -9,7 +9,6 @@ use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 
 final class OutputFormatterFactoryTest extends TestCase
 {
@@ -63,42 +62,19 @@ final class OutputFormatterFactoryTest extends TestCase
         /** @var $arguments InputArgument[] */
         $arguments = $formatterFactory->getFormatterOptions();
 
-        self::assertEquals('formatter-foo1', $arguments[0]->getName());
+        self::assertEquals('f1-n1', $arguments[0]->getName());
+        self::assertEquals('f1-n1-default', $arguments[0]->getDefault());
+        self::assertEquals('f1-n1-desc', $arguments[0]->getDescription());
 
-        self::assertEquals('f1-n1', $arguments[1]->getName());
-        self::assertEquals('f1-n1-default', $arguments[1]->getDefault());
-        self::assertEquals('f1-n1-desc', $arguments[1]->getDescription());
+        self::assertEquals('f2-n1', $arguments[1]->getName());
+        self::assertEquals('f2-n1-default', $arguments[1]->getDefault());
+        self::assertEquals('f2-n1-desc', $arguments[1]->getDescription());
 
-        self::assertEquals('formatter-foo2', $arguments[2]->getName());
+        self::assertEquals('f2-n2', $arguments[2]->getName());
+        self::assertEquals('f2-n2-default', $arguments[2]->getDefault());
+        self::assertEquals('f2-n2-desc', $arguments[2]->getDescription());
 
-        self::assertEquals('f2-n1', $arguments[3]->getName());
-        self::assertEquals('f2-n1-default', $arguments[3]->getDefault());
-        self::assertEquals('f2-n1-desc', $arguments[3]->getDescription());
-
-        self::assertEquals('f2-n2', $arguments[4]->getName());
-        self::assertEquals('f2-n2-default', $arguments[4]->getDefault());
-        self::assertEquals('f2-n2-desc', $arguments[4]->getDescription());
-
-        self::assertCount(6, $arguments);
-    }
-
-    public function testIsFormatterActive(): void
-    {
-        $formatter = (new OutputFormatterFactory([
-            $this->createNamedFormatter('f1'),
-            $this->createNamedFormatter('f2'),
-            $this->createNamedFormatter('f3'),
-        ]));
-
-        $input = $this->createMock(InputInterface::class);
-        $input->method('getOption')->withConsecutive(
-            ['formatter-f1'],
-            ['formatter-f2'],
-            ['formatter-f3']
-        )
-        ->willReturnOnConsecutiveCalls(true, true, false);
-
-        self::assertCount(2, $formatter->getActiveFormatters($input));
+        self::assertCount(3, $arguments);
     }
 
     public function testGetFormatterByNameNotFound(): void
