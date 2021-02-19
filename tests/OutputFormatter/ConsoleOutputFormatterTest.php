@@ -23,13 +23,12 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Tests\Qossmic\Deptrac\EmptyEnv;
 
 final class ConsoleOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {
-        self::assertEquals('console', (new ConsoleOutputFormatter(new EmptyEnv()))->getName());
+        self::assertEquals('console', (new ConsoleOutputFormatter())->getName());
     }
 
     public function basicDataProvider(): iterable
@@ -165,7 +164,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
 
-        $formatter = new ConsoleOutputFormatter(new EmptyEnv());
+        $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
             new Context($rules, $errors),
             $output,
@@ -200,7 +199,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
 
-        $formatter = new ConsoleOutputFormatter(new EmptyEnv());
+        $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
             new Context($rules, []),
             $output,
@@ -229,7 +228,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
     public function testGetOptions(): void
     {
-        self::assertCount(0, (new ConsoleOutputFormatter(new EmptyEnv()))->configureOptions());
+        self::assertCount(0, (new ConsoleOutputFormatter())->configureOptions());
     }
 
     private function normalize($str)
@@ -237,8 +236,8 @@ final class ConsoleOutputFormatterTest extends TestCase
         return str_replace(["\r", "\t", "\n", ' '], '', $str);
     }
 
-    public function testConsoleOutputFormatterIsEnabledByDefault(): void
+    public function testConsoleOutputFormatterIsDisabledByDefault(): void
     {
-        self::assertTrue((new ConsoleOutputFormatter(new EmptyEnv()))->enabledByDefault());
+        self::assertFalse((new ConsoleOutputFormatter())->enabledByDefault());
     }
 }

@@ -30,7 +30,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
     public function enabledByDefault(): bool
     {
-        return false;
+        return true;
     }
 
     public function finish(
