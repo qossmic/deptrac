@@ -8,7 +8,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\Env;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
@@ -16,14 +15,6 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
-    /** @var Env */
-    private $env;
-
-    public function __construct(Env $env = null)
-    {
-        $this->env = $env ?? new Env();
-    }
-
     public function getName(): string
     {
         return 'console';
@@ -36,7 +27,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     public function enabledByDefault(): bool
     {
-        return false === $this->env->get('GITHUB_ACTIONS');
+        return false;
     }
 
     public function finish(

@@ -296,6 +296,6 @@ class TableOutputFormatterTest extends TestCase
 
     public function testConsoleOutputFormatterIsEnabledByDefault(): void
     {
-        static::assertFalse((new TableOutputFormatter())->enabledByDefault());
+        static::assertTrue((new TableOutputFormatter())->enabledByDefault());
     }
 }
