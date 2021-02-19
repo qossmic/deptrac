@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac;
 
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterFactory
@@ -34,8 +33,6 @@ class OutputFormatterFactory
         $arguments = [];
 
         foreach ($this->formatters as $formatter) {
-            $arguments[] = $this->createFormatterOption($formatter);
-
             $formatterArguments = $formatter->configureOptions();
 
             foreach ($formatterArguments as $formatterArgument) {
@@ -44,16 +41,6 @@ class OutputFormatterFactory
         }
 
         return $arguments;
-    }
-
-    /**
-     * @return OutputFormatterInterface[]
-     */
-    public function getActiveFormatters(InputInterface $input): array
-    {
-        return array_values(array_filter($this->formatters, function (OutputFormatterInterface $formatter) use ($input): bool {
-            return $this->isFormatterActive($formatter, $input);
-        }));
     }
 
     /**
@@ -72,30 +59,9 @@ class OutputFormatterFactory
         throw new \LogicException(sprintf('Formatter %s does not exists, did you mean %s?', $name, implode(', ', array_map(static function (OutputFormatterInterface $f): string { return $f->getName(); }, $this->formatters))));
     }
 
-    private function isFormatterActive(OutputFormatterInterface $formatter, InputInterface $input): bool
-    {
-        $option = $input->getOption('formatter-'.$formatter->getName());
-
-        return true === filter_var($option, FILTER_VALIDATE_BOOLEAN);
-    }
-
     private function addFormatter(OutputFormatterInterface $formatter): void
     {
         $this->formatters[$formatter->getName()] = $formatter;
-    }
-
-    private function createFormatterOption(OutputFormatterInterface $formatter): InputOption
-    {
-        $description = $formatter->enabledByDefault()
-            ? 'to disable the '.$formatter->getName().' formatter, set this argument to "false"'
-            : 'to activate the '.$formatter->getName().' formatter, set this argument to "true"';
-
-        return new InputOption(
-            'formatter-'.$formatter->getName(),
-            null,
-            InputOption::VALUE_OPTIONAL,
-            '<fg=yellow>[DEPRECATED]</> '.$description
-        );
     }
 
     private function createFormatterArgumentOption(OutputFormatterInterface $formatter, OutputFormatterOption $formatterArgument): InputOption

@@ -10,7 +10,6 @@ use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
 use Qossmic\Deptrac\Subscriber\ProgressSubscriber;
@@ -104,11 +103,9 @@ class AnalyzeCommand extends Command
         /** @var string[] $formats */
         $formats = (array) $input->getOption('formatter');
 
+        $formatters = [];
         if ($formats) {
             $formatters = $this->formatterFactory->getFormattersByNames($formats);
-        } else { // BC
-            $formatters = $this->formatterFactory->getActiveFormatters($input);
-            $this->printDeprecationsForLegacyFormatterOptions($symfonyOutput, $formatters);
         }
 
         if ([] === $formatters) {
@@ -174,21 +171,5 @@ class AnalyzeCommand extends Command
         }
 
         return getcwd().'/depfile.yaml';
-    }
-
-    /**
-     * @param OutputFormatterInterface[] $formatters
-     */
-    private function printDeprecationsForLegacyFormatterOptions(SymfonyOutput $output, array $formatters): void
-    {
-        foreach ($formatters as $formatter) {
-            $name = $formatter->getName();
-            $output->writeLineFormatted([
-                sprintf('⚠️  You\'re using an obsolete option <fg=cyan>--formatter-%s</>. ⚠️️', $name),
-                sprintf('   Please use the new option <fg=cyan>--formatter=%s</> instead.', $name),
-                '   Multiple options are allowed.',
-                '',
-            ]);
-        }
     }
 }
