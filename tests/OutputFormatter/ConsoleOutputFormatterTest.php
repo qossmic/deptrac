@@ -20,6 +20,7 @@ use Qossmic\Deptrac\RulesetEngine\Error;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\RulesetEngine\Warning;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -55,6 +56,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
                 originalA.php::12
@@ -69,6 +71,8 @@ final class ConsoleOutputFormatterTest extends TestCase
                 Skipped violations: 0
                 Uncovered: 0
                 Allowed: 0
+                Warnings:0
+                Errors:0
             ',
         ];
 
@@ -81,6 +85,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             '
                 OriginalA must not depend on OriginalB (LayerA on LayerB)
                 originalA.php::12
@@ -90,12 +95,15 @@ final class ConsoleOutputFormatterTest extends TestCase
                 Skipped violations: 0
                 Uncovered: 0
                 Allowed: 0
+                Warnings:0
+                Errors:0
             ',
         ];
 
         yield [
             [],
             [],
+            'warnings' => [],
             '
 
                 Report:
@@ -103,6 +111,8 @@ final class ConsoleOutputFormatterTest extends TestCase
                 Skipped violations: 0
                 Uncovered: 0
                 Allowed: 0
+                Warnings:0
+                Errors:0
             ',
         ];
 
@@ -115,6 +125,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
             originalA.php::12
             
@@ -123,6 +134,8 @@ final class ConsoleOutputFormatterTest extends TestCase
             Skipped violations: 1
             Uncovered: 0
             Allowed: 0
+            Warnings:0
+            Errors:0
             ',
         ];
 
@@ -134,6 +147,7 @@ final class ConsoleOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             '
                 Uncovered dependencies:
                 OriginalA has uncovered dependency on OriginalB (LayerA)
@@ -143,20 +157,30 @@ final class ConsoleOutputFormatterTest extends TestCase
                 Skipped violations: 0
                 Uncovered: 1
                 Allowed: 0
+                Warnings:0
+                Errors:0
             ',
         ];
 
         yield 'an error occurred' => [
             [],
             [new Error('an error occurred')],
-            '[ERROR]anerroroccurredReport:Violations:0Skippedviolations:0Uncovered:0Allowed:0',
+            'warnings' => [],
+            '[ERROR]anerroroccurredReport:Violations:0Skippedviolations:0Uncovered:0Allowed:0Warnings:0Errors:1',
+        ];
+
+        yield 'an warning occurred' => [
+            [],
+            [],
+            'warnings' => [Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            '[WARNING]Foo\Barisinmorethanonelayer["Layer1","Layer2"].Itisrecommendedthatoneclassshouldonlybeinonelayer.Report:Violations:0Skippedviolations:0Uncovered:0Allowed:0Warnings:1Errors:0',
         ];
     }
 
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $rules, array $errors, string $expectedOutput): void
+    public function testBasic(array $rules, array $errors, array $warnings, string $expectedOutput): void
     {
         $bufferedOutput = new BufferedOutput();
         $output = new SymfonyOutput(
@@ -166,7 +190,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors),
+            new Context($rules, $errors, $warnings),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
@@ -201,7 +225,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, []),
+            new Context($rules, [], []),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
@@ -218,6 +242,8 @@ final class ConsoleOutputFormatterTest extends TestCase
             Skipped violations: 1
             Uncovered: 0
             Allowed: 0
+            Warnings:0
+            Errors:0
             ';
 
         self::assertEquals(

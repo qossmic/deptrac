@@ -88,6 +88,10 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         if ($context->hasErrors()) {
             $this->printErrors($context, $output);
         }
+
+        if ($context->hasWarnings()) {
+            $this->printWarnings($context, $output);
+        }
     }
 
     private function determineLogLevel(Rule $rule): string
@@ -146,6 +150,13 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
     {
         foreach ($context->errors() as $error) {
             $output->writeLineFormatted('::error ::'.$error->toString());
+        }
+    }
+
+    private function printWarnings(Context $context, Output $output): void
+    {
+        foreach ($context->warnings() as $error) {
+            $output->writeLineFormatted('::warning ::'.$error->toString());
         }
     }
 }

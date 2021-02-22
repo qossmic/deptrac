@@ -20,6 +20,7 @@ use Qossmic\Deptrac\RulesetEngine\Error;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\RulesetEngine\Warning;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -35,13 +36,13 @@ final class GithubActionsOutputFormatterTest extends TestCase
     /**
      * @dataProvider finishProvider
      */
-    public function testFinish(array $rules, array $errors, string $expectedOutput): void
+    public function testFinish(array $rules, array $errors, array $warnings, string $expectedOutput): void
     {
         $bufferedOutput = new BufferedOutput();
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors),
+            new Context($rules, $errors, $warnings),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
@@ -55,8 +56,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
     public function finishProvider(): iterable
     {
         yield 'No Rules, No Output' => [
-            [],
-            [],
+            'rules' => [],
+            'errors' => [],
+            'warnings' => [],
             '',
         ];
 
@@ -65,42 +67,45 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $originalAOccurrence = FileOccurrence::fromFilepath('/home/testuser/originalA.php', 12);
 
         yield 'Simple Violation' => [
-            [
+            'violations' => [
                 new Violation(
                     new Dependency($originalA, $originalB, $originalAOccurrence),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
+            'errors' => [],
+            'warnings' => [],
             "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
         yield 'Skipped Violation' => [
-            [
+            'violations' => [
                 new SkippedViolation(
                     new Dependency($originalA, $originalB, $originalAOccurrence),
                     'LayerA',
                     'LayerB'
                 ),
             ],
-            [],
+            'errors' => [],
+            'warnings' => [],
             "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
         yield 'Uncovered Dependency' => [
-            [
+            'violations' => [
                 new Uncovered(
                     new Dependency($originalA, $originalB, $originalAOccurrence),
                     'LayerA'
                 ),
             ],
-            [],
+            'errors' => [],
+            'warnings' => [],
             "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
         ];
 
         yield 'Inherit dependency' => [
-            [
+            'violations' => [
                 new Violation(
                     new InheritDependency(
                         ClassLikeName::fromFQCN('ClassA'),
@@ -117,14 +122,23 @@ final class GithubActionsOutputFormatterTest extends TestCase
                     'LayerB'
                 ),
             ],
-            [],
+            'errors' => [],
+            'warnings' => [],
             "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12\n",
         ];
 
         yield 'an error occurred' => [
-            [],
-            [new Error('an error occurred')],
+            'violations' => [],
+            'errors' => [new Error('an error occurred')],
+            'warnings' => [],
             "::error ::an error occurred\n",
+        ];
+
+        yield 'an warning occurred' => [
+            'violations' => [],
+            'errors' => [],
+            'warnings' => [Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one class should only be in one layer.\n",
         ];
     }
 
@@ -146,7 +160,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, []),
+            new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,

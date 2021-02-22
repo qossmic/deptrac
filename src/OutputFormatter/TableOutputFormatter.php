@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use function count;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
@@ -14,6 +15,7 @@ use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\RulesetEngine\Warning;
 use Symfony\Component\Console\Helper\TableSeparator;
 
 final class TableOutputFormatter implements OutputFormatterInterface
@@ -73,6 +75,10 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $this->printErrors($context, $output);
         }
 
+        if ($context->hasWarnings()) {
+            $this->printWarnings($context, $output);
+        }
+
         $this->printSummary($context, $output);
     }
 
@@ -123,10 +129,12 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
     private function printSummary(Context $context, Output $output): void
     {
-        $violationCount = \count($context->violations());
-        $skippedViolationCount = \count($context->skippedViolations());
-        $uncoveredCount = \count($context->uncovered());
-        $allowedCount = \count($context->allowed());
+        $violationCount = count($context->violations());
+        $skippedViolationCount = count($context->skippedViolations());
+        $uncoveredCount = count($context->uncovered());
+        $allowedCount = count($context->allowed());
+        $warningsCount = count($context->warnings());
+        $errorsCount = count($context->errors());
 
         $style = $output->getStyle();
         $style->newLine();
@@ -136,7 +144,9 @@ final class TableOutputFormatter implements OutputFormatterInterface
             ['Violations' => sprintf('<fg=%s>%d</>', $violationCount > 0 ? 'red' : 'default', $violationCount)],
             ['Skipped violations' => sprintf('<fg=%s>%d</>', $skippedViolationCount > 0 ? 'yellow' : 'default', $skippedViolationCount)],
             ['Uncovered' => sprintf('<fg=%s>%d</>', $uncoveredCount > 0 ? 'yellow' : 'default', $uncoveredCount)],
-            ['Allowed' => $allowedCount]
+            ['Allowed' => $allowedCount],
+            ['Warnings' => sprintf('<fg=%s>%d</>', $warningsCount > 0 ? 'yellow' : 'default', $warningsCount)],
+            ['Errors' => sprintf('<fg=%s>%d</>', $errorsCount > 0 ? 'red' : 'default', $errorsCount)]
         );
     }
 
@@ -172,6 +182,19 @@ final class TableOutputFormatter implements OutputFormatterInterface
                     return [$error->toString()];
                 },
                 $context->errors()
+            )
+        );
+    }
+
+    private function printWarnings(Context $context, Output $output): void
+    {
+        $output->getStyle()->table(
+            ['<fg=yellow>Warnings</>'],
+            array_map(
+                static function (Warning $warning) {
+                    return [$warning->toString()];
+                },
+                $context->warnings()
             )
         );
     }
