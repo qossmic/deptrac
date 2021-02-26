@@ -10,13 +10,17 @@ name: "Tests"
 
 jobs:
   unit-tests:
-    name: "PHP ${{ matrix.php-version }} Test"
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        php-version: [7.2, 7.3, 7.4, 8.0]
+        os: [ubuntu-20.04]
+        php-version: [7.4, 8.0]
+        include:
+          - os: ubuntu-18.04
+            php-version: 7.2
+          - os: ubuntu-18.04
+            php-version: 7.3
 
     steps:
       - name: "Checkout"
@@ -62,13 +66,13 @@ jobs:
         run: make tests
 
   infection:
-    name: "PHP ${{ matrix.php-version }} Infection"
-
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        php-version: [ 7.4 ]
+        include:
+          - os: ubuntu-20.04
+            php-version: 7.4
 
     steps:
       - name: "Checkout"
