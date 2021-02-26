@@ -15,6 +15,7 @@ use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolationHelper;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\RulesetEngine\Warning;
 
 class RulesetEngine
 {
@@ -24,12 +25,18 @@ class RulesetEngine
         Configuration $configuration
     ): Context {
         $rules = [];
+        $warnings = [];
 
         $configurationRuleset = $configuration->getRuleset();
         $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
             $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameA());
+
+            $classLikeANameString = $dependency->getClassLikeNameA()->toString();
+            if (!isset($warnings[$classLikeANameString]) && count($layerNames) > 1) {
+                $warnings[$classLikeANameString] = Warning::classLikeIsInMoreThanOneLayer($dependency->getClassLikeNameA(), $layerNames);
+            }
 
             foreach ($layerNames as $layerName) {
                 $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
@@ -70,7 +77,7 @@ class RulesetEngine
             }
         }
 
-        return new Context($rules, $errors);
+        return new Context($rules, $errors, $warnings);
     }
 
     private function ignoreUncoveredInternalClass(Configuration $configuration, ClassLikeName $classLikeName): bool

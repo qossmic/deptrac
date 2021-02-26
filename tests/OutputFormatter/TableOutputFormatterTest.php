@@ -20,6 +20,7 @@ use Qossmic\Deptrac\RulesetEngine\Error;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\RulesetEngine\Warning;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -69,6 +70,7 @@ class TableOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             ' ----------- ------------------------------------------- 
   Reason      LayerA                                     
  ----------- ------------------------------------------- 
@@ -89,6 +91,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   0    
   Uncovered            0    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -103,6 +107,7 @@ class TableOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             ' ----------- ------------------------------------------------- 
   Reason      LayerA                                           
  ----------- ------------------------------------------------- 
@@ -118,6 +123,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   0    
   Uncovered            0    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -126,6 +133,7 @@ class TableOutputFormatterTest extends TestCase
         yield [
             [],
             [],
+            'warnings' => [],
             '
  -------------------- ----- 
   Report                    
@@ -134,6 +142,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   0    
   Uncovered            0    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -148,6 +158,7 @@ class TableOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             ' --------- ------------------------------------------------- 
   Reason    LayerA                                           
  --------- ------------------------------------------------- 
@@ -163,6 +174,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   1    
   Uncovered            0    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -177,6 +190,7 @@ class TableOutputFormatterTest extends TestCase
                 ),
             ],
             [],
+            'warnings' => [],
             '
  -------------------- ----- 
   Report                    
@@ -185,6 +199,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   1    
   Uncovered            0    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -200,6 +216,7 @@ class TableOutputFormatterTest extends TestCase
                 ),
             ],
             'errors' => [],
+            'warnings' => [],
             'expectedOutput' => ' ----------- ------------------------------------------------- 
   Reason      LayerA                                           
  ----------- ------------------------------------------------- 
@@ -215,6 +232,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   0    
   Uncovered            1    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -228,6 +247,7 @@ class TableOutputFormatterTest extends TestCase
                 ),
             ],
             'errors' => [],
+            'warnings' => [],
             'expectedOutput' => '
  -------------------- ----- 
   Report                    
@@ -236,6 +256,8 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   0    
   Uncovered            1    
   Allowed              0    
+  Warnings             0    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -245,6 +267,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'an error occurred' => [
             [],
             [new Error('an error occurred')],
+            'warnings' => [],
             ' ------------------- 
   Errors             
  ------------------- 
@@ -259,6 +282,33 @@ class TableOutputFormatterTest extends TestCase
   Skipped violations   0    
   Uncovered            0    
   Allowed              0    
+  Warnings             0    
+  Errors               1    
+ -------------------- ----- 
+
+',
+        ];
+
+        yield 'an warning occurred' => [
+            'rules' => [],
+            'errors' => [],
+            'warnings' => [Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            ' ------------------------------------------------------------------------------------------------------------------------- 
+  Warnings                                                                                                                 
+ ------------------------------------------------------------------------------------------------------------------------- 
+  Foo\Bar is in more than one layer ["Layer 1", "Layer 2"]. It is recommended that one class should only be in one layer.  
+ ------------------------------------------------------------------------------------------------------------------------- 
+
+
+ -------------------- ----- 
+  Report                    
+ -------------------- ----- 
+  Violations           0    
+  Skipped violations   0    
+  Uncovered            0    
+  Allowed              0    
+  Warnings             1    
+  Errors               0    
  -------------------- ----- 
 
 ',
@@ -268,7 +318,7 @@ class TableOutputFormatterTest extends TestCase
     /**
      * @dataProvider basicDataProvider
      */
-    public function testBasic(array $rules, array $errors, string $expectedOutput, bool $reportUncovered = true, bool $reportSkipped = true): void
+    public function testBasic(array $rules, array $errors, array $warnings, string $expectedOutput, bool $reportUncovered = true, bool $reportSkipped = true): void
     {
         $bufferedOutput = new BufferedOutput();
         $output = new SymfonyOutput(
@@ -278,7 +328,7 @@ class TableOutputFormatterTest extends TestCase
 
         $formatter = new TableOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors),
+            new Context($rules, $errors, $warnings),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,

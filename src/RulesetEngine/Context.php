@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
+use function array_filter;
+use function count;
+
 final class Context
 {
     /**
@@ -14,15 +17,21 @@ final class Context
      * @var Error[]
      */
     private $errors;
+    /**
+     * @var Warning[]
+     */
+    private $warnings;
 
     /**
-     * @param Rule[]  $rules
-     * @param Error[] $errors
+     * @param Rule[]    $rules
+     * @param Error[]   $errors
+     * @param Warning[] $warnings
      */
-    public function __construct(array $rules, array $errors)
+    public function __construct(array $rules, array $errors, array $warnings)
     {
         $this->rules = $rules;
         $this->errors = $errors;
+        $this->warnings = $warnings;
     }
 
     /**
@@ -85,7 +94,7 @@ final class Context
 
     public function hasErrors(): bool
     {
-        return \count($this->errors) > 0;
+        return count($this->errors) > 0;
     }
 
     /**
@@ -94,5 +103,18 @@ final class Context
     public function errors(): array
     {
         return $this->errors;
+    }
+
+    public function hasWarnings(): bool
+    {
+        return count($this->warnings) > 0;
+    }
+
+    /**
+     * @return Warning[]
+     */
+    public function warnings(): array
+    {
+        return $this->warnings;
     }
 }

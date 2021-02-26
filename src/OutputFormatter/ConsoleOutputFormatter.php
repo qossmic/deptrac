@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use function count;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Output;
@@ -57,6 +58,10 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $this->printErrors($context, $output);
         }
 
+        if ($context->hasWarnings()) {
+            $this->printWarnings($context, $output);
+        }
+
         $this->printSummary($context, $output);
     }
 
@@ -104,10 +109,12 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     private function printSummary(Context $context, Output $output): void
     {
-        $violationCount = \count($context->violations());
-        $skippedViolationCount = \count($context->skippedViolations());
-        $uncoveredCount = \count($context->uncovered());
-        $allowedCount = \count($context->allowed());
+        $violationCount = count($context->violations());
+        $skippedViolationCount = count($context->skippedViolations());
+        $uncoveredCount = count($context->uncovered());
+        $allowedCount = count($context->allowed());
+        $warningsCount = count($context->warnings());
+        $errorsCount = count($context->errors());
 
         $output->writeLineFormatted('');
         $output->writeLineFormatted('Report:');
@@ -133,6 +140,20 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             )
         );
         $output->writeLineFormatted(sprintf('<info>Allowed: %d</info>', $allowedCount));
+        $output->writeLineFormatted(
+            sprintf(
+                '<fg=%s>Warnings: %d</>',
+                $warningsCount > 0 ? 'yellow' : 'default',
+                $warningsCount
+            )
+        );
+        $output->writeLineFormatted(
+            sprintf(
+                '<fg=%s>Errors: %d</>',
+                $errorsCount > 0 ? 'red' : 'default',
+                $errorsCount
+            )
+        );
     }
 
     private function printUncovered(Context $context, Output $output): void
@@ -171,6 +192,14 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $output->writeLineFormatted('');
         foreach ($context->errors() as $error) {
             $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', $error->toString()));
+        }
+    }
+
+    private function printWarnings(Context $context, Output $output): void
+    {
+        $output->writeLineFormatted('');
+        foreach ($context->warnings() as $error) {
+            $output->writeLineFormatted(sprintf('<fg=yellow>[WARNING]</> %s', $error->toString()));
         }
     }
 }
