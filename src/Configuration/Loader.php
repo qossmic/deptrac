@@ -20,10 +20,15 @@ class Loader
     private $processor;
     /** @var FileHelper */
     private $workingDirectoryFileHelper;
+    /**
+     * @var string
+     */
+    private $workingDirectory;
 
     public function __construct(YmlFileLoader $fileLoader, string $workingDirectory)
     {
         $this->fileLoader = $fileLoader;
+        $this->workingDirectory = $workingDirectory;
         $this->workingDirectoryFileHelper = new FileHelper($workingDirectory);
         $this->processor = new Processor();
     }
@@ -36,12 +41,13 @@ class Loader
     public function load(string $file): Configuration
     {
         $absolutePath = $this->workingDirectoryFileHelper->toAbsolutePath($file);
+        $depfileDirectory = dirname($absolutePath);
 
         $configs = [];
         $configs[] = $mainConfig = $this->fileLoader->parseFile($absolutePath);
 
         $useRelativePathFromDepfile = (bool) ($mainConfig['use_relative_path_from_depfile'] ?? true);
-        $fileHelper = $useRelativePathFromDepfile ? new FileHelper(dirname($absolutePath)) : $this->workingDirectoryFileHelper;
+        $fileHelper = $useRelativePathFromDepfile ? new FileHelper($depfileDirectory) : $this->workingDirectoryFileHelper;
 
         if (isset($mainConfig['baseline'])) {
             $configs[] = $this->fileLoader->parseFile($fileHelper->toAbsolutePath($mainConfig['baseline']));
@@ -55,7 +61,11 @@ class Loader
 
         $mergedConfig = $this->processor->processConfiguration(new Definition(), $configs);
 
+        $mergedConfig['parameters']['currentWorkingDirectory'] = $this->workingDirectory;
+        $mergedConfig['parameters']['depfileDirectory'] = $depfileDirectory;
+
         return Configuration::fromArray([
+            'parameters' => $mergedConfig['parameters'],
             'paths' => array_map([$fileHelper, 'toAbsolutePath'], $mergedConfig['paths']),
             'exclude_files' => $mergedConfig['exclude_files'],
             'layers' => $mergedConfig['layers'],

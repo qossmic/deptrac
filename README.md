@@ -47,6 +47,8 @@ this rule has been violated.
     1. [GitHubActions Formatter](#githubactions-formatter)
     1. [Baseline Formatter](#baseline-formatter)
 1. [Uncovered dependencies](#uncovered-dependencies)
+1. [Import depfiles](#import-depfiles)
+1. [Parameters](#parameters)
 1. [Build Deptrac](#build-deptrac)
 1. [Contribute](#contribute)
 
@@ -724,6 +726,25 @@ It is possible to import other depfile definitions in your depfile as followed:
 ```yaml
 imports:
    - some/depfile.yaml
+```
+
+## Parameters
+
+Parameters can be used in a collector's configuration.  
+Deptrac provides predefined parameters:
+- `%currentWorkingDirectory%` The path deptrac has been executed
+- `%depfileDirectory%` The path where the depfile is stored.
+
+Custom parameters can be configured as followed:
+```yaml
+parameters:
+    Project: MyProject
+
+layers:
+   - name: Foo
+     collectors:
+        - type: implements
+          implements: '%Project%\SomeInterface'
 ```
 
 ## Build Deptrac

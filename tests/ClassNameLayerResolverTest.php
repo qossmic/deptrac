@@ -14,6 +14,7 @@ use Qossmic\Deptrac\Collector\CollectorInterface;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationLayer;
+use Qossmic\Deptrac\Configuration\ParameterResolver;
 
 final class ClassNameLayerResolverTest extends TestCase
 {
@@ -96,6 +97,7 @@ final class ClassNameLayerResolverTest extends TestCase
                 ],
             ]),
         ]);
+        $configuration->getParameters()->willReturn([]);
 
         $astMap = $this->prophesize(AstMap::class);
         $collectorRegistry = $this->prophesize(Registry::class);
@@ -112,7 +114,8 @@ final class ClassNameLayerResolverTest extends TestCase
         $resolver = new ClassNameLayerResolver(
             $configuration->reveal(),
             $astMap->reveal(),
-            $collectorRegistry->reveal()
+            $collectorRegistry->reveal(),
+            new ParameterResolver()
         );
 
         self::assertEquals(

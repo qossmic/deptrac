@@ -22,8 +22,8 @@ interface CollectorInterface
     public function getType(): string;
 
     /**
-     * @param array<string, mixed> $configuration     List of arguments passed for this collector declaration
-     * @param AstClassReference    $astClassReference Class being checked
+     * @param array<string, string|array> $configuration     List of arguments passed for this collector declaration
+     * @param AstClassReference           $astClassReference Class being checked
      *
      * @example
      *  For the YAML configuration:

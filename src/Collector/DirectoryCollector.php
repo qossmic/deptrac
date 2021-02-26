@@ -26,11 +26,11 @@ class DirectoryCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string> $configuration
+     * @param array<string, string|array> $configuration
      */
     private function getPattern(array $configuration): string
     {
-        if (!isset($configuration['regex'])) {
+        if (!isset($configuration['regex']) || !is_string($configuration['regex'])) {
             throw new \LogicException('DirectoryCollector needs the regex configuration.');
         }
 

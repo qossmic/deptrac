@@ -20,6 +20,8 @@ class Configuration
     private $skipViolations;
     /** @var bool */
     private $ignoreUncoveredInternalClasses;
+    /** @var array<string, string> */
+    private $parameters;
 
     /**
      * @param array<string, mixed> $args
@@ -33,9 +35,11 @@ class Configuration
             'paths',
             'ruleset',
         ])
+        ->setDefault('parameters', [])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
         ->setDefault('ignore_uncovered_internal_classes', true)
+        ->addAllowedTypes('parameters', 'array')
         ->addAllowedTypes('layers', 'array')
         ->addAllowedTypes('paths', 'array')
         ->addAllowedTypes('exclude_files', ['array', 'null'])
@@ -84,6 +88,7 @@ class Configuration
             throw Exception\InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
         }
 
+        $this->parameters = $options['parameters'];
         $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
         $this->paths = $options['paths'];
         $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
@@ -128,5 +133,13 @@ class Configuration
     public function ignoreUncoveredInternalClasses(): bool
     {
         return $this->ignoreUncoveredInternalClasses;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
     }
 }

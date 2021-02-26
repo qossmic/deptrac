@@ -30,6 +30,13 @@ final class LoaderTest extends TestCase
             [__DIR__.'/examples/Uncovered/'],
             $configuration->getPaths()
         );
+        self::assertSame(
+            [
+                'currentWorkingDirectory' => __DIR__,
+                'depfileDirectory' => __DIR__.'/Fixtures',
+            ],
+            $configuration->getParameters()
+        );
     }
 
     public function testLoadReturnsConfigurationWithRelativePathOption(): void

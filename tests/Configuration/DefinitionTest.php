@@ -14,6 +14,9 @@ class DefinitionTest extends TestCase
     {
         $configs = [
             [
+                'parameters' => [
+                    'param' => 'value',
+                ],
                 'paths' => ['test/'],
                 'layers' => [
                     [
@@ -35,6 +38,9 @@ class DefinitionTest extends TestCase
                 ],
             ],
             [
+                'parameters' => [
+                    'foo' => 'bar',
+                ],
                 'layers' => [
                     [
                         'name' => 'Test',
@@ -71,6 +77,10 @@ class DefinitionTest extends TestCase
         $configuration = (new Processor())->processConfiguration(new Definition(), $configs);
 
         self::assertSame([
+            'parameters' => [
+                'param' => 'value',
+                'foo' => 'bar',
+            ],
             'paths' => ['test/'],
             'layers' => [
                 'Test' => [
