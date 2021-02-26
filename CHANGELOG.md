@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## Unreleased
+
+### Added
+
+- [#499] report warnings about classes are in two or more layers, Thanks to [@smoench]
+- [#489] Import configuration files, Thanks to [@smoench]
+
+### Changed
+
+- [#498] Bump phpstan/phpdoc-parser from 0.4.10 to 0.4.11
+- [#496] Use TableOutputFormatter as default, Thanks to [@smoench]
+- [#494] Don't report skipped violations by default, Thanks to [@smoench]
+- [#490] update tools, Thanks to [@smoench]
+
+### Removed
+
+- [#497] Remove deprecated formatter options, Thanks to [@smoench]
+- [#495] Remove deprecated options, Thanks to [@smoench]
+
 ## [0.11.1] - 2021-02-09
 
 ### Added
@@ -405,6 +424,14 @@ All notable changes to this project will be documented in this file, in reverse 
 [@xabbuh]: https://github.com/xabbuh
 [@lprzybylek]: https://github.com/lprzybylek
 
+[#499]: https://github.com/qossmic/deptrac/pull/499
+[#498]: https://github.com/qossmic/deptrac/pull/498
+[#497]: https://github.com/qossmic/deptrac/pull/497
+[#496]: https://github.com/qossmic/deptrac/pull/496
+[#495]: https://github.com/qossmic/deptrac/pull/495
+[#494]: https://github.com/qossmic/deptrac/pull/494
+[#490]: https://github.com/qossmic/deptrac/pull/490
+[#489]: https://github.com/qossmic/deptrac/pull/489
 [#485]: https://github.com/qossmic/deptrac/pull/485
 [#484]: https://github.com/qossmic/deptrac/pull/484
 [#480]: https://github.com/qossmic/deptrac/pull/480
