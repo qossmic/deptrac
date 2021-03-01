@@ -28,6 +28,7 @@ use Qossmic\Deptrac\Collector\UsesCollector;
 use Qossmic\Deptrac\Configuration\Dumper;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
+use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
@@ -101,6 +102,7 @@ return static function (ContainerConfigurator $container): void {
             service(Resolver::class),
             service(Registry::class),
             service(RulesetEngine::class),
+            service(ParameterResolver::class),
         ]);
 
     $services->set(RulesetEngine::class);
@@ -115,6 +117,7 @@ return static function (ContainerConfigurator $container): void {
             service(YmlFileLoader::class),
             param('currentWorkingDirectory'),
         ]);
+    $services->set(ParameterResolver::class);
 
     /* Formatters */
     $services

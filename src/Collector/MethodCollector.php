@@ -46,11 +46,11 @@ class MethodCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string> $configuration
+     * @param array<string, string|array> $configuration
      */
     private function getPattern(array $configuration): string
     {
-        if (!isset($configuration['name'])) {
+        if (!isset($configuration['name']) || !is_string($configuration['name'])) {
             throw new \LogicException('MethodCollector needs the name configuration.');
         }
 

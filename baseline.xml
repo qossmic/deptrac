@@ -31,6 +31,11 @@
       <code>self::$classAstMap[$classLikeName] ?? null</code>
     </MixedReturnStatement>
   </file>
+  <file src="src/ClassNameLayerResolver.php">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$configuration</code>
+    </MixedArgumentTypeCoercion>
+  </file>
   <file src="src/Collector/BoolCollector.php">
     <MixedArgument occurrences="2">
       <code>$v</code>
@@ -40,21 +45,6 @@
       <code>$v</code>
       <code>$v</code>
     </MixedAssignment>
-  </file>
-  <file src="src/Collector/ClassNameCollector.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$configuration</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="src/Collector/DirectoryCollector.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$configuration</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="src/Collector/MethodCollector.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$configuration</code>
-    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Configuration.php">
     <MixedArgument occurrences="6">
@@ -68,7 +58,8 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$v</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment occurrences="2">
+      <code>$this-&gt;parameters</code>
       <code>$this-&gt;paths</code>
     </MixedAssignment>
     <MixedPropertyTypeCoercion occurrences="1">
@@ -85,7 +76,8 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="61">
+    <MixedMethodCall occurrences="66">
+      <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -105,6 +97,8 @@
       <code>children</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -144,6 +138,8 @@
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
@@ -161,9 +157,29 @@
     <MixedArrayAccess occurrences="1">
       <code>$mergedConfig['paths']</code>
     </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="2">
+      <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
+      <code>$mergedConfig['parameters']['depfileDirectory']</code>
+    </MixedArrayAssignment>
     <MixedAssignment occurrences="1">
       <code>$importFile</code>
     </MixedAssignment>
+  </file>
+  <file src="src/Configuration/ParameterResolver.php">
+    <MixedArgument occurrences="1">
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$keys</code>
+      <code>array_values($parameters)</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedReturnTypeCoercion occurrences="2">
+      <code>$values</code>
+      <code>array&lt;array-key, string|array&gt;</code>
+    </MixedReturnTypeCoercion>
   </file>
   <file src="src/OutputFormatter/BaselineOutputFormatter.php">
     <MixedArgument occurrences="2">
@@ -174,35 +190,7 @@
       <code>$baselineFile</code>
     </MixedAssignment>
   </file>
-  <file src="src/OutputFormatter/ConsoleOutputFormatter.php">
-    <DeprecatedConstant occurrences="3">
-      <code>self::LEGACY_REPORT_UNCOVERED</code>
-      <code>self::LEGACY_REPORT_UNCOVERED</code>
-      <code>self::LEGACY_REPORT_UNCOVERED</code>
-    </DeprecatedConstant>
-  </file>
-  <file src="src/OutputFormatter/GithubActionsOutputFormatter.php">
-    <DeprecatedConstant occurrences="3">
-      <code>self::LEGACY_REPORT_UNCOVERED</code>
-      <code>self::LEGACY_REPORT_UNCOVERED</code>
-      <code>self::LEGACY_REPORT_UNCOVERED</code>
-    </DeprecatedConstant>
-  </file>
   <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
-    <DeprecatedConstant occurrences="12">
-      <code>self::LEGACY_DISPLAY</code>
-      <code>self::LEGACY_DISPLAY</code>
-      <code>self::LEGACY_DISPLAY</code>
-      <code>self::LEGACY_DUMP_DOT</code>
-      <code>self::LEGACY_DUMP_DOT</code>
-      <code>self::LEGACY_DUMP_DOT</code>
-      <code>self::LEGACY_DUMP_HTML</code>
-      <code>self::LEGACY_DUMP_HTML</code>
-      <code>self::LEGACY_DUMP_HTML</code>
-      <code>self::LEGACY_DUMP_IMAGE</code>
-      <code>self::LEGACY_DUMP_IMAGE</code>
-      <code>self::LEGACY_DUMP_IMAGE</code>
-    </DeprecatedConstant>
     <InvalidScalarArgument occurrences="2">
       <code>$layer</code>
       <code>$layerDependOn</code>
@@ -215,16 +203,10 @@
       <code>$dumpImagePath</code>
       <code>$dumpImagePath</code>
     </MixedArgument>
-    <MixedAssignment occurrences="9">
-      <code>$dumpDotPath</code>
+    <MixedAssignment occurrences="3">
       <code>$dumpDotPath</code>
       <code>$dumpHtmlPath</code>
-      <code>$dumpHtmlPath</code>
       <code>$dumpImagePath</code>
-      <code>$dumpImagePath</code>
-      <code>$legacyDumpDot</code>
-      <code>$legacyDumpHtml</code>
-      <code>$legacyDumpImage</code>
     </MixedAssignment>
   </file>
   <file src="src/OutputFormatter/JUnitOutputFormatter.php">
@@ -232,10 +214,8 @@
       <code>$dumpXmlPath</code>
       <code>$dumpXmlPath</code>
     </MixedArgument>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="1">
       <code>$dumpXmlPath</code>
-      <code>$dumpXmlPath</code>
-      <code>$legacyDumpXml</code>
     </MixedAssignment>
   </file>
   <file src="src/OutputFormatter/XMLOutputFormatter.php">
@@ -243,10 +223,8 @@
       <code>$dumpXmlPath</code>
       <code>$dumpXmlPath</code>
     </MixedArgument>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="1">
       <code>$dumpXmlPath</code>
-      <code>$dumpXmlPath</code>
-      <code>$legacyDumpXml</code>
     </MixedAssignment>
   </file>
   <file src="src/PathNameFilterIterator.php">

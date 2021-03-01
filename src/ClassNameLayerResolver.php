@@ -9,21 +9,25 @@ use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\ParameterResolver;
 
 class ClassNameLayerResolver implements ClassNameLayerResolverInterface
 {
     private $configuration;
     private $astMap;
     private $collectorRegistry;
+    private $parameterResolver;
 
     public function __construct(
         Configuration $configuration,
         AstMap $astMap,
-        Registry $collectorRegistry
+        Registry $collectorRegistry,
+        ParameterResolver $parameterResolver
     ) {
         $this->configuration = $configuration;
         $this->astMap = $astMap;
         $this->collectorRegistry = $collectorRegistry;
+        $this->parameterResolver = $parameterResolver;
     }
 
     /**
@@ -42,12 +46,12 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
             foreach ($configurationLayer->getCollectors() as $configurationCollector) {
                 $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                if ($collector->satisfy(
+                $configuration = $this->parameterResolver->resolve(
                     $configurationCollector->getArgs(),
-                    $astClassReference,
-                    $this->astMap,
-                    $this->collectorRegistry
-                )) {
+                    $this->configuration->getParameters()
+                );
+
+                if ($collector->satisfy($configuration, $astClassReference, $this->astMap, $this->collectorRegistry)) {
                     $layers[$configurationLayer->getName()] = true;
                 }
             }
