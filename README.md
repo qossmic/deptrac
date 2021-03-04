@@ -558,7 +558,7 @@ layers:
   - name: Foo
     collectors:
       - type: implements
-        implements: 'App\SomeInterface'
+        implements: 'App\\SomeInterface'
 ```
 
 ### `extends` Collector
@@ -570,7 +570,7 @@ layers:
   - name: Foo
     collectors:
       - type: extends
-        extends: 'App\SomeClass'
+        extends: 'App\\SomeClass'
 ```
 
 ### `uses` Collector
@@ -582,7 +582,7 @@ layers:
   - name: Foo
     collectors:
       - type: uses
-        uses: 'App\SomeTrait'
+        uses: 'App\\SomeTrait'
 ```
 
 ### `inherits` Collector
@@ -594,7 +594,7 @@ layers:
   - name: Foo
     collectors:
       - type: inherits
-        inherits: 'App\SomeInterface'
+        inherits: 'App\\SomeInterface'
 ```
 
 ### Custom Collectors
@@ -744,7 +744,7 @@ layers:
    - name: Foo
      collectors:
         - type: implements
-          implements: '%Project%\SomeInterface'
+          implements: '%Project%\\SomeInterface'
 ```
 
 ## Build Deptrac
