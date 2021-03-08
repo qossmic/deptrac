@@ -488,7 +488,7 @@ layers:
   - name: Controller
     collectors:
       - type: classNameRegex
-        regex: #.*Controller.*#
+        regex: '#.*Controller.*#'
 ```
 
 Every class name that matches the regular expression becomes a part of the *controller* layer.
