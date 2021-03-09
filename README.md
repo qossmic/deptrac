@@ -79,7 +79,7 @@ Let's have a look at the generated file:
 paths:
   - ./src
 exclude_files:
-  - .*test.*
+  - '#.*test.*#'
 layers:
   - name: Controller
     collectors:

@@ -1,7 +1,7 @@
 paths:
   - ./src
 exclude_files:
-  - .*test.*
+  - '#.*test.*#'
 layers:
   - name: Controller
     collectors:
