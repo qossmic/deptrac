@@ -27,17 +27,6 @@ use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 
 class TypeResolver
 {
-    // Can be removed when https://github.com/phpDocumentor/TypeResolver/issues/111 gets merged.
-    private const PSEUDO_TYPES = [
-        'array-key',
-        'trait-string',
-        'callable-string',
-        'numeric-string',
-        'positive-int',
-        'non-empty-array',
-        'callable-array',
-    ];
-
     /**
      * @var \phpDocumentor\Reflection\TypeResolver
      */
@@ -135,12 +124,12 @@ class TypeResolver
      */
     public function resolveString(string $type, TypeScope $nameScope): array
     {
-        if (in_array($type, self::PSEUDO_TYPES, true)) {
+        $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
+        try {
+            $resolvedType = $this->typeResolver->resolve($type, $context);
+        } catch (\Throwable $e) {
             return [];
         }
-
-        $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
-        $resolvedType = $this->typeResolver->resolve($type, $context);
 
         return $this->resolveReflectionType($resolvedType);
     }
