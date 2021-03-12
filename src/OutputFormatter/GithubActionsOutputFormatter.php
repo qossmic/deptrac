@@ -48,6 +48,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
     public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
         $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
+        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
+        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED);
 
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
@@ -81,8 +83,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             ));
         }
 
-        if ($outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED)) {
-            $this->printUncovered($context, $output);
+        if ($reportUncovered && $context->hasUncovered()) {
+            $this->printUncovered($context, $output, $reportUncoveredAsError);
         }
 
         if ($context->hasErrors()) {
@@ -106,18 +108,14 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printUncovered(Context $context, Output $output): void
+    private function printUncovered(Context $context, Output $output, bool $reportAsError): void
     {
-        $uncovered = $context->uncovered();
-        if ([] === $uncovered) {
-            return;
-        }
-
-        foreach ($uncovered as $u) {
+        foreach ($context->uncovered() as $u) {
             $dependency = $u->getDependency();
             $output->writeLineFormatted(
                 sprintf(
-                    '::warning file=%s,line=%s::%s has uncovered dependency on %s (%s)',
+                    '::%s file=%s,line=%s::%s has uncovered dependency on %s (%s)',
+                    $reportAsError ? 'error' : 'warning',
                     $dependency->getFileOccurrence()->getFilepath(),
                     $dependency->getFileOccurrence()->getLine(),
                     $dependency->getClassLikeNameA()->toString(),

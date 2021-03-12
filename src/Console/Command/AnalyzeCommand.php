@@ -24,6 +24,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class AnalyzeCommand extends Command
 {
     public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
+    public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
     /** @var Analyser */
@@ -120,7 +121,7 @@ class AnalyzeCommand extends Command
             }
         }
 
-        if ($input->getOption('fail-on-uncovered') && $context->hasUncovered()) {
+        if ($input->getOption(self::OPTION_FAIL_ON_UNCOVERED) && $context->hasUncovered()) {
             return 1;
         }
 

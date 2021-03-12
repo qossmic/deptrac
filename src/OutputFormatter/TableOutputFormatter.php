@@ -42,6 +42,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
     ): void {
         $groupedRules = [];
         $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
+        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED);
         $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
 
         foreach ($context->rules() as $rule) {
@@ -62,7 +63,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $rows = [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Uncovered) {
-                    $rows[] = $this->uncoveredRow($rule);
+                    $rows[] = $this->uncoveredRow($rule, $reportUncoveredAsError);
                 } else {
                     $rows[] = $this->violationRow($rule);
                 }
@@ -79,7 +80,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $this->printWarnings($context, $output);
         }
 
-        $this->printSummary($context, $output);
+        $this->printSummary($context, $output, $reportUncoveredAsError);
     }
 
     /**
@@ -127,7 +128,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         return implode(" -> \n", $buffer);
     }
 
-    private function printSummary(Context $context, Output $output): void
+    private function printSummary(Context $context, Output $output, bool $reportUncoveredAsError): void
     {
         $violationCount = count($context->violations());
         $skippedViolationCount = count($context->skippedViolations());
@@ -136,6 +137,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $warningsCount = count($context->warnings());
         $errorsCount = count($context->errors());
 
+        $uncoveredFg = $reportUncoveredAsError ? 'red' : 'yellow';
+
         $style = $output->getStyle();
         $style->newLine();
         $style->definitionList(
@@ -143,14 +146,14 @@ final class TableOutputFormatter implements OutputFormatterInterface
             new TableSeparator(),
             ['Violations' => sprintf('<fg=%s>%d</>', $violationCount > 0 ? 'red' : 'default', $violationCount)],
             ['Skipped violations' => sprintf('<fg=%s>%d</>', $skippedViolationCount > 0 ? 'yellow' : 'default', $skippedViolationCount)],
-            ['Uncovered' => sprintf('<fg=%s>%d</>', $uncoveredCount > 0 ? 'yellow' : 'default', $uncoveredCount)],
+            ['Uncovered' => sprintf('<fg=%s>%d</>', $uncoveredCount > 0 ? $uncoveredFg : 'default', $uncoveredCount)],
             ['Allowed' => $allowedCount],
             ['Warnings' => sprintf('<fg=%s>%d</>', $warningsCount > 0 ? 'yellow' : 'default', $warningsCount)],
             ['Errors' => sprintf('<fg=%s>%d</>', $errorsCount > 0 ? 'red' : 'default', $errorsCount)]
         );
     }
 
-    private function uncoveredRow(Uncovered $rule): array
+    private function uncoveredRow(Uncovered $rule, bool $reportAsError): array
     {
         $dependency = $rule->getDependency();
 
@@ -168,7 +171,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
 
         return [
-            '<fg=yellow>Uncovered</>',
+            sprintf('<fg=%s>Uncovered</>', $reportAsError ? 'red' : 'yellow'),
             $message,
         ];
     }

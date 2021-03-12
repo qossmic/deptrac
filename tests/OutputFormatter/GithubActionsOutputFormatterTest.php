@@ -28,9 +28,9 @@ use Tests\Qossmic\Deptrac\EmptyEnv;
 
 final class GithubActionsOutputFormatterTest extends TestCase
 {
-    public function testGetName()
+    public function testGetName(): void
     {
-        self::assertEquals('github-actions', (new GithubActionsOutputFormatter())->getName());
+        self::assertSame('github-actions', (new GithubActionsOutputFormatter())->getName());
     }
 
     /**
@@ -45,12 +45,13 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new Context($rules, $errors, $warnings),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
             ])
         );
 
-        self::assertEquals($expectedOutput, $bufferedOutput->fetch());
+        self::assertSame($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function finishProvider(): iterable
@@ -137,7 +138,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
         yield 'an warning occurred' => [
             'violations' => [],
             'errors' => [],
-            'warnings' => [Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            'warnings' => [
+                Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2']),
+            ],
             "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one class should only be in one layer.\n",
         ];
     }
@@ -163,12 +166,45 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
             ])
         );
 
-        self::assertEquals('', $bufferedOutput->fetch());
+        self::assertSame('', $bufferedOutput->fetch());
+    }
+
+    public function testUncoveredWithFailOnUncoveredAreReportedAsError(): void
+    {
+        $originalA = ClassLikeName::fromFQCN('\ACME\OriginalA');
+        $originalB = ClassLikeName::fromFQCN('\ACME\OriginalB');
+        $originalAOccurrence = FileOccurrence::fromFilepath('/home/testuser/originalA.php', 12);
+
+        $rules = [
+            new Uncovered(
+                new Dependency($originalA, $originalB, $originalAOccurrence),
+                'LayerA'
+            ),
+        ];
+
+        $bufferedOutput = new BufferedOutput();
+
+        $formatter = new GithubActionsOutputFormatter();
+        $formatter->finish(
+            new Context($rules, [], []),
+            $this->createSymfonyOutput($bufferedOutput),
+            new OutputFormatterInput([
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => true,
+            ])
+        );
+
+        self::assertSame(
+            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
+            $bufferedOutput->fetch()
+        );
     }
 
     public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
