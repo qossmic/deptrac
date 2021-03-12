@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
-## [0.12.0] - 2021-02-12
+## [0.12.0] - 2021-03-12
 
 ### Added
 
