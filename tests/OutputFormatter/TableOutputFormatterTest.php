@@ -333,6 +333,7 @@ class TableOutputFormatterTest extends TestCase
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
             ])
         );
 
