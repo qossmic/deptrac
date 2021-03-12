@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
-## Unreleased
+## [0.12.0] - 2021-02-12
 
 ### Added
 
@@ -13,10 +13,29 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#498] Bump phpstan/phpdoc-parser from 0.4.10 to 0.4.11
+- [#523] Report uncovered as errors with GithubActionOutputFormatter, Thanks to [@smoench]
+- [#502] update build matrix OS, Thanks to [@smoench]
+- [#501] Parameters, Thanks to [@smoench]
 - [#496] Use TableOutputFormatter as default, Thanks to [@smoench]
 - [#494] Don't report skipped violations by default, Thanks to [@smoench]
 - [#490] update tools, Thanks to [@smoench]
+- [#522] Bump symfony/console from 5.2.4 to 5.2.5
+- [#521] Bump symfony/dependency-injection from 5.2.4 to 5.2.5
+- [#520] Bump symfony/yaml from 5.2.4 to 5.2.5
+- [#517] Bump symfony/options-resolver from 5.2.3 to 5.2.4
+- [#516] Bump symfony/dependency-injection from 5.2.3 to 5.2.4
+- [#515] Bump symfony/finder from 5.2.3 to 5.2.4
+- [#514] Bump symfony/config from 5.2.3 to 5.2.4
+- [#513] Bump symfony/yaml from 5.2.3 to 5.2.4
+- [#512] Bump symfony/console from 5.2.3 to 5.2.4
+- [#511] Bump symfony/event-dispatcher from 5.2.3 to 5.2.4
+- [#505] Bump phpstan/phpdoc-parser from 0.4.11 to 0.4.12
+- [#498] Bump phpstan/phpdoc-parser from 0.4.10 to 0.4.11
+
+### Fixed
+
+- [#519] fix fqsen type resolver, Thanks to [@smoench]
+- [#507] readme: fix `classNameRegex` example, Thanks to [@clxmstaab]
 
 ### Removed
 
@@ -423,7 +442,24 @@ All notable changes to this project will be documented in this file, in reverse 
 [@sasezaki]: https://github.com/sasezaki
 [@xabbuh]: https://github.com/xabbuh
 [@lprzybylek]: https://github.com/lprzybylek
+[@clxmstaab]: https://github.com/clxmstaab
 
+[#523]: https://github.com/qossmic/deptrac/pull/523
+[#522]: https://github.com/qossmic/deptrac/pull/522
+[#521]: https://github.com/qossmic/deptrac/pull/521
+[#520]: https://github.com/qossmic/deptrac/pull/520
+[#519]: https://github.com/qossmic/deptrac/pull/519
+[#517]: https://github.com/qossmic/deptrac/pull/517
+[#516]: https://github.com/qossmic/deptrac/pull/516
+[#515]: https://github.com/qossmic/deptrac/pull/515
+[#514]: https://github.com/qossmic/deptrac/pull/514
+[#513]: https://github.com/qossmic/deptrac/pull/513
+[#512]: https://github.com/qossmic/deptrac/pull/512
+[#511]: https://github.com/qossmic/deptrac/pull/511
+[#507]: https://github.com/qossmic/deptrac/pull/507
+[#505]: https://github.com/qossmic/deptrac/pull/505
+[#502]: https://github.com/qossmic/deptrac/pull/502
+[#501]: https://github.com/qossmic/deptrac/pull/501
 [#499]: https://github.com/qossmic/deptrac/pull/499
 [#498]: https://github.com/qossmic/deptrac/pull/498
 [#497]: https://github.com/qossmic/deptrac/pull/497
@@ -602,6 +638,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/qossmic/deptrac/pull/270
 [#266]: https://github.com/qossmic/deptrac/pull/266
 
+[0.12.0]: https://github.com/qossmic/deptrac/compare/0.11.1...0.12.0
 [0.11.1]: https://github.com/qossmic/deptrac/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/qossmic/deptrac/compare/0.10.3...0.11.0
 [0.10.3]: https://github.com/qossmic/deptrac/compare/0.10.2...0.10.3
