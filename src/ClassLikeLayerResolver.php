@@ -11,7 +11,7 @@ use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 
-class ClassNameLayerResolver implements ClassNameLayerResolverInterface
+class ClassLikeLayerResolver implements ClassLikeLayerResolverInterface
 {
     private $configuration;
     private $astMap;
@@ -33,7 +33,7 @@ class ClassNameLayerResolver implements ClassNameLayerResolverInterface
     /**
      * @return string[]
      */
-    public function getLayersByClassName(ClassLikeName $className): array
+    public function getLayersByClassLikeName(ClassLikeName $className): array
     {
         /** @var array<string, bool> $layers */
         $layers = [];

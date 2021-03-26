@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Console;
 
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
+use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\ShouldNotHappenException;
 use Symfony\Component\Config\FileLocator;
@@ -45,7 +47,13 @@ final class Application extends BaseApplication
         /** @var AnalyzeCommand $analyzeCommand */
         $analyzeCommand = $container->get(AnalyzeCommand::class);
 
-        $this->addCommands([$initCommand, $analyzeCommand]);
+        /** @var DebugClassLikeCommand $debugClassLikeCommand */
+        $debugClassLikeCommand = $container->get(DebugClassLikeCommand::class);
+
+        /** @var DebugLayerCommand $debugLayerCommand */
+        $debugLayerCommand = $container->get(DebugLayerCommand::class);
+
+        $this->addCommands([$initCommand, $analyzeCommand, $debugClassLikeCommand, $debugLayerCommand]);
         $this->setDefaultCommand('analyze');
 
         return parent::doRun($input, $output);

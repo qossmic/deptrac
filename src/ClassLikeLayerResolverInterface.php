@@ -6,10 +6,10 @@ namespace Qossmic\Deptrac;
 
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 
-interface ClassNameLayerResolverInterface
+interface ClassLikeLayerResolverInterface
 {
     /**
      * @return string[]
      */
-    public function getLayersByClassName(ClassLikeName $className): array;
+    public function getLayersByClassLikeName(ClassLikeName $className): array;
 }
