@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\DependencyEmitter;
 
 use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\BetterReflection\Factory;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
@@ -19,12 +20,19 @@ trait EmitterTrait
 {
     public function getDeps(DependencyEmitterInterface $emitter, string $file): array
     {
+        $phpParser = ParserFactory::createParser();
+        $factory = new Factory(
+            $phpParser,
+            [dirname($file)],
+            []
+        );
+
         $typeResolver = new TypeResolver();
         $parser = new NikicPhpParser(
-            ParserFactory::createParser(),
+            $phpParser,
             new AstFileReferenceInMemoryCache(),
             $typeResolver,
-            new ClassMethodResolver($typeResolver)
+            new ClassMethodResolver($typeResolver, $factory->create())
         );
         $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$file]);
         $result = new Result();

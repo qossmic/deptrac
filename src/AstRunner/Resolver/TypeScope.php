@@ -56,11 +56,11 @@ class TypeScope
     }
 
     /**
-     * @return string[]|null
+     * @return string[]
      */
-    public function getVariable(string $var): ?array
+    public function getVariable(string $var): array
     {
-        return $this->variables[$var] ?? null;
+        return $this->variables[$var] ?? [];
     }
 
     public function enterClassMethod(): self

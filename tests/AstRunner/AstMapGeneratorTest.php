@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\BetterReflection\Factory;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
@@ -32,16 +33,24 @@ final class AstMapGeneratorTest extends TestCase
     private function getAstMap(string $fixture): AstMap
     {
         $typeResolver = new TypeResolver();
+        $parser = ParserFactory::createParser();
+
+        $betterReflectionFactory = new Factory(
+            $parser,
+            [__DIR__.'/Fixtures'],
+            [__DIR__.'/../../vendor/autoload.php']
+        );
+
         $astRunner = new AstRunner(
             new EventDispatcher(),
             new NikicPhpParser(
-                ParserFactory::createParser(),
+                $parser,
                 new AstFileReferenceInMemoryCache(),
                 $typeResolver,
                 new AnnotationDependencyResolver($typeResolver),
                 new AnonymousClassResolver(),
                 new ClassConstantResolver(),
-                new ClassMethodResolver($typeResolver)
+                new ClassMethodResolver($typeResolver, $betterReflectionFactory->create())
             )
         );
 
