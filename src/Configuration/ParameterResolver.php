@@ -7,10 +7,10 @@ namespace Qossmic\Deptrac\Configuration;
 final class ParameterResolver
 {
     /**
-     * @param array<array-key, string|array> $values
-     * @param array<string, string>          $parameters
+     * @param array<string, string|array> $values
+     * @param array<string, string>       $parameters
      *
-     * @return array<array-key, string|array>
+     * @return array<string, string|array>
      */
     public function resolve(array $values, array $parameters): array
     {
@@ -22,11 +22,16 @@ final class ParameterResolver
             return "%$key%";
         }, array_keys($parameters));
 
-        $values = $this->replace($values, $keys, $parameters);
-
-        return $values;
+        return $this->replace($values, $keys, $parameters);
     }
 
+    /**
+     * @param array<string, string|array> $values
+     * @param string[]                    $keys
+     * @param array<string, string>       $parameters
+     *
+     * @return array<string, string|array>
+     */
     private function replace(array $values, array $keys, array $parameters): array
     {
         foreach ($values as &$value) {
