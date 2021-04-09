@@ -60,7 +60,7 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->defaults()
-        ->private();
+        ->public();
 
     $services->set(EventDispatcher::class);
 
@@ -228,8 +228,7 @@ return static function (ContainerConfigurator $container): void {
     /* Commands */
     $services
         ->set(InitCommand::class)
-        ->args([service(Dumper::class)])
-        ->public();
+        ->args([service(Dumper::class)]);
 
     $services
         ->set(AnalyzeCommand::class)
@@ -238,22 +237,19 @@ return static function (ContainerConfigurator $container): void {
             service(Loader::class),
             service(EventDispatcher::class),
             service(OutputFormatterFactory::class),
-        ])
-        ->public();
+        ]);
 
     $services
         ->set(DebugClassLikeCommand::class)
         ->args([
             service(ClassLikeAnalyser::class),
             service(Loader::class),
-        ])
-        ->public();
+        ]);
 
     $services
         ->set(DebugLayerCommand::class)
         ->args([
             service(LayerAnalyser::class),
             service(Loader::class),
-        ])
-        ->public();
+        ]);
 };

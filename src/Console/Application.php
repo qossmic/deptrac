@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console;
 
+use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
+use Qossmic\Deptrac\ContainerBuilder;
 use Qossmic\Deptrac\ShouldNotHappenException;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 
 final class Application extends BaseApplication
 {
@@ -59,28 +56,16 @@ final class Application extends BaseApplication
         return parent::doRun($input, $output);
     }
 
-    private function buildContainer(InputInterface $input, string $currentWorkingDirectory): ContainerBuilder
+    private function buildContainer(InputInterface $input, string $currentWorkingDirectory): ContainerInterface
     {
-        $container = new ContainerBuilder();
-        $container->setParameter('currentWorkingDirectory', $currentWorkingDirectory);
-        $container->addCompilerPass(
-            new RegisterListenersPass(EventDispatcher::class, 'event_listener', 'event_subscriber')
-        );
-
-        $fileLoader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config/'));
-        $fileLoader->load('services.php');
+        $containerBuilder = new ContainerBuilder($currentWorkingDirectory);
 
         if (false === $input->hasParameterOption('--no-cache')) {
-            $container->setParameter(
-                'deptrac.cache_file',
-                $input->getParameterOption('--cache-file', getcwd().'/.deptrac.cache')
-            );
-
-            $fileLoader->load('cache.php');
+            /** @var string $cacheFile */
+            $cacheFile = $input->getParameterOption('--cache-file', $currentWorkingDirectory.'/.deptrac.cache');
+            $containerBuilder->useCache($cacheFile);
         }
 
-        $container->compile();
-
-        return $container;
+        return $containerBuilder->build();
     }
 }
