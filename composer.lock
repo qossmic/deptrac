@@ -154,22 +154,22 @@
         },
         {
             "name": "jetbrains/phpstorm-stubs",
-            "version": "v2020.2",
+            "version": "v2020.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "55746ac77eecd0cd757b52151b9df9002da554af"
+                "reference": "daf8849db40acded37b13231a291c7536922955b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/55746ac77eecd0cd757b52151b9df9002da554af",
-                "reference": "55746ac77eecd0cd757b52151b9df9002da554af",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/daf8849db40acded37b13231a291c7536922955b",
+                "reference": "daf8849db40acded37b13231a291c7536922955b",
                 "shasum": ""
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.16",
-                "nikic/php-parser": "^4",
-                "php": "^7.4",
+                "nikic/php-parser": "dev-master",
+                "php": "^8.0",
                 "phpdocumentor/reflection-docblock": "dev-master",
                 "phpunit/phpunit": "^9"
             },
@@ -195,7 +195,7 @@
                 "stubs",
                 "type"
             ],
-            "time": "2020-09-16T15:54:07+00:00"
+            "time": "2020-11-24T13:58:53+00:00"
         },
         {
             "name": "nikic/php-parser",
