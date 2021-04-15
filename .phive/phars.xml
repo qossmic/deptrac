@@ -4,6 +4,6 @@
   <phar name="phpunit" version="^8.5.13" installed="8.5.14" location="./tools/phpunit.phar" copy="true"/>
   <phar name="phpstan" version="^0.12.29" installed="0.12.79" location="./tools/phpstan" copy="true"/>
   <phar name="psalm" version="^4.3.0" installed="4.5.1" location="./tools/psalm" copy="true"/>
-  <phar name="humbug/box" version="^3.9.1" installed="3.11.1" location="./tools/box" copy="true"/>
+  <phar name="box-project/box" version="^3.12.2" installed="3.12.2" location="./tools/box" copy="true"/>
   <phar name="infection" version="^0.20.1" installed="0.21.0" location="./tools/infection" copy="true"/>
 </phive>
