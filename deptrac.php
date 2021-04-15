@@ -18,7 +18,7 @@ if (PHP_VERSION_ID < 70205) {
     }
 })();
 
-$xdebug = new XdebugHandler('DEPTRAC', '--ansi');
+$xdebug = new XdebugHandler('DEPTRAC');
 $xdebug->check();
 unset($xdebug);
 

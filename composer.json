@@ -15,7 +15,7 @@
     "require": {
         "php": "^7.2.5 || 8.0.*",
         "ext-json": "*",
-        "composer/xdebug-handler": "^1.4",
+        "composer/xdebug-handler": "^2.0",
         "graphp/graphviz": "0.2.*",
         "jetbrains/phpstorm-stubs": "^2020.2",
         "nikic/php-parser": "^4.3",
