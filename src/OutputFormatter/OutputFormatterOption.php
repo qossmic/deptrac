@@ -18,14 +18,14 @@ class OutputFormatterOption
     private $mode;
     /** @var string */
     private $description;
-    /** @var array<array-key, string>|bool|int|null|string */
+    /** @var array<array-key, string>|bool|null|string */
     private $default;
 
     /**
-     * @param string                                        $name        The argument name
-     * @param int|null                                      $mode        The argument mode: self::REQUIRED or self::OPTIONAL
-     * @param string                                        $description A description text
-     * @param array<array-key, string>|bool|int|null|string $default     The default value (for self::OPTIONAL mode only)
+     * @param string                                    $name        The argument name
+     * @param int|null                                  $mode        The argument mode: self::REQUIRED or self::OPTIONAL
+     * @param string                                    $description A description text
+     * @param array<array-key, string>|bool|null|string $default     The default value (for self::OPTIONAL mode only)
      */
     private function __construct(string $name, int $mode = null, string $description = '', $default = null)
     {
@@ -36,7 +36,7 @@ class OutputFormatterOption
     }
 
     /**
-     * @param array<array-key, string>|bool|int|null|string $default
+     * @param array<array-key, string>|bool|null|string $default
      */
     public static function newValueOption(string $name, string $description, $default = null, int $mode = self::OPTIONAL): self
     {
@@ -59,7 +59,7 @@ class OutputFormatterOption
     }
 
     /**
-     * @return array<array-key, string>|bool|int|null|string
+     * @return array<array-key, string>|bool|null|string
      */
     public function getDefault()
     {
