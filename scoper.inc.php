@@ -7,7 +7,7 @@ use Isolated\Symfony\Component\Finder\Finder;
 $polyfillsBootstrap = Finder::create()
     ->files()
     ->in(__DIR__ . '/vendor/symfony/polyfill-*')
-    ->name('bootstrap.php');
+    ->name('*.php');
 
 return [
     'prefix' => null,                       // string|null
