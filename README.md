@@ -23,12 +23,14 @@ this rule has been violated.
     1. [PHIVE](#phive)
     1. [Optional Dependency: Graphviz](#optional-dependency-graphviz)
 1. [Run Deptrac](#run-deptrac)
-1. [Layers](#layers)
+    1. [Debug Layer](#debug-layer)
+    1. [Debug Class-Like](#debug-class-like)
+3. [Layers](#layers)
     1. [Collecting Layers](#collecting-layers)
-1. [Violations](#violations)
-1. [Ruleset (Allowing Dependencies)](#ruleset-allowing-dependencies)
-1. [Different Layers and Different Views](#different-layers-and-different-views)
-1. [Collectors](#collectors)
+4. [Violations](#violations)
+5. [Ruleset (Allowing Dependencies)](#ruleset-allowing-dependencies)
+6. [Different Layers and Different Views](#different-layers-and-different-views)
+7. [Collectors](#collectors)
     1. [`className` Collector](#classname-collector)
     1. [`classNameRegex` Collector](#classnameregex-collector)
     1. [`directory` Collector](#directory-collector)
@@ -39,18 +41,18 @@ this rule has been violated.
     1. [`uses` Collector](#uses-collector)
     1. [`inherits` Collector](#inherits-collector)
     1. [Custom Collectors](#custom-collectors)
-1. [Formatters](#formatters)
+8. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
     1. [Table Formatter](#table-formatter)
     1. [Graphviz Formatter](#graphviz-formatter)
     1. [JUnit Formatter](#junit-formatter)
     1. [GitHubActions Formatter](#githubactions-formatter)
     1. [Baseline Formatter](#baseline-formatter)
-1. [Uncovered dependencies](#uncovered-dependencies)
-1. [Import depfiles](#import-depfiles)
-1. [Parameters](#parameters)
-1. [Build Deptrac](#build-deptrac)
-1. [Contribute](#contribute)
+9. [Uncovered dependencies](#uncovered-dependencies)
+10. [Import depfiles](#import-depfiles)
+11. [Parameters](#parameters)
+12. [Build Deptrac](#build-deptrac)
+13. [Contribute](#contribute)
 
 ## Getting Started
 
@@ -192,6 +194,37 @@ If you run `php deptrac.phar -v` you'll get a more verbose output.
 
 The analyse command runs with a caching mechanism for parsed files by default. This could be disabled with the `--no-cache` option.
 
+### Debug Layer
+
+With the `debug:layer`-command you can list all class-likes wich are matched in a specific layer.
+
+```bash
+php deptrac.phar debug:layer examples/DirectoryLayer.depfile.yaml Layer1
+
+---------------------------------------------
+ Layer1
+---------------------------------------------
+ examples\Layer1\AnotherClassLikeAController
+ examples\Layer1\SomeClass
+ examples\Layer1\SomeClass2
+---------------------------------------------
+```
+
+### Debug Class-Like
+
+With the `debug:class`-command you list all layers for a specific class-like.
+
+```bash
+php deptrac.phar debug:class-like examples/DirectoryLayer.depfile.yaml 'examples\Layer1\AnotherClassLikeAController'
+
+ ---------------------------------------------
+  examples\Layer1\AnotherClassLikeAController
+ ---------------------------------------------
+  Controller
+  Layer1
+ ---------------------------------------------
+
+```
 
 ## Layers
 
