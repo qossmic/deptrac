@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.13.0] - 2021-04-16
+
+### Added
+
+- [#527] adds debug commands for layer and class-likes, Thanks to [@smoench]
+
+### Changed
+
+- [#532] update xdebug-handler to v2, Thanks to [@smoench]
+- [#531] Bump jetbrains/phpstorm-stubs from 2020.2 to 2020.3
+- [#529] Bump symfony/console from 5.2.5 to 5.2.6
+- [#528] Bump symfony/dependency-injection from 5.2.5 to 5.2.6
+- [#526] Bump composer/xdebug-handler from 1.4.5 to 1.4.6
+- [#525] Bump phpstan/phpdoc-parser from 0.4.12 to 0.4.14
+
 ## [0.12.0] - 2021-03-12
 
 ### Added
@@ -444,6 +459,13 @@ All notable changes to this project will be documented in this file, in reverse 
 [@lprzybylek]: https://github.com/lprzybylek
 [@clxmstaab]: https://github.com/clxmstaab
 
+[#532]: https://github.com/qossmic/deptrac/pull/532
+[#531]: https://github.com/qossmic/deptrac/pull/531
+[#529]: https://github.com/qossmic/deptrac/pull/529
+[#528]: https://github.com/qossmic/deptrac/pull/528
+[#527]: https://github.com/qossmic/deptrac/pull/527
+[#526]: https://github.com/qossmic/deptrac/pull/526
+[#525]: https://github.com/qossmic/deptrac/pull/525
 [#523]: https://github.com/qossmic/deptrac/pull/523
 [#522]: https://github.com/qossmic/deptrac/pull/522
 [#521]: https://github.com/qossmic/deptrac/pull/521
@@ -638,6 +660,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/qossmic/deptrac/pull/270
 [#266]: https://github.com/qossmic/deptrac/pull/266
 
+[0.13.0]: https://github.com/qossmic/deptrac/compare/0.12.0...0.13.0
 [0.12.0]: https://github.com/qossmic/deptrac/compare/0.11.1...0.12.0
 [0.11.1]: https://github.com/qossmic/deptrac/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/qossmic/deptrac/compare/0.10.3...0.11.0
