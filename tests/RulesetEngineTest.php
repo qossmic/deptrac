@@ -7,7 +7,7 @@ namespace Tests\Qossmic\Deptrac;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\ClassNameLayerResolverInterface;
+use Qossmic\Deptrac\ClassLikeLayerResolverInterface;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\Result;
@@ -234,9 +234,9 @@ final class RulesetEngineTest extends TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
+        $classLikeLayerResolver = $this->prophesize(ClassLikeLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
+            $classLikeLayerResolver->getLayersByClassLikeName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([
@@ -247,7 +247,7 @@ final class RulesetEngineTest extends TestCase
 
         $context = (new RulesetEngine())->process(
             $dependencyResult,
-            $classNameLayerResolver->reveal(),
+            $classLikeLayerResolver->reveal(),
             $configuration
         );
 
@@ -301,9 +301,9 @@ final class RulesetEngineTest extends TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
+        $classLikeLayerResolver = $this->prophesize(ClassLikeLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
+            $classLikeLayerResolver->getLayersByClassLikeName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([
@@ -315,7 +315,7 @@ final class RulesetEngineTest extends TestCase
 
         $context = (new RulesetEngine())->process(
             $dependencyResult,
-            $classNameLayerResolver->reveal(),
+            $classLikeLayerResolver->reveal(),
             $configuration
         );
 
@@ -355,9 +355,9 @@ final class RulesetEngineTest extends TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $classNameLayerResolver = $this->prophesize(ClassNameLayerResolverInterface::class);
+        $classLikeLayerResolver = $this->prophesize(ClassLikeLayerResolverInterface::class);
         foreach ($classesInLayers as $classInLayer => $layers) {
-            $classNameLayerResolver->getLayersByClassName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
+            $classLikeLayerResolver->getLayersByClassLikeName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
         }
 
         $configuration = Configuration::fromArray([
@@ -370,7 +370,7 @@ final class RulesetEngineTest extends TestCase
 
         $context = (new RulesetEngine())->process(
             $dependencyResult,
-            $classNameLayerResolver->reveal(),
+            $classLikeLayerResolver->reveal(),
             $configuration
         );
 

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
+  <file src="src/AstRunner/AstParser/AstFileReferenceFileCache.php">
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>array&lt;string, array{hash: string, reference: AstFileReference}&gt;</code>
+    </UnnecessaryVarAnnotation>
+  </file>
   <file src="src/AstRunner/AstParser/NikicPhpParser/ClassReferenceVisitor.php">
     <MixedArgument occurrences="1">
       <code>$className</code>
@@ -30,11 +35,6 @@
     <MixedReturnStatement occurrences="1">
       <code>self::$classAstMap[$classLikeName] ?? null</code>
     </MixedReturnStatement>
-  </file>
-  <file src="src/ClassNameLayerResolver.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$configuration</code>
-    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Collector/BoolCollector.php">
     <MixedArgument occurrences="2">
@@ -147,6 +147,10 @@
     <PossiblyUndefinedMethod occurrences="1">
       <code>children</code>
     </PossiblyUndefinedMethod>
+    <UnusedVariable occurrences="2">
+      <code>$remove</code>
+      <code>$removeKeyItem</code>
+    </UnusedVariable>
   </file>
   <file src="src/Configuration/Loader.php">
     <MixedArgument occurrences="3">
@@ -166,20 +170,9 @@
     </MixedAssignment>
   </file>
   <file src="src/Configuration/ParameterResolver.php">
-    <MixedArgument occurrences="1">
+    <MixedArgumentTypeCoercion occurrences="1">
       <code>$value</code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
-      <code>$keys</code>
-      <code>array_values($parameters)</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="1">
-      <code>$value</code>
-    </MixedAssignment>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>$values</code>
-      <code>array&lt;array-key, string|array&gt;</code>
-    </MixedReturnTypeCoercion>
   </file>
   <file src="src/OutputFormatter/BaselineOutputFormatter.php">
     <MixedArgument occurrences="2">
@@ -208,6 +201,9 @@
       <code>$dumpHtmlPath</code>
       <code>$dumpImagePath</code>
     </MixedAssignment>
+    <UnusedVariable occurrences="1">
+      <code>$layerDependOnCount</code>
+    </UnusedVariable>
   </file>
   <file src="src/OutputFormatter/JUnitOutputFormatter.php">
     <MixedArgument occurrences="2">
@@ -226,6 +222,11 @@
     <MixedAssignment occurrences="1">
       <code>$dumpXmlPath</code>
     </MixedAssignment>
+  </file>
+  <file src="src/OutputFormatterFactory.php">
+    <UnusedParam occurrences="1">
+      <code>$formatter</code>
+    </UnusedParam>
   </file>
   <file src="src/PathNameFilterIterator.php">
     <MixedArgument occurrences="2">

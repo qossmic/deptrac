@@ -14,6 +14,8 @@ use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\PropertyTypeResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\ClassLikeAnalyser;
+use Qossmic\Deptrac\ClassLikeLayerResolverFactory;
 use Qossmic\Deptrac\Collector\BoolCollector;
 use Qossmic\Deptrac\Collector\ClassNameCollector;
 use Qossmic\Deptrac\Collector\ClassNameRegexCollector;
@@ -30,12 +32,15 @@ use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
+use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
 use Qossmic\Deptrac\DependencyEmitter\BasicDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
 use Qossmic\Deptrac\FileResolver;
+use Qossmic\Deptrac\LayerAnalyser;
 use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
@@ -55,7 +60,7 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services->defaults()
-        ->private();
+        ->public();
 
     $services->set(EventDispatcher::class);
 
@@ -95,14 +100,37 @@ return static function (ContainerConfigurator $container): void {
         ->args([service(TypeResolver::class)]);
 
     $services
+        ->set(ClassLikeLayerResolverFactory::class)
+        ->args([
+            service(Registry::class),
+            service(ParameterResolver::class),
+        ]);
+
+    $services
         ->set(Analyser::class)
         ->args([
             service(AstRunner::class),
             service(FileResolver::class),
             service(Resolver::class),
-            service(Registry::class),
             service(RulesetEngine::class),
-            service(ParameterResolver::class),
+            service(ClassLikeLayerResolverFactory::class),
+        ]);
+
+    $services
+        ->set(ClassLikeAnalyser::class)
+        ->args([
+            service(AstRunner::class),
+            service(FileResolver::class),
+            service(ClassLikeLayerResolverFactory::class),
+        ]);
+
+    $services
+        ->set(LayerAnalyser::class)
+        ->args([
+            service(AstRunner::class),
+            service(FileResolver::class),
+            service(Resolver::class),
+            service(ClassLikeLayerResolverFactory::class),
         ]);
 
     $services->set(RulesetEngine::class);
@@ -200,8 +228,7 @@ return static function (ContainerConfigurator $container): void {
     /* Commands */
     $services
         ->set(InitCommand::class)
-        ->args([service(Dumper::class)])
-        ->public();
+        ->args([service(Dumper::class)]);
 
     $services
         ->set(AnalyzeCommand::class)
@@ -210,6 +237,19 @@ return static function (ContainerConfigurator $container): void {
             service(Loader::class),
             service(EventDispatcher::class),
             service(OutputFormatterFactory::class),
-        ])
-        ->public();
+        ]);
+
+    $services
+        ->set(DebugClassLikeCommand::class)
+        ->args([
+            service(ClassLikeAnalyser::class),
+            service(Loader::class),
+        ]);
+
+    $services
+        ->set(DebugLayerCommand::class)
+        ->args([
+            service(LayerAnalyser::class),
+            service(Loader::class),
+        ]);
 };

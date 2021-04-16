@@ -21,7 +21,7 @@ class RulesetEngine
 {
     public function process(
         Result $dependencyResult,
-        ClassNameLayerResolverInterface $classNameLayerResolver,
+        ClassLikeLayerResolverInterface $classLikeLayerResolver,
         Configuration $configuration
     ): Context {
         $rules = [];
@@ -31,7 +31,7 @@ class RulesetEngine
         $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layerNames = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameA());
+            $layerNames = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getClassLikeNameA());
 
             $classLikeANameString = $dependency->getClassLikeNameA()->toString();
             if (!isset($warnings[$classLikeANameString]) && count($layerNames) > 1) {
@@ -41,7 +41,7 @@ class RulesetEngine
             foreach ($layerNames as $layerName) {
                 $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
 
-                $layersNamesClassB = $classNameLayerResolver->getLayersByClassName($dependency->getClassLikeNameB());
+                $layersNamesClassB = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getClassLikeNameB());
 
                 if (0 === count($layersNamesClassB)) {
                     if (!$this->ignoreUncoveredInternalClass($configuration, $dependency->getClassLikeNameB())) {

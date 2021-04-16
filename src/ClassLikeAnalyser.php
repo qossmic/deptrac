@@ -1,40 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Qossmic\Deptrac;
 
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\Dependency\Resolver;
-use Qossmic\Deptrac\RulesetEngine\Context;
 
-class Analyser
+class ClassLikeAnalyser
 {
     private $astRunner;
     private $fileResolver;
-    private $resolver;
-    private $rulesetEngine;
     private $classLikeLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,
         FileResolver $fileResolver,
-        Resolver $resolver,
-        RulesetEngine $rulesetEngine,
         ClassLikeLayerResolverFactory $classLikeLayerResolverFactory
     ) {
         $this->astRunner = $astRunner;
         $this->fileResolver = $fileResolver;
-        $this->resolver = $resolver;
-        $this->rulesetEngine = $rulesetEngine;
         $this->classLikeLayerResolverFactory = $classLikeLayerResolverFactory;
     }
 
-    public function analyse(Configuration $configuration): Context
+    /**
+     * @return string[]
+     */
+    public function analyse(Configuration $configuration, ClassLikeName $classLikeName): array
     {
         $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
-        $dependencyResult = $this->resolver->resolve($astMap);
-        $classLikeLayerResolver = $this->classLikeLayerResolverFactory->create($configuration, $astMap);
 
-        return $this->rulesetEngine->process($dependencyResult, $classLikeLayerResolver, $configuration);
+        return $this->classLikeLayerResolverFactory
+            ->create($configuration, $astMap)
+            ->getLayersByClassLikeName($classLikeName);
     }
 }
