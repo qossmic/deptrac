@@ -38,7 +38,7 @@ final class AnnotationDependencyResolverTest extends TestCase
             $annotationDependency[0]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[0]->getFileOccurrence()->getFilepath());
-        self::assertSame(9, $annotationDependency[0]->getFileOccurrence()->getLine());
+        self::assertSame(12, $annotationDependency[0]->getFileOccurrence()->getLine());
         self::assertSame('variable', $annotationDependency[0]->getType());
 
         self::assertSame(
@@ -46,7 +46,7 @@ final class AnnotationDependencyResolverTest extends TestCase
             $annotationDependency[1]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[1]->getFileOccurrence()->getFilepath());
-        self::assertSame(23, $annotationDependency[1]->getFileOccurrence()->getLine());
+        self::assertSame(26, $annotationDependency[1]->getFileOccurrence()->getLine());
         self::assertSame('variable', $annotationDependency[1]->getType());
 
         self::assertSame(
@@ -54,7 +54,7 @@ final class AnnotationDependencyResolverTest extends TestCase
             $annotationDependency[2]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[2]->getFileOccurrence()->getFilepath());
-        self::assertSame(26, $annotationDependency[2]->getFileOccurrence()->getLine());
+        self::assertSame(29, $annotationDependency[2]->getFileOccurrence()->getLine());
         self::assertSame('variable', $annotationDependency[2]->getType());
 
         self::assertSame(
@@ -62,7 +62,7 @@ final class AnnotationDependencyResolverTest extends TestCase
             $annotationDependency[3]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[3]->getFileOccurrence()->getFilepath());
-        self::assertSame(29, $annotationDependency[3]->getFileOccurrence()->getLine());
+        self::assertSame(32, $annotationDependency[3]->getFileOccurrence()->getLine());
         self::assertSame('variable', $annotationDependency[3]->getType());
 
         self::assertSame(
@@ -70,7 +70,7 @@ final class AnnotationDependencyResolverTest extends TestCase
             $annotationDependency[4]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[4]->getFileOccurrence()->getFilepath());
-        self::assertSame(14, $annotationDependency[4]->getFileOccurrence()->getLine());
+        self::assertSame(17, $annotationDependency[4]->getFileOccurrence()->getLine());
         self::assertSame('parameter', $annotationDependency[4]->getType());
 
         self::assertSame(
@@ -78,7 +78,10 @@ final class AnnotationDependencyResolverTest extends TestCase
             $annotationDependency[5]->getClassLikeName()->toString()
         );
         self::assertSame($filePath, $annotationDependency[5]->getFileOccurrence()->getFilepath());
-        self::assertSame(14, $annotationDependency[5]->getFileOccurrence()->getLine());
+        self::assertSame(17, $annotationDependency[5]->getFileOccurrence()->getLine());
         self::assertSame('returntype', $annotationDependency[5]->getType());
+
+        self::assertTrue($astClassReferences[0]->isInternal());
+        self::assertFalse($astClassReferences[1]->isInternal());
     }
 }

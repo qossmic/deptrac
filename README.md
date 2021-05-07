@@ -630,6 +630,17 @@ layers:
         inherits: 'App\SomeInterface'
 ```
 
+### `marked_internal` Collector
+
+The `marked_internal` collector collects all classes annotated with `@internal` on the class doc block.
+
+```
+layers:
+  - name: Foo
+    collectors:
+      - type: marked_internal
+```
+
 ### Custom Collectors
 
 You can even create custom collectors in your project by implementing the `Qossmic\Deptrac\Collector\CollectorInterface`.
