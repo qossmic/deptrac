@@ -1,0 +1,11 @@
+{
+    "totals": {
+        "violations": 0,
+        "skipped": 0,
+        "uncovered": 0,
+        "allowed": 0,
+        "warnings": 0,
+        "errors": 0
+    },
+    "files": []
+}

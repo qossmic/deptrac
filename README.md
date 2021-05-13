@@ -48,6 +48,7 @@ this rule has been violated.
     1. [JUnit Formatter](#junit-formatter)
     1. [GitHubActions Formatter](#githubactions-formatter)
     1. [Baseline Formatter](#baseline-formatter)
+    1. [Json Formatter](#json-formatter)
 9. [Uncovered dependencies](#uncovered-dependencies)
 10. [Import depfiles](#import-depfiles)
 11. [Parameters](#parameters)
@@ -743,6 +744,66 @@ Include the baseline into your existing `depfile.yml`
 # depfile.yml
 baseline: depfile.baseline.yml
 ``` 
+
+### Json Formatter
+
+By default, Json formatter dumps information to *STDOUT*. It can be activated with `--formatter=json`
+
+```json
+{
+    "totals": {
+        "violations": 1,
+        "skipped": 2,
+        "uncovered": 1,
+        "allowed": 0,
+        "warnings": 0,
+        "errors": 0
+    },
+    "files": {
+        "src/ClassA.php": {
+            "errors": 2,
+            "messages": [
+                {
+                    "message": "ClassA must not depend on ClassB (LayerA on LayerB)",
+                    "line": 12,
+                    "type": "error"
+                },
+                {
+                    "message": "ClassA should not depend on ClassC (LayerA on LayerB)",
+                    "line": 15,
+                    "type": "warning"
+                }
+            ]
+        },
+        "src/ClassC.php": {
+            "errors": 1,
+            "messages": [
+                {
+                    "message": "ClassC should not depend on ClassD (LayerA on LayerB)",
+                    "line": 10,
+                    "type": "warning"
+                }
+            ]
+        },
+        "src/OriginalA.php": {
+            "errors": 1,
+            "messages": [
+                {
+                    "message": "OriginalA has uncovered dependency on OriginalB (LayerA)",
+                    "line": 5,
+                    "type": "warning"
+                }
+            ]
+        }
+    }
+}
+```
+
+Supported options:
+
+```
+--json-dump= path to a dumped json file
+```
 
 ## Uncovered dependencies
 
