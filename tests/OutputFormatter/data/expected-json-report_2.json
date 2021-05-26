@@ -1,15 +1,15 @@
 {
-    "totals": {
-        "violations": 1,
-        "skipped": 0,
-        "uncovered": 0,
-        "allowed": 0,
-        "warnings": 0,
-        "errors": 0
+    "Report": {
+        "Violations": 1,
+        "Skipped violations": 0,
+        "Uncovered": 0,
+        "Allowed": 0,
+        "Warnings": 0,
+        "Errors": 0
     },
     "files": {
         "ClassA.php": {
-            "errors": 1,
+            "violations": 1,
             "messages": [
                 {
                     "message": "OriginalA must not depend on OriginalB (LayerA on LayerB)",

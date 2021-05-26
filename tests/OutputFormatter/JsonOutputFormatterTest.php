@@ -30,8 +30,8 @@ final class JsonOutputFormatterTest extends TestCase
 
     public function tearDown(): void
     {
-        if (file_exists(__DIR__ . '/data/' . self::$actual_json_report_file)) {
-            unlink(__DIR__ . '/data/' . self::$actual_json_report_file);
+        if (file_exists(__DIR__.'/data/'.self::$actual_json_report_file)) {
+            unlink(__DIR__.'/data/'.self::$actual_json_report_file);
         }
     }
 
@@ -366,15 +366,15 @@ final class JsonOutputFormatterTest extends TestCase
             new OutputFormatterInput(
                 [
                     AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED   => $reportSkipped,
-                    JsonOutputFormatter::DUMP_JSON          => __DIR__ . '/data/' . self::$actual_json_report_file,
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                    JsonOutputFormatter::DUMP_JSON => __DIR__.'/data/'.self::$actual_json_report_file,
                 ]
             )
         );
 
         self::assertJsonFileEqualsJsonFile(
-            __DIR__ . '/data/' . self::$actual_json_report_file,
-            __DIR__ . '/data/' . $expectedOutputFile
+            __DIR__.'/data/'.self::$actual_json_report_file,
+            __DIR__.'/data/'.$expectedOutputFile
         );
     }
 
@@ -396,14 +396,14 @@ final class JsonOutputFormatterTest extends TestCase
             new OutputFormatterInput(
                 [
                     AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED   => $reportSkipped,
-                    JsonOutputFormatter::DUMP_JSON          => null,
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                    JsonOutputFormatter::DUMP_JSON => null,
                 ]
             )
         );
 
         self::assertJsonStringEqualsJsonFile(
-            __DIR__ . '/data/' . $expectedOutputFile,
+            __DIR__.'/data/'.$expectedOutputFile,
             $bufferedOutput->fetch()
         );
     }
