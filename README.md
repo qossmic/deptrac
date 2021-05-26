@@ -751,17 +751,17 @@ By default, Json formatter dumps information to *STDOUT*. It can be activated wi
 
 ```json
 {
-    "totals": {
-        "violations": 1,
-        "skipped": 2,
-        "uncovered": 1,
-        "allowed": 0,
-        "warnings": 0,
-        "errors": 0
+    "Report": {
+        "Violations": 1,
+        "Skipped violations": 2,
+        "Uncovered": 1,
+        "Allowed": 0,
+        "Warnings": 0,
+        "Errors": 0
     },
     "files": {
         "src/ClassA.php": {
-            "errors": 2,
+            "violations": 2,
             "messages": [
                 {
                     "message": "ClassA must not depend on ClassB (LayerA on LayerB)",
@@ -776,7 +776,7 @@ By default, Json formatter dumps information to *STDOUT*. It can be activated wi
             ]
         },
         "src/ClassC.php": {
-            "errors": 1,
+            "violations": 1,
             "messages": [
                 {
                     "message": "ClassC should not depend on ClassD (LayerA on LayerB)",
@@ -786,7 +786,7 @@ By default, Json formatter dumps information to *STDOUT*. It can be activated wi
             ]
         },
         "src/OriginalA.php": {
-            "errors": 1,
+            "violations": 1,
             "messages": [
                 {
                     "message": "OriginalA has uncovered dependency on OriginalB (LayerA)",
