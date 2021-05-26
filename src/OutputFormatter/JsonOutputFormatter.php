@@ -86,6 +86,10 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             'Errors' => count($context->errors()),
         ];
 
+        foreach ($jsonArray['files'] as &$value) {
+            $value['violations'] = count($value['messages']);
+        }
+
         $json = json_encode($jsonArray);
 
         $dumpJsonPath = (string) $outputFormatterInput->getOption(self::DUMP_JSON);
@@ -112,8 +116,6 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             'line' => $violation->getDependency()->getFileOccurrence()->getLine(),
             'type' => 'error',
         ];
-
-        $violationsArray[$className]['violations'] = count($violationsArray[$className]['messages']);
     }
 
     private function getFailureMessage(Violation $violation): string
@@ -142,8 +144,6 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             'line' => $violation->getDependency()->getFileOccurrence()->getLine(),
             'type' => 'warning',
         ];
-
-        $violationsArray[$className]['violations'] = count($violationsArray[$className]['messages']);
     }
 
     private function getWarningMessage(SkippedViolation $violation): string
@@ -172,8 +172,6 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             'line' => $violation->getDependency()->getFileOccurrence()->getLine(),
             'type' => 'warning',
         ];
-
-        $violationsArray[$className]['violations'] = count($violationsArray[$className]['messages']);
     }
 
     private function getUncoveredMessage(Uncovered $violation): string
