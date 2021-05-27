@@ -52,7 +52,6 @@ use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\RulesetEngine;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;

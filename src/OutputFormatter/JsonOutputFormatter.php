@@ -50,7 +50,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
 
         $jsonArray = [];
-        $jsonArray['files'] = [];
+        $violations = [];
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
                 continue;
@@ -66,13 +66,13 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
             switch (true) {
                 case $rule instanceof Violation:
-                    $this->addFailure($jsonArray['files'], $rule);
+                    $this->addFailure($violations, $rule);
                     break;
                 case $rule instanceof SkippedViolation:
-                    $this->addSkipped($jsonArray['files'], $rule);
+                    $this->addSkipped($violations, $rule);
                     break;
                 case $rule instanceof Uncovered:
-                    $this->addUncovered($jsonArray['files'], $rule);
+                    $this->addUncovered($violations, $rule);
                     break;
             }
         }
@@ -86,10 +86,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             'Errors' => count($context->errors()),
         ];
 
-        foreach ($jsonArray['files'] as &$value) {
+        foreach ($violations as &$value) {
             $value['violations'] = count($value['messages']);
         }
 
+        $jsonArray['files'] = $violations;
         $json = json_encode($jsonArray);
 
         $dumpJsonPath = (string) $outputFormatterInput->getOption(self::DUMP_JSON);
@@ -104,8 +105,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<string, array<string, array<int, array<string, string|int>>>> $violationsArray
-     * @param-out non-empty-array<string, non-empty-array<string, 0|array<int, non-empty-array<string, int|string>>|positive-int>> $violationsArray
+     * @param array<string, array{messages: array<int, array{message: string, line: int, type: string}>}> $violationsArray
      */
     private function addFailure(array &$violationsArray, Violation $violation): void
     {
@@ -132,8 +132,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<string, array<string, array<int, array<string, string|int>>>> $violationsArray
-     * @param-out non-empty-array<string, non-empty-array<string, 0|array<int, non-empty-array<string, int|string>>|positive-int>> $violationsArray
+     * @param array<string, array{messages: array<int, array{message: string, line: int, type: string}>}> $violationsArray
      */
     private function addSkipped(array &$violationsArray, SkippedViolation $violation): void
     {
@@ -160,8 +159,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<string, array<string, array<int, array<string, string|int>>>> $violationsArray
-     * @param-out non-empty-array<string, non-empty-array<string, 0|array<int, non-empty-array<string, int|string>>|positive-int>> $violationsArray
+     * @param array<string, array{messages: array<int, array{message: string, line: int, type: string}>}> $violationsArray
      */
     private function addUncovered(array &$violationsArray, Uncovered $violation): void
     {
