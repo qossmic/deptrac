@@ -62,7 +62,7 @@ class LayerAnalyser
         $classLikeNames = array_unique($classLikeNames);
         natcasesort($classLikeNames);
         
-        return $classLikeNames;
+        return array_values($classLikeNames);
     }
 
     private function isInLayer(
