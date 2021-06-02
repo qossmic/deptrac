@@ -61,7 +61,7 @@ class LayerAnalyser
 
         $classLikeNames = array_unique($classLikeNames);
         natcasesort($classLikeNames);
-        
+
         return array_values($classLikeNames);
     }
 
