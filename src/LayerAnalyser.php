@@ -59,7 +59,10 @@ class LayerAnalyser
             }
         }
 
-        return array_unique($classLikeNames);
+        $classLikeNames = array_unique($classLikeNames);
+        natcasesort($classLikeNames);
+
+        return array_values($classLikeNames);
     }
 
     private function isInLayer(
