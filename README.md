@@ -1,6 +1,6 @@
 # Deptrac
 
-![](https://github.com/qossmic/deptrac/workflows/Continuous%20Integration/badge.svg?branch=master)
+![](https://github.com/qossmic/deptrac/workflows/Continuous%20Integration/badge.svg?branch=main)
 
 ## What is Deptrac
 
