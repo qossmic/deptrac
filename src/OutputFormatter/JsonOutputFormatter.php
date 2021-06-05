@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use function json_encode;
+use function json_last_error;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
-use function json_last_error;
 use function sprintf;
 
 final class JsonOutputFormatter implements OutputFormatterInterface
@@ -95,7 +95,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         $jsonArray['files'] = $violations;
         $json = json_encode($jsonArray, \JSON_PRETTY_PRINT);
 
-        if ($json === false) {
+        if (false === $json) {
             throw new \Exception(sprintf('Unable to render json output. %s', $this->jsonLastError()));
         }
 
