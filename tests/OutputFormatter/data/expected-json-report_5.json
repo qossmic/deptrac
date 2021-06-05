@@ -1,0 +1,47 @@
+{
+    "Report": {
+        "Violations": 1,
+        "Skipped violations": 2,
+        "Uncovered": 1,
+        "Allowed": 0,
+        "Warnings": 0,
+        "Errors": 0
+    },
+    "files": {
+        "ClassA.php": {
+            "violations": 2,
+            "messages": [
+                {
+                    "message": "ClassA must not depend on ClassB (LayerA on LayerB)",
+                    "line": 12,
+                    "type": "error"
+                },
+                {
+                    "message": "ClassA should not depend on ClassB (LayerA on LayerB)",
+                    "line": 15,
+                    "type": "warning"
+                }
+            ]
+        },
+        "ClassC.php": {
+            "violations": 1,
+            "messages": [
+                {
+                    "message": "ClassC should not depend on ClassD (LayerA on LayerB)",
+                    "line": 12,
+                    "type": "warning"
+                }
+            ]
+        },
+        "OriginalA.php": {
+            "violations": 1,
+            "messages": [
+                {
+                    "message": "OriginalA has uncovered dependency on OriginalB (LayerA)",
+                    "line": 12,
+                    "type": "warning"
+                }
+            ]
+        }
+    }
+}

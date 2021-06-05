@@ -45,6 +45,7 @@ use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
+use Qossmic\Deptrac\OutputFormatter\JsonOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
@@ -171,6 +172,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(BaselineOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(JsonOutputFormatter::class)
         ->tag('output_formatter');
 
     /* Collectors */
