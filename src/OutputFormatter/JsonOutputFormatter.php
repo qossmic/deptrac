@@ -11,6 +11,8 @@ use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use function json_last_error;
+use function sprintf;
 
 final class JsonOutputFormatter implements OutputFormatterInterface
 {
@@ -91,7 +93,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         }
 
         $jsonArray['files'] = $violations;
-        $json = json_encode($jsonArray);
+        $json = json_encode($jsonArray, \JSON_PRETTY_PRINT);
+
+        if ($json === false) {
+            throw new \Exception(sprintf('Unable to render json output. %s', $this->jsonLastError()));
+        }
 
         $dumpJsonPath = (string) $outputFormatterInput->getOption(self::DUMP_JSON);
         if ($dumpJsonPath) {
@@ -101,7 +107,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             return;
         }
 
-        $output->writeRaw((string) $json);
+        $output->writeRaw($json);
     }
 
     /**
@@ -182,5 +188,25 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             $dependency->getClassLikeNameB()->toString(),
             $violation->getLayer()
         );
+    }
+
+    private function jsonLastError(): string
+    {
+        switch (json_last_error()) {
+            case JSON_ERROR_NONE:
+                return 'No errors';
+            case JSON_ERROR_DEPTH:
+                return 'Maximum stack depth exceeded';
+            case JSON_ERROR_STATE_MISMATCH:
+                return 'Underflow or the modes mismatch';
+            case JSON_ERROR_CTRL_CHAR:
+                return 'Unexpected control character found';
+            case JSON_ERROR_SYNTAX:
+                return 'Syntax error, malformed JSON';
+            case JSON_ERROR_UTF8:
+                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
+            default:
+                return 'Unknown error';
+        }
     }
 }

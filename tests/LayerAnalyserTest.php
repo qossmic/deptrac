@@ -36,10 +36,12 @@ class LayerAnalyserTest extends TestCase
         $analyser = $container->get(LayerAnalyser::class);
         $classLikes = $analyser->analyse($configuration, 'LayerFoo');
 
-        $expected = [
-            ClassBar::class,
-            ClassFoo::class,
-        ];
-        self::assertSame(sort($expected), sort($classLikes));
+        self::assertSame(
+            [
+                ClassBar::class,
+                ClassFoo::class,
+            ],
+            $classLikes
+        );
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
@@ -405,6 +406,38 @@ final class JsonOutputFormatterTest extends TestCase
         self::assertJsonStringEqualsJsonFile(
             __DIR__.'/data/'.$expectedOutputFile,
             $bufferedOutput->fetch()
+        );
+    }
+
+    public function testJsonRenderError(): void
+    {
+        $bufferedOutput = new BufferedOutput();
+        $formatter = new JsonOutputFormatter();
+
+        $malformedCharacters = "\xB1\x31";
+        $violation = new Violation(
+            new Dependency(
+                ClassLikeName::fromFQCN('OriginalA'),
+                ClassLikeName::fromFQCN('OriginalB'.$malformedCharacters),
+                FileOccurrence::fromFilepath('ClassA.php', 12)
+            ),
+            'LayerA',
+            'LayerB'
+        );
+
+        self::expectException(Exception::class);
+        self::expectExceptionMessage('Unable to render json output. '
+                                     .'Malformed UTF-8 characters, possibly incorrectly encoded');
+        $formatter->finish(
+            new Context([$violation], [], []),
+            $this->createSymfonyOutput($bufferedOutput),
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => false,
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                    JsonOutputFormatter::DUMP_JSON => null,
+                ]
+            )
         );
     }
 
