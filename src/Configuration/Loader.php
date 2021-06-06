@@ -72,6 +72,7 @@ class Loader
             'ruleset' => $mergedConfig['ruleset'],
             'skip_violations' => $mergedConfig['skip_violations'],
             'ignore_uncovered_internal_classes' => $mergedConfig['ignore_uncovered_internal_classes'],
+            'hidden_layers' => $mergedConfig['hidden_layers']
         ]);
     }
 }

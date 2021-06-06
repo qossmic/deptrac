@@ -328,7 +328,7 @@ class TableOutputFormatterTest extends TestCase
 
         $formatter = new TableOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings),
+            new Context($rules, $errors, $warnings, []),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,

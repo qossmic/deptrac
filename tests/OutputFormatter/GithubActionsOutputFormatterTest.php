@@ -42,7 +42,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings),
+            new Context($rules, $errors, $warnings, []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
@@ -163,7 +163,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
@@ -192,7 +192,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_SKIPPED => false,

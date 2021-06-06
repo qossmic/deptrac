@@ -362,7 +362,7 @@ final class JsonOutputFormatterTest extends TestCase
 
         $formatter = new JsonOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
@@ -392,7 +392,7 @@ final class JsonOutputFormatterTest extends TestCase
 
         $formatter = new JsonOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
@@ -429,7 +429,7 @@ final class JsonOutputFormatterTest extends TestCase
         self::expectExceptionMessage('Unable to render json output. '
                                      .'Malformed UTF-8 characters, possibly incorrectly encoded');
         $formatter->finish(
-            new Context([$violation], [], []),
+            new Context([$violation], [], [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [

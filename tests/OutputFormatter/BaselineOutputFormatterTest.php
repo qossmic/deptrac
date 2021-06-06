@@ -105,7 +105,7 @@ class BaselineOutputFormatterTest extends TestCase
 
             $formatter = new BaselineOutputFormatter();
             $formatter->finish(
-                new Context($rules, [], []),
+                new Context($rules, [], [], []),
                 $this->createSymfonyOutput($output),
                 new OutputFormatterInput(['baseline-dump' => $generatedBaselineFile])
             );

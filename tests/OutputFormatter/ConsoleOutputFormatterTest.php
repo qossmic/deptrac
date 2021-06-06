@@ -190,7 +190,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings),
+            new Context($rules, $errors, $warnings, []),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
@@ -225,7 +225,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], []),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
