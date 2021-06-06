@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
+use Qossmic\Deptrac\Configuration\ConfigurationGroups;
+
 use function array_filter;
 use function count;
 
@@ -21,17 +23,22 @@ final class Context
      * @var Warning[]
      */
     private $warnings;
+    /**
+     * @var \Qossmic\Deptrac\Configuration\ConfigurationGroups
+     */
+    private $groups;
 
     /**
      * @param Rule[]    $rules
      * @param Error[]   $errors
      * @param Warning[] $warnings
      */
-    public function __construct(array $rules, array $errors, array $warnings)
+    public function __construct(array $rules, array $errors, array $warnings, ConfigurationGroups $groups)
     {
         $this->rules = $rules;
         $this->errors = $errors;
         $this->warnings = $warnings;
+        $this->groups = $groups;
     }
 
     /**
@@ -116,5 +123,10 @@ final class Context
     public function warnings(): array
     {
         return $this->warnings;
+    }
+
+    public function groups(): ConfigurationGroups
+    {
+        return $this->groups;
     }
 }

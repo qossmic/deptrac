@@ -16,6 +16,8 @@ class Configuration
     private $excludeFiles;
     /** @var ConfigurationRuleset */
     private $ruleset;
+    /** @var ConfigurationGroups */
+    private $groups;
     /** @var ConfigurationSkippedViolation */
     private $skipViolations;
     /** @var bool */
@@ -39,6 +41,7 @@ class Configuration
             'paths',
             'ruleset',
         ])
+        ->setDefault('groups', [])
         ->setDefault('parameters', [])
         ->setDefault('formatters', [])
         ->setDefault('exclude_files', [])
@@ -51,6 +54,7 @@ class Configuration
         ->addAllowedTypes('paths', 'array')
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
+        ->addAllowedTypes('groups', 'array')
         ->addAllowedTypes('skip_violations', 'array')
         ->addAllowedTypes('analyzer', 'array')
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
@@ -98,6 +102,7 @@ class Configuration
 
         $this->parameters = $options['parameters'];
         $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
+        $this->groups = ConfigurationGroups::fromArray($options['groups']);
         $this->paths = $options['paths'];
         $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
         $this->excludeFiles = (array) $options['exclude_files'];
@@ -133,6 +138,11 @@ class Configuration
     public function getRuleset(): ConfigurationRuleset
     {
         return $this->ruleset;
+    }
+
+    public function getGroups(): ConfigurationGroups
+    {
+        return $this->groups;
     }
 
     public function getSkipViolations(): ConfigurationSkippedViolation

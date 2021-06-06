@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\ConfigurationGroups;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
@@ -190,7 +191,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings),
+            new Context($rules, $errors, $warnings, ConfigurationGroups::fromArray([])),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
@@ -225,7 +226,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], ConfigurationGroups::fromArray([])),
             $output,
             new OutputFormatterInput([
                 AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,

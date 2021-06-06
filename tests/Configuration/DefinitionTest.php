@@ -121,6 +121,7 @@ class DefinitionTest extends TestCase
             'exclude_files' => [],
             'ignore_uncovered_internal_classes' => true,
             'use_relative_path_from_depfile' => true,
+            'groups' => [],
         ], $configuration);
     }
 }

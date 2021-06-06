@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\ConfigurationGroups;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
@@ -362,7 +363,7 @@ final class JsonOutputFormatterTest extends TestCase
 
         $formatter = new JsonOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], ConfigurationGroups::fromArray([])),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
@@ -392,7 +393,7 @@ final class JsonOutputFormatterTest extends TestCase
 
         $formatter = new JsonOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new Context($rules, [], [], ConfigurationGroups::fromArray([])),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
@@ -429,7 +430,7 @@ final class JsonOutputFormatterTest extends TestCase
         self::expectExceptionMessage('Unable to render json output. '
                                      .'Malformed UTF-8 characters, possibly incorrectly encoded');
         $formatter->finish(
-            new Context([$violation], [], []),
+            new Context([$violation], [], [], ConfigurationGroups::fromArray([])),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [

@@ -77,7 +77,7 @@ class RulesetEngine
             }
         }
 
-        return new Context($rules, $errors, $warnings);
+        return new Context($rules, $errors, $warnings, $configuration->getGroups());
     }
 
     private function ignoreUncoveredInternalClass(Configuration $configuration, ClassLikeName $classLikeName): bool
