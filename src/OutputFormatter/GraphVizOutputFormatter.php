@@ -62,7 +62,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $hiddenLayers = $context->hiddenLayers();
         // create a vertices
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if(in_array($layer, $hiddenLayers)) {
+            if (in_array($layer, $hiddenLayers, true)) {
                 continue;
             }
             if (!isset($vertices[$layer])) {
@@ -70,7 +70,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             }
 
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if(in_array($layerDependOn, $hiddenLayers)) {
+                if (in_array($layerDependOn, $hiddenLayers, true)) {
                     continue;
                 }
                 if (!isset($vertices[$layerDependOn])) {
@@ -81,11 +81,11 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
 
         // createEdges
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if(in_array($layer, $hiddenLayers)) {
+            if (in_array($layer, $hiddenLayers, true)) {
                 continue;
             }
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if(in_array($layerDependOn, $hiddenLayers) ) {
+                if (in_array($layerDependOn, $hiddenLayers, true)) {
                     continue;
                 }
                 $edge = $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);

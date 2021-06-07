@@ -31,7 +31,7 @@ final class Context
      * @param Rule[]    $rules
      * @param Error[]   $errors
      * @param Warning[] $warnings
-     * @param string[] $hiddenLayers
+     * @param string[]  $hiddenLayers
      */
     public function __construct(array $rules, array $errors, array $warnings, array $hiddenLayers)
     {
