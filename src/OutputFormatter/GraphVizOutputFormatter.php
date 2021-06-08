@@ -79,12 +79,18 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
+        $groupNumber = 1;
         foreach ($context->groups()->getMap() as $groupName => $groupLayerNames) {
             foreach ($groupLayerNames as $groupLayerName) {
                 if (array_key_exists($groupLayerName, $vertices)) {
+                    //TODO: Remove next line once graphviz library is updated to 1.0
+                    $vertices[$groupLayerName]->setGroup($groupNumber);
+
+                    $vertices[$groupLayerName]->setAttribute('group', $groupName);
                     $vertices[$groupLayerName]->setAttribute('graphviz.group', $groupName);
                 }
             }
+            ++$groupNumber;
         }
 
         // createEdges
