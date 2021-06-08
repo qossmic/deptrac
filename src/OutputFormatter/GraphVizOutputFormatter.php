@@ -81,8 +81,8 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
 
         foreach ($context->groups()->getMap() as $groupName => $groupLayerNames) {
             foreach ($groupLayerNames as $groupLayerName) {
-                if(array_key_exists($groupLayerName, $vertices)) {
-                    $vertices[$groupLayerName]->setAttribute('group', $groupName);
+                if (array_key_exists($groupLayerName, $vertices)) {
+                    $vertices[$groupLayerName]->setAttribute('graphviz.group', $groupName);
                 }
             }
         }

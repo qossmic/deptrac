@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
-use Qossmic\Deptrac\Configuration\ConfigurationGroups;
-
 use function array_filter;
 use function count;
+use Qossmic\Deptrac\Configuration\ConfigurationGroups;
 
 final class Context
 {
