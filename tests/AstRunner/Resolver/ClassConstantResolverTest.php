@@ -23,7 +23,7 @@ final class ClassConstantResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/ClassConst.php';
-        $astFileReference = $parser->parseFile($filePath);
+        $astFileReference = $parser->parseFile($filePath, null);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 

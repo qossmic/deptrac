@@ -16,6 +16,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\File\FileReader;
 use Qossmic\Deptrac\ShouldNotHappenException;
 
@@ -66,13 +67,15 @@ class NikicPhpParser implements AstParser
         $this->traverser->addVisitor(new NameResolver());
     }
 
-    public function parseFile(string $file): AstFileReference
+    public function parseFile(string $file, ?Configuration $configuration): AstFileReference
     {
         if (null !== $fileReference = $this->cache->get($file)) {
             return $fileReference;
         }
 
-        $fileReferenceBuilder = FileReferenceBuilder::create($file);
+        $countUseStatements = null === $configuration || $configuration->getParameters()['count_use_statements'];
+
+        $fileReferenceBuilder = FileReferenceBuilder::create($file, $countUseStatements);
         $visitor = new ClassReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->classDependencyResolvers);
 
         $nodes = $this->parser->parse(FileReader::read($file));

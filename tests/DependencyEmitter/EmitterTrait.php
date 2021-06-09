@@ -23,7 +23,7 @@ trait EmitterTrait
             new AstFileReferenceInMemoryCache(),
             new TypeResolver()
         );
-        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$file]);
+        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$file], null);
         $result = new Result();
 
         $emitter->applyDependencies($astMap, $result);

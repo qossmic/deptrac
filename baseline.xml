@@ -58,11 +58,11 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$v</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="2">
-      <code>$this-&gt;parameters</code>
+    <MixedAssignment occurrences="1">
       <code>$this-&gt;paths</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion occurrences="1">
+    <MixedPropertyTypeCoercion occurrences="2">
+      <code>$options['parameters']</code>
       <code>(array) $options['exclude_files']</code>
     </MixedPropertyTypeCoercion>
   </file>

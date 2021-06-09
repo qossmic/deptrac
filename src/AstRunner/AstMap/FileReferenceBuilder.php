@@ -18,23 +18,29 @@ final class FileReferenceBuilder
     /** @var ClassReferenceBuilder|null */
     private $currentClassReference;
 
-    private function __construct(string $filepath)
+    /** @var bool */
+    private $countUseStatementsAsDependencies;
+
+    private function __construct(string $filepath, bool $countUseStatementsAsDependencies)
     {
         $this->filepath = $filepath;
         $this->classReferences = [];
+        $this->countUseStatementsAsDependencies = $countUseStatementsAsDependencies;
     }
 
-    public static function create(string $filepath): self
+    public static function create(string $filepath, bool $countUseStatementsAsDependencies = true): self
     {
-        return new self($filepath);
+        return new self($filepath, $countUseStatementsAsDependencies);
     }
 
     public function use(string $classLikeName, int $occursAtLine): self
     {
-        $this->dependencies[] = AstDependency::useStmt(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
-        );
+        if ($this->countUseStatementsAsDependencies) {
+            $this->dependencies[] = AstDependency::useStmt(
+                ClassLikeName::fromFQCN($classLikeName),
+                FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
+            );
+        }
 
         return $this;
     }

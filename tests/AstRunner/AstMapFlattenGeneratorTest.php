@@ -47,7 +47,7 @@ final class AstMapFlattenGeneratorTest extends TestCase
             )
         );
 
-        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php']);
+        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php'], null);
     }
 
     private function getInheritedInherits(string $class, AstMap $astMap): array

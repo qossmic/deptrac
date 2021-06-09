@@ -35,7 +35,9 @@ class Configuration
             'paths',
             'ruleset',
         ])
-        ->setDefault('parameters', [])
+        ->setDefault('parameters', [
+            'count_use_statements' => true,
+        ])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
         ->setDefault('ignore_uncovered_internal_classes', true)
@@ -86,6 +88,11 @@ class Configuration
 
         if ([] !== $unknownLayerNames) {
             throw Exception\InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
+        }
+
+        assert(is_array($options['parameters']));
+        if (array_key_exists('count_use_statements', $options['parameters'])) {
+            $options['parameters']['count_use_statements'] = 'true';
         }
 
         $this->parameters = $options['parameters'];

@@ -27,6 +27,6 @@ final class NikicPhpParserTest extends TestCase
     public function testParseWithInvalidData(): void
     {
         $this->expectException(\TypeError::class);
-        $this->parser->parseFile(new \stdClass());
+        $this->parser->parseFile(new \stdClass(), null);
     }
 }

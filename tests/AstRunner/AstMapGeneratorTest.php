@@ -44,7 +44,7 @@ final class AstMapGeneratorTest extends TestCase
             )
         );
 
-        return $astRunner->createAstMapByFiles([$fixture]);
+        return $astRunner->createAstMapByFiles([$fixture], null);
     }
 
     public function testBasicDependencyClass(): void

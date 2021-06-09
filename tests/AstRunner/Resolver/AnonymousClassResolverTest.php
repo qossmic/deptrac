@@ -23,7 +23,7 @@ final class AnonymousClassResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/AnonymousClass.php';
-        $astFileReference = $parser->parseFile($filePath);
+        $astFileReference = $parser->parseFile($filePath, null);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 

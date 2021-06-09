@@ -23,7 +23,7 @@ final class PropertyTypeResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/PropertyTypeDependency.php';
-        $astFileReference = $parser->parseFile($filePath);
+        $astFileReference = $parser->parseFile($filePath, null);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
         self::assertCount(1, $astClassReferences);

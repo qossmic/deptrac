@@ -24,7 +24,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/AnnotationDependency.php';
-        $astFileReference = $parser->parseFile($filePath);
+        $astFileReference = $parser->parseFile($filePath, null);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
         $annotationDependency = $astClassReferences[0]->getDependencies();
