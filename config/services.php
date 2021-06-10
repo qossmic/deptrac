@@ -34,6 +34,7 @@ use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
+use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
@@ -51,6 +52,7 @@ use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\RulesetEngine;
+use Qossmic\Deptrac\UnassignedAnalyser;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -131,6 +133,14 @@ return static function (ContainerConfigurator $container): void {
             service(AstRunner::class),
             service(FileResolver::class),
             service(Resolver::class),
+            service(ClassLikeLayerResolverFactory::class),
+        ]);
+
+    $services
+        ->set(UnassignedAnalyser::class)
+        ->args([
+            service(AstRunner::class),
+            service(FileResolver::class),
             service(ClassLikeLayerResolverFactory::class),
         ]);
 
@@ -256,4 +266,11 @@ return static function (ContainerConfigurator $container): void {
             service(LayerAnalyser::class),
             service(Loader::class),
         ]);
+
+    $services
+        ->set(DebugUnassignedCommand::class)
+        ->args([
+                   service(UnassignedAnalyser::class),
+                   service(Loader::class),
+               ]);
 };
