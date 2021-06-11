@@ -50,12 +50,9 @@ class DebugUnassignedCommand extends Command
 
         $configuration = $this->loader->load($depfile);
 
-        $matchedClasses = $this->analyser->analyse($configuration);
-        natcasesort($matchedClasses);
-
         $style->table(['Unassigned classes'], array_map(static function (string $matchedClass): array {
             return [$matchedClass];
-        }, $matchedClasses));
+        }, $this->analyser->analyse($configuration)));
 
         return 0;
     }
