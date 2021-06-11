@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\ClassLikeAnalyser;
+use Qossmic\Deptrac\ClassLikeAnalyzer;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use Qossmic\Deptrac\Console\Symfony\Style;
@@ -19,18 +19,18 @@ class DebugClassLikeCommand extends Command
 {
     protected static $defaultName = 'debug:class-like';
 
-    /** @var ClassLikeAnalyser */
-    private $analyser;
+    /** @var ClassLikeAnalyzer */
+    private $analyzer;
     /** @var Loader */
     private $loader;
 
     public function __construct(
-        ClassLikeAnalyser $analyser,
+        ClassLikeAnalyzer $analyzer,
         Loader $loader
     ) {
         parent::__construct();
 
-        $this->analyser = $analyser;
+        $this->analyzer = $analyzer;
         $this->loader = $loader;
     }
 
@@ -55,7 +55,7 @@ class DebugClassLikeCommand extends Command
 
         $configuration = $this->loader->load($depfile);
 
-        $matchedClassLikeNames = $this->analyser->analyse($configuration, ClassLikeName::fromFQCN($classLike));
+        $matchedClassLikeNames = $this->analyzer->analyze($configuration, ClassLikeName::fromFQCN($classLike));
 
         natcasesort($matchedClassLikeNames);
 

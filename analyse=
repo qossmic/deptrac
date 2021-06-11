@@ -1,0 +1,14 @@
+M	Makefile
+M	README.md
+M	config/services.php
+M	src/Analyser.php
+M	src/ClassLikeAnalyser.php
+M	src/Console/Command/AnalyzeCommand.php
+M	src/Console/Command/DebugClassLikeCommand.php
+M	src/Console/Command/DebugLayerCommand.php
+M	src/LayerAnalyser.php
+M	tests/ClassLikeAnalyserTest.php
+M	tests/Fixtures/ClassLikeAnalyser/ClassFoo.php
+M	tests/Fixtures/LayerAnalyser/ClassBar.php
+M	tests/Fixtures/LayerAnalyser/ClassFoo.php
+M	tests/LayerAnalyserTest.php
