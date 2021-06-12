@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
+use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
@@ -45,9 +46,14 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
 
         $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
         $docNode = $this->docParser->parse($tokens);
+        $templateTypes = array_map(
+            static function (TemplateTagValueNode $node): string {
+                return $node->name;
+            },
+            $docNode->getTemplateTagValues());
 
         foreach ($docNode->getParamTagValues() as $tag) {
-            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->parameter($type, $docComment->getStartLine());
@@ -55,7 +61,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         }
 
         foreach ($docNode->getVarTagValues() as $tag) {
-            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->variable($type, $docComment->getStartLine());
@@ -63,7 +69,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         }
 
         foreach ($docNode->getReturnTagValues() as $tag) {
-            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->returnType($type, $docComment->getStartLine());
@@ -71,7 +77,7 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
         }
 
         foreach ($docNode->getThrowsTagValues() as $tag) {
-            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope);
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
 
             foreach ($types as $type) {
                 $classReferenceBuilder->throwStatement($type, $docComment->getStartLine());
