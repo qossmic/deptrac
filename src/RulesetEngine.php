@@ -26,6 +26,7 @@ class RulesetEngine
     ): Context {
         $rules = [];
         $warnings = [];
+        $errors = [];
 
         $configurationRuleset = $configuration->getRuleset();
         $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
@@ -39,7 +40,12 @@ class RulesetEngine
             }
 
             foreach ($layerNames as $layerName) {
-                $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
+                try {
+                    $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
+                } catch (\InvalidArgumentException $exception) {
+                    $errors[] = new Error($exception->getMessage());
+                    continue;
+                }
 
                 $layersNamesClassB = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getClassLikeNameB());
 
@@ -70,7 +76,6 @@ class RulesetEngine
             }
         }
 
-        $errors = [];
         foreach ($skippedViolationHelper->unmatchedSkippedViolations() as $classLikeNameA => $classLikes) {
             foreach ($classLikes as $classLikeNameB) {
                 $errors[] = new Error(sprintf('Skipped violation "%s" for "%s" was not matched.', $classLikeNameB, $classLikeNameA));

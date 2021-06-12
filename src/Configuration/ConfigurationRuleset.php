@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use InvalidArgumentException;
+
 final class ConfigurationRuleset
 {
     /** @var array<string, string[]> */
@@ -27,9 +29,45 @@ final class ConfigurationRuleset
 
     /**
      * @return string[]
+     *
+     * @throws InvalidArgumentException
      */
     public function getAllowedDependencies(string $layerName): array
     {
-        return $this->layerMap[$layerName] ?? [];
+        $dependencies = [];
+        foreach ($this->layerMap[$layerName] ?? [] as $layer) {
+            if (0 === strncmp($layer, '+', 1)) {
+                $dependencies[] = $this->getTransitiveDependencies($layer, [$layerName]);
+            } else {
+                $dependencies[] = [$layer];
+            }
+        }
+
+        return [] === $dependencies ? [] : array_unique(array_merge(...$dependencies));
+    }
+
+    /**
+     * @param string[] $previousLayers
+     *
+     * @return string[]
+     *
+     * @throws InvalidArgumentException
+     */
+    private function getTransitiveDependencies(string $layerName, array $previousLayers): array
+    {
+        if (in_array($layerName, $previousLayers, true)) {
+            throw new InvalidArgumentException('Circular ruleset dependency for layer '.$layerName);
+        }
+        $transitiveDependencies = [];
+        $nonTransitiveDependencies = [];
+        foreach ($this->layerMap[$layerName] ?? [] as $layer) {
+            if (0 === strncmp($layer, '+', 1)) {
+                $transitiveDependencies[] = $this->getTransitiveDependencies($layer, array_merge([$layerName], $previousLayers));
+            } else {
+                $nonTransitiveDependencies[] = $layer;
+            }
+        }
+
+        return array_merge($nonTransitiveDependencies, ...$transitiveDependencies);
     }
 }
