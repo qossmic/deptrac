@@ -270,7 +270,7 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(DebugUnassignedCommand::class)
         ->args([
-                   service(UnassignedAnalyser::class),
-                   service(Loader::class),
-               ]);
+            service(UnassignedAnalyser::class),
+            service(Loader::class),
+        ]);
 };
