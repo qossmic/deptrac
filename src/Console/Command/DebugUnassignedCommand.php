@@ -17,6 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class DebugUnassignedCommand extends Command
 {
     protected static $defaultName = 'debug:unassigned';
+    protected static $defaultDescription = 'Lists all classes from your paths that are not assigned to any layer.';
 
     /** @var UnassignedAnalyser */
     private $analyser;

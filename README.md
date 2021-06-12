@@ -229,7 +229,7 @@ php deptrac.phar debug:class-like examples/DirectoryLayer.depfile.yaml 'examples
 
 ### Debug unassigned classes
 
-With the `debug:unassigned`-command you list all classes that are not assigned to any layer. This is useful to test that your collector configuration for layers is correct. 
+With the `debug:unassigned`-command you list all classes in your path that are not assigned to any layer. This is useful to test that your collector configuration for layers is correct. 
 
 ```bash
 php deptrac.phar debug:unassigned examples/DirectoryLayer.depfile.yaml 
