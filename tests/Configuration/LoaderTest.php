@@ -34,6 +34,7 @@ final class LoaderTest extends TestCase
             [
                 'currentWorkingDirectory' => __DIR__,
                 'depfileDirectory' => __DIR__.'/Fixtures',
+                'count_use_statements' => true,
             ],
             $configuration->getParameters()
         );
