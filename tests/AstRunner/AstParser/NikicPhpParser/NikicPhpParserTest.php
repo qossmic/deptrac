@@ -6,16 +6,12 @@ namespace Tests\Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ClassReferenceVisitor;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
-use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\File\FileReader;
 
 final class NikicPhpParserTest extends TestCase
 {
@@ -37,7 +33,6 @@ final class NikicPhpParserTest extends TestCase
         $this->parser->parseFile(new \stdClass(), null);
     }
 
-
     public function testParseIgnoreUses(): void
     {
         $typeResolver = new TypeResolver();
@@ -47,15 +42,15 @@ final class NikicPhpParserTest extends TestCase
             $typeResolver
         );
 
-        $filePath         = __DIR__.'/Fixtures/CountingUseStatements.php';
-        $configuration    = Configuration::fromArray(
+        $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
+        $configuration = Configuration::fromArray(
             [
-                'layers'     => [],
-                'paths'      => [],
-                'ruleset'    => [],
+                'layers' => [],
+                'paths' => [],
+                'ruleset' => [],
                 'parameters' => [
-                    'count_use_statements' => false
-                ]
+                    'count_use_statements' => false,
+                ],
             ]
         );
         self::assertCount(0, $parser->parseFile($filePath, $configuration)->getDependencies());
@@ -70,15 +65,15 @@ final class NikicPhpParserTest extends TestCase
             $typeResolver
         );
 
-        $filePath         = __DIR__.'/Fixtures/CountingUseStatements.php';
-        $configuration    = Configuration::fromArray(
+        $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
+        $configuration = Configuration::fromArray(
             [
-                'layers'     => [],
-                'paths'      => [],
-                'ruleset'    => [],
+                'layers' => [],
+                'paths' => [],
+                'ruleset' => [],
                 'parameters' => [
-                    'count_use_statements' => true
-                ]
+                    'count_use_statements' => true,
+                ],
             ]
         );
         self::assertCount(1, $parser->parseFile($filePath, $configuration)->getDependencies());
@@ -93,13 +88,13 @@ final class NikicPhpParserTest extends TestCase
             $typeResolver
         );
 
-        $filePath         = __DIR__.'/Fixtures/CountingUseStatements.php';
-        $configuration    = Configuration::fromArray(
+        $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
+        $configuration = Configuration::fromArray(
             [
-                'layers'     => [],
-                'paths'      => [],
-                'ruleset'    => [],
-                'parameters' => []
+                'layers' => [],
+                'paths' => [],
+                'ruleset' => [],
+                'parameters' => [],
             ]
         );
         self::assertCount(1, $parser->parseFile($filePath, $configuration)->getDependencies());
