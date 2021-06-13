@@ -654,6 +654,15 @@ You can even create custom collectors in your project by implementing the `Qossm
 As soon as an unknown collector is referenced in the config file deptrac will try to load the class in your project.
 With this you can create collectors specific for your usecase. And more people can use these custom collectors per default if you contribute them back to deptrac!
 
+### Ignoring `use` statements for namespaces
+
+Counting `use` statements that are including namespaced classes into current file might skew the number of dependencies displayed. It is up to you, if you want to count them or not. `deptrac` counts them by default, but is you would like not to, you can change this behaviour in the config file:
+
+```yaml
+parameters:
+   count_use_statements: false
+```
+*Note:* This only applies in the context of including namespaces, `use` statements that are applying traits on classes are always counted. 
 
 ## Formatters
 
@@ -841,7 +850,7 @@ imports:
 
 ## Parameters
 
-Parameters can be used in a collector's configuration.  
+Parameters can be used in a collector's configuration.  )
 Deptrac provides predefined parameters:
 - `%currentWorkingDirectory%` The path deptrac has been executed
 - `%depfileDirectory%` The path where the depfile is stored.
