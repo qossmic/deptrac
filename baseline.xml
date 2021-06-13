@@ -64,7 +64,7 @@
     </MixedAssignment>
     <MixedPropertyTypeCoercion occurrences="2">
       <code>(array) $options['exclude_files']</code>
-      <code>(array) $options['hidden_layers']</code>
+      <code>(array) $options['formatters']</code>
     </MixedPropertyTypeCoercion>
   </file>
   <file src="src/Configuration/ConfigurationLayer.php">
@@ -77,7 +77,9 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="70">
+    <MixedMethodCall occurrences="79">
+      <code>arrayNode</code>
+      <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -97,8 +99,14 @@
       <code>cannotBeEmpty</code>
       <code>children</code>
       <code>children</code>
+      <code>children</code>
+      <code>children</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -144,6 +152,7 @@
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
+      <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
