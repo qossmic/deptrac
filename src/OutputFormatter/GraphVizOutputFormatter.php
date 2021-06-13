@@ -59,7 +59,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         /** @var Vertex[] $vertices */
         $vertices = [];
 
-        $hiddenLayers = $context->hiddenLayers();
+        $hiddenLayers = (array) $outputFormatterInput->getConfig('hidden_layers');
         // create a vertices
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             if (in_array($layer, $hiddenLayers, true)) {

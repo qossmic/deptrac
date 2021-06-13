@@ -77,7 +77,7 @@ class RulesetEngine
             }
         }
 
-        return new Context($rules, $errors, $warnings, $configuration->getHiddenLayers());
+        return new Context($rules, $errors, $warnings);
     }
 
     private function ignoreUncoveredInternalClass(Configuration $configuration, ClassLikeName $classLikeName): bool

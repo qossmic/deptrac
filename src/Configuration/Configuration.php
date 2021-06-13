@@ -22,8 +22,9 @@ class Configuration
     private $ignoreUncoveredInternalClasses;
     /** @var array<string, string> */
     private $parameters;
-    /** @var string[] */
-    private $hiddenLayers;
+
+    /** @var array<string, array<string, mixed>> */
+    private $formatters;
 
     /**
      * @param array<string, mixed> $args
@@ -38,16 +39,16 @@ class Configuration
             'ruleset',
         ])
         ->setDefault('parameters', [])
-        ->setDefault('hidden_layers', [])
+        ->setDefault('formatters', [])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
         ->setDefault('ignore_uncovered_internal_classes', true)
         ->addAllowedTypes('parameters', 'array')
+        ->addAllowedTypes('formatters', ['array', 'null'])
         ->addAllowedTypes('layers', 'array')
         ->addAllowedTypes('paths', 'array')
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
-        ->addAllowedTypes('hidden_layers', ['array', 'null'])
         ->addAllowedTypes('skip_violations', 'array')
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
         ->resolve($args);
@@ -98,7 +99,7 @@ class Configuration
         $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
         $this->excludeFiles = (array) $options['exclude_files'];
         $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
-        $this->hiddenLayers = (array) $options['hidden_layers'];
+        $this->formatters = (array) $options['formatters'];
     }
 
     /**
@@ -149,10 +150,10 @@ class Configuration
     }
 
     /**
-     * @return string[]
+     * @return array<string, mixed>
      */
-    public function getHiddenLayers(): array
+    public function getFormatterConfig(string $formatterName): array
     {
-        return $this->hiddenLayers;
+        return $this->formatters[$formatterName] ?? [];
     }
 }

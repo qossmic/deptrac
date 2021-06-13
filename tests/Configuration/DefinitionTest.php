@@ -119,7 +119,6 @@ class DefinitionTest extends TestCase
             ],
             'imports' => [],
             'exclude_files' => [],
-            'hidden_layers' => [],
             'ignore_uncovered_internal_classes' => true,
             'use_relative_path_from_depfile' => true,
         ], $configuration);

@@ -328,13 +328,15 @@ class TableOutputFormatterTest extends TestCase
 
         $formatter = new TableOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings, []),
+            new Context($rules, $errors, $warnings),
             $output,
-            new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
-                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
-            ])
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
+                ]
+            )
         );
 
         static::assertEquals($expectedOutput, $bufferedOutput->fetch());

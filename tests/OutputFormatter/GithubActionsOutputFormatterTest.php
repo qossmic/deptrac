@@ -42,13 +42,15 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings, []),
+            new Context($rules, $errors, $warnings),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
-            ])
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
+                ]
+            )
         );
 
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
@@ -163,13 +165,15 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], [], []),
+            new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
-            ])
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
+                ]
+            )
         );
 
         self::assertSame('', $bufferedOutput->fetch());
@@ -192,13 +196,15 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], [], []),
+            new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => true,
-            ])
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => true,
+                ]
+            )
         );
 
         self::assertSame(

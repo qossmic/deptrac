@@ -23,22 +23,15 @@ final class Context
     private $warnings;
 
     /**
-     * @var string[]
-     */
-    private $hiddenLayers;
-
-    /**
      * @param Rule[]    $rules
      * @param Error[]   $errors
      * @param Warning[] $warnings
-     * @param string[]  $hiddenLayers
      */
-    public function __construct(array $rules, array $errors, array $warnings, array $hiddenLayers)
+    public function __construct(array $rules, array $errors, array $warnings)
     {
         $this->rules = $rules;
         $this->errors = $errors;
         $this->warnings = $warnings;
-        $this->hiddenLayers = $hiddenLayers;
     }
 
     /**
@@ -123,10 +116,5 @@ final class Context
     public function warnings(): array
     {
         return $this->warnings;
-    }
-
-    public function hiddenLayers(): array
-    {
-        return $this->hiddenLayers;
     }
 }

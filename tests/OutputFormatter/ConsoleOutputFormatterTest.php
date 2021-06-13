@@ -190,12 +190,14 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings, []),
+            new Context($rules, $errors, $warnings),
             $output,
-            new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
-            ])
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
+                ]
+            )
         );
 
         $o = $bufferedOutput->fetch();
@@ -225,12 +227,14 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], [], []),
+            new Context($rules, [], []),
             $output,
-            new OutputFormatterInput([
-                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
-            ])
+            new OutputFormatterInput(
+                [
+                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                ]
+            )
         );
 
         $o = $bufferedOutput->fetch();

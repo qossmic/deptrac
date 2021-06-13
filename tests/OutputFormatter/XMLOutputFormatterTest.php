@@ -120,11 +120,13 @@ final class XMLOutputFormatterTest extends TestCase
 
         $formatter = new XMLOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], [], []),
+            new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                XMLOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_xml_report_file,
-            ])
+            new OutputFormatterInput(
+                [
+                    XMLOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_xml_report_file,
+                ]
+            )
         );
 
         self::assertXmlFileEqualsXmlFile(
