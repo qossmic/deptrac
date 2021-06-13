@@ -123,7 +123,7 @@ final class XMLOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
-                    XMLOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_xml_report_file,
+                XMLOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_xml_report_file,
             ])
         );
 

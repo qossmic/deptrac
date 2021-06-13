@@ -331,9 +331,9 @@ class TableOutputFormatterTest extends TestCase
             new Context($rules, $errors, $warnings),
             $output,
             new OutputFormatterInput([
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
-                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
             ])
         );
 

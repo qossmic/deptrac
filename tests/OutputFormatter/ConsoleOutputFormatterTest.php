@@ -193,8 +193,8 @@ final class ConsoleOutputFormatterTest extends TestCase
             new Context($rules, $errors, $warnings),
             $output,
             new OutputFormatterInput([
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
             ])
         );
 
@@ -228,8 +228,8 @@ final class ConsoleOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $output,
             new OutputFormatterInput([
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
             ])
         );
 

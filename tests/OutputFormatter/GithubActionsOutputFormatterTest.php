@@ -45,9 +45,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new Context($rules, $errors, $warnings),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
             ])
         );
 
@@ -166,9 +166,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
             ])
         );
 
@@ -195,9 +195,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput([
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
-                    AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => true,
+                AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
+                AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => true,
             ])
         );
 
