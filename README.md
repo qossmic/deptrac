@@ -850,7 +850,7 @@ imports:
 
 ## Parameters
 
-Parameters can be used in a collector's configuration.  )
+Parameters can be used in a collector's configuration.  
 Deptrac provides predefined parameters:
 - `%currentWorkingDirectory%` The path deptrac has been executed
 - `%depfileDirectory%` The path where the depfile is stored.
