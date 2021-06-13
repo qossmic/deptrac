@@ -36,10 +36,11 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         $context = new Context([
             new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
+            new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassHidden'), $fileOccurrenceA), 'LayerA', 'LayerHidden'),
             new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), FileOccurrence::fromFilepath('classAB.php', 1)), 'LayerA', 'LayerB'),
             new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
             new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
-        ], [], [], []);
+        ], [], [], ['LayerHidden']);
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput([
