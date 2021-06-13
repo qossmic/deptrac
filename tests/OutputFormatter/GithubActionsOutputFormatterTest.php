@@ -44,13 +44,11 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, $errors, $warnings),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput(
-                [
+            new OutputFormatterInput([
                     AnalyzeCommand::OPTION_REPORT_SKIPPED => true,
                     AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                     AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
-                ]
-            )
+            ])
         );
 
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
@@ -167,13 +165,11 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput(
-                [
+            new OutputFormatterInput([
                     AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
                     AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                     AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => false,
-                ]
-            )
+            ])
         );
 
         self::assertSame('', $bufferedOutput->fetch());
@@ -198,13 +194,11 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput(
-                [
+            new OutputFormatterInput([
                     AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
                     AnalyzeCommand::OPTION_REPORT_UNCOVERED => true,
                     AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED => true,
-                ]
-            )
+            ])
         );
 
         self::assertSame(

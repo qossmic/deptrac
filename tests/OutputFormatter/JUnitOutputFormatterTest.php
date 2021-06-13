@@ -126,11 +126,9 @@ final class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput(new BufferedOutput()),
-            new OutputFormatterInput(
-                [
+            new OutputFormatterInput([
                     JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
-                ]
-            )
+            ])
         );
 
         self::assertXmlFileEqualsXmlFile(
