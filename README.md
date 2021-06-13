@@ -726,8 +726,10 @@ layers:
       # Libs
       - type: className
         regex: ^Company\\Saas\\Plugins\\.*
-hidden_layers:
-  - Generic Domains
+formatters:
+  graphviz:
+    hidden_layers:
+      - Generic Domains
 ```
 
 ### JUnit Formatter
