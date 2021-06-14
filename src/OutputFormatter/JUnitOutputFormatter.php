@@ -89,7 +89,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $testSuite->appendChild(new \DOMAttr('errors', (string) count($context->errors())));
             $testSuite->appendChild(new \DOMAttr('time', '0'));
             foreach ($context->errors() as $message) {
-                $error = $xmlDoc->createElement('failure');
+                $error = $xmlDoc->createElement('error');
                 $error->appendChild(new \DOMAttr('message', $message->toString()));
                 $error->appendChild(new \DOMAttr('type', 'WARNING'));
                 $testSuite->appendChild($error);

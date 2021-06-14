@@ -15,6 +15,7 @@ use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\Error;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Input\InputInterface;
@@ -140,6 +141,25 @@ final class JUnitOutputFormatterTest extends TestCase
     public function testGetOptions(): void
     {
         self::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
+    }
+
+    public function testUnmatchedSkipped(): void
+    {
+        $formatter = new JUnitOutputFormatter();
+        $formatter->finish(
+            new Context([], [
+                new Error('Skipped violation "Class1" for "Class2" was not matched.'),
+            ], []),
+            $this->createSymfonyOutput(new BufferedOutput()),
+            new OutputFormatterInput([
+                                         JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
+                                     ])
+        );
+
+        self::assertXmlFileEqualsXmlFile(
+            __DIR__.'/data/'.self::$actual_junit_report_file,
+            __DIR__.'/data/expected-junit-report-with-unmatched-violations.xml'
+        );
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput
