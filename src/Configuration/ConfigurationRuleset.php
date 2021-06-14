@@ -37,10 +37,10 @@ final class ConfigurationRuleset
         $dependencies = [];
         foreach ($this->layerMap[$layerName] ?? [] as $layer) {
             if (0 === strncmp($layer, '+', 1)) {
+                $layer = ltrim($layer, '+');
                 $dependencies[] = $this->getTransitiveDependencies($layer, [$layerName]);
-            } else {
-                $dependencies[] = [$layer];
             }
+            $dependencies[] = [$layer];
         }
 
         return [] === $dependencies ? [] : array_unique(array_merge(...$dependencies));
@@ -56,16 +56,18 @@ final class ConfigurationRuleset
     private function getTransitiveDependencies(string $layerName, array $previousLayers): array
     {
         if (in_array($layerName, $previousLayers, true)) {
-            throw new InvalidArgumentException('Circular ruleset dependency for layer '.$layerName);
+            throw new InvalidArgumentException('Circular ruleset dependency for layer '.$layerName . ' depending on: ' . implode(
+                                                   '->',
+                                                   $previousLayers));
         }
         $transitiveDependencies = [];
         $nonTransitiveDependencies = [];
         foreach ($this->layerMap[$layerName] ?? [] as $layer) {
             if (0 === strncmp($layer, '+', 1)) {
+                $layer = ltrim($layer, '+');
                 $transitiveDependencies[] = $this->getTransitiveDependencies($layer, array_merge([$layerName], $previousLayers));
-            } else {
-                $nonTransitiveDependencies[] = $layer;
             }
+            $nonTransitiveDependencies[] = $layer;
         }
 
         return array_merge($nonTransitiveDependencies, ...$transitiveDependencies);
