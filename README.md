@@ -659,7 +659,7 @@ With this you can create collectors specific for your usecase. And more people c
 By default, deptrac will analyze all occurrences for classes, including `use` statements. If you would like to exempt `use` statements from the analysis, you can change this behaviour in the depfile:
 
 ```yaml
-parameters:
+analyzer:
    count_use_statements: false
 ```
 *Note:* This only applies in the context of including namespaces, `use` statements that are applying traits on classes are always counted. 

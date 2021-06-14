@@ -77,7 +77,8 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="66">
+    <MixedMethodCall occurrences="73">
+      <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -96,8 +97,13 @@
       <code>cannotBeEmpty</code>
       <code>children</code>
       <code>children</code>
+      <code>children</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -131,6 +137,7 @@
       <code>requiresAtLeastOneElement</code>
       <code>requiresAtLeastOneElement</code>
       <code>requiresAtLeastOneElement</code>
+      <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
