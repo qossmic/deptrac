@@ -22,6 +22,8 @@ class Configuration
     private $ignoreUncoveredInternalClasses;
     /** @var array<string, string> */
     private $parameters;
+    /** @var ConfigurationAnalyzer */
+    private $analyzer;
 
     /**
      * @param array<string, mixed> $args
@@ -35,11 +37,12 @@ class Configuration
             'paths',
             'ruleset',
         ])
-        ->setDefault('parameters', [
-            'count_use_statements' => true,
-        ])
+        ->setDefault('parameters', [])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
+        ->setDefault('analyzer', [
+            'count_use_statements' => true,
+        ])
         ->setDefault('ignore_uncovered_internal_classes', true)
         ->addAllowedTypes('parameters', 'array')
         ->addAllowedTypes('layers', 'array')
@@ -47,6 +50,7 @@ class Configuration
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
         ->addAllowedTypes('skip_violations', 'array')
+        ->addAllowedTypes('analyzer', 'array')
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
         ->resolve($args);
 
@@ -90,17 +94,13 @@ class Configuration
             throw Exception\InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
         }
 
-        /** @var array $options['parameters'] */
-        if (!array_key_exists('count_use_statements', $options['parameters'])) {
-            $options['parameters']['count_use_statements'] = true;
-        }
-
         $this->parameters = $options['parameters'];
         $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
         $this->paths = $options['paths'];
         $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
         $this->excludeFiles = (array) $options['exclude_files'];
         $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
+        $this->analyzer = ConfigurationAnalyzer::fromArray($options['analyzer']);
     }
 
     /**
@@ -148,5 +148,10 @@ class Configuration
     public function getParameters(): array
     {
         return $this->parameters;
+    }
+
+    public function getAnalyzer(): ConfigurationAnalyzer
+    {
+        return $this->analyzer;
     }
 }

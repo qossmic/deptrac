@@ -33,8 +33,7 @@ final class LoaderTest extends TestCase
         self::assertSame(
             [
                 'currentWorkingDirectory' => __DIR__,
-                'depfileDirectory' => __DIR__.'/Fixtures',
-                'count_use_statements' => true,
+                'depfileDirectory' => __DIR__.'/Fixtures'
             ],
             $configuration->getParameters()
         );

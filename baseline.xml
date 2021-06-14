@@ -47,7 +47,8 @@
     </MixedAssignment>
   </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="7">
+      <code>$options['analyzer']</code>
       <code>$options['layers']</code>
       <code>$options['ruleset']</code>
       <code>$options['ruleset']</code>
@@ -58,11 +59,11 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$v</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment occurrences="2">
+      <code>$this-&gt;parameters</code>
       <code>$this-&gt;paths</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion occurrences="2">
-      <code>$options['parameters']</code>
+    <MixedPropertyTypeCoercion occurrences="1">
       <code>(array) $options['exclude_files']</code>
     </MixedPropertyTypeCoercion>
   </file>

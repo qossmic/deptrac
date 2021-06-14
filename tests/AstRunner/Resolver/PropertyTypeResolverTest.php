@@ -8,6 +8,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\PropertyTypeResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Symfony\Component\Finder\SplFileInfo;
 
 final class PropertyTypeResolverTest extends TestCase
@@ -23,7 +24,7 @@ final class PropertyTypeResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/PropertyTypeDependency.php';
-        $astFileReference = $parser->parseFile($filePath, null);
+        $astFileReference = $parser->parseFile($filePath, ConfigurationAnalyzer::fromArray([]));
 
         $astClassReferences = $astFileReference->getAstClassReferences();
         self::assertCount(1, $astClassReferences);
