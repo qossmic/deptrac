@@ -9,7 +9,6 @@ use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
 use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

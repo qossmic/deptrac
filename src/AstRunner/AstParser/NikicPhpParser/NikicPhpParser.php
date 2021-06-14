@@ -16,7 +16,6 @@ use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Qossmic\Deptrac\File\FileReader;
 use Qossmic\Deptrac\ShouldNotHappenException;
