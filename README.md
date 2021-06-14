@@ -696,40 +696,30 @@ You can disable automatic opening of the image by setting the `--graphviz-displa
 
 *Hint*: You can create an image, a dot and an HTML file at the same time.
 
-#### Supported config file options:
-You can define a `hidden_layers` section in your config file with a list of `layers` you do not want to include in `graphviz` output, but still want to perform the analysis on. 
+#### Supported depfile options:
+Under `formatters.graphviz.hidden_layers` you can define a list of `layers` you do not want to include when using the corresponding `graphviz` output formatter. The generated image will not contain these layers, but they will be part of the analysis.
 
 There are 2 main use-cases for this feature:
  - Hiding a generic/general domains like the `vendor` folder
- - Having multiple "views" for your architecture. You can define common file with all the `layers` and `rulesets` and have multiple config files with different `hidden_layers` that include the common file. Calling `graphviz` formatter with these files will then produce different views of your architecture.  
+- Having multiple "views" for your architecture. You can define a shared file with all your `layers` and a `ruleset` and then have multiple config files for the different `hidden_layers`. Using the `graphviz` formatter with these files will then generate graphs focusing on only the relevant layers.
 
 ```yaml
 layers:
-  - name: Generic Domains
-    collectors:
-      # Vendor
-      - type: bool
-        must:
-          - type: className
-            regex: .+\\.*
-        must_not:
-          - type: className
-            regex: ^Company\\Saas\\.*
-      # common
-      - type: bool
-        must:
-          - type: directory
-            regex: src/.*
-        must_not:
-          - type: directory
-            regex: src/.*/.*
-      # Libs
-      - type: className
-        regex: ^Company\\Saas\\Plugins\\.*
+   - name: Utils
+     collectors:
+        - type: className
+          regex: .*Util.*
+   - name: Controller
+     collectors:
+        - type: className
+          regex: .*Controller.*
+ruleset:
+   Controller:
+      - Utils
 formatters:
-  graphviz:
-    hidden_layers:
-      - Generic Domains
+   graphviz:
+      hidden_layers:
+         - Utils
 ```
 
 ### JUnit Formatter
