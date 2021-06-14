@@ -77,6 +77,27 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $xmlDoc->appendChild($testSuites);
 
+        if ($context->hasErrors()) {
+            $testSuite = $xmlDoc->createElement('testsuite');
+            $testSuite->appendChild(new \DOMAttr('id', '0'));
+            $testSuite->appendChild(new \DOMAttr('package', ''));
+            $testSuite->appendChild(new \DOMAttr('name', 'Unmatched skipped violations'));
+            $testSuite->appendChild(new \DOMAttr('hostname', 'localhost'));
+            $testSuite->appendChild(new \DOMAttr('tests', '0'));
+            $testSuite->appendChild(new \DOMAttr('failures', '0'));
+            $testSuite->appendChild(new \DOMAttr('skipped', '0'));
+            $testSuite->appendChild(new \DOMAttr('errors', (string) count($context->errors())));
+            $testSuite->appendChild(new \DOMAttr('time', '0'));
+            foreach ($context->errors() as $message) {
+                $error = $xmlDoc->createElement('error');
+                $error->appendChild(new \DOMAttr('message', $message->toString()));
+                $error->appendChild(new \DOMAttr('type', 'WARNING'));
+                $testSuite->appendChild($error);
+            }
+
+            $testSuites->appendChild($testSuite);
+        }
+
         $this->addTestSuite($context, $xmlDoc, $testSuites);
     }
 
