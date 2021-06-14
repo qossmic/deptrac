@@ -28,7 +28,7 @@ class UnassignedAnalyser
      */
     public function analyse(Configuration $configuration): array
     {
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
+        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration);
         $classLikeLayerResolver = $this->classLikeLayerResolverFactory->create($configuration, $astMap);
 
         /** @var string[] $classLikeNames */
