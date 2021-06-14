@@ -41,6 +41,7 @@ this rule has been violated.
     1. [`uses` Collector](#uses-collector)
     1. [`inherits` Collector](#inherits-collector)
     1. [Custom Collectors](#custom-collectors)
+    1. [Ignoring `use` statements for namespaces](#ignoring-use-statements-for-namespaces)
 8. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
     1. [Table Formatter](#table-formatter)
