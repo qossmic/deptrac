@@ -40,9 +40,7 @@ class Configuration
         ->setDefault('parameters', [])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
-        ->setDefault('analyzer', [
-            'count_use_statements' => true,
-        ])
+        ->setDefault('analyzer', [])
         ->setDefault('ignore_uncovered_internal_classes', true)
         ->addAllowedTypes('parameters', 'array')
         ->addAllowedTypes('layers', 'array')

@@ -4,21 +4,30 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 final class ConfigurationAnalyzer
 {
-    /** @var array<string, mixed> */
+    /** @var array{count_use_statements: bool} $config */
     private $config;
 
     /**
-     * @param array<string, mixed> $arr
+     * @param array<string, mixed> $args
+     *
+     * @throws Exception\InvalidConfigurationException
      */
-    public static function fromArray(array $arr): self
+    public static function fromArray(array $args): self
     {
-        return new self($arr);
+        /** @var array{count_use_statements: bool} $options */
+        $options = (new OptionsResolver())
+            ->setDefault('count_use_statements', true)
+            ->addAllowedTypes('count_use_statements', 'bool')
+            ->resolve($args);
+        return new self($options);
     }
 
     /**
-     * @param array<string, mixed> $config
+     * @param array{count_use_statements: bool} $config
      */
     private function __construct(array $config)
     {
@@ -27,6 +36,6 @@ final class ConfigurationAnalyzer
 
     public function isCountingUseStatements(): bool
     {
-        return (bool) ($this->config['count_use_statements'] ?? true);
+        return $this->config['count_use_statements'];
     }
 }
