@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
 use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
+use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\ContainerBuilder;
 use Qossmic\Deptrac\ShouldNotHappenException;
@@ -50,7 +51,10 @@ final class Application extends BaseApplication
         /** @var DebugLayerCommand $debugLayerCommand */
         $debugLayerCommand = $container->get(DebugLayerCommand::class);
 
-        $this->addCommands([$initCommand, $analyzeCommand, $debugClassLikeCommand, $debugLayerCommand]);
+        /** @var DebugUnassignedCommand $debugUnassignedCommand */
+        $debugUnassignedCommand = $container->get(DebugUnassignedCommand::class);
+
+        $this->addCommands([$initCommand, $analyzeCommand, $debugClassLikeCommand, $debugLayerCommand, $debugUnassignedCommand]);
         $this->setDefaultCommand('analyze');
 
         return parent::doRun($input, $output);
