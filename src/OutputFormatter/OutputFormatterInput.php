@@ -11,12 +11,17 @@ class OutputFormatterInput
      */
     private $options;
 
+    /** @var array<string, mixed> */
+    private $config;
+
     /**
-     * @param mixed[] $options
+     * @param mixed[]              $options
+     * @param array<string, mixed> $config
      */
-    public function __construct(array $options)
+    public function __construct(array $options, array $config = [])
     {
         $this->options = $options;
+        $this->config = $config;
     }
 
     /**
@@ -36,5 +41,13 @@ class OutputFormatterInput
     public function getOptionAsBoolean(string $name): bool
     {
         return true === filter_var($this->getOption($name), FILTER_VALIDATE_BOOLEAN);
+    }
+
+    /**
+     * @return ?mixed
+     */
+    public function getConfig(string $key)
+    {
+        return $this->config[$key] ?? null;
     }
 }

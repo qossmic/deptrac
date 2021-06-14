@@ -115,7 +115,10 @@ class AnalyzeCommand extends Command
 
         foreach ($formatters as $formatter) {
             try {
-                $formatter->finish($context, $symfonyOutput, new OutputFormatterInput($input->getOptions()));
+                $formatterConfig = $configuration->getFormatterConfig($formatter->getName());
+                $formatter->finish($context, $symfonyOutput, new OutputFormatterInput(
+                    $input->getOptions(), $formatterConfig
+                ));
             } catch (\Exception $ex) {
                 $this->printFormatterException($symfonyOutput, $formatter->getName(), $ex);
             }

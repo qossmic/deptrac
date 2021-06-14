@@ -36,18 +36,26 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         $context = new Context([
             new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
+            new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassHidden'), $fileOccurrenceA), 'LayerA', 'LayerHidden'),
             new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), FileOccurrence::fromFilepath('classAB.php', 1)), 'LayerA', 'LayerB'),
             new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
             new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
         ], [], []);
 
         $bufferedOutput = new BufferedOutput();
-        $input = new OutputFormatterInput([
-            GraphVizOutputFormatter::DISPLAY => false,
-            GraphVizOutputFormatter::DUMP_IMAGE => false,
-            GraphVizOutputFormatter::DUMP_DOT => $dotFile,
-            GraphVizOutputFormatter::DUMP_HTML => false,
-        ]);
+        $input = new OutputFormatterInput(
+            [
+                GraphVizOutputFormatter::DISPLAY => false,
+                GraphVizOutputFormatter::DUMP_IMAGE => false,
+                GraphVizOutputFormatter::DUMP_DOT => $dotFile,
+                GraphVizOutputFormatter::DUMP_HTML => false,
+            ],
+            [
+                'hidden_layers' => [
+                    'LayerHidden',
+                ],
+            ]
+        );
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
