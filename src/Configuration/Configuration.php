@@ -90,7 +90,7 @@ class Configuration
             throw Exception\InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
         }
 
-        assert(is_array($options['parameters']));
+        /** @var array $options['parameters'] */
         if (!array_key_exists('count_use_statements', $options['parameters'])) {
             $options['parameters']['count_use_statements'] = true;
         }

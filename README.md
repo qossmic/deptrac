@@ -656,7 +656,7 @@ With this you can create collectors specific for your usecase. And more people c
 
 ### Ignoring `use` statements for namespaces
 
-Counting `use` statements that are including namespaced classes into current file might skew the number of dependencies displayed. It is up to you, if you want to count them or not. `deptrac` counts them by default, but is you would like not to, you can change this behaviour in the config file:
+By default, deptrac will analyze all occurrences for classes, including `use` statements. If you would like to exempt `use` statements from the analysis, you can change this behaviour in the depfile:
 
 ```yaml
 parameters:
