@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ConfigurationAnalyzer
 {
-    /** @var array{count_use_statements: bool} $config */
+    /** @var array{count_use_statements: bool} */
     private $config;
 
     /**
@@ -23,6 +23,7 @@ final class ConfigurationAnalyzer
             ->setDefault('count_use_statements', true)
             ->addAllowedTypes('count_use_statements', 'bool')
             ->resolve($args);
+
         return new self($options);
     }
 
