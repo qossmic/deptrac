@@ -100,4 +100,32 @@ final class NikicPhpParserTest extends TestCase
         );
         self::assertCount(1, $parser->parseFile($filePath, $configuration->getAnalyzer())->getDependencies());
     }
+
+    /**
+     * @requires PHP >= 8.0
+     */
+    public function testParseAttributes(): void
+    {
+        $typeResolver = new TypeResolver();
+        $parser = new NikicPhpParser(
+            ParserFactory::createParser(),
+            new AstFileReferenceInMemoryCache(),
+            $typeResolver
+        );
+
+        $filePath = __DIR__.'/Fixtures/Attributes.php';
+        $configuration = Configuration::fromArray(
+            [
+                'layers' => [],
+                'paths' => [],
+                'ruleset' => [],
+                'parameters' => [],
+            ]
+        );
+        $astFileReference = $parser->parseFile($filePath, $configuration->getAnalyzer());
+        $astClassReferences = $astFileReference->getAstClassReferences();
+        self::assertCount(7, $astClassReferences[0]->getDependencies());
+        self::assertCount(2, $astClassReferences[1]->getDependencies());
+        self::assertCount(1, $astClassReferences[2]->getDependencies());
+    }
 }

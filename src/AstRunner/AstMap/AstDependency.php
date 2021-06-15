@@ -96,4 +96,9 @@ class AstDependency
     {
         return new self($classLikeName, $fileOccurrence, 'anonymous_class_implements');
     }
+
+    public static function attribute(ClassLikeName $classLikeName, FileOccurrence $fileOccurrence): self
+    {
+        return new self($classLikeName, $fileOccurrence, 'attribute');
+    }
 }
