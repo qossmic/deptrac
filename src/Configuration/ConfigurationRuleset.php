@@ -56,9 +56,7 @@ final class ConfigurationRuleset
     private function getTransitiveDependencies(string $layerName, array $previousLayers): array
     {
         if (in_array($layerName, $previousLayers, true)) {
-            throw new InvalidArgumentException('Circular ruleset dependency for layer '.$layerName . ' depending on: ' . implode(
-                                                   '->',
-                                                   $previousLayers));
+            throw new InvalidArgumentException('Circular ruleset dependency for layer '.$layerName.' depending on: '.implode('->', $previousLayers));
         }
         $transitiveDependencies = [];
         $nonTransitiveDependencies = [];
