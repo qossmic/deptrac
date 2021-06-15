@@ -47,8 +47,9 @@
     </MixedAssignment>
   </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedArgument occurrences="7">
+    <MixedArgument occurrences="8">
       <code>$options['analyzer']</code>
+      <code>$options['groups']</code>
       <code>$options['layers']</code>
       <code>$options['ruleset']</code>
       <code>$options['ruleset']</code>
@@ -78,7 +79,7 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="86">
+    <MixedMethodCall occurrences="93">
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -91,6 +92,8 @@
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
@@ -107,6 +110,9 @@
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -160,6 +166,8 @@
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>

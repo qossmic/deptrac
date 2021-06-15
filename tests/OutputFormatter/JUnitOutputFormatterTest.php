@@ -150,7 +150,7 @@ final class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context([], [
                 new Error('Skipped violation "Class1" for "Class2" was not matched.'),
-            ], []),
+            ], [], ConfigurationGroups::fromArray([])),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput([
                 JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
