@@ -68,6 +68,12 @@
       <code>(array) $options['formatters']</code>
     </MixedPropertyTypeCoercion>
   </file>
+  <file src="src/Configuration/ConfigurationGraphViz.php">
+    <MixedArgument occurrences="2">
+      <code>$arr['groups'] ?? []</code>
+      <code>$arr['hidden_layers'] ?? []</code>
+    </MixedArgument>
+  </file>
   <file src="src/Configuration/ConfigurationLayer.php">
     <MixedArgument occurrences="2">
       <code>$options['collectors']</code>
@@ -225,14 +231,10 @@
       <code>$dumpImagePath</code>
       <code>$dumpImagePath</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>(array) $groupsConfig</code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="3">
       <code>$dumpDotPath</code>
       <code>$dumpHtmlPath</code>
       <code>$dumpImagePath</code>
-      <code>$groupsConfig</code>
     </MixedAssignment>
     <UnusedVariable occurrences="1">
       <code>$layerDependOnCount</code>
