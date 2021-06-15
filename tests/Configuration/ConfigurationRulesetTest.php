@@ -29,11 +29,11 @@ final class ConfigurationRulesetTest extends TestCase
 
             'qux' => ['+quuz', '+grault'],
             'quuz' => ['corge'],
-            'grault' => ['+foo'],
+            'grault' => ['+foo', 'baz'],
         ]);
 
         self::assertEquals(['baz', 'bar'], $configurationRuleSet->getAllowedDependencies('foo'));
-        self::assertEquals(['corge', 'quuz', 'foo', 'bar', 'baz', 'grault'], $configurationRuleSet->getAllowedDependencies('qux'));
+        self::assertEquals(['corge', 'quuz', 'baz', 'bar', 'foo', 'grault'], $configurationRuleSet->getAllowedDependencies('qux'));
     }
 
     public function testFromArrayTransitiveCircular(): void
