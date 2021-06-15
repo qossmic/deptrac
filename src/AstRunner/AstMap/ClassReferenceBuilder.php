@@ -21,6 +21,9 @@ final class ClassReferenceBuilder
     /** @var string[] */
     private $classTemplates;
 
+    /**
+     * @param string[] $classTemplates
+     */
     private function __construct(string $filepath, string $classLikeName, array $classTemplates)
     {
         $this->filepath = $filepath;
