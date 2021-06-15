@@ -7,7 +7,6 @@ namespace Tests\Qossmic\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Configuration\ConfigurationGroups;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -41,7 +40,7 @@ final class GraphVizOutputFormatterTest extends TestCase
             new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), FileOccurrence::fromFilepath('classAB.php', 1)), 'LayerA', 'LayerB'),
             new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
             new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
-        ], [], [], ConfigurationGroups::fromArray([]));
+        ], [], []);
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(

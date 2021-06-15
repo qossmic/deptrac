@@ -47,9 +47,8 @@
     </MixedAssignment>
   </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedArgument occurrences="8">
+    <MixedArgument occurrences="7">
       <code>$options['analyzer']</code>
-      <code>$options['groups']</code>
       <code>$options['layers']</code>
       <code>$options['ruleset']</code>
       <code>$options['ruleset']</code>
@@ -226,10 +225,14 @@
       <code>$dumpImagePath</code>
       <code>$dumpImagePath</code>
     </MixedArgument>
-    <MixedAssignment occurrences="3">
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>(array) $groupsConfig</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="4">
       <code>$dumpDotPath</code>
       <code>$dumpHtmlPath</code>
       <code>$dumpImagePath</code>
+      <code>$groupsConfig</code>
     </MixedAssignment>
     <UnusedVariable occurrences="1">
       <code>$layerDependOnCount</code>

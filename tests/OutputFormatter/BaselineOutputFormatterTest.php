@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Configuration\ConfigurationGroups;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -106,7 +105,7 @@ class BaselineOutputFormatterTest extends TestCase
 
             $formatter = new BaselineOutputFormatter();
             $formatter->finish(
-                new Context($rules, [], [], ConfigurationGroups::fromArray([])),
+                new Context($rules, [], []),
                 $this->createSymfonyOutput($output),
                 new OutputFormatterInput(['baseline-dump' => $generatedBaselineFile])
             );

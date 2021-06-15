@@ -70,7 +70,6 @@ class Loader
             'exclude_files' => $mergedConfig['exclude_files'],
             'layers' => $mergedConfig['layers'],
             'ruleset' => $mergedConfig['ruleset'],
-            'groups' => $mergedConfig['groups'],
             'skip_violations' => $mergedConfig['skip_violations'],
             'ignore_uncovered_internal_classes' => $mergedConfig['ignore_uncovered_internal_classes'],
             'formatters' => $mergedConfig['formatters'] ?? [],

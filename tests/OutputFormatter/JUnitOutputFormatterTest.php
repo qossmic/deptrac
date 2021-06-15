@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Configuration\ConfigurationGroups;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -126,7 +125,7 @@ final class JUnitOutputFormatterTest extends TestCase
     {
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], [], ConfigurationGroups::fromArray([])),
+            new Context($rules, [], []),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput([
                 JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
@@ -150,7 +149,7 @@ final class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context([], [
                 new Error('Skipped violation "Class1" for "Class2" was not matched.'),
-            ], [], ConfigurationGroups::fromArray([])),
+            ], []),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput([
                 JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
