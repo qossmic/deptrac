@@ -69,15 +69,18 @@ final class GraphVizOutputFormatterTest extends TestCase
     {
         $dotFile = __DIR__.'/data/graphviz.dot';
 
-        $fileOccurrenceA = FileOccurrence::fromFilepath('classA.php', 0);
-        $classA = ClassLikeName::fromFQCN('ClassA');
+        $dependency = new Dependency(
+            ClassLikeName::fromFQCN('ClassA'),
+            ClassLikeName::fromFQCN('ClassC'),
+            FileOccurrence::fromFilepath('classA.php', 0)
+        );
 
         $context = new Context([
-                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA_A', 'LayerA_B'),
-                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerB_A', 'LayerB_B'),
-                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA_A', 'LayerB_A'),
-                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA_B', 'LayerB_A'),
-                               ], [], []);
+                new Allowed($dependency, 'LayerA_A', 'LayerA_B'),
+                new Allowed($dependency, 'LayerB_A', 'LayerB_B'),
+                new Allowed($dependency, 'LayerA_A', 'LayerB_A'),
+                new Allowed($dependency, 'LayerA_B', 'LayerB_A'),
+        ], [], []);
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
