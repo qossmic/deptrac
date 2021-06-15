@@ -12,6 +12,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB;
@@ -47,7 +48,8 @@ final class AstMapFlattenGeneratorTest extends TestCase
             )
         );
 
-        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php']);
+        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php'], ConfigurationAnalyzer::fromArray(
+            []));
     }
 
     private function getInheritedInherits(string $class, AstMap $astMap): array

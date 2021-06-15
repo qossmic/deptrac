@@ -41,6 +41,7 @@ this rule has been violated.
     1. [`uses` Collector](#uses-collector)
     1. [`inherits` Collector](#inherits-collector)
     1. [Custom Collectors](#custom-collectors)
+    1. [Ignoring `use` statements for namespaces](#ignoring-use-statements-for-namespaces)
 8. [Formatters](#formatters)
     1. [Console Formatter](#console-formatter)
     1. [Table Formatter](#table-formatter)
@@ -654,6 +655,15 @@ You can even create custom collectors in your project by implementing the `Qossm
 As soon as an unknown collector is referenced in the config file deptrac will try to load the class in your project.
 With this you can create collectors specific for your usecase. And more people can use these custom collectors per default if you contribute them back to deptrac!
 
+### Ignoring `use` statements for namespaces
+
+By default, deptrac will analyze all occurrences for classes, including `use` statements. If you would like to exempt `use` statements from the analysis, you can change this behaviour in the depfile:
+
+```yaml
+analyzer:
+   count_use_statements: false
+```
+*Note:* This only applies in the context of including namespaces, `use` statements that are applying traits on classes are always counted. 
 
 ## Formatters
 

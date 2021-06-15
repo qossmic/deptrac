@@ -10,6 +10,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 
 final class ClassConstantResolverTest extends TestCase
 {
@@ -23,7 +24,7 @@ final class ClassConstantResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/ClassConst.php';
-        $astFileReference = $parser->parseFile($filePath);
+        $astFileReference = $parser->parseFile($filePath, ConfigurationAnalyzer::fromArray([]));
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 
