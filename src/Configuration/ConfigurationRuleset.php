@@ -58,6 +58,6 @@ final class ConfigurationRuleset
             $dependencies[] = [$layer];
         }
 
-        return array_merge(...$dependencies);
+        return $dependencies === [] ? [] : array_merge(...$dependencies);
     }
 }
