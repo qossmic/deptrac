@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 
 /**
- * @covers ConfigurationAnalyzer
+ * @covers \Qossmic\Deptrac\Configuration\ConfigurationAnalyzer
  */
 final class ConfigurationAnalyzerTest extends TestCase
 {
