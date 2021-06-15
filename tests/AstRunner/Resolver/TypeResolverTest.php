@@ -41,7 +41,7 @@ final class TypeResolverTest extends TestCase
         $typeNode = $this->typeParser->parse($tokens);
 
         $typeResolver = new TypeResolver();
-        $resolvedTypes = $typeResolver->resolvePHPStanDocParserType($typeNode, new TypeScope('\\Test\\'));
+        $resolvedTypes = $typeResolver->resolvePHPStanDocParserType($typeNode, new TypeScope('\\Test\\'), ['T']);
 
         self::assertSame($types, $resolvedTypes);
     }
@@ -60,5 +60,9 @@ final class TypeResolverTest extends TestCase
         yield ['doc' => 'positive-int', 'types' => []];
         yield ['doc' => 'non-empty-array<string>', 'types' => []];
         yield ['doc' => 'callable-array', 'types' => []];
+        yield ['doc' => 'list<Foo>', 'types' => ['\\Test\\Foo']];
+        yield ['doc' => 'T', 'types' => []];
+        yield ['doc' => 'Foo<T>', 'types' => ['\\Test\\Foo']];
+        yield ['doc' => 'T<Foo>', 'types' => ['\\Test\\Foo']];
     }
 }
