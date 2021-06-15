@@ -474,6 +474,21 @@ class SomeRepository { }
 If we remove the `use` statement and rerun deptrac, the violation will disappear.
 
 
+### Transitive/inherited dependencies
+Sometimes you might want to allow layer to depend on all layers that another layer depends on. For example if `layer A` depends on `layer B` and `layer B` depends on `layer C`, you also want implicitly for `layer A` to depend on `layer C` (hence transitive). Another way to put it, you want `layer A` to inherit all the dependencies of `layer B`. You can do that in deptrac with the use of `+` modifier: 
+```yaml
+layers:
+  - name: layerA
+  - name: layerB
+  - name: layerC
+ruleset:
+  layerB:
+    - layerC
+  layerA:
+    - +layerB # means `layerB` and `layerC`
+```
+
+
 ## Different Layers and Different Views
 
 In the example above we defined 3 different layers (*controller*, *repository* and *service*).
