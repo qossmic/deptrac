@@ -65,6 +65,50 @@ final class GraphVizOutputFormatterTest extends TestCase
         unlink($dotFile);
     }
 
+    public function testGroups(): void
+    {
+        $dotFile = __DIR__.'/data/graphviz.dot';
+
+        $fileOccurrenceA = FileOccurrence::fromFilepath('classA.php', 0);
+        $classA = ClassLikeName::fromFQCN('ClassA');
+
+        $context = new Context([
+                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA_A', 'LayerA_B'),
+                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerB_A', 'LayerB_B'),
+                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA_A', 'LayerB_A'),
+                                   new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA_B', 'LayerB_A'),
+                               ], [], []);
+
+        $bufferedOutput = new BufferedOutput();
+        $input = new OutputFormatterInput(
+            [
+                GraphVizOutputFormatter::DISPLAY => false,
+                GraphVizOutputFormatter::DUMP_IMAGE => false,
+                GraphVizOutputFormatter::DUMP_DOT => $dotFile,
+                GraphVizOutputFormatter::DUMP_HTML => false,
+            ],
+            [
+                'groups' => [
+                    'groupA' => [
+                        'LayerA_A',
+                        'LayerA_B',
+                    ],
+                    'groupB' => [
+                        'LayerB_A',
+                        'LayerB_B',
+                    ],
+                ],
+            ]
+        );
+
+        (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+
+        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
+
+        unlink($dotFile);
+    }
+
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput
     {
         return new SymfonyOutput(

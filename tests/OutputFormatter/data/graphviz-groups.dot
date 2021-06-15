@@ -1,0 +1,16 @@
+digraph {
+  subgraph cluster_1 {
+    label = 1
+    "LayerA_A" [group="groupA"]
+    "LayerA_B" [group="groupA"]
+  }
+  subgraph cluster_2 {
+    label = 2
+    "LayerB_A" [group="groupB"]
+    "LayerB_B" [group="groupB"]
+  }
+  "LayerA_A" -> "LayerA_B" [label=1]
+  "LayerA_A" -> "LayerB_A" [label=1]
+  "LayerB_A" -> "LayerB_B" [label=1]
+  "LayerA_B" -> "LayerB_A" [label=1]
+}
