@@ -31,7 +31,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         $annotationDependency = $astClassReferences[0]->getDependencies();
 
         self::assertCount(2, $astClassReferences);
-        self::assertCount(7, $annotationDependency);
+        self::assertCount(9, $annotationDependency);
         self::assertCount(0, $astClassReferences[1]->getDependencies());
 
         self::assertSame(
