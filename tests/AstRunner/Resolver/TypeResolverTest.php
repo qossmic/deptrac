@@ -64,5 +64,6 @@ final class TypeResolverTest extends TestCase
         yield ['doc' => 'T', 'types' => []];
         yield ['doc' => 'Foo<T>', 'types' => ['\\Test\\Foo']];
         yield ['doc' => 'T<Foo>', 'types' => ['\\Test\\Foo']];
+        yield ['doc' => 'Bar<Foo>', 'types' => ['\\Test\\Bar', '\\Test\\Foo']];
     }
 }
