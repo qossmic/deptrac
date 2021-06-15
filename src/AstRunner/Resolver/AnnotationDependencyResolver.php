@@ -46,11 +46,11 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
 
         $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
         $docNode = $this->docParser->parse($tokens);
-        $templateTypes = array_map(
+        $templateTypes = array_merge(array_map(
             static function (TemplateTagValueNode $node): string {
                 return $node->name;
             },
-            $docNode->getTemplateTagValues());
+            $docNode->getTemplateTagValues()), $classReferenceBuilder->getClassTemplates());
 
         foreach ($docNode->getParamTagValues() as $tag) {
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);

@@ -34,7 +34,7 @@ final class AnnotationDependency
 
     /**
      * @template T
-     * @param T as mixed
+     * @param T $var
      * @return AnnotationDependencyChild<T>
      */
     public function template($var)
@@ -48,7 +48,18 @@ final class AnnotationDependency
  */
 final class AnnotationDependencyChild
 {
+    /**
+     * @param T $var
+     */
     public function __construct($var)
     {
+    }
+
+    /**
+     * @return T
+     */
+    public function get()
+    {
+
     }
 }
