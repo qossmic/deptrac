@@ -25,6 +25,7 @@ this rule has been violated.
 1. [Run Deptrac](#run-deptrac)
     1. [Debug Layer](#debug-layer)
     1. [Debug Class-Like](#debug-class-like)
+    1. [Debug Unassigned Classes](#debug-unassigned-classes)
 3. [Layers](#layers)
     1. [Collecting Layers](#collecting-layers)
 4. [Violations](#violations)
@@ -203,13 +204,9 @@ With the `debug:layer`-command you can list all class-likes wich are matched in 
 ```bash
 php deptrac.phar debug:layer examples/DirectoryLayer.depfile.yaml Layer1
 
----------------------------------------------
- Layer1
----------------------------------------------
- examples\Layer1\AnotherClassLikeAController
- examples\Layer1\SomeClass
- examples\Layer1\SomeClass2
----------------------------------------------
+examples\Layer1\AnotherClassLikeAController
+examples\Layer1\SomeClass
+examples\Layer1\SomeClass2
 ```
 
 ### Debug Class-Like
@@ -219,13 +216,8 @@ With the `debug:class`-command you list all layers for a specific class-like.
 ```bash
 php deptrac.phar debug:class-like examples/DirectoryLayer.depfile.yaml 'examples\Layer1\AnotherClassLikeAController'
 
- ---------------------------------------------
-  examples\Layer1\AnotherClassLikeAController
- ---------------------------------------------
-  Controller
-  Layer1
- ---------------------------------------------
-
+Controller
+Layer1
 ```
 
 ### Debug unassigned classes
@@ -235,14 +227,9 @@ With the `debug:unassigned`-command you list all classes in your path that are n
 ```bash
 php deptrac.phar debug:unassigned examples/DirectoryLayer.depfile.yaml 
 
- ---------------------------------------------
-  Unassigned classes
- ---------------------------------------------
-  examples\Layer1\AnotherClassLikeAController
-  examples\Layer1\SomeClass
-  examples\Layer1\SomeClass2
- ---------------------------------------------
-
+examples\Layer1\AnotherClassLikeAController
+examples\Layer1\SomeClass
+examples\Layer1\SomeClass2
 ```
 
 ## Layers

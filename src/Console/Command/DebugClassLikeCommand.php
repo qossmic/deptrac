@@ -8,12 +8,10 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\ClassLikeAnalyser;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
-use Qossmic\Deptrac\Console\Symfony\Style;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DebugClassLikeCommand extends Command
 {
@@ -42,8 +40,6 @@ class DebugClassLikeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $style = new Style(new SymfonyStyle($input, $output));
-
         $depfile = $input->getArgument('depfile');
 
         if (!is_string($depfile)) {
@@ -59,9 +55,7 @@ class DebugClassLikeCommand extends Command
 
         natcasesort($matchedClassLikeNames);
 
-        $style->table([$classLike], array_map(static function (string $matchedClassLikeName): array {
-            return [$matchedClassLikeName];
-        }, $matchedClassLikeNames));
+        $output->writeln($matchedClassLikeNames);
 
         return 0;
     }
