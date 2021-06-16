@@ -42,8 +42,6 @@ class DebugClassLikeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $style = new Style(new SymfonyStyle($input, $output));
-
         $depfile = $input->getArgument('depfile');
 
         if (!is_string($depfile)) {
@@ -59,9 +57,7 @@ class DebugClassLikeCommand extends Command
 
         natcasesort($matchedClassLikeNames);
 
-        $style->table([$classLike], array_map(static function (string $matchedClassLikeName): array {
-            return [$matchedClassLikeName];
-        }, $matchedClassLikeNames));
+        $output->writeln($matchedClassLikeNames);
 
         return 0;
     }

@@ -41,8 +41,6 @@ class DebugUnassignedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $style = new Style(new SymfonyStyle($input, $output));
-
         $depfile = $input->getArgument('depfile');
 
         if (!is_string($depfile)) {
@@ -51,9 +49,7 @@ class DebugUnassignedCommand extends Command
 
         $configuration = $this->loader->load($depfile);
 
-        $style->table(['Unassigned classes'], array_map(static function (string $matchedClass): array {
-            return [$matchedClass];
-        }, $this->analyser->analyse($configuration)));
+        $output->writeln($this->analyser->analyse($configuration));
 
         return 0;
     }

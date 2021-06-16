@@ -68,9 +68,7 @@ class DebugLayerCommand extends Command
         $matchedLayers = $this->analyser->analyse($configuration, $layer);
         natcasesort($matchedLayers);
 
-        $style->table([$layer], array_map(static function (string $matchedLayer): array {
-            return [$matchedLayer];
-        }, $matchedLayers));
+        $output->writeln($matchedLayers);
 
         return 0;
     }
