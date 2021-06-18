@@ -638,7 +638,7 @@ layers:
 
 ### Custom Collectors
 
-You can even create custom collectors in your project by implementing the `Qossmic\Deptrac\Collector\CollectorInterface`.
+You can even create custom collectors in your project by implementing the [`Qossmic\Deptrac\Collector\CollectorInterface`](https://github.com/qossmic/deptrac/blob/main/src/Collector/CollectorInterface.php).
 As soon as an unknown collector is referenced in the config file deptrac will try to load the class in your project.
 With this you can create collectors specific for your usecase. And more people can use these custom collectors per default if you contribute them back to deptrac!
 
