@@ -12,7 +12,7 @@ final class MarkedInternalCollectorTest extends TestCase
 {
     public function testGetType(): void
     {
-        self::assertSame('marked_internal', (new MarkedInternalCollector())->getType());
+        self::assertSame('markedInternal', (new MarkedInternalCollector())->getType());
     }
 
     public function testSatisfy(): void

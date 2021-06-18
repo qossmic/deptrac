@@ -11,7 +11,7 @@ class MarkedInternalCollector implements CollectorInterface
 {
     public function getType(): string
     {
-        return 'marked_internal';
+        return 'markedInternal';
     }
 
     public function satisfy(array $configuration, AstClassReference $astClassReference, AstMap $astMap, Registry $collectorRegistry): bool

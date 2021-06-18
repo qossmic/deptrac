@@ -630,15 +630,15 @@ layers:
         inherits: 'App\SomeInterface'
 ```
 
-### `marked_internal` Collector
+### `markedInternal` Collector
 
-The `marked_internal` collector collects all classes annotated with `@internal` on the class doc block.
+The `markedInternal` collector collects all classes annotated with `@internal` on the class doc block.
 
 ```
 layers:
   - name: Foo
     collectors:
-      - type: marked_internal
+      - type: markedInternal
 ```
 
 ### Custom Collectors
