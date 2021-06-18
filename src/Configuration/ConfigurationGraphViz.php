@@ -8,6 +8,7 @@ final class ConfigurationGraphViz
 {
     /** @var array<string, string[]> */
     private $groupsLayerMap;
+
     /** @var string[] */
     private $hiddenLayers;
 
