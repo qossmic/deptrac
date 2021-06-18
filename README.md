@@ -719,6 +719,29 @@ formatters:
          - Utils
 ```
 
+Another supported option is `formatters.graphviz.groups`. There you can sort layers into groups that will be rendered as sub-graphs in GraphViz output.
+
+The following config:
+```yaml
+layers:
+   - User Frontend
+   - User Backend
+   - Admin Frontend
+   - Admin Backend
+formatters:
+   graphviz:
+      groups:
+         User:
+            - User Frontend
+            - User Backend
+         Admin:
+            - Admin Frontend
+            - Admin Backend
+```
+
+Will produce the following graph:
+![GraphvizGroups](examples/GraphvizGroups.png)
+
 ### JUnit Formatter
 
 The JUnit formatter dumps a JUnit Report XML file, which is quite handy in CI environments.

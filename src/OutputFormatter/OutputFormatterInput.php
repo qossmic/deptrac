@@ -44,10 +44,10 @@ class OutputFormatterInput
     }
 
     /**
-     * @return ?mixed
+     * @return array<string, mixed>
      */
-    public function getConfig(string $key)
+    public function getConfig(): array
     {
-        return $this->config[$key] ?? null;
+        return $this->config;
     }
 }

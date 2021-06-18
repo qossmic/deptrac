@@ -68,6 +68,12 @@
       <code>(array) $options['formatters']</code>
     </MixedPropertyTypeCoercion>
   </file>
+  <file src="src/Configuration/ConfigurationGraphViz.php">
+    <MixedArgument occurrences="2">
+      <code>$arr['groups'] ?? []</code>
+      <code>$arr['hidden_layers'] ?? []</code>
+    </MixedArgument>
+  </file>
   <file src="src/Configuration/ConfigurationLayer.php">
     <MixedArgument occurrences="2">
       <code>$options['collectors']</code>
@@ -78,7 +84,7 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="86">
+    <MixedMethodCall occurrences="93">
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -91,6 +97,8 @@
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
@@ -107,6 +115,9 @@
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -160,6 +171,8 @@
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>

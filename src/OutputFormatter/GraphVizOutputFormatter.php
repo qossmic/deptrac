@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\OutputFormatter;
 use Fhaculty\Graph\Graph;
 use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
+use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
@@ -59,7 +60,8 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         /** @var Vertex[] $vertices */
         $vertices = [];
 
-        $hiddenLayers = (array) $outputFormatterInput->getConfig('hidden_layers');
+        $outputConfig = ConfigurationGraphViz::fromArray($outputFormatterInput->getConfig());
+        $hiddenLayers = $outputConfig->getHiddenLayers();
         // create a vertices
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
             if (in_array($layer, $hiddenLayers, true)) {
@@ -77,6 +79,20 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                     $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
                 }
             }
+        }
+
+        $groupNumber = 1;
+        foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
+            foreach ($groupLayerNames as $groupLayerName) {
+                if (array_key_exists($groupLayerName, $vertices)) {
+                    //TODO: Remove next line once graphviz library is updated to 1.0
+                    $vertices[$groupLayerName]->setGroup($groupNumber);
+
+                    $vertices[$groupLayerName]->setAttribute('group', $groupName);
+                    $vertices[$groupLayerName]->setAttribute('graphviz.group', $groupName);
+                }
+            }
+            ++$groupNumber;
         }
 
         // createEdges
