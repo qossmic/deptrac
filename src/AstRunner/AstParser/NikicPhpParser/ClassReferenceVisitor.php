@@ -102,6 +102,12 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
+        if ($node instanceof Node\Attribute) {
+            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->name) as $classLikeName) {
+                $classReferenceBuilder->attribute($classLikeName, $node->getLine());
+            }
+        }
+
         if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $classReferenceBuilder->instanceof($classLikeName, $node->class->getLine());
