@@ -75,43 +75,51 @@ class TypeResolver
     }
 
     /**
+     * @param array<string> $templateTypes
+     *
      * @return string[]
      */
-    public function resolvePHPStanDocParserType(TypeNode $type, TypeScope $typeScope): array
+    public function resolvePHPStanDocParserType(TypeNode $type, TypeScope $typeScope, array $templateTypes = []): array
     {
         if ($type instanceof IdentifierTypeNode) {
+            if (in_array($type->name, $templateTypes, true)) {
+                return [];
+            }
+
             return $this->resolveString($type->name, $typeScope);
         }
         if ($type instanceof ConstTypeNode && $type->constExpr instanceof ConstFetchNode) {
             return $this->resolveString($type->constExpr->className, $typeScope);
         }
         if ($type instanceof NullableTypeNode) {
-            return $this->resolvePHPStanDocParserType($type->type, $typeScope);
+            return $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
         }
         if ($type instanceof ArrayTypeNode) {
-            return $this->resolvePHPStanDocParserType($type->type, $typeScope);
+            return $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
         }
         if ($type instanceof UnionTypeNode || $type instanceof IntersectionTypeNode) {
-            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope) {
-                return $this->resolvePHPStanDocParserType($typeNode, $typeScope);
+            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope, $templateTypes) {
+                return $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes);
             }, $type->types));
         }
         if ($type instanceof GenericTypeNode) {
-            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope) {
-                return $this->resolvePHPStanDocParserType($typeNode, $typeScope);
+            $preType = 'list' === $type->type->name ? [] : $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
+
+            return array_merge($preType, ...array_map(function (TypeNode $typeNode) use ($typeScope, $templateTypes) {
+                return $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes);
             }, $type->genericTypes));
         }
         if ($type instanceof ArrayShapeNode) {
-            return array_merge([], ...array_map(function (ArrayShapeItemNode $itemNode) use ($typeScope) {
-                return $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope);
+            return array_merge([], ...array_map(function (ArrayShapeItemNode $itemNode) use ($typeScope, $templateTypes) {
+                return $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope, $templateTypes);
             }, $type->items)
             );
         }
         if ($type instanceof CallableTypeNode) {
             return array_merge(
-                $this->resolvePHPStanDocParserType($type->returnType, $typeScope),
-                ...array_map(function (CallableTypeParameterNode $parameterNode) use ($typeScope) {
-                    return $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope);
+                $this->resolvePHPStanDocParserType($type->returnType, $typeScope, $templateTypes),
+                ...array_map(function (CallableTypeParameterNode $parameterNode) use ($typeScope, $templateTypes) {
+                    return $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope, $templateTypes);
                 }, $type->parameters)
             );
         }

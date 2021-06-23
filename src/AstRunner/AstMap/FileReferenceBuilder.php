@@ -45,9 +45,12 @@ final class FileReferenceBuilder
         return $this;
     }
 
-    public function newClassLike(string $classLikeName): ClassReferenceBuilder
+    /**
+     * @param string[] $templateTypes
+     */
+    public function newClassLike(string $classLikeName, array $templateTypes = []): ClassReferenceBuilder
     {
-        $this->classReferences[] = $this->currentClassReference = ClassReferenceBuilder::create($this->filepath, $classLikeName);
+        $this->classReferences[] = $this->currentClassReference = ClassReferenceBuilder::create($this->filepath, $classLikeName, $templateTypes);
 
         return $this->currentClassReference;
     }

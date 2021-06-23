@@ -31,8 +31,35 @@ final class AnnotationDependency
 
         return [];
     }
+
+    /**
+     * @template T
+     * @param T $var
+     * @return AnnotationDependencyChild<T>
+     */
+    public function template($var)
+    {
+        return new AnnotationDependencyChild($var);
+    }
 }
 
+/**
+ * @template T
+ */
 final class AnnotationDependencyChild
 {
+    /**
+     * @param T $var
+     */
+    public function __construct($var)
+    {
+    }
+
+    /**
+     * @return T
+     */
+    public function get()
+    {
+
+    }
 }

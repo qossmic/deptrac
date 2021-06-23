@@ -6,6 +6,12 @@ namespace Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
+use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
+use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
+use PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
@@ -24,13 +30,37 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
     /** @var TypeResolver */
     private $typeResolver;
+    /** @var Lexer */
+    private $lexer;
+    /** @var PhpDocParser */
+    private $docParser;
 
     public function __construct(FileReferenceBuilder $fileReferenceBuilder, TypeResolver $typeResolver, ClassDependencyResolver ...$classDependencyResolvers)
     {
         $this->currentTypeScope = new TypeScope('');
+        $this->lexer = new Lexer();
+        $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
         $this->fileReferenceBuilder = $fileReferenceBuilder;
         $this->classDependencyResolvers = $classDependencyResolvers;
         $this->typeResolver = $typeResolver;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function classLikeTemplatesFromDocs(
+        Node $node
+    ): array {
+        $docComment = $node->getDocComment();
+        if (null === $docComment) {
+            return [];
+        }
+        $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+        $docNode = $this->docParser->parse($tokens);
+
+        return array_map(static function (TemplateTagValueNode $tag): string {
+            return $tag->name;
+        }, $docNode->getTemplateTagValues());
     }
 
     public function enterNode(Node $node)
@@ -51,7 +81,7 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
             return null; // map anonymous classes on current class
         }
 
-        $classReferenceBuilder = $this->fileReferenceBuilder->newClassLike($className);
+        $classReferenceBuilder = $this->fileReferenceBuilder->newClassLike($className, $this->classLikeTemplatesFromDocs($node));
 
         if ($node instanceof Node\Stmt\Class_) {
             if ($node->extends instanceof Node\Name) {

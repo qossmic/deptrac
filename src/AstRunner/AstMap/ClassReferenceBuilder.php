@@ -18,15 +18,25 @@ final class ClassReferenceBuilder
     /** @var AstDependency[] */
     private $dependencies = [];
 
-    private function __construct(string $filepath, string $classLikeName)
+    /** @var string[] */
+    private $classTemplates;
+
+    /**
+     * @param string[] $classTemplates
+     */
+    private function __construct(string $filepath, string $classLikeName, array $classTemplates)
     {
         $this->filepath = $filepath;
         $this->classLikeName = $classLikeName;
+        $this->classTemplates = $classTemplates;
     }
 
-    public static function create(string $filepath, string $classLikeName): self
+    /**
+     * @param string[] $classTemplates
+     */
+    public static function create(string $filepath, string $classLikeName, array $classTemplates): self
     {
-        return new self($filepath, $classLikeName);
+        return new self($filepath, $classLikeName, $classTemplates);
     }
 
     /** @internal */
@@ -197,5 +207,13 @@ final class ClassReferenceBuilder
         );
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getClassTemplates(): array
+    {
+        return $this->classTemplates;
     }
 }
