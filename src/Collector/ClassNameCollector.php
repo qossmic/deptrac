@@ -8,7 +8,7 @@ use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
-class ClassNameCollector implements CollectorInterface
+class ClassNameCollector extends RegexCollector implements CollectorInterface
 {
     public function getType(): string
     {
@@ -26,13 +26,10 @@ class ClassNameCollector implements CollectorInterface
         }
 
         return $astTokenReference->getTokenName()
-            ->match($this->getPattern($configuration));
+            ->match($this->getValidatedPattern($configuration));
     }
 
-    /**
-     * @param array<string, string|array> $configuration
-     */
-    private function getPattern(array $configuration): string
+    protected function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex']) || !is_string($configuration['regex'])) {
             throw new LogicException('ClassNameCollector needs the regex configuration.');
