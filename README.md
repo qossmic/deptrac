@@ -141,7 +141,7 @@ Download the latest [deptrac.phar](https://github.com/qossmic/deptrac/releases).
 Run it using `php deptrac.phar` or feel free to add it to your PATH (i.e. `/usr/local/bin/deptrac`)
 
 ```bash
-curl -LS https://github.com/qossmic/deptrac/releases/download/0.13.0/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/qossmic/deptrac/releases/download/0.14.0/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
