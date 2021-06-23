@@ -19,4 +19,31 @@ final class ConfigurationRulesetTest extends TestCase
         self::assertEquals(['xx', 'yy'], $configurationRuleSet->getAllowedDependencies('lala'));
         self::assertEquals([], $configurationRuleSet->getAllowedDependencies('lalax'));
     }
+
+    public function testFromArrayTransitive(): void
+    {
+        $configurationRuleSet = ConfigurationRuleset::fromArray([
+            'foo' => ['+bar'],
+            'bar' => ['baz'],
+            'baz' => ['qux'],
+
+            'qux' => ['+quuz', '+grault'],
+            'quuz' => ['corge'],
+            'grault' => ['+foo', 'baz'],
+        ]);
+
+        self::assertEquals(['baz', 'bar'], $configurationRuleSet->getAllowedDependencies('foo'));
+        self::assertEquals(['corge', 'quuz', 'baz', 'bar', 'foo', 'grault'], $configurationRuleSet->getAllowedDependencies('qux'));
+    }
+
+    public function testFromArrayTransitiveCircular(): void
+    {
+        $configurationRuleSet = ConfigurationRuleset::fromArray([
+            'a' => ['+b'],
+            'b' => ['+c'],
+            'c' => ['+a'],
+        ]);
+        $this->expectException(\InvalidArgumentException::class);
+        $configurationRuleSet->getAllowedDependencies('a');
+    }
 }
