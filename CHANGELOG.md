@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file, in reverse 
 
 <!-- changelog-linker -->
 
+## [0.14.0] - 2021-06-23
+
+### Added
+
+- [#551] Add JSON formatter, Thanks to [@oldy777]
+
+### Changed
+
+- [#595] Update symfony dependencies, Thanks to [@dbrumann]
+- [#587] Refactored debug output, Thanks to [@patrickkusebauch]
+- [#584] Readme: link the CollectorInterface, Thanks to [@staabm]
+- [#583] Support for attributes, Thanks to [@patrickkusebauch]
+- [#579] Transitive dependencies, Thanks to [@patrickkusebauch]
+- [#578] Basic template type and generic support, Thanks to [@patrickkusebauch]
+- [#574] Update composer dependency for phpdocparser, Thanks to [@patrickkusebauch]
+- [#573] JUnit output formatter - unmatched skipped violations, Thanks to [@patrickkusebauch]
+- [#572] List unassigned classes, Thanks to [@patrickkusebauch]
+- [#571] Not counting use statements, Thanks to [@patrickkusebauch]
+- [#570] Subgraphs and groups, Thanks to [@patrickkusebauch]
+- [#567] Output configuration - Hidden layers, Thanks to [@patrickkusebauch]
+- [#565] Switch default branch to main, Thanks to [@dbrumann]
+- [#544] Bump composer/xdebug-handler from 2.0.0 to 2.0.1
+- [#543] Bump nikic/php-parser from 4.10.4 to 4.10.5
+- [#542] Bump symfony/yaml from 5.2.5 to 5.2.7
+- [#541] Bump symfony/config from 5.2.4 to 5.2.7
+- [#540] Bump symfony/dependency-injection from 5.2.6 to 5.2.7
+- [#539] Bump symfony/console from 5.2.6 to 5.2.7
+
 ## [0.13.0] - 2021-04-16
 
 ### Added
@@ -458,7 +486,31 @@ All notable changes to this project will be documented in this file, in reverse 
 [@xabbuh]: https://github.com/xabbuh
 [@lprzybylek]: https://github.com/lprzybylek
 [@clxmstaab]: https://github.com/clxmstaab
+[@patrickkusebauch]: https://github.com/patrickkusebauch
+[@oldy777]: https://github.com/oldy777
+[@dependabot]: https://github.com/dependabot
 
+[#595]: https://github.com/qossmic/deptrac/pull/595
+[#587]: https://github.com/qossmic/deptrac/pull/587
+[#584]: https://github.com/qossmic/deptrac/pull/584
+[#583]: https://github.com/qossmic/deptrac/pull/583
+[#579]: https://github.com/qossmic/deptrac/pull/579
+[#578]: https://github.com/qossmic/deptrac/pull/578
+[#574]: https://github.com/qossmic/deptrac/pull/574
+[#573]: https://github.com/qossmic/deptrac/pull/573
+[#572]: https://github.com/qossmic/deptrac/pull/572
+[#571]: https://github.com/qossmic/deptrac/pull/571
+[#570]: https://github.com/qossmic/deptrac/pull/570
+[#567]: https://github.com/qossmic/deptrac/pull/567
+[#565]: https://github.com/qossmic/deptrac/pull/565
+[#564]: https://github.com/qossmic/deptrac/pull/564
+[#551]: https://github.com/qossmic/deptrac/pull/551
+[#544]: https://github.com/qossmic/deptrac/pull/544
+[#543]: https://github.com/qossmic/deptrac/pull/543
+[#542]: https://github.com/qossmic/deptrac/pull/542
+[#541]: https://github.com/qossmic/deptrac/pull/541
+[#540]: https://github.com/qossmic/deptrac/pull/540
+[#539]: https://github.com/qossmic/deptrac/pull/539
 [#532]: https://github.com/qossmic/deptrac/pull/532
 [#531]: https://github.com/qossmic/deptrac/pull/531
 [#529]: https://github.com/qossmic/deptrac/pull/529
@@ -660,6 +712,7 @@ All notable changes to this project will be documented in this file, in reverse 
 [#270]: https://github.com/qossmic/deptrac/pull/270
 [#266]: https://github.com/qossmic/deptrac/pull/266
 
+[0.14.0]: https://github.com/qossmic/deptrac/compare/0.13.0...0.14.0
 [0.13.0]: https://github.com/qossmic/deptrac/compare/0.12.0...0.13.0
 [0.12.0]: https://github.com/qossmic/deptrac/compare/0.11.1...0.12.0
 [0.11.1]: https://github.com/qossmic/deptrac/compare/0.11.0...0.11.1
