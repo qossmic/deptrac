@@ -172,7 +172,7 @@ final class ConsoleOutputFormatterTest extends TestCase
         yield 'an warning occurred' => [
             [],
             [],
-            'warnings' => [Warning::TokenLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            'warnings' => [Warning::tokenLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
             '[WARNING]Foo\Barisinmorethanonelayer["Layer1","Layer2"].Itisrecommendedthatonetokenshouldonlybeinonelayer.Report:Violations:0Skippedviolations:0Uncovered:0Allowed:0Warnings:1Errors:0',
         ];
     }

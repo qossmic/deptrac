@@ -38,7 +38,7 @@ class RulesetEngine
 
             $classLikeANameString = $dependency->getTokenLikeNameA()->toString();
             if (!isset($warnings[$classLikeANameString]) && count($layerNames) > 1) {
-                $warnings[$classLikeANameString] = Warning::TokenLikeIsInMoreThanOneLayer($dependency->getTokenLikeNameA(), $layerNames);
+                $warnings[$classLikeANameString] = Warning::tokenLikeIsInMoreThanOneLayer($dependency->getTokenLikeNameA(), $layerNames);
             }
 
             foreach ($layerNames as $layerName) {

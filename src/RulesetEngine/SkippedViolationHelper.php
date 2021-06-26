@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenLikeName;
 use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
 

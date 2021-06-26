@@ -18,7 +18,7 @@ final class Warning
     /**
      * @param string[] $layerNames
      */
-    public static function TokenLikeIsInMoreThanOneLayer(
+    public static function tokenLikeIsInMoreThanOneLayer(
         TokenLikeName $tokenLikeName,
         array $layerNames
     ): self {
