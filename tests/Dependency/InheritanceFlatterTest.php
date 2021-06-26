@@ -20,7 +20,7 @@ final class InheritanceFlatterTest extends TestCase
     private function getAstClassReference($className)
     {
         $astClass = $this->prophesize(AstClassReference::class);
-        $astClass->getClassLikeName()->willReturn(ClassLikeName::fromFQCN($className));
+        $astClass->getTokenLikeName()->willReturn(ClassLikeName::fromFQCN($className));
 
         return $astClass->reveal();
     }
