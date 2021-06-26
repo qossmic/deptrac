@@ -41,7 +41,8 @@ class LayerAnalyser
         $classLikeNames = [];
 
         foreach ($astMap->getAstClassReferences() as $classReference) {
-            $classLikeName = $classReference->getClassLikeName();
+            $classLikeName = $classReference->getTokenLikeName();
+            assert($classLikeName instanceof ClassLikeName);
             if ($this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }
@@ -49,12 +50,12 @@ class LayerAnalyser
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
             $classLikeName = $dependency->getTokenLikeNameA();
-            if ($this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
+            if ($classLikeName instanceof ClassLikeName && $this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }
 
             $classLikeName = $dependency->getTokenLikeNameB();
-            if ($this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
+            if ($classLikeName instanceof ClassLikeName && $this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\Configuration\Configuration;
 
@@ -35,7 +36,8 @@ class UnassignedAnalyser
         $classLikeNames = [];
 
         foreach ($astMap->getAstClassReferences() as $classReference) {
-            $classLikeName = $classReference->getClassLikeName();
+            $classLikeName = $classReference->getTokenLikeName();
+            assert($classLikeName instanceof ClassLikeName);
             if ([] === $classLikeLayerResolver->getLayersByClassLikeName($classLikeName)) {
                 $classLikeNames[] = $classLikeName->toString();
             }

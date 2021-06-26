@@ -34,11 +34,13 @@ class RulesetEngine
         $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layerNames = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getTokenLikeNameA());
+            $tokenLikeNameA = $dependency->getTokenLikeNameA();
+            assert($tokenLikeNameA instanceof ClassLikeName);
+            $layerNames = $classLikeLayerResolver->getLayersByClassLikeName($tokenLikeNameA);
 
-            $classLikeANameString = $dependency->getTokenLikeNameA()->toString();
+            $classLikeANameString = $tokenLikeNameA->toString();
             if (!isset($warnings[$classLikeANameString]) && count($layerNames) > 1) {
-                $warnings[$classLikeANameString] = Warning::tokenLikeIsInMoreThanOneLayer($dependency->getTokenLikeNameA(), $layerNames);
+                $warnings[$classLikeANameString] = Warning::tokenLikeIsInMoreThanOneLayer($tokenLikeNameA, $layerNames);
             }
 
             foreach ($layerNames as $layerName) {
@@ -49,10 +51,12 @@ class RulesetEngine
                     continue;
                 }
 
-                $layersNamesClassB = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getTokenLikeNameB());
+                $tokenLikeNameB = $dependency->getTokenLikeNameB();
+                assert($tokenLikeNameB instanceof ClassLikeName);
+                $layersNamesClassB = $classLikeLayerResolver->getLayersByClassLikeName($tokenLikeNameB);
 
                 if (0 === count($layersNamesClassB)) {
-                    if (!$this->ignoreUncoveredInternalClass($configuration, $dependency->getTokenLikeNameB())) {
+                    if (!$this->ignoreUncoveredInternalClass($configuration, $tokenLikeNameB)) {
                         $rules[] = new Uncovered($dependency, $layerName);
                     }
                     continue;
@@ -68,7 +72,7 @@ class RulesetEngine
                         continue;
                     }
 
-                    if ($skippedViolationHelper->isViolationSkipped($dependency->getTokenLikeNameA(), $dependency->getTokenLikeNameB())) {
+                    if ($skippedViolationHelper->isViolationSkipped($tokenLikeNameA, $tokenLikeNameB)) {
                         $rules[] = new SkippedViolation($dependency, $layerName, $layerNameOfDependency);
                         continue;
                     }

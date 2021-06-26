@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-class AstClassReference
+class AstClassReference implements AstTokenReference
 {
     private ClassLikeName $classLikeName;
 
@@ -40,7 +40,7 @@ class AstClassReference
         return $this->fileReference;
     }
 
-    public function getClassLikeName(): ClassLikeName
+    public function getTokenLikeName(): TokenLikeName
     {
         return $this->classLikeName;
     }

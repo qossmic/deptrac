@@ -25,13 +25,17 @@ class MethodCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
+        if (!$astTokenReference instanceof AstClassReference) {
+            return false;
+        }
+
         $pattern = $this->getPattern($configuration);
 
-        $classLike = $this->nikicPhpParser->getAstForClassReference($astClassReference);
+        $classLike = $this->nikicPhpParser->getAstForClassReference($astTokenReference);
 
         if (null === $classLike) {
             return false;

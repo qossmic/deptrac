@@ -119,12 +119,10 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $layerIndex = 0;
         foreach ($layers as $layer => $rules) {
-            /** @var Violation[] $violationsByLayer */
             $violationsByLayer = array_filter($rules, static function (Rule $rule) {
                 return $rule instanceof Violation;
             });
 
-            /** @var SkippedViolation[] $skippedViolationsByLayer */
             $skippedViolationsByLayer = array_filter($rules, static function (Rule $rule) {
                 return $rule instanceof SkippedViolation;
             });

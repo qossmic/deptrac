@@ -24,13 +24,19 @@ class ImplementsCollector implements CollectorInterface
      */
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
+        if (!$astTokenReference instanceof AstClassReference) {
+            return false;
+        }
+
         $interfaceName = $this->getInterfaceName($configuration);
 
-        foreach ($astMap->getClassInherits($astClassReference->getClassLikeName()) as $inherit) {
+        $classLikeName = $astTokenReference->getTokenLikeName();
+        assert($classLikeName instanceof AstMap\ClassLikeName);
+        foreach ($astMap->getClassInherits($classLikeName) as $inherit) {
             if ($inherit->isImplements() && $inherit->getClassLikeName()->equals($interfaceName)) {
                 return true;
             }
