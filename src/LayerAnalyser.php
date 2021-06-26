@@ -42,7 +42,6 @@ class LayerAnalyser
 
         foreach ($astMap->getAstClassReferences() as $classReference) {
             $classLikeName = $classReference->getTokenLikeName();
-            assert($classLikeName instanceof ClassLikeName);
             if ($this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }

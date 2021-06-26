@@ -37,7 +37,6 @@ class UnassignedAnalyser
 
         foreach ($astMap->getAstClassReferences() as $classReference) {
             $classLikeName = $classReference->getTokenLikeName();
-            assert($classLikeName instanceof ClassLikeName);
             if ([] === $classLikeLayerResolver->getLayersByClassLikeName($classLikeName)) {
                 $classLikeNames[] = $classLikeName->toString();
             }

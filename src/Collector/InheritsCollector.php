@@ -34,9 +34,7 @@ class InheritsCollector implements CollectorInterface
 
         $classLikeName = $this->getClassLikeName($configuration);
 
-        $tokenLikeName = $astTokenReference->getTokenLikeName();
-        assert($tokenLikeName instanceof AstMap\ClassLikeName);
-        foreach ($astMap->getClassInherits($tokenLikeName) as $inherit) {
+        foreach ($astMap->getClassInherits($astTokenReference->getTokenLikeName()) as $inherit) {
             if ($inherit->getClassLikeName()->equals($classLikeName)) {
                 return true;
             }

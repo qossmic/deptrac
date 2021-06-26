@@ -24,10 +24,8 @@ class ClassNameRegexCollector implements CollectorInterface
         if (!$astTokenReference instanceof AstClassReference) {
             return false;
         }
-        $tokenLikeName = $astTokenReference->getTokenLikeName();
-        assert($tokenLikeName instanceof AstMap\ClassLikeName);
-
-        return $tokenLikeName->match($this->getPattern($configuration));
+        return $astTokenReference->getTokenLikeName()
+            ->match($this->getPattern($configuration));
     }
 
     /**

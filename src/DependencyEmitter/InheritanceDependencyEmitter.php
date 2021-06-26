@@ -19,7 +19,6 @@ class InheritanceDependencyEmitter implements DependencyEmitterInterface
     {
         foreach ($astMap->getAstClassReferences() as $classReference) {
             $classLikeName = $classReference->getTokenLikeName();
-            assert($classLikeName instanceof AstMap\ClassLikeName);
             foreach ($astMap->getClassInherits($classLikeName) as $inherit) {
                 $dependencyResult->addDependency(
                     new Dependency(

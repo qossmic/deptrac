@@ -24,9 +24,7 @@ class InheritanceLevelCollector implements CollectorInterface
             return false;
         }
 
-        $classLikeName = $astTokenReference->getTokenLikeName();
-        assert($classLikeName instanceof AstMap\ClassLikeName);
-        $classInherits = $astMap->getClassInherits($classLikeName);
+        $classInherits = $astMap->getClassInherits($astTokenReference->getTokenLikeName());
 
         foreach ($classInherits as $classInherit) {
             if (count($classInherit->getPath()) >= $configuration['level']) {

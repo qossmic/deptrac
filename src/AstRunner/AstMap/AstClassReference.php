@@ -40,7 +40,7 @@ class AstClassReference implements AstTokenReference
         return $this->fileReference;
     }
 
-    public function getTokenLikeName(): TokenLikeName
+    public function getTokenLikeName(): ClassLikeName
     {
         return $this->classLikeName;
     }

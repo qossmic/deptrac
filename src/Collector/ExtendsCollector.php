@@ -34,9 +34,7 @@ class ExtendsCollector implements CollectorInterface
 
         $interfaceName = $this->getInterfaceName($configuration);
 
-        $classLikeName = $astTokenReference->getTokenLikeName();
-        assert($classLikeName instanceof AstMap\ClassLikeName);
-        foreach ($astMap->getClassInherits($classLikeName) as $inherit) {
+        foreach ($astMap->getClassInherits($astTokenReference->getTokenLikeName()) as $inherit) {
             if ($inherit->isExtends() && $inherit->getClassLikeName()->equals($interfaceName)) {
                 return true;
             }
