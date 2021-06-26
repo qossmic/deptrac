@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac;
 use InvalidArgumentException;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenLikeName;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Dependency\Result;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -33,11 +34,11 @@ class RulesetEngine
         $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $layerNames = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getClassLikeNameA());
+            $layerNames = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getTokenLikeNameA());
 
-            $classLikeANameString = $dependency->getClassLikeNameA()->toString();
+            $classLikeANameString = $dependency->getTokenLikeNameA()->toString();
             if (!isset($warnings[$classLikeANameString]) && count($layerNames) > 1) {
-                $warnings[$classLikeANameString] = Warning::classLikeIsInMoreThanOneLayer($dependency->getClassLikeNameA(), $layerNames);
+                $warnings[$classLikeANameString] = Warning::TokenLikeIsInMoreThanOneLayer($dependency->getTokenLikeNameA(), $layerNames);
             }
 
             foreach ($layerNames as $layerName) {
@@ -48,10 +49,10 @@ class RulesetEngine
                     continue;
                 }
 
-                $layersNamesClassB = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getClassLikeNameB());
+                $layersNamesClassB = $classLikeLayerResolver->getLayersByClassLikeName($dependency->getTokenLikeNameB());
 
                 if (0 === count($layersNamesClassB)) {
-                    if (!$this->ignoreUncoveredInternalClass($configuration, $dependency->getClassLikeNameB())) {
+                    if (!$this->ignoreUncoveredInternalClass($configuration, $dependency->getTokenLikeNameB())) {
                         $rules[] = new Uncovered($dependency, $layerName);
                     }
                     continue;
@@ -67,7 +68,7 @@ class RulesetEngine
                         continue;
                     }
 
-                    if ($skippedViolationHelper->isViolationSkipped($dependency->getClassLikeNameA(), $dependency->getClassLikeNameB())) {
+                    if ($skippedViolationHelper->isViolationSkipped($dependency->getTokenLikeNameA(), $dependency->getTokenLikeNameB())) {
                         $rules[] = new SkippedViolation($dependency, $layerName, $layerNameOfDependency);
                         continue;
                     }
@@ -86,8 +87,8 @@ class RulesetEngine
         return new Context($rules, $errors, $warnings);
     }
 
-    private function ignoreUncoveredInternalClass(Configuration $configuration, ClassLikeName $classLikeName): bool
+    private function ignoreUncoveredInternalClass(Configuration $configuration, TokenLikeName $tokenLikeName): bool
     {
-        return $configuration->ignoreUncoveredInternalClasses() && isset(PhpStormStubsMap::CLASSES[$classLikeName->toString()]);
+        return !$tokenLikeName instanceof ClassLikeName || ($configuration->ignoreUncoveredInternalClasses() && isset(PhpStormStubsMap::CLASSES[$tokenLikeName->toString()]));
     }
 }

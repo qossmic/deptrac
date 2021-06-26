@@ -35,7 +35,7 @@ final class ClassConstantResolverTest extends TestCase
         $dependencies = $astClassReferences[1]->getDependencies();
         self::assertSame(
             'Tests\Qossmic\Deptrac\Integration\Fixtures\ClassA',
-            $dependencies[0]->getClassLikeName()->toString()
+            $dependencies[0]->getTokenLikeName()->toString()
         );
         self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
         self::assertSame(15, $dependencies[0]->getFileOccurrence()->getLine());

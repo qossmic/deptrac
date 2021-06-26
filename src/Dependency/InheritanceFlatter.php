@@ -17,7 +17,7 @@ class InheritanceFlatter
                 foreach ($dependencyResult->getDependenciesByClass($inherit->getClassLikeName()) as $dep) {
                     $dependencyResult->addInheritDependency(new InheritDependency(
                         $classReference->getClassLikeName(),
-                        $dep->getClassLikeNameB(),
+                        $dep->getTokenLikeNameB(),
                         $dep,
                         $inherit
                     ));

@@ -94,8 +94,8 @@ final class XMLOutputFormatter implements OutputFormatterInterface
         $entry->appendChild($xmlDoc->createElement('LayerB', $rule->getLayerB()));
 
         $dependency = $rule->getDependency();
-        $entry->appendChild($xmlDoc->createElement('ClassA', $dependency->getClassLikeNameA()->toString()));
-        $entry->appendChild($xmlDoc->createElement('ClassB', $dependency->getClassLikeNameB()->toString()));
+        $entry->appendChild($xmlDoc->createElement('ClassA', $dependency->getTokenLikeNameA()->toString()));
+        $entry->appendChild($xmlDoc->createElement('ClassB', $dependency->getTokenLikeNameB()->toString()));
 
         $fileOccurrence = $dependency->getFileOccurrence();
         $occurrence = $xmlDoc->createElement('occurrence');

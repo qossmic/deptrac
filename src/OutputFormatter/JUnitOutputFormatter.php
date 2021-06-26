@@ -107,6 +107,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
     private function addTestSuite(Context $context, DOMDocument $xmlDoc, DOMElement $testSuites): void
     {
+        /** @var array<string, array<Rule>> $layers */
         $layers = [];
         foreach ($context->rules() as $rule) {
             if ($rule instanceof Allowed || $rule instanceof Violation || $rule instanceof SkippedViolation) {
@@ -130,7 +131,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
-                $rulesByClassName[$rule->getDependency()->getClassLikeNameA()->toString()][] = $rule;
+                $rulesByClassName[$rule->getDependency()->getTokenLikeNameA()->toString()][] = $rule;
             }
 
             $testSuite = $xmlDoc->createElement('testsuite');
@@ -181,9 +182,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d must not depend on %s (%s on %s)',
-            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getTokenLikeNameA()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getClassLikeNameB()->toString(),
+            $dependency->getTokenLikeNameB()->toString(),
             $violation->getLayerA(),
             $violation->getLayerB()
         );
@@ -207,9 +208,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d has uncovered dependency on %s (%s)',
-            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getTokenLikeNameA()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getClassLikeNameB()->toString(),
+            $dependency->getTokenLikeNameB()->toString(),
             $rule->getLayer()
         );
 

@@ -4,30 +4,30 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Dependency;
 
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenLikeName;
 
 class Dependency implements DependencyInterface
 {
-    private ClassLikeName $classLikeNameB;
-    private ClassLikeName $classLikeNameA;
+    private TokenLikeName $tokenLikeNameA;
+    private TokenLikeName $tokenLikeNameB;
     private FileOccurrence $fileOccurrence;
 
-    public function __construct(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB, FileOccurrence $fileOccurrence)
+    public function __construct(TokenLikeName $tokenLikeNameA, TokenLikeName $tokenLikeNameB, FileOccurrence $fileOccurrence)
     {
-        $this->classLikeNameA = $classLikeNameA;
-        $this->classLikeNameB = $classLikeNameB;
+        $this->tokenLikeNameA = $tokenLikeNameA;
+        $this->tokenLikeNameB = $tokenLikeNameB;
         $this->fileOccurrence = $fileOccurrence;
     }
 
-    public function getClassLikeNameA(): ClassLikeName
+    public function getTokenLikeNameA(): TokenLikeName
     {
-        return $this->classLikeNameA;
+        return $this->tokenLikeNameA;
     }
 
-    public function getClassLikeNameB(): ClassLikeName
+    public function getTokenLikeNameB(): TokenLikeName
     {
-        return $this->classLikeNameB;
+        return $this->tokenLikeNameB;
     }
 
     public function getFileOccurrence(): FileOccurrence

@@ -33,9 +33,9 @@ trait EmitterTrait
         return array_map(
             static function (DependencyInterface $d) {
                 return sprintf('%s:%d on %s',
-                    $d->getClassLikeNameA()->toString(),
+                    $d->getTokenLikeNameA()->toString(),
                     $d->getFileOccurrence()->getLine(),
-                    $d->getClassLikeNameB()->toString()
+                    $d->getTokenLikeNameB()->toString()
                 );
             },
             $result->getDependenciesAndInheritDependencies()

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-final class ClassLikeName
+final class ClassLikeName implements TokenLikeName
 {
     private string $className;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenLikeName;
 
 final class Warning
 {
@@ -18,14 +18,14 @@ final class Warning
     /**
      * @param string[] $layerNames
      */
-    public static function classLikeIsInMoreThanOneLayer(
-        ClassLikeName $getClassLikeNameA,
+    public static function TokenLikeIsInMoreThanOneLayer(
+        TokenLikeName $tokenLikeName,
         array $layerNames
     ): self {
         return new self(sprintf(
-            '%s is in more than one layer ["%s"]. It is recommended that one class should only be in one layer.',
-            $getClassLikeNameA->toString(),
-            implode('", "', $layerNames)
+                            '%s is in more than one layer ["%s"]. It is recommended that one token should only be in one layer.',
+                            $tokenLikeName->toString(),
+                            implode('", "', $layerNames)
         ));
     }
 

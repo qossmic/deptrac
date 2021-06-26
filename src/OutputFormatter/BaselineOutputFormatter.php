@@ -61,8 +61,8 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
                 continue;
             }
             $dependency = $rule->getDependency();
-            $dependantClass = $dependency->getClassLikeNameA()->toString();
-            $dependencyClass = $dependency->getClassLikeNameB()->toString();
+            $dependantClass = $dependency->getTokenLikeNameA()->toString();
+            $dependencyClass = $dependency->getTokenLikeNameB()->toString();
 
             if (!array_key_exists($dependantClass, $violations)) {
                 $violations[$dependantClass] = [];

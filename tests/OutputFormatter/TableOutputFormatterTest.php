@@ -292,11 +292,11 @@ class TableOutputFormatterTest extends TestCase
         yield 'an warning occurred' => [
             'rules' => [],
             'errors' => [],
-            'warnings' => [Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            'warnings' => [Warning::TokenLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
             ' ------------------------------------------------------------------------------------------------------------------------- 
   Warnings                                                                                                                 
  ------------------------------------------------------------------------------------------------------------------------- 
-  Foo\Bar is in more than one layer ["Layer 1", "Layer 2"]. It is recommended that one class should only be in one layer.  
+  Foo\Bar is in more than one layer ["Layer 1", "Layer 2"]. It is recommended that one token should only be in one layer.  
  ------------------------------------------------------------------------------------------------------------------------- 
 
 

@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Dependency;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenLikeName;
 
 class InheritDependency implements DependencyInterface
 {
@@ -23,7 +24,7 @@ class InheritDependency implements DependencyInterface
         $this->path = $path;
     }
 
-    public function getClassLikeNameA(): ClassLikeName
+    public function getTokenLikeNameA(): TokenLikeName
     {
         return $this->classLikeNameA;
     }
@@ -33,7 +34,7 @@ class InheritDependency implements DependencyInterface
         return $this->getOriginalDependency()->getFileOccurrence();
     }
 
-    public function getClassLikeNameB(): ClassLikeName
+    public function getTokenLikeNameB(): TokenLikeName
     {
         return $this->classLikeNameB;
     }
