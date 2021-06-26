@@ -16,11 +16,6 @@ jobs:
       matrix:
         os: [ubuntu-20.04]
         php-version: [7.4, 8.0]
-        include:
-          - os: ubuntu-18.04
-            php-version: 7.2
-          - os: ubuntu-18.04
-            php-version: 7.3
 
     steps:
       - name: "Checkout"

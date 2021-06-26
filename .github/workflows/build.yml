@@ -82,11 +82,8 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          - os: ubuntu-18.04
-            php-version: 7.2
-          - os: ubuntu-20.04
-            php-version: 8.0
+        os: [ubuntu-20.04]
+        php-version: [7.4, 8.0]
 
     steps:
       - name: "Checkout"

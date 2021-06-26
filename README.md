@@ -922,7 +922,7 @@ layers:
 
 To build deptrac, clone this repository and ensure you have the build dependencies installed:
 
-- PHP in version 7.2 or above
+- PHP in version 7.4 or above
 - [Composer](https://getcomposer.org/)
 - [PHIVE](https://phar.io/)
 - make
