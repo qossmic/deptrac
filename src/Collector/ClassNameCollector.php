@@ -24,6 +24,7 @@ class ClassNameCollector implements CollectorInterface
         if (!$astTokenReference instanceof AstClassReference) {
             return false;
         }
+
         return $astTokenReference->getTokenLikeName()
             ->match($this->getPattern($configuration));
     }
