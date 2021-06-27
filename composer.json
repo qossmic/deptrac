@@ -8,12 +8,16 @@
         },
         {
             "name": "Simon Mönch",
-            "email": "simon.moench@qossmic.com",
+            "email": "simon.moench@qossmic.com"
+        },
+        {
+            "name": "Denis Brumann",
+            "email": "denis.brumann@qossmic.com",
             "role": "maintainer"
         }
     ],
     "require": {
-        "php": "^7.2.5 || 8.0.*",
+        "php": "^7.4.0 || 8.0.*",
         "ext-json": "*",
         "composer/xdebug-handler": "^2.0",
         "graphp/graphviz": "0.2.*",
@@ -45,7 +49,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.2.5"
+            "php": "7.4.20"
         },
         "sort-packages": true
     }

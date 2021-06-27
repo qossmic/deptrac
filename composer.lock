@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9ee4ea07bca37cadc13d81bc434ce6e4",
+    "content-hash": "1af511846f5089fda54d3263a1ff9e59",
     "packages": [
         {
             "name": "clue/graph",
@@ -2117,12 +2117,12 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5 || 8.0.*",
+        "php": "^7.4.0 || 8.0.*",
         "ext-json": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "7.2.5"
+        "php": "7.4.20"
     },
     "plugin-api-version": "2.1.0"
 }
