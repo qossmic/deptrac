@@ -121,7 +121,7 @@ class AstMap
 
     private function addAstClassReference(AstClassReference $astClassReference): void
     {
-        $this->astClassReferences[$astClassReference->getTokenLikeName()->toString()] = $astClassReference;
+        $this->astClassReferences[$astClassReference->getTokenName()->toString()] = $astClassReference;
     }
 
     private function addAstFileReference(AstFileReference $astFileReference): void

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Dependency;
 
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
 interface DependencyInterface
 {
-    public function getTokenLikeNameA(): TokenLikeName;
+    public function getTokenNameA(): TokenName;
 
-    public function getTokenLikeNameB(): TokenLikeName;
+    public function getTokenNameB(): TokenName;
 
     public function getFileOccurrence(): FileOccurrence;
 }

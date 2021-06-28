@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-interface TokenLikeName
+interface TokenName
 {
     public function toString(): string;
 }

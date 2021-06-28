@@ -41,19 +41,19 @@ class LayerAnalyser
         $classLikeNames = [];
 
         foreach ($astMap->getAstClassReferences() as $classReference) {
-            $classLikeName = $classReference->getTokenLikeName();
+            $classLikeName = $classReference->getTokenName();
             if ($this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }
         }
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $classLikeName = $dependency->getTokenLikeNameA();
+            $classLikeName = $dependency->getTokenNameA();
             if ($classLikeName instanceof ClassLikeName && $this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }
 
-            $classLikeName = $dependency->getTokenLikeNameB();
+            $classLikeName = $dependency->getTokenNameB();
             if ($classLikeName instanceof ClassLikeName && $this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }

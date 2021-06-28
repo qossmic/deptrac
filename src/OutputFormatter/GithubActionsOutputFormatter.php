@@ -63,8 +63,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             $message = sprintf(
                 '%s%s must not depend on %s (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getTokenLikeNameA()->toString(),
-                $dependency->getTokenLikeNameB()->toString(),
+                $dependency->getTokenNameA()->toString(),
+                $dependency->getTokenNameB()->toString(),
                 $rule->getLayerA(),
                 $rule->getLayerB()
             );
@@ -117,8 +117,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                     $reportAsError ? 'error' : 'warning',
                     $dependency->getFileOccurrence()->getFilepath(),
                     $dependency->getFileOccurrence()->getLine(),
-                    $dependency->getTokenLikeNameA()->toString(),
-                    $dependency->getTokenLikeNameB()->toString(),
+                    $dependency->getTokenNameA()->toString(),
+                    $dependency->getTokenNameB()->toString(),
                     $u->getLayer()
                 )
             );
@@ -136,7 +136,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             '%s::%d',
-            $dependency->getOriginalDependency()->getTokenLikeNameB()->toString(),
+            $dependency->getOriginalDependency()->getTokenNameB()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 

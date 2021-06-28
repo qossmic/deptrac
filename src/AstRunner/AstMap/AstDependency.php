@@ -6,20 +6,20 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 class AstDependency
 {
-    private TokenLikeName $tokenLikeName;
+    private TokenName $tokenName;
     private FileOccurrence $fileOccurrence;
     private string $type;
 
-    private function __construct(TokenLikeName $tokenLikeName, FileOccurrence $fileOccurrence, string $type)
+    private function __construct(TokenName $tokenName, FileOccurrence $fileOccurrence, string $type)
     {
-        $this->tokenLikeName = $tokenLikeName;
+        $this->tokenName = $tokenName;
         $this->fileOccurrence = $fileOccurrence;
         $this->type = $type;
     }
 
-    public function getTokenLikeName(): TokenLikeName
+    public function getTokenName(): TokenName
     {
-        return $this->tokenLikeName;
+        return $this->tokenName;
     }
 
     public function getFileOccurrence(): FileOccurrence

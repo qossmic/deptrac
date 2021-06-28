@@ -114,7 +114,7 @@ final class AstMapGeneratorTest extends TestCase
             ],
             array_map(
                 static function (AstMap\AstDependency $dependency) {
-                    return $dependency->getTokenLikeName()->toString();
+                    return $dependency->getTokenName()->toString();
                 },
                 $astMap->getAstFileReferences()[__DIR__.'/Fixtures/Issue319.php']->getDependencies()
             )

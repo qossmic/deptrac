@@ -34,7 +34,7 @@ class UsesCollector implements CollectorInterface
 
         $interfaceName = $this->getInterfaceName($configuration);
 
-        foreach ($astMap->getClassInherits($astTokenReference->getTokenLikeName()) as $inherit) {
+        foreach ($astMap->getClassInherits($astTokenReference->getTokenName()) as $inherit) {
             if ($inherit->isUses() && $inherit->getClassLikeName()->equals($interfaceName)) {
                 return true;
             }

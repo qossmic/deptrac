@@ -8,5 +8,5 @@ interface AstTokenReference
 {
     public function getFileReference(): ?AstFileReference;
 
-    public function getTokenLikeName(): TokenLikeName;
+    public function getTokenName(): TokenName;
 }
