@@ -6,10 +6,7 @@ namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 class TypeScope
 {
-    /**
-     * @var string
-     */
-    private $namespace;
+    private string $namespace;
 
     /**
      * @var array<string, string> alias => className

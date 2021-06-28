@@ -13,8 +13,7 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
-    /** @var Env */
-    private $env;
+    private Env $env;
 
     public function __construct(Env $env = null)
     {

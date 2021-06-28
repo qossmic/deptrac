@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
@@ -23,34 +25,22 @@ use Qossmic\Deptrac\ShouldNotHappenException;
 class NikicPhpParser implements AstParser
 {
     /**
-     * @var array<string, Node\Stmt\ClassLike>
+     * @var array<string, ClassLike>
      */
-    private static $classAstMap = [];
+    private static array $classAstMap = [];
 
-    /**
-     * @var Parser
-     */
-    private $parser;
+    private Parser $parser;
 
-    /**
-     * @var AstFileReferenceCache
-     */
-    private $cache;
+    private AstFileReferenceCache $cache;
 
-    /**
-     * @var TypeResolver
-     */
-    private $typeResolver;
+    private TypeResolver $typeResolver;
 
     /**
      * @var ClassDependencyResolver[]
      */
-    private $classDependencyResolvers;
+    private array $classDependencyResolvers;
 
-    /**
-     * @var NodeTraverser
-     */
-    private $traverser;
+    private NodeTraverser $traverser;
 
     public function __construct(
         Parser $parser,
@@ -91,7 +81,7 @@ class NikicPhpParser implements AstParser
         return $fileReference;
     }
 
-    public function getAstForClassReference(AstClassReference $classReference): ?Node\Stmt\ClassLike
+    public function getAstForClassReference(AstClassReference $classReference): ?ClassLike
     {
         $classLikeName = $classReference->getClassLikeName()->toString();
 
@@ -107,7 +97,7 @@ class NikicPhpParser implements AstParser
 
         $findingVisitor = new FindingVisitor(
             static function (Node $node): bool {
-                return $node instanceof Node\Stmt\ClassLike;
+                return $node instanceof ClassLike;
             }
         );
 
@@ -120,13 +110,13 @@ class NikicPhpParser implements AstParser
         $this->traverser->traverse($nodes);
         $this->traverser->removeVisitor($findingVisitor);
 
-        /** @var Node\Stmt\ClassLike[] $classLikeNodes */
+        /** @var ClassLike[] $classLikeNodes */
         $classLikeNodes = $findingVisitor->getFoundNodes();
 
         foreach ($classLikeNodes as $classLikeNode) {
             if (isset($classLikeNode->namespacedName)) {
                 $className = $classLikeNode->namespacedName->toCodeString();
-            } elseif ($classLikeNode->name instanceof Node\Identifier) {
+            } elseif ($classLikeNode->name instanceof Identifier) {
                 $className = $classLikeNode->name->toString();
             } else {
                 continue;

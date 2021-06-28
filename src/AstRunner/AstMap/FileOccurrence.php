@@ -6,11 +6,9 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 final class FileOccurrence
 {
-    /** @var string */
-    private $filepath;
+    private string $filepath;
 
-    /** @var int */
-    private $line;
+    private int $line;
 
     private function __construct(string $filepath, int $line)
     {

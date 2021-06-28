@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use Exception;
 use function json_encode;
 use function json_last_error;
 use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
@@ -41,7 +42,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function finish(
         Context $context,
@@ -96,7 +97,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         $json = json_encode($jsonArray, \JSON_PRETTY_PRINT);
 
         if (false === $json) {
-            throw new \Exception(sprintf('Unable to render json output. %s', $this->jsonLastError()));
+            throw new Exception(sprintf('Unable to render json output. %s', $this->jsonLastError()));
         }
 
         $dumpJsonPath = (string) $outputFormatterInput->getOption(self::DUMP_JSON);

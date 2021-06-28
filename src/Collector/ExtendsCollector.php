@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
+use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 
 class ExtendsCollector implements CollectorInterface
 {
@@ -40,12 +42,12 @@ class ExtendsCollector implements CollectorInterface
     /**
      * @param array<string, mixed> $configuration
      */
-    private function getInterfaceName(array $configuration): AstMap\ClassLikeName
+    private function getInterfaceName(array $configuration): ClassLikeName
     {
         if (!isset($configuration['extends']) || !is_string($configuration['extends'])) {
-            throw new \LogicException('ExtendsCollector needs the interface or class name as a string.');
+            throw new LogicException('ExtendsCollector needs the interface or class name as a string.');
         }
 
-        return AstMap\ClassLikeName::fromFQCN($configuration['extends']);
+        return ClassLikeName::fromFQCN($configuration['extends']);
     }
 }

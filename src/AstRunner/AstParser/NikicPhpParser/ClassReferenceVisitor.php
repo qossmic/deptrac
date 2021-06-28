@@ -5,6 +5,24 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
+use PhpParser\Node\Attribute;
+use PhpParser\Node\Expr\Closure;
+use PhpParser\Node\Expr\Instanceof_;
+use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\StaticPropertyFetch;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
+use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\Catch_;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassLike;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\GroupUse;
+use PhpParser\Node\Stmt\Interface_;
+use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\TraitUse;
+use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
@@ -19,21 +37,16 @@ use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
 
 class ClassReferenceVisitor extends NodeVisitorAbstract
 {
-    /** @var FileReferenceBuilder */
-    private $fileReferenceBuilder;
+    private FileReferenceBuilder $fileReferenceBuilder;
 
     /** @var ClassDependencyResolver[] */
-    private $classDependencyResolvers;
+    private array $classDependencyResolvers;
 
-    /** @var TypeScope */
-    private $currentTypeScope;
+    private TypeScope $currentTypeScope;
 
-    /** @var TypeResolver */
-    private $typeResolver;
-    /** @var Lexer */
-    private $lexer;
-    /** @var PhpDocParser */
-    private $docParser;
+    private TypeResolver $typeResolver;
+    private Lexer $lexer;
+    private PhpDocParser $docParser;
 
     public function __construct(FileReferenceBuilder $fileReferenceBuilder, TypeResolver $typeResolver, ClassDependencyResolver ...$classDependencyResolvers)
     {
@@ -65,17 +78,17 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
     public function enterNode(Node $node)
     {
-        if ($node instanceof Node\Stmt\Namespace_) {
+        if ($node instanceof Namespace_) {
             $this->currentTypeScope = new TypeScope($node->name ? $node->name->toCodeString() : '');
         }
 
-        if (!$node instanceof Node\Stmt\ClassLike) {
+        if (!$node instanceof ClassLike) {
             return null;
         }
 
         if (isset($node->namespacedName)) {
             $className = $node->namespacedName->toCodeString();
-        } elseif ($node->name instanceof Node\Identifier) {
+        } elseif ($node->name instanceof Identifier) {
             $className = $node->name->toString();
         } else {
             return null; // map anonymous classes on current class
@@ -83,8 +96,8 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
         $classReferenceBuilder = $this->fileReferenceBuilder->newClassLike($className, $this->classLikeTemplatesFromDocs($node));
 
-        if ($node instanceof Node\Stmt\Class_) {
-            if ($node->extends instanceof Node\Name) {
+        if ($node instanceof Class_) {
+            if ($node->extends instanceof Name) {
                 $classReferenceBuilder->extends($node->extends->toCodeString(), $node->extends->getLine());
             }
             foreach ($node->implements as $implement) {
@@ -92,7 +105,7 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if ($node instanceof Node\Stmt\Interface_) {
+        if ($node instanceof Interface_) {
             foreach ($node->extends as $extend) {
                 $classReferenceBuilder->implements($extend->toCodeString(), $extend->getLine());
             }
@@ -103,16 +116,16 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        if ($node instanceof Node\Stmt\Use_ && Node\Stmt\Use_::TYPE_NORMAL === $node->type) {
+        if ($node instanceof Use_ && Use_::TYPE_NORMAL === $node->type) {
             foreach ($node->uses as $use) {
                 $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
                 $this->fileReferenceBuilder->use($use->name->toString(), $use->name->getLine());
             }
         }
 
-        if ($node instanceof Node\Stmt\GroupUse) {
+        if ($node instanceof GroupUse) {
             foreach ($node->uses as $use) {
-                if (Node\Stmt\Use_::TYPE_NORMAL === $use->type) {
+                if (Use_::TYPE_NORMAL === $use->type) {
                     $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
                     $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
                     $this->fileReferenceBuilder->use($classLikeName, $use->name->getLine());
@@ -126,55 +139,55 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
 
         $classReferenceBuilder = $this->fileReferenceBuilder->currentClassLike();
 
-        if ($node instanceof Node\Stmt\TraitUse) {
+        if ($node instanceof TraitUse) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
                 $classReferenceBuilder->trait($classLikeName, $node->getLine());
             }
         }
 
-        if ($node instanceof Node\Attribute) {
+        if ($node instanceof Attribute) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->name) as $classLikeName) {
                 $classReferenceBuilder->attribute($classLikeName, $node->getLine());
             }
         }
 
-        if ($node instanceof Node\Expr\Instanceof_ && $node->class instanceof Node\Name) {
+        if ($node instanceof Instanceof_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $classReferenceBuilder->instanceof($classLikeName, $node->class->getLine());
             }
         }
 
-        if ($node instanceof Node\Param && null !== $node->type) {
+        if ($node instanceof Param && null !== $node->type) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->type) as $classLikeName) {
                 $classReferenceBuilder->parameter($classLikeName, $node->type->getLine());
             }
         }
 
-        if ($node instanceof Node\Expr\New_ && $node->class instanceof Node\Name) {
+        if ($node instanceof New_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $classReferenceBuilder->newStatement($classLikeName, $node->class->getLine());
             }
         }
 
-        if ($node instanceof Node\Expr\StaticPropertyFetch && $node->class instanceof Node\Name) {
+        if ($node instanceof StaticPropertyFetch && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $classReferenceBuilder->staticProperty($classLikeName, $node->class->getLine());
             }
         }
 
-        if ($node instanceof Node\Expr\StaticCall && $node->class instanceof Node\Name) {
+        if ($node instanceof StaticCall && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $classReferenceBuilder->staticMethod($classLikeName, $node->class->getLine());
             }
         }
 
-        if (($node instanceof Node\Stmt\ClassMethod || $node instanceof Node\Expr\Closure) && null !== $node->returnType) {
+        if (($node instanceof ClassMethod || $node instanceof Closure) && null !== $node->returnType) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->returnType) as $classLikeName) {
                 $classReferenceBuilder->returnType($classLikeName, $node->returnType->getLine());
             }
         }
 
-        if ($node instanceof Node\Stmt\Catch_) {
+        if ($node instanceof Catch_) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->types) as $classLikeName) {
                 $classReferenceBuilder->catchStmt($classLikeName, $node->getLine());
             }

@@ -10,10 +10,10 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class InheritDependency implements DependencyInterface
 {
-    private $classLikeNameA;
-    private $classLikeNameB;
-    private $path;
-    private $originalDependency;
+    private ClassLikeName $classLikeNameA;
+    private ClassLikeName $classLikeNameB;
+    private AstInherit $path;
+    private DependencyInterface $originalDependency;
 
     public function __construct(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB, DependencyInterface $originalDependency, AstInherit $path)
     {

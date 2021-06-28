@@ -16,13 +16,11 @@ use Qossmic\Deptrac\File\FileReader;
 class AstFileReferenceFileCache implements AstFileReferenceCache
 {
     /** @var array<string, array{hash: string, reference: AstFileReference}> */
-    private $cache;
-    /** @var string */
-    private $cacheFile;
-    /** @var bool */
-    private $loaded = false;
+    private array $cache;
+    private string $cacheFile;
+    private bool $loaded = false;
     /** @var array<string, bool> */
-    private $parsedFiles = [];
+    private array $parsedFiles = [];
 
     public function __construct(string $cacheFile)
     {

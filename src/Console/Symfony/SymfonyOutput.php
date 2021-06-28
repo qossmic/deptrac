@@ -13,8 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SymfonyOutput implements Output
 {
-    private $symfonyOutput;
-    private $style;
+    private OutputInterface $symfonyOutput;
+    private OutputStyle $style;
 
     public function __construct(
         OutputInterface $symfonyOutput,

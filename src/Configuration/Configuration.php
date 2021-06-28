@@ -4,33 +4,30 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Configuration
 {
     /** @var ConfigurationLayer[] */
-    private $layers;
+    private array $layers;
     /** @var string[] */
-    private $paths;
+    private array $paths;
     /** @var string[] */
-    private $excludeFiles;
-    /** @var ConfigurationRuleset */
-    private $ruleset;
-    /** @var ConfigurationSkippedViolation */
-    private $skipViolations;
-    /** @var bool */
-    private $ignoreUncoveredInternalClasses;
+    private array $excludeFiles;
+    private ConfigurationRuleset $ruleset;
+    private ConfigurationSkippedViolation $skipViolations;
+    private bool $ignoreUncoveredInternalClasses;
     /** @var array<string, string> */
-    private $parameters;
-    /** @var ConfigurationAnalyzer */
-    private $analyzer;
+    private array $parameters;
+    private ConfigurationAnalyzer $analyzer;
     /** @var array<string, array<string, mixed>> */
-    private $formatters;
+    private array $formatters;
 
     /**
      * @param array<string, mixed> $args
      *
-     * @throws Exception\InvalidConfigurationException
+     * @throws InvalidConfigurationException
      */
     public static function fromArray(array $args): self
     {
@@ -60,7 +57,7 @@ class Configuration
     }
 
     /**
-     * @throws Exception\InvalidConfigurationException
+     * @throws InvalidConfigurationException
      */
     private function __construct(array $options)
     {
@@ -77,7 +74,7 @@ class Configuration
         }));
 
         if ([] !== $duplicateLayerNames) {
-            throw Exception\InvalidConfigurationException::fromDuplicateLayerNames(...$duplicateLayerNames);
+            throw InvalidConfigurationException::fromDuplicateLayerNames(...$duplicateLayerNames);
         }
 
         $layerNamesUsedInRuleset = array_unique(array_merge(
@@ -93,7 +90,7 @@ class Configuration
         );
 
         if ([] !== $unknownLayerNames) {
-            throw Exception\InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
+            throw InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
         }
 
         $this->parameters = $options['parameters'];

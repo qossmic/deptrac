@@ -13,10 +13,10 @@ use Qossmic\Deptrac\Configuration\ParameterResolver;
 
 class ClassLikeLayerResolver implements ClassLikeLayerResolverInterface
 {
-    private $configuration;
-    private $astMap;
-    private $collectorRegistry;
-    private $parameterResolver;
+    private Configuration $configuration;
+    private AstMap $astMap;
+    private Registry $collectorRegistry;
+    private ParameterResolver $parameterResolver;
 
     public function __construct(
         Configuration $configuration,

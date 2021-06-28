@@ -6,20 +6,18 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 final class ClassReferenceBuilder
 {
-    /** @var string */
-    private $filepath;
+    private string $filepath;
 
-    /** @var string */
-    private $classLikeName;
+    private string $classLikeName;
 
     /** @var AstInherit[] */
-    private $inherits = [];
+    private array $inherits = [];
 
     /** @var AstDependency[] */
-    private $dependencies = [];
+    private array $dependencies = [];
 
     /** @var string[] */
-    private $classTemplates;
+    private array $classTemplates;
 
     /**
      * @param string[] $classTemplates

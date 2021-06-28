@@ -8,10 +8,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 
 final class Warning
 {
-    /**
-     * @var string
-     */
-    private $message;
+    private string $message;
 
     private function __construct(string $message)
     {

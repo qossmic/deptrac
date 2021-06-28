@@ -6,13 +6,14 @@ namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Name;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class ClassConstantResolver implements ClassDependencyResolver
 {
     public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof ClassConstFetch || !$node->class instanceof Node\Name || $node->class->isSpecialClassName()) {
+        if (!$node instanceof ClassConstFetch || !$node->class instanceof Name || $node->class->isSpecialClassName()) {
             return;
         }
 

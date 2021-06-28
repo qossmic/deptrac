@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
+use InvalidArgumentException;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Configuration\Configuration;
@@ -42,7 +43,7 @@ class RulesetEngine
             foreach ($layerNames as $layerName) {
                 try {
                     $allowedDependencies = $configurationRuleset->getAllowedDependencies($layerName);
-                } catch (\InvalidArgumentException $exception) {
+                } catch (InvalidArgumentException $exception) {
                     $errors[] = new Error($exception->getMessage());
                     continue;
                 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
-final class ShouldNotHappenException extends \RuntimeException
+use RuntimeException;
+
+final class ShouldNotHappenException extends RuntimeException
 {
     public function __construct(string $message = 'Internal error.')
     {

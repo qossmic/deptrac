@@ -9,9 +9,9 @@ use Qossmic\Deptrac\Configuration\Configuration;
 
 class UnassignedAnalyser
 {
-    private $astRunner;
-    private $fileResolver;
-    private $classLikeLayerResolverFactory;
+    private AstRunner $astRunner;
+    private FileResolver $fileResolver;
+    private ClassLikeLayerResolverFactory $classLikeLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,

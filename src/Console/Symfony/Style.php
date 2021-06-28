@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class Style implements OutputStyle
 {
-    private $symfonyStyle;
+    private SymfonyStyle $symfonyStyle;
 
     public function __construct(SymfonyStyle $symfonyStyle)
     {

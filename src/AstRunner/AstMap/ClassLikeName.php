@@ -6,10 +6,7 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 final class ClassLikeName
 {
-    /**
-     * @var string
-     */
-    private $className;
+    private string $className;
 
     private function __construct(string $className)
     {

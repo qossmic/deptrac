@@ -8,9 +8,9 @@ use Qossmic\Deptrac\Dependency\DependencyInterface;
 
 final class Violation implements Rule
 {
-    private $dependency;
-    private $layerA;
-    private $layerB;
+    private DependencyInterface $dependency;
+    private string $layerA;
+    private string $layerB;
 
     public function __construct(DependencyInterface $dependency, string $layerA, string $layerB)
     {

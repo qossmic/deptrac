@@ -12,8 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressSubscriber implements EventSubscriberInterface
 {
-    /** @var Output */
-    private $output;
+    private Output $output;
 
     public function __construct(Output $output)
     {

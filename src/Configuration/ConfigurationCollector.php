@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use InvalidArgumentException;
+
 final class ConfigurationCollector
 {
-    private $type;
+    private string $type;
 
     /** @var array<string, string> */
     private $args;
@@ -17,7 +19,7 @@ final class ConfigurationCollector
     public static function fromArray(array $args): self
     {
         if (!isset($args['type'])) {
-            throw new \InvalidArgumentException('Collector needs a type.');
+            throw new InvalidArgumentException('Collector needs a type.');
         }
 
         return new self($args['type'], $args);

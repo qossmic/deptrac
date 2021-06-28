@@ -9,11 +9,11 @@ use Qossmic\Deptrac\RulesetEngine\Context;
 
 class Analyser
 {
-    private $astRunner;
-    private $fileResolver;
-    private $resolver;
-    private $rulesetEngine;
-    private $classLikeLayerResolverFactory;
+    private AstRunner $astRunner;
+    private FileResolver $fileResolver;
+    private Resolver $resolver;
+    private RulesetEngine $rulesetEngine;
+    private ClassLikeLayerResolverFactory $classLikeLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,

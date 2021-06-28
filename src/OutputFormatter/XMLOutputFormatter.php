@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use DOMAttr;
+use DOMDocument;
+use DOMElement;
+use Exception;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
@@ -36,7 +40,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function finish(
         Context $context,
@@ -52,15 +56,15 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function createXml(Context $dependencyContext): string
     {
-        if (!class_exists(\DOMDocument::class)) {
-            throw new \Exception('Unable to create xml file (php-xml needs to be installed)');
+        if (!class_exists(DOMDocument::class)) {
+            throw new Exception('Unable to create xml file (php-xml needs to be installed)');
         }
 
-        $xmlDoc = new \DOMDocument('1.0', 'UTF-8');
+        $xmlDoc = new DOMDocument('1.0', 'UTF-8');
         $xmlDoc->formatOutput = true;
 
         $rootEntry = $xmlDoc->createElement('entries');
@@ -81,10 +85,10 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     /**
      * @param Violation|SkippedViolation $rule
      */
-    private function addRule(string $type, \DOMElement $rootEntry, \DOMDocument $xmlDoc, $rule): void
+    private function addRule(string $type, DOMElement $rootEntry, DOMDocument $xmlDoc, $rule): void
     {
         $entry = $xmlDoc->createElement('entry');
-        $entry->appendChild(new \DOMAttr('type', $type));
+        $entry->appendChild(new DOMAttr('type', $type));
 
         $entry->appendChild($xmlDoc->createElement('LayerA', $rule->getLayerA()));
         $entry->appendChild($xmlDoc->createElement('LayerB', $rule->getLayerB()));

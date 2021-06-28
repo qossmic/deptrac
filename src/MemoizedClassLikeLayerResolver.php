@@ -8,10 +8,10 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 
 class MemoizedClassLikeLayerResolver implements ClassLikeLayerResolverInterface
 {
-    private $classLikeLayerResolver;
+    private ClassLikeLayerResolverInterface $classLikeLayerResolver;
 
     /** @var array<string, string[]> */
-    private $layerNamesByClassCache = [];
+    private array $layerNamesByClassCache = [];
 
     public function __construct(ClassLikeLayerResolverInterface $classLikeLayerResolver)
     {

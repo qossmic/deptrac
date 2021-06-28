@@ -9,9 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class ConfigurationLayer
 {
     /** @var ConfigurationCollector[] */
-    private $collectors;
+    private array $collectors;
 
-    private $name;
+    private string $name;
 
     /**
      * @param array<string, mixed> $args

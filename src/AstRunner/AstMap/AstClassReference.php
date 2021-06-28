@@ -6,17 +6,15 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 class AstClassReference
 {
-    /** @var ClassLikeName */
-    private $classLikeName;
+    private ClassLikeName $classLikeName;
 
-    /** @var AstFileReference|null */
-    private $fileReference;
+    private ?AstFileReference $fileReference = null;
 
     /** @var AstDependency[] */
-    private $dependencies;
+    private array $dependencies;
 
     /** @var AstInherit[] */
-    private $inherits;
+    private array $inherits;
 
     /**
      * @param AstInherit[]    $inherits

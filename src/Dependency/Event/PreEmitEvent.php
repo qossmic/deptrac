@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class PreEmitEvent extends Event
 {
-    private $emitterName;
+    private string $emitterName;
 
     public function __construct(string $emitterName)
     {
