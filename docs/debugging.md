@@ -1,7 +1,8 @@
 # Debugging
 
 Deptrac provides a series of debug commands that help you identify issues in
-your depfile.
+your depfile. All command output one issue per line and can therefore be easily 
+combined with with other tools like `wc` or `grep`.
 
 * [`debug:layer`](#debuglayer)
 * [`debug:class`](#debugclass)
