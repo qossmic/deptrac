@@ -144,6 +144,7 @@ formatters:
 ```
 
 Will produce the following graph:
+
 ![GraphvizGroups](../examples/GraphvizGroups.png)
 
 ## JSON Formatter
