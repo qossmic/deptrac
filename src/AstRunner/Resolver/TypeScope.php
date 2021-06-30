@@ -11,7 +11,7 @@ class TypeScope
     /**
      * @var array<string, string> alias => className
      */
-    private $uses;
+    private array $uses;
 
     public function __construct(string $namespace)
     {
