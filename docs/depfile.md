@@ -41,7 +41,7 @@ You can define a baseline, i.e. existing violations that should not fail a build
 
 Example:
 
-```
+```yaml
 baseline: 'deptrac.baseline.yaml'
 ```
 
@@ -92,6 +92,7 @@ formatters:
 ```
 
 The resulting output will look like this:
+
 ![GraphvizGroups](../examples/GraphvizGroups.png)
 
 #### `hidden_layers`
@@ -159,7 +160,7 @@ enclosing the whole name in single quotes, e.g. `'Controller'`.
 
 ### `collectors`
 
-For a list of available collectory and their configuration format see
+For a list of available collectors and their configuration format see
 [Collectors](collectors.md).
 
 ## `parameters`
