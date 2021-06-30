@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\TypeResolver as phpDocumentorTypeResolver;
 use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Object_;
@@ -32,11 +33,11 @@ use Throwable;
 
 class TypeResolver
 {
-    private \phpDocumentor\Reflection\TypeResolver $typeResolver;
+    private phpDocumentorTypeResolver $typeResolver;
 
     public function __construct()
     {
-        $this->typeResolver = new \phpDocumentor\Reflection\TypeResolver(new FqsenResolver());
+        $this->typeResolver = new phpDocumentorTypeResolver(new FqsenResolver());
     }
 
     /**
