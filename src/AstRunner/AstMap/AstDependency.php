@@ -6,9 +6,9 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 class AstDependency
 {
-    private $classLikeName;
-    private $fileOccurrence;
-    private $type;
+    private ClassLikeName $classLikeName;
+    private FileOccurrence $fileOccurrence;
+    private string $type;
 
     private function __construct(ClassLikeName $classLikeName, FileOccurrence $fileOccurrence, string $type)
     {

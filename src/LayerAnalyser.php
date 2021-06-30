@@ -11,10 +11,10 @@ use Qossmic\Deptrac\Dependency\Resolver;
 
 class LayerAnalyser
 {
-    private $astRunner;
-    private $fileResolver;
-    private $resolver;
-    private $classLikeLayerResolverFactory;
+    private AstRunner $astRunner;
+    private FileResolver $fileResolver;
+    private Resolver $resolver;
+    private ClassLikeLayerResolverFactory $classLikeLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,

@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AstFileAnalyzedEvent extends Event
 {
-    private $file;
+    private string $file;
 
     public function __construct(string $file)
     {

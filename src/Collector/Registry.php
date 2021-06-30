@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
+use InvalidArgumentException;
+
 class Registry
 {
     /** @var CollectorInterface[] */
-    protected $collectors = [];
+    protected array $collectors = [];
 
     /**
      * @param CollectorInterface[] $collectors
@@ -20,7 +22,7 @@ class Registry
     }
 
     /**
-     * @throws \InvalidArgumentException if collector does not exists
+     * @throws InvalidArgumentException if collector does not exists
      */
     public function getCollector(string $type): CollectorInterface
     {
@@ -41,7 +43,7 @@ class Registry
             return $collector;
         }
 
-        throw new \InvalidArgumentException(sprintf('unknown collector type "%s", possible collectors are %s', $type, implode(', ', array_keys($this->collectors))));
+        throw new InvalidArgumentException(sprintf('unknown collector type "%s", possible collectors are %s', $type, implode(', ', array_keys($this->collectors))));
     }
 
     private function addCollector(CollectorInterface $collector): void

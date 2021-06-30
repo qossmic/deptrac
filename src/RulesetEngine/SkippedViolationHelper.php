@@ -12,12 +12,12 @@ final class SkippedViolationHelper
     /**
      * @var array<string, string[]>
      */
-    private $skippedViolation;
+    private array $skippedViolation;
 
     /**
      * @var array<string, string[]>
      */
-    private $unmatchedSkippedViolation;
+    private array $unmatchedSkippedViolation;
 
     public function __construct(ConfigurationSkippedViolation $configuration)
     {

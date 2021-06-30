@@ -10,14 +10,11 @@ class AstInherit
     private const TYPE_IMPLEMENTS = 2;
     private const TYPE_USES = 3;
 
-    /** @var ClassLikeName */
-    private $classLikeName;
-    /** @var FileOccurrence */
-    private $fileOccurrence;
-    /** @var int */
-    private $type;
+    private ClassLikeName $classLikeName;
+    private FileOccurrence $fileOccurrence;
+    private int $type;
     /** @var AstInherit[] */
-    private $path;
+    private array $path;
 
     private function __construct(ClassLikeName $className, FileOccurrence $fileOccurrence, int $type)
     {

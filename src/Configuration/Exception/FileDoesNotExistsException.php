@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration\Exception;
 
-final class FileDoesNotExistsException extends \RuntimeException
+use RuntimeException;
+
+final class FileDoesNotExistsException extends RuntimeException
 {
     public static function fromFilename(string $filename): self
     {

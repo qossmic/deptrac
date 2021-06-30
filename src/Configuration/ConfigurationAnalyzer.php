@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ConfigurationAnalyzer
 {
     /** @var array{count_use_statements: bool} */
-    private $config;
+    private array $config;
 
     /**
      * @param array<string, mixed> $args
      *
-     * @throws Exception\InvalidConfigurationException
+     * @throws InvalidConfigurationException
      */
     public static function fromArray(array $args): self
     {

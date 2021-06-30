@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner;
 
+use PhpParser\Error;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
 use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
 use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
@@ -14,8 +15,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AstRunner
 {
-    private $dispatcher;
-    private $astParser;
+    private EventDispatcherInterface $dispatcher;
+    private AstParser $astParser;
 
     public function __construct(EventDispatcherInterface $dispatcher, AstParser $astParser)
     {
@@ -37,7 +38,7 @@ class AstRunner
                 $references[] = $this->astParser->parseFile($file, $configuration);
 
                 $this->dispatcher->dispatch(new AstFileAnalyzedEvent($file));
-            } catch (\PhpParser\Error $e) {
+            } catch (Error $e) {
                 $this->dispatcher->dispatch(new AstFileSyntaxErrorEvent($file, $e->getMessage()));
             }
         }

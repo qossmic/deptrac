@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
+use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
@@ -31,7 +32,7 @@ class DirectoryCollector implements CollectorInterface
     private function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex']) || !is_string($configuration['regex'])) {
-            throw new \LogicException('DirectoryCollector needs the regex configuration.');
+            throw new LogicException('DirectoryCollector needs the regex configuration.');
         }
 
         return '#'.$configuration['regex'].'#i';

@@ -12,12 +12,9 @@ class OutputFormatterOption
     public const REQUIRED = InputOption::VALUE_REQUIRED;
     public const OPTIONAL = InputOption::VALUE_OPTIONAL;
 
-    /** @var string */
-    private $name;
-    /** @var int|null */
-    private $mode;
-    /** @var string */
-    private $description;
+    private string $name;
+    private ?int $mode;
+    private string $description;
     /** @var array<array-key, string>|bool|null|string */
     private $default;
 

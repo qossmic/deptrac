@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstParser;
 
-class FileNotExistsException extends \RuntimeException
+use RuntimeException;
+
+class FileNotExistsException extends RuntimeException
 {
     public function __construct(string $filepath)
     {

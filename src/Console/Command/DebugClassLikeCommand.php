@@ -17,10 +17,8 @@ class DebugClassLikeCommand extends Command
 {
     protected static $defaultName = 'debug:class-like';
 
-    /** @var ClassLikeAnalyser */
-    private $analyser;
-    /** @var Loader */
-    private $loader;
+    private ClassLikeAnalyser $analyser;
+    private Loader $loader;
 
     public function __construct(
         ClassLikeAnalyser $analyser,

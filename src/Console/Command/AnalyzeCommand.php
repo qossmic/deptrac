@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
+use Exception;
 use Qossmic\Deptrac\Analyser;
 use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
 use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
@@ -27,14 +28,10 @@ class AnalyzeCommand extends Command
     public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
-    /** @var Analyser */
-    private $analyser;
-    /** @var ConfigurationLoader */
-    private $configurationLoader;
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-    /** @var OutputFormatterFactory */
-    private $formatterFactory;
+    private Analyser $analyser;
+    private ConfigurationLoader $configurationLoader;
+    private EventDispatcherInterface $dispatcher;
+    private OutputFormatterFactory $formatterFactory;
 
     public function __construct(
         Analyser $analyser,
@@ -119,7 +116,7 @@ class AnalyzeCommand extends Command
                 $formatter->finish($context, $symfonyOutput, new OutputFormatterInput(
                     $input->getOptions(), $formatterConfig
                 ));
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 $this->printFormatterException($symfonyOutput, $formatter->getName(), $ex);
             }
         }
@@ -145,7 +142,7 @@ class AnalyzeCommand extends Command
         }
     }
 
-    protected function printFormatterException(SymfonyOutput $output, string $formatterName, \Exception $exception): void
+    protected function printFormatterException(SymfonyOutput $output, string $formatterName, Exception $exception): void
     {
         $output->writeLineFormatted('');
         $output->getStyle()->error([

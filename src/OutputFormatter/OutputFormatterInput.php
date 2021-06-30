@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use InvalidArgumentException;
+
 class OutputFormatterInput
 {
     /**
      * @var mixed[]
      */
-    private $options;
+    private array $options;
 
     /** @var array<string, mixed> */
     private $config;
@@ -25,14 +27,14 @@ class OutputFormatterInput
     }
 
     /**
-     * @throws \InvalidArgumentException on not configured option
+     * @throws InvalidArgumentException on not configured option
      *
      * @return mixed
      */
     public function getOption(string $name)
     {
         if (!array_key_exists($name, $this->options)) {
-            throw new \InvalidArgumentException('option '.$name.' is not configured.');
+            throw new InvalidArgumentException('option '.$name.' is not configured.');
         }
 
         return $this->options[$name];

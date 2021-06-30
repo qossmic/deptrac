@@ -12,15 +12,15 @@ final class Context
     /**
      * @var Rule[]
      */
-    private $rules;
+    private array $rules;
     /**
      * @var Error[]
      */
-    private $errors;
+    private array $errors;
     /**
      * @var Warning[]
      */
-    private $warnings;
+    private array $warnings;
 
     /**
      * @param Rule[]    $rules

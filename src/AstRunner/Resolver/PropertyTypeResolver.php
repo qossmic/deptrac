@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Property;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class PropertyTypeResolver implements ClassDependencyResolver
 {
-    /** @var TypeResolver */
-    private $typeResolver;
+    private TypeResolver $typeResolver;
 
     public function __construct(TypeResolver $typeResolver)
     {
@@ -19,7 +19,7 @@ class PropertyTypeResolver implements ClassDependencyResolver
 
     public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof Node\Stmt\Property) {
+        if (!$node instanceof Property) {
             return;
         }
 

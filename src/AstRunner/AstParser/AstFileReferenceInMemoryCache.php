@@ -11,7 +11,7 @@ class AstFileReferenceInMemoryCache implements AstFileReferenceCache
     /**
      * @var array<string, AstFileReference>
      */
-    private $cache = [];
+    private array $cache = [];
 
     public function has(string $filepath): bool
     {

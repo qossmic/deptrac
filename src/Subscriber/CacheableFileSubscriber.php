@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CacheableFileSubscriber implements EventSubscriberInterface
 {
-    private $cache;
+    private AstFileReferenceFileCache $cache;
 
     public function __construct(AstFileReferenceFileCache $cache)
     {

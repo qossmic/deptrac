@@ -9,9 +9,9 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 
 class Dependency implements DependencyInterface
 {
-    private $classLikeNameB;
-    private $classLikeNameA;
-    private $fileOccurrence;
+    private ClassLikeName $classLikeNameB;
+    private ClassLikeName $classLikeNameA;
+    private FileOccurrence $fileOccurrence;
 
     public function __construct(ClassLikeName $classLikeNameA, ClassLikeName $classLikeNameB, FileOccurrence $fileOccurrence)
     {

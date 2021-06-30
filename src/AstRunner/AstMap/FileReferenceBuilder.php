@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
+use RuntimeException;
+
 final class FileReferenceBuilder
 {
     /** @var AstDependency[] */
-    private $dependencies = [];
+    private array $dependencies = [];
 
-    /** @var string */
-    private $filepath;
+    private string $filepath;
 
     /** @var ClassReferenceBuilder[] */
-    private $classReferences;
+    private array $classReferences;
 
-    /** @var ClassReferenceBuilder|null */
-    private $currentClassReference;
+    private ?ClassReferenceBuilder $currentClassReference = null;
 
-    /** @var bool */
-    private $countUseStatementsAsDependencies;
+    private bool $countUseStatementsAsDependencies;
 
     private function __construct(string $filepath, bool $countUseStatementsAsDependencies)
     {
@@ -63,7 +62,7 @@ final class FileReferenceBuilder
     public function currentClassLike(): ClassReferenceBuilder
     {
         if (null === $this->currentClassReference) {
-            throw new \RuntimeException('No class like has been defined before.');
+            throw new RuntimeException('No class like has been defined before.');
         }
 
         return $this->currentClassReference;

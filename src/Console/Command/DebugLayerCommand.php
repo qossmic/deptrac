@@ -19,10 +19,8 @@ class DebugLayerCommand extends Command
 {
     protected static $defaultName = 'debug:layer';
 
-    /** @var LayerAnalyser */
-    private $analyser;
-    /** @var Loader */
-    private $loader;
+    private LayerAnalyser $analyser;
+    private Loader $loader;
 
     public function __construct(
         LayerAnalyser $analyser,

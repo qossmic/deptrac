@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
+use InvalidArgumentException;
+use LogicException;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,7 +15,7 @@ class OutputFormatterFactory
     /**
      * @var array<string, OutputFormatterInterface>
      */
-    protected $formatters = [];
+    protected array $formatters = [];
 
     /**
      * @param OutputFormatterInterface[] $formatters
@@ -44,7 +46,7 @@ class OutputFormatterFactory
     }
 
     /**
-     * @throws \LogicException if formatter does not exists
+     * @throws LogicException if formatter does not exists
      */
     public function getFormatterByName(string $name): OutputFormatterInterface
     {
@@ -56,7 +58,7 @@ class OutputFormatterFactory
             return $formatter;
         }
 
-        throw new \LogicException(sprintf('Formatter %s does not exists, did you mean %s?', $name, implode(', ', array_map(static function (OutputFormatterInterface $f): string { return $f->getName(); }, $this->formatters))));
+        throw new LogicException(sprintf('Formatter %s does not exists, did you mean %s?', $name, implode(', ', array_map(static function (OutputFormatterInterface $f): string { return $f->getName(); }, $this->formatters))));
     }
 
     private function addFormatter(OutputFormatterInterface $formatter): void
@@ -90,7 +92,7 @@ class OutputFormatterFactory
         }
 
         if ([] !== $invalidNames) {
-            throw new \InvalidArgumentException(sprintf('Following formatters ["%s"] are not supported.', implode('", "', $invalidNames)));
+            throw new InvalidArgumentException(sprintf('Following formatters ["%s"] are not supported.', implode('", "', $invalidNames)));
         }
 
         return array_values(

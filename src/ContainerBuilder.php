@@ -13,10 +13,8 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 final class ContainerBuilder
 {
-    /** @var string */
-    private $currentWorkingDirectory;
-    /** @var string|null */
-    private $cacheFile;
+    private string $currentWorkingDirectory;
+    private ?string $cacheFile = null;
 
     public function __construct(string $currentWorkingDirectory)
     {

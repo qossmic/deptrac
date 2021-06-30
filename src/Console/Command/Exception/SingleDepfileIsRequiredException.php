@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command\Exception;
 
-final class SingleDepfileIsRequiredException extends \RuntimeException
+use RuntimeException;
+
+final class SingleDepfileIsRequiredException extends RuntimeException
 {
     /**
      * @param mixed $argument

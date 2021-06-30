@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration\Exception;
 
-final class FileCannotBeParsedAsYamlException extends \RuntimeException
+use RuntimeException;
+
+final class FileCannotBeParsedAsYamlException extends RuntimeException
 {
     public static function fromFilename(string $filename): self
     {

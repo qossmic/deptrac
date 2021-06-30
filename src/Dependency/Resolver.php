@@ -14,12 +14,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver
 {
-    /** @var EventDispatcherInterface */
-    private $dispatcher;
-    /** @var InheritanceFlatter */
-    private $inheritanceFlatter;
+    private EventDispatcherInterface $dispatcher;
+    private InheritanceFlatter $inheritanceFlatter;
     /** @var DependencyEmitterInterface[] */
-    private $emitters;
+    private array $emitters;
 
     /**
      * @param DependencyEmitterInterface[] $emitters

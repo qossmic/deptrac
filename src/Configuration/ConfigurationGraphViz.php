@@ -7,10 +7,10 @@ namespace Qossmic\Deptrac\Configuration;
 final class ConfigurationGraphViz
 {
     /** @var array<string, string[]> */
-    private $groupsLayerMap;
+    private array $groupsLayerMap;
 
     /** @var string[] */
-    private $hiddenLayers;
+    private array $hiddenLayers;
 
     /**
      * @param array<string, mixed> $arr

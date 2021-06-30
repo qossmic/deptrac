@@ -8,8 +8,8 @@ use Qossmic\Deptrac\Dependency\DependencyInterface;
 
 final class Uncovered implements Rule
 {
-    private $dependency;
-    private $layer;
+    private DependencyInterface $dependency;
+    private string $layer;
 
     public function __construct(DependencyInterface $dependency, string $layer)
     {

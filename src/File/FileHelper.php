@@ -12,8 +12,7 @@ use function trim;
 
 final class FileHelper
 {
-    /** @var string */
-    private $workingDirectory;
+    private string $workingDirectory;
 
     public function __construct(string $workingDirectory)
     {

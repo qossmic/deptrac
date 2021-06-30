@@ -11,8 +11,8 @@ use Qossmic\Deptrac\Configuration\ParameterResolver;
 
 class ClassLikeLayerResolverFactory
 {
-    private $registry;
-    private $parameterResolver;
+    private Registry $registry;
+    private ParameterResolver $parameterResolver;
 
     public function __construct(Registry $registry, ParameterResolver $parameterResolver)
     {

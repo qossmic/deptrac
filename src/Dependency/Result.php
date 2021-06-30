@@ -9,10 +9,10 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 class Result
 {
     /** @var array<string, Dependency[]> */
-    private $dependencies = [];
+    private array $dependencies = [];
 
     /** @var array<string, InheritDependency[]> */
-    private $inheritDependencies = [];
+    private array $inheritDependencies = [];
 
     public function addDependency(Dependency $dependency): self
     {

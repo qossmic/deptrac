@@ -9,7 +9,11 @@ use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Object_;
-use PhpParser\Node;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\NullableType;
+use PhpParser\Node\UnionType;
 use PhpParser\NodeAbstract;
 use PHPStan\PhpDocParser\Ast\ConstExpr\ConstFetchNode;
 use PHPStan\PhpDocParser\Ast\Type\ArrayShapeItemNode;
@@ -24,13 +28,11 @@ use PHPStan\PhpDocParser\Ast\Type\IntersectionTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\NullableTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
+use Throwable;
 
 class TypeResolver
 {
-    /**
-     * @var \phpDocumentor\Reflection\TypeResolver
-     */
-    private $typeResolver;
+    private \phpDocumentor\Reflection\TypeResolver $typeResolver;
 
     public function __construct()
     {
@@ -55,19 +57,19 @@ class TypeResolver
      */
     private function resolvePHPParserType(TypeScope $typeScope, NodeAbstract $node): array
     {
-        if ($node instanceof Node\Name && $node->isSpecialClassName()) {
+        if ($node instanceof Name && $node->isSpecialClassName()) {
             return [];
         }
 
-        if ($node instanceof Node\Name) {
+        if ($node instanceof Name) {
             return $this->resolveString($node->toCodeString(), $typeScope);
         }
 
-        if ($node instanceof Node\NullableType) {
+        if ($node instanceof NullableType) {
             return $this->resolvePHPParserType($typeScope, $node->type);
         }
 
-        if ($node instanceof Node\UnionType) {
+        if ($node instanceof UnionType) {
             return $this->resolvePHPParserTypes($typeScope, ...$node->types);
         }
 
@@ -135,7 +137,7 @@ class TypeResolver
         $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
         try {
             $resolvedType = $this->typeResolver->resolve($type, $context);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return [];
         }
 
@@ -143,22 +145,22 @@ class TypeResolver
     }
 
     /**
-     * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType $type
+     * @param Identifier|Name|NullableType|UnionType $type
      *
      * @return string[]
      */
     public function resolvePropertyType(NodeAbstract $type): array
     {
-        if ($type instanceof Node\Name\FullyQualified) {
+        if ($type instanceof FullyQualified) {
             return [(string) $type];
         }
-        if ($type instanceof Node\NullableType) {
+        if ($type instanceof NullableType) {
             return $this->resolvePropertyType($type->type);
         }
-        if ($type instanceof Node\UnionType) {
+        if ($type instanceof UnionType) {
             return array_merge([], ...array_map(
                 /**
-                 * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name $typeNode
+                 * @param Identifier|Name $typeNode
                  */
                 function ($typeNode) {
                     return $this->resolvePropertyType($typeNode);

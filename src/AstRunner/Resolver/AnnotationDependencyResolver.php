@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
@@ -16,12 +19,9 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 
 class AnnotationDependencyResolver implements ClassDependencyResolver
 {
-    /** @var Lexer */
-    private $lexer;
-    /** @var PhpDocParser */
-    private $docParser;
-    /** @var TypeResolver */
-    private $typeResolver;
+    private Lexer $lexer;
+    private PhpDocParser $docParser;
+    private TypeResolver $typeResolver;
 
     public function __construct(TypeResolver $typeResolver)
     {
@@ -32,9 +32,9 @@ class AnnotationDependencyResolver implements ClassDependencyResolver
 
     public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof Node\Stmt\Property
-            && !$node instanceof Node\Expr\Variable
-            && !$node instanceof Node\Stmt\ClassMethod
+        if (!$node instanceof Property
+            && !$node instanceof Variable
+            && !$node instanceof ClassMethod
         ) {
             return;
         }

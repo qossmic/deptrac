@@ -9,7 +9,7 @@ use InvalidArgumentException;
 final class ConfigurationRuleset
 {
     /** @var array<string, string[]> */
-    private $layerMap;
+    private array $layerMap;
 
     /**
      * @param array<string, string[]> $arr

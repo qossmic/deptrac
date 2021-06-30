@@ -14,16 +14,10 @@ use Symfony\Component\Config\Definition\Processor;
 
 class Loader
 {
-    /** @var YmlFileLoader */
-    private $fileLoader;
-    /** @var Processor */
-    private $processor;
-    /** @var FileHelper */
-    private $workingDirectoryFileHelper;
-    /**
-     * @var string
-     */
-    private $workingDirectory;
+    private YmlFileLoader $fileLoader;
+    private Processor $processor;
+    private FileHelper $workingDirectoryFileHelper;
+    private string $workingDirectory;
 
     public function __construct(YmlFileLoader $fileLoader, string $workingDirectory)
     {
