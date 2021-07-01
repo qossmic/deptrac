@@ -7,6 +7,9 @@ namespace Qossmic\Deptrac\Dependency;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
+/**
+ * @psalm-immutable
+ */
 class Dependency implements DependencyInterface
 {
     private TokenName $dependant;

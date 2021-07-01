@@ -51,7 +51,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             }
 
             if ($rule instanceof Violation || ($reportSkipped && $rule instanceof SkippedViolation)) {
-                $groupedRules[$rule->getLayerA()][] = $rule;
+                $groupedRules[$rule->getDependantLayerName()][] = $rule;
             } elseif ($reportUncovered && $rule instanceof Uncovered) {
                 $groupedRules[$rule->getLayer()][] = $rule;
             }
@@ -94,7 +94,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             '<info>%s</info> must not depend on <info>%s</info> (%s)',
             $dependency->getDependant()->toString(),
             $dependency->getDependee()->toString(),
-            $rule->getLayerB()
+            $rule->getDependeeLayerName()
         );
 
         if ($dependency instanceof InheritDependency) {

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
+/**
+ * @psalm-immutable
+ */
 final class FileOccurrence
 {
     private string $filepath;

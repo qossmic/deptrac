@@ -8,7 +8,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
 /**
- * @immutable
+ * @psalm-immutable
  */
 interface DependencyInterface
 {

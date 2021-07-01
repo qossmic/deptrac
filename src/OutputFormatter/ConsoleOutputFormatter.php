@@ -78,8 +78,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
                 $dependency->getDependant()->toString(),
                 $dependency->getDependee()->toString(),
-                $rule->getLayerA(),
-                $rule->getLayerB()
+                $rule->getDependantLayerName(),
+                $rule->getDependeeLayerName()
             )
         );
         $this->printFileOccurrence($output, $dependency->getFileOccurrence());

@@ -133,8 +133,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             '%s must not depend on %s (%s on %s)',
             $dependency->getDependant()->toString(),
             $dependency->getDependee()->toString(),
-            $violation->getLayerA(),
-            $violation->getLayerB()
+            $violation->getDependantLayerName(),
+            $violation->getDependeeLayerName()
         );
     }
 
@@ -160,8 +160,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             '%s should not depend on %s (%s on %s)',
             $dependency->getDependant()->toString(),
             $dependency->getDependee()->toString(),
-            $violation->getLayerA(),
-            $violation->getLayerB()
+            $violation->getDependantLayerName(),
+            $violation->getDependeeLayerName()
         );
     }
 

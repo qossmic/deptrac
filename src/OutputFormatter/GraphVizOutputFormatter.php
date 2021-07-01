@@ -9,10 +9,9 @@ use Fhaculty\Graph\Vertex;
 use Graphp\GraphViz\GraphViz;
 use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\CoveredRule;
 use Qossmic\Deptrac\RulesetEngine\Rule;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
 
@@ -145,14 +144,14 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     {
         $layerViolations = [];
         foreach ($violations as $violation) {
-            if (!isset($layerViolations[$violation->getLayerA()])) {
-                $layerViolations[$violation->getLayerA()] = [];
+            if (!isset($layerViolations[$violation->getDependantLayerName()])) {
+                $layerViolations[$violation->getDependantLayerName()] = [];
             }
 
-            if (!isset($layerViolations[$violation->getLayerA()][$violation->getLayerB()])) {
-                $layerViolations[$violation->getLayerA()][$violation->getLayerB()] = 1;
+            if (!isset($layerViolations[$violation->getDependantLayerName()][$violation->getDependeeLayerName()])) {
+                $layerViolations[$violation->getDependantLayerName()][$violation->getDependeeLayerName()] = 1;
             } else {
-                ++$layerViolations[$violation->getLayerA()][$violation->getLayerB()];
+                ++$layerViolations[$violation->getDependantLayerName()][$violation->getDependeeLayerName()];
             }
         }
 
@@ -169,12 +168,9 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $layersDependOnLayers = [];
 
         foreach ($rules as $rule) {
-            if ($rule instanceof Violation
-                || $rule instanceof SkippedViolation
-                || $rule instanceof Allowed
-            ) {
-                $layerA = $rule->getLayerA();
-                $layerB = $rule->getLayerB();
+            if ($rule instanceof CoveredRule) {
+                $layerA = $rule->getDependantLayerName();
+                $layerB = $rule->getDependeeLayerName();
 
                 if (!isset($layersDependOnLayers[$layerA])) {
                     $layersDependOnLayers[$layerA] = [];

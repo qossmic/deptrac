@@ -9,8 +9,8 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\CoveredRule;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
@@ -110,8 +110,8 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         /** @var array<string, array<Rule>> $layers */
         $layers = [];
         foreach ($context->rules() as $rule) {
-            if ($rule instanceof Allowed || $rule instanceof Violation || $rule instanceof SkippedViolation) {
-                $layers[$rule->getLayerA()][] = $rule;
+            if ($rule instanceof CoveredRule) {
+                $layers[$rule->getDependantLayerName()][] = $rule;
             } elseif ($rule instanceof Uncovered) {
                 $layers[$rule->getLayer()][] = $rule;
             }
@@ -183,8 +183,8 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $dependency->getDependant()->toString(),
             $dependency->getFileOccurrence()->getLine(),
             $dependency->getDependee()->toString(),
-            $violation->getLayerA(),
-            $violation->getLayerB()
+            $violation->getDependantLayerName(),
+            $violation->getDependeeLayerName()
         );
 
         $error = $xmlDoc->createElement('failure');

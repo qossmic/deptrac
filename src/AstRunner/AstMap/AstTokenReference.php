@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 /**
- * @immutable
+ * @psalm-immutable
  */
 interface AstTokenReference
 {

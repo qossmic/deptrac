@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\RulesetEngine;
 
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
+/**
+ * @psalm-immutable
+ */
 final class Warning
 {
     private string $message;

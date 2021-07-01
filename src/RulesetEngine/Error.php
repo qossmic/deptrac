@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
+/**
+ * @psalm-immutable
+ */
 class Error
 {
     private string $message;

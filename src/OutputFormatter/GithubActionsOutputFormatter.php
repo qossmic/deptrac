@@ -65,8 +65,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
                 $dependency->getDependant()->toString(),
                 $dependency->getDependee()->toString(),
-                $rule->getLayerA(),
-                $rule->getLayerB()
+                $rule->getDependantLayerName(),
+                $rule->getDependeeLayerName()
             );
 
             if ($dependency instanceof InheritDependency) {

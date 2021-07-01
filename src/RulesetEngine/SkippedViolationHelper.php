@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\RulesetEngine;
 
 use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
 
+/**
+ * @psalm-immutable
+ */
 final class SkippedViolationHelper
 {
     /**
