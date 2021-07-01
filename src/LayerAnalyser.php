@@ -48,12 +48,12 @@ class LayerAnalyser
         }
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
-            $classLikeName = $dependency->getTokenNameA();
+            $classLikeName = $dependency->getDependant();
             if ($classLikeName instanceof ClassLikeName && $this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }
 
-            $classLikeName = $dependency->getTokenNameB();
+            $classLikeName = $dependency->getDependee();
             if ($classLikeName instanceof ClassLikeName && $this->isInLayer($layer, $classLikeName, $classLikeLayerResolver)) {
                 $classLikeNames[] = $classLikeName->toString();
             }

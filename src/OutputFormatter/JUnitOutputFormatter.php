@@ -129,7 +129,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
-                $rulesByClassName[$rule->getDependency()->getTokenNameA()->toString()][] = $rule;
+                $rulesByClassName[$rule->getDependency()->getDependant()->toString()][] = $rule;
             }
 
             $testSuite = $xmlDoc->createElement('testsuite');
@@ -180,9 +180,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d must not depend on %s (%s on %s)',
-            $dependency->getTokenNameA()->toString(),
+            $dependency->getDependant()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getTokenNameB()->toString(),
+            $dependency->getDependee()->toString(),
             $violation->getLayerA(),
             $violation->getLayerB()
         );
@@ -206,9 +206,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d has uncovered dependency on %s (%s)',
-            $dependency->getTokenNameA()->toString(),
+            $dependency->getDependant()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getTokenNameB()->toString(),
+            $dependency->getDependee()->toString(),
             $rule->getLayer()
         );
 

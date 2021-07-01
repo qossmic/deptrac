@@ -9,25 +9,25 @@ use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
 class Dependency implements DependencyInterface
 {
-    private TokenName $tokenNameA;
-    private TokenName $tokenNameB;
+    private TokenName $dependant;
+    private TokenName $dependee;
     private FileOccurrence $fileOccurrence;
 
-    public function __construct(TokenName $tokenNameA, TokenName $tokenNameB, FileOccurrence $fileOccurrence)
+    public function __construct(TokenName $dependant, TokenName $dependee, FileOccurrence $fileOccurrence)
     {
-        $this->tokenNameA = $tokenNameA;
-        $this->tokenNameB = $tokenNameB;
+        $this->dependant = $dependant;
+        $this->dependee = $dependee;
         $this->fileOccurrence = $fileOccurrence;
     }
 
-    public function getTokenNameA(): TokenName
+    public function getDependant(): TokenName
     {
-        return $this->tokenNameA;
+        return $this->dependant;
     }
 
-    public function getTokenNameB(): TokenName
+    public function getDependee(): TokenName
     {
-        return $this->tokenNameB;
+        return $this->dependee;
     }
 
     public function getFileOccurrence(): FileOccurrence

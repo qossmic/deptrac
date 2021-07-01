@@ -12,9 +12,9 @@ class Registry
     protected array $collectors = [];
 
     /**
-     * @param CollectorInterface[] $collectors
+     * @param iterable<CollectorInterface> $collectors
      */
-    public function __construct($collectors)
+    public function __construct(iterable $collectors)
     {
         foreach ($collectors as $collector) {
             $this->addCollector($collector);

@@ -18,9 +18,9 @@ class OutputFormatterFactory
     protected array $formatters = [];
 
     /**
-     * @param OutputFormatterInterface[] $formatters
+     * @param iterable<OutputFormatterInterface> $formatters
      */
-    public function __construct($formatters)
+    public function __construct(iterable $formatters)
     {
         foreach ($formatters as $formatter) {
             $this->addFormatter($formatter);

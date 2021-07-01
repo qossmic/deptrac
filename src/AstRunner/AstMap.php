@@ -16,12 +16,12 @@ class AstMap
     /**
      * @var AstClassReference[]
      */
-    private $astClassReferences = [];
+    private array $astClassReferences = [];
 
     /**
      * @var AstFileReference[]
      */
-    private $astFileReferences = [];
+    private array $astFileReferences = [];
 
     /**
      * @param AstFileReference[] $astFileReferences

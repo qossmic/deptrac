@@ -7,11 +7,14 @@ namespace Qossmic\Deptrac\Dependency;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
+/**
+ * @immutable
+ */
 interface DependencyInterface
 {
-    public function getTokenNameA(): TokenName;
+    public function getDependant(): TokenName;
 
-    public function getTokenNameB(): TokenName;
+    public function getDependee(): TokenName;
 
     public function getFileOccurrence(): FileOccurrence;
 }

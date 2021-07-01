@@ -92,8 +92,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '<info>%s</info> must not depend on <info>%s</info> (%s)',
-            $dependency->getTokenNameA()->toString(),
-            $dependency->getTokenNameB()->toString(),
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString(),
             $rule->getLayerB()
         );
 
@@ -121,7 +121,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             '%s::%d',
-            $dependency->getOriginalDependency()->getTokenNameB()->toString(),
+            $dependency->getOriginalDependency()->getDependee()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
@@ -159,8 +159,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '<info>%s</info> has uncovered dependency on <info>%s</info>',
-            $dependency->getTokenNameA()->toString(),
-            $dependency->getTokenNameB()->toString()
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString()
         );
 
         if ($dependency instanceof InheritDependency) {

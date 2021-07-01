@@ -16,7 +16,7 @@ class InheritanceFlatter
             $tokenName = $classReference->getTokenName();
             foreach ($astMap->getClassInherits($tokenName) as $inherit) {
                 foreach ($dependencyResult->getDependenciesByClass($inherit->getClassLikeName()) as $dep) {
-                    $depTokenName = $dep->getTokenNameB();
+                    $depTokenName = $dep->getDependee();
                     assert($depTokenName instanceof AstMap\ClassLikeName);
                     $dependencyResult->addInheritDependency(new InheritDependency(
                                                                 $tokenName,

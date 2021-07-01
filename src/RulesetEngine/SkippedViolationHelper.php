@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
 
 final class SkippedViolationHelper
@@ -25,15 +24,12 @@ final class SkippedViolationHelper
         $this->unmatchedSkippedViolation = $configuration->all();
     }
 
-    public function isViolationSkipped(TokenName $tokenNameA, TokenName $tokenNameB): bool
+    public function isViolationSkipped(string $dependant, string $dependee): bool
     {
-        $a = $tokenNameA->toString();
-        $b = $tokenNameB->toString();
+        $matched = isset($this->skippedViolation[$dependant]) && \in_array($dependee, $this->skippedViolation[$dependant], true);
 
-        $matched = isset($this->skippedViolation[$a]) && \in_array($b, $this->skippedViolation[$a], true);
-
-        if ($matched && false !== ($key = array_search($b, $this->unmatchedSkippedViolation[$a], true))) {
-            unset($this->unmatchedSkippedViolation[$a][$key]);
+        if ($matched && false !== ($key = array_search($dependee, $this->unmatchedSkippedViolation[$dependant], true))) {
+            unset($this->unmatchedSkippedViolation[$dependant][$key]);
         }
 
         return $matched;

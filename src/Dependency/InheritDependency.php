@@ -24,7 +24,7 @@ class InheritDependency implements DependencyInterface
         $this->path = $path;
     }
 
-    public function getTokenNameA(): TokenName
+    public function getDependant(): TokenName
     {
         return $this->classLikeNameA;
     }
@@ -34,7 +34,7 @@ class InheritDependency implements DependencyInterface
         return $this->getOriginalDependency()->getFileOccurrence();
     }
 
-    public function getTokenNameB(): TokenName
+    public function getDependee(): TokenName
     {
         return $this->classLikeNameB;
     }

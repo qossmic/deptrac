@@ -38,8 +38,8 @@ use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
-use Qossmic\Deptrac\DependencyEmitter\BasicDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\InheritanceDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\FileResolver;
 use Qossmic\Deptrac\LayerAnalyser;
 use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
@@ -233,10 +233,10 @@ return static function (ContainerConfigurator $container): void {
         ]);
     $services->set(InheritanceFlatter::class);
     $services
-        ->set(InheritanceDependencyEmitter::class)
+        ->set(UsesDependencyEmitter::class)
         ->tag('dependency_emitter');
     $services
-        ->set(BasicDependencyEmitter::class)
+        ->set(ClassDependencyEmitter::class)
         ->tag('dependency_emitter');
 
     /* Commands */

@@ -20,9 +20,9 @@ class Resolver
     private array $emitters;
 
     /**
-     * @param DependencyEmitterInterface[] $emitters
+     * @param iterable<DependencyEmitterInterface> $emitters
      */
-    public function __construct(EventDispatcherInterface $dispatcher, InheritanceFlatter $inheritanceFlatter, $emitters)
+    public function __construct(EventDispatcherInterface $dispatcher, InheritanceFlatter $inheritanceFlatter, iterable $emitters)
     {
         $this->dispatcher = $dispatcher;
         $this->inheritanceFlatter = $inheritanceFlatter;

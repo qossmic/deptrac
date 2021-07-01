@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
+/**
+ * @immutable
+ */
 class AstFileReference
 {
     private string $filepath;
@@ -15,10 +18,10 @@ class AstFileReference
     private array $dependencies;
 
     /**
-     * @param AstDependency[]     $dependencies
      * @param AstClassReference[] $classReferences
+     * @param AstDependency[]     $dependencies
      */
-    public function __construct(string $filepath, array $dependencies, array $classReferences)
+    public function __construct(string $filepath, array $classReferences, array $dependencies)
     {
         $this->filepath = $filepath;
         $this->dependencies = $dependencies;

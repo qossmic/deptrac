@@ -128,7 +128,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             'warnings' => [],
             '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
             originalA.php::12
-            
+
             Report:
             Violations: 0
             Skipped violations: 1
@@ -172,7 +172,7 @@ final class ConsoleOutputFormatterTest extends TestCase
         yield 'an warning occurred' => [
             [],
             [],
-            'warnings' => [Warning::tokenLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            'warnings' => [Warning::tokenIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
             '[WARNING]Foo\Barisinmorethanonelayer["Layer1","Layer2"].Itisrecommendedthatonetokenshouldonlybeinonelayer.Report:Violations:0Skippedviolations:0Uncovered:0Allowed:0Warnings:1Errors:0',
         ];
     }
@@ -236,7 +236,7 @@ final class ConsoleOutputFormatterTest extends TestCase
         $o = $bufferedOutput->fetch();
 
         $expectedOutput = '
-            
+
             Report:
             Violations: 0
             Skipped violations: 1

@@ -95,11 +95,7 @@ class NikicPhpParser implements AstParser
             return null;
         }
 
-        $findingVisitor = new FindingVisitor(
-            static function (Node $node): bool {
-                return $node instanceof ClassLike;
-            }
-        );
+        $findingVisitor = new FindingVisitor(static fn (Node $node): bool => $node instanceof ClassLike);
 
         $nodes = $this->parser->parse(FileReader::read($astFileReference->getFilepath()));
         if (null === $nodes) {

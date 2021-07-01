@@ -131,8 +131,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s must not depend on %s (%s on %s)',
-            $dependency->getTokenNameA()->toString(),
-            $dependency->getTokenNameB()->toString(),
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString(),
             $violation->getLayerA(),
             $violation->getLayerB()
         );
@@ -158,8 +158,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s should not depend on %s (%s on %s)',
-            $dependency->getTokenNameA()->toString(),
-            $dependency->getTokenNameB()->toString(),
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString(),
             $violation->getLayerA(),
             $violation->getLayerB()
         );
@@ -185,8 +185,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s has uncovered dependency on %s (%s)',
-            $dependency->getTokenNameA()->toString(),
-            $dependency->getTokenNameB()->toString(),
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString(),
             $violation->getLayer()
         );
     }

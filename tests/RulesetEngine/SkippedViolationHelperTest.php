@@ -30,26 +30,26 @@ final class SkippedViolationHelperTest extends TestCase
 
         self::assertTrue(
             $helper->isViolationSkipped(
-                ClassLikeName::fromFQCN('ClassWithOneDep'),
-                ClassLikeName::fromFQCN('DependencyClass')
+                ClassLikeName::fromFQCN('ClassWithOneDep')->toString(),
+                ClassLikeName::fromFQCN('DependencyClass')->toString()
             )
         );
         self::assertFalse(
             $helper->isViolationSkipped(
-                ClassLikeName::fromFQCN('ClassWithEmptyDeps'),
-                ClassLikeName::fromFQCN('DependencyClass')
+                ClassLikeName::fromFQCN('ClassWithEmptyDeps')->toString(),
+                ClassLikeName::fromFQCN('DependencyClass')->toString()
             )
         );
         self::assertTrue(
             $helper->isViolationSkipped(
-                ClassLikeName::fromFQCN('ClassWithMultipleDeps'),
-                ClassLikeName::fromFQCN('DependencyClass1')
+                ClassLikeName::fromFQCN('ClassWithMultipleDeps')->toString(),
+                ClassLikeName::fromFQCN('DependencyClass1')->toString()
             )
         );
         self::assertTrue(
             $helper->isViolationSkipped(
-                ClassLikeName::fromFQCN('ClassWithMultipleDeps'),
-                ClassLikeName::fromFQCN('DependencyClass2')
+                ClassLikeName::fromFQCN('ClassWithMultipleDeps')->toString(),
+                ClassLikeName::fromFQCN('DependencyClass2')->toString()
             )
         );
     }
@@ -73,8 +73,8 @@ final class SkippedViolationHelperTest extends TestCase
 
         self::assertTrue(
             $helper->isViolationSkipped(
-                ClassLikeName::fromFQCN('ClassWithOneDep'),
-                ClassLikeName::fromFQCN('DependencyClass')
+                ClassLikeName::fromFQCN('ClassWithOneDep')->toString(),
+                ClassLikeName::fromFQCN('DependencyClass')->toString()
             )
         );
         self::assertSame(
