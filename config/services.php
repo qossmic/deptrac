@@ -132,7 +132,6 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service(AstRunner::class),
             service(FileResolver::class),
-            service(Resolver::class),
             service(ClassLikeLayerResolverFactory::class),
         ]);
 
