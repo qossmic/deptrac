@@ -11,7 +11,10 @@ class AstFileReference
     /** @var AstClassReference[] */
     private array $classReferences;
 
-    /** @var AstDependency[] */
+    /** 
+     * @var AstDependency[] 
+     * @deprecated 
+     */
     private array $dependencies;
 
     /**
@@ -43,6 +46,7 @@ class AstFileReference
 
     /**
      * @return AstDependency[]
+     * @deprecated 
      */
     public function getDependencies(): array
     {

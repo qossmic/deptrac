@@ -6,7 +6,10 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 final class FileReferenceBuilder
 {
-    /** @var AstDependency[] */
+    /** 
+     * @var AstDependency[] 
+     * @deprecated 
+     */
     private array $dependencies = [];
 
     private string $filepath;
