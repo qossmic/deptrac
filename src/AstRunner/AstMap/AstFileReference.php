@@ -11,9 +11,10 @@ class AstFileReference
     /** @var AstClassReference[] */
     private array $classReferences;
 
-    /** 
-     * @var AstDependency[] 
-     * @deprecated 
+    /**
+     * @var AstDependency[]
+     *
+     * @deprecated
      */
     private array $dependencies;
 
@@ -26,7 +27,7 @@ class AstFileReference
         $this->filepath = $filepath;
         $this->dependencies = $dependencies;
         $this->classReferences = array_map(
-            fn(AstClassReference $classReference) => $classReference->withFileReference($this),
+            fn (AstClassReference $classReference) => $classReference->withFileReference($this),
             $classReferences
         );
     }
@@ -46,7 +47,8 @@ class AstFileReference
 
     /**
      * @return AstDependency[]
-     * @deprecated 
+     *
+     * @deprecated
      */
     public function getDependencies(): array
     {
