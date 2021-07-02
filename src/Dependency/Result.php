@@ -16,12 +16,12 @@ class Result
 
     public function addDependency(Dependency $dependency): self
     {
-        $classLikeName = $dependency->getDependant()->toString();
-        if (!isset($this->dependencies[$classLikeName])) {
-            $this->dependencies[$classLikeName] = [];
+        $tokenName = $dependency->getDependant()->toString();
+        if (!isset($this->dependencies[$tokenName])) {
+            $this->dependencies[$tokenName] = [];
         }
 
-        $this->dependencies[$classLikeName][] = $dependency;
+        $this->dependencies[$tokenName][] = $dependency;
 
         return $this;
     }
