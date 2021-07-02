@@ -15,11 +15,11 @@ use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 class InheritDependency implements DependencyInterface
 {
     private ClassLikeName $dependant;
-    private ClassLikeName $dependee;
+    private TokenName $dependee;
     private AstInherit $path;
     private DependencyInterface $originalDependency;
 
-    public function __construct(ClassLikeName $dependant, ClassLikeName $dependee, DependencyInterface $originalDependency, AstInherit $path)
+    public function __construct(ClassLikeName $dependant, TokenName $dependee, DependencyInterface $originalDependency, AstInherit $path)
     {
         $this->dependant = $dependant;
         $this->dependee = $dependee;
@@ -27,7 +27,7 @@ class InheritDependency implements DependencyInterface
         $this->path = $path;
     }
 
-    public function getDependant(): TokenName
+    public function getDependant(): ClassLikeName
     {
         return $this->dependant;
     }
