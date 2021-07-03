@@ -66,17 +66,17 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
-//            $graph->export('png',$dumpImagePath);
+            $graph->export('png',$dumpImagePath);
             $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT)) {
-//            file_put_contents($dumpDotPath, (string)$graph);
+            file_put_contents($dumpDotPath, (string)$graph);
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
-//            file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
+            file_put_contents($dumpHtmlPath, $this->createImageHtml($graph));
             $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
     }
@@ -218,4 +218,10 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             $graph->setNode($node);
         }
     }
+
+    private function createImageHtml(Graph $graph): string
+    {
+        return '<img src="data:image/png;base64,' . base64_encode($this->createImageData($graph)) . '" />';
+    }
+
 }
