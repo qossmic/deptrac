@@ -1,0 +1,27 @@
+paths: ["./Transitive"]
+exclude_files: []
+layers:
+  - name: Foo
+    collectors:
+      - type: className
+        regex: .*\\Foo$
+  - name: Baz
+    collectors:
+      - type: className
+        regex: .*\\Baz$
+  - name: Bar
+    collectors:
+      - type: className
+        regex: .*\\Bar$
+  - name: Bat
+    collectors:
+      - type: className
+        regex: .*\\Bat$
+ruleset:
+  Foo:
+    - Bar
+  Bar: ~
+  Baz:
+    - +Foo
+  Bat:
+    - Foo
