@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use function base64_encode;
+use function file_get_contents;
 use phpDocumentor\GraphViz\Edge;
+use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
 use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
@@ -15,6 +18,8 @@ use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use function sys_get_temp_dir;
+use function tempnam;
 
 final class GraphVizOutputFormatter implements OutputFormatterInterface
 {
@@ -62,22 +67,58 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $this->addNodesToGraph($graph, $nodes, $outputConfig);
 
         if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
-            $graph->export('xlib', tempnam(sys_get_temp_dir(), 'deptrac'));
+            try {
+                $filename = tempnam(sys_get_temp_dir(), 'deptrac');
+                if (false === $filename) {
+                    throw new \RuntimeException('Unable to create temp file for output.');
+                }
+                $graph->export('xlib', $filename);
+            } catch (Exception $exception) {
+                throw new \LogicException('Unable to display output: '.$exception->getMessage());
+            } finally {
+                if (isset($filename) && false !== $filename) {
+                    unlink($filename);
+                }
+            }
         }
 
         if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
-            $graph->export('png',$dumpImagePath);
-            $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+            try {
+                $graph->export('png', $dumpImagePath);
+                $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+            } catch (Exception $exception) {
+                throw new \LogicException('Unable to display output: '.$exception->getMessage());
+            }
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT)) {
-            file_put_contents($dumpDotPath, (string)$graph);
+            file_put_contents($dumpDotPath, (string) $graph);
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
-            file_put_contents($dumpHtmlPath, $this->createImageHtml($graph));
-            $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
+            try {
+                $filename = tempnam(sys_get_temp_dir(), 'deptrac');
+                if (false === $filename) {
+                    throw new \RuntimeException('Unable to create temp file for output.');
+                }
+                $graph->export('png', $filename);
+                $imageData = file_get_contents($filename);
+                if (false === $imageData) {
+                    throw new \RuntimeException('Unable to create temp file for output.');
+                }
+                file_put_contents(
+                    $dumpHtmlPath,
+                    '<img src="data:image/png;base64,'.base64_encode($imageData).'" />'
+                );
+                $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
+            } catch (Exception $exception) {
+                throw new \LogicException('Unable to generate HTML file: '.$exception->getMessage());
+            } finally {
+                if (isset($filename) && false !== $filename) {
+                    unlink($filename);
+                }
+            }
         }
     }
 
@@ -143,6 +184,8 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
+     * @param array<string, array<string, int>> $layersDependOnLayers
+     *
      * @return Node[]
      */
     private function createNodes(ConfigurationGraphViz $outputConfig, array $layersDependOnLayers): array
@@ -157,7 +200,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                 $nodes[$layer] = new Node($layer);
             }
 
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
+            foreach ($layersDependOn as $layerDependOn => $_) {
                 if (in_array($layerDependOn, $hiddenLayers, true)) {
                     continue;
                 }
@@ -166,9 +209,15 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                 }
             }
         }
+
         return $nodes;
     }
 
+    /**
+     * @param Node[]                            $nodes
+     * @param array<string, array<string, int>> $layersDependOnLayers
+     * @param array<string, array<string, int>> $layerViolations
+     */
     private function connectEdges(
         Graph $graph,
         array $nodes,
@@ -189,15 +238,18 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                 $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
                 $graph->link($edge);
                 if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge->setAttribute('label', (string)$layerViolations[$layer][$layerDependOn]);
+                    $edge->setAttribute('label', (string) $layerViolations[$layer][$layerDependOn]);
                     $edge->setAttribute('color', 'red');
                 } else {
-                    $edge->setAttribute('label', (string)$layerDependOnCount);
+                    $edge->setAttribute('label', (string) $layerDependOnCount);
                 }
             }
         }
     }
 
+    /**
+     * @param Node[] $nodes
+     */
     private function addNodesToGraph(Graph $graph, array $nodes, ConfigurationGraphViz $outputConfig): void
     {
         foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
@@ -218,10 +270,4 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             $graph->setNode($node);
         }
     }
-
-    private function createImageHtml(Graph $graph): string
-    {
-        return '<img src="data:image/png;base64,' . base64_encode($this->createImageData($graph)) . '" />';
-    }
-
 }

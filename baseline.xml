@@ -47,14 +47,13 @@
     </MixedAssignment>
   </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedArgument occurrences="7">
+    <MixedArgument occurrences="6">
       <code>$options['analyzer']</code>
       <code>$options['layers']</code>
       <code>$options['ruleset']</code>
       <code>$options['ruleset']</code>
       <code>$options['ruleset']</code>
       <code>$options['skip_violations']</code>
-      <code>$unknownLayerNames</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$v</code>
@@ -219,16 +218,11 @@
     </MixedAssignment>
   </file>
   <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
-    <InvalidScalarArgument occurrences="2">
-      <code>$layer</code>
-      <code>$layerDependOn</code>
-    </InvalidScalarArgument>
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="5">
       <code>$dumpDotPath</code>
       <code>$dumpDotPath</code>
       <code>$dumpHtmlPath</code>
       <code>$dumpHtmlPath</code>
-      <code>$dumpImagePath</code>
       <code>$dumpImagePath</code>
     </MixedArgument>
     <MixedAssignment occurrences="3">
@@ -236,9 +230,12 @@
       <code>$dumpHtmlPath</code>
       <code>$dumpImagePath</code>
     </MixedAssignment>
-    <UnusedVariable occurrences="1">
-      <code>$layerDependOnCount</code>
-    </UnusedVariable>
+    <RedundantCondition occurrences="4">
+      <code>false !== $filename</code>
+      <code>false !== $filename</code>
+      <code>isset($filename) &amp;&amp; false !== $filename</code>
+      <code>isset($filename) &amp;&amp; false !== $filename</code>
+    </RedundantCondition>
   </file>
   <file src="src/OutputFormatter/JUnitOutputFormatter.php">
     <MixedArgument occurrences="2">
