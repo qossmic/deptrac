@@ -77,10 +77,11 @@ class Configuration
             throw InvalidConfigurationException::fromDuplicateLayerNames(...$duplicateLayerNames);
         }
 
+        /** @var list<string> $layerNamesUsedInRuleset */
         $layerNamesUsedInRuleset = array_unique(array_merge(
             array_keys($options['ruleset']),
             ...array_values(array_map(static function (?array $rules): array {
-                return (array) $rules;
+                return array_map(static fn (string $rule): string => ltrim($rule, '+'), (array) $rules);
             }, $options['ruleset']))
         ));
 
