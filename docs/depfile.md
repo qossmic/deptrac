@@ -217,6 +217,19 @@ ruleset:
   Repository: ~
 ```
 
+If you prepend a layer with `+` then not only this layer is allowed, but also
+all layers it allows. In the example below, the Controller can now use classes
+from the Service and the Repository layer, not just the Service layer.
+
+```yaml
+ruleset:
+  Controller:
+    - +Service
+  Service:
+    - Repository
+  Repository: ~
+```
+
 ## `skip_violations`
 
 With `skip_violations` you can tell your CI pipeline to not fail, when the
