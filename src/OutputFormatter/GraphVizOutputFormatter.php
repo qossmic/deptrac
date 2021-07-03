@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Fhaculty\Graph\Graph;
-use Fhaculty\Graph\Vertex;
-use Graphp\GraphViz\GraphViz;
+use phpDocumentor\GraphViz\Edge;
+use phpDocumentor\GraphViz\Graph;
+use phpDocumentor\GraphViz\Node;
 use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -54,84 +54,29 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     ): void {
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
-
-        $graph = new Graph();
-
-        /** @var Vertex[] $vertices */
-        $vertices = [];
-
         $outputConfig = ConfigurationGraphViz::fromArray($outputFormatterInput->getConfig());
-        $hiddenLayers = $outputConfig->getHiddenLayers();
-        // create a vertices
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (in_array($layer, $hiddenLayers, true)) {
-                continue;
-            }
-            if (!isset($vertices[$layer])) {
-                $vertices[$layer] = $graph->createVertex($layer);
-            }
 
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if (in_array($layerDependOn, $hiddenLayers, true)) {
-                    continue;
-                }
-                if (!isset($vertices[$layerDependOn])) {
-                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
-                }
-            }
-        }
-
-        $groupNumber = 1;
-        foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
-            foreach ($groupLayerNames as $groupLayerName) {
-                if (array_key_exists($groupLayerName, $vertices)) {
-                    //TODO: Remove next line once graphviz library is updated to 1.0
-                    $vertices[$groupLayerName]->setGroup($groupNumber);
-
-                    $vertices[$groupLayerName]->setAttribute('group', $groupName);
-                    $vertices[$groupLayerName]->setAttribute('graphviz.group', $groupName);
-                }
-            }
-            ++$groupNumber;
-        }
-
-        // createEdges
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (in_array($layer, $hiddenLayers, true)) {
-                continue;
-            }
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if (in_array($layerDependOn, $hiddenLayers, true)) {
-                    continue;
-                }
-                $edge = $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
-
-                if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
-                    $edge->setAttribute('graphviz.color', 'red');
-                } else {
-                    $edge->setAttribute('graphviz.label', $layerDependOnCount);
-                }
-            }
-        }
+        $graph = Graph::create('');
+        $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
+        $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
+        $this->addNodesToGraph($graph, $nodes, $outputConfig);
 
         if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
-            (new GraphViz())->display($graph);
+            $graph->export('xlib', tempnam(sys_get_temp_dir(), 'deptrac'));
         }
 
         if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
-            $imagePath = (new GraphViz())->createImageFile($graph);
-            rename($imagePath, $dumpImagePath);
+//            $graph->export('png',$dumpImagePath);
             $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT)) {
-            file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
+//            file_put_contents($dumpDotPath, (string)$graph);
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
-            file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
+//            file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
             $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         }
     }
@@ -195,5 +140,82 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         return $layersDependOnLayers;
+    }
+
+    /**
+     * @return Node[]
+     */
+    private function createNodes(ConfigurationGraphViz $outputConfig, array $layersDependOnLayers): array
+    {
+        $hiddenLayers = $outputConfig->getHiddenLayers();
+        $nodes = [];
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
+            if (in_array($layer, $hiddenLayers, true)) {
+                continue;
+            }
+            if (!isset($nodes[$layer])) {
+                $nodes[$layer] = new Node($layer);
+            }
+
+            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
+                if (in_array($layerDependOn, $hiddenLayers, true)) {
+                    continue;
+                }
+                if (!isset($nodes[$layerDependOn])) {
+                    $nodes[$layerDependOn] = new Node($layerDependOn);
+                }
+            }
+        }
+        return $nodes;
+    }
+
+    private function connectEdges(
+        Graph $graph,
+        array $nodes,
+        ConfigurationGraphViz $outputConfig,
+        array $layersDependOnLayers,
+        array $layerViolations
+    ): void {
+        $hiddenLayers = $outputConfig->getHiddenLayers();
+
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
+            if (in_array($layer, $hiddenLayers, true)) {
+                continue;
+            }
+            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
+                if (in_array($layerDependOn, $hiddenLayers, true)) {
+                    continue;
+                }
+                $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
+                $graph->link($edge);
+                if (isset($layerViolations[$layer][$layerDependOn])) {
+                    $edge->setAttribute('label', (string)$layerViolations[$layer][$layerDependOn]);
+                    $edge->setAttribute('color', 'red');
+                } else {
+                    $edge->setAttribute('label', (string)$layerDependOnCount);
+                }
+            }
+        }
+    }
+
+    private function addNodesToGraph(Graph $graph, array $nodes, ConfigurationGraphViz $outputConfig): void
+    {
+        foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
+            $subgraph = Graph::create('cluster_'.$groupName)
+                ->setAttribute('label', $groupName);
+            $graph->addGraph($subgraph);
+
+            foreach ($groupLayerNames as $groupLayerName) {
+                if (array_key_exists($groupLayerName, $nodes)) {
+                    $subgraph->setNode($nodes[$groupLayerName]);
+                    $nodes[$groupLayerName]->setAttribute('group', $groupName);
+                    unset($nodes[$groupLayerName]);
+                }
+            }
+        }
+
+        foreach ($nodes as $node) {
+            $graph->setNode($node);
+        }
     }
 }
