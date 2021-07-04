@@ -19,6 +19,7 @@ configuration.
 * [`parameters`](#parameters)
 * [`paths`](#paths)
 * [`ruleset`](#ruleset)
+  * [Allowing transitive dependencies](#allowing-transitive-dependencies)
 * [`skip_violations`](#skip_violations)
 * [`use_relative_path_from_depfile`](#use_relative_path_from_depfile)
 
@@ -216,6 +217,8 @@ ruleset:
     - Repository
   Repository: ~
 ```
+
+### Allowing transitive dependencies
 
 If you prepend a layer with `+` then not only this layer is allowed, but also
 all layers it allows. In the example below, the Controller can now use classes
