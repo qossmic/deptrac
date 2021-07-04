@@ -11,6 +11,10 @@ final class ConfigurationRuleset
     /** @var array<string, string[]> */
     private array $layerMap;
 
+    private ConfigurationSkippedViolation $skipViolations;
+
+    private bool $ignoreUncoveredInternalClasses;
+
     /**
      * @param array<string, string[]> $arr
      */
@@ -25,6 +29,8 @@ final class ConfigurationRuleset
     private function __construct(array $layerMap)
     {
         $this->layerMap = $layerMap;
+        $this->skipViolations = ConfigurationSkippedViolation::fromArray($layerMap['skip_violations'] ?? []);
+        $this->ignoreUncoveredInternalClasses = (bool)($layerMap['ignore_uncovered_internal_classes'] ?? false);
     }
 
     /**
@@ -35,6 +41,16 @@ final class ConfigurationRuleset
     public function getAllowedDependencies(string $layerName): array
     {
         return array_values(array_unique($this->getTransitiveDependencies($layerName, [])));
+    }
+
+    public function getSkipViolations(): ConfigurationSkippedViolation
+    {
+        return $this->skipViolations;
+    }
+
+    public function ignoreUncoveredInternalClasses(): bool
+    {
+        return $this->ignoreUncoveredInternalClasses;
     }
 
     /**

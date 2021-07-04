@@ -46,4 +46,32 @@ final class ConfigurationRulesetTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $configurationRuleSet->getAllowedDependencies('a');
     }
+
+    public function testSkipViolations(): void
+    {
+        $configuration = ConfigurationRuleset::fromArray([
+            'skip_violations' => [
+                'FooClass' => [
+                    'BarClass',
+                    'AnotherClass',
+                ],
+            ],
+        ]);
+
+        self::assertSame([
+            'FooClass' => [
+                'BarClass',
+                'AnotherClass',
+            ],
+        ], $configuration->getSkipViolations()->all());
+    }
+
+    public function testIgnoreUncoveredInternalClassesSetToFalse(): void
+    {
+        $configuration = ConfigurationRuleset::fromArray([
+            'ignore_uncovered_internal_classes' => false,
+        ]);
+
+        self::assertFalse($configuration->ignoreUncoveredInternalClasses());
+    }
 }
