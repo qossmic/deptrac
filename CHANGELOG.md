@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/qossmic/deptrac/tree/HEAD)
+## [0.14.1](https://github.com/qossmic/deptrac/tree/0.14.1) (2021-07-04)
 
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.0...HEAD)
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.0...0.14.1)
 
 **Closed issues:**
 
