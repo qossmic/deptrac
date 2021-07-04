@@ -16,7 +16,8 @@ the `analyze` command as shown above.
 * [Console Formatter](#console-formatter)
 * [GitHubActions Formatter](#githubactions-formatter)
 * [Graphviz Formatter](#graphviz-formatter)
-  * [Supported depfile options](#supported-depfile-options)
+  * [Hide layers in output](#hide-layers-in-output)
+  * [Group layers](#group-layers)
 * [JSON Formatter](#json-formatter)
 * [JUnit Formatter](#junit-formatter)
 * [Table Formatter](#table-formatter)
@@ -83,7 +84,7 @@ Supported options:
 
 *Hint*: You can create an image, a dot and an HTML file at the same time.
 
-#### Supported depfile options:
+#### Hide layers in output
 
 Under `formatters.graphviz.hidden_layers` you can define a list of `layers` you
 do not want to include when using the corresponding `graphviz` output formatter.
@@ -120,6 +121,8 @@ formatters:
     hidden_layers:
       - Utils
 ```
+
+#### Group layers
 
 Another supported option is `formatters.graphviz.groups`. There you can sort
 layers into groups that will be rendered as sub-graphs in GraphViz output.
