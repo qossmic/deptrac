@@ -17,20 +17,30 @@ final class ConfigurationRuleset
 
     /**
      * @param array<string, string[]> $arr
+     * @param ConfigurationSkippedViolation $skippedViolation
+     * @param bool $ignoreUncoveredInternalClasses
      */
-    public static function fromArray(array $arr): self
-    {
-        return new self($arr);
+    public static function fromOptions(
+        array $arr,
+        ConfigurationSkippedViolation $skippedViolation,
+        bool $ignoreUncoveredInternalClasses
+    ): self {
+        return new self($arr, $skippedViolation, $ignoreUncoveredInternalClasses);
     }
 
     /**
      * @param array<string, string[]> $layerMap
+     * @param ConfigurationSkippedViolation $skippedViolation
+     * @param bool $ignoreUncoveredInternalClasses
      */
-    private function __construct(array $layerMap)
-    {
+    private function __construct(
+        array $layerMap,
+        ConfigurationSkippedViolation $skippedViolation,
+        bool $ignoreUncoveredInternalClasses
+    ) {
         $this->layerMap = $layerMap;
-        $this->skipViolations = ConfigurationSkippedViolation::fromArray($layerMap['skip_violations'] ?? []);
-        $this->ignoreUncoveredInternalClasses = (bool)($layerMap['ignore_uncovered_internal_classes'] ?? false);
+        $this->skipViolations = $skippedViolation;
+        $this->ignoreUncoveredInternalClasses = $ignoreUncoveredInternalClasses;
     }
 
     /**

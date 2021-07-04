@@ -92,11 +92,12 @@ class Configuration
             throw InvalidConfigurationException::fromUnknownLayerNames(...$unknownLayerNames);
         }
 
-        $options['ruleset']['skip_violations'] = $options['skip_violations'];
-        $options['ruleset']['ignore_uncovered_internal_classes'] = $options['ignore_uncovered_internal_classes'];
-
         $this->parameters = $options['parameters'];
-        $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
+        $this->ruleset = ConfigurationRuleset::fromOptions(
+            $options['ruleset'],
+            ConfigurationSkippedViolation::fromArray($options['skip_violations'] ?? []),
+            (bool)($options['ignore_uncovered_internal_classes'] ?? false)
+        );
         $this->paths = $options['paths'];
         $this->excludeFiles = (array) $options['exclude_files'];
         $this->formatters = (array) $options['formatters'];
