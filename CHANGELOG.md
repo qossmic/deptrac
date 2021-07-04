@@ -6,16 +6,29 @@
 
 **Closed issues:**
 
+- Tests: E2E test for transitive dependencies [\#619](https://github.com/qossmic/deptrac/issues/619)
+- Docs: Transitive dependencies docs dropped with docs refactor [\#617](https://github.com/qossmic/deptrac/issues/617)
+- Bool Collector: Multiple Class Layers [\#616](https://github.com/qossmic/deptrac/issues/616)
+- Bug: .editorconfig breaks TableOutputFormatterTest [\#614](https://github.com/qossmic/deptrac/issues/614)
+- bug: deptrac doesn't understand imported namespaces. [\#609](https://github.com/qossmic/deptrac/issues/609)
 - no errors are found if the project name matches `exclude_files` [\#600](https://github.com/qossmic/deptrac/issues/600)
 - strange error if specify single file in config [\#599](https://github.com/qossmic/deptrac/issues/599)
 - GPG public key not found on keyservers \(phive install/update\) [\#598](https://github.com/qossmic/deptrac/issues/598)
+- Can we read the rules somehow from composer.json [\#218](https://github.com/qossmic/deptrac/issues/218)
 
 **Merged pull requests:**
 
+- editorconfig: Ignore trailing whitespace in tests [\#629](https://github.com/qossmic/deptrac/pull/629) ([dbrumann](https://github.com/dbrumann))
+- Doc Improvement: Add linkable headlines to features [\#627](https://github.com/qossmic/deptrac/pull/627) ([dbrumann](https://github.com/dbrumann))
+- Add e2e test for transitive dependencies [\#623](https://github.com/qossmic/deptrac/pull/623) ([dbrumann](https://github.com/dbrumann))
+- Replace changelog-linker with github\_changelog\_generator [\#622](https://github.com/qossmic/deptrac/pull/622) ([dbrumann](https://github.com/dbrumann))
 - Add transitive deps to depfile docs [\#621](https://github.com/qossmic/deptrac/pull/621) ([dbrumann](https://github.com/dbrumann))
 - Add example for transitive dependencies. [\#620](https://github.com/qossmic/deptrac/pull/620) ([dbrumann](https://github.com/dbrumann))
 - BUGFIX: Forgotten config validation for transitive dependencies [\#618](https://github.com/qossmic/deptrac/pull/618) ([patrickkusebauch](https://github.com/patrickkusebauch))
 - Fix things missed by rector [\#613](https://github.com/qossmic/deptrac/pull/613) ([dbrumann](https://github.com/dbrumann))
+- Bump symfony/dependency-injection from 5.3.2 to 5.3.3 [\#612](https://github.com/qossmic/deptrac/pull/612) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/config from 5.3.2 to 5.3.3 [\#611](https://github.com/qossmic/deptrac/pull/611) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/yaml from 5.3.2 to 5.3.3 [\#610](https://github.com/qossmic/deptrac/pull/610) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Note about piping debug commands [\#608](https://github.com/qossmic/deptrac/pull/608) ([patrickkusebauch](https://github.com/patrickkusebauch))
 - Update formatters.md [\#607](https://github.com/qossmic/deptrac/pull/607) ([patrickkusebauch](https://github.com/patrickkusebauch))
 - Update depfile.md [\#606](https://github.com/qossmic/deptrac/pull/606) ([patrickkusebauch](https://github.com/patrickkusebauch))
