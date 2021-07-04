@@ -48,5 +48,5 @@ gpg:
 	gpg --verify deptrac.phar.asc deptrac.phar
 
 generate-changelog:
-	changelog-linker dump-merges --in-categories
-	changelog-linker cleanup
+	#gem install github_changelog_generator
+	github_changelog_generator -u qossmic -p deptrac
