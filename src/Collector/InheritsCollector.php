@@ -24,13 +24,17 @@ class InheritsCollector implements CollectorInterface
      */
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
+        if (!$astTokenReference instanceof AstClassReference) {
+            return false;
+        }
+
         $classLikeName = $this->getClassLikeName($configuration);
 
-        foreach ($astMap->getClassInherits($astClassReference->getClassLikeName()) as $inherit) {
+        foreach ($astMap->getClassInherits($astTokenReference->getTokenName()) as $inherit) {
             if ($inherit->getClassLikeName()->equals($classLikeName)) {
                 return true;
             }

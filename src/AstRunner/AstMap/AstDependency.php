@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
+/**
+ * @psalm-immutable
+ */
 class AstDependency
 {
-    private ClassLikeName $classLikeName;
+    private TokenName $tokenName;
     private FileOccurrence $fileOccurrence;
     private string $type;
 
-    private function __construct(ClassLikeName $classLikeName, FileOccurrence $fileOccurrence, string $type)
+    private function __construct(TokenName $tokenName, FileOccurrence $fileOccurrence, string $type)
     {
-        $this->classLikeName = $classLikeName;
+        $this->tokenName = $tokenName;
         $this->fileOccurrence = $fileOccurrence;
         $this->type = $type;
     }
 
-    public function getClassLikeName(): ClassLikeName
+    public function getTokenName(): TokenName
     {
-        return $this->classLikeName;
+        return $this->tokenName;
     }
 
     public function getFileOccurrence(): FileOccurrence

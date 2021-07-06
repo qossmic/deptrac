@@ -6,17 +6,20 @@ namespace Qossmic\Deptrac\RulesetEngine;
 
 use Qossmic\Deptrac\Dependency\DependencyInterface;
 
-final class Violation implements Rule
+/**
+ * @psalm-immutable
+ */
+final class Violation implements CoveredRule
 {
     private DependencyInterface $dependency;
-    private string $layerA;
-    private string $layerB;
+    private string $dependantLayerName;
+    private string $dependeeLayerName;
 
-    public function __construct(DependencyInterface $dependency, string $layerA, string $layerB)
+    public function __construct(DependencyInterface $dependency, string $dependantLayerName, string $dependeeLayerName)
     {
         $this->dependency = $dependency;
-        $this->layerA = $layerA;
-        $this->layerB = $layerB;
+        $this->dependantLayerName = $dependantLayerName;
+        $this->dependeeLayerName = $dependeeLayerName;
     }
 
     public function getDependency(): DependencyInterface
@@ -24,13 +27,13 @@ final class Violation implements Rule
         return $this->dependency;
     }
 
-    public function getLayerA(): string
+    public function getDependantLayerName(): string
     {
-        return $this->layerA;
+        return $this->dependantLayerName;
     }
 
-    public function getLayerB(): string
+    public function getDependeeLayerName(): string
     {
-        return $this->layerB;
+        return $this->dependeeLayerName;
     }
 }

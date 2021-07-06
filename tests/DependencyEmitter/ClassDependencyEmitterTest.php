@@ -5,26 +5,29 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\DependencyEmitter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\DependencyEmitter\BasicDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
 
-final class BasicDependencyEmitterTest extends TestCase
+final class ClassDependencyEmitterTest extends TestCase
 {
     use EmitterTrait;
 
     public function testGetName(): void
     {
-        self::assertEquals('BasicDependencyEmitter', (new BasicDependencyEmitter())->getName());
+        self::assertEquals('ClassDependencyEmitter', (new ClassDependencyEmitter())->getName());
     }
 
     public function testApplyDependencies(): void
     {
         $deps = $this->getDeps(
-            new BasicDependencyEmitter(),
+            new ClassDependencyEmitter(),
             __DIR__.'/Fixtures/Foo.php'
         );
 
-        self::assertCount(15, $deps);
-        self::assertContains('Foo\Bar:4 on SomeUse', $deps);
+        self::assertCount(18, $deps);
+        self::assertContains('Foo\Bar:6 on Foo\BarExtends', $deps);
+        self::assertContains('Foo\Bar:6 on Foo\BarInterface1', $deps);
+        self::assertContains('Foo\Bar:6 on BarInterface2', $deps);
+        self::assertContains('Foo\Bar:8 on Foo\SomeTrait', $deps);
         self::assertContains('Foo\Bar:10 on Foo\SomeParam', $deps);
         self::assertContains('Foo\Bar:10 on Foo\SomeClass', $deps);
         self::assertContains('Foo\Bar:12 on Foo\SomeClass', $deps);

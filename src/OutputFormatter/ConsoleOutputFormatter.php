@@ -76,10 +76,10 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             sprintf(
                 '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getClassLikeNameA()->toString(),
-                $dependency->getClassLikeNameB()->toString(),
-                $rule->getLayerA(),
-                $rule->getLayerB()
+                $dependency->getDependant()->toString(),
+                $dependency->getDependee()->toString(),
+                $rule->getDependantLayerName(),
+                $rule->getDependeeLayerName()
             )
         );
         $this->printFileOccurrence($output, $dependency->getFileOccurrence());
@@ -100,7 +100,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             "\t%s::%d",
-            $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
+            $dependency->getOriginalDependency()->getDependee()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
@@ -169,8 +169,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted(
                 sprintf(
                     '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
-                    $dependency->getClassLikeNameA()->toString(),
-                    $dependency->getClassLikeNameB()->toString(),
+                    $dependency->getDependant()->toString(),
+                    $dependency->getDependee()->toString(),
                     $u->getLayer()
                 )
             );

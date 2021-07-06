@@ -16,11 +16,15 @@ class InheritanceLevelCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        $classInherits = $astMap->getClassInherits($astClassReference->getClassLikeName());
+        if (!$astTokenReference instanceof AstClassReference) {
+            return false;
+        }
+
+        $classInherits = $astMap->getClassInherits($astTokenReference->getTokenName());
 
         foreach ($classInherits as $classInherit) {
             if (count($classInherit->getPath()) >= $configuration['level']) {

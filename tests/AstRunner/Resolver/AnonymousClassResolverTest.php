@@ -37,7 +37,7 @@ final class AnonymousClassResolverTest extends TestCase
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\AstRunner\Resolver\Fixtures\ClassA',
-            $dependencies[0]->getClassLikeName()->toString()
+            $dependencies[0]->getTokenName()->toString()
         );
         self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
         self::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
@@ -45,7 +45,7 @@ final class AnonymousClassResolverTest extends TestCase
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\AstRunner\Resolver\Fixtures\InterfaceC',
-            $dependencies[1]->getClassLikeName()->toString()
+            $dependencies[1]->getTokenName()->toString()
         );
         self::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());
         self::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());

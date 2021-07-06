@@ -16,19 +16,19 @@ class Result
 
     public function addDependency(Dependency $dependency): self
     {
-        $classLikeName = $dependency->getClassLikeNameA()->toString();
-        if (!isset($this->dependencies[$classLikeName])) {
-            $this->dependencies[$classLikeName] = [];
+        $tokenName = $dependency->getDependant()->toString();
+        if (!isset($this->dependencies[$tokenName])) {
+            $this->dependencies[$tokenName] = [];
         }
 
-        $this->dependencies[$classLikeName][] = $dependency;
+        $this->dependencies[$tokenName][] = $dependency;
 
         return $this;
     }
 
     public function addInheritDependency(InheritDependency $dependency): self
     {
-        $classLikeName = $dependency->getClassLikeNameA()->toString();
+        $classLikeName = $dependency->getDependant()->toString();
         if (!isset($this->inheritDependencies[$classLikeName])) {
             $this->inheritDependencies[$classLikeName] = [];
         }

@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\RulesetEngine;
 
 use Qossmic\Deptrac\Dependency\DependencyInterface;
 
+/**
+ * @psalm-immutable
+ */
 final class Uncovered implements Rule
 {
     private DependencyInterface $dependency;

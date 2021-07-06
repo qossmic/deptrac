@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Collector;
 
 use InvalidArgumentException;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\Configuration\ConfigurationCollector;
 
 class BoolCollector implements CollectorInterface
@@ -18,7 +17,7 @@ class BoolCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
@@ -39,7 +38,7 @@ class BoolCollector implements CollectorInterface
 
             if (!$collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
-                $astClassReference,
+                $astTokenReference,
                 $astMap,
                 $collectorRegistry
             )) {
@@ -52,7 +51,7 @@ class BoolCollector implements CollectorInterface
 
             if ($collectorRegistry->getCollector($configurationForCollector->getType())->satisfy(
                 $configurationForCollector->getArgs(),
-                $astClassReference,
+                $astTokenReference,
                 $astMap,
                 $collectorRegistry
             )) {

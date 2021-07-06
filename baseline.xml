@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
+  <file src="src/AstRunner/AstMap/AstFileReference.php">
+    <DeprecatedProperty occurrences="1">
+      <code>$this-&gt;dependencies</code>
+    </DeprecatedProperty>
+  </file>
+  <file src="src/AstRunner/AstMap/FileReferenceBuilder.php">
+    <DeprecatedProperty occurrences="2">
+      <code>$this-&gt;countUseStatementsAsDependencies</code>
+      <code>$this-&gt;dependencies</code>
+    </DeprecatedProperty>
+  </file>
   <file src="src/AstRunner/AstParser/AstFileReferenceFileCache.php">
     <UnnecessaryVarAnnotation occurrences="1">
       <code>array&lt;string, array{hash: string, reference: AstFileReference}&gt;</code>
     </UnnecessaryVarAnnotation>
   </file>
   <file src="src/AstRunner/AstParser/NikicPhpParser/ClassReferenceVisitor.php">
+    <DeprecatedMethod occurrences="2">
+      <code>use</code>
+      <code>use</code>
+    </DeprecatedMethod>
     <MixedArgument occurrences="1">
       <code>$className</code>
     </MixedArgument>
@@ -208,6 +223,11 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$value</code>
     </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/DependencyEmitter/UsesDependencyEmitter.php">
+    <DeprecatedMethod occurrences="1">
+      <code>getDependencies</code>
+    </DeprecatedMethod>
   </file>
   <file src="src/OutputFormatter/BaselineOutputFormatter.php">
     <MixedArgument occurrences="2">

@@ -139,9 +139,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
             'violations' => [],
             'errors' => [],
             'warnings' => [
-                Warning::classLikeIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2']),
+                Warning::tokenIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2']),
             ],
-            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one class should only be in one layer.\n",
+            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one token should only be in one layer.\n",
         ];
     }
 

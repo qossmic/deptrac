@@ -51,7 +51,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             }
 
             if ($rule instanceof Violation || ($reportSkipped && $rule instanceof SkippedViolation)) {
-                $groupedRules[$rule->getLayerA()][] = $rule;
+                $groupedRules[$rule->getDependantLayerName()][] = $rule;
             } elseif ($reportUncovered && $rule instanceof Uncovered) {
                 $groupedRules[$rule->getLayer()][] = $rule;
             }
@@ -92,9 +92,9 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '<info>%s</info> must not depend on <info>%s</info> (%s)',
-            $dependency->getClassLikeNameA()->toString(),
-            $dependency->getClassLikeNameB()->toString(),
-            $rule->getLayerB()
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString(),
+            $rule->getDependeeLayerName()
         );
 
         if ($dependency instanceof InheritDependency) {
@@ -121,7 +121,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             '%s::%d',
-            $dependency->getOriginalDependency()->getClassLikeNameB()->toString(),
+            $dependency->getOriginalDependency()->getDependee()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
@@ -159,8 +159,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '<info>%s</info> has uncovered dependency on <info>%s</info>',
-            $dependency->getClassLikeNameA()->toString(),
-            $dependency->getClassLikeNameB()->toString()
+            $dependency->getDependant()->toString(),
+            $dependency->getDependee()->toString()
         );
 
         if ($dependency instanceof InheritDependency) {

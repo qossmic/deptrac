@@ -17,11 +17,16 @@ class ClassNameCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        return $astClassReference->getClassLikeName()->match($this->getPattern($configuration));
+        if (!$astTokenReference instanceof AstClassReference) {
+            return false;
+        }
+
+        return $astTokenReference->getTokenName()
+            ->match($this->getPattern($configuration));
     }
 
     /**

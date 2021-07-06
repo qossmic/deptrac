@@ -16,12 +16,12 @@ class AstMap
     /**
      * @var AstClassReference[]
      */
-    private $astClassReferences = [];
+    private array $astClassReferences = [];
 
     /**
      * @var AstFileReference[]
      */
-    private $astFileReferences = [];
+    private array $astFileReferences = [];
 
     /**
      * @param AstFileReference[] $astFileReferences
@@ -121,7 +121,7 @@ class AstMap
 
     private function addAstClassReference(AstClassReference $astClassReference): void
     {
-        $this->astClassReferences[$astClassReference->getClassLikeName()->toString()] = $astClassReference;
+        $this->astClassReferences[$astClassReference->getTokenName()->toString()] = $astClassReference;
     }
 
     private function addAstFileReference(AstFileReference $astFileReference): void

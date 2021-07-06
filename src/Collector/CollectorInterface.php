@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Collector;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
 /**
  * A collector is responsible to tell from an AST node (e.g. a specific class) is part of a layer.
@@ -23,17 +22,15 @@ interface CollectorInterface
 
     /**
      * @param array<string, string|array> $configuration     List of arguments passed for this collector declaration
-     * @param AstClassReference           $astClassReference Class being checked
+     * @param AstMap\AstTokenReference    $astTokenReference Token being checked
      *
      * @example
      *  For the YAML configuration:
-     *
      *  ```yaml
      *  collectors:
      *      - type: className
      *        regex: .*Controller.*
      *  ```
-     *
      *  The configuration `$configuration` will be:
      *  [
      *      'type' => 'className',
@@ -42,7 +39,7 @@ interface CollectorInterface
      */
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool;

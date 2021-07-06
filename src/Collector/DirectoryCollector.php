@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
 class DirectoryCollector implements CollectorInterface
 {
@@ -17,11 +16,11 @@ class DirectoryCollector implements CollectorInterface
 
     public function satisfy(
         array $configuration,
-        AstClassReference $astClassReference,
+        AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        $fileReference = $astClassReference->getFileReference();
+        $fileReference = $astTokenReference->getFileReference();
 
         return $fileReference && 1 === preg_match($this->getPattern($configuration), $fileReference->getFilepath());
     }

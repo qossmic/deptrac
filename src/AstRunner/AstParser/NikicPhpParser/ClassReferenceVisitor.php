@@ -133,11 +133,11 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if (!$this->fileReferenceBuilder->hasCurrentClassLike()) {
+        $classReferenceBuilder = $this->fileReferenceBuilder->currentClassLike();
+
+        if (null === $classReferenceBuilder) {
             return null;
         }
-
-        $classReferenceBuilder = $this->fileReferenceBuilder->currentClassLike();
 
         if ($node instanceof TraitUse) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {

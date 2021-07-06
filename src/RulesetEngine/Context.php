@@ -7,6 +7,9 @@ namespace Qossmic\Deptrac\RulesetEngine;
 use function array_filter;
 use function count;
 
+/**
+ * @psalm-immutable
+ */
 final class Context
 {
     /**

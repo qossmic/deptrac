@@ -9,8 +9,8 @@ use DOMDocument;
 use DOMElement;
 use Exception;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\RulesetEngine\CoveredRule;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
@@ -107,10 +107,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
     private function addTestSuite(Context $context, DOMDocument $xmlDoc, DOMElement $testSuites): void
     {
+        /** @var array<string, array<Rule>> $layers */
         $layers = [];
         foreach ($context->rules() as $rule) {
-            if ($rule instanceof Allowed || $rule instanceof Violation || $rule instanceof SkippedViolation) {
-                $layers[$rule->getLayerA()][] = $rule;
+            if ($rule instanceof CoveredRule) {
+                $layers[$rule->getDependantLayerName()][] = $rule;
             } elseif ($rule instanceof Uncovered) {
                 $layers[$rule->getLayer()][] = $rule;
             }
@@ -118,19 +119,17 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $layerIndex = 0;
         foreach ($layers as $layer => $rules) {
-            /** @var Violation[] $violationsByLayer */
             $violationsByLayer = array_filter($rules, static function (Rule $rule) {
                 return $rule instanceof Violation;
             });
 
-            /** @var SkippedViolation[] $skippedViolationsByLayer */
             $skippedViolationsByLayer = array_filter($rules, static function (Rule $rule) {
                 return $rule instanceof SkippedViolation;
             });
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
-                $rulesByClassName[$rule->getDependency()->getClassLikeNameA()->toString()][] = $rule;
+                $rulesByClassName[$rule->getDependency()->getDependant()->toString()][] = $rule;
             }
 
             $testSuite = $xmlDoc->createElement('testsuite');
@@ -181,11 +180,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d must not depend on %s (%s on %s)',
-            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getDependant()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getClassLikeNameB()->toString(),
-            $violation->getLayerA(),
-            $violation->getLayerB()
+            $dependency->getDependee()->toString(),
+            $violation->getDependantLayerName(),
+            $violation->getDependeeLayerName()
         );
 
         $error = $xmlDoc->createElement('failure');
@@ -207,9 +206,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d has uncovered dependency on %s (%s)',
-            $dependency->getClassLikeNameA()->toString(),
+            $dependency->getDependant()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getClassLikeNameB()->toString(),
+            $dependency->getDependee()->toString(),
             $rule->getLayer()
         );
 

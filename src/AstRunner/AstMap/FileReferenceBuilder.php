@@ -4,26 +4,30 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-use RuntimeException;
-
 final class FileReferenceBuilder
 {
-    /** @var AstDependency[] */
+    /**
+     * @var AstDependency[]
+     *
+     * @deprecated
+     */
     private array $dependencies = [];
 
     private string $filepath;
 
     /** @var ClassReferenceBuilder[] */
-    private array $classReferences;
+    private array $classReferences = [];
 
     private ?ClassReferenceBuilder $currentClassReference = null;
 
+    /**
+     * @deprecated use `UseVisitor` instead
+     */
     private bool $countUseStatementsAsDependencies;
 
     private function __construct(string $filepath, bool $countUseStatementsAsDependencies)
     {
         $this->filepath = $filepath;
-        $this->classReferences = [];
         $this->countUseStatementsAsDependencies = $countUseStatementsAsDependencies;
     }
 
@@ -32,6 +36,9 @@ final class FileReferenceBuilder
         return new self($filepath, $countUseStatementsAsDependencies);
     }
 
+    /**
+     * @deprecated use `UseVisitor` instead
+     */
     public function use(string $classLikeName, int $occursAtLine): self
     {
         if ($this->countUseStatementsAsDependencies) {
@@ -54,17 +61,8 @@ final class FileReferenceBuilder
         return $this->currentClassReference;
     }
 
-    public function hasCurrentClassLike(): bool
+    public function currentClassLike(): ?ClassReferenceBuilder
     {
-        return null !== $this->currentClassReference;
-    }
-
-    public function currentClassLike(): ClassReferenceBuilder
-    {
-        if (null === $this->currentClassReference) {
-            throw new RuntimeException('No class like has been defined before.');
-        }
-
         return $this->currentClassReference;
     }
 
@@ -75,6 +73,6 @@ final class FileReferenceBuilder
             $classReferences[] = $classReference->build();
         }
 
-        return new AstFileReference($this->filepath, $this->dependencies, $classReferences);
+        return new AstFileReference($this->filepath, $classReferences, $this->dependencies);
     }
 }

@@ -8,20 +8,32 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\Result;
 
-class InheritanceDependencyEmitter implements DependencyEmitterInterface
+class ClassDependencyEmitter implements DependencyEmitterInterface
 {
     public function getName(): string
     {
-        return 'InheritanceDependencyEmitter';
+        return 'ClassDependencyEmitter';
     }
 
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void
     {
         foreach ($astMap->getAstClassReferences() as $classReference) {
-            foreach ($astMap->getClassInherits($classReference->getClassLikeName()) as $inherit) {
+            $classLikeName = $classReference->getTokenName();
+
+            foreach ($classReference->getDependencies() as $dependency) {
                 $dependencyResult->addDependency(
                     new Dependency(
-                        $classReference->getClassLikeName(),
+                        $classLikeName,
+                        $dependency->getTokenName(),
+                        $dependency->getFileOccurrence()
+                    )
+                );
+            }
+
+            foreach ($astMap->getClassInherits($classLikeName) as $inherit) {
+                $dependencyResult->addDependency(
+                    new Dependency(
+                        $classLikeName,
                         $inherit->getClassLikeName(),
                         $inherit->getFileOccurrence()
                     )

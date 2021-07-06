@@ -31,9 +31,9 @@ final class PropertyTypeResolverTest extends TestCase
         $propertyDependencies = $astClassReferences[0]->getDependencies();
         self::assertCount(4, $propertyDependencies);
 
-        $this->assertSame(SplFileInfo::class, $propertyDependencies[0]->getClassLikeName()->toString());
-        $this->assertSame(\SplFileInfo::class, $propertyDependencies[1]->getClassLikeName()->toString());
-        $this->assertSame(\DateTimeInterface::class, $propertyDependencies[2]->getClassLikeName()->toString());
-        $this->assertSame(SplFileInfo::class, $propertyDependencies[3]->getClassLikeName()->toString());
+        $this->assertSame(SplFileInfo::class, $propertyDependencies[0]->getTokenName()->toString());
+        $this->assertSame(\SplFileInfo::class, $propertyDependencies[1]->getTokenName()->toString());
+        $this->assertSame(\DateTimeInterface::class, $propertyDependencies[2]->getTokenName()->toString());
+        $this->assertSame(SplFileInfo::class, $propertyDependencies[3]->getTokenName()->toString());
     }
 }

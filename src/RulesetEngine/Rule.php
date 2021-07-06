@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\RulesetEngine;
 
 use Qossmic\Deptrac\Dependency\DependencyInterface;
 
+/**
+ * @psalm-immutable
+ */
 interface Rule
 {
     public function getDependency(): DependencyInterface;
