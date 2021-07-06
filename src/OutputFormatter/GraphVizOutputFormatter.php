@@ -28,6 +28,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     public const DUMP_IMAGE = self::NAME.'-dump-image';
     public const DUMP_DOT = self::NAME.'-dump-dot';
     public const DUMP_HTML = self::NAME.'-dump-html';
+    private const DELAY_OPEN = 2.0;
 
     public function getName(): string
     {
@@ -67,19 +68,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $this->addNodesToGraph($graph, $nodes, $outputConfig);
 
         if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
-            try {
-                $filename = tempnam(sys_get_temp_dir(), 'deptrac');
-                if (false === $filename) {
-                    throw new \RuntimeException('Unable to create temp file for output.');
-                }
-                $graph->export('xlib', $filename);
-            } catch (Exception $exception) {
-                throw new \LogicException('Unable to display output: '.$exception->getMessage());
-            } finally {
-                if (isset($filename) && false !== $filename) {
-                    unlink($filename);
-                }
-            }
+            $this->display($graph);
         }
 
         if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
@@ -98,11 +87,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
             try {
-                $filename = tempnam(sys_get_temp_dir(), 'deptrac');
-                if (false === $filename) {
-                    throw new \RuntimeException('Unable to create temp file for output.');
-                }
-                $graph->export('png', $filename);
+                $filename = $this->getTempImage($graph);
                 $imageData = file_get_contents($filename);
                 if (false === $imageData) {
                     throw new \RuntimeException('Unable to create temp file for output.');
@@ -119,6 +104,28 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                     unlink($filename);
                 }
             }
+        }
+    }
+
+    public function display(Graph $graph): void
+    {
+        try {
+            $filename = $this->getTempImage($graph);
+            static $next = 0;
+            if ($next > microtime(true)) {
+                sleep((int) self::DELAY_OPEN);
+            }
+
+            if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
+                exec('start "" '.escapeshellarg($filename).' >NUL');
+            } elseif ('DARWIN' === strtoupper(PHP_OS)) {
+                exec('open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
+            } else {
+                exec('xdg-open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
+            }
+            $next = microtime(true) + self::DELAY_OPEN;
+        } catch (Exception $exception) {
+            throw new \LogicException('Unable to display output: '.$exception->getMessage());
         }
     }
 
@@ -269,5 +276,19 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         foreach ($nodes as $node) {
             $graph->setNode($node);
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getTempImage(Graph $graph): string
+    {
+        $filename = tempnam(sys_get_temp_dir(), 'deptrac');
+        if (false === $filename) {
+            throw new \RuntimeException('Unable to create temp file for output.');
+        }
+        $graph->export('png', $filename);
+
+        return $filename;
     }
 }
