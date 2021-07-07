@@ -283,7 +283,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
      */
     private function getTempImage(Graph $graph): string
     {
-        $filename = tempnam(sys_get_temp_dir(), 'deptrac');
+        $filename = tempnam(sys_get_temp_dir(), 'deptrac').'.png';
         if (false === $filename) {
             throw new \RuntimeException('Unable to create temp file for output.');
         }
