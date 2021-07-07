@@ -63,17 +63,15 @@ class NikicPhpParser implements AstParser
             return $fileReference;
         }
 
-        $fileReferenceBuilder = FileReferenceBuilder::create($file, $configuration->isCountingUseStatements());
-        $visitor = new ClassReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->classDependencyResolvers);
-
+        $fileReferenceBuilder = FileReferenceBuilder::create($file);
         $nodes = $this->parser->parse(FileReader::read($file));
         if (null === $nodes) {
             throw new ShouldNotHappenException();
         }
 
-        $this->traverser->addVisitor($visitor);
-        $this->traverser->traverse($nodes);
-        $this->traverser->removeVisitor($visitor);
+        foreach ($configuration->getTypes() as $type) {
+            $this->traverseType($type, $fileReferenceBuilder, $nodes);
+        }
 
         $fileReference = $fileReferenceBuilder->build();
         $this->cache->set($fileReference);
@@ -122,5 +120,26 @@ class NikicPhpParser implements AstParser
         }
 
         return self::$classAstMap[$classLikeName] ?? null;
+    }
+
+    private function traverseType(string $type, FileReferenceBuilder $fileReferenceBuilder, array $nodes): void
+    {
+        switch ($type) {
+            case 'class': {
+                $visitor =
+                    new ClassReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->classDependencyResolvers);
+                break;
+            }
+            case 'use': {
+                $visitor = new UseStatementVisitor($fileReferenceBuilder);
+                break;
+            }
+            default: {
+                throw new \InvalidArgumentException('Unsupported type: ' . $type);
+            }
+        }
+        $this->traverser->addVisitor($visitor);
+        $this->traverser->traverse($nodes);
+        $this->traverser->removeVisitor($visitor);
     }
 }

@@ -6,12 +6,8 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 final class FileReferenceBuilder
 {
-    /**
-     * @var AstDependency[]
-     *
-     * @deprecated
-     */
-    private array $dependencies = [];
+    /** @var AstDependency[] */
+    private array $useStatements = [];
 
     private string $filepath;
 
@@ -25,29 +21,22 @@ final class FileReferenceBuilder
      */
     private bool $countUseStatementsAsDependencies;
 
-    private function __construct(string $filepath, bool $countUseStatementsAsDependencies)
+    private function __construct(string $filepath)
     {
         $this->filepath = $filepath;
-        $this->countUseStatementsAsDependencies = $countUseStatementsAsDependencies;
     }
 
-    public static function create(string $filepath, bool $countUseStatementsAsDependencies = true): self
+    public static function create(string $filepath): self
     {
-        return new self($filepath, $countUseStatementsAsDependencies);
+        return new self($filepath);
     }
 
-    /**
-     * @deprecated use `UseVisitor` instead
-     */
-    public function use(string $classLikeName, int $occursAtLine): self
+    public function newUseStatement(string $classLikeName, int $occursAtLine): self
     {
-        if ($this->countUseStatementsAsDependencies) {
-            $this->dependencies[] = AstDependency::useStmt(
-                ClassLikeName::fromFQCN($classLikeName),
-                FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
-            );
-        }
-
+        $this->useStatements[] = AstDependency::useStmt(
+            ClassLikeName::fromFQCN($classLikeName),
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
+        );
         return $this;
     }
 
@@ -73,6 +62,6 @@ final class FileReferenceBuilder
             $classReferences[] = $classReference->build();
         }
 
-        return new AstFileReference($this->filepath, $classReferences, $this->dependencies);
+        return new AstFileReference($this->filepath, $classReferences, $this->useStatements);
     }
 }

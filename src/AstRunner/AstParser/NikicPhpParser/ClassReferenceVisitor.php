@@ -119,7 +119,6 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
         if ($node instanceof Use_ && Use_::TYPE_NORMAL === $node->type) {
             foreach ($node->uses as $use) {
                 $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
-                $this->fileReferenceBuilder->use($use->name->toString(), $use->name->getLine());
             }
         }
 
@@ -128,7 +127,6 @@ class ClassReferenceVisitor extends NodeVisitorAbstract
                 if (Use_::TYPE_NORMAL === $use->type) {
                     $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
                     $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
-                    $this->fileReferenceBuilder->use($classLikeName, $use->name->getLine());
                 }
             }
         }
