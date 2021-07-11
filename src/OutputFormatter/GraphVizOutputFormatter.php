@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Fhaculty\Graph\Graph;
-use Fhaculty\Graph\Vertex;
-use Graphp\GraphViz\GraphViz;
+use function base64_encode;
+use function file_get_contents;
+use phpDocumentor\GraphViz\Edge;
+use phpDocumentor\GraphViz\Exception;
+use phpDocumentor\GraphViz\Graph;
+use phpDocumentor\GraphViz\Node;
 use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
@@ -14,6 +17,8 @@ use Qossmic\Deptrac\RulesetEngine\CoveredRule;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use function sys_get_temp_dir;
+use function tempnam;
 
 final class GraphVizOutputFormatter implements OutputFormatterInterface
 {
@@ -22,6 +27,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     public const DUMP_IMAGE = self::NAME.'-dump-image';
     public const DUMP_DOT = self::NAME.'-dump-dot';
     public const DUMP_HTML = self::NAME.'-dump-html';
+    private const DELAY_OPEN = 2.0;
 
     public function getName(): string
     {
@@ -53,85 +59,72 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     ): void {
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
-
-        $graph = new Graph();
-
-        /** @var Vertex[] $vertices */
-        $vertices = [];
-
         $outputConfig = ConfigurationGraphViz::fromArray($outputFormatterInput->getConfig());
-        $hiddenLayers = $outputConfig->getHiddenLayers();
-        // create a vertices
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (in_array($layer, $hiddenLayers, true)) {
-                continue;
-            }
-            if (!isset($vertices[$layer])) {
-                $vertices[$layer] = $graph->createVertex($layer);
-            }
 
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if (in_array($layerDependOn, $hiddenLayers, true)) {
-                    continue;
-                }
-                if (!isset($vertices[$layerDependOn])) {
-                    $vertices[$layerDependOn] = $graph->createVertex($layerDependOn);
-                }
-            }
-        }
-
-        $groupNumber = 1;
-        foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
-            foreach ($groupLayerNames as $groupLayerName) {
-                if (array_key_exists($groupLayerName, $vertices)) {
-                    //TODO: Remove next line once graphviz library is updated to 1.0
-                    $vertices[$groupLayerName]->setGroup($groupNumber);
-
-                    $vertices[$groupLayerName]->setAttribute('group', $groupName);
-                    $vertices[$groupLayerName]->setAttribute('graphviz.group', $groupName);
-                }
-            }
-            ++$groupNumber;
-        }
-
-        // createEdges
-        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (in_array($layer, $hiddenLayers, true)) {
-                continue;
-            }
-            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if (in_array($layerDependOn, $hiddenLayers, true)) {
-                    continue;
-                }
-                $edge = $vertices[$layer]->createEdgeTo($vertices[$layerDependOn]);
-
-                if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge->setAttribute('graphviz.label', $layerViolations[$layer][$layerDependOn]);
-                    $edge->setAttribute('graphviz.color', 'red');
-                } else {
-                    $edge->setAttribute('graphviz.label', $layerDependOnCount);
-                }
-            }
-        }
+        $graph = Graph::create('');
+        $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
+        $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
+        $this->addNodesToGraph($graph, $nodes, $outputConfig);
 
         if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
-            (new GraphViz())->display($graph);
+            $this->display($graph);
         }
 
         if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
-            $imagePath = (new GraphViz())->createImageFile($graph);
-            rename($imagePath, $dumpImagePath);
-            $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+            try {
+                $graph->export('png', $dumpImagePath);
+                $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+            } catch (Exception $exception) {
+                throw new \LogicException('Unable to display output: '.$exception->getMessage());
+            }
         }
 
         if ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT)) {
-            file_put_contents($dumpDotPath, (new GraphViz())->createScript($graph));
+            file_put_contents($dumpDotPath, (string) $graph);
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
         if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
-            file_put_contents($dumpHtmlPath, (new GraphViz())->createImageHtml($graph));
-            $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
+            try {
+                $filename = $this->getTempImage($graph);
+                $imageData = file_get_contents($filename);
+                if (false === $imageData) {
+                    throw new \RuntimeException('Unable to create temp file for output.');
+                }
+                file_put_contents(
+                    $dumpHtmlPath,
+                    '<img src="data:image/png;base64,'.base64_encode($imageData).'" />'
+                );
+                $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
+            } catch (Exception $exception) {
+                throw new \LogicException('Unable to generate HTML file: '.$exception->getMessage());
+            } finally {
+                if (isset($filename) && false !== $filename) {
+                    unlink($filename);
+                }
+            }
+        }
+    }
+
+    public function display(Graph $graph): void
+    {
+        try {
+            $filename = $this->getTempImage($graph);
+            static $next = 0;
+            if ($next > microtime(true)) {
+                sleep((int) self::DELAY_OPEN);
+            }
+
+            if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
+                exec('start "" '.escapeshellarg($filename).' >NUL');
+            } elseif ('DARWIN' === strtoupper(PHP_OS)) {
+                exec('open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
+            } else {
+                exec('xdg-open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
+            }
+            $next = microtime(true) + self::DELAY_OPEN;
+        } catch (Exception $exception) {
+            throw new \LogicException('Unable to display output: '.$exception->getMessage());
         }
     }
 
@@ -191,5 +184,108 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         return $layersDependOnLayers;
+    }
+
+    /**
+     * @param array<string, array<string, int>> $layersDependOnLayers
+     *
+     * @return Node[]
+     */
+    private function createNodes(ConfigurationGraphViz $outputConfig, array $layersDependOnLayers): array
+    {
+        $hiddenLayers = $outputConfig->getHiddenLayers();
+        $nodes = [];
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
+            if (in_array($layer, $hiddenLayers, true)) {
+                continue;
+            }
+            if (!isset($nodes[$layer])) {
+                $nodes[$layer] = new Node($layer);
+            }
+
+            foreach ($layersDependOn as $layerDependOn => $_) {
+                if (in_array($layerDependOn, $hiddenLayers, true)) {
+                    continue;
+                }
+                if (!isset($nodes[$layerDependOn])) {
+                    $nodes[$layerDependOn] = new Node($layerDependOn);
+                }
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * @param Node[]                            $nodes
+     * @param array<string, array<string, int>> $layersDependOnLayers
+     * @param array<string, array<string, int>> $layerViolations
+     */
+    private function connectEdges(
+        Graph $graph,
+        array $nodes,
+        ConfigurationGraphViz $outputConfig,
+        array $layersDependOnLayers,
+        array $layerViolations
+    ): void {
+        $hiddenLayers = $outputConfig->getHiddenLayers();
+
+        foreach ($layersDependOnLayers as $layer => $layersDependOn) {
+            if (in_array($layer, $hiddenLayers, true)) {
+                continue;
+            }
+            foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
+                if (in_array($layerDependOn, $hiddenLayers, true)) {
+                    continue;
+                }
+                $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
+                $graph->link($edge);
+                if (isset($layerViolations[$layer][$layerDependOn])) {
+                    $edge->setAttribute('label', (string) $layerViolations[$layer][$layerDependOn]);
+                    $edge->setAttribute('color', 'red');
+                } else {
+                    $edge->setAttribute('label', (string) $layerDependOnCount);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param Node[] $nodes
+     */
+    private function addNodesToGraph(Graph $graph, array $nodes, ConfigurationGraphViz $outputConfig): void
+    {
+        foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
+            $subgraph = Graph::create('cluster_'.$groupName)
+                ->setAttribute('label', $groupName);
+            $graph->addGraph($subgraph);
+
+            foreach ($groupLayerNames as $groupLayerName) {
+                if (array_key_exists($groupLayerName, $nodes)) {
+                    $subgraph->setNode($nodes[$groupLayerName]);
+                    $nodes[$groupLayerName]->setAttribute('group', $groupName);
+                    unset($nodes[$groupLayerName]);
+                }
+            }
+        }
+
+        foreach ($nodes as $node) {
+            $graph->setNode($node);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getTempImage(Graph $graph): string
+    {
+        $filename = tempnam(sys_get_temp_dir(), 'deptrac');
+        if (false === $filename) {
+            throw new \RuntimeException('Unable to create temp file for output.');
+        }
+        $filename .= '.png';
+        $graph->export('png', $filename);
+
+        return $filename;
     }
 }
