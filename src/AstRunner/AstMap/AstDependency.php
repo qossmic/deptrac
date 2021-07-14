@@ -10,21 +10,21 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
 class AstDependency
 {
     //TODO: Replace with ENUM in PHP 8.1 (Patrick Kusebauch @ 10.07.21)
-    public const USE                        = 'use';
-    public const RETURN_TYPE                = 'returntype';
-    public const PARAMETER                  = 'parameter';
-    public const NEW                        = 'new';
-    public const STATIC_PROPERTY            = 'static_property';
-    public const STATIC_METHOD              = 'static_method';
-    public const INSTANCEOF                 = 'instanceof';
-    public const CATCH                      = 'catch';
-    public const VARIABLE                   = 'variable';
-    public const THROW                      = 'throw';
-    public const CONST                      = 'const';
-    public const ANONYMOUS_CLASS_EXTENDS    = 'anonymous_class_extends';
+    public const USE = 'use';
+    public const RETURN_TYPE = 'returntype';
+    public const PARAMETER = 'parameter';
+    public const NEW = 'new';
+    public const STATIC_PROPERTY = 'static_property';
+    public const STATIC_METHOD = 'static_method';
+    public const INSTANCEOF = 'instanceof';
+    public const CATCH = 'catch';
+    public const VARIABLE = 'variable';
+    public const THROW = 'throw';
+    public const CONST = 'const';
+    public const ANONYMOUS_CLASS_EXTENDS = 'anonymous_class_extends';
     public const ANONYMOUS_CLASS_IMPLEMENTS = 'anonymous_class_implements';
-    public const ANONYMOUS_CLASS_TRAIT      = 'anonymous_class_trait';
-    public const ATTRIBUTE                  = 'attribute';
+    public const ANONYMOUS_CLASS_TRAIT = 'anonymous_class_trait';
+    public const ATTRIBUTE = 'attribute';
 
     private TokenName $tokenName;
     private FileOccurrence $fileOccurrence;
@@ -56,5 +56,4 @@ class AstDependency
     {
         return new self($tokenName, $fileOccurrence, $type);
     }
-
 }

@@ -71,20 +71,21 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
         $docNode = $this->docParser->parse($tokens);
 
-        return array_map(static fn(TemplateTagValueNode $tag): string => $tag->name, $docNode->getTemplateTagValues());
+        return array_map(static fn (TemplateTagValueNode $tag): string => $tag->name, $docNode->getTemplateTagValues());
     }
 
     public function enterNode(Node $node)
     {
         if ($node instanceof Namespace_) {
             $this->currentTypeScope = new TypeScope($node->name ? $node->name->toCodeString() : '');
+
             return null;
         }
 
         if ($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) {
             $name = $this->getReferenceName($node);
 
-            if ($node instanceof ClassLike && $name !== null) {
+            if ($node instanceof ClassLike && null !== $name) {
                 $this->enterClassLike($name, $node);
             } elseif ($node instanceof Node\Stmt\Function_) {
                 $this->enterFunction($name, $node);
@@ -97,7 +98,6 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                     }
                 }
             }
-
         }
 
         return null;
@@ -105,18 +105,20 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        #Resolve current reference scope
-        if(($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) && $this->getReferenceName($node) !== null) {
+        //Resolve current reference scope
+        if (($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) && null !== $this->getReferenceName($node)) {
             $this->currentReference = $this->fileReferenceBuilder;
+
             return null;
         }
 
-        #Resolve current type scope
+        //Resolve current type scope
         if ($node instanceof Use_ && Use_::TYPE_NORMAL === $node->type) {
             foreach ($node->uses as $use) {
                 $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
                 $this->fileReferenceBuilder->useStatement($use->name->toString(), $use->name->getLine());
             }
+
             return null;
         }
         if ($node instanceof GroupUse) {
@@ -127,10 +129,11 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                     $this->fileReferenceBuilder->useStatement($classLikeName, $use->name->getLine());
                 }
             }
+
             return null;
         }
 
-        #Resolve code
+        //Resolve code
         if ($node instanceof Instanceof_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $this->currentReference->instanceof($classLikeName, $node->class->getLine());
@@ -175,7 +178,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                     }
                 }
             }
-            if(null !== $node->getReturnType()) {
+            if (null !== $node->getReturnType()) {
                 foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName) {
                     $this->currentReference->returnType($classLikeName, $node->getReturnType()->getLine());
                 }
@@ -230,8 +233,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         foreach (
-            $this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as
-            $classLikeName
+            $this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName
         ) {
             $this->currentReference->returnType($classLikeName, $node->getLine());
         }

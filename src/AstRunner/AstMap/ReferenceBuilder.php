@@ -123,6 +123,7 @@ abstract class ReferenceBuilder
 
         return $this;
     }
+
     public function instanceof(string $classLikeName, int $occursAtLine): self
     {
         $this->dependencies[] = AstDependency::fromType(
@@ -133,7 +134,6 @@ abstract class ReferenceBuilder
 
         return $this;
     }
-
 
     public function newStatement(string $classLikeName, int $occursAtLine): self
     {
@@ -178,5 +178,4 @@ abstract class ReferenceBuilder
 
         return $this;
     }
-
 }

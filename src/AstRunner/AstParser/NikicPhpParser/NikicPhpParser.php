@@ -122,5 +122,4 @@ class NikicPhpParser implements AstParser
 
         return self::$classAstMap[$classLikeName] ?? null;
     }
-
 }

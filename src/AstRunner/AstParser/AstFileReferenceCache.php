@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstParser;
 
-
 use Qossmic\Deptrac\AstRunner\AstMap\File\AstFileReference;
 
 interface AstFileReferenceCache

@@ -13,7 +13,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 
 final class FileReferenceBuilder extends ReferenceBuilder
 {
-
     /** @var ClassReferenceBuilder[] */
     private array $classReferences = [];
 

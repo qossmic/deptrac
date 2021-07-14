@@ -7,7 +7,6 @@ namespace Qossmic\Deptrac\AstRunner\Resolver;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\TraitUse;
 use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 
 class AnonymousClassResolver implements DependencyResolver
@@ -29,6 +28,5 @@ class AnonymousClassResolver implements DependencyResolver
         foreach ($node->getTraitUses() as $traitUse) {
             $referenceBuilder->anonymousClassTrait($traitUse->toCodeString(), $traitUse->getLine());
         }
-
     }
 }
