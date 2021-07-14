@@ -8,6 +8,9 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\Result;
 
+/**
+ * @deprecated
+ */
 class UsesDependencyEmitter implements DependencyEmitterInterface
 {
     public function getName(): string

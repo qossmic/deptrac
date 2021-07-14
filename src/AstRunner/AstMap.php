@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner;
 
 use ArrayObject;
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
-use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\File\AstFileReference;
 use SplStack;
 
 class AstMap

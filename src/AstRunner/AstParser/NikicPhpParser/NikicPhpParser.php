@@ -11,12 +11,12 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\FindingVisitor;
 use PhpParser\NodeVisitor\NameResolver;
 use PhpParser\Parser;
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
-use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
-use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\File\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
-use Qossmic\Deptrac\AstRunner\Resolver\ClassDependencyResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\DependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Qossmic\Deptrac\File\FileReader;
@@ -36,9 +36,9 @@ class NikicPhpParser implements AstParser
     private TypeResolver $typeResolver;
 
     /**
-     * @var ClassDependencyResolver[]
+     * @var DependencyResolver[]
      */
-    private array $classDependencyResolvers;
+    private array $dependencyResolvers;
 
     private NodeTraverser $traverser;
 
@@ -46,12 +46,12 @@ class NikicPhpParser implements AstParser
         Parser $parser,
         AstFileReferenceCache $cache,
         TypeResolver $typeResolver,
-        ClassDependencyResolver ...$classDependencyResolvers
+        DependencyResolver ...$dependencyResolvers
     ) {
         $this->parser = $parser;
         $this->cache = $cache;
         $this->typeResolver = $typeResolver;
-        $this->classDependencyResolvers = $classDependencyResolvers;
+        $this->dependencyResolvers = $dependencyResolvers;
 
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new NameResolver());
@@ -69,9 +69,10 @@ class NikicPhpParser implements AstParser
             throw new ShouldNotHappenException();
         }
 
-        foreach ($configuration->getTypes() as $type) {
-            $this->traverseType($type, $fileReferenceBuilder, $nodes);
-        }
+        $visitor = new FileReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->dependencyResolvers);
+        $this->traverser->addVisitor($visitor);
+        $this->traverser->traverse($nodes);
+        $this->traverser->removeVisitor($visitor);
 
         $fileReference = $fileReferenceBuilder->build();
         $this->cache->set($fileReference);
@@ -122,24 +123,4 @@ class NikicPhpParser implements AstParser
         return self::$classAstMap[$classLikeName] ?? null;
     }
 
-    private function traverseType(string $type, FileReferenceBuilder $fileReferenceBuilder, array $nodes): void
-    {
-        switch ($type) {
-            case 'class': {
-                $visitor =
-                    new ClassReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->classDependencyResolvers);
-                break;
-            }
-            case 'use': {
-                $visitor = new UseStatementVisitor($fileReferenceBuilder);
-                break;
-            }
-            default: {
-                throw new \InvalidArgumentException('Unsupported type: ' . $type);
-            }
-        }
-        $this->traverser->addVisitor($visitor);
-        $this->traverser->traverse($nodes);
-        $this->traverser->removeVisitor($visitor);
-    }
 }

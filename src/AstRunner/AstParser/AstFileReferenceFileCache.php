@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstParser;
 
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
-use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\File\AstFileReference;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\File\FileReader;
@@ -107,6 +107,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
                     $data['reference'],
                     [
                         'allowed_classes' => [
+                            //TODO: Add new classes (Patrick Kusebauch @ 10.07.21)
                             AstFileReference::class,
                             AstClassReference::class,
                             AstInherit::class,

@@ -14,7 +14,7 @@ final class ConfigurationAnalyzer
         'use',
         'function',
     ];
-    
+
     /** @var array{types: string[]} */
     private array $config;
 
@@ -41,14 +41,14 @@ final class ConfigurationAnalyzer
      */
     private function __construct(array $config)
     {
-        if($config['count_use_statements']) {
+        if ($config['count_use_statements']) {
             $config['types'][] = 'use';
         }
         unset($config['count_use_statements']);
 
         foreach ($config['types'] as $type) {
-            if(!in_array($type, self::RECOGNIZED_TOKENS, true)) {
-                throw new \InvalidArgumentException('Unsupported analyzer type: ' . $type);
+            if (!in_array($type, self::RECOGNIZED_TOKENS, true)) {
+                throw new \InvalidArgumentException('Unsupported analyzer type: '.$type);
             }
         }
         $this->config = $config;

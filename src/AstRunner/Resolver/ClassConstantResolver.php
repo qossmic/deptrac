@@ -8,15 +8,16 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Name;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenReferenceBuilder;
 
-class ClassConstantResolver implements ClassDependencyResolver
+class ClassConstantResolver implements DependencyResolver
 {
-    public function processNode(Node $node, ClassReferenceBuilder $classReferenceBuilder, TypeScope $typeScope): void
+    public function processNode(Node $node, TokenReferenceBuilder $tokenReferenceBuilder, TypeScope $typeScope): void
     {
         if (!$node instanceof ClassConstFetch || !$node->class instanceof Name || $node->class->isSpecialClassName()) {
             return;
         }
 
-        $classReferenceBuilder->constFetch($node->class->toCodeString(), $node->class->getLine());
+        $tokenReferenceBuilder->constFetch($node->class->toCodeString(), $node->class->getLine());
     }
 }
