@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\Resolver;
 
 use PhpParser\Node;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 
 interface DependencyResolver
 {
-    public function processNode(Node $node, TokenReferenceBuilder $tokenReferenceBuilder, TypeScope $typeScope): void;
+    public function processNode(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void;
 }

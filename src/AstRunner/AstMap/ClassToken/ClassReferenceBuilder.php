@@ -7,9 +7,9 @@ namespace Qossmic\Deptrac\AstRunner\AstMap\ClassToken;
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 
-final class ClassReferenceBuilder extends TokenReferenceBuilder
+final class ClassReferenceBuilder extends ReferenceBuilder
 {
     private string $classLikeName;
 
@@ -73,70 +73,5 @@ final class ClassReferenceBuilder extends TokenReferenceBuilder
         return $this;
     }
 
-    public function instanceof(string $classLikeName, int $occursAtLine): self
-    {
-        $this->dependencies[] = AstDependency::fromType(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::INSTANCEOF
-        );
-
-        return $this;
-    }
-
-    public function newStatement(string $classLikeName, int $occursAtLine): self
-    {
-        $this->dependencies[] = AstDependency::fromType(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::NEW
-        );
-
-        return $this;
-    }
-
-    public function staticProperty(string $classLikeName, int $occursAtLine): self
-    {
-        $this->dependencies[] = AstDependency::fromType(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::STATIC_PROPERTY
-        );
-
-        return $this;
-    }
-
-    public function staticMethod(string $classLikeName, int $occursAtLine): self
-    {
-        $this->dependencies[] = AstDependency::fromType(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::STATIC_METHOD
-        );
-
-        return $this;
-    }
-
-    public function catchStmt(string $classLikeName, int $occursAtLine): self
-    {
-        $this->dependencies[] = AstDependency::fromType(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::CATCH
-        );
-
-        return $this;
-    }
-
-    public function attribute(string $classLikeName, int $occursAtLine): self
-    {
-        $this->dependencies[] = AstDependency::fromType(
-            ClassLikeName::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::ATTRIBUTE
-        );
-
-        return $this;
-    }
 
 }

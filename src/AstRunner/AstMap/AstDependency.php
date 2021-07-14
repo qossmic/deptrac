@@ -23,6 +23,7 @@ class AstDependency
     public const CONST                      = 'const';
     public const ANONYMOUS_CLASS_EXTENDS    = 'anonymous_class_extends';
     public const ANONYMOUS_CLASS_IMPLEMENTS = 'anonymous_class_implements';
+    public const ANONYMOUS_CLASS_TRAIT      = 'anonymous_class_trait';
     public const ATTRIBUTE                  = 'attribute';
 
     private TokenName $tokenName;

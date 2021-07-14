@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap\FunctionToken;
 
-use Qossmic\Deptrac\AstRunner\AstMap\TokenReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 
-class FunctionReferenceBuilder extends TokenReferenceBuilder
+class FunctionReferenceBuilder extends ReferenceBuilder
 {
     private string $functionName;
 

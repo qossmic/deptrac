@@ -5,23 +5,19 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser;
 
 use PhpParser\Node;
-use PhpParser\Node\Attribute;
-use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Expr\Instanceof_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
-use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Catch_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
-use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\GroupUse;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpParser\Node\Stmt\TraitUse;
+use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
@@ -30,9 +26,8 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstMap\File\FileReferenceBuilder;
-use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\FunctionReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\Resolver\DependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
@@ -50,8 +45,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     private Lexer $lexer;
     private PhpDocParser $docParser;
 
-    private ?ClassReferenceBuilder $currentClassReference;
-    private ?FunctionReferenceBuilder $currentFunctionReference;
+    private ReferenceBuilder $currentReference;
 
     public function __construct(FileReferenceBuilder $fileReferenceBuilder, TypeResolver $typeResolver, DependencyResolver ...$dependencyResolvers)
     {
@@ -61,6 +55,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         $this->fileReferenceBuilder = $fileReferenceBuilder;
         $this->dependencyResolvers = $dependencyResolvers;
         $this->typeResolver = $typeResolver;
+        $this->currentReference = $fileReferenceBuilder;
     }
 
     /**
@@ -76,9 +71,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
         $docNode = $this->docParser->parse($tokens);
 
-        return array_map(static function (TemplateTagValueNode $tag): string {
-            return $tag->name;
-        }, $docNode->getTemplateTagValues());
+        return array_map(static fn(TemplateTagValueNode $tag): string => $tag->name, $docNode->getTemplateTagValues());
     }
 
     public function enterNode(Node $node)
@@ -89,22 +82,20 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) {
-            if (isset($node->namespacedName)) {
-                $name = $node->namespacedName->toCodeString();
-            } elseif ($node->name instanceof Identifier) {
-                $name = $node->name->toString();
-            } else {
-                return null;
-            }
+            $name = $this->getReferenceName($node);
 
-            if ($node instanceof ClassLike) {
+            if ($node instanceof ClassLike && $name !== null) {
                 $this->enterClassLike($name, $node);
-                return null;
+            } elseif ($node instanceof Node\Stmt\Function_) {
+                $this->enterFunction($name, $node);
             }
 
-            if ($node instanceof Node\Stmt\Function_) {
-                $this->enterFunction($name, $node);
-                return null;
+            foreach ($node->getAttrGroups() as $attrGroup) {
+                foreach ($attrGroup->getAttributes() as $attribute) {
+                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
+                        $this->currentReference->attribute($classLikeName, $node->getLine());
+                    }
+                }
             }
 
         }
@@ -114,85 +105,91 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
+        #Resolve current reference scope
+        if(($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) && $this->getReferenceName($node) !== null) {
+            $this->currentReference = $this->fileReferenceBuilder;
+            return null;
+        }
+
+        #Resolve current type scope
         if ($node instanceof Use_ && Use_::TYPE_NORMAL === $node->type) {
             foreach ($node->uses as $use) {
                 $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
-                $this->fileReferenceBuilder->newUseStatement($use->name->toString(), $use->name->getLine());
+                $this->fileReferenceBuilder->useStatement($use->name->toString(), $use->name->getLine());
             }
+            return null;
         }
-
         if ($node instanceof GroupUse) {
             foreach ($node->uses as $use) {
                 if (Use_::TYPE_NORMAL === $use->type) {
                     $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
                     $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
-                    $this->fileReferenceBuilder->newUseStatement($classLikeName, $use->name->getLine());
+                    $this->fileReferenceBuilder->useStatement($classLikeName, $use->name->getLine());
                 }
             }
-        }
-
-        $currentTokenReference = $this->currentFunctionReference ?? $this->currentClassReference ?? null;
-
-        if (null === $currentTokenReference) {
             return null;
         }
 
-        if ($node instanceof TraitUse) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
-                $this->currentClassReference->trait($classLikeName, $node->getLine());
-            }
-        }
-
-        if ($node instanceof Attribute) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->name) as $classLikeName) {
-                $this->currentClassReference->attribute($classLikeName, $node->getLine());
-            }
-        }
-
+        #Resolve code
         if ($node instanceof Instanceof_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReference->instanceof($classLikeName, $node->class->getLine());
+                $this->currentReference->instanceof($classLikeName, $node->class->getLine());
             }
         }
-
-        if ($node instanceof Param && null !== $node->type) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->type) as $classLikeName) {
-                $this->currentClassReference->parameter($classLikeName, $node->type->getLine());
-            }
-        }
-
         if ($node instanceof New_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReference->newStatement($classLikeName, $node->class->getLine());
+                $this->currentReference->newStatement($classLikeName, $node->class->getLine());
             }
         }
 
         if ($node instanceof StaticPropertyFetch && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReference->staticProperty($classLikeName, $node->class->getLine());
+                $this->currentReference->staticProperty($classLikeName, $node->class->getLine());
             }
         }
 
         if ($node instanceof StaticCall && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentClassReference->staticMethod($classLikeName, $node->class->getLine());
-            }
-        }
-
-        if (($node instanceof ClassMethod || $node instanceof Closure) && null !== $node->returnType) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->returnType) as $classLikeName) {
-                $this->currentClassReference->returnType($classLikeName, $node->returnType->getLine());
+                $this->currentReference->staticMethod($classLikeName, $node->class->getLine());
             }
         }
 
         if ($node instanceof Catch_) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->types) as $classLikeName) {
-                $this->currentClassReference->catchStmt($classLikeName, $node->getLine());
+                $this->currentReference->catchStmt($classLikeName, $node->getLine());
+            }
+        }
+
+        if ($node instanceof Node\FunctionLike) {
+            foreach ($node->getAttrGroups() as $attrGroup) {
+                foreach ($attrGroup->getAttributes() as $attribute) {
+                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
+                        $this->currentReference->attribute($classLikeName, $node->getLine());
+                    }
+                }
+            }
+            foreach ($node->getParams() as $param) {
+                if (null !== $param->type) {
+                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $param->type) as $classLikeName) {
+                        $this->currentReference->parameter($classLikeName, $param->type->getLine());
+                    }
+                }
+            }
+            if(null !== $node->getReturnType()) {
+                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName) {
+                    $this->currentReference->returnType($classLikeName, $node->getReturnType()->getLine());
+                }
+            }
+        }
+
+        if ($node instanceof Property && null !== $node->type) {
+            foreach ($this->typeResolver->resolvePropertyType($node->type) as $type) {
+                $this->currentReference->variable($type, $node->getStartLine());
             }
         }
 
         foreach ($this->dependencyResolvers as $resolver) {
-            $resolver->processNode($node, $this->currentClassReference, $this->currentTypeScope);
+            $resolver->processNode($node, $this->currentReference, $this->currentTypeScope);
         }
 
         return null;
@@ -200,37 +197,35 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     private function enterClassLike(string $name, ClassLike $node): void
     {
-        $this->currentClassReference =
+        $this->currentReference =
             $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node));
 
         if ($node instanceof Class_) {
             if ($node->extends instanceof Name) {
-                $this->currentClassReference->extends($node->extends->toCodeString(), $node->extends->getLine());
+                $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
             }
             foreach ($node->implements as $implement) {
-                $this->currentClassReference->implements($implement->toCodeString(), $implement->getLine());
+                $this->currentReference->implements($implement->toCodeString(), $implement->getLine());
+            }
+            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->getTraitUses()) as $classLikeName) {
+                $this->currentReference->trait($classLikeName, $node->getLine());
             }
         }
 
         if ($node instanceof Interface_) {
             foreach ($node->extends as $extend) {
-                $this->currentClassReference->implements($extend->toCodeString(), $extend->getLine());
+                $this->currentReference->implements($extend->toCodeString(), $extend->getLine());
             }
         }
     }
 
     private function enterFunction(string $name, Node\Stmt\Function_ $node): void
     {
-        $this->currentFunctionReference = $this->fileReferenceBuilder->newFunction($name);
+        $this->currentReference = $this->fileReferenceBuilder->newFunction($name);
+
         foreach ($node->getParams() as $param) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $param) as $classLikeName) {
-                $this->currentFunctionReference->parameter($classLikeName, $node->getLine());
-            }
-        }
-
-        foreach ($node->getAttrGroups() as $attrGroup) {
-            foreach ($attrGroup->getAttributes() as $attribute) {
-                //TODO: More resolving here (Patrick Kusebauch @ 10.07.21)
+                $this->currentReference->parameter($classLikeName, $node->getLine());
             }
         }
 
@@ -238,7 +233,20 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             $this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as
             $classLikeName
         ) {
-            $this->currentFunctionReference->returnType($classLikeName, $node->getLine());
+            $this->currentReference->returnType($classLikeName, $node->getLine());
         }
+    }
+
+    private function getReferenceName($node): ?string
+    {
+        if (isset($node->namespacedName)) {
+            return $node->namespacedName->toCodeString();
+        }
+
+        if ($node->name instanceof Identifier) {
+            return $node->name->toString();
+        }
+
+        return null;
     }
 }

@@ -9,13 +9,10 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\FunctionReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 
-final class FileReferenceBuilder
+final class FileReferenceBuilder extends ReferenceBuilder
 {
-    /** @var AstDependency[] */
-    private array $directDependencies = [];
-
-    private string $filepath;
 
     /** @var ClassReferenceBuilder[] */
     private array $classReferences = [];
@@ -23,19 +20,14 @@ final class FileReferenceBuilder
     /** @var FunctionReferenceBuilder[] */
     private array $functionReferences = [];
 
-    private function __construct(string $filepath)
-    {
-        $this->filepath = $filepath;
-    }
-
     public static function create(string $filepath): self
     {
-        return new self($filepath);
+        return new self([], $filepath);
     }
 
-    public function newUseStatement(string $classLikeName, int $occursAtLine): self
+    public function useStatement(string $classLikeName, int $occursAtLine): self
     {
-        $this->directDependencies[] = AstDependency::fromType(
+        $this->dependencies[] = AstDependency::fromType(
             ClassLikeName::fromFQCN($classLikeName),
             FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
             AstDependency::USE
@@ -75,6 +67,6 @@ final class FileReferenceBuilder
             $functionReferences[] = $functionReference->build();
         }
 
-        return new AstFileReference($this->filepath, $classReferences, $functionReferences, $this->directDependencies);
+        return new AstFileReference($this->filepath, $classReferences, $functionReferences, $this->dependencies);
     }
 }
