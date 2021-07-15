@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\AstRunner\Visitor;
+namespace Tests\Qossmic\Deptrac\AstRunner;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
@@ -17,7 +17,6 @@ use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Tests\Qossmic\Deptrac\AstRunner\ArrayAsserts;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassB;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassC;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyTraitA;
@@ -124,7 +123,7 @@ final class AstMapGeneratorTest extends TestCase
     /**
      * @return string[]
      */
-    private function getInheritsAsString(?AstMap\AstClassReference $classReference): array
+    private function getInheritsAsString(?AstMap\ClassToken\AstClassReference $classReference): array
     {
         if (null === $classReference) {
             return [];

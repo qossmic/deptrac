@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstMap;
+namespace Qossmic\Deptrac\AstRunner\AstMap\File;
+
+use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\AstFunctionReference;
 
 class AstFileReference
 {
@@ -11,24 +15,27 @@ class AstFileReference
     /** @var AstClassReference[] */
     private array $classReferences;
 
-    /**
-     * @var AstDependency[]
-     *
-     * @deprecated
-     */
+    /** @var AstDependency[] */
     private array $dependencies;
+
+    /** @var AstFunctionReference[] */
+    private array $functionReferences;
 
     /**
      * @param AstClassReference[] $classReferences
      * @param AstDependency[]     $dependencies
      */
-    public function __construct(string $filepath, array $classReferences, array $dependencies)
+    public function __construct(string $filepath, array $classReferences, array $functionReferences, array $dependencies)
     {
         $this->filepath = $filepath;
         $this->dependencies = $dependencies;
         $this->classReferences = array_map(
             fn (AstClassReference $classReference) => $classReference->withFileReference($this),
             $classReferences
+        );
+        $this->functionReferences = array_map(
+            fn (AstFunctionReference $functionReference) => $functionReference->withFileReference($this),
+            $functionReferences
         );
     }
 
@@ -47,11 +54,17 @@ class AstFileReference
 
     /**
      * @return AstDependency[]
-     *
-     * @deprecated
      */
     public function getDependencies(): array
     {
         return $this->dependencies;
+    }
+
+    /**
+     * @return AstFunctionReference[]
+     */
+    public function getFunctionReferences(): array
+    {
+        return $this->functionReferences;
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+
 /**
  * @psalm-immutable
  */

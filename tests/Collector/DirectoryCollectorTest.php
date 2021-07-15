@@ -28,7 +28,7 @@ final class DirectoryCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
-        $fileReferenceBuilder = AstMap\FileReferenceBuilder::create($filePath);
+        $fileReferenceBuilder = AstMap\File\FileReferenceBuilder::create($filePath);
         $fileReferenceBuilder->newClassLike('Test');
         $fileReference = $fileReferenceBuilder->build();
 
@@ -44,7 +44,7 @@ final class DirectoryCollectorTest extends TestCase
 
     public function testMissingRegexThrowsException(): void
     {
-        $fileReferenceBuilder = AstMap\FileReferenceBuilder::create('/some/path/to/file.php');
+        $fileReferenceBuilder = AstMap\File\FileReferenceBuilder::create('/some/path/to/file.php');
         $fileReferenceBuilder->newClassLike('Test');
         $fileReference = $fileReferenceBuilder->build();
 
