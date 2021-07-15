@@ -26,6 +26,7 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\Resolver\DependencyResolver;
@@ -82,22 +83,33 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        if ($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) {
-            $name = $this->getReferenceName($node);
-
-            if ($node instanceof ClassLike && null !== $name) {
-                $this->enterClassLike($name, $node);
-            } elseif ($node instanceof Node\Stmt\Function_) {
-                $this->enterFunction($name, $node);
-            }
-
+        if ($node instanceof Node\Stmt\Function_) {
+            $this->enterFunction($this->getReferenceName($node), $node);
             foreach ($node->getAttrGroups() as $attrGroup) {
-                foreach ($attrGroup->getAttributes() as $attribute) {
+                foreach ($attrGroup->attrs as $attribute) {
                     foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
-                        $this->currentReference->attribute($classLikeName, $node->getLine());
+                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
                     }
                 }
             }
+
+            return null;
+        }
+
+        if ($node instanceof ClassLike) {
+            $name = $this->getReferenceName($node);
+            if (null !== $name) {
+                $this->enterClassLike($name, $node);
+            }
+            foreach ($node->attrGroups as $attrGroup) {
+                foreach ($attrGroup->attrs as $attribute) {
+                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
+                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
+                    }
+                }
+            }
+
+            return null;
         }
 
         return null;
@@ -134,6 +146,13 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         //Resolve code
+        if ($node instanceof Node\Stmt\TraitUse && $this->currentReference instanceof ClassReferenceBuilder) {
+            //TODO: What about anonymous classes?? (Patrick Kusebauch @ 15.07.21)
+            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
+                $this->currentReference->trait($classLikeName, $node->getLine());
+            }
+        }
+
         if ($node instanceof Instanceof_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $this->currentReference->instanceof($classLikeName, $node->class->getLine());
@@ -165,9 +184,9 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
         if ($node instanceof Node\FunctionLike) {
             foreach ($node->getAttrGroups() as $attrGroup) {
-                foreach ($attrGroup->getAttributes() as $attribute) {
-                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
-                        $this->currentReference->attribute($classLikeName, $node->getLine());
+                foreach ($attrGroup->attrs as $attribute) {
+                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
+                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
                     }
                 }
             }
@@ -185,9 +204,18 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if ($node instanceof Property && null !== $node->type) {
-            foreach ($this->typeResolver->resolvePropertyType($node->type) as $type) {
-                $this->currentReference->variable($type, $node->getStartLine());
+        if ($node instanceof Property) {
+            foreach ($node->attrGroups as $attrGroup) {
+                foreach ($attrGroup->attrs as $attribute) {
+                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
+                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
+                    }
+                }
+            }
+            if (null !== $node->type) {
+                foreach ($this->typeResolver->resolvePropertyType($node->type) as $type) {
+                    $this->currentReference->variable($type, $node->type->getStartLine());
+                }
             }
         }
 
@@ -210,9 +238,6 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             foreach ($node->implements as $implement) {
                 $this->currentReference->implements($implement->toCodeString(), $implement->getLine());
             }
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->getTraitUses()) as $classLikeName) {
-                $this->currentReference->trait($classLikeName, $node->getLine());
-            }
         }
 
         if ($node instanceof Interface_) {
@@ -228,14 +253,15 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
         foreach ($node->getParams() as $param) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $param) as $classLikeName) {
-                $this->currentReference->parameter($classLikeName, $node->getLine());
+                $this->currentReference->parameter($classLikeName, $param->getLine());
             }
         }
 
+        $returnType = $node->getReturnType();
         foreach (
-            $this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName
+            $this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $returnType) as $classLikeName
         ) {
-            $this->currentReference->returnType($classLikeName, $node->getLine());
+            $this->currentReference->returnType($classLikeName, $returnType->getLine());
         }
     }
 

@@ -30,28 +30,28 @@ final class ImplementsCollectorTest extends TestCase
      */
     public function testSatisfy(array $configuration, bool $expected): void
     {
-        $fooFileReferenceBuilder = AstMap\FileReferenceBuilder::create('foo.php');
+        $fooFileReferenceBuilder = AstMap\File\FileReferenceBuilder::create('foo.php');
         $fooFileReferenceBuilder
             ->newClassLike('App\Foo')
             ->implements('App\Bar', 2);
         $fooFileReference = $fooFileReferenceBuilder->build();
 
-        $barFileReferenceBuilder = AstMap\FileReferenceBuilder::create('bar.php');
+        $barFileReferenceBuilder = AstMap\File\FileReferenceBuilder::create('bar.php');
         $barFileReferenceBuilder
             ->newClassLike('App\Bar')
             ->implements('App\Baz', 2);
         $barFileReference = $barFileReferenceBuilder->build();
 
-        $bazFileReferenceBuilder = AstMap\FileReferenceBuilder::create('baz.php');
+        $bazFileReferenceBuilder = AstMap\File\FileReferenceBuilder::create('baz.php');
         $bazFileReferenceBuilder->newClassLike('App\Baz');
         $bazFileReference = $bazFileReferenceBuilder->build();
 
-        $fizTraitFileReferenceBuilder = AstMap\FileReferenceBuilder::create('fiztrait.php');
+        $fizTraitFileReferenceBuilder = AstMap\File\FileReferenceBuilder::create('fiztrait.php');
         $fizTraitFileReferenceBuilder
             ->newClassLike('App\FizTrait');
         $fizTraitFileReference = $fizTraitFileReferenceBuilder->build();
 
-        $fooBarFileReferenceBuilder = AstMap\FileReferenceBuilder::create('foobar.php');
+        $fooBarFileReferenceBuilder = AstMap\File\FileReferenceBuilder::create('foobar.php');
         $fooBarFileReferenceBuilder
             ->newClassLike('App\FooBar')
             ->extends('App\Foo', 2)

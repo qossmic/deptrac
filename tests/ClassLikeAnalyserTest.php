@@ -3,7 +3,7 @@
 namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
 use Qossmic\Deptrac\ClassLikeAnalyser;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\ContainerBuilder;

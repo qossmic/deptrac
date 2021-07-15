@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
@@ -39,7 +38,7 @@ class ClassLikeLayerResolver implements ClassLikeLayerResolverInterface
         $layers = [];
 
         if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
-            $astClassReference = new AstClassReference($className);
+            $astClassReference = new AstMap\ClassToken\AstClassReference($className);
         }
 
         foreach ($this->configuration->getLayers() as $configurationLayer) {
