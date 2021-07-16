@@ -5,53 +5,52 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Dependency;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
-use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver
 {
     private EventDispatcherInterface $dispatcher;
     private InheritanceFlatter $inheritanceFlatter;
-    /** @var DependencyEmitterInterface[] */
-    private array $emitters;
+    private ClassDependencyEmitter $classDependencyEmitter;
+    private UsesDependencyEmitter $usesDependencyEmitter;
 
-    /**
-     * @param iterable<DependencyEmitterInterface> $emitters
-     */
-    public function __construct(EventDispatcherInterface $dispatcher, InheritanceFlatter $inheritanceFlatter, iterable $emitters)
+    public function __construct(EventDispatcherInterface $dispatcher, InheritanceFlatter $inheritanceFlatter, ClassDependencyEmitter $classDependencyEmitter, UsesDependencyEmitter $usesDependencyEmitter)
     {
         $this->dispatcher = $dispatcher;
         $this->inheritanceFlatter = $inheritanceFlatter;
-
-        $this->emitters = [];
-        foreach ($emitters as $emitter) {
-            $this->addEmitter($emitter);
-        }
+        $this->classDependencyEmitter = $classDependencyEmitter;
+        $this->usesDependencyEmitter = $usesDependencyEmitter;
     }
 
-    public function resolve(AstMap $astMap): Result
+    public function resolve(AstMap $astMap, ConfigurationAnalyzer $configurationAnalyzer): Result
     {
         $result = new Result();
 
-        foreach ($this->emitters as $emitter) {
-            $this->dispatcher->dispatch(new PreEmitEvent($emitter->getName()));
-            $emitter->applyDependencies($astMap, $result);
+        $types = $configurationAnalyzer->getTypes();
+
+        if(in_array('class', $types, true)) {
+            $this->dispatcher->dispatch(new PreEmitEvent($this->classDependencyEmitter->getName()));
+            $this->classDependencyEmitter->applyDependencies($astMap, $result);
+            $this->dispatcher->dispatch(new PostEmitEvent());
         }
-        $this->dispatcher->dispatch(new PostEmitEvent());
+        if(in_array('uses', $types, true)) {
+            $this->dispatcher->dispatch(new PreEmitEvent($this->usesDependencyEmitter->getName()));
+            $this->usesDependencyEmitter->applyDependencies($astMap, $result);
+            $this->dispatcher->dispatch(new PostEmitEvent());
+        }
+        //TODO: FunctionEmitter + FileEmitter (Patrick Kusebauch @ 16.07.21)
 
         $this->dispatcher->dispatch(new PreFlattenEvent());
         $this->inheritanceFlatter->flattenDependencies($astMap, $result);
         $this->dispatcher->dispatch(new PostFlattenEvent());
 
         return $result;
-    }
-
-    private function addEmitter(DependencyEmitterInterface $emitter): void
-    {
-        $this->emitters[] = $emitter;
     }
 }

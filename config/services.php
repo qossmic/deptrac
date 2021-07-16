@@ -223,15 +223,12 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service(EventDispatcher::class),
             service(InheritanceFlatter::class),
-            tagged_iterator('dependency_emitter'),
+            service(ClassDependencyEmitter::class),
+            service(UsesDependencyEmitter::class),
         ]);
     $services->set(InheritanceFlatter::class);
-    $services
-        ->set(UsesDependencyEmitter::class)
-        ->tag('dependency_emitter');
-    $services
-        ->set(ClassDependencyEmitter::class)
-        ->tag('dependency_emitter');
+    $services->set(ClassDependencyEmitter::class);
+    $services->set(UsesDependencyEmitter::class);
 
     /* Commands */
     $services
