@@ -10,7 +10,7 @@ use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 
-class ClassLikeLayerResolver implements ClassLikeLayerResolverInterface
+class TokenLayerResolver implements TokenLayerResolverInterface
 {
     private Configuration $configuration;
     private AstMap $astMap;
@@ -32,26 +32,28 @@ class ClassLikeLayerResolver implements ClassLikeLayerResolverInterface
     /**
      * @return string[]
      */
-    public function getLayersByClassLikeName(ClassLikeName $className): array
+    public function getLayersByTokenName(AstMap\TokenName $tokenName): array
     {
         /** @var array<string, bool> $layers */
         $layers = [];
 
-        if (!$astClassReference = $this->astMap->getClassReferenceByClassName($className)) {
-            $astClassReference = new AstMap\ClassToken\AstClassReference($className);
-        }
+        if ($tokenName instanceof ClassLikeName) {
+            if (!$astClassReference = $this->astMap->getClassReferenceByClassName($tokenName)) {
+                $astClassReference = new AstMap\ClassToken\AstClassReference($tokenName);
+            }
 
-        foreach ($this->configuration->getLayers() as $configurationLayer) {
-            foreach ($configurationLayer->getCollectors() as $configurationCollector) {
-                $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
+            foreach ($this->configuration->getLayers() as $configurationLayer) {
+                foreach ($configurationLayer->getCollectors() as $configurationCollector) {
+                    $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                $configuration = $this->parameterResolver->resolve(
-                    $configurationCollector->getArgs(),
-                    $this->configuration->getParameters()
-                );
+                    $configuration = $this->parameterResolver->resolve(
+                        $configurationCollector->getArgs(),
+                        $this->configuration->getParameters()
+                    );
 
-                if ($collector->satisfy($configuration, $astClassReference, $this->astMap, $this->collectorRegistry)) {
-                    $layers[$configurationLayer->getName()] = true;
+                    if ($collector->satisfy($configuration, $astClassReference, $this->astMap, $this->collectorRegistry)) {
+                        $layers[$configurationLayer->getName()] = true;
+                    }
                 }
             }
         }
