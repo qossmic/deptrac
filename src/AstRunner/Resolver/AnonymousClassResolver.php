@@ -26,7 +26,9 @@ class AnonymousClassResolver implements DependencyResolver
         }
 
         foreach ($node->getTraitUses() as $traitUse) {
-            $referenceBuilder->anonymousClassTrait($traitUse->toCodeString(), $traitUse->getLine());
+            foreach ($traitUse->traits as $trait) {
+                $referenceBuilder->anonymousClassTrait($trait->toCodeString(), $trait->getLine());
+            }
         }
     }
 }

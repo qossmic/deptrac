@@ -35,7 +35,7 @@ final class ConfigurationAnalyzer
      */
     public static function fromArray(array $args): self
     {
-        /** @var array{count_use_statements: bool} $options */
+        /** @var array{count_use_statements: bool, types: string[]} $options */
         $options = (new OptionsResolver())
             ->setDefault('count_use_statements', true)
             ->setDefault('types', [self::CLASS_TOKEN])

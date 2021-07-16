@@ -96,7 +96,8 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Stmt\Function_) {
-            $this->enterFunction($this->getReferenceName($node), $node);
+            $name = isset($node->namespacedName) ? $node->namespacedName->toCodeString() : $node->name->toString();
+            $this->enterFunction($name, $node);
             foreach ($node->getAttrGroups() as $attrGroup) {
                 foreach ($attrGroup->attrs as $attribute) {
                     foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
@@ -109,7 +110,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof ClassLike) {
-            $name = $this->getReferenceName($node);
+            $name = $this->getClassReferenceName($node);
             if (null !== $name) {
                 $this->enterClassLike($name, $node);
             }
@@ -130,7 +131,12 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         //Resolve current reference scope
-        if (($node instanceof ClassLike || $node instanceof Node\Stmt\Function_) && null !== $this->getReferenceName($node)) {
+        if ($node instanceof Node\Stmt\Function_) {
+            $this->currentReference = $this->fileReferenceBuilder;
+
+            return null;
+        }
+        if ($node instanceof ClassLike && null !== $this->getClassReferenceName($node)) {
             $this->currentReference = $this->fileReferenceBuilder;
 
             return null;
@@ -274,15 +280,14 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        $returnType = $node->getReturnType();
-        foreach (
-            $this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $returnType) as $classLikeName
-        ) {
-            $this->currentReference->returnType($classLikeName, $returnType->getLine());
+        if (null !== $node->getReturnType()) {
+            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName) {
+                $this->currentReference->returnType($classLikeName, $node->getReturnType()->getLine());
+            }
         }
     }
 
-    private function getReferenceName($node): ?string
+    private function getClassReferenceName(ClassLike $node): ?string
     {
         if (isset($node->namespacedName)) {
             return $node->namespacedName->toCodeString();
