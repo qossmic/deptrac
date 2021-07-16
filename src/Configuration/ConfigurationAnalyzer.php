@@ -10,10 +10,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 final class ConfigurationAnalyzer
 {
     private const RECOGNIZED_TOKENS = [
-        'class',
-        'use',
-        'function',
+        self::CLASS_TOKEN,
+        self::CLASS_SUPERGLOBAL_TOKEN,
+        self::USE_TOKEN,
+        self::FILE_TOKEN,
+        self::FUNCTION_TOKEN,
+        self::FUNCTION_SUPERGLOBAL_TOKEN,
     ];
+
+    public const CLASS_TOKEN = 'class';
+    public const CLASS_SUPERGLOBAL_TOKEN = 'class_superglobal';
+    public const USE_TOKEN = 'use';
+    public const FILE_TOKEN = 'file';
+    public const FUNCTION_TOKEN = 'function';
+    public const FUNCTION_SUPERGLOBAL_TOKEN = 'function_superglobal';
 
     /** @var array{types: string[]} */
     private array $config;
@@ -28,7 +38,7 @@ final class ConfigurationAnalyzer
         /** @var array{count_use_statements: bool} $options */
         $options = (new OptionsResolver())
             ->setDefault('count_use_statements', true)
-            ->setDefault('types', ['class'])
+            ->setDefault('types', [self::CLASS_TOKEN])
             ->addAllowedTypes('count_use_statements', 'bool')
             ->addAllowedTypes('types', 'array')
             ->resolve($args);
@@ -42,7 +52,7 @@ final class ConfigurationAnalyzer
     private function __construct(array $config)
     {
         if ($config['count_use_statements']) {
-            $config['types'][] = 'use';
+            $config['types'][] = self::USE_TOKEN;
         }
         unset($config['count_use_statements']);
 

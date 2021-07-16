@@ -49,7 +49,7 @@ abstract class ReferenceBuilder
         $this->dependencies[] = AstDependency::fromType(
             new SuperGlobalName($superglobalName),
             FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            AstDependency::VARIABLE
+            AstDependency::SUPERGLOBAL_VARIABLE
         );
     }
 

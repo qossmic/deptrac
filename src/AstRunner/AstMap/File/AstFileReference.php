@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner\AstMap\File;
 
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
+use Qossmic\Deptrac\AstRunner\AstMap\AstTokenReference;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\AstFunctionReference;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
-class AstFileReference
+class AstFileReference implements AstTokenReference
 {
     private string $filepath;
 
@@ -66,5 +68,15 @@ class AstFileReference
     public function getFunctionReferences(): array
     {
         return $this->functionReferences;
+    }
+
+    public function getFileReference(): ?AstFileReference
+    {
+        return $this;
+    }
+
+    public function getTokenName(): TokenName
+    {
+        return new FileName($this->getFilepath());
     }
 }

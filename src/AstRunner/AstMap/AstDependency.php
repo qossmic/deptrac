@@ -25,6 +25,7 @@ class AstDependency
     public const ANONYMOUS_CLASS_IMPLEMENTS = 'anonymous_class_implements';
     public const ANONYMOUS_CLASS_TRAIT = 'anonymous_class_trait';
     public const ATTRIBUTE = 'attribute';
+    public const SUPERGLOBAL_VARIABLE = 'superglobal_variable';
 
     private TokenName $tokenName;
     private FileOccurrence $fileOccurrence;

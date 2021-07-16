@@ -11,41 +11,58 @@ use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
+use Qossmic\Deptrac\ShouldNotHappenException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver
 {
     private EventDispatcherInterface $dispatcher;
     private InheritanceFlatter $inheritanceFlatter;
-    private ClassDependencyEmitter $classDependencyEmitter;
-    private UsesDependencyEmitter $usesDependencyEmitter;
 
-    public function __construct(EventDispatcherInterface $dispatcher, InheritanceFlatter $inheritanceFlatter, ClassDependencyEmitter $classDependencyEmitter, UsesDependencyEmitter $usesDependencyEmitter)
-    {
+    /** @var DependencyEmitterInterface[] */
+    private array $emitters;
+
+    public function __construct(
+        EventDispatcherInterface $dispatcher,
+        InheritanceFlatter $inheritanceFlatter,
+        ClassDependencyEmitter $classDependencyEmitter,
+        ClassSuperglobalDependencyEmitter $classSuperglobalDependencyEmitter,
+        FileDependencyEmitter $fileDependencyEmitter,
+        FunctionDependencyEmitter $functionDependencyEmitter,
+        FunctionSuperglobalDependencyEmitter $functionSuperglobalDependencyEmitter,
+        UsesDependencyEmitter $usesDependencyEmitter
+    ) {
         $this->dispatcher = $dispatcher;
         $this->inheritanceFlatter = $inheritanceFlatter;
-        $this->classDependencyEmitter = $classDependencyEmitter;
-        $this->usesDependencyEmitter = $usesDependencyEmitter;
+        $this->emitters = [
+            ConfigurationAnalyzer::CLASS_TOKEN => $classDependencyEmitter,
+            ConfigurationAnalyzer::CLASS_SUPERGLOBAL_TOKEN => $classSuperglobalDependencyEmitter,
+            ConfigurationAnalyzer::FILE_TOKEN => $fileDependencyEmitter,
+            ConfigurationAnalyzer::FUNCTION_TOKEN => $functionDependencyEmitter,
+            ConfigurationAnalyzer::FUNCTION_SUPERGLOBAL_TOKEN => $functionSuperglobalDependencyEmitter,
+            ConfigurationAnalyzer::USE_TOKEN => $usesDependencyEmitter,
+        ];
     }
 
     public function resolve(AstMap $astMap, ConfigurationAnalyzer $configurationAnalyzer): Result
     {
         $result = new Result();
 
-        $types = $configurationAnalyzer->getTypes();
+        foreach ($configurationAnalyzer->getTypes() as $type) {
+            if (!array_key_exists($type, $this->emitters)) {
+                throw new ShouldNotHappenException();
+            }
 
-        if(in_array('class', $types, true)) {
-            $this->dispatcher->dispatch(new PreEmitEvent($this->classDependencyEmitter->getName()));
-            $this->classDependencyEmitter->applyDependencies($astMap, $result);
+            $this->dispatcher->dispatch(new PreEmitEvent($this->emitters[$type]->getName()));
+            $this->emitters[$type]->applyDependencies($astMap, $result);
             $this->dispatcher->dispatch(new PostEmitEvent());
         }
-        if(in_array('uses', $types, true)) {
-            $this->dispatcher->dispatch(new PreEmitEvent($this->usesDependencyEmitter->getName()));
-            $this->usesDependencyEmitter->applyDependencies($astMap, $result);
-            $this->dispatcher->dispatch(new PostEmitEvent());
-        }
-        //TODO: FunctionEmitter + FileEmitter (Patrick Kusebauch @ 16.07.21)
 
         $this->dispatcher->dispatch(new PreFlattenEvent());
         $this->inheritanceFlatter->flattenDependencies($astMap, $result);

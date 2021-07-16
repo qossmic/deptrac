@@ -14,7 +14,10 @@ use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
+use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -28,6 +31,8 @@ final class ResolverTest extends TestCase
         $dispatcher->method('dispatch')->withConsecutive(
             [new PreEmitEvent('emitter')],
             [new PostEmitEvent()],
+            [new PreEmitEvent('emitter6')],
+            [new PostEmitEvent()],
             [new PreFlattenEvent()],
             [new PostFlattenEvent()]
         );
@@ -39,11 +44,28 @@ final class ResolverTest extends TestCase
         $emitter->method('getName')->willReturn('emitter');
         $emitter->expects(self::once())->method('applyDependencies');
 
-        $emitter2 = $this->createMock(UsesDependencyEmitter::class);
+        $emitter2 = $this->createMock(ClassSuperglobalDependencyEmitter::class);
         $emitter2->method('getName')->willReturn('emitter2');
         $emitter2->expects(self::never())->method('applyDependencies');
 
-        $resolver = new Resolver($dispatcher, $inheritanceFlatter, $emitter, $emitter2);
+        $emitter3 = $this->createMock(FileDependencyEmitter::class);
+        $emitter3->method('getName')->willReturn('emitter3');
+        $emitter3->expects(self::never())->method('applyDependencies');
+
+        $emitter4 = $this->createMock(FunctionDependencyEmitter::class);
+        $emitter4->method('getName')->willReturn('emitter4');
+        $emitter4->expects(self::never())->method('applyDependencies');
+
+        $emitter5 = $this->createMock(FunctionSuperglobalDependencyEmitter::class);
+        $emitter5->method('getName')->willReturn('emitter5');
+        $emitter5->expects(self::never())->method('applyDependencies');
+
+        $emitter6 = $this->createMock(UsesDependencyEmitter::class);
+        $emitter6->method('getName')->willReturn('emitter6');
+        $emitter6->expects(self::once())->method('applyDependencies');
+
+        $resolver = new Resolver($dispatcher, $inheritanceFlatter, $emitter, $emitter2, $emitter3, $emitter4, $emitter5, $emitter6);
+        
         $resolver->resolve($astMap, ConfigurationAnalyzer::fromArray([]));
     }
 }

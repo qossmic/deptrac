@@ -38,6 +38,10 @@ use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter as ClassSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter as FileDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter as FunctionDependencyEmitter;
+use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter as FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\FileResolver;
 use Qossmic\Deptrac\LayerAnalyser;
@@ -224,10 +228,18 @@ return static function (ContainerConfigurator $container): void {
             service(EventDispatcher::class),
             service(InheritanceFlatter::class),
             service(ClassDependencyEmitter::class),
+            service(ClassSuperglobalDependencyEmitter::class),
+            service(FileDependencyEmitter::class),
+            service(FunctionDependencyEmitter::class),
+            service(FunctionSuperglobalDependencyEmitter::class),
             service(UsesDependencyEmitter::class),
         ]);
     $services->set(InheritanceFlatter::class);
     $services->set(ClassDependencyEmitter::class);
+    $services->set(ClassSuperglobalDependencyEmitter::class);
+    $services->set(FileDependencyEmitter::class);
+    $services->set(FunctionDependencyEmitter::class);
+    $services->set(FunctionSuperglobalDependencyEmitter::class);
     $services->set(UsesDependencyEmitter::class);
 
     /* Commands */
