@@ -44,6 +44,15 @@ abstract class ReferenceBuilder
         return $this;
     }
 
+    public function superglobal(string $superglobalName, int $occursAtLine): void
+    {
+        $this->dependencies[] = AstDependency::fromType(
+            new SuperGlobalName($superglobalName),
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
+            AstDependency::VARIABLE
+        );
+    }
+
     public function returnType(string $classLikeName, int $occursAtLine): self
     {
         $this->dependencies[] = AstDependency::fromType(

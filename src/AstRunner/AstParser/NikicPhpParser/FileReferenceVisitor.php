@@ -35,6 +35,18 @@ use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
 
 class FileReferenceVisitor extends NodeVisitorAbstract
 {
+    private const SUPERGLOBALS = [
+        'GLOBALS',
+        '_SERVER',
+        '_GET',
+        '_POST',
+        '_FILES',
+        '_COOKIE',
+        '_SESSION',
+        '_REQUEST',
+        '_ENV',
+    ];
+
     private FileReferenceBuilder $fileReferenceBuilder;
 
     /** @var DependencyResolver[] */
@@ -158,6 +170,11 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 $this->currentReference->instanceof($classLikeName, $node->class->getLine());
             }
         }
+
+        if ($node instanceof Node\Expr\Variable && in_array($node->name, self::SUPERGLOBALS, true)) {
+            $this->currentReference->superglobal($node->name, $node->getLine());
+        }
+
         if ($node instanceof New_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $this->currentReference->newStatement($classLikeName, $node->class->getLine());
