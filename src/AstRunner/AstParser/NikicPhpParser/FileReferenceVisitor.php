@@ -159,7 +159,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
         //Resolve code
         if ($node instanceof Node\Stmt\TraitUse && $this->currentReference instanceof ClassReferenceBuilder) {
-            //TODO: What about anonymous classes?? (Patrick Kusebauch @ 15.07.21)
+            //TODO: Missing anonymous classes support
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
                 $this->currentReference->trait($classLikeName, $node->getLine());
             }

@@ -12,7 +12,7 @@ class FunctionReferenceBuilder extends ReferenceBuilder
 
     protected function __construct(string $filepath, string $functionName)
     {
-        //TODO: Function templates (Patrick Kusebauch @ 10.07.21)
+        //TODO: Function templates
         parent::__construct([], $filepath);
         $this->functionName = $functionName;
     }
