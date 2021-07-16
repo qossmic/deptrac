@@ -65,7 +65,7 @@ final class ResolverTest extends TestCase
         $emitter6->expects(self::once())->method('applyDependencies');
 
         $resolver = new Resolver($dispatcher, $inheritanceFlatter, $emitter, $emitter2, $emitter3, $emitter4, $emitter5, $emitter6);
-        
+
         $resolver->resolve($astMap, ConfigurationAnalyzer::fromArray([]));
     }
 }
