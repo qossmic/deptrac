@@ -220,9 +220,10 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                     }
                 }
             }
-            if (null !== $node->getReturnType()) {
-                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName) {
-                    $this->currentReference->returnType($classLikeName, $node->getReturnType()->getLine());
+            $returnType = $node->getReturnType();
+            if (null !== $returnType) {
+                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $returnType) as $classLikeName) {
+                    $this->currentReference->returnType($classLikeName, $returnType->getLine());
                 }
             }
         }
@@ -280,9 +281,10 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if (null !== $node->getReturnType()) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->getReturnType()) as $classLikeName) {
-                $this->currentReference->returnType($classLikeName, $node->getReturnType()->getLine());
+        $returnType = $node->getReturnType();
+        if (null !== $returnType) {
+            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $returnType) as $classLikeName) {
+                $this->currentReference->returnType($classLikeName, $returnType->getLine());
             }
         }
     }

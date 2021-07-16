@@ -10,6 +10,9 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\AstFunctionReference;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 
+/**
+ * @psalm-immutable
+ */
 class AstFileReference implements AstTokenReference
 {
     private string $filepath;
