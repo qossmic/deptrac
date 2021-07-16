@@ -22,4 +22,9 @@ final class FileName implements TokenName
     {
         return $this->name;
     }
+
+    public function getFilepath(): string
+    {
+        return $this->toString();
+    }
 }

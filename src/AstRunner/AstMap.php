@@ -9,19 +9,25 @@ use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\File\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\AstFunctionReference;
 use SplStack;
 
 class AstMap
 {
     /**
-     * @var AstClassReference[]
+     * @var array<string, AstClassReference>
      */
     private array $astClassReferences = [];
 
     /**
-     * @var AstFileReference[]
+     * @var array<string, AstFileReference>
      */
     private array $astFileReferences = [];
+
+    /**
+     * @var array<string, AstFunctionReference>
+     */
+    private array $astFunctionReferences = [];
 
     /**
      * @param AstFileReference[] $astFileReferences
@@ -131,5 +137,23 @@ class AstMap
         foreach ($astFileReference->getAstClassReferences() as $astClassReference) {
             $this->addAstClassReference($astClassReference);
         }
+        foreach ($astFileReference->getFunctionReferences() as $astFunctionReference) {
+            $this->addAstFunctionReference($astFunctionReference);
+        }
+    }
+
+    private function addAstFunctionReference(AstFunctionReference $astFunctionReference): void
+    {
+        $this->astFunctionReferences[$astFunctionReference->getTokenName()->toString()] = $astFunctionReference;
+    }
+
+    public function getFunctionReferenceByFunctionName(AstMap\FunctionToken\FunctionName $tokenName): ?AstFunctionReference
+    {
+        return $this->astFunctionReferences[$tokenName->toString()] ?? null;
+    }
+
+    public function getFileReferenceByFileName(AstMap\File\FileName $tokenName): ?AstFileReference
+    {
+        return $this->astFileReferences[$tokenName->toString()] ?? null;
     }
 }

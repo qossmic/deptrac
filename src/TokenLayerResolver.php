@@ -38,22 +38,34 @@ class TokenLayerResolver implements TokenLayerResolverInterface
         $layers = [];
 
         if ($tokenName instanceof ClassLikeName) {
-            if (!$astClassReference = $this->astMap->getClassReferenceByClassName($tokenName)) {
-                $astClassReference = new AstMap\ClassToken\AstClassReference($tokenName);
+            if (!$astTokenReference = $this->astMap->getClassReferenceByClassName($tokenName)) {
+                $astTokenReference = new AstMap\ClassToken\AstClassReference($tokenName);
             }
+        } elseif ($tokenName instanceof AstMap\FunctionToken\FunctionName) {
+            if (!$astTokenReference = $this->astMap->getFunctionReferenceByFunctionName($tokenName)) {
+                $astTokenReference = new AstMap\FunctionToken\AstFunctionReference($tokenName);
+            }
+        } elseif ($tokenName instanceof AstMap\File\FileName) {
+            if (!$astTokenReference = $this->astMap->getFileReferenceByFileName($tokenName)) {
+                $astTokenReference = new AstMap\File\AstFileReference($tokenName->getFilepath(), [], [], []);
+            }
+        } elseif ($tokenName instanceof AstMap\SuperGlobalName) {
+            $astTokenReference = new AstMap\AstVariableReference($tokenName);
+        } else {
+            throw new ShouldNotHappenException();
+        }
 
-            foreach ($this->configuration->getLayers() as $configurationLayer) {
-                foreach ($configurationLayer->getCollectors() as $configurationCollector) {
-                    $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
+        foreach ($this->configuration->getLayers() as $configurationLayer) {
+            foreach ($configurationLayer->getCollectors() as $configurationCollector) {
+                $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                    $configuration = $this->parameterResolver->resolve(
-                        $configurationCollector->getArgs(),
-                        $this->configuration->getParameters()
-                    );
+                $configuration = $this->parameterResolver->resolve(
+                    $configurationCollector->getArgs(),
+                    $this->configuration->getParameters()
+                );
 
-                    if ($collector->satisfy($configuration, $astClassReference, $this->astMap, $this->collectorRegistry)) {
-                        $layers[$configurationLayer->getName()] = true;
-                    }
+                if ($collector->satisfy($configuration, $astTokenReference, $this->astMap, $this->collectorRegistry)) {
+                    $layers[$configurationLayer->getName()] = true;
                 }
             }
         }
