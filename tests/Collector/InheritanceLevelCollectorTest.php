@@ -6,9 +6,9 @@ namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\InheritanceLevelCollector;
 use Qossmic\Deptrac\Collector\Registry;
 

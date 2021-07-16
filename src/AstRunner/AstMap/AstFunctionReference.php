@@ -2,12 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstMap\FunctionToken;
-
-use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
-use Qossmic\Deptrac\AstRunner\AstMap\AstTokenReference;
-use Qossmic\Deptrac\AstRunner\AstMap\File\AstFileReference;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
+namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 /**
  * @psalm-immutable

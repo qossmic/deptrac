@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Collector;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
 class InheritanceLevelCollector implements CollectorInterface
 {

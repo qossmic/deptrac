@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac;
 
 use InvalidArgumentException;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Dependency\Result;

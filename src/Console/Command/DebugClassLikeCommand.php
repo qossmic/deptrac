@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\ClassLikeAnalyser;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;

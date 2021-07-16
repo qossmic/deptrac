@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstMap\ClassToken;
-
-use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
+namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 final class ClassReferenceBuilder extends ReferenceBuilder
 {

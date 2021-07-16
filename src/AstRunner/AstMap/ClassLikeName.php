@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstMap\ClassToken;
-
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
+namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 /**
  * @psalm-immutable

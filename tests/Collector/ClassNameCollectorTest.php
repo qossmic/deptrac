@@ -6,7 +6,7 @@ namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\Collector\ClassNameCollector;
 use Qossmic\Deptrac\Collector\Registry;
 
@@ -30,7 +30,7 @@ final class ClassNameCollectorTest extends TestCase
     {
         $stat = (new ClassNameCollector())->satisfy(
             $configuration,
-            new AstClassReference(AstMap\ClassToken\ClassLikeName::fromFQCN($className)),
+            new AstClassReference(AstMap\ClassLikeName::fromFQCN($className)),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );
@@ -44,7 +44,7 @@ final class ClassNameCollectorTest extends TestCase
 
         (new ClassNameCollector())->satisfy(
             ['Foo' => 'a'],
-            new AstClassReference(AstMap\ClassToken\ClassLikeName::fromFQCN('Foo')),
+            new AstClassReference(AstMap\ClassLikeName::fromFQCN('Foo')),
             $this->prophesize(AstMap::class)->reveal(),
             $this->prophesize(Registry::class)->reveal()
         );

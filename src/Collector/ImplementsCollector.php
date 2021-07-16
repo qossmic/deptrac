@@ -6,8 +6,8 @@ namespace Qossmic\Deptrac\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 
 class ImplementsCollector implements CollectorInterface
 {

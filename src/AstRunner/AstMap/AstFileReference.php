@@ -2,13 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstMap\File;
-
-use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
-use Qossmic\Deptrac\AstRunner\AstMap\AstTokenReference;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\AstClassReference;
-use Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\AstFunctionReference;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
+namespace Qossmic\Deptrac\AstRunner\AstMap;
 
 /**
  * @psalm-immutable
@@ -34,10 +28,12 @@ class AstFileReference implements AstTokenReference
     {
         $this->filepath = $filepath;
         $this->dependencies = $dependencies;
+        /** @psalm-suppress ImpureFunctionCall */
         $this->classReferences = array_map(
             fn (AstClassReference $classReference) => $classReference->withFileReference($this),
             $classReferences
         );
+        /** @psalm-suppress ImpureFunctionCall */
         $this->functionReferences = array_map(
             fn (AstFunctionReference $functionReference) => $functionReference->withFileReference($this),
             $functionReferences

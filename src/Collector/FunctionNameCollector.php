@@ -19,11 +19,11 @@ class FunctionNameCollector implements CollectorInterface
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool {
-        if (!$astTokenReference instanceof AstMap\FunctionToken\AstFunctionReference) {
+        if (!$astTokenReference instanceof AstMap\AstFunctionReference) {
             return false;
         }
 
-        /** @var \Qossmic\Deptrac\AstRunner\AstMap\FunctionToken\FunctionName $tokenName */
+        /** @var \Qossmic\Deptrac\AstRunner\AstMap\FunctionName $tokenName */
         $tokenName = $astTokenReference->getTokenName();
 
         return $tokenName->match($this->getPattern($configuration));

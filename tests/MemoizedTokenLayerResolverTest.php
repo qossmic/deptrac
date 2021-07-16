@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\MemoizedTokenLayerResolver;
 use Qossmic\Deptrac\TokenLayerResolverInterface;
 

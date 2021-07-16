@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassToken\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
@@ -39,15 +39,15 @@ class TokenLayerResolver implements TokenLayerResolverInterface
 
         if ($tokenName instanceof ClassLikeName) {
             if (!$astTokenReference = $this->astMap->getClassReferenceByClassName($tokenName)) {
-                $astTokenReference = new AstMap\ClassToken\AstClassReference($tokenName);
+                $astTokenReference = new AstMap\AstClassReference($tokenName);
             }
-        } elseif ($tokenName instanceof AstMap\FunctionToken\FunctionName) {
+        } elseif ($tokenName instanceof AstMap\FunctionName) {
             if (!$astTokenReference = $this->astMap->getFunctionReferenceByFunctionName($tokenName)) {
-                $astTokenReference = new AstMap\FunctionToken\AstFunctionReference($tokenName);
+                $astTokenReference = new AstMap\AstFunctionReference($tokenName);
             }
-        } elseif ($tokenName instanceof AstMap\File\FileName) {
+        } elseif ($tokenName instanceof AstMap\FileName) {
             if (!$astTokenReference = $this->astMap->getFileReferenceByFileName($tokenName)) {
-                $astTokenReference = new AstMap\File\AstFileReference($tokenName->getFilepath(), [], [], []);
+                $astTokenReference = new AstMap\AstFileReference($tokenName->getFilepath(), [], [], []);
             }
         } elseif ($tokenName instanceof AstMap\SuperGlobalName) {
             $astTokenReference = new AstMap\AstVariableReference($tokenName);
