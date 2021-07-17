@@ -53,6 +53,5 @@ final class FunctionDependencyEmitterTest extends TestCase
         self::assertContains('Foo\testAnonymousClass():64 on Foo\SomeClass', $deps);
         self::assertContains('Foo\testAnonymousClass():68 on Foo\string2', $deps);
         self::assertContains('Foo\testAnonymousClass():72 on Foo\SomeClass', $deps);
-
     }
 }

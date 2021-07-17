@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\DependencyEmitter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 
 final class FunctionSuperglobalDependencyEmitterTest extends TestCase
