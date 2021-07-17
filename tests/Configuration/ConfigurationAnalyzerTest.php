@@ -18,7 +18,7 @@ final class ConfigurationAnalyzerTest extends TestCase
             'count_use_statements' => true,
         ]);
 
-        self::assertSame(['class', 'use'], $configuration->getTypes());
+        self::assertSame([ConfigurationAnalyzer::CLASS_TOKEN, ConfigurationAnalyzer::USE_TOKEN], $configuration->getTypes());
     }
 
     public function testNotCounting(): void
@@ -27,23 +27,23 @@ final class ConfigurationAnalyzerTest extends TestCase
             'count_use_statements' => false,
         ]);
 
-        self::assertSame(['class'], $configuration->getTypes());
+        self::assertSame([ConfigurationAnalyzer::CLASS_TOKEN], $configuration->getTypes());
     }
 
     public function testDefaultTypes(): void
     {
         $configuration = ConfigurationAnalyzer::fromArray([]);
-        self::assertSame(['class', 'use'], $configuration->getTypes());
+        self::assertSame([ConfigurationAnalyzer::CLASS_TOKEN, ConfigurationAnalyzer::USE_TOKEN], $configuration->getTypes());
     }
 
     public function testCustomTypes(): void
     {
         $types = [
-            'class',
-            'function'
+            ConfigurationAnalyzer::CLASS_TOKEN,
+            ConfigurationAnalyzer::FUNCTION_TOKEN,
         ];
         $configuration = ConfigurationAnalyzer::fromArray(['types' => $types]);
-        $types[] = 'use';
+        $types[] = ConfigurationAnalyzer::USE_TOKEN;
         self::assertSame($types, $configuration->getTypes());
     }
 
@@ -53,7 +53,7 @@ final class ConfigurationAnalyzerTest extends TestCase
 
         ConfigurationAnalyzer::fromArray([
             'types' => [
-                'unknown'
+                'unknown',
             ],
         ]);
     }
