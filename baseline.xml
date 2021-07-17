@@ -271,6 +271,11 @@
       <code>$dumpXmlPath</code>
     </MixedAssignment>
   </file>
+  <file src="src/OutputFormatterFactory.php">
+    <UnusedParam occurrences="1">
+      <code>$formatter</code>
+    </UnusedParam>
+  </file>
   <file src="src/PathNameFilterIterator.php">
     <MixedArgument occurrences="2">
       <code>$filename</code>

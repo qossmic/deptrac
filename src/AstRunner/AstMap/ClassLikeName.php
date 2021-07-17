@@ -31,7 +31,7 @@ final class ClassLikeName implements TokenName
         return $this->className;
     }
 
-    public function equals(self $classLikeName): bool
+    public function equals(ClassLikeName $classLikeName): bool
     {
         return $this->className === $classLikeName->className;
     }

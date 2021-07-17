@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac;
 use InvalidArgumentException;
 use LogicException;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterOption;
 use Symfony\Component\Console\Input\InputOption;
 
 class OutputFormatterFactory
@@ -37,13 +38,7 @@ class OutputFormatterFactory
             $formatterArguments = $formatter->configureOptions();
 
             foreach ($formatterArguments as $formatterArgument) {
-                $arguments[] = new InputOption(
-                    $formatterArgument->getName(),
-                    null,
-                    $formatterArgument->getMode(),
-                    $formatterArgument->getDescription(),
-                    $formatterArgument->getDefault()
-                );
+                $arguments[] = $this->createFormatterArgumentOption($formatter, $formatterArgument);
             }
         }
 
@@ -69,6 +64,17 @@ class OutputFormatterFactory
     private function addFormatter(OutputFormatterInterface $formatter): void
     {
         $this->formatters[$formatter->getName()] = $formatter;
+    }
+
+    private function createFormatterArgumentOption(OutputFormatterInterface $formatter, OutputFormatterOption $formatterArgument): InputOption
+    {
+        return new InputOption(
+            $formatterArgument->getName(),
+            null,
+            $formatterArgument->getMode(),
+            $formatterArgument->getDescription(),
+            $formatterArgument->getDefault()
+        );
     }
 
     /**
