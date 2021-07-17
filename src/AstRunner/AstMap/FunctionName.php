@@ -28,7 +28,7 @@ final class FunctionName implements TokenName
 
     public function toString(): string
     {
-        return $this->functionName;
+        return $this->functionName . '()';
     }
 
     public function equals(self $functionName): bool

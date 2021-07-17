@@ -18,6 +18,6 @@ final class SuperGlobalName implements TokenName
 
     public function toString(): string
     {
-        return $this->name;
+        return '$'.$this->name;
     }
 }

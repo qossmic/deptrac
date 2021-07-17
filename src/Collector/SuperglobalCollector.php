@@ -38,6 +38,6 @@ class SuperglobalCollector implements CollectorInterface
             throw new LogicException('SuperglobalCollector needs the names configuration.');
         }
 
-        return array_map(static fn ($_): string => (string) $_, $configuration['names']);
+        return array_map(static fn ($name): string => '$'.(string) $name, $configuration['names']);
     }
 }

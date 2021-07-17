@@ -277,8 +277,10 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         $this->currentReference = $this->fileReferenceBuilder->newFunction($name);
 
         foreach ($node->getParams() as $param) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $param) as $classLikeName) {
-                $this->currentReference->parameter($classLikeName, $param->getLine());
+            if(null !== $param->type) {
+                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $param->type) as $classLikeName) {
+                    $this->currentReference->parameter($classLikeName, $param->getLine());
+                }
             }
         }
 
