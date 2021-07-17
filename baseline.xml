@@ -96,7 +96,8 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="93">
+    <MixedMethodCall occurrences="97">
+      <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -127,6 +128,8 @@
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -176,6 +179,7 @@
       <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
+      <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
