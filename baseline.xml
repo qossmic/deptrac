@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
-  <file src="src/AstRunner/AstMap/File/AstFileReference.php">
+  <file src="src/AstRunner/AstMap/AstFileReference.php">
     <ImpureFunctionCall occurrences="2">
       <code>array_map</code>
       <code>array_map</code>

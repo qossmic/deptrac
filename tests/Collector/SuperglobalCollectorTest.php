@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Collector;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\Collector\FunctionNameCollector;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Collector\SuperglobalCollector;
 
