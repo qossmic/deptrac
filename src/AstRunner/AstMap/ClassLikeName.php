@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-/**
- * @psalm-immutable
- */
 final class ClassLikeName implements TokenName
 {
     private string $className;

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-/**
- * @psalm-immutable
- */
 final class FileName implements TokenName
 {
     private string $path;
@@ -18,7 +15,9 @@ final class FileName implements TokenName
 
     public function toString(): string
     {
-        return 0 === strpos($this->path, getcwd()) ? substr($this->path, strlen(getcwd())) : $this->path;
+        $wd = getcwd();
+
+        return false !== $wd && 0 === strpos($this->path, $wd) ? substr($this->path, strlen($wd)) : $this->path;
     }
 
     public function getFilepath(): string
