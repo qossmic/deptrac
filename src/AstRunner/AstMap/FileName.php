@@ -9,20 +9,20 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
  */
 final class FileName implements TokenName
 {
-    private string $name;
+    private string $path;
 
-    public function __construct(string $name)
+    public function __construct(string $path)
     {
-        $this->name = $name;
+        $this->path = $path;
     }
 
     public function toString(): string
     {
-        return $this->name;
+        return 0 === strpos($this->path, getcwd()) ? substr($this->path, strlen(getcwd())) : $this->path;
     }
 
     public function getFilepath(): string
     {
-        return $this->toString();
+        return $this->path;
     }
 }
