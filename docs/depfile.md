@@ -166,7 +166,7 @@ For a list of available collectors and their configuration format see
 
 ## `parameters`
 
-Deptrac provides parameters that can be user in your confiugration.
+Deptrac provides parameters that can be user in your configuration.
 
 * `%currentWorkingDirectory%` The path Deptrac runs in
 * `%depfileDirectory%` The path where the depfile is stored.
