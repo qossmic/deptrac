@@ -274,7 +274,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     private function enterFunction(string $name, Node\Stmt\Function_ $node): void
     {
-        $this->currentReference = $this->fileReferenceBuilder->newFunction($name);
+        $this->currentReference = $this->fileReferenceBuilder->newFunction($name, $this->templatesFromDocs($node));
 
         foreach ($node->getParams() as $param) {
             if (null !== $param->type) {

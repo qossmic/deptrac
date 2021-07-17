@@ -9,7 +9,6 @@ namespace Qossmic\Deptrac\AstRunner\AstMap;
  */
 class AstDependency
 {
-    //TODO: Replace with ENUM in PHP 8.1
     public const USE = 'use';
     public const RETURN_TYPE = 'returntype';
     public const PARAMETER = 'parameter';

@@ -8,16 +8,21 @@ class FunctionReferenceBuilder extends ReferenceBuilder
 {
     private string $functionName;
 
-    protected function __construct(string $filepath, string $functionName)
+    /**
+     * @param string[] $tokenTemplates
+     */
+    protected function __construct(array $tokenTemplates, string $filepath, string $functionName)
     {
-        //TODO: Function templates
-        parent::__construct([], $filepath);
+        parent::__construct($tokenTemplates, $filepath);
         $this->functionName = $functionName;
     }
 
-    public static function create(string $filepath, string $functionName): self
+    /**
+     * @param string[] $functionTemplates
+     */
+    public static function create(string $filepath, string $functionName, array $functionTemplates): self
     {
-        return new self($filepath, $functionName);
+        return new self($functionTemplates, $filepath, $functionName);
     }
 
     /** @internal */

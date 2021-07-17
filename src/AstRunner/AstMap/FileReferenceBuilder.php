@@ -39,9 +39,12 @@ final class FileReferenceBuilder extends ReferenceBuilder
         return $classReference;
     }
 
-    public function newFunction(string $functionName): FunctionReferenceBuilder
+    /**
+     * @param string[] $templateTypes
+     */
+    public function newFunction(string $functionName, array $templateTypes = []): FunctionReferenceBuilder
     {
-        $functionReference = FunctionReferenceBuilder::create($this->filepath, $functionName);
+        $functionReference = FunctionReferenceBuilder::create($this->filepath, $functionName, $templateTypes);
         $this->functionReferences[] = $functionReference;
 
         return $functionReference;
