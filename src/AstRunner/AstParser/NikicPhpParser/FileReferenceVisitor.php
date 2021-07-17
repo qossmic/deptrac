@@ -170,6 +170,8 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
+        //TODO: Function call
+
         if ($node instanceof Instanceof_ && $node->class instanceof Name) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
                 $this->currentReference->instanceof($classLikeName, $node->class->getLine());

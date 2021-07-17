@@ -12,6 +12,8 @@ multiple different collectors for a layer.
 * [`inherits` Collector](#inherits-collector)
 * [`method` Collector](#method-collector)
 * [`uses` Collector](#uses-collector)
+* [`functionName` Collector](#functionname-collector)
+* [`superglobal` Collector](#superglobal-collector)
 * [Custom Collectors](#custom-collectors)
 
 ## `bool` Collector
@@ -156,6 +158,35 @@ layers:
         collectors:
             -   type: uses
                 uses: 'App\SomeTrait'
+```
+
+## `functionName` Collector
+
+The `functionName` collector allows collecting functions by matching their fully
+qualified name to a simplified regular expression. Any matching function will be
+added to the assigned layer.
+
+```yaml
+layers:
+    -   name: Foo
+        collectors:
+            -   type: functionName
+                regex: .*array_.*
+```
+
+## `superglobal` Collector
+
+The `superglobal` collector allows collecting superglobal PHP variables
+matching the specified superglobal name.
+
+```yaml
+layers:
+    -   name: Foo
+        collectors:
+            -   type: superglobal
+                names:
+                  - _POST
+                  - _GET
 ```
 
 ## Custom Collectors
