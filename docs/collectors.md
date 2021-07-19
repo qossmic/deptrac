@@ -8,12 +8,12 @@ multiple different collectors for a layer.
 * [`classNameRegex` Collector](#classnameregex-collector)
 * [`directory` Collector](#directory-collector)
 * [`extends` Collector](#extends-collector)
+* [`functionName` Collector](#functionname-collector)
 * [`implements` Collector](#implements-collector)
 * [`inherits` Collector](#inherits-collector)
 * [`method` Collector](#method-collector)
-* [`uses` Collector](#uses-collector)
-* [`functionName` Collector](#functionname-collector)
 * [`superglobal` Collector](#superglobal-collector)
+* [`uses` Collector](#uses-collector)
 * [Custom Collectors](#custom-collectors)
 
 ## `bool` Collector
@@ -104,6 +104,20 @@ layers:
                 extends: 'App\SomeClass'
 ```
 
+## `functionName` Collector
+
+The `functionName` collector allows collecting functions by matching their fully
+qualified name to a simplified regular expression. Any matching function will be
+added to the assigned layer.
+
+```yaml
+layers:
+    -   name: Foo
+        collectors:
+            -   type: functionName
+                regex: .*array_.*
+```
+
 ## `implements` Collector
 
 The `implements` collector allows collecting classes implementing a specified
@@ -147,33 +161,6 @@ layers:
 Every class having a method that matches the regular expression `.*foo`,
 e.g. `getFoo()` or `setFoo()` becomes a part of the *Foo services* layer.
 
-## `uses` Collector
-
-The `uses` collector allows collecting classes using a specified trait by
-matching recursively for a fully qualified trait name.
-
-```yaml
-layers:
-    -   name: Foo
-        collectors:
-            -   type: uses
-                uses: 'App\SomeTrait'
-```
-
-## `functionName` Collector
-
-The `functionName` collector allows collecting functions by matching their fully
-qualified name to a simplified regular expression. Any matching function will be
-added to the assigned layer.
-
-```yaml
-layers:
-    -   name: Foo
-        collectors:
-            -   type: functionName
-                regex: .*array_.*
-```
-
 ## `superglobal` Collector
 
 The `superglobal` collector allows collecting superglobal PHP variables
@@ -187,6 +174,19 @@ layers:
                 names:
                   - _POST
                   - _GET
+```
+
+## `uses` Collector
+
+The `uses` collector allows collecting classes using a specified trait by
+matching recursively for a fully qualified trait name.
+
+```yaml
+layers:
+    -   name: Foo
+        collectors:
+            -   type: uses
+                uses: 'App\SomeTrait'
 ```
 
 ## Custom Collectors
