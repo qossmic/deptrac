@@ -45,4 +45,10 @@ final class Bar extends BarExtends implements BarInterface1, \BarInterface2 {
 
         function () : ?self {};
     }
+
+    public function bar(): void
+    {
+        $session = $_SESSION;
+        $post = $_POST;
+    }
 }

@@ -7,9 +7,14 @@ namespace Qossmic\Deptrac\AstRunner\AstParser;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
 use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
+use Qossmic\Deptrac\AstRunner\AstMap\AstFunctionReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
+use Qossmic\Deptrac\AstRunner\AstMap\AstVariableReference;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\FileName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
+use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
 use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\File\FileReader;
 
@@ -109,9 +114,14 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
                         'allowed_classes' => [
                             AstFileReference::class,
                             AstClassReference::class,
+                            AstFunctionReference::class,
+                            AstVariableReference::class,
                             AstInherit::class,
                             AstDependency::class,
+                            FileName::class,
                             ClassLikeName::class,
+                            FunctionName::class,
+                            SuperGlobalName::class,
                             FileOccurrence::class,
                         ],
                     ]

@@ -10,20 +10,21 @@ At the heart of Deptrac are three main concepts:
 
 ## Layers
 
-Deptrac allows you to group different classes into *layers*. Technically layers
-are nothing more than a collection of classes.
+Deptrac allows you to group different tokens(classes, function, file usage
+outside those) into *layers*. Technically layers are nothing more than a
+collection of those tokens.
 
 Each layer has a unique name and a list of one or more collectors, which will
-look for classes that should be assigned to this layer (and yes, classes can be
+look for tokens should be assigned to this layer (and yes, tokens can be
 assigned to more than one layer).
 
 If you want to ensure your application follows the MVC architecture pattern then
-you can create a depfile that makes sure that a View does not directly interact
-with a Controller or that Models are independent of both Views and Controllers.
+you can create a depfile that makes sure a View does not directly interact with
+a Controller or that Models are independent of both Views and Controllers.
 
 Another example for layers are bundles in Symfony applications. Each bundle
 should be independent by design. You can create layers for each bundle you have
-in your application and then ensure that they do not use classes from any of the
+in your application and then ensure that they do not use tokens from any of the
 other bundles. This is particularly helpful when you have an application with
 many bundles as it will tell you which ones to consolidate and which ones can be
 extracted and reused.
@@ -65,10 +66,10 @@ ruleset: [ ]
 At first, lets take a closer look at the first layer (named *Models*).
 
 Here we decided that our software has some kind of layer called *Models*. You
-assign classes to this layer with the help of [*Collectors*](collectors.md).
+assign tokens to this layer with the help of [*Collectors*](collectors.md).
 
 Collectors are responsible for taking a closer look at your code and decide if a
-class is part of a layer. By using the `className` collector you can define a
+token is part of a layer. By using the `className` collector you can define a
 regular expression for a class name. Every (fully qualified) class name that
 matches this regular expression becomes part of the assigned layer. In this
 example we define that every class that contains `MyNamespace\Models\` will be a
@@ -295,8 +296,8 @@ skip_violations:
 ```
 
 *skip_violations* section contains an associative array where a
-key (`Library\LibClass`) is the name of dependant class and
-values (`Core\CoreClass`) are dependency classes.
+key (`Library\LibClass`) is the name of dependant token and
+values (`Core\CoreClass`) are dependency tokens.
 
 Matched violations will be marked as skipped:
 

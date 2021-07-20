@@ -8,9 +8,11 @@ multiple different collectors for a layer.
 * [`classNameRegex` Collector](#classnameregex-collector)
 * [`directory` Collector](#directory-collector)
 * [`extends` Collector](#extends-collector)
+* [`functionName` Collector](#functionname-collector)
 * [`implements` Collector](#implements-collector)
 * [`inherits` Collector](#inherits-collector)
 * [`method` Collector](#method-collector)
+* [`superglobal` Collector](#superglobal-collector)
 * [`uses` Collector](#uses-collector)
 * [Custom Collectors](#custom-collectors)
 
@@ -102,6 +104,20 @@ layers:
                 extends: 'App\SomeClass'
 ```
 
+## `functionName` Collector
+
+The `functionName` collector allows collecting functions by matching their fully
+qualified name to a simplified regular expression. Any matching function will be
+added to the assigned layer.
+
+```yaml
+layers:
+    -   name: Foo
+        collectors:
+            -   type: functionName
+                regex: .*array_.*
+```
+
 ## `implements` Collector
 
 The `implements` collector allows collecting classes implementing a specified
@@ -144,6 +160,21 @@ layers:
 
 Every class having a method that matches the regular expression `.*foo`,
 e.g. `getFoo()` or `setFoo()` becomes a part of the *Foo services* layer.
+
+## `superglobal` Collector
+
+The `superglobal` collector allows collecting superglobal PHP variables
+matching the specified superglobal name.
+
+```yaml
+layers:
+    -   name: Foo
+        collectors:
+            -   type: superglobal
+                names:
+                  - _POST
+                  - _GET
+```
 
 ## `uses` Collector
 

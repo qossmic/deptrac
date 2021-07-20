@@ -1,8 +1,8 @@
 # Debugging
 
 Deptrac provides a series of debug commands that help you identify issues in
-your depfile. All commands output one issue per line and can therefore be easily 
-combined with with other tools like `wc` or `grep`.
+your depfile. All commands output one issue per line and can therefore be easily
+combined with other tools like `wc` or `grep`.
 
 * [`debug:layer`](#debuglayer)
 * [`debug:class`](#debugclass)
@@ -10,7 +10,7 @@ combined with with other tools like `wc` or `grep`.
 
 ## `debug:layer`
 
-With the `debug:layer`-command you can list all class-likes which are matched in
+With the `debug:layer`-command you can list all tokens which are matched in
 a specific layer.
 
 ```bash
@@ -35,7 +35,7 @@ Layer1
 
 ## `debug:unassigned`
 
-With the `debug:unassigned`-command you list all classes in your path that are
+With the `debug:unassigned`-command you list all tokens in your path that are
 not assigned to any layer. This is useful to test that your collector
 configuration for layers is correct.
 

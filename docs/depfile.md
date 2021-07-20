@@ -5,6 +5,7 @@ configuration.
 
 * [`analyzer`](#analyzer)
   * [`count_use_statements`](#count_use_statements)
+  * [`types`](#types)
 * [`baseline`](#baseline)
 * [`exclude_files`](#exclude_files)
 * [`formatters`](#formatters)
@@ -27,6 +28,8 @@ configuration.
 
 ### `count_use_statements`
 
+**This feature is deprecated and will be removed in future release, use [types](#types) instead.**
+
 By default, deptrac will analyze all occurrences for classes, including `use`
 statements. If you would like to exempt `use` statements from the analysis, you
 can change this behaviour in the depfile:
@@ -35,6 +38,17 @@ can change this behaviour in the depfile:
 analyzer:
   count_use_statements: false
 ```
+
+### `types`
+
+Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyze file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analyzed file:
+
+- `class` (default) - analyzes class definitions for everything apart from superglobal usage.
+- `class_superglobal` - analyzes class definitions for superglobal usage.
+- `use` (default) - analyzes file definitions for use statements.
+- `file` - analyzes file for everything apart from use statements and function/class definitions.
+- `function` - analyzes function definitions for everything apart from superglobal usage.
+- `function_superglobal` - analyzes function definitions for superglobal usage.
 
 ## `baseline`
 
@@ -166,7 +180,7 @@ For a list of available collectors and their configuration format see
 
 ## `parameters`
 
-Deptrac provides parameters that can be user in your confiugration.
+Deptrac provides parameters that can be user in your configuration.
 
 * `%currentWorkingDirectory%` The path Deptrac runs in
 * `%depfileDirectory%` The path where the depfile is stored.
