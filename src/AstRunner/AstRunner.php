@@ -6,11 +6,11 @@ namespace Qossmic\Deptrac\AstRunner;
 
 use PhpParser\Error;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
-use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
 use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AstRunner
@@ -27,7 +27,7 @@ class AstRunner
     /**
      * @param string[] $files
      */
-    public function createAstMapByFiles(array $files, ConfigurationAnalyzer $configuration): AstMap
+    public function createAstMapByFiles(array $files, ConfigurationAnalyser $configuration): AstMap
     {
         $references = [];
 
@@ -37,7 +37,7 @@ class AstRunner
             try {
                 $references[] = $this->astParser->parseFile($file, $configuration);
 
-                $this->dispatcher->dispatch(new AstFileAnalyzedEvent($file));
+                $this->dispatcher->dispatch(new AstFileAnalysedEvent($file));
             } catch (Error $e) {
                 $this->dispatcher->dispatch(new AstFileSyntaxErrorEvent($file, $e->getMessage()));
             }

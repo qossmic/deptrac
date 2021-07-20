@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Configuration;
 use Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-final class ConfigurationAnalyzer
+final class ConfigurationAnalyser
 {
     private const RECOGNIZED_TOKENS = [
         self::CLASS_TOKEN,
@@ -58,7 +58,7 @@ final class ConfigurationAnalyzer
 
         foreach ($config['types'] as $type) {
             if (!in_array($type, self::RECOGNIZED_TOKENS, true)) {
-                throw new \InvalidArgumentException('Unsupported analyzer type: '.$type);
+                throw new \InvalidArgumentException('Unsupported analyser type: '.$type);
             }
         }
         $this->config = $config;

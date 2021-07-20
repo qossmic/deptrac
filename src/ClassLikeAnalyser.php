@@ -29,7 +29,7 @@ class ClassLikeAnalyser
      */
     public function analyse(Configuration $configuration, ClassLikeName $classLikeName): array
     {
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyzer());
+        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
 
         return $this->classLikeLayerResolverFactory
             ->create($configuration, $astMap)

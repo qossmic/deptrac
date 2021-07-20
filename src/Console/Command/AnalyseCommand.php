@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class AnalyzeCommand extends Command
+class AnalyseCommand extends Command
 {
     public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
     public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
@@ -49,8 +49,8 @@ class AnalyzeCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('analyze');
-        $this->setAliases(['analyse']);
+        $this->setName('analyse');
+        $this->setAliases(['analyze']);
 
         $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile');
         $this->addOption(

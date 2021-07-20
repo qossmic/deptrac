@@ -14,7 +14,7 @@ use Tests\Qossmic\Deptrac\Fixtures\ClassLikeAnalyser\ClassFoo;
  */
 class ClassLikeAnalyserTest extends TestCase
 {
-    public function testAnalyze(): void
+    public function testAnalyse(): void
     {
         $configuration = Configuration::fromArray([
             'paths' => [__DIR__.'/Fixtures/ClassLikeAnalyser/'],

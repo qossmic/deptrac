@@ -2,7 +2,7 @@
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\Env;
@@ -46,9 +46,9 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
-        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
-        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED);
+        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
+        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED);
+        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_FAIL_ON_UNCOVERED);
 
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {

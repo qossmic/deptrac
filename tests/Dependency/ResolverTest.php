@@ -6,7 +6,7 @@ namespace Tests\Qossmic\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
@@ -66,6 +66,6 @@ final class ResolverTest extends TestCase
 
         $resolver = new Resolver($dispatcher, $inheritanceFlatter, $emitter, $emitter2, $emitter3, $emitter4, $emitter5, $emitter6);
 
-        $resolver->resolve($astMap, ConfigurationAnalyzer::fromArray([]));
+        $resolver->resolve($astMap, ConfigurationAnalyser::fromArray([]));
     }
 }

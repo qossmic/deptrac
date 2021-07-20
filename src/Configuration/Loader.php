@@ -58,6 +58,9 @@ class Loader
         $mergedConfig['parameters']['currentWorkingDirectory'] = $this->workingDirectory;
         $mergedConfig['parameters']['depfileDirectory'] = $depfileDirectory;
 
+        $analyzer = $mergedConfig['analyzer'] ?? [];
+        $analyser = $mergedConfig['analyser'] ?? [];
+
         return Configuration::fromArray([
             'parameters' => $mergedConfig['parameters'],
             'paths' => array_map([$fileHelper, 'toAbsolutePath'], $mergedConfig['paths']),
@@ -67,7 +70,7 @@ class Loader
             'skip_violations' => $mergedConfig['skip_violations'],
             'ignore_uncovered_internal_classes' => $mergedConfig['ignore_uncovered_internal_classes'],
             'formatters' => $mergedConfig['formatters'] ?? [],
-            'analyzer' => $mergedConfig['analyzer'] ?? [],
+            'analyser' => [] === $analyser ? $analyzer : $analyser,
         ]);
     }
 }

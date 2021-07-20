@@ -12,7 +12,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceA;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\FixtureBasicInheritanceB;
@@ -48,7 +48,7 @@ final class AstMapFlattenGeneratorTest extends TestCase
             )
         );
 
-        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php'], ConfigurationAnalyzer::fromArray(
+        return $astRunner->createAstMapByFiles([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php'], ConfigurationAnalyser::fromArray(
             []));
     }
 

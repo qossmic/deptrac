@@ -3,7 +3,7 @@
 The depfile describes your [layers, ruleset](concepts.md) and other project
 configuration.
 
-* [`analyzer`](#analyzer)
+* [`analyser`](#analyser)
   * [`count_use_statements`](#count_use_statements)
   * [`types`](#types)
 * [`baseline`](#baseline)
@@ -24,31 +24,31 @@ configuration.
 * [`skip_violations`](#skip_violations)
 * [`use_relative_path_from_depfile`](#use_relative_path_from_depfile)
 
-## `analyzer`
+## `analyser`
 
 ### `count_use_statements`
 
 **This feature is deprecated and will be removed in future release, use [types](#types) instead.**
 
-By default, deptrac will analyze all occurrences for classes, including `use`
+By default, deptrac will analyse all occurrences for classes, including `use`
 statements. If you would like to exempt `use` statements from the analysis, you
 can change this behaviour in the depfile:
 
 ```yaml
-analyzer:
+analyser:
   count_use_statements: false
 ```
 
 ### `types`
 
-Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyze file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analyzed file:
+Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyse file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analysed file:
 
-- `class` (default) - analyzes class definitions for everything apart from superglobal usage.
-- `class_superglobal` - analyzes class definitions for superglobal usage.
-- `use` (default) - analyzes file definitions for use statements.
-- `file` - analyzes file for everything apart from use statements and function/class definitions.
-- `function` - analyzes function definitions for everything apart from superglobal usage.
-- `function_superglobal` - analyzes function definitions for superglobal usage.
+- `class` (default) - analyses class definitions for everything apart from superglobal usage.
+- `class_superglobal` - analyses class definitions for superglobal usage.
+- `use` (default) - analyses file definitions for use statements.
+- `file` - analyses file for everything apart from use statements and function/class definitions.
+- `function` - analyses function definitions for everything apart from superglobal usage.
+- `function_superglobal` - analyses function definitions for superglobal usage.
 
 ## `baseline`
 
@@ -113,7 +113,7 @@ The resulting output will look like this:
 #### `hidden_layers`
 
 You can hide layers from the generated output. These layers will still be
-analyzed and violations will be reported, but they might no longer be visible in
+analysed and violations will be reported, but they might no longer be visible in
 the generated image.
 
 Example:
@@ -204,7 +204,7 @@ layers:
 
 ## `paths`
 
-The `path` option takes a list of directories, that Deptrac should analyze. In
+The `path` option takes a list of directories, that Deptrac should analyse. In
 most cases, this is where your project's source files are located. You could
 also add the vendor/ directory if you want to collect any vendor files in layers
 as well.

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -366,8 +366,8 @@ final class JsonOutputFormatterTest extends TestCase
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                    AnalyseCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
+                    AnalyseCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
                     JsonOutputFormatter::DUMP_JSON => __DIR__.'/data/'.self::$actual_json_report_file,
                 ]
             )
@@ -396,8 +396,8 @@ final class JsonOutputFormatterTest extends TestCase
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
+                    AnalyseCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
+                    AnalyseCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
                     JsonOutputFormatter::DUMP_JSON => null,
                 ]
             )
@@ -433,8 +433,8 @@ final class JsonOutputFormatterTest extends TestCase
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 [
-                    AnalyzeCommand::OPTION_REPORT_UNCOVERED => false,
-                    AnalyzeCommand::OPTION_REPORT_SKIPPED => false,
+                    AnalyseCommand::OPTION_REPORT_UNCOVERED => false,
+                    AnalyseCommand::OPTION_REPORT_SKIPPED => false,
                     JsonOutputFormatter::DUMP_JSON => null,
                 ]
             )

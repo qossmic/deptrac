@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Dependency;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
@@ -41,20 +41,20 @@ class Resolver
         $this->dispatcher = $dispatcher;
         $this->inheritanceFlatter = $inheritanceFlatter;
         $this->emitters = [
-            ConfigurationAnalyzer::CLASS_TOKEN => $classDependencyEmitter,
-            ConfigurationAnalyzer::CLASS_SUPERGLOBAL_TOKEN => $classSuperglobalDependencyEmitter,
-            ConfigurationAnalyzer::FILE_TOKEN => $fileDependencyEmitter,
-            ConfigurationAnalyzer::FUNCTION_TOKEN => $functionDependencyEmitter,
-            ConfigurationAnalyzer::FUNCTION_SUPERGLOBAL_TOKEN => $functionSuperglobalDependencyEmitter,
-            ConfigurationAnalyzer::USE_TOKEN => $usesDependencyEmitter,
+            ConfigurationAnalyser::CLASS_TOKEN => $classDependencyEmitter,
+            ConfigurationAnalyser::CLASS_SUPERGLOBAL_TOKEN => $classSuperglobalDependencyEmitter,
+            ConfigurationAnalyser::FILE_TOKEN => $fileDependencyEmitter,
+            ConfigurationAnalyser::FUNCTION_TOKEN => $functionDependencyEmitter,
+            ConfigurationAnalyser::FUNCTION_SUPERGLOBAL_TOKEN => $functionSuperglobalDependencyEmitter,
+            ConfigurationAnalyser::USE_TOKEN => $usesDependencyEmitter,
         ];
     }
 
-    public function resolve(AstMap $astMap, ConfigurationAnalyzer $configurationAnalyzer): Result
+    public function resolve(AstMap $astMap, ConfigurationAnalyser $configurationAnalyser): Result
     {
         $result = new Result();
 
-        foreach ($configurationAnalyzer->getTypes() as $type) {
+        foreach ($configurationAnalyser->getTypes() as $type) {
             if (!array_key_exists($type, $this->emitters)) {
                 throw new ShouldNotHappenException();
             }

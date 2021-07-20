@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use function count;
-use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -41,9 +41,9 @@ final class TableOutputFormatter implements OutputFormatterInterface
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
-        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_FAIL_ON_UNCOVERED);
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
+        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED);
+        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_FAIL_ON_UNCOVERED);
+        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
 
         foreach ($context->rules() as $rule) {
             if ($rule instanceof Allowed) {

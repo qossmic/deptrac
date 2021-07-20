@@ -13,7 +13,7 @@ use Tests\Qossmic\Deptrac\Fixtures\LayerAnalyser\ClassBar;
  */
 class UnassignedAnalyserTest extends TestCase
 {
-    public function testAnalyze(): void
+    public function testAnalyse(): void
     {
         $configuration = Configuration::fromArray([
             'paths' => [__DIR__.'/Fixtures/LayerAnalyser/'],

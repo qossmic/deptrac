@@ -30,7 +30,7 @@ use Qossmic\Deptrac\Configuration\Dumper;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
-use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
@@ -248,7 +248,7 @@ return static function (ContainerConfigurator $container): void {
         ->args([service(Dumper::class)]);
 
     $services
-        ->set(AnalyzeCommand::class)
+        ->set(AnalyseCommand::class)
         ->args([
             service(Analyser::class),
             service(Loader::class),

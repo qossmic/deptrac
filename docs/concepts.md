@@ -84,7 +84,7 @@ configuration:
 installed on your system)
 
 ```bash
-php deptrac.php analyze examples/ModelController1.depfile.yaml
+php deptrac.php analyse examples/ModelController1.depfile.yaml
 ```
 
 After Deptrac has finished, an image should be opened:
@@ -251,7 +251,7 @@ class SomeController
 After running Deptrac for this example
 
 ```bash
-php deptrac.php analyze examples/ModelController2.depfile.yaml
+php deptrac.php analyse examples/ModelController2.depfile.yaml
 ```
 
 we will get this output:
@@ -302,7 +302,7 @@ values (`Core\CoreClass`) are dependency tokens.
 Matched violations will be marked as skipped:
 
 ```bash
-php deptrac.php analyze examples/SkipViolations.yaml --report-skipped
+php deptrac.php analyse examples/SkipViolations.yaml --report-skipped
 1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
 [SKIPPED] Library\LibClass must not depend on Core\CoreClass (Library on Core)

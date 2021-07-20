@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Subscriber;
 
-use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
 use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
@@ -32,7 +32,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
         return [
             PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
             PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
-            AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
+            AstFileAnalysedEvent::class => 'onAstFileAnalysedEvent',
             AstFileSyntaxErrorEvent::class => 'onAstFileSyntaxErrorEvent',
             PreEmitEvent::class => 'onPreDependencyEmit',
             PostEmitEvent::class => 'onPostDependencyEmit',
@@ -57,10 +57,10 @@ class ConsoleSubscriber implements EventSubscriberInterface
         $this->output->writeln('AstMap created.', OutputInterface::VERBOSITY_VERBOSE);
     }
 
-    public function onAstFileAnalyzedEvent(AstFileAnalyzedEvent $analyzedEvent): void
+    public function onAstFileAnalysedEvent(AstFileAnalysedEvent $analysedEvent): void
     {
         $this->output->writeln(
-            sprintf('Parsing File %s', $analyzedEvent->getFile()),
+            sprintf('Parsing File %s', $analysedEvent->getFile()),
             OutputInterface::VERBOSITY_VERBOSE
         );
     }
