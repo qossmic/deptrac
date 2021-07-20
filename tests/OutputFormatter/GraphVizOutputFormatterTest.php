@@ -76,10 +76,10 @@ final class GraphVizOutputFormatterTest extends TestCase
         );
 
         $context = new Context([
-                new Allowed($dependency, 'LayerA_A', 'LayerA_B'),
-                new Allowed($dependency, 'LayerB_A', 'LayerB_B'),
-                new Allowed($dependency, 'LayerA_A', 'LayerB_A'),
-                new Allowed($dependency, 'LayerA_B', 'LayerB_A'),
+                new Allowed($dependency, 'User Frontend', 'User Backend'),
+                new Allowed($dependency, 'Admin Frontend', 'Admin Backend'),
+                new Allowed($dependency, 'User Frontend', 'Admin Frontend'),
+                new Allowed($dependency, 'User Backend', 'Admin Frontend'),
         ], [], []);
 
         $bufferedOutput = new BufferedOutput();
@@ -92,13 +92,13 @@ final class GraphVizOutputFormatterTest extends TestCase
             ],
             [
                 'groups' => [
-                    'groupA' => [
-                        'LayerA_A',
-                        'LayerA_B',
+                    'User' => [
+                        'User Frontend',
+                        'User Backend',
                     ],
-                    'groupB' => [
-                        'LayerB_A',
-                        'LayerB_B',
+                    'Admin' => [
+                        'Admin Frontend',
+                        'Admin Backend',
                     ],
                 ],
             ]

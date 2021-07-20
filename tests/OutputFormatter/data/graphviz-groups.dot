@@ -1,32 +1,32 @@
 digraph "" {
-subgraph "cluster_groupA" {
-label="groupA"
-"LayerA_A" [
-group="groupA"
+subgraph "cluster_User" {
+label="User"
+"User Frontend" [
+group="User"
 ]
-"LayerA_B" [
-group="groupA"
-]
-}
-subgraph "cluster_groupB" {
-label="groupB"
-"LayerB_A" [
-group="groupB"
-]
-"LayerB_B" [
-group="groupB"
+"User Backend" [
+group="User"
 ]
 }
-"LayerA_A" -> "LayerA_B" [
+subgraph "cluster_Admin" {
+label="Admin"
+"Admin Frontend" [
+group="Admin"
+]
+"Admin Backend" [
+group="Admin"
+]
+}
+"User Frontend" -> "User Backend" [
 label="1"
 ]
-"LayerA_A" -> "LayerB_A" [
+"User Frontend" -> "Admin Frontend" [
 label="1"
 ]
-"LayerB_A" -> "LayerB_B" [
+"Admin Frontend" -> "Admin Backend" [
 label="1"
 ]
-"LayerA_B" -> "LayerB_A" [
+"User Backend" -> "Admin Frontend" [
 label="1"
 ]
 }
