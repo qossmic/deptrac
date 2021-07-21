@@ -17,10 +17,7 @@ abstract class RegexCollector
     protected function getValidatedPattern(array $configuration): string
     {
         $pattern = $this->getPattern($configuration);
-        set_error_handler(static function () {}, E_WARNING);
-        $isRegularExpression = false !== preg_match($pattern, '');
-        restore_error_handler();
-        if ($isRegularExpression) {
+        if (false !== @preg_match($pattern, '')) {
             return $pattern;
         }
         throw new \LogicException('Invalid regex pattern '.$pattern);
