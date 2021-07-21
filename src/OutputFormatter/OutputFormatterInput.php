@@ -14,7 +14,7 @@ class OutputFormatterInput
     private array $options;
 
     /** @var array<string, mixed> */
-    private $config;
+    private array $config;
 
     /**
      * @param mixed[]              $options

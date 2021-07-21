@@ -255,18 +255,6 @@
     </MixedAssignment>
   </file>
   <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
-    <MixedArgument occurrences="5">
-      <code>$dumpDotPath</code>
-      <code>$dumpDotPath</code>
-      <code>$dumpHtmlPath</code>
-      <code>$dumpHtmlPath</code>
-      <code>$dumpImagePath</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="3">
-      <code>$dumpDotPath</code>
-      <code>$dumpHtmlPath</code>
-      <code>$dumpImagePath</code>
-    </MixedAssignment>
     <RedundantCondition occurrences="2">
       <code>false !== $filename</code>
       <code>isset($filename) &amp;&amp; false !== $filename</code>
@@ -281,30 +269,9 @@
       <code>$dumpXmlPath</code>
     </MixedAssignment>
   </file>
-  <file src="src/OutputFormatter/XMLOutputFormatter.php">
-    <MixedArgument occurrences="2">
-      <code>$dumpXmlPath</code>
-      <code>$dumpXmlPath</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$dumpXmlPath</code>
-    </MixedAssignment>
-  </file>
   <file src="src/OutputFormatterFactory.php">
     <UnusedParam occurrences="1">
       <code>$formatter</code>
     </UnusedParam>
-  </file>
-  <file src="src/PathNameFilterIterator.php">
-    <MixedArgument occurrences="2">
-      <code>$filename</code>
-      <code>$filename</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$filename</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>getPathname</code>
-    </MixedMethodCall>
   </file>
 </files>

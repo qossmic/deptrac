@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
-/**
- * @author Dmitry Balabka <dmitry.balabka@gmail.com>
- */
 final class ConfigurationSkippedViolation
 {
     /** @var array<string, string[]> */
-    private $classesDeps;
+    private array $classesDeps;
 
     /**
      * @param array<string, string[]> $arr

@@ -13,7 +13,7 @@ use Qossmic\Deptrac\File\CouldNotReadFileException;
  */
 final class LoaderTest extends TestCase
 {
-    private $loader;
+    private Loader $loader;
 
     protected function setUp(): void
     {
