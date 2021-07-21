@@ -18,9 +18,7 @@ final class ParameterResolver
             return $values;
         }
 
-        $keys = array_map(static function (string $key) {
-            return "%$key%";
-        }, array_keys($parameters));
+        $keys = array_map(static fn (string $key): string => "%$key%", array_keys($parameters));
 
         return $this->replace($values, $keys, $parameters);
     }
@@ -36,6 +34,7 @@ final class ParameterResolver
     {
         foreach ($values as &$value) {
             if (is_array($value)) {
+                /** @psalm-suppress MixedArgumentTypeCoercion */
                 $value = $this->replace($value, $keys, $parameters);
             } else {
                 $value = str_replace($keys, array_values($parameters), $value);

@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
-  <file src="src/AstRunner/AstMap/AstFileReference.php">
-    <ImpureFunctionCall occurrences="2">
-      <code>array_map</code>
-      <code>array_map</code>
-    </ImpureFunctionCall>
-  </file>
-  <file src="src/AstRunner/AstParser/NikicPhpParser/FileReferenceVisitor.php">
-    <MixedArgument occurrences="1">
-      <code>$name</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$name</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>?string</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="2">
-      <code>toCodeString</code>
-      <code>toCodeString</code>
-    </MixedMethodCall>
-    <MixedReturnStatement occurrences="1">
-      <code>$node-&gt;namespacedName-&gt;toCodeString()</code>
-    </MixedReturnStatement>
-  </file>
   <file src="src/Configuration/Configuration.php">
     <MixedArgument occurrences="6">
       <code>$options['analyser']</code>
@@ -44,21 +20,6 @@
       <code>(array) $options['exclude_files']</code>
       <code>(array) $options['formatters']</code>
     </MixedPropertyTypeCoercion>
-  </file>
-  <file src="src/Configuration/ConfigurationGraphViz.php">
-    <MixedArgument occurrences="2">
-      <code>$arr['groups'] ?? []</code>
-      <code>$arr['hidden_layers'] ?? []</code>
-    </MixedArgument>
-  </file>
-  <file src="src/Configuration/ConfigurationLayer.php">
-    <MixedArgument occurrences="2">
-      <code>$options['collectors']</code>
-      <code>$options['name']</code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$v</code>
-    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
     <MixedMethodCall occurrences="110">
@@ -182,9 +143,7 @@
     </UnusedVariable>
   </file>
   <file src="src/Configuration/Loader.php">
-    <MixedArgument occurrences="3">
-      <code>$importFile</code>
-      <code>$mainConfig['baseline']</code>
+    <MixedArgument occurrences="1">
       <code>$mergedConfig['paths']</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="1">
@@ -194,26 +153,5 @@
       <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
       <code>$mergedConfig['parameters']['depfileDirectory']</code>
     </MixedArrayAssignment>
-    <MixedAssignment occurrences="3">
-      <code>$analyser</code>
-      <code>$analyzer</code>
-      <code>$importFile</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/Configuration/ParameterResolver.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="src/Dependency/Resolver.php">
-    <DeprecatedClass occurrences="1">
-      <code>UsesDependencyEmitter</code>
-    </DeprecatedClass>
-  </file>
-  <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
-    <RedundantCondition occurrences="2">
-      <code>false !== $filename</code>
-      <code>isset($filename) &amp;&amp; false !== $filename</code>
-    </RedundantCondition>
   </file>
 </files>

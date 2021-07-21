@@ -59,7 +59,10 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     ): void {
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
-        $outputConfig = ConfigurationGraphViz::fromArray($outputFormatterInput->getConfig());
+
+        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>} $outputConfig */
+        $outputConfig = $outputFormatterInput->getConfig();
+        $outputConfig = ConfigurationGraphViz::fromArray($outputConfig);
 
         $graph = Graph::create('');
         $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
@@ -99,6 +102,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             } catch (Exception $exception) {
                 throw new \LogicException('Unable to generate HTML file: '.$exception->getMessage());
             } finally {
+                /** @psalm-suppress RedundantCondition */
                 if (isset($filename) && false !== $filename) {
                     unlink($filename);
                 }

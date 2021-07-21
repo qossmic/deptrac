@@ -44,10 +44,11 @@ class Loader
         $fileHelper = $useRelativePathFromDepfile ? new FileHelper($depfileDirectory) : $this->workingDirectoryFileHelper;
 
         if (isset($mainConfig['baseline'])) {
-            $configs[] = $this->fileLoader->parseFile($fileHelper->toAbsolutePath($mainConfig['baseline']));
+            $configs[] = $this->fileLoader->parseFile($fileHelper->toAbsolutePath((string) $mainConfig['baseline']));
         }
 
         if (isset($mainConfig['imports'])) {
+            /** @var string $importFile */
             foreach ((array) $mainConfig['imports'] as $importFile) {
                 $configs[] = $this->fileLoader->parseFile($fileHelper->toAbsolutePath($importFile));
             }
@@ -58,7 +59,9 @@ class Loader
         $mergedConfig['parameters']['currentWorkingDirectory'] = $this->workingDirectory;
         $mergedConfig['parameters']['depfileDirectory'] = $depfileDirectory;
 
+        /** @var array $analyzer */
         $analyzer = $mergedConfig['analyzer'] ?? [];
+        /** @var array $analyser */
         $analyser = $mergedConfig['analyser'] ?? [];
 
         return Configuration::fromArray([

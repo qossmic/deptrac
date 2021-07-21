@@ -1,6 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#1 \\$args of static method Qossmic\\\\Deptrac\\\\Configuration\\\\ConfigurationLayer\\:\\:fromArray\\(\\) expects array\\('name' \\=\\> string, 'collectors' \\=\\> array\\<array\\<string, string\\>\\>\\), array given\\.$#"
+			count: 1
+			path: src/Configuration/Configuration.php
+
+		-
 			message: "#^Call to an undefined method Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition\\:\\:children\\(\\)\\.$#"
 			count: 1
 			path: src/Configuration/Definition.php
+
