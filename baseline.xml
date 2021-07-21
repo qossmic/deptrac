@@ -6,11 +6,6 @@
       <code>array_map</code>
     </ImpureFunctionCall>
   </file>
-  <file src="src/AstRunner/AstParser/AstFileReferenceFileCache.php">
-    <UnnecessaryVarAnnotation occurrences="1">
-      <code>array&lt;string, array{hash: string, reference: AstFileReference}&gt;</code>
-    </UnnecessaryVarAnnotation>
-  </file>
   <file src="src/AstRunner/AstParser/NikicPhpParser/FileReferenceVisitor.php">
     <MixedArgument occurrences="1">
       <code>$name</code>
@@ -27,26 +22,6 @@
     </MixedMethodCall>
     <MixedReturnStatement occurrences="1">
       <code>$node-&gt;namespacedName-&gt;toCodeString()</code>
-    </MixedReturnStatement>
-  </file>
-  <file src="src/AstRunner/AstParser/NikicPhpParser/NikicPhpParser.php">
-    <MixedArrayOffset occurrences="1">
-      <code>self::$classAstMap[$className]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="1">
-      <code>$className</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>?ClassLike</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="1">
-      <code>toCodeString</code>
-    </MixedMethodCall>
-    <MixedPropertyTypeCoercion occurrences="1">
-      <code>self::$classAstMap</code>
-    </MixedPropertyTypeCoercion>
-    <MixedReturnStatement occurrences="1">
-      <code>self::$classAstMap[$classLikeName] ?? null</code>
     </MixedReturnStatement>
   </file>
   <file src="src/Configuration/Configuration.php">
