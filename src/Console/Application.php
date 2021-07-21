@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Console;
 
 use Psr\Container\ContainerInterface;
-use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
@@ -42,8 +42,8 @@ final class Application extends BaseApplication
         /** @var InitCommand $initCommand */
         $initCommand = $container->get(InitCommand::class);
 
-        /** @var AnalyzeCommand $analyzeCommand */
-        $analyzeCommand = $container->get(AnalyzeCommand::class);
+        /** @var AnalyseCommand $analyseCommand */
+        $analyseCommand = $container->get(AnalyseCommand::class);
 
         /** @var DebugClassLikeCommand $debugClassLikeCommand */
         $debugClassLikeCommand = $container->get(DebugClassLikeCommand::class);
@@ -54,8 +54,8 @@ final class Application extends BaseApplication
         /** @var DebugUnassignedCommand $debugUnassignedCommand */
         $debugUnassignedCommand = $container->get(DebugUnassignedCommand::class);
 
-        $this->addCommands([$initCommand, $analyzeCommand, $debugClassLikeCommand, $debugLayerCommand, $debugUnassignedCommand]);
-        $this->setDefaultCommand('analyze');
+        $this->addCommands([$initCommand, $analyseCommand, $debugClassLikeCommand, $debugLayerCommand, $debugUnassignedCommand]);
+        $this->setDefaultCommand('analyse');
 
         return parent::doRun($input, $output);
     }

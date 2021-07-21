@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac\AstRunner\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class AstFileAnalyzedEvent extends Event
+class AstFileAnalysedEvent extends Event
 {
     private string $file;
 

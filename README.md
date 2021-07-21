@@ -37,7 +37,7 @@ formatter you can visualize your layers, rules and violations.
 
 In order to run Deptrac you need at least PHP 7.4. We also support PHP 8.
 
-You can analyze projects that require an older PHP version as long as
+You can analyse projects that require an older PHP version as long as
 [nikic/php-parser](https://github.com/nikic/PHP-Parser) can parse it.
 
 ## Installation
@@ -53,7 +53,7 @@ Download the latest [deptrac.phar](https://github.com/qossmic/deptrac/releases).
 You can run the phar file using php:
 
 ```
-php deptrac.phar analyze
+php deptrac.phar analyse
 ```
 
 All examples in this documentation, assume you have the deptrac.phar downloaded
@@ -94,7 +94,7 @@ composer dependency, i.e. you run Deptrac like this:
 
 ```
 composer require qossmic/deptrac-shim
-php vendor/bin/deptrac analyze
+php vendor/bin/deptrac analyse
 ```
 
 ### Optional Dependency: Graphviz
@@ -195,19 +195,19 @@ You can learn more about the file in the [Depfile reference](/docs/depfile.md).
 
 ## Run Deptrac
 
-Once you have set up the depfile you can run Deptrac to analyze your code and
+Once you have set up the depfile you can run Deptrac to analyse your code and
 check for violations.
 
 ```bash
 php deptrac.phar
 
 # which is equivalent to
-php deptrac.phar analyze depfile.yaml
+php deptrac.phar analyse depfile.yaml
 ```
 
 If you run `php deptrac.phar -v` you'll get a more verbose output.
 
-The analyze command runs with a caching mechanism for parsed files by default.
+The analyse command runs with a caching mechanism for parsed files by default.
 This can be disabled with the `--no-cache` option.
 
 The generated output will roughly look like this:
@@ -295,4 +295,4 @@ docs/ directory:
 * [Debugging](/docs/debugging.md) - overview of the debug commands
 * [Contribute](/docs/contributing.md) - advice for contributing code changes,
    e.g. how to run tests or how to build a phar file with your changes that you
-   can use to analyze your projects
+   can use to analyse your projects

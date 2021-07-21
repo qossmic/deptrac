@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
 use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
@@ -25,7 +25,7 @@ final class ConsoleSubscriberTest extends TestCase
             [
                 PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
                 PostCreateAstMapEvent::class => 'onPostCreateAstMapEvent',
-                AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
+                AstFileAnalysedEvent::class => 'onAstFileAnalysedEvent',
                 AstFileSyntaxErrorEvent::class => 'onAstFileSyntaxErrorEvent',
                 PreEmitEvent::class => 'onPreDependencyEmit',
                 PostEmitEvent::class => 'onPostDependencyEmit',
@@ -56,12 +56,12 @@ final class ConsoleSubscriberTest extends TestCase
         self::assertSame("AstMap created.\n", $output->fetch());
     }
 
-    public function testOnAstFileAnalyzedEventWithVerboseVerbosity(): void
+    public function testOnAstFileAnalysedEventWithVerboseVerbosity(): void
     {
         $output = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
 
         $subscriber = new ConsoleSubscriber($output);
-        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent('foo.php'));
+        $subscriber->onAstFileAnalysedEvent(new AstFileAnalysedEvent('foo.php'));
 
         self::assertSame("Parsing File foo.php\n", $output->fetch());
     }

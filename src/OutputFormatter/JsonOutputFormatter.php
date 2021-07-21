@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\OutputFormatter;
 use Exception;
 use function json_encode;
 use function json_last_error;
-use Qossmic\Deptrac\Console\Command\AnalyzeCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
@@ -49,8 +49,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_SKIPPED);
-        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyzeCommand::OPTION_REPORT_UNCOVERED);
+        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
+        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED);
 
         $jsonArray = [];
         $violations = [];

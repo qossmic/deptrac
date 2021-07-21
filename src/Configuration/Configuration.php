@@ -20,7 +20,7 @@ class Configuration
     private bool $ignoreUncoveredInternalClasses;
     /** @var array<string, string> */
     private array $parameters;
-    private ConfigurationAnalyzer $analyzer;
+    private ConfigurationAnalyser $analyser;
     /** @var array<string, array<string, mixed>> */
     private array $formatters;
 
@@ -40,7 +40,7 @@ class Configuration
         ->setDefault('formatters', [])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
-        ->setDefault('analyzer', [])
+        ->setDefault('analyser', [])
         ->setDefault('ignore_uncovered_internal_classes', true)
         ->addAllowedTypes('parameters', 'array')
         ->addAllowedTypes('formatters', ['array', 'null'])
@@ -49,7 +49,7 @@ class Configuration
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
         ->addAllowedTypes('skip_violations', 'array')
-        ->addAllowedTypes('analyzer', 'array')
+        ->addAllowedTypes('analyser', 'array')
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
         ->resolve($args);
 
@@ -101,7 +101,7 @@ class Configuration
         $this->excludeFiles = (array) $options['exclude_files'];
         $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
         $this->formatters = (array) $options['formatters'];
-        $this->analyzer = ConfigurationAnalyzer::fromArray($options['analyzer']);
+        $this->analyser = ConfigurationAnalyser::fromArray($options['analyser']);
     }
 
     /**
@@ -159,8 +159,8 @@ class Configuration
         return $this->formatters[$formatterName] ?? [];
     }
 
-    public function getAnalyzer(): ConfigurationAnalyzer
+    public function getAnalyser(): ConfigurationAnalyser
     {
-        return $this->analyzer;
+        return $this->analyser;
     }
 }

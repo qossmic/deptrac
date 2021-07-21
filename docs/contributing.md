@@ -96,7 +96,7 @@ make infection
 ### Build Deptrac
 
 You can build the `deptrac.phar` both to ensure it works, as well as for using
-it to analyze your existing projects to see if your changes work as expected.
+it to analyse your existing projects to see if your changes work as expected.
 
 ```bash
 make build

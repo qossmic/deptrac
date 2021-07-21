@@ -31,8 +31,8 @@ class Analyser
 
     public function analyse(Configuration $configuration): Context
     {
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyzer());
-        $dependencyResult = $this->resolver->resolve($astMap, $configuration->getAnalyzer());
+        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
+        $dependencyResult = $this->resolver->resolve($astMap, $configuration->getAnalyser());
         $classLikeLayerResolver = $this->classLikeLayerResolverFactory->create($configuration, $astMap);
 
         return $this->rulesetEngine->process($dependencyResult, $classLikeLayerResolver, $configuration);

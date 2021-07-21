@@ -12,7 +12,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 
 final class NikicPhpParserTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class NikicPhpParserTest extends TestCase
     public function testParseWithInvalidData(): void
     {
         $this->expectException(\TypeError::class);
-        $this->parser->parseFile(new \stdClass(), ConfigurationAnalyzer::fromArray([]));
+        $this->parser->parseFile(new \stdClass(), ConfigurationAnalyser::fromArray([]));
     }
 
     public function testParseDoesNotIgnoreUsesByDefault(): void
@@ -52,7 +52,7 @@ final class NikicPhpParserTest extends TestCase
                 'parameters' => [],
             ]
         );
-        self::assertCount(1, $parser->parseFile($filePath, $configuration->getAnalyzer())->getDependencies());
+        self::assertCount(1, $parser->parseFile($filePath, $configuration->getAnalyser())->getDependencies());
     }
 
     /**
@@ -76,7 +76,7 @@ final class NikicPhpParserTest extends TestCase
                 'parameters' => [],
             ]
         );
-        $astFileReference = $parser->parseFile($filePath, $configuration->getAnalyzer());
+        $astFileReference = $parser->parseFile($filePath, $configuration->getAnalyser());
         $astClassReferences = $astFileReference->getAstClassReferences();
         self::assertCount(7, $astClassReferences[0]->getDependencies());
         self::assertCount(2, $astClassReferences[1]->getDependencies());

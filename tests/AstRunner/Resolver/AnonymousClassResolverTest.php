@@ -10,7 +10,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyzer;
+use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 
 final class AnonymousClassResolverTest extends TestCase
 {
@@ -24,7 +24,7 @@ final class AnonymousClassResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/AnonymousClass.php';
-        $astFileReference = $parser->parseFile($filePath, ConfigurationAnalyzer::fromArray([]));
+        $astFileReference = $parser->parseFile($filePath, ConfigurationAnalyser::fromArray([]));
 
         $astClassReferences = $astFileReference->getAstClassReferences();
 

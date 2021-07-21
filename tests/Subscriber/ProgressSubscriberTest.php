@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\Event\AstFileAnalyzedEvent;
+use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
 use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use Qossmic\Deptrac\Console\Symfony\Style;
@@ -23,7 +23,7 @@ final class ProgressSubscriberTest extends TestCase
             [
                 PreCreateAstMapEvent::class => 'onPreCreateAstMapEvent',
                 PostCreateAstMapEvent::class => ['onPostCreateAstMapEvent', 1],
-                AstFileAnalyzedEvent::class => 'onAstFileAnalyzedEvent',
+                AstFileAnalysedEvent::class => 'onAstFileAnalysedEvent',
             ],
             ProgressSubscriber::getSubscribedEvents()
         );
@@ -35,7 +35,7 @@ final class ProgressSubscriberTest extends TestCase
         $subscriber = new ProgressSubscriber($this->createSymfonyOutput($bufferedOutput));
 
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(1));
-        $subscriber->onAstFileAnalyzedEvent(new AstFileAnalyzedEvent('foo.php'));
+        $subscriber->onAstFileAnalysedEvent(new AstFileAnalysedEvent('foo.php'));
         $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
         $expectedOutput = <<<OUT

@@ -5,12 +5,12 @@ Deptrac has support for different output formatters with various options.
 You can get a list of available formatters by running,
 
 ```bash
-php deptrac.php analyze --help
+php deptrac.php analyse --help
 ```
 
 *Hint*: Symfony Console does not allow to pass options to the default command.
 Therefore in order to use the formatter options you have to explicitly use
-the `analyze` command as shown above.
+the `analyse` command as shown above.
 
 * [Baseline Formatter](#baseline-formatter)
 * [Console Formatter](#console-formatter)

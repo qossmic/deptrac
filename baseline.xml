@@ -61,7 +61,7 @@
   </file>
   <file src="src/Configuration/Configuration.php">
     <MixedArgument occurrences="6">
-      <code>$options['analyzer']</code>
+      <code>$options['analyser']</code>
       <code>$options['layers']</code>
       <code>$options['ruleset']</code>
       <code>$options['ruleset']</code>
@@ -96,7 +96,9 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="97">
+    <MixedMethodCall occurrences="110">
+      <code>arrayNode</code>
+      <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -125,9 +127,16 @@
       <code>children</code>
       <code>children</code>
       <code>children</code>
+      <code>children</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -179,6 +188,7 @@
       <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
+      <code>scalarNode</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
@@ -188,6 +198,9 @@
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
+      <code>scalarPrototype</code>
+      <code>setDeprecated</code>
+      <code>setDeprecated</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
@@ -216,7 +229,9 @@
       <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
       <code>$mergedConfig['parameters']['depfileDirectory']</code>
     </MixedArrayAssignment>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment occurrences="3">
+      <code>$analyser</code>
+      <code>$analyzer</code>
       <code>$importFile</code>
     </MixedAssignment>
   </file>
