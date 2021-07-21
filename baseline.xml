@@ -49,16 +49,6 @@
       <code>self::$classAstMap[$classLikeName] ?? null</code>
     </MixedReturnStatement>
   </file>
-  <file src="src/Collector/BoolCollector.php">
-    <MixedArgument occurrences="2">
-      <code>$v</code>
-      <code>$v</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$v</code>
-      <code>$v</code>
-    </MixedAssignment>
-  </file>
   <file src="src/Configuration/Configuration.php">
     <MixedArgument occurrences="6">
       <code>$options['analyser']</code>
@@ -245,33 +235,10 @@
       <code>UsesDependencyEmitter</code>
     </DeprecatedClass>
   </file>
-  <file src="src/OutputFormatter/BaselineOutputFormatter.php">
-    <MixedArgument occurrences="2">
-      <code>$baselineFile</code>
-      <code>$baselineFile</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$baselineFile</code>
-    </MixedAssignment>
-  </file>
   <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
     <RedundantCondition occurrences="2">
       <code>false !== $filename</code>
       <code>isset($filename) &amp;&amp; false !== $filename</code>
     </RedundantCondition>
-  </file>
-  <file src="src/OutputFormatter/JUnitOutputFormatter.php">
-    <MixedArgument occurrences="2">
-      <code>$dumpXmlPath</code>
-      <code>$dumpXmlPath</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$dumpXmlPath</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/OutputFormatterFactory.php">
-    <UnusedParam occurrences="1">
-      <code>$formatter</code>
-    </UnusedParam>
   </file>
 </files>

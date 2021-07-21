@@ -38,7 +38,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     ): void {
         $groupedViolations = $this->collectViolations($context);
 
-        if ($baselineFile = $outputFormatterInput->getOption(self::DUMP_BASELINE)) {
+        if ($baselineFile = (string) $outputFormatterInput->getOption(self::DUMP_BASELINE)) {
             file_put_contents(
                 $baselineFile,
                 Yaml::dump(
