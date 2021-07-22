@@ -37,6 +37,9 @@ php-cs-fix:																		## run cs fixer
 phpstan:
 	$(PHPSTAN_BIN) analyse
 
+deptrac:
+	$(PHP_BIN) deptrac.php analyse
+
 psalm:
 	$(PSALM_BIN) analyse
 
