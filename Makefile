@@ -41,7 +41,7 @@ psalm:
 	$(PSALM_BIN) analyse
 
 infection: tools-install composer-install
-	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=83
+	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=82
 
 gpg:
 	gpg --detach-sign --armor --default-key ED42E9154E81A416E7FBA19F4F2AB4D11A9A65F7 --output deptrac.phar.asc deptrac.phar

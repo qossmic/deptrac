@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\AstRunner\Resolver;
 
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
-use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPUnit\Framework\TestCase;
@@ -15,14 +14,8 @@ use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
 
 final class TypeResolverTest extends TestCase
 {
-    /**
-     * @var Lexer
-     */
-    private $lexer;
-    /**
-     * @var PhpDocParser
-     */
-    private $typeParser;
+    private Lexer $lexer;
+    private TypeParser $typeParser;
 
     protected function setUp(): void
     {

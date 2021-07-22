@@ -33,6 +33,7 @@ class BoolCollector implements CollectorInterface
             throw new InvalidArgumentException('"bool" collector must have a "must" or a "must_not" attribute.');
         }
 
+        /** @var array<string, string> $v */
         foreach ((array) $configuration['must'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
@@ -46,6 +47,7 @@ class BoolCollector implements CollectorInterface
             }
         }
 
+        /** @var array<string, string> $v */
         foreach ((array) $configuration['must_not'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 

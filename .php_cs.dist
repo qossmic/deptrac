@@ -17,5 +17,6 @@ return PhpCsFixer\Config::create()
         'no_unused_imports' => true,
         'static_lambda' => true,
         'strict_param' => true,
+        'phpdoc_to_comment' => false,
     ])
     ->setFinder($finder);

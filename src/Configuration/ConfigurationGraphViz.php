@@ -13,7 +13,7 @@ final class ConfigurationGraphViz
     private array $hiddenLayers;
 
     /**
-     * @param array<string, mixed> $arr
+     * @param array{hidden_layers?: string[], groups?: array<string, string[]>} $arr
      */
     public static function fromArray(array $arr): self
     {

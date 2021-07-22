@@ -14,19 +14,18 @@ final class ConfigurationLayer
     private string $name;
 
     /**
-     * @param array<string, mixed> $args
+     * @param array{name: string, collectors: array<array<string, string>>} $args
      */
     public static function fromArray(array $args): self
     {
+        /** @var array{name: string, collectors: array<array<string, string>>} $options */
         $options = (new OptionsResolver())->setRequired([
             'name',
             'collectors',
         ])->resolve($args);
 
         return new self(
-            array_map(static function (array $v): ConfigurationCollector {
-                return ConfigurationCollector::fromArray($v);
-            }, $options['collectors']),
+            array_map([ConfigurationCollector::class, 'fromArray'], $options['collectors']),
             $options['name']
         );
     }

@@ -49,7 +49,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($context);
 
-        if ($dumpXmlPath = $outputFormatterInput->getOption(self::DUMP_XML)) {
+        if ($dumpXmlPath = (string) $outputFormatterInput->getOption(self::DUMP_XML)) {
             file_put_contents($dumpXmlPath, $xml);
             $output->writeLineFormatted('<info>XML Report dumped to '.realpath($dumpXmlPath).'</info>');
         }

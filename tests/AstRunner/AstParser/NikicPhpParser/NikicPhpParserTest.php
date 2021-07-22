@@ -16,8 +16,7 @@ use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 
 final class NikicPhpParserTest extends TestCase
 {
-    /** @var NikicPhpParser */
-    private $parser;
+    private NikicPhpParser $parser;
 
     protected function setUp(): void
     {

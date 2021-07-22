@@ -59,7 +59,10 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     ): void {
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
-        $outputConfig = ConfigurationGraphViz::fromArray($outputFormatterInput->getConfig());
+
+        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>} $outputConfig */
+        $outputConfig = $outputFormatterInput->getConfig();
+        $outputConfig = ConfigurationGraphViz::fromArray($outputConfig);
 
         $graph = Graph::create('');
         $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
@@ -70,7 +73,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             $this->display($graph);
         }
 
-        if ($dumpImagePath = $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
+        if ($dumpImagePath = (string) $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
             try {
                 $graph->export('png', $dumpImagePath);
                 $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
@@ -79,12 +82,12 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        if ($dumpDotPath = $outputFormatterInput->getOption(self::DUMP_DOT)) {
+        if ($dumpDotPath = (string) $outputFormatterInput->getOption(self::DUMP_DOT)) {
             file_put_contents($dumpDotPath, (string) $graph);
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
-        if ($dumpHtmlPath = $outputFormatterInput->getOption(self::DUMP_HTML)) {
+        if ($dumpHtmlPath = (string) $outputFormatterInput->getOption(self::DUMP_HTML)) {
             try {
                 $filename = $this->getTempImage($graph);
                 $imageData = file_get_contents($filename);
@@ -99,6 +102,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             } catch (Exception $exception) {
                 throw new \LogicException('Unable to generate HTML file: '.$exception->getMessage());
             } finally {
+                /** @psalm-suppress RedundantCondition */
                 if (isset($filename) && false !== $filename) {
                     unlink($filename);
                 }

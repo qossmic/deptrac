@@ -7,14 +7,13 @@ namespace Qossmic\Deptrac;
 use SplFileInfo;
 use Symfony\Component\Finder\Iterator\PathFilterIterator;
 
-/**
- * @method SplFileInfo current()
- */
 class PathNameFilterIterator extends PathFilterIterator
 {
     public function accept(): bool
     {
-        $filename = $this->current()->getPathname();
+        /** @var SplFileInfo $fileInfo */
+        $fileInfo = $this->current();
+        $filename = $fileInfo->getPathname();
 
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $filename = str_replace('\\', '/', $filename);

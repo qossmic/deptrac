@@ -96,7 +96,13 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Node\Stmt\Function_) {
-            $name = isset($node->namespacedName) ? $node->namespacedName->toCodeString() : $node->name->toString();
+            if (isset($node->namespacedName)) {
+                /** @psalm-var \PhpParser\Node\Name $namespacedName */
+                $namespacedName = $node->namespacedName;
+                $name = $namespacedName->toCodeString();
+            } else {
+                $name = $node->name->toString();
+            }
             $this->enterFunction($name, $node);
             foreach ($node->getAttrGroups() as $attrGroup) {
                 foreach ($attrGroup->attrs as $attribute) {
@@ -293,7 +299,10 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     private function getClassReferenceName(ClassLike $node): ?string
     {
         if (isset($node->namespacedName)) {
-            return $node->namespacedName->toCodeString();
+            /** @psalm-var \PhpParser\Node\Name $namespacedName */
+            $namespacedName = $node->namespacedName;
+
+            return $namespacedName->toCodeString();
         }
 
         if ($node->name instanceof Identifier) {

@@ -1,99 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
-  <file src="src/AstRunner/AstMap/AstFileReference.php">
-    <ImpureFunctionCall occurrences="2">
-      <code>array_map</code>
-      <code>array_map</code>
-    </ImpureFunctionCall>
-  </file>
-  <file src="src/AstRunner/AstParser/AstFileReferenceFileCache.php">
-    <UnnecessaryVarAnnotation occurrences="1">
-      <code>array&lt;string, array{hash: string, reference: AstFileReference}&gt;</code>
-    </UnnecessaryVarAnnotation>
-  </file>
-  <file src="src/AstRunner/AstParser/NikicPhpParser/FileReferenceVisitor.php">
-    <MixedArgument occurrences="1">
-      <code>$name</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$name</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>?string</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="2">
-      <code>toCodeString</code>
-      <code>toCodeString</code>
-    </MixedMethodCall>
-    <MixedReturnStatement occurrences="1">
-      <code>$node-&gt;namespacedName-&gt;toCodeString()</code>
-    </MixedReturnStatement>
-  </file>
-  <file src="src/AstRunner/AstParser/NikicPhpParser/NikicPhpParser.php">
-    <MixedArrayOffset occurrences="1">
-      <code>self::$classAstMap[$className]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="1">
-      <code>$className</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>?ClassLike</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="1">
-      <code>toCodeString</code>
-    </MixedMethodCall>
-    <MixedPropertyTypeCoercion occurrences="1">
-      <code>self::$classAstMap</code>
-    </MixedPropertyTypeCoercion>
-    <MixedReturnStatement occurrences="1">
-      <code>self::$classAstMap[$classLikeName] ?? null</code>
-    </MixedReturnStatement>
-  </file>
-  <file src="src/Collector/BoolCollector.php">
-    <MixedArgument occurrences="2">
-      <code>$v</code>
-      <code>$v</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$v</code>
-      <code>$v</code>
-    </MixedAssignment>
-  </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedArgument occurrences="6">
-      <code>$options['analyser']</code>
-      <code>$options['layers']</code>
-      <code>$options['ruleset']</code>
-      <code>$options['ruleset']</code>
-      <code>$options['ruleset']</code>
-      <code>$options['skip_violations']</code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
-      <code>$v</code>
+      <code>$options</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="2">
-      <code>$this-&gt;parameters</code>
-      <code>$this-&gt;paths</code>
-    </MixedAssignment>
     <MixedPropertyTypeCoercion occurrences="2">
       <code>(array) $options['exclude_files']</code>
       <code>(array) $options['formatters']</code>
     </MixedPropertyTypeCoercion>
-  </file>
-  <file src="src/Configuration/ConfigurationGraphViz.php">
-    <MixedArgument occurrences="2">
-      <code>$arr['groups'] ?? []</code>
-      <code>$arr['hidden_layers'] ?? []</code>
-    </MixedArgument>
-  </file>
-  <file src="src/Configuration/ConfigurationLayer.php">
-    <MixedArgument occurrences="2">
-      <code>$options['collectors']</code>
-      <code>$options['name']</code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$v</code>
-    </MixedArgumentTypeCoercion>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array) $rules</code>
+      <code>(bool) $options['ignore_uncovered_internal_classes']</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Configuration/Definition.php">
     <MixedMethodCall occurrences="110">
@@ -217,9 +135,7 @@
     </UnusedVariable>
   </file>
   <file src="src/Configuration/Loader.php">
-    <MixedArgument occurrences="3">
-      <code>$importFile</code>
-      <code>$mainConfig['baseline']</code>
+    <MixedArgument occurrences="1">
       <code>$mergedConfig['paths']</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="1">
@@ -229,82 +145,5 @@
       <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
       <code>$mergedConfig['parameters']['depfileDirectory']</code>
     </MixedArrayAssignment>
-    <MixedAssignment occurrences="3">
-      <code>$analyser</code>
-      <code>$analyzer</code>
-      <code>$importFile</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/Configuration/ParameterResolver.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="src/Dependency/Resolver.php">
-    <DeprecatedClass occurrences="1">
-      <code>UsesDependencyEmitter</code>
-    </DeprecatedClass>
-  </file>
-  <file src="src/OutputFormatter/BaselineOutputFormatter.php">
-    <MixedArgument occurrences="2">
-      <code>$baselineFile</code>
-      <code>$baselineFile</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$baselineFile</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/OutputFormatter/GraphVizOutputFormatter.php">
-    <MixedArgument occurrences="5">
-      <code>$dumpDotPath</code>
-      <code>$dumpDotPath</code>
-      <code>$dumpHtmlPath</code>
-      <code>$dumpHtmlPath</code>
-      <code>$dumpImagePath</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="3">
-      <code>$dumpDotPath</code>
-      <code>$dumpHtmlPath</code>
-      <code>$dumpImagePath</code>
-    </MixedAssignment>
-    <RedundantCondition occurrences="2">
-      <code>false !== $filename</code>
-      <code>isset($filename) &amp;&amp; false !== $filename</code>
-    </RedundantCondition>
-  </file>
-  <file src="src/OutputFormatter/JUnitOutputFormatter.php">
-    <MixedArgument occurrences="2">
-      <code>$dumpXmlPath</code>
-      <code>$dumpXmlPath</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$dumpXmlPath</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/OutputFormatter/XMLOutputFormatter.php">
-    <MixedArgument occurrences="2">
-      <code>$dumpXmlPath</code>
-      <code>$dumpXmlPath</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$dumpXmlPath</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/OutputFormatterFactory.php">
-    <UnusedParam occurrences="1">
-      <code>$formatter</code>
-    </UnusedParam>
-  </file>
-  <file src="src/PathNameFilterIterator.php">
-    <MixedArgument occurrences="2">
-      <code>$filename</code>
-      <code>$filename</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="1">
-      <code>$filename</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>getPathname</code>
-    </MixedMethodCall>
   </file>
 </files>

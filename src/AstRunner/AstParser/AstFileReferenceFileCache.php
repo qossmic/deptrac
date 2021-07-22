@@ -104,8 +104,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
             return;
         }
 
-        /** @var array<string, array{hash: string, reference: AstFileReference}> $deserialized */
-        $deserialized = array_map(
+        $this->cache = array_map(
             /** @param array{hash: string, reference: string} $data */
             static function (array $data): array {
                 $reference = unserialize(
@@ -135,8 +134,6 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
             },
             $cache['payload']
         );
-
-        $this->cache = $deserialized;
     }
 
     public function write(): void
