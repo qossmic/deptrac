@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
   <file src="src/Configuration/Configuration.php">
-    <MixedArgument occurrences="6">
-      <code>$options['analyser']</code>
-      <code>$options['layers']</code>
-      <code>$options['ruleset']</code>
-      <code>$options['ruleset']</code>
-      <code>$options['ruleset']</code>
-      <code>$options['skip_violations']</code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
-      <code>$v</code>
+      <code>$options</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="2">
-      <code>$this-&gt;parameters</code>
-      <code>$this-&gt;paths</code>
-    </MixedAssignment>
     <MixedPropertyTypeCoercion occurrences="2">
       <code>(array) $options['exclude_files']</code>
       <code>(array) $options['formatters']</code>
     </MixedPropertyTypeCoercion>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array) $rules</code>
+      <code>(bool) $options['ignore_uncovered_internal_classes']</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Configuration/Definition.php">
     <MixedMethodCall occurrences="110">

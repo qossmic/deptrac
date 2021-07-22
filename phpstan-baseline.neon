@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$args of static method Qossmic\\\\Deptrac\\\\Configuration\\\\ConfigurationLayer\\:\\:fromArray\\(\\) expects array\\('name' \\=\\> string, 'collectors' \\=\\> array\\<array\\<string, string\\>\\>\\), array given\\.$#"
+			message: "#^Parameter \\#1 \\$options of class Qossmic\\\\Deptrac\\\\Configuration\\\\Configuration constructor expects array\\('parameters' \\=\\> array\\<string, string\\>, 'formatters' \\=\\> array\\|null, 'layers' \\=\\> array\\<array\\('name' \\=\\> string, 'collectors' \\=\\> array\\<array\\<string, string\\>\\>\\)\\>, 'paths' \\=\\> array\\<int, string\\>, 'exclude_files' \\=\\> array\\|null, 'ruleset' \\=\\> array\\<string, array\\<string\\>\\>, 'skip_violations' \\=\\> array\\<string, array\\<string\\>\\>, 'analyser' \\=\\> array\\<string, mixed\\>, \\.\\.\\.\\), array given\\.$#"
 			count: 1
 			path: src/Configuration/Configuration.php
 

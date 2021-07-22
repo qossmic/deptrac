@@ -57,13 +57,23 @@ class Configuration
     }
 
     /**
+     * @param  array{
+     *     parameters: array<string, string>,
+     *     formatters: ?array,
+     *     layers: array<array{name: string, collectors: array<array<string, string>>}>,
+     *     paths: list<string>,
+     *     exclude_files: ?array,
+     *     ruleset: array<string, string[]>,
+     *     skip_violations: array<string, string[]>,
+     *     analyser: array<string, mixed>,
+     *     ignore_uncovered_internal_classes: bool,
+     * } $options
+     *
      * @throws InvalidConfigurationException
      */
     private function __construct(array $options)
     {
-        $this->layers = array_map(static function (array $v): ConfigurationLayer {
-            return ConfigurationLayer::fromArray($v);
-        }, $options['layers']);
+        $this->layers = array_map([self::class, 'createLayerConfig'], $options['layers']);
 
         $layerNames = array_values(array_map(static function (ConfigurationLayer $configurationLayer): string {
             return $configurationLayer->getName();
@@ -78,12 +88,19 @@ class Configuration
         }
 
         /** @var list<string> $layerNamesUsedInRuleset */
-        $layerNamesUsedInRuleset = array_unique(array_merge(
-            array_keys($options['ruleset']),
-            ...array_values(array_map(static function (?array $rules): array {
-                return array_map(static fn (string $rule): string => ltrim($rule, '+'), (array) $rules);
-            }, $options['ruleset']))
-        ));
+        $layerNamesUsedInRuleset = array_unique(
+            array_merge(
+                array_keys($options['ruleset']),
+                ...array_values(
+                    array_map(
+                        static function (?array $rules): array {
+                            return array_map(static fn (string $rule): string => ltrim($rule, '+'), (array) $rules);
+                        },
+                        $options['ruleset']
+                    )
+                )
+            )
+        );
 
         $unknownLayerNames = array_diff(
             $layerNamesUsedInRuleset,
@@ -102,6 +119,14 @@ class Configuration
         $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
         $this->formatters = (array) $options['formatters'];
         $this->analyser = ConfigurationAnalyser::fromArray($options['analyser']);
+    }
+
+    /**
+     * @param array{name: string, collectors: array<array<string, string>>} $args
+     */
+    private static function createLayerConfig(array $args): ConfigurationLayer
+    {
+        return ConfigurationLayer::fromArray($args);
     }
 
     /**
