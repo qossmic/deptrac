@@ -25,7 +25,7 @@ final class ConfigurationLayer
         ])->resolve($args);
 
         return new self(
-            array_map([self::class, 'createCollector'], $options['collectors']),
+            array_map([ConfigurationCollector::class, 'fromArray'], $options['collectors']),
             $options['name']
         );
     }
@@ -37,14 +37,6 @@ final class ConfigurationLayer
     {
         $this->collectors = $collectors;
         $this->name = $name;
-    }
-
-    /**
-     * @param array<string, string> $args
-     */
-    private static function createCollector(array $args): ConfigurationCollector
-    {
-        return ConfigurationCollector::fromArray($args);
     }
 
     /**

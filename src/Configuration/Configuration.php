@@ -73,7 +73,7 @@ class Configuration
      */
     private function __construct(array $options)
     {
-        $this->layers = array_map([self::class, 'createLayerConfig'], $options['layers']);
+        $this->layers = array_map([ConfigurationLayer::class, 'fromArray'], $options['layers']);
 
         $layerNames = array_values(array_map(static function (ConfigurationLayer $configurationLayer): string {
             return $configurationLayer->getName();
@@ -119,14 +119,6 @@ class Configuration
         $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
         $this->formatters = (array) $options['formatters'];
         $this->analyser = ConfigurationAnalyser::fromArray($options['analyser']);
-    }
-
-    /**
-     * @param array{name: string, collectors: array<array<string, string>>} $args
-     */
-    private static function createLayerConfig(array $args): ConfigurationLayer
-    {
-        return ConfigurationLayer::fromArray($args);
     }
 
     /**
