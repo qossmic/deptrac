@@ -1,0 +1,150 @@
+paths:
+  - ./src
+
+baseline: 'depfile.baseline.yml'
+
+layers:
+  - name: Utils
+    collectors:
+      - type: directory
+        regex: src/File/.*
+      - type: className
+        regex: .*ShouldNotHappenException
+      - type: className
+        regex: .*InvalidConfigurationException
+      - type: bool
+        must:
+          - type: className
+            regex: .+\\.*
+        must_not:
+          - type: className
+            regex: ^Qossmic\\Deptrac\\.*
+  - name: Console Formatters
+    collectors:
+      - type: implements
+        implements: 'Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface'
+      - type: className
+        regex: .*ConfigurationGraphViz
+  - name: Console
+    collectors:
+      - type: directory
+        regex: src/Console/.*
+      - type: className
+        regex: OutputFormatter\w+
+  - name: Application
+    collectors:
+      - type: bool
+        must:
+          - type: directory
+            regex: src/.*
+        must_not:
+          - type: directory
+            regex: src/.*/.*
+          - type: className
+            regex: OutputFormatter\w+
+          - type: className
+            regex: .*ShouldNotHappenException
+      - type: directory
+        regex: src/RulesetEngine/.*
+      - type: bool
+        must:
+          - type: directory
+            regex: src/Configuration/.*
+        must_not:
+          - type: className
+            regex: .*ConfigurationGraphViz
+          - type: className
+            regex: .*ConfigurationAnalyser
+          - type: className
+            regex: .*ConfigurationCollector
+          - type: className
+            regex: .*InvalidConfigurationException
+  - name: Dependencies
+    collectors:
+      - type: bool
+        must:
+          - type: directory
+            regex: src/Dependency/.*
+        must_not:
+          - type: className
+            regex: .*Resolver
+      - type: inherits
+        inherits: 'Qossmic\Deptrac\AstRunner\AstMap\TokenName'
+      - type: className
+        regex: Qossmic\\Deptrac\\AstRunner\\AstMap\\TokenName
+      - type: className
+        regex: Qossmic\\Deptrac\\AstRunner\\AstMap\\FileOccurrence
+  - name: AstRunner
+    collectors:
+      - type: className
+        regex: .*ConfigurationAnalyser
+      - type: className
+        regex: .*CacheableFileSubscriber
+      - type: bool
+        must:
+          - type: directory
+            regex: src/AstRunner/.*
+        must_not:
+          - type: inherits
+            inherits: 'Qossmic\Deptrac\AstRunner\AstMap\TokenName'
+          - type: className
+            regex: Qossmic\\Deptrac\\AstRunner\\AstMap\\TokenName
+          - type: className
+            regex: Qossmic\\Deptrac\\AstRunner\\AstMap\\FileOccurrence
+  - name: Resolver
+    collectors:
+      - type: directory
+        regex: src/Collector/.*
+      - type: directory
+        regex: src/DependencyEmitter/.*
+      - type: className
+        regex: Qossmic\\Deptrac\\Dependency\\Resolver
+      - type: className
+        regex: .*ConfigurationCollector
+  - name: Events
+    collectors:
+      - type: bool
+        must:
+          - type: directory
+            regex: src/Subscriber/.*
+        must_not:
+          - type: className
+            regex: .*CacheableFileSubscriber
+
+ruleset:
+  Console Formatters:
+    - Console
+    - Application
+    - Dependencies
+    - Utils
+  Console:
+    - Application
+    - Events
+    - Utils
+  Application:
+    - Dependencies
+    - Utils
+    - Resolver
+  Dependencies:
+    - Utils
+  AstRunner:
+    - Utils
+    - Dependencies
+  Resolver:
+    - Utils
+    - AstRunner
+    - Dependencies
+  Events:
+    - Utils
+    - Console
+    - AstRunner
+    - Dependencies
+
+formatters:
+  graphviz:
+    hidden_layers:
+      - Utils
+    groups:
+      Console:
+        - Console
+        - Console Formatters
