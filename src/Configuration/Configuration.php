@@ -16,8 +16,6 @@ class Configuration
     /** @var string[] */
     private array $excludeFiles;
     private ConfigurationRuleset $ruleset;
-    private ConfigurationSkippedViolation $skipViolations;
-    private bool $ignoreUncoveredInternalClasses;
     /** @var array<string, string> */
     private array $parameters;
     private ConfigurationAnalyser $analyser;
@@ -112,11 +110,9 @@ class Configuration
         }
 
         $this->parameters = $options['parameters'];
-        $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset']);
+        $this->ruleset = ConfigurationRuleset::fromArray($options['ruleset'], $options['skip_violations'], (bool) $options['ignore_uncovered_internal_classes']);
         $this->paths = $options['paths'];
-        $this->skipViolations = ConfigurationSkippedViolation::fromArray($options['skip_violations']);
         $this->excludeFiles = (array) $options['exclude_files'];
-        $this->ignoreUncoveredInternalClasses = (bool) $options['ignore_uncovered_internal_classes'];
         $this->formatters = (array) $options['formatters'];
         $this->analyser = ConfigurationAnalyser::fromArray($options['analyser']);
     }
@@ -148,16 +144,6 @@ class Configuration
     public function getRuleset(): ConfigurationRuleset
     {
         return $this->ruleset;
-    }
-
-    public function getSkipViolations(): ConfigurationSkippedViolation
-    {
-        return $this->skipViolations;
-    }
-
-    public function ignoreUncoveredInternalClasses(): bool
-    {
-        return $this->ignoreUncoveredInternalClasses;
     }
 
     /**

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
-use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
-
 /**
  * @psalm-immutable
  */
@@ -21,10 +19,13 @@ final class SkippedViolationHelper
      */
     private array $unmatchedSkippedViolation;
 
-    public function __construct(ConfigurationSkippedViolation $configuration)
+    /**
+     * @param array<string, string[]> $skipViolations
+     */
+    public function __construct(array $skipViolations)
     {
-        $this->skippedViolation = $configuration->all();
-        $this->unmatchedSkippedViolation = $configuration->all();
+        $this->skippedViolation = $skipViolations;
+        $this->unmatchedSkippedViolation = $skipViolations;
     }
 
     public function isViolationSkipped(string $dependant, string $dependee): bool

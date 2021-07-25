@@ -6,15 +6,13 @@ namespace Tests\Qossmic\Deptrac\RulesetEngine;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\Configuration\ConfigurationSkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolationHelper;
 
 final class SkippedViolationHelperTest extends TestCase
 {
     public function testIsViolationSkipped(): void
     {
-        $configuration = ConfigurationSkippedViolation::fromArray(
-            [
+        $configuration = [
                 'ClassWithOneDep' => [
                     'DependencyClass',
                 ],
@@ -24,8 +22,7 @@ final class SkippedViolationHelperTest extends TestCase
                     'DependencyClass2',
                     'DependencyClass2',
                 ],
-            ]
-        );
+            ];
         $helper = new SkippedViolationHelper($configuration);
 
         self::assertTrue(
@@ -56,8 +53,7 @@ final class SkippedViolationHelperTest extends TestCase
 
     public function testUnmatchedSkippedViolations(): void
     {
-        $configuration = ConfigurationSkippedViolation::fromArray(
-            [
+        $configuration = [
                 'ClassWithOneDep' => [
                     'DependencyClass',
                 ],
@@ -67,8 +63,7 @@ final class SkippedViolationHelperTest extends TestCase
                     'DependencyClass2',
                     'DependencyClass2',
                 ],
-            ]
-        );
+            ];
         $helper = new SkippedViolationHelper($configuration);
 
         self::assertTrue(

@@ -12,7 +12,7 @@ final class ConfigurationRulesetTest extends TestCase
     public function testFromArray(): void
     {
         $configurationRuleSet = ConfigurationRuleset::fromArray(
-           ['foo' => ['bar'], 'lala' => ['xx', 'yy']]
+           ['foo' => ['bar'], 'lala' => ['xx', 'yy']], [], false
         );
 
         self::assertEquals(['bar'], $configurationRuleSet->getAllowedDependencies('foo'));
@@ -30,7 +30,7 @@ final class ConfigurationRulesetTest extends TestCase
             'qux' => ['+quuz', '+grault'],
             'quuz' => ['corge'],
             'grault' => ['+foo', 'baz'],
-        ]);
+        ], [], false);
 
         self::assertEquals(['baz', 'bar'], $configurationRuleSet->getAllowedDependencies('foo'));
         self::assertEquals(['corge', 'quuz', 'baz', 'bar', 'foo', 'grault'], $configurationRuleSet->getAllowedDependencies('qux'));
@@ -42,7 +42,7 @@ final class ConfigurationRulesetTest extends TestCase
             'a' => ['+b'],
             'b' => ['+c'],
             'c' => ['+a'],
-        ]);
+        ], [], false);
         $this->expectException(\InvalidArgumentException::class);
         $configurationRuleSet->getAllowedDependencies('a');
     }

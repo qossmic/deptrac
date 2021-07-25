@@ -11,20 +11,29 @@ final class ConfigurationRuleset
     /** @var array<string, string[]> */
     private array $layerMap;
 
+    /** @var array<string, string[]> */
+    private array $skipViolations;
+
+    private bool $ignoreUncoveredInternalClasses;
+
     /**
-     * @param array<string, string[]> $arr
+     * @param array<string, string[]> $layerMap
+     * @param array<string, string[]> $skipViolations
      */
-    public static function fromArray(array $arr): self
+    public static function fromArray(array $layerMap, array $skipViolations, bool $ignoreUncoveredInternalClasses): self
     {
-        return new self($arr);
+        return new self($layerMap, $skipViolations, $ignoreUncoveredInternalClasses);
     }
 
     /**
      * @param array<string, string[]> $layerMap
+     * @param array<string, string[]> $skipViolations
      */
-    private function __construct(array $layerMap)
+    private function __construct(array $layerMap, array $skipViolations, bool $ignoreUncoveredInternalClasses)
     {
         $this->layerMap = $layerMap;
+        $this->skipViolations = $skipViolations;
+        $this->ignoreUncoveredInternalClasses = $ignoreUncoveredInternalClasses;
     }
 
     /**
@@ -59,5 +68,18 @@ final class ConfigurationRuleset
         }
 
         return [] === $dependencies ? [] : array_merge(...$dependencies);
+    }
+
+    /**
+     * @return array<string, string[]>
+     */
+    public function getSkipViolations(): array
+    {
+        return $this->skipViolations;
+    }
+
+    public function ignoreUncoveredInternalClasses(): bool
+    {
+        return $this->ignoreUncoveredInternalClasses;
     }
 }
