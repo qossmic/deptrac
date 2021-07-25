@@ -37,7 +37,7 @@ class DebugTokenCommand extends Command
 
         $this->addArgument('depfile', InputArgument::REQUIRED, 'Path to the depfile');
         $this->addArgument('token', InputArgument::REQUIRED, 'Full qualified token name to debug');
-        $this->addArgument('type', InputArgument::REQUIRED, 'Token type (class-like, function, file)', 'class-like');
+        $this->addArgument('type', InputArgument::OPTIONAL, 'Token type (class-like, function, file)', 'class-like');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -48,8 +48,10 @@ class DebugTokenCommand extends Command
             throw SingleDepfileIsRequiredException::fromArgument($depfile);
         }
 
-        $tokenName = (string) $input->getArgument('token');
-        $tokenType = (string) $input->getArgument('type');
+        /** @var string $tokenName */
+        $tokenName = $input->getArgument('token');
+        /** @var string $tokenType */
+        $tokenType = $input->getArgument('type');
 
         $configuration = $this->loader->load($depfile);
 
