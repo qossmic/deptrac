@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 
-class ClassLikeLayerResolverFactory
+class TokenLayerResolverFactory
 {
     private Registry $registry;
     private ParameterResolver $parameterResolver;

@@ -29,24 +29,13 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
 use Qossmic\Deptrac\AstRunner\AstMap\ReferenceBuilder;
+use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
 use Qossmic\Deptrac\AstRunner\Resolver\DependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeScope;
 
 class FileReferenceVisitor extends NodeVisitorAbstract
 {
-    private const SUPERGLOBALS = [
-        'GLOBALS',
-        '_SERVER',
-        '_GET',
-        '_POST',
-        '_FILES',
-        '_COOKIE',
-        '_SESSION',
-        '_REQUEST',
-        '_ENV',
-    ];
-
     private FileReferenceBuilder $fileReferenceBuilder;
 
     /** @var DependencyResolver[] */
@@ -182,7 +171,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if ($node instanceof Node\Expr\Variable && in_array($node->name, self::SUPERGLOBALS, true)) {
+        if ($node instanceof Node\Expr\Variable && in_array($node->name, SuperGlobalName::ALLOWED_NAMES, true)) {
             $this->currentReference->superglobal($node->name, $node->getLine());
         }
 
