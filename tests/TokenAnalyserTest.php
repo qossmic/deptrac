@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileName;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
-use Qossmic\Deptrac\Configuration\Configuration;;
+use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\ContainerBuilder;
 use Qossmic\Deptrac\TokenAnalyser;
 use Tests\Qossmic\Deptrac\Fixtures\TokenAnalyser\ClassFoo;
