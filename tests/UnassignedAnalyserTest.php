@@ -38,8 +38,8 @@ class UnassignedAnalyserTest extends TestCase
 
         self::assertSame(
             [
-                '/' . basename(__DIR__).'/Fixtures/LayerAnalyser/ClassBar.php',
-                '/' . basename(__DIR__).'/Fixtures/LayerAnalyser/ClassFoo.php',
+                '/'.basename(__DIR__).'/Fixtures/LayerAnalyser/ClassBar.php',
+                '/'.basename(__DIR__).'/Fixtures/LayerAnalyser/ClassFoo.php',
                 ClassBar::class,
             ],
             $classLikes

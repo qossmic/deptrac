@@ -4,35 +4,35 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\Configuration\Configuration;
 
-class ClassLikeAnalyser
+class TokenAnalyser
 {
     private AstRunner $astRunner;
     private FileResolver $fileResolver;
-    private TokenLayerResolverFactory $classLikeLayerResolverFactory;
+    private TokenLayerResolverFactory $tokenLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,
         FileResolver $fileResolver,
-        TokenLayerResolverFactory $classLikeLayerResolverFactory
+        TokenLayerResolverFactory $tokenLayerResolverFactory
     ) {
         $this->astRunner = $astRunner;
         $this->fileResolver = $fileResolver;
-        $this->classLikeLayerResolverFactory = $classLikeLayerResolverFactory;
+        $this->tokenLayerResolverFactory = $tokenLayerResolverFactory;
     }
 
     /**
      * @return string[]
      */
-    public function analyse(Configuration $configuration, ClassLikeName $classLikeName): array
+    public function analyse(Configuration $configuration, TokenName $tokenName): array
     {
         $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
 
-        return $this->classLikeLayerResolverFactory
+        return $this->tokenLayerResolverFactory
             ->create($configuration, $astMap)
-            ->getLayersByTokenName($classLikeName);
+            ->getLayersByTokenName($tokenName);
     }
 }
