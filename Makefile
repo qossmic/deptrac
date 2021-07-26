@@ -38,7 +38,7 @@ phpstan:
 	$(PHPSTAN_BIN) analyse
 
 deptrac:
-	$(PHP_BIN) deptrac.php analyse
+	$(PHP_BIN) deptrac.php analyse --no-progress --ansi
 
 psalm:
 	$(PSALM_BIN) analyse
