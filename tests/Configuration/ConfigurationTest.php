@@ -128,7 +128,7 @@ final class ConfigurationTest extends TestCase
         self::assertEquals(['foo', 'bar'], $configuration->getPaths());
         self::assertEquals(['foo2', 'bar2'], $configuration->getExcludeFiles());
         self::assertEquals(['xx', 'yy'], $configuration->getRuleset()->getAllowedDependencies('some_name'));
-        self::assertTrue($configuration->ignoreUncoveredInternalClasses());
+        self::assertTrue($configuration->getRuleset()->ignoreUncoveredInternalClasses());
     }
 
     public function testExcludedFilesAreOptional(): void
@@ -188,7 +188,7 @@ final class ConfigurationTest extends TestCase
                 'BarClass',
                 'AnotherClass',
             ],
-        ], $configuration->getSkipViolations()->all());
+        ], $configuration->getRuleset()->getSkipViolations());
     }
 
     public function testIgnoreUncoveredInternalClassesSetToFalse(): void
@@ -200,6 +200,6 @@ final class ConfigurationTest extends TestCase
             'ignore_uncovered_internal_classes' => false,
         ]);
 
-        self::assertFalse($configuration->ignoreUncoveredInternalClasses());
+        self::assertFalse($configuration->getRuleset()->ignoreUncoveredInternalClasses());
     }
 }

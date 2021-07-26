@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
-use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\ConfigurationRuleset;
 use Qossmic\Deptrac\Dependency\Result;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
@@ -24,14 +24,13 @@ class RulesetEngine
     public function process(
         Result $dependencyResult,
         TokenLayerResolverInterface $tokenLayerResolver,
-        Configuration $configuration
+        ConfigurationRuleset $configurationRuleset
     ): Context {
         $rules = [];
         $warnings = [];
         $errors = [];
 
-        $configurationRuleset = $configuration->getRuleset();
-        $skippedViolationHelper = new SkippedViolationHelper($configuration->getSkipViolations());
+        $skippedViolationHelper = new SkippedViolationHelper($configurationRuleset->getSkipViolations());
 
         foreach ($dependencyResult->getDependenciesAndInheritDependencies() as $dependency) {
             $dependant = $dependency->getDependant();
@@ -53,7 +52,7 @@ class RulesetEngine
                 $dependeeLayerNames = $tokenLayerResolver->getLayersByTokenName($dependee);
 
                 if (0 === count($dependeeLayerNames)) {
-                    if ($dependee instanceof ClassLikeName && !$this->ignoreUncoveredInternalClass($configuration, $dependee)) {
+                    if ($dependee instanceof ClassLikeName && !$this->ignoreUncoveredInternalClass($configurationRuleset, $dependee)) {
                         $rules[] = new Uncovered($dependency, $dependantLayerName);
                     }
                     continue;
@@ -88,7 +87,7 @@ class RulesetEngine
         return new Context($rules, $errors, $warnings);
     }
 
-    private function ignoreUncoveredInternalClass(Configuration $configuration, TokenName $tokenName): bool
+    private function ignoreUncoveredInternalClass(ConfigurationRuleset $configuration, TokenName $tokenName): bool
     {
         return !$tokenName instanceof ClassLikeName || ($configuration->ignoreUncoveredInternalClasses() && isset(PhpStormStubsMap::CLASSES[$tokenName->toString()]));
     }
