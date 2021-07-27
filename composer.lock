@@ -704,23 +704,23 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v5.3.3",
+            "version": "v5.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "e421c4f161848740ad1fcf09b12391ddca168d95"
+                "reference": "5a825e4b386066167a8b55487091cb62beec74c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/e421c4f161848740ad1fcf09b12391ddca168d95",
-                "reference": "e421c4f161848740ad1fcf09b12391ddca168d95",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/5a825e4b386066167a8b55487091cb62beec74c2",
+                "reference": "5a825e4b386066167a8b55487091cb62beec74c2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
                 "psr/container": "^1.1.1",
                 "symfony/deprecation-contracts": "^2.1",
-                "symfony/polyfill-php80": "^1.15",
+                "symfony/polyfill-php80": "^1.16",
                 "symfony/service-contracts": "^1.1.6|^2"
             },
             "conflict": {
@@ -772,7 +772,7 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dependency-injection/tree/v5.3.3"
+                "source": "https://github.com/symfony/dependency-injection/tree/v5.3.4"
             },
             "funding": [
                 {
@@ -788,7 +788,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-24T08:13:00+00:00"
+            "time": "2021-07-23T15:55:36+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -2030,5 +2030,5 @@
     "platform-overrides": {
         "php": "7.4.20"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
