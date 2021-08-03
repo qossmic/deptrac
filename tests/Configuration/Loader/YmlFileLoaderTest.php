@@ -32,7 +32,7 @@ final class YmlFileLoaderTest extends TestCase
 
         $loader = new YmlFileLoader();
 
-        $this->expectException(ParsedYamlIsNotAnArrayException::class);
+        $this->expectException(FileCannotBeParsedAsYamlException::class);
 
         $loader->parseFile($file);
     }
