@@ -5,7 +5,7 @@ your depfile. All commands output one issue per line and can therefore be easily
 combined with other tools like `wc` or `grep`.
 
 * [`debug:layer`](#debuglayer)
-* [`debug:class`](#debugclass)
+* [`debug:token`](#debugtoken)
 * [`debug:unassigned`](#debugunassigned)
 
 ## `debug:layer`
@@ -21,13 +21,12 @@ examples\Layer1\SomeClass
 examples\Layer1\SomeClass2
 ```
 
-## `debug:class`
+## `debug:token`
 
-The `debug:class`-command will let you know which layers a specified class-like
-belongs to.
+The `debug:token` (previously `debug:class-like`)-command will let you know which layers a specified token belongs to.
 
 ```bash
-php deptrac.phar debug:class-like examples/DirectoryLayer.depfile.yaml 'examples\Layer1\AnotherClassLikeAController'
+php deptrac.phar debug:token examples/DirectoryLayer.depfile.yaml 'examples\Layer1\AnotherClassLikeAController' class-like
 
 Controller
 Layer1

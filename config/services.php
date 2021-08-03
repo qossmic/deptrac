@@ -13,13 +13,12 @@ use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\ClassLikeAnalyser;
-use Qossmic\Deptrac\ClassLikeLayerResolverFactory;
 use Qossmic\Deptrac\Collector\BoolCollector;
 use Qossmic\Deptrac\Collector\ClassNameCollector;
 use Qossmic\Deptrac\Collector\ClassNameRegexCollector;
 use Qossmic\Deptrac\Collector\DirectoryCollector;
 use Qossmic\Deptrac\Collector\ExtendsCollector;
+use Qossmic\Deptrac\Collector\FunctionNameCollector;
 use Qossmic\Deptrac\Collector\ImplementsCollector;
 use Qossmic\Deptrac\Collector\InheritanceLevelCollector;
 use Qossmic\Deptrac\Collector\InheritsCollector;
@@ -31,8 +30,8 @@ use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
-use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
+use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
@@ -55,6 +54,8 @@ use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\RulesetEngine;
+use Qossmic\Deptrac\TokenAnalyser;
+use Qossmic\Deptrac\TokenLayerResolverFactory;
 use Qossmic\Deptrac\UnassignedAnalyser;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
@@ -102,7 +103,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(TypeResolver::class);
 
     $services
-        ->set(ClassLikeLayerResolverFactory::class)
+        ->set(TokenLayerResolverFactory::class)
         ->args([
             service(Registry::class),
             service(ParameterResolver::class),
@@ -115,15 +116,15 @@ return static function (ContainerConfigurator $container): void {
             service(FileResolver::class),
             service(Resolver::class),
             service(RulesetEngine::class),
-            service(ClassLikeLayerResolverFactory::class),
+            service(TokenLayerResolverFactory::class),
         ]);
 
     $services
-        ->set(ClassLikeAnalyser::class)
+        ->set(TokenAnalyser::class)
         ->args([
             service(AstRunner::class),
             service(FileResolver::class),
-            service(ClassLikeLayerResolverFactory::class),
+            service(TokenLayerResolverFactory::class),
         ]);
 
     $services
@@ -131,7 +132,7 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service(AstRunner::class),
             service(FileResolver::class),
-            service(ClassLikeLayerResolverFactory::class),
+            service(TokenLayerResolverFactory::class),
         ]);
 
     $services
@@ -139,7 +140,7 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             service(AstRunner::class),
             service(FileResolver::class),
-            service(ClassLikeLayerResolverFactory::class),
+            service(TokenLayerResolverFactory::class),
         ]);
 
     $services->set(RulesetEngine::class);
@@ -194,6 +195,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('collector');
     $services
         ->set(ClassNameCollector::class)
+        ->tag('collector');
+    $services
+        ->set(FunctionNameCollector::class)
         ->tag('collector');
     $services
         ->set(ClassNameRegexCollector::class)
@@ -257,9 +261,9 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services
-        ->set(DebugClassLikeCommand::class)
+        ->set(DebugTokenCommand::class)
         ->args([
-            service(ClassLikeAnalyser::class),
+            service(TokenAnalyser::class),
             service(Loader::class),
         ]);
 

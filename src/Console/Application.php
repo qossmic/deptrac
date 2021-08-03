@@ -6,8 +6,8 @@ namespace Qossmic\Deptrac\Console;
 
 use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
-use Qossmic\Deptrac\Console\Command\DebugClassLikeCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
+use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\ContainerBuilder;
@@ -45,8 +45,8 @@ final class Application extends BaseApplication
         /** @var AnalyseCommand $analyseCommand */
         $analyseCommand = $container->get(AnalyseCommand::class);
 
-        /** @var DebugClassLikeCommand $debugClassLikeCommand */
-        $debugClassLikeCommand = $container->get(DebugClassLikeCommand::class);
+        /** @var DebugTokenCommand $debugClassLikeCommand */
+        $debugClassLikeCommand = $container->get(DebugTokenCommand::class);
 
         /** @var DebugLayerCommand $debugLayerCommand */
         $debugLayerCommand = $container->get(DebugLayerCommand::class);

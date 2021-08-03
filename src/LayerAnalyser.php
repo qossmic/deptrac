@@ -13,12 +13,12 @@ class LayerAnalyser
 {
     private AstRunner $astRunner;
     private FileResolver $fileResolver;
-    private ClassLikeLayerResolverFactory $classLikeLayerResolverFactory;
+    private TokenLayerResolverFactory $classLikeLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,
         FileResolver $fileResolver,
-        ClassLikeLayerResolverFactory $classLikeLayerResolverFactory
+        TokenLayerResolverFactory $classLikeLayerResolverFactory
     ) {
         $this->astRunner = $astRunner;
         $this->fileResolver = $fileResolver;

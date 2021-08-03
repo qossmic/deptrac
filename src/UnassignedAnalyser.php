@@ -11,16 +11,16 @@ class UnassignedAnalyser
 {
     private AstRunner $astRunner;
     private FileResolver $fileResolver;
-    private ClassLikeLayerResolverFactory $classLikeLayerResolverFactory;
+    private TokenLayerResolverFactory $tokenLayerResolverFactory;
 
     public function __construct(
         AstRunner $astRunner,
         FileResolver $fileResolver,
-        ClassLikeLayerResolverFactory $classLikeLayerResolverFactory
+        TokenLayerResolverFactory $tokenLayerResolverFactory
     ) {
         $this->astRunner = $astRunner;
         $this->fileResolver = $fileResolver;
-        $this->classLikeLayerResolverFactory = $classLikeLayerResolverFactory;
+        $this->tokenLayerResolverFactory = $tokenLayerResolverFactory;
     }
 
     /**
@@ -29,20 +29,34 @@ class UnassignedAnalyser
     public function analyse(Configuration $configuration): array
     {
         $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
-        $classLikeLayerResolver = $this->classLikeLayerResolverFactory->create($configuration, $astMap);
+        $tokenLayerResolver = $this->tokenLayerResolverFactory->create($configuration, $astMap);
 
-        /** @var string[] $classLikeNames */
-        $classLikeNames = [];
+        /** @var string[] $tokenNames */
+        $tokenNames = [];
 
-        foreach ($astMap->getAstClassReferences() as $classReference) {
-            $classLikeName = $classReference->getTokenName();
-            if ([] === $classLikeLayerResolver->getLayersByTokenName($classLikeName)) {
-                $classLikeNames[] = $classLikeName->toString();
+        foreach ($astMap->getAstFileReferences() as $fileReference) {
+            foreach ($fileReference->getAstClassReferences() as $classReference) {
+                $tokenName = $classReference->getTokenName();
+                if ([] === $tokenLayerResolver->getLayersByTokenName($tokenName)) {
+                    $tokenNames[] = $tokenName->toString();
+                }
+            }
+
+            foreach ($fileReference->getFunctionReferences() as $functionReference) {
+                $tokenName = $functionReference->getTokenName();
+                if ([] === $tokenLayerResolver->getLayersByTokenName($tokenName)) {
+                    $tokenNames[] = $tokenName->toString();
+                }
+            }
+
+            $tokenName = $fileReference->getTokenName();
+            if ([] === $tokenLayerResolver->getLayersByTokenName($tokenName)) {
+                $tokenNames[] = $tokenName->toString();
             }
         }
 
-        natcasesort($classLikeNames);
+        natcasesort($tokenNames);
 
-        return array_values($classLikeNames);
+        return array_values($tokenNames);
     }
 }
