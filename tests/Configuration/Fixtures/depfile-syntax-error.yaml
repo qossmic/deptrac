@@ -1,0 +1,28 @@
+paths:
+  - app/
+
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
+  - name: ViewModel
+    collectors:
+      - type: className
+        regex: ^(.*\\viewmodel\\.*)$
+  - name: Service
+    collectors:
+      - type: className
+        regex: .*\\service\\.*
+  - name: Business
+    collectors:
+      - type: className
+        regex: .*\\business\\.*
+ruleset:
+  ViewModel:
+    - Business
+  Controller:
+    - Service
+    - ViewModel
+  ViewModel:
+    - Business

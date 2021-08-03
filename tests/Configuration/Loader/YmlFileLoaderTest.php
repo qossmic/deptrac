@@ -32,7 +32,19 @@ final class YmlFileLoaderTest extends TestCase
 
         $loader = new YmlFileLoader();
 
+        $this->expectException(ParsedYamlIsNotAnArrayException::class);
+
+        $loader->parseFile($file);
+    }
+    
+    public function testSyntaxErrorDetailsPrinted(): void
+    {
+        $file = __DIR__.'/../Fixtures/depfile-syntax-error.yaml';
+
+        $loader = new YmlFileLoader();
+
         $this->expectException(FileCannotBeParsedAsYamlException::class);
+        $this->expectExceptionMessageMatches('/.*Duplicate key "ViewModel" detected at line.*/');
 
         $loader->parseFile($file);
     }
