@@ -15,7 +15,7 @@ class YmlFileLoader
         try {
             $data = Yaml::parse(FileReader::read($file));
         } catch (ParseException $exception) {
-            throw FileCannotBeParsedAsYamlException::fromFilename($file);
+            throw FileCannotBeParsedAsYamlException::fromFilenameAndException($file, $exception);
         }
 
         if (!is_array($data)) {

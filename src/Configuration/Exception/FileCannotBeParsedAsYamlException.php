@@ -8,11 +8,12 @@ use RuntimeException;
 
 final class FileCannotBeParsedAsYamlException extends RuntimeException
 {
-    public static function fromFilename(string $filename): self
+    public static function fromFilenameAndException(string $filename, RuntimeException $exception): self
     {
         return new self(sprintf(
-            'File "%s" cannot be parsed as YAML.',
-            $filename
+            'File "%s" cannot be parsed as YAML: %s',
+            $filename,
+            $exception->getMessage()
         ));
     }
 }
