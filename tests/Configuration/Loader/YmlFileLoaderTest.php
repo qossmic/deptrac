@@ -36,7 +36,7 @@ final class YmlFileLoaderTest extends TestCase
 
         $loader->parseFile($file);
     }
-    
+
     public function testSyntaxErrorDetailsPrinted(): void
     {
         $file = __DIR__.'/../Fixtures/depfile-syntax-error.yaml';
