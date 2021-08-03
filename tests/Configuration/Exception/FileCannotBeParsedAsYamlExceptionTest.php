@@ -19,14 +19,14 @@ final class FileCannotBeParsedAsYamlExceptionTest extends TestCase
         self::assertInstanceOf(\RuntimeException::class, $exception);
     }
 
-    public function testFromFilenameReturnsException(): void
+    public function testFromFilenameAndExceptionReturnsException(): void
     {
         $filename = __FILE__;
 
-        $exception = FileCannotBeParsedAsYamlException::fromFilename($filename);
+        $exception = FileCannotBeParsedAsYamlException::fromFilenameAndException($filename, new \RuntimeException('abc'));
 
         $message = sprintf(
-            'File "%s" cannot be parsed as YAML.',
+            'File "%s" cannot be parsed as YAML: abc',
             $filename
         );
 

@@ -16,12 +16,4 @@ final class FileCannotBeParsedAsYamlException extends RuntimeException
             $exception->getMessage()
         ));
     }
-
-    public static function fromFilename(string $filename): self
-    {
-        return new self(sprintf(
-            'File "%s" cannot be parsed as YAML.',
-            $filename
-        ));
-    }
 }
