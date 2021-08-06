@@ -3,16 +3,18 @@ skip_violations:
     - Qossmic\Deptrac\AstRunner\AstRunner
   Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache:
     - Qossmic\Deptrac\Console\Application
-  Qossmic\Deptrac\ClassLikeLayerResolverFactory:
+  Qossmic\Deptrac\TokenLayerResolverFactory:
     - Qossmic\Deptrac\AstRunner\AstMap
-  Qossmic\Deptrac\ClassLikeAnalyser:
+  Qossmic\Deptrac\TokenAnalyser:
     - Qossmic\Deptrac\AstRunner\AstRunner
   Qossmic\Deptrac\Dependency\InheritanceFlatter:
     - Qossmic\Deptrac\AstRunner\AstMap
   Qossmic\Deptrac\Dependency\InheritDependency:
     - Qossmic\Deptrac\AstRunner\AstMap\AstInherit
-  Qossmic\Deptrac\Console\Command\DebugClassLikeCommand:
+  Qossmic\Deptrac\Console\Command\DebugTokenCommand:
     - Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName
+    - Qossmic\Deptrac\AstRunner\AstMap\FileName
+    - Qossmic\Deptrac\AstRunner\AstMap\FunctionName
   Qossmic\Deptrac\Configuration\Configuration:
     - Qossmic\Deptrac\Configuration\ConfigurationAnalyser
   Qossmic\Deptrac\TokenLayerResolver:
