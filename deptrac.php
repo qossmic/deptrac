@@ -9,10 +9,6 @@ if (PHP_VERSION_ID < 70400) {
 }
 
 (static function (): void {
-    require_once __DIR__.'/vendor/autoload.php';
-})();
-
-(static function (): void {
     if (\file_exists($autoload = getcwd().'/vendor/autoload.php')) {
         include_once $autoload;
     }
