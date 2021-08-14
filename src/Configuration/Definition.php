@@ -84,7 +84,6 @@ final class Definition implements ConfigurationInterface
                         ->arrayNode('graphviz')
                             ->children()
                                 ->arrayNode('hidden_layers')
-                                    ->useAttributeAsKey('name')
                                     ->scalarPrototype()->end()
                                 ->end()
                                 ->arrayNode('groups')
