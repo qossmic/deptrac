@@ -1,5 +1,50 @@
 # Changelog
 
+## [0.15.0](https://github.com/qossmic/deptrac/tree/0.15.0)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.1...0.15.0)
+
+**Implemented enhancements:**
+
+- `RulesetEngine` should only use `ConfigurationRuleset` [\#615](https://github.com/qossmic/deptrac/issues/615)
+
+**Closed issues:**
+
+- Incorrect merge of `formatters.graphviz.hidden_layers` from multiple files [\#668](https://github.com/qossmic/deptrac/issues/668)
+- Fix deptrac-violations introduced by renaming [\#664](https://github.com/qossmic/deptrac/issues/664)
+- print yaml error [\#661](https://github.com/qossmic/deptrac/issues/661)
+- Update debug commands [\#638](https://github.com/qossmic/deptrac/issues/638)
+- Docs: change generated image for grapviz formatter for groups [\#636](https://github.com/qossmic/deptrac/issues/636)
+- Allow only DomainEvents dependency across bounded contexts [\#633](https://github.com/qossmic/deptrac/issues/633)
+- Multiple rule sets [\#632](https://github.com/qossmic/deptrac/issues/632)
+- Groups: use group names instead of numbers [\#597](https://github.com/qossmic/deptrac/issues/597)
+- support procedural php files [\#594](https://github.com/qossmic/deptrac/issues/594)
+- throw proper error on invalid regex [\#593](https://github.com/qossmic/deptrac/issues/593)
+- Internal - Refactor AstRunner to support parsing more than classes [\#582](https://github.com/qossmic/deptrac/issues/582)
+- Fix naming inconsistencies analyze vs. analyse [\#575](https://github.com/qossmic/deptrac/issues/575)
+- Scan scripts without classes [\#331](https://github.com/qossmic/deptrac/issues/331)
+
+**Merged pull requests:**
+
+- Update dependencies [\#670](https://github.com/qossmic/deptrac/pull/670) ([dbrumann](https://github.com/dbrumann))
+- fixed bug in merging hidden\_layers [\#669](https://github.com/qossmic/deptrac/pull/669) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Make library usable as is without shim [\#666](https://github.com/qossmic/deptrac/pull/666) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Fix master [\#665](https://github.com/qossmic/deptrac/pull/665) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Report yaml syntax errors in more detail [\#662](https://github.com/qossmic/deptrac/pull/662) ([staabm](https://github.com/staabm))
+- Run deptrac as part of the test suite [\#648](https://github.com/qossmic/deptrac/pull/648) ([dbrumann](https://github.com/dbrumann))
+- Debug commands [\#647](https://github.com/qossmic/deptrac/pull/647) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Ruleset config refactor [\#646](https://github.com/qossmic/deptrac/pull/646) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Eat your own dog food \(use deptrac on deptrac\) [\#645](https://github.com/qossmic/deptrac/pull/645) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Rename analyze to analyse for builds. [\#644](https://github.com/qossmic/deptrac/pull/644) ([dbrumann](https://github.com/dbrumann))
+- Cleanup [\#643](https://github.com/qossmic/deptrac/pull/643) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- analyze -\> analyse [\#641](https://github.com/qossmic/deptrac/pull/641) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update docs for graphviz formatter [\#640](https://github.com/qossmic/deptrac/pull/640) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Support for file, function and superglobal tokens [\#634](https://github.com/qossmic/deptrac/pull/634) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Bump nikic/php-parser from 4.10.5 to 4.11.0 [\#630](https://github.com/qossmic/deptrac/pull/630) ([dependabot[bot]](https://github.com/apps/dependabot))
+- new GraphVizOutputFormatter [\#626](https://github.com/qossmic/deptrac/pull/626) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Internal refactor to support more token types - part 1/??? [\#602](https://github.com/qossmic/deptrac/pull/602) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Regex validation [\#596](https://github.com/qossmic/deptrac/pull/596) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
 ## [0.14.1](https://github.com/qossmic/deptrac/tree/0.14.1) (2021-07-04)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.0...0.14.1)

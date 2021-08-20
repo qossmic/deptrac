@@ -63,7 +63,7 @@ Feel free to add Deptrac to your PATH (i.e. `/usr/local/bin/deptrac`) to make it
 globally available.
 
 ```bash
-curl -LS https://github.com/qossmic/deptrac/releases/download/0.14.1/deptrac.phar -o deptrac.phar
+curl -LS https://github.com/qossmic/deptrac/releases/download/0.15.0/deptrac.phar -o deptrac.phar
 
 # optional
 sudo chmod +x deptrac.phar
