@@ -1,6 +1,18 @@
 # Changelog
 
-## [0.15.0](https://github.com/qossmic/deptrac/tree/0.15.0)
+## [0.15.1](https://github.com/qossmic/deptrac/tree/0.15.1) (2021-08-24)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.0...0.15.1)
+
+**Closed issues:**
+
+- unknown collector type "superglobal" [\#671](https://github.com/qossmic/deptrac/issues/671)
+
+**Merged pull requests:**
+
+- Add superglobal collector to services.php [\#672](https://github.com/qossmic/deptrac/pull/672) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
+## [0.15.0](https://github.com/qossmic/deptrac/tree/0.15.0) (2021-08-20)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.1...0.15.0)
 
