@@ -59,7 +59,6 @@ analyser:
 - `function` - analyses function definitions for everything apart from superglobal usage.
 - `function_superglobal` - analyses function definitions for superglobal usage.
 
-
 ## `baseline`
 
 You can define a baseline, i.e. existing violations that should not fail a build. The `baseline` option takes the filename where the baseline is defined.
