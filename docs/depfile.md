@@ -43,6 +43,15 @@ analyser:
 
 Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyse file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analysed file:
 
+```yaml
+analyser:
+  types:
+    - use
+    - file
+    - class_superglobal
+    - function_superglobal
+```
+
 - `class` (default) - analyses class definitions for everything apart from superglobal usage.
 - `class_superglobal` - analyses class definitions for superglobal usage.
 - `use` (default) - analyses file definitions for use statements.
