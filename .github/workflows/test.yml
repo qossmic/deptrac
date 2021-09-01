@@ -11,11 +11,18 @@ name: "Tests"
 jobs:
   unit-tests:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-20.04]
-        php-version: [7.4, 8.0, 8.1]
+        php-version: [7.4, 8.0]
+        experimental: [false]
+        include:
+          - os: ubuntu-20.04
+            php-version: 8.1
+            experimental: true
 
     steps:
       - name: "Checkout"
@@ -111,11 +118,18 @@ jobs:
 
   deptrac:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-20.04]
-        php-version: [8.0, 8.1]
+        php-version: [8.0]
+        experimental: [false]
+        include:
+          - os: ubuntu-20.04
+            php-version: 8.1
+            experimental: true
 
     steps:
       - name: "Checkout"
