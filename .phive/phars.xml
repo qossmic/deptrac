@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
-  <phar name="php-cs-fixer" version="^3.1" installed="3.1.0" location="./tools/php-cs-fixer" copy="true"/>
-  <phar name="phpunit" version="^9.5" installed="9.5.9" location="./tools/phpunit" copy="true"/>
-  <phar name="phpstan" version="^0.12.29" installed="0.12.83" location="./tools/phpstan" copy="true"/>
-  <phar name="psalm" version="^4.8.0" installed="4.8.1" location="./tools/psalm" copy="true"/>
-  <phar name="box-project/box" version="^3.12.2" installed="3.12.2" location="./tools/box" copy="true"/>
-  <phar name="infection" version="^0.25" installed="0.25.0" location="./tools/infection" copy="true"/>
+  <phar name="php-cs-fixer" version="^3.1" installed="3.1.0" location="./tools/php-cs-fixer" copy="true" />
+  <phar name="phpunit" version="^9.5" installed="9.5.9" location="./tools/phpunit" copy="true" />
+  <phar name="phpstan" version="^0.12.29" installed="0.12.83" location="./tools/phpstan" copy="true" />
+  <phar name="psalm" version="^4.8.0" installed="4.8.1" location="./tools/psalm" copy="true" />
+  <phar name="box-project/box" version="^3.12.2" installed="3.12.2" location="./tools/box" copy="true" />
+  <phar name="infection" version="^0.25" installed="0.25.0" location="./tools/infection" copy="true" />
 </phive>
