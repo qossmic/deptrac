@@ -30,8 +30,8 @@ final class FunctionNameCollectorTest extends TestCase
         $stat = (new FunctionNameCollector())->satisfy(
             $configuration,
             new AstMap\AstFunctionReference(AstMap\FunctionName::fromFQCN($functionName)),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
 
         self::assertEquals($expected, $stat);
@@ -44,8 +44,8 @@ final class FunctionNameCollectorTest extends TestCase
         (new FunctionNameCollector())->satisfy(
             ['Foo' => 'a'],
             new AstMap\AstFunctionReference(AstMap\FunctionName::fromFQCN('Foo')),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
     }
 }

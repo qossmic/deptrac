@@ -14,9 +14,8 @@ final class RegistryTest extends TestCase
 {
     public function testGetCollector(): void
     {
-        $fooCollector = $this->prophesize(CollectorInterface::class);
-        $fooCollector->getType()->willReturn('foo');
-        $fooCollector = $fooCollector->reveal();
+        $fooCollector = $this->createMock(CollectorInterface::class);
+        $fooCollector->method('getType')->willReturn('foo');
 
         self::assertSame(
             $fooCollector,

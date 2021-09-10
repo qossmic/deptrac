@@ -19,26 +19,26 @@ final class InheritanceFlatterTest extends TestCase
 {
     private function getAstClassReference($className)
     {
-        $astClass = $this->prophesize(AstClassReference::class);
-        $astClass->getTokenName()->willReturn(ClassLikeName::fromFQCN($className));
+        $astClass = $this->createMock(AstClassReference::class);
+        $astClass->method('getTokenName')->willReturn(ClassLikeName::fromFQCN($className));
 
-        return $astClass->reveal();
+        return $astClass;
     }
 
     private function getDependency($className)
     {
-        $dep = $this->prophesize(Dependency::class);
-        $dep->getDependant()->willReturn(ClassLikeName::fromFQCN($className));
-        $dep->getDependee()->willReturn(ClassLikeName::fromFQCN($className.'_b'));
+        $dep = $this->createMock(Dependency::class);
+        $dep->method('getDependant')->willReturn(ClassLikeName::fromFQCN($className));
+        $dep->method('getDependee')->willReturn(ClassLikeName::fromFQCN($className.'_b'));
 
-        return $dep->reveal();
+        return $dep;
     }
 
     public function testFlattenDependencies(): void
     {
-        $astMap = $this->prophesize(AstMap::class);
+        $astMap = $this->createMock(AstMap::class);
 
-        $astMap->getAstClassReferences()->willReturn([
+        $astMap->method('getAstClassReferences')->willReturn([
             $this->getAstClassReference('classA'),
             $this->getAstClassReference('classB'),
             $this->getAstClassReference('classBaum'),
@@ -52,20 +52,27 @@ final class InheritanceFlatterTest extends TestCase
         $dependencyResult->addDependency($this->getDependency('classBaum'));
         $dependencyResult->addDependency($this->getDependency('classWeihnachtsbaumsA'));
 
-        $astMap->getClassInherits(ClassLikeName::fromFQCN('classA'))->willReturn([]);
-        $astMap->getClassInherits(ClassLikeName::fromFQCN('classB'))->willReturn([]);
-        $astMap->getClassInherits(ClassLikeName::fromFQCN('classBaum'))->willReturn([]);
-        $astMap->getClassInherits(ClassLikeName::fromFQCN('classWeihnachtsbaum'))->willReturn([
-            AstInherit::newTraitUse(ClassLikeName::fromFQCN('classBaum'), FileOccurrence::fromFilepath('classWeihnachtsbaum.php', 3)),
-        ]);
-        $astMap->getClassInherits(ClassLikeName::fromFQCN('classGeschmückterWeihnachtsbaum'))->willReturn([
-            AstMap\AstInherit::newExtends(ClassLikeName::fromFQCN('classBaum'), FileOccurrence::fromFilepath('classGeschmückterWeihnachtsbaum.php', 3))
-                ->withPath([
-                    AstInherit::newTraitUse(ClassLikeName::fromFQCN('classWeihnachtsbaum'), FileOccurrence::fromFilepath('classBaum.php', 3)),
-                ]),
-        ]);
+        $astMap->method('getClassInherits')->willReturnOnConsecutiveCalls(
+            // classA
+            [],
+            // classB
+            [],
+            // classBaum,
+            [],
+            // classWeihnachtsbaum
+            [
+                AstInherit::newTraitUse(ClassLikeName::fromFQCN('classBaum'), FileOccurrence::fromFilepath('classWeihnachtsbaum.php', 3)),
+            ],
+            // classGeschmückterWeihnachtsbaum
+            [
+                AstMap\AstInherit::newExtends(ClassLikeName::fromFQCN('classBaum'), FileOccurrence::fromFilepath('classGeschmückterWeihnachtsbaum.php', 3))
+                    ->withPath([
+                        AstInherit::newTraitUse(ClassLikeName::fromFQCN('classWeihnachtsbaum'), FileOccurrence::fromFilepath('classBaum.php', 3)),
+                    ]),
+            ]
+        );
 
-        (new InheritanceFlatter())->flattenDependencies($astMap->reveal(), $dependencyResult);
+        (new InheritanceFlatter())->flattenDependencies($astMap, $dependencyResult);
 
         $inheritDeps = array_filter(
             $dependencyResult->getDependenciesAndInheritDependencies(),

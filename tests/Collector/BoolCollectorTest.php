@@ -31,22 +31,6 @@ final class BoolCollectorTest extends TestCase
         self::assertEquals('bool', (new BoolCollector())->getType());
     }
 
-    private function getCalculatorMock(bool $returns)
-    {
-        $collector = $this->createMock(CollectorInterface::class);
-        $collector
-            ->method('satisfy')
-            ->with(
-                ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
-                self::isInstanceOf(AstClassReference::class),
-                self::isInstanceOf(AstMap::class),
-                self::isInstanceOf(Registry::class)
-            )
-            ->willReturn($returns);
-
-        return $collector;
-    }
-
     public function provideSatisfyBasic(): iterable
     {
         // must
@@ -153,13 +137,11 @@ final class BoolCollectorTest extends TestCase
      */
     public function testSatisfyBasicTest(array $configuration, bool $expected): void
     {
-        $collectorFactory = $this->prophesize(Registry::class);
-        $collectorFactory->getCollector('true')->willReturn(
-            $this->getCalculatorMock(true)
-        );
-        $collectorFactory->getCollector('false')->willReturn(
-            $this->getCalculatorMock(false)
-        );
+        $collectorFactory = $this->createMock(Registry::class);
+        $collectorFactory->method('getCollector')->willReturnMap([
+            ['true', $this->getCalculatorMock(true)],
+            ['false', $this->getCalculatorMock(false)],
+        ]);
 
         if (isset($configuration['must'])) {
             foreach ($configuration['must'] as &$v) {
@@ -174,11 +156,27 @@ final class BoolCollectorTest extends TestCase
 
         $stat = (new BoolCollector())->satisfy(
             $configuration,
-            $this->prophesize(AstClassReference::class)->reveal(),
-            $this->prophesize(AstMap::class)->reveal(),
-            $collectorFactory->reveal()
+            $this->createMock(AstClassReference::class),
+            $this->createMock(AstMap::class),
+            $collectorFactory
         );
 
         self::assertEquals($expected, $stat);
+    }
+
+    private function getCalculatorMock(bool $returns)
+    {
+        $collector = $this->createMock(CollectorInterface::class);
+        $collector
+            ->method('satisfy')
+            ->with(
+                ['type' => $returns ? 'true' : 'false', 'foo' => 'bar'],
+                self::isInstanceOf(AstClassReference::class),
+                self::isInstanceOf(AstMap::class),
+                self::isInstanceOf(Registry::class)
+            )
+            ->willReturn($returns);
+
+        return $collector;
     }
 }
