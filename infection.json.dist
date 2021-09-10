@@ -12,6 +12,6 @@
         "@default": true
     },
     "phpUnit": {
-        "customPath": "tools/phpunit.phar"
+        "customPath": "tools/phpunit"
     }
 }
