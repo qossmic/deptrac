@@ -29,10 +29,10 @@ tests-coverage: composer-install
 	$(PHPUNIT_BIN) -c . --coverage-html coverage
 
 php-cs-check:																	## run cs fixer (dry-run)
-	PHP_CS_FIXER_FUTURE_MODE=1 $(PHP_CS_FIXER_BIN) fix --allow-risky=yes --diff --diff-format=udiff --using-cache=no --verbose --dry-run
+	$(PHP_CS_FIXER_BIN) fix --allow-risky=yes --diff --using-cache=no --verbose --dry-run
 
 php-cs-fix:																		## run cs fixer
-	PHP_CS_FIXER_FUTURE_MODE=1 $(PHP_CS_FIXER_BIN) fix --allow-risky=yes
+	$(PHP_CS_FIXER_BIN) fix --allow-risky=yes
 
 phpstan:
 	$(PHPSTAN_BIN) analyse

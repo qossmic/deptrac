@@ -8,7 +8,8 @@ phpunit.xml
 box.json
 deptrac.version
 junit-report.xml
-.php_cs.cache
+.php-cs-fixer.cache
+.php-cs-fixer.php
 .deptrac.cache
 .phpunit.result.cache
 infection.log
