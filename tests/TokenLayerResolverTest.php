@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
@@ -20,15 +19,15 @@ final class TokenLayerResolverTest extends TestCase
 {
     private function getCollector(bool $return)
     {
-        $collector = $this->prophesize(CollectorInterface::class);
-        $collector->satisfy(
-            Argument::type('array'),
-            Argument::type(AstClassReference::class),
-            Argument::type(AstMap::class),
-            Argument::type(Registry::class)
+        $collector = $this->createMock(CollectorInterface::class);
+        $collector->method('satisfy')->with(
+            $this->isType('array'),
+            $this->isInstanceOf(AstClassReference::class),
+            $this->isInstanceOf(AstMap::class),
+            $this->isInstanceOf(Registry::class)
         )->willReturn($return);
 
-        return $collector->reveal();
+        return $collector;
     }
 
     public function provideGetLayersByClassLikeName(): iterable
@@ -81,8 +80,8 @@ final class TokenLayerResolverTest extends TestCase
      */
     public function testGetLayersByClassLikeName(bool $collectA, bool $collectB1, bool $collectB2, array $expectedLayers): void
     {
-        $configuration = $this->prophesize(Configuration::class);
-        $configuration->getLayers()->willReturn([
+        $configuration = $this->createMock(Configuration::class);
+        $configuration->method('getLayers')->willReturn([
             ConfigurationLayer::fromArray([
                 'name' => 'LayerA',
                 'collectors' => [
@@ -97,24 +96,20 @@ final class TokenLayerResolverTest extends TestCase
                 ],
             ]),
         ]);
-        $configuration->getParameters()->willReturn([]);
+        $configuration->method('getParameters')->willReturn([]);
 
-        $astMap = $this->prophesize(AstMap::class);
-        $collectorRegistry = $this->prophesize(Registry::class);
-        $collectorRegistry->getCollector('CollectorA')->willReturn(
-            $this->getCollector($collectA)
-        );
-        $collectorRegistry->getCollector('CollectorB1')->willReturn(
-            $this->getCollector($collectB1)
-        );
-        $collectorRegistry->getCollector('CollectorB2')->willReturn(
-            $this->getCollector($collectB2)
-        );
+        $astMap = $this->createMock(AstMap::class);
+        $collectorRegistry = $this->createMock(Registry::class);
+        $collectorRegistry->method('getCollector')->willReturnMap([
+            ['CollectorA', $this->getCollector($collectA)],
+            ['CollectorB1', $this->getCollector($collectB1)],
+            ['CollectorB2', $this->getCollector($collectB2)],
+        ]);
 
         $resolver = new TokenLayerResolver(
-            $configuration->reveal(),
-            $astMap->reveal(),
-            $collectorRegistry->reveal(),
+            $configuration,
+            $astMap,
+            $collectorRegistry,
             new ParameterResolver()
         );
 

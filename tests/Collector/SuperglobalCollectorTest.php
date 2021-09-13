@@ -30,8 +30,8 @@ final class SuperglobalCollectorTest extends TestCase
         $stat = (new SuperglobalCollector())->satisfy(
             $configuration,
             new AstMap\AstVariableReference(new AstMap\SuperGlobalName($name)),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
 
         self::assertEquals($expected, $stat);
@@ -44,8 +44,8 @@ final class SuperglobalCollectorTest extends TestCase
         (new SuperglobalCollector())->satisfy(
             ['Foo' => 'a'],
             new AstMap\AstVariableReference(new AstMap\SuperGlobalName('_POST')),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
     }
 }

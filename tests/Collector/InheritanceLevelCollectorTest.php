@@ -31,19 +31,20 @@ final class InheritanceLevelCollectorTest extends TestCase
      */
     public function testSatisfy(int $pathLevel, int $levelConfig, bool $expected): void
     {
-        $classInherit = $this->prophesize(AstInherit::class);
-        $classInherit->getPath()
+        $classInherit = $this->createMock(AstInherit::class);
+        $classInherit->method('getPath')
             ->willReturn(array_fill(0, $pathLevel, 1));
 
-        $astMap = $this->prophesize(AstMap::class);
-        $astMap->getClassInherits(ClassLikeName::fromFQCN(AstInherit::class))
-            ->willReturn([$classInherit->reveal()]);
+        $astMap = $this->createMock(AstMap::class);
+        $astMap->method('getClassInherits')
+            ->with(ClassLikeName::fromFQCN(AstInherit::class))
+            ->willReturn([$classInherit]);
 
         $stat = (new InheritanceLevelCollector())->satisfy(
             ['level' => $levelConfig],
             new AstClassReference(ClassLikeName::fromFQCN(AstInherit::class)),
-            $astMap->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $astMap,
+            $this->createMock(Registry::class)
         );
 
         self::assertEquals($expected, $stat);

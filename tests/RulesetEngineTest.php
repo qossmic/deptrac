@@ -7,6 +7,7 @@ namespace Tests\Qossmic\Deptrac;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\Result;
@@ -234,10 +235,12 @@ final class RulesetEngineTest extends TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $tokenLayerResolver = $this->prophesize(TokenLayerResolverInterface::class);
-        foreach ($classesInLayers as $classInLayer => $layers) {
-            $tokenLayerResolver->getLayersByTokenName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
-        }
+        $tokenLayerResolver = $this->createMock(TokenLayerResolverInterface::class);
+        $tokenLayerResolver->method('getLayersByTokenName')->willReturnCallback(
+            static function (TokenName $tokenName) use ($classesInLayers) {
+                return $classesInLayers[$tokenName->toString()];
+            }
+        );
 
         $configuration = Configuration::fromArray([
             'layers' => $layersConfiguration,
@@ -247,7 +250,7 @@ final class RulesetEngineTest extends TestCase
 
         $context = (new RulesetEngine())->process(
             $dependencyResult,
-            $tokenLayerResolver->reveal(),
+            $tokenLayerResolver,
             $configuration->getRuleset()
         );
 
@@ -301,10 +304,12 @@ final class RulesetEngineTest extends TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $tokenLayerResolver = $this->prophesize(TokenLayerResolverInterface::class);
-        foreach ($classesInLayers as $classInLayer => $layers) {
-            $tokenLayerResolver->getLayersByTokenName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
-        }
+        $tokenLayerResolver = $this->createMock(TokenLayerResolverInterface::class);
+        $tokenLayerResolver->method('getLayersByTokenName')->willReturnCallback(
+            static function (TokenName $tokenName) use ($classesInLayers) {
+                return $classesInLayers[$tokenName->toString()];
+            }
+        );
 
         $configuration = Configuration::fromArray([
             'layers' => [],
@@ -315,7 +320,7 @@ final class RulesetEngineTest extends TestCase
 
         $context = (new RulesetEngine())->process(
             $dependencyResult,
-            $tokenLayerResolver->reveal(),
+            $tokenLayerResolver,
             $configuration->getRuleset()
         );
 
@@ -355,10 +360,12 @@ final class RulesetEngineTest extends TestCase
             $dependencyResult->addDependency($dep);
         }
 
-        $tokenLayerResolver = $this->prophesize(TokenLayerResolverInterface::class);
-        foreach ($classesInLayers as $classInLayer => $layers) {
-            $tokenLayerResolver->getLayersByTokenName(ClassLikeName::fromFQCN($classInLayer))->willReturn($layers);
-        }
+        $tokenLayerResolver = $this->createMock(TokenLayerResolverInterface::class);
+        $tokenLayerResolver->method('getLayersByTokenName')->willReturnCallback(
+            static function (TokenName $tokenName) use ($classesInLayers) {
+                return $classesInLayers[$tokenName->toString()];
+            }
+        );
 
         $configuration = Configuration::fromArray([
             'layers' => [],
@@ -370,7 +377,7 @@ final class RulesetEngineTest extends TestCase
 
         $context = (new RulesetEngine())->process(
             $dependencyResult,
-            $tokenLayerResolver->reveal(),
+            $tokenLayerResolver,
             $configuration->getRuleset()
         );
 

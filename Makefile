@@ -5,7 +5,7 @@ PHIVE_BIN := phive
 PHP_CS_FIXER_BIN := ./tools/php-cs-fixer
 PHPSTAN_BIN	:= ./tools/phpstan
 PSALM_BIN	:= ./tools/psalm
-PHPUNIT_BIN	:= ./tools/phpunit.phar
+PHPUNIT_BIN	:= ./tools/phpunit
 INFECTION_BIN	:= ./tools/infection
 
 .PHONY: build tools-install composer-install tests tests-coverage gpg php-cs-check php-cs-fix phpstan

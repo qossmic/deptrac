@@ -14,10 +14,10 @@ final class MemoizedTokenLayerResolverTest extends TestCase
     public function testGetLayersByClassLikeName(): void
     {
         $classLikeName = ClassLikeName::fromFQCN('foo');
-        $decorated = $this->prophesize(TokenLayerResolverInterface::class);
-        $decorated->getLayersByTokenName($classLikeName)->willReturn(['bar']);
+        $decorated = $this->createMock(TokenLayerResolverInterface::class);
+        $decorated->method('getLayersByTokenName')->with($classLikeName)->willReturn(['bar']);
 
-        $decorator = new MemoizedTokenLayerResolver($decorated->reveal());
+        $decorator = new MemoizedTokenLayerResolver($decorated);
 
         self::assertEquals(['bar'], $decorator->getLayersByTokenName($classLikeName));
         self::assertEquals(['bar'], $decorator->getLayersByTokenName($classLikeName));

@@ -31,8 +31,8 @@ final class ClassNameCollectorTest extends TestCase
         $stat = (new ClassNameCollector())->satisfy(
             $configuration,
             new AstClassReference(AstMap\ClassLikeName::fromFQCN($className)),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
 
         self::assertEquals($expected, $stat);
@@ -45,8 +45,8 @@ final class ClassNameCollectorTest extends TestCase
         (new ClassNameCollector())->satisfy(
             ['Foo' => 'a'],
             new AstClassReference(AstMap\ClassLikeName::fromFQCN('Foo')),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
     }
 
@@ -57,8 +57,8 @@ final class ClassNameCollectorTest extends TestCase
         (new ClassNameCollector())->satisfy(
             ['regex' => '/'],
             new AstClassReference(AstMap\ClassLikeName::fromFQCN('Foo')),
-            $this->prophesize(AstMap::class)->reveal(),
-            $this->prophesize(Registry::class)->reveal()
+            $this->createMock(AstMap::class),
+            $this->createMock(Registry::class)
         );
     }
 }
