@@ -8,15 +8,20 @@ use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use Qossmic\Deptrac\Console\Symfony\Style;
+use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\LayerAnalyser;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DebugLayerCommand extends Command
 {
+    use DefaultDepFileTrait;
+
     protected static $defaultName = 'debug:layer';
 
     private LayerAnalyser $analyser;
@@ -34,39 +39,48 @@ class DebugLayerCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('depfile', InputArgument::REQUIRED, 'Path to the depfile');
-        $this->addArgument('layer', InputArgument::REQUIRED, 'Layer to debug');
+        $this->addArgument('layer', InputArgument::OPTIONAL, 'Layer to debug');
+        $this->addOption('depfile', null, InputOption::VALUE_OPTIONAL, 'Path to the depfile');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $style = new Style(new SymfonyStyle($input, $output));
-
-        $depfile = $input->getArgument('depfile');
+        $outputStyle = new Style(new SymfonyStyle($input, $output));
+        $depfile = $input->getOption('depfile') ?? $this->getDefaultFile(new SymfonyOutput($output, $outputStyle));
 
         if (!is_string($depfile)) {
             throw SingleDepfileIsRequiredException::fromArgument($depfile);
         }
 
-        /** @var string $layer */
+        /** @var ?string $layer */
         $layer = $input->getArgument('layer');
 
         $configuration = $this->loader->load($depfile);
 
-        $configurationLayers = array_map(static function (ConfigurationLayer $configurationLayer) {
-            return $configurationLayer->getName();
-        }, $configuration->getLayers());
+        $configurationLayers = array_map(
+            static fn (ConfigurationLayer $configurationLayer) => $configurationLayer->getName(),
+            $configuration->getLayers()
+        );
 
-        if (!in_array($layer, $configurationLayers, true)) {
-            $style->error('Layer not found.');
+        if (null !== $layer && !in_array($layer, $configurationLayers, true)) {
+            $outputStyle->error('Layer not found.');
 
             return 1;
         }
 
-        $matchedLayers = $this->analyser->analyse($configuration, $layer);
-        natcasesort($matchedLayers);
+        $layers = null === $layer ? $configurationLayers : (array) $layer;
 
-        $output->writeln($matchedLayers);
+        foreach ($layers as $layer) {
+            $matchedLayers = array_map(
+                static fn (string $token) => (array) $token,
+                $this->analyser->analyse($configuration, $layer)
+            );
+
+            $table = new Table($output);
+            $table->setHeaders([$layer]);
+            $table->setRows($matchedLayers);
+            $table->render();
+        }
 
         return 0;
     }

@@ -24,6 +24,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyseCommand extends Command
 {
+    use DefaultDepFileTrait;
+
     public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
     public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     public const OPTION_REPORT_SKIPPED = 'report-skipped';
@@ -75,11 +77,7 @@ class AnalyseCommand extends Command
 
         $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
 
-        $file = $input->getArgument('depfile');
-
-        if (null === $file) {
-            $file = $this->getDefaultFile($symfonyOutput);
-        }
+        $file = $input->getArgument('depfile') ?? $this->getDefaultFile($symfonyOutput);
 
         if (!is_string($file)) {
             throw SingleDepfileIsRequiredException::fromArgument($file);
@@ -152,25 +150,5 @@ class AnalyseCommand extends Command
             '',
         ]);
         $output->writeLineFormatted('');
-    }
-
-    protected function getDefaultFile(SymfonyOutput $output): string
-    {
-        $oldDefaultFile = getcwd().'/depfile.yml';
-
-        if (is_file($oldDefaultFile)) {
-            $output->writeLineFormatted([
-                '',
-                '⚠️  Old default file detected. ⚠️',
-                '   The default file changed from <fg=cyan>depfile.yml</> to <fg=cyan>depfile.yaml</>.',
-                '   You are getting this message because you are using deptrac without the file argument and the old default file.',
-                '   Deptrac loads for now the old file. Please update your file extension from <fg=cyan>yml</> to <fg=cyan>yaml</>.',
-                '',
-            ]);
-
-            return $oldDefaultFile;
-        }
-
-        return getcwd().'/depfile.yaml';
     }
 }
