@@ -175,6 +175,17 @@ abstract class ReferenceBuilder
         return $this;
     }
 
+    public function methodCall(string $classLikeName, int $occursAtLine): self
+    {
+        $this->dependencies[] = AstDependency::fromType(
+            ClassLikeName::fromFQCN($classLikeName),
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
+            AstDependency::METHOD_CALL
+        );
+
+        return $this;
+    }
+
     public function catchStmt(string $classLikeName, int $occursAtLine): self
     {
         $this->dependencies[] = AstDependency::fromType(

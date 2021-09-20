@@ -12,6 +12,7 @@ use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
+use Qossmic\Deptrac\AstRunner\Resolver\ClassMethodResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Collector\BoolCollector;
 use Qossmic\Deptrac\Collector\ClassNameCollector;
@@ -58,6 +59,7 @@ use Qossmic\Deptrac\RulesetEngine;
 use Qossmic\Deptrac\TokenAnalyser;
 use Qossmic\Deptrac\TokenLayerResolverFactory;
 use Qossmic\Deptrac\UnassignedAnalyser;
+use Roave\BetterReflection\BetterReflection;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
@@ -94,6 +96,7 @@ return static function (ContainerConfigurator $container): void {
             service(AnnotationDependencyResolver::class),
             service(AnonymousClassResolver::class),
             service(ClassConstantResolver::class),
+            service(ClassMethodResolver::class),
         ]);
 
     $services
@@ -101,7 +104,14 @@ return static function (ContainerConfigurator $container): void {
         ->args([service(TypeResolver::class)]);
     $services->set(AnonymousClassResolver::class);
     $services->set(ClassConstantResolver::class);
+    $services->set(ClassMethodResolver::class)
+        ->args([
+            service(TypeResolver::class),
+            service(BetterReflection::class)
+        ]);
     $services->set(TypeResolver::class);
+    $services->set(BetterReflection::class);
+
 
     $services
         ->set(TokenLayerResolverFactory::class)

@@ -15,6 +15,7 @@ class AstDependency
     public const NEW = 'new';
     public const STATIC_PROPERTY = 'static_property';
     public const STATIC_METHOD = 'static_method';
+    public const METHOD_CALL = 'method_call';
     public const INSTANCEOF = 'instanceof';
     public const CATCH = 'catch';
     public const VARIABLE = 'variable';

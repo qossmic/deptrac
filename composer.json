@@ -20,7 +20,7 @@
         "php": "^7.4.0 || 8.0.* || 8.1.*",
         "ext-json": "*",
         "composer/xdebug-handler": "^2.0",
-        "jetbrains/phpstorm-stubs": "^2020.2",
+        "jetbrains/phpstorm-stubs": "^v2019.3",
         "nikic/php-parser": "^4.3",
         "phpdocumentor/graphviz": "^2.0",
         "phpdocumentor/type-resolver": "^1.0",
@@ -31,7 +31,8 @@
         "symfony/event-dispatcher": "^5.1",
         "symfony/finder": "^5.1",
         "symfony/options-resolver": "^5.1",
-        "symfony/yaml": "^5.1"
+        "symfony/yaml": "^5.1",
+        "roave/better-reflection": "^4.12.0"
     },
     "suggest": {
         "ext-dom": "For using the JUnit output formatter"
