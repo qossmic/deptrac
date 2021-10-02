@@ -16,6 +16,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
 use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
 use Qossmic\Deptrac\Console\Application;
+use Qossmic\Deptrac\Exception\AstRunner\AstParser\FileNotExistsException;
 use Qossmic\Deptrac\File\FileReader;
 
 class AstFileReferenceFileCache implements AstFileReferenceCache

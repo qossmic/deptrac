@@ -6,9 +6,9 @@ namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\Loader;
-use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\LayerAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -49,7 +49,7 @@ class DebugLayerCommand extends Command
         $depfile = $input->getOption('depfile') ?? $this->getDefaultFile(new SymfonyOutput($output, $outputStyle));
 
         if (!is_string($depfile)) {
-            throw SingleDepfileIsRequiredException::fromArgument($depfile);
+            throw InvalidArgumentException::invalidDepfileType($depfile);
         }
 
         /** @var ?string $layer */

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Configuration\Exception;
+namespace Tests\Qossmic\Deptrac\Exception\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException;
+use Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException;
 
 /**
- * @covers \Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException
+ * @covers \Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException
  */
 final class InvalidConfigurationExceptionTest extends TestCase
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac;
+namespace Qossmic\Deptrac\Exception;
 
 use RuntimeException;
 
-final class ShouldNotHappenException extends RuntimeException
+final class ShouldNotHappenException extends RuntimeException implements ExceptionInterface
 {
     public function __construct(string $message = 'Internal error.')
     {

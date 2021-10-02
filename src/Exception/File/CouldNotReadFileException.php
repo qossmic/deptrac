@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\File;
+namespace Qossmic\Deptrac\Exception\File;
 
+use Qossmic\Deptrac\Exception\ExceptionInterface;
 use RuntimeException;
 
-final class CouldNotReadFileException extends RuntimeException
+final class CouldNotReadFileException extends RuntimeException implements ExceptionInterface
 {
     public static function fromFilename(string $filename): self
     {

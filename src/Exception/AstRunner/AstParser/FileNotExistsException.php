@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstParser;
+namespace Qossmic\Deptrac\Exception\AstRunner\AstParser;
 
 use RuntimeException;
 

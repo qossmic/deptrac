@@ -17,7 +17,7 @@ use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
-use Qossmic\Deptrac\ShouldNotHappenException;
+use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver

@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
-use Qossmic\Deptrac\Configuration\Exception\FileExistsException;
+use Qossmic\Deptrac\Exception\Configuration\FileAlreadyExistsException;
 
 class Dumper
 {
     /**
-     * @throws FileExistsException
+     * @throws FileAlreadyExistsException
      */
     public function dump(string $file): void
     {
         if (file_exists($file)) {
-            throw new FileExistsException();
+            throw new FileAlreadyExistsException();
         }
 
         copy(__DIR__.'/example_configuration.yml', $file);

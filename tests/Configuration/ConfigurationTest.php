@@ -6,7 +6,7 @@ namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\Configuration\Exception;
+use Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException;
 
 /**
  * @covers \Qossmic\Deptrac\Configuration\Configuration
@@ -15,7 +15,7 @@ final class ConfigurationTest extends TestCase
 {
     public function testFromArrayRejectsLayersWithDuplicateNames(): void
     {
-        $this->expectException(Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Configuration can not contain multiple layers with the same name, got "baz", "foo" as duplicate.');
 
         Configuration::fromArray([
@@ -58,7 +58,7 @@ final class ConfigurationTest extends TestCase
 
     public function testFromArrayRejectsRulesetUsingUnknownLayerNames(): void
     {
-        $this->expectException(Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('Configuration can not reference rule sets with unknown layer names, got "quux", "qux" as unknown.');
 
         Configuration::fromArray([

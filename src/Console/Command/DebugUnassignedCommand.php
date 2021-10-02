@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\Configuration\Loader;
-use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
+use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\UnassignedAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,7 +40,7 @@ class DebugUnassignedCommand extends Command
         $depfile = $input->getArgument('depfile');
 
         if (!is_string($depfile)) {
-            throw SingleDepfileIsRequiredException::fromArgument($depfile);
+            throw InvalidArgumentException::invalidDepfileType($depfile);
         }
 
         $configuration = $this->loader->load($depfile);

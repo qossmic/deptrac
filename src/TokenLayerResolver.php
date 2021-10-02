@@ -9,6 +9,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
+use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 
 class TokenLayerResolver implements TokenLayerResolverInterface
 {
