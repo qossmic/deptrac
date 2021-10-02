@@ -22,7 +22,17 @@ class DirectoryCollector extends RegexCollector implements CollectorInterface
     ): bool {
         $fileReference = $astTokenReference->getFileReference();
 
-        return $fileReference && 1 === preg_match($this->getValidatedPattern($configuration), $fileReference->getFilepath());
+        if (null === $fileReference) {
+            return false;
+        }
+
+        $filePath = $fileReference->getFilepath();
+        $validatedPattern = $this->getValidatedPattern($configuration);
+
+        // make paths/patterns cross-OS compatible
+        $normalizedPath = str_replace('\\', '/', $filePath);
+
+        return 1 === preg_match($validatedPattern, $normalizedPath);
     }
 
     protected function getPattern(array $configuration): string
