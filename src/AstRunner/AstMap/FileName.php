@@ -17,7 +17,10 @@ final class FileName implements TokenName
     {
         $wd = getcwd();
 
-        return false !== $wd && 0 === strpos($this->path, $wd) ? substr($this->path, strlen($wd)) : $this->path;
+        $path = false !== $wd && 0 === strpos($this->path, $wd) ? substr($this->path, strlen($wd)) : $this->path;
+
+        // make paths/patterns cross-OS compatible
+        return str_replace('\\', '/', $path);
     }
 
     public function getFilepath(): string
