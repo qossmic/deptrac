@@ -25,6 +25,7 @@ final class FileName implements TokenName
 
     public function getFilepath(): string
     {
-        return $this->path;
+        // make paths/patterns cross-OS compatible
+        return str_replace('\\', '/', $this->path);
     }
 }
