@@ -14,7 +14,7 @@ final class FileNameTest extends TestCase
         $fileName = new AstMap\FileName('/path/to/file.php');
         $this->assertSame('/path/to/file.php', $fileName->getFilepath());
         $this->assertSame('/path/to/file.php', $fileName->toString());
-        
+
         $fileName = new AstMap\FileName('\\path\\to\\file.php');
         $this->assertSame('/path/to/file.php', $fileName->getFilepath());
         $this->assertSame('/path/to/file.php', $fileName->toString());
