@@ -18,10 +18,15 @@ final class FileName implements TokenName
     public function toString(): string
     {
         $wd = getcwd();
+        
+        if ($wd !== false && 0 === strpos($this->path, $wd) {
+            $wd = FileHelper::normalizePath($wd);
+            $path = substr($this->path, strlen($wd))
+        } else {
+            $path = $this->path;
+        }
 
-        $path = false !== $wd && 0 === strpos($this->path, $wd) ? substr($this->path, strlen($wd)) : $this->path;
-
-        return FileHelper::normalizePath($path);
+        return $path;
     }
 
     public function getFilepath(): string
