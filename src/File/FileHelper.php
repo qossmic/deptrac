@@ -43,7 +43,7 @@ final class FileHelper
     }
 
     /**
-     * make paths cross-OS compatible.
+     * make path cross-OS compatible.
      */
     public static function normalizePath(string $path): string
     {
