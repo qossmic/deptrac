@@ -18,7 +18,7 @@ final class FileName implements TokenName
     public function toString(): string
     {
         $wd = getcwd();
-        
+
         if (false !== $wd) {
             $wd = FileHelper::normalizePath($wd);
         }
