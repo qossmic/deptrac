@@ -17,7 +17,7 @@ class PathNameFilterIterator extends PathFilterIterator
         $filename = $fileInfo->getPathname();
 
         if ('\\' === \DIRECTORY_SEPARATOR) {
-            $filename = FileHelper::normalizePath($filename)
+            $filename = FileHelper::normalizePath($filename);
         }
 
         return $this->isAccepted($filename);
