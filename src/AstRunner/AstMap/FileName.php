@@ -21,7 +21,7 @@ final class FileName implements TokenName
         
         if ($wd !== false && 0 === strpos($this->path, $wd)) {
             $wd = FileHelper::normalizePath($wd);
-            $path = substr($this->path, strlen($wd))
+            $path = substr($this->path, strlen($wd));
         } else {
             $path = $this->path;
         }
