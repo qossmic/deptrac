@@ -43,7 +43,7 @@ final class FileHelper
     }
 
     /**
-     * make paths/patterns cross-OS compatible
+     * make paths cross-OS compatible
      */
     static public function normalizePath(string $path):string {
         return str_replace('\\', '/', $path);
