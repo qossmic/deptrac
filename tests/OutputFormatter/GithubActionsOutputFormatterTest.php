@@ -77,7 +77,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
+            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)". PHP_EOL,
         ];
 
         yield 'Skipped Violation' => [
@@ -90,7 +90,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
+            "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)". PHP_EOL,
         ];
 
         yield 'Uncovered Dependency' => [
@@ -102,7 +102,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
+            "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)". PHP_EOL,
         ];
 
         yield 'Inherit dependency' => [
@@ -125,14 +125,14 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12\n",
+            "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12". PHP_EOL,
         ];
 
         yield 'an error occurred' => [
             'violations' => [],
             'errors' => [new Error('an error occurred')],
             'warnings' => [],
-            "::error ::an error occurred\n",
+            "::error ::an error occurred". PHP_EOL,
         ];
 
         yield 'an warning occurred' => [
@@ -141,7 +141,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             'warnings' => [
                 Warning::tokenIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2']),
             ],
-            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one token should only be in one layer.\n",
+            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one token should only be in one layer.". PHP_EOL,
         ];
     }
 
@@ -202,7 +202,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         );
 
         self::assertSame(
-            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
+            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)". PHP_EOL,
             $bufferedOutput->fetch()
         );
     }
