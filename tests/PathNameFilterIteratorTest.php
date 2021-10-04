@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac;
 
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\File\FileHelper;
 use Qossmic\Deptrac\PathNameFilterIterator;
 use SplFileInfo;
 
@@ -20,7 +21,7 @@ final class PathNameFilterIteratorTest extends TestCase
 
         $values = array_map(
             static function (SplFileInfo $fileInfo) {
-                return str_replace('/', \DIRECTORY_SEPARATOR, $fileInfo->getPathname());
+                return $fileInfo->getPathname();
             },
             iterator_to_array($iterator, false)
         );
@@ -37,27 +38,27 @@ final class PathNameFilterIteratorTest extends TestCase
 
         //PATH:   A/B/C/abc.dat
         $inner[] = new SplFileInfo(
-            'A'.\DIRECTORY_SEPARATOR.'B'.\DIRECTORY_SEPARATOR.'C'.\DIRECTORY_SEPARATOR.'abc.dat'
+            'A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'C'.FileHelper::DIR_SEPARATOR.'abc.dat'
         );
 
         //PATH:   A/B/ab.dat
-        $inner[] = new SplFileInfo('A'.\DIRECTORY_SEPARATOR.'B'.\DIRECTORY_SEPARATOR.'ab.dat');
+        $inner[] = new SplFileInfo('A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'ab.dat');
 
         //PATH:   A/a.dat
-        $inner[] = new SplFileInfo('A'.\DIRECTORY_SEPARATOR.'a.dat');
+        $inner[] = new SplFileInfo('A'.FileHelper::DIR_SEPARATOR.'a.dat');
 
         //PATH:   copy/A/B/C/abc.dat.copy
         $inner[] = new SplFileInfo(
-            'copy'.\DIRECTORY_SEPARATOR.'A'.\DIRECTORY_SEPARATOR.'B'.\DIRECTORY_SEPARATOR.'C'.\DIRECTORY_SEPARATOR.'abc.dat.copy'
+            'copy'.FileHelper::DIR_SEPARATOR.'A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'C'.FileHelper::DIR_SEPARATOR.'abc.dat.copy'
         );
 
         //PATH:   copy/A/B/ab.dat.copy
         $inner[] = new SplFileInfo(
-            'copy'.\DIRECTORY_SEPARATOR.'A'.\DIRECTORY_SEPARATOR.'B'.\DIRECTORY_SEPARATOR.'ab.dat.copy'
+            'copy'.FileHelper::DIR_SEPARATOR.'A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'ab.dat.copy'
         );
 
         //PATH:   copy/A/a.dat.copy
-        $inner[] = new SplFileInfo('copy'.\DIRECTORY_SEPARATOR.'A'.\DIRECTORY_SEPARATOR.'a.dat.copy');
+        $inner[] = new SplFileInfo('copy'.FileHelper::DIR_SEPARATOR.'A'.FileHelper::DIR_SEPARATOR.'a.dat.copy');
 
         return [
             [$inner, ['/^A/'], [], ['A/B/C/abc.dat', 'A/B/ab.dat', 'A/a.dat']],
