@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
+use Qossmic\Deptrac\File\FileHelper;
+
 final class FileName implements TokenName
 {
     private string $path;
 
     public function __construct(string $path)
     {
-        $this->path = $path;
+        $this->path = FileHelper::normalizePath($path);
     }
 
     public function toString(): string
@@ -19,13 +21,11 @@ final class FileName implements TokenName
 
         $path = false !== $wd && 0 === strpos($this->path, $wd) ? substr($this->path, strlen($wd)) : $this->path;
 
-        // make paths/patterns cross-OS compatible
-        return str_replace('\\', '/', $path);
+        return FileHelper::normalizePath($path);
     }
 
     public function getFilepath(): string
     {
-        // make paths/patterns cross-OS compatible
-        return str_replace('\\', '/', $this->path);
+        return $this->path;
     }
 }

@@ -41,4 +41,11 @@ final class FileHelper
 
         return $this->workingDirectory.'/'.$path;
     }
+
+    /**
+     * make paths/patterns cross-OS compatible
+     */
+    static public function normalizePath(string $path):string {
+        return str_replace('\\', '/', $path);
+    }
 }
