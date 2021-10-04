@@ -24,12 +24,10 @@ final class FileName implements TokenName
         }
 
         if (false !== $wd && 0 === strpos($this->path, $wd)) {
-            $path = substr($this->path, strlen($wd));
-        } else {
-            $path = $this->path;
+            return substr($this->path, strlen($wd));
         }
 
-        return $path;
+        return $this->path;
     }
 
     public function getFilepath(): string
