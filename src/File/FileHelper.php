@@ -45,7 +45,8 @@ final class FileHelper
     /**
      * make paths cross-OS compatible.
      */
-    static public function normalizePath(string $path): string {
+    public static function normalizePath(string $path): string
+    {
         return str_replace('\\', '/', $path);
     }
 }
