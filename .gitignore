@@ -13,3 +13,4 @@ junit-report.xml
 .deptrac.cache
 .phpunit.result.cache
 infection.log
+tests/OutputFormatter/data/graphviz.dot
