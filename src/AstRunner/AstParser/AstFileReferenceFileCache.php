@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstParser;
 
+use Composer\InstalledVersions;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
 use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
@@ -15,7 +16,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
 use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
-use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\File\FileReader;
 
 class AstFileReferenceFileCache implements AstFileReferenceCache
@@ -100,7 +100,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
 
         $this->loaded = true;
 
-        if (Application::VERSION !== $cache['version']) {
+        if (InstalledVersions::getRootPackage()['version'] !== $cache['version']) {
             return;
         }
 
@@ -163,7 +163,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
             $this->cacheFile,
             json_encode(
                 [
-                    'version' => Application::VERSION,
+                    'version' => InstalledVersions::getRootPackage()['version'],
                     'payload' => $payload,
                 ]
             )

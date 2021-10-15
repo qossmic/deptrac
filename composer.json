@@ -19,6 +19,7 @@
     "require": {
         "php": "^7.4.0 || 8.0.* || 8.1.*",
         "ext-json": "*",
+        "composer-runtime-api": "^2.0",
         "composer/xdebug-handler": "^2.0",
         "jetbrains/phpstorm-stubs": "^2020.2",
         "nikic/php-parser": "^4.3",

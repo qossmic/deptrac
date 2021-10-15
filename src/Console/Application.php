@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console;
 
+use Composer\InstalledVersions;
 use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
@@ -19,11 +20,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class Application extends BaseApplication
 {
-    public const VERSION = '@git-version@';
-
     public function __construct()
     {
-        parent::__construct('deptrac', self::VERSION);
+        parent::__construct('deptrac', InstalledVersions::getRootPackage()['version']);
 
         $this->getDefinition()->addOptions([
             new InputOption('--no-cache', null, InputOption::VALUE_NONE, 'Disable caching mechanisms'),
