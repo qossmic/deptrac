@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Configuration\Exception;
+namespace Qossmic\Deptrac\Exception\Configuration;
 
 use InvalidArgumentException;
+use Qossmic\Deptrac\Exception\ExceptionInterface;
 
-final class InvalidConfigurationException extends InvalidArgumentException
+final class InvalidConfigurationException extends InvalidArgumentException implements ExceptionInterface
 {
     public static function fromDuplicateLayerNames(string ...$layerNames): self
     {

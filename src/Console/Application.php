@@ -11,7 +11,7 @@ use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\ContainerBuilder;
-use Qossmic\Deptrac\ShouldNotHappenException;
+use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

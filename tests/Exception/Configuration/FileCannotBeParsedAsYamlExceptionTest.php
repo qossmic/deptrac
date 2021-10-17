@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Configuration\Exception;
+namespace Tests\Qossmic\Deptrac\Exception\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Exception\Configuration\FileCannotBeParsedAsYamlException;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
- * @covers \Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException
+ * @covers \Qossmic\Deptrac\Exception\Configuration\FileCannotBeParsedAsYamlException
  */
 final class FileCannotBeParsedAsYamlExceptionTest extends TestCase
 {
@@ -23,7 +24,7 @@ final class FileCannotBeParsedAsYamlExceptionTest extends TestCase
     {
         $filename = __FILE__;
 
-        $exception = FileCannotBeParsedAsYamlException::fromFilenameAndException($filename, new \RuntimeException('abc'));
+        $exception = FileCannotBeParsedAsYamlException::fromFilenameAndException($filename, new ParseException('abc'));
 
         $message = sprintf(
             'File "%s" cannot be parsed as YAML: abc',

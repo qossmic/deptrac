@@ -7,9 +7,9 @@ namespace Qossmic\Deptrac\Console\Command;
 use Exception;
 use Qossmic\Deptrac\Analyser;
 use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
-use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
@@ -80,7 +80,7 @@ class AnalyseCommand extends Command
         $file = $input->getArgument('depfile') ?? $this->getDefaultFile($symfonyOutput);
 
         if (!is_string($file)) {
-            throw SingleDepfileIsRequiredException::fromArgument($file);
+            throw InvalidArgumentException::invalidDepfileType($file);
         }
 
         $configuration = $this->configurationLoader->load($file);

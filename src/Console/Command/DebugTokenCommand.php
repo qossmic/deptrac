@@ -8,9 +8,9 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileName;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
 use Qossmic\Deptrac\Configuration\Loader;
-use Qossmic\Deptrac\Console\Command\Exception\SingleDepfileIsRequiredException;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\TokenAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -52,7 +52,7 @@ class DebugTokenCommand extends Command
         $depfile = $input->getOption('depfile') ?? $this->getDefaultFile($symfonyOutput);
 
         if (!is_string($depfile)) {
-            throw SingleDepfileIsRequiredException::fromArgument($depfile);
+            throw InvalidArgumentException::invalidDepfileType($depfile);
         }
 
         /** @var string $tokenName */

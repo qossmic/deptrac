@@ -6,7 +6,7 @@ namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\Loader;
-use Qossmic\Deptrac\File\CouldNotReadFileException;
+use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
 
 /**
  * @covers \Qossmic\Deptrac\Configuration\Loader

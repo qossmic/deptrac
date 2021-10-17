@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Configuration;
 
 use function dirname;
-use Qossmic\Deptrac\Configuration\Exception\FileCannotBeParsedAsYamlException;
-use Qossmic\Deptrac\Configuration\Exception\ParsedYamlIsNotAnArrayException;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
-use Qossmic\Deptrac\File\CouldNotReadFileException;
+use Qossmic\Deptrac\Exception\Configuration\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Exception\Configuration\ParsedYamlIsNotAnArrayException;
+use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
 use Qossmic\Deptrac\File\FileHelper;
 use Symfony\Component\Config\Definition\Processor;
 

@@ -19,8 +19,8 @@ use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
 use Qossmic\Deptrac\AstRunner\Resolver\DependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
+use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 use Qossmic\Deptrac\File\FileReader;
-use Qossmic\Deptrac\ShouldNotHappenException;
 
 class NikicPhpParser implements AstParser
 {

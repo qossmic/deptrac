@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\File;
 
+use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
+
 final class FileReader
 {
     public static function read(string $fileName): string

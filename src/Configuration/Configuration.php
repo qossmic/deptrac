@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
-use Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException;
+use Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Configuration
