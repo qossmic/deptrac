@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\File\FileHelper;
 
 class DirectoryCollector extends RegexCollector implements CollectorInterface
 {
@@ -28,9 +29,7 @@ class DirectoryCollector extends RegexCollector implements CollectorInterface
 
         $filePath = $fileReference->getFilepath();
         $validatedPattern = $this->getValidatedPattern($configuration);
-
-        // make paths/patterns cross-OS compatible
-        $normalizedPath = str_replace('\\', '/', $filePath);
+        $normalizedPath = FileHelper::normalizePath($filePath);
 
         return 1 === preg_match($validatedPattern, $normalizedPath);
     }
