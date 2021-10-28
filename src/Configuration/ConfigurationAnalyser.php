@@ -37,7 +37,7 @@ final class ConfigurationAnalyser
     {
         /** @var array{count_use_statements: bool, types: string[]} $options */
         $options = (new OptionsResolver())
-            ->setDefault('count_use_statements', true)
+            ->setDefault('count_use_statements', !array_key_exists('types', $args))
             ->setDefault('types', [self::CLASS_TOKEN])
             ->addAllowedTypes('count_use_statements', 'bool')
             ->addAllowedTypes('types', 'array')

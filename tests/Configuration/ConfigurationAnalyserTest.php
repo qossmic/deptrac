@@ -36,14 +36,24 @@ final class ConfigurationAnalyserTest extends TestCase
         self::assertSame([ConfigurationAnalyser::CLASS_TOKEN, ConfigurationAnalyser::USE_TOKEN], $configuration->getTypes());
     }
 
-    public function testCustomTypes(): void
+    public function testCustomTypesWithAddedUse(): void
+    {
+        $types = [
+            ConfigurationAnalyser::CLASS_TOKEN,
+            ConfigurationAnalyser::FUNCTION_TOKEN,
+        ];
+        $configuration = ConfigurationAnalyser::fromArray(['count_use_statements' => true, 'types' => $types]);
+        $types[] = ConfigurationAnalyser::USE_TOKEN;
+        self::assertSame($types, $configuration->getTypes());
+    }
+
+    public function testCustomTypesWithDefaultUse(): void
     {
         $types = [
             ConfigurationAnalyser::CLASS_TOKEN,
             ConfigurationAnalyser::FUNCTION_TOKEN,
         ];
         $configuration = ConfigurationAnalyser::fromArray(['types' => $types]);
-        $types[] = ConfigurationAnalyser::USE_TOKEN;
         self::assertSame($types, $configuration->getTypes());
     }
 
