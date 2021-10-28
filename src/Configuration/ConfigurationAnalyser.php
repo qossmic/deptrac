@@ -51,7 +51,7 @@ final class ConfigurationAnalyser
      */
     private function __construct(array $config)
     {
-        if ($config['count_use_statements']) {
+        if ($config['count_use_statements'] && !in_array(self::USE_TOKEN, $config['types'], true)) {
             $config['types'][] = self::USE_TOKEN;
         }
         unset($config['count_use_statements']);
