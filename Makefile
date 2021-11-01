@@ -47,7 +47,7 @@ infection: tools-install composer-install
 	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=82
 
 gpg:
-	gpg --detach-sign --armor --default-key ED42E9154E81A416E7FBA19F4F2AB4D11A9A65F7 --output deptrac.phar.asc deptrac.phar
+	gpg --detach-sign --armor --default-key 41DDE07547459FAECFA17813B8F640134AB1782E --output deptrac.phar.asc deptrac.phar
 	gpg --verify deptrac.phar.asc deptrac.phar
 
 generate-changelog:

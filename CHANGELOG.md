@@ -1,6 +1,57 @@
 # Changelog
 
-## [0.15.0](https://github.com/qossmic/deptrac/tree/0.15.0)
+## [0.16.0](https://github.com/qossmic/deptrac/tree/0.16.0) (2021-11-01)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.2...0.16.0)
+
+**Closed issues:**
+
+- Wrong count of dependencies with analyser.types usage [\#707](https://github.com/qossmic/deptrac/issues/707)
+- Define dependency in the code, not in a dep file [\#703](https://github.com/qossmic/deptrac/issues/703)
+- Improve DebugCommands [\#689](https://github.com/qossmic/deptrac/issues/689)
+- windows vs. linux baseline [\#675](https://github.com/qossmic/deptrac/issues/675)
+- PHAR signature could not be verified [\#674](https://github.com/qossmic/deptrac/issues/674)
+- DirectoryCollector: OS agnostic patterns [\#635](https://github.com/qossmic/deptrac/issues/635)
+- How to automate configuration while working with bounded contexts [\#631](https://github.com/qossmic/deptrac/issues/631)
+- support `@internal` class annotations [\#538](https://github.com/qossmic/deptrac/issues/538)
+
+**Merged pull requests:**
+
+- Option `--graphviz-dump-image` creates directory [\#714](https://github.com/qossmic/deptrac/pull/714) ([dbrumann](https://github.com/dbrumann))
+- Update multiple dependencies. [\#713](https://github.com/qossmic/deptrac/pull/713) ([dbrumann](https://github.com/dbrumann))
+- Bump symfony/config from 5.3.4 to 5.3.10 [\#712](https://github.com/qossmic/deptrac/pull/712) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/dependency-injection from 5.3.7 to 5.3.10 [\#711](https://github.com/qossmic/deptrac/pull/711) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/console from 5.3.7 to 5.3.10 [\#710](https://github.com/qossmic/deptrac/pull/710) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix issue \#707 [\#709](https://github.com/qossmic/deptrac/pull/709) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Bump phpdocumentor/type-resolver from 1.4.0 to 1.5.1 [\#702](https://github.com/qossmic/deptrac/pull/702) ([dependabot[bot]](https://github.com/apps/dependabot))
+- use consistent directory-separator in baseline [\#700](https://github.com/qossmic/deptrac/pull/700) ([staabm](https://github.com/staabm))
+- Refactor exceptions [\#699](https://github.com/qossmic/deptrac/pull/699) ([dbrumann](https://github.com/dbrumann))
+- DirectoryCollector: Support OS agnostic paths [\#698](https://github.com/qossmic/deptrac/pull/698) ([staabm](https://github.com/staabm))
+- Update deps [\#692](https://github.com/qossmic/deptrac/pull/692) ([dbrumann](https://github.com/dbrumann))
+- Move getDefaultFile to trait [\#690](https://github.com/qossmic/deptrac/pull/690) ([gennadigennadigennadi](https://github.com/gennadigennadigennadi))
+- Upgrade PHPUnit [\#688](https://github.com/qossmic/deptrac/pull/688) ([dbrumann](https://github.com/dbrumann))
+- Upgrade php-cs-fixer [\#687](https://github.com/qossmic/deptrac/pull/687) ([dbrumann](https://github.com/dbrumann))
+- Allow PHP 8.1 to fail builds. [\#683](https://github.com/qossmic/deptrac/pull/683) ([dbrumann](https://github.com/dbrumann))
+- feat: support php 8.1 [\#681](https://github.com/qossmic/deptrac/pull/681) ([shouze](https://github.com/shouze))
+
+## [0.15.2](https://github.com/qossmic/deptrac/tree/0.15.2) (2021-08-25)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.1...0.15.2)
+
+**Merged pull requests:**
+
+- docs: added analyser.types example [\#673](https://github.com/qossmic/deptrac/pull/673) ([staabm](https://github.com/staabm))
+- Add superglobal collector to services.php [\#672](https://github.com/qossmic/deptrac/pull/672) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
+## [0.15.1](https://github.com/qossmic/deptrac/tree/0.15.1) (2021-08-24)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.0...0.15.1)
+
+**Closed issues:**
+
+- unknown collector type "superglobal" [\#671](https://github.com/qossmic/deptrac/issues/671)
+
+## [0.15.0](https://github.com/qossmic/deptrac/tree/0.15.0) (2021-08-20)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.1...0.15.0)
 
@@ -23,6 +74,7 @@
 - Internal - Refactor AstRunner to support parsing more than classes [\#582](https://github.com/qossmic/deptrac/issues/582)
 - Fix naming inconsistencies analyze vs. analyse [\#575](https://github.com/qossmic/deptrac/issues/575)
 - Scan scripts without classes [\#331](https://github.com/qossmic/deptrac/issues/331)
+- DirectoryCollector: OS agnostic patterns [\#635](https://github.com/qossmic/deptrac/issues/635)
 
 **Merged pull requests:**
 
