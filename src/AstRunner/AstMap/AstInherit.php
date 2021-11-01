@@ -45,13 +45,13 @@ class AstInherit
     public function __toString(): string
     {
         switch ($this->type) {
-            case static::TYPE_EXTENDS:
+            case self::TYPE_EXTENDS:
                 $type = 'Extends';
                 break;
-            case static::TYPE_USES:
+            case self::TYPE_USES:
                 $type = 'Uses';
                 break;
-            case static::TYPE_IMPLEMENTS:
+            case self::TYPE_IMPLEMENTS:
                 $type = 'Implements';
                 break;
             default:

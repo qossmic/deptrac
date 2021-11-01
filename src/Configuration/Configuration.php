@@ -55,7 +55,7 @@ class Configuration
     }
 
     /**
-     * @param  array{
+     * @param array{
      *     parameters: array<string, string>,
      *     formatters: ?array,
      *     layers: array<array{name: string, collectors: array<array<string, string>>}>,

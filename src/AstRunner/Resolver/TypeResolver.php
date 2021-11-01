@@ -10,7 +10,9 @@ use phpDocumentor\Reflection\TypeResolver as phpDocumentorTypeResolver;
 use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Object_;
+use PhpParser\Node\ComplexType;
 use PhpParser\Node\Identifier;
+use PhpParser\Node\IntersectionType;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\NullableType;
@@ -71,6 +73,10 @@ class TypeResolver
         }
 
         if ($node instanceof UnionType) {
+            return $this->resolvePHPParserTypes($typeScope, ...$node->types);
+        }
+
+        if ($node instanceof IntersectionType) {
             return $this->resolvePHPParserTypes($typeScope, ...$node->types);
         }
 
@@ -146,7 +152,7 @@ class TypeResolver
     }
 
     /**
-     * @param Identifier|Name|NullableType|UnionType $type
+     * @param Identifier|Name|ComplexType $type
      *
      * @return string[]
      */
@@ -158,7 +164,7 @@ class TypeResolver
         if ($type instanceof NullableType) {
             return $this->resolvePropertyType($type->type);
         }
-        if ($type instanceof UnionType) {
+        if ($type instanceof UnionType || $type instanceof IntersectionType) {
             return array_merge([], ...array_map(
                 /**
                  * @param Identifier|Name $typeNode
