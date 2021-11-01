@@ -74,6 +74,10 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         if ($dumpImagePath = (string) $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
+            $imageFile = new \SplFileInfo($dumpImagePath);
+            if (!is_dir($imageFile->getPath()) && !mkdir($imageFile->getPath())) {
+                throw new \LogicException(sprintf('Unable to dump image: Path "%s" does not exist and is not writable.', $imageFile->getPath()));
+            }
             try {
                 $graph->export('png', $dumpImagePath);
                 $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
