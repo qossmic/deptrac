@@ -1,19 +1,21 @@
 # Changelog
 
+## [0.18.0](https://github.com/qossmic/deptrac/tree/0.18.0) (2021-11-24)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.17.0...0.18.0)
+
+**Merged pull requests:**
+
+- Update Symfony components to allow 6.0 [\#724](https://github.com/qossmic/deptrac/pull/724) ([dbrumann](https://github.com/dbrumann))
+- Update to support PHPStan v1 [\#723](https://github.com/qossmic/deptrac/pull/723) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
+## [0.17.0](https://github.com/qossmic/deptrac/tree/0.17.0) (2021-11-01)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.16.0...0.17.0)
+
 ## [0.16.0](https://github.com/qossmic/deptrac/tree/0.16.0) (2021-11-01)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.2...0.16.0)
-
-**Closed issues:**
-
-- Wrong count of dependencies with analyser.types usage [\#707](https://github.com/qossmic/deptrac/issues/707)
-- Define dependency in the code, not in a dep file [\#703](https://github.com/qossmic/deptrac/issues/703)
-- Improve DebugCommands [\#689](https://github.com/qossmic/deptrac/issues/689)
-- windows vs. linux baseline [\#675](https://github.com/qossmic/deptrac/issues/675)
-- PHAR signature could not be verified [\#674](https://github.com/qossmic/deptrac/issues/674)
-- DirectoryCollector: OS agnostic patterns [\#635](https://github.com/qossmic/deptrac/issues/635)
-- How to automate configuration while working with bounded contexts [\#631](https://github.com/qossmic/deptrac/issues/631)
-- support `@internal` class annotations [\#538](https://github.com/qossmic/deptrac/issues/538)
 
 **Merged pull requests:**
 
@@ -47,34 +49,9 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.0...0.15.1)
 
-**Closed issues:**
-
-- unknown collector type "superglobal" [\#671](https://github.com/qossmic/deptrac/issues/671)
-
 ## [0.15.0](https://github.com/qossmic/deptrac/tree/0.15.0) (2021-08-20)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.1...0.15.0)
-
-**Implemented enhancements:**
-
-- `RulesetEngine` should only use `ConfigurationRuleset` [\#615](https://github.com/qossmic/deptrac/issues/615)
-
-**Closed issues:**
-
-- Incorrect merge of `formatters.graphviz.hidden_layers` from multiple files [\#668](https://github.com/qossmic/deptrac/issues/668)
-- Fix deptrac-violations introduced by renaming [\#664](https://github.com/qossmic/deptrac/issues/664)
-- print yaml error [\#661](https://github.com/qossmic/deptrac/issues/661)
-- Update debug commands [\#638](https://github.com/qossmic/deptrac/issues/638)
-- Docs: change generated image for grapviz formatter for groups [\#636](https://github.com/qossmic/deptrac/issues/636)
-- Allow only DomainEvents dependency across bounded contexts [\#633](https://github.com/qossmic/deptrac/issues/633)
-- Multiple rule sets [\#632](https://github.com/qossmic/deptrac/issues/632)
-- Groups: use group names instead of numbers [\#597](https://github.com/qossmic/deptrac/issues/597)
-- support procedural php files [\#594](https://github.com/qossmic/deptrac/issues/594)
-- throw proper error on invalid regex [\#593](https://github.com/qossmic/deptrac/issues/593)
-- Internal - Refactor AstRunner to support parsing more than classes [\#582](https://github.com/qossmic/deptrac/issues/582)
-- Fix naming inconsistencies analyze vs. analyse [\#575](https://github.com/qossmic/deptrac/issues/575)
-- Scan scripts without classes [\#331](https://github.com/qossmic/deptrac/issues/331)
-- DirectoryCollector: OS agnostic patterns [\#635](https://github.com/qossmic/deptrac/issues/635)
 
 **Merged pull requests:**
 
@@ -100,18 +77,6 @@
 ## [0.14.1](https://github.com/qossmic/deptrac/tree/0.14.1) (2021-07-04)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.14.0...0.14.1)
-
-**Closed issues:**
-
-- Tests: E2E test for transitive dependencies [\#619](https://github.com/qossmic/deptrac/issues/619)
-- Docs: Transitive dependencies docs dropped with docs refactor [\#617](https://github.com/qossmic/deptrac/issues/617)
-- Bool Collector: Multiple Class Layers [\#616](https://github.com/qossmic/deptrac/issues/616)
-- Bug: .editorconfig breaks TableOutputFormatterTest [\#614](https://github.com/qossmic/deptrac/issues/614)
-- bug: deptrac doesn't understand imported namespaces. [\#609](https://github.com/qossmic/deptrac/issues/609)
-- no errors are found if the project name matches `exclude_files` [\#600](https://github.com/qossmic/deptrac/issues/600)
-- strange error if specify single file in config [\#599](https://github.com/qossmic/deptrac/issues/599)
-- GPG public key not found on keyservers \(phive install/update\) [\#598](https://github.com/qossmic/deptrac/issues/598)
-- Can we read the rules somehow from composer.json [\#218](https://github.com/qossmic/deptrac/issues/218)
 
 **Merged pull requests:**
 
@@ -160,45 +125,9 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.13.0...0.14.0)
 
-**Implemented enhancements:**
-
-- Report class definitions without layers [\#546](https://github.com/qossmic/deptrac/issues/546)
-- Recognizing @template T phpdoc [\#535](https://github.com/qossmic/deptrac/issues/535)
-- Add support for attributes [\#375](https://github.com/qossmic/deptrac/issues/375)
-
-**Fixed bugs:**
-
-- Rule with null is interpreted as empty string [\#580](https://github.com/qossmic/deptrac/issues/580)
-
-**Closed issues:**
-
-- Make debug output more friendly for piping into other commands [\#581](https://github.com/qossmic/deptrac/issues/581)
-- Count use statements [\#569](https://github.com/qossmic/deptrac/issues/569)
-- Add unmatched skipped violations to junit report [\#568](https://github.com/qossmic/deptrac/issues/568)
-- Help needed for configuring a Domain-based project [\#555](https://github.com/qossmic/deptrac/issues/555)
-- Phar Composer package [\#537](https://github.com/qossmic/deptrac/issues/537)
-- Partial use statements [\#536](https://github.com/qossmic/deptrac/issues/536)
-- PHP 8 support [\#534](https://github.com/qossmic/deptrac/issues/534)
-- Directory collector define depth or exclude subdirectories [\#533](https://github.com/qossmic/deptrac/issues/533)
-- Cache file location [\#491](https://github.com/qossmic/deptrac/issues/491)
-- Analyze global functions [\#280](https://github.com/qossmic/deptrac/issues/280)
-- Allow Transitive Dependencies [\#202](https://github.com/qossmic/deptrac/issues/202)
-- Add ability to inherit from a parent layer [\#158](https://github.com/qossmic/deptrac/issues/158)
-- grouping layers [\#77](https://github.com/qossmic/deptrac/issues/77)
-- Add command to visualize a group [\#69](https://github.com/qossmic/deptrac/issues/69)
-- Support for dot clusters [\#39](https://github.com/qossmic/deptrac/issues/39)
-
 ## [0.13.0](https://github.com/qossmic/deptrac/tree/0.13.0) (2021-04-16)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.12.0...0.13.0)
-
-**Implemented enhancements:**
-
-- Add debug command [\#327](https://github.com/qossmic/deptrac/issues/327)
-
-**Closed issues:**
-
-- update xdebug-handler to v2 [\#530](https://github.com/qossmic/deptrac/issues/530)
 
 **Merged pull requests:**
 
@@ -214,31 +143,9 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.11.1...0.12.0)
 
-**Implemented enhancements:**
-
-- Set document root for directory collector [\#328](https://github.com/qossmic/deptrac/issues/328)
-- emit errors instead of warnings, when `--report-uncovered --fail-on-uncovered` is used in combination [\#510](https://github.com/qossmic/deptrac/issues/510)
-- Paths relative to depfile [\#453](https://github.com/qossmic/deptrac/issues/453)
-
 **Fixed bugs:**
 
 - fix fqsen type resolver [\#519](https://github.com/qossmic/deptrac/pull/519) ([smoench](https://github.com/smoench))
-
-**Closed issues:**
-
-- `\` vs `\\`  in depfile [\#508](https://github.com/qossmic/deptrac/issues/508)
-- using `/vendor/` as a layer [\#506](https://github.com/qossmic/deptrac/issues/506)
-- Feature request: Except layer collector [\#503](https://github.com/qossmic/deptrac/issues/503)
-- mixed directory separators [\#500](https://github.com/qossmic/deptrac/issues/500)
-- Feature request: Parametrised imports [\#493](https://github.com/qossmic/deptrac/issues/493)
-- Error Analysis psalm ? [\#349](https://github.com/qossmic/deptrac/issues/349)
-- hackable/flexible depfile configuration [\#76](https://github.com/qossmic/deptrac/issues/76)
-- add support for Service Configurations [\#20](https://github.com/qossmic/deptrac/issues/20)
-- Use TableOutputFormatter as default [\#492](https://github.com/qossmic/deptrac/issues/492)
-- How are classes handled which are part of several layers [\#488](https://github.com/qossmic/deptrac/issues/488)
-- Don't report skipped violations by default [\#487](https://github.com/qossmic/deptrac/issues/487)
-- Extending/ including config [\#486](https://github.com/qossmic/deptrac/issues/486)
-- Remove deprecated options [\#481](https://github.com/qossmic/deptrac/issues/481)
 
 **Merged pull requests:**
 
@@ -270,12 +177,6 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.11.0...0.11.1)
 
-**Closed issues:**
-
-- coverage 100% [\#16](https://github.com/qossmic/deptrac/issues/16)
-- Add support for report skipped option in GithubActionsOutputFormatter [\#483](https://github.com/qossmic/deptrac/issues/483)
-- Add support for report skipped option in TableOutputFormatter [\#482](https://github.com/qossmic/deptrac/issues/482)
-
 **Merged pull requests:**
 
 - Add support for report skipped option in TableOutputFormatter [\#485](https://github.com/qossmic/deptrac/pull/485) ([smoench](https://github.com/smoench))
@@ -305,14 +206,6 @@
 **Implemented enhancements:**
 
 - Support non annotated property type [\#456](https://github.com/qossmic/deptrac/pull/456) ([sasezaki](https://github.com/sasezaki))
-
-**Closed issues:**
-
-- can not find declaration property type dependency. [\#455](https://github.com/qossmic/deptrac/issues/455)
-- must not depend on Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository \(Repository on Service\) [\#448](https://github.com/qossmic/deptrac/issues/448)
-- Baseline dump documentation incomplete [\#414](https://github.com/qossmic/deptrac/issues/414)
-- False positive: How can this be a violation? [\#351](https://github.com/qossmic/deptrac/issues/351)
-- Add support for sarb.json output format to baselines can be made [\#268](https://github.com/qossmic/deptrac/issues/268)
 
 **Merged pull requests:**
 
@@ -353,10 +246,6 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.10.1...0.10.2)
 
-**Fixed bugs:**
-
-- Using deptrac 0.10.1 with php 7.4 results in error [\#431](https://github.com/qossmic/deptrac/issues/431)
-
 **Merged pull requests:**
 
 - update phpstan to 0.12.58 [\#430](https://github.com/qossmic/deptrac/pull/430) ([smoench](https://github.com/smoench))
@@ -384,15 +273,6 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.9.0...0.10.0)
 
-**Fixed bugs:**
-
-- Deptrac fails on invalid PHP8 code [\#416](https://github.com/qossmic/deptrac/issues/416)
-
-**Closed issues:**
-
-- 0.8.2 -\> 0.9.0 2x performance degradation in CI [\#413](https://github.com/qossmic/deptrac/issues/413)
-- PHP 8 support [\#412](https://github.com/qossmic/deptrac/issues/412)
-
 **Merged pull requests:**
 
 - Allow PHP 8 [\#417](https://github.com/qossmic/deptrac/pull/417) ([smoench](https://github.com/smoench))
@@ -404,9 +284,6 @@
 
 **Implemented enhancements:**
 
-- \[GithubActionsOutputFormatter\] print inherit path [\#376](https://github.com/qossmic/deptrac/issues/376)
-- Optionally hide the skipped violations and warn that skipped violation is already non-existent [\#352](https://github.com/qossmic/deptrac/issues/352)
-- Load/instantiate collectors by FQCN [\#164](https://github.com/qossmic/deptrac/issues/164)
 - Enhancement: Mark test classes as final [\#400](https://github.com/qossmic/deptrac/pull/400) ([localheinz](https://github.com/localheinz))
 - Enhancement: Enable final\_static\_access fixer [\#397](https://github.com/qossmic/deptrac/pull/397) ([localheinz](https://github.com/localheinz))
 - Simplify formatter options [\#396](https://github.com/qossmic/deptrac/pull/396) ([smoench](https://github.com/smoench))
@@ -414,11 +291,6 @@
 - Fix PHPUnit phar extension name, so PHPStorm can analyse it and refrences can be used in tests [\#353](https://github.com/qossmic/deptrac/pull/353) ([smoench](https://github.com/smoench))
 - introduce table output formatter [\#337](https://github.com/qossmic/deptrac/pull/337) ([smoench](https://github.com/smoench))
 - Load Collectors by FQCN [\#320](https://github.com/qossmic/deptrac/pull/320) ([DanielBadura](https://github.com/DanielBadura))
-
-**Closed issues:**
-
-- Improve console formatter output [\#326](https://github.com/qossmic/deptrac/issues/326)
-- allow custom collectors [\#19](https://github.com/qossmic/deptrac/issues/19)
 
 **Merged pull requests:**
 
@@ -480,16 +352,6 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.8.1...0.8.2)
 
-**Implemented enhancements:**
-
-- Default file from depfile.yml to depfile.yaml [\#332](https://github.com/qossmic/deptrac/issues/332)
-- add option to report uncovered dependencies for GitHubActionFormatter [\#325](https://github.com/qossmic/deptrac/issues/325)
-- Some Psalm annotations/types break the scan [\#329](https://github.com/qossmic/deptrac/issues/329)
-
-**Fixed bugs:**
-
-- unknown collector type "extends" [\#333](https://github.com/qossmic/deptrac/issues/333)
-
 **Merged pull requests:**
 
 - Bump symfony/finder from 5.1.2 to 5.1.3 [\#347](https://github.com/qossmic/deptrac/pull/347) ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -510,14 +372,6 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.8.0...0.8.1)
 
-**Implemented enhancements:**
-
-- Enable GitHub Actions formatter automatically [\#318](https://github.com/qossmic/deptrac/issues/318)
-
-**Fixed bugs:**
-
-- 'Report uncovered' does not work properly with PHP built-in function/classes if they are imported [\#319](https://github.com/qossmic/deptrac/issues/319)
-
 **Merged pull requests:**
 
 - install tools with phive [\#316](https://github.com/qossmic/deptrac/pull/316) ([smoench](https://github.com/smoench))
@@ -537,26 +391,9 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.7.1...0.8.0)
 
-**Implemented enhancements:**
-
-- GitHub Action Output formatter [\#282](https://github.com/qossmic/deptrac/issues/282)
-
-**Closed issues:**
-
-- Check why the Symfony 5.1 upgrade increased the phar file size from ~800kb to ~2.1mb [\#317](https://github.com/qossmic/deptrac/issues/317)
-- Integrate jetbrains/phpstorm-stubs [\#313](https://github.com/qossmic/deptrac/issues/313)
-- Add `extends` and `traitUse` collectors [\#309](https://github.com/qossmic/deptrac/issues/309)
-- Provide flag to fail if uncovered dependencies found [\#306](https://github.com/qossmic/deptrac/issues/306)
-- PHPStan Not Part of the Normal Build [\#304](https://github.com/qossmic/deptrac/issues/304)
-- Add file names in the output to integrate with Git hooks [\#291](https://github.com/qossmic/deptrac/issues/291)
-
 ## [0.7.1](https://github.com/qossmic/deptrac/tree/0.7.1) (2020-05-04)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.7.0...0.7.1)
-
-**Fixed bugs:**
-
-- Scan breaks on certain docblocks in 0.7.0 [\#301](https://github.com/qossmic/deptrac/issues/301)
 
 **Merged pull requests:**
 
@@ -565,22 +402,6 @@
 ## [0.7.0](https://github.com/qossmic/deptrac/tree/0.7.0) (2020-05-02)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.6.0...0.7.0)
-
-**Implemented enhancements:**
-
-- Disable Xdebug [\#293](https://github.com/qossmic/deptrac/issues/293)
-- Make deptrac complain about namespaces that don't belong to any layers  [\#231](https://github.com/qossmic/deptrac/issues/231)
-- Empty jUnit report when all checks passed [\#205](https://github.com/qossmic/deptrac/issues/205)
-
-**Fixed bugs:**
-
-- check for missing statements / dependencies [\#212](https://github.com/qossmic/deptrac/issues/212)
-
-**Closed issues:**
-
-- Add separate cache file for each depfile [\#299](https://github.com/qossmic/deptrac/issues/299)
-- Allow installation as `composer` dev-dependency [\#277](https://github.com/qossmic/deptrac/issues/277)
-- docs for MethodNameCollector [\#49](https://github.com/qossmic/deptrac/issues/49)
 
 **Merged pull requests:**
 
@@ -613,18 +434,6 @@
 ## [0.6.0](https://github.com/qossmic/deptrac/tree/0.6.0) (2019-10-18)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.5.0...0.6.0)
-
-**Closed issues:**
-
-- README should state that this applies only to PHP [\#260](https://github.com/qossmic/deptrac/issues/260)
-- Resolving docblock annotations [\#240](https://github.com/qossmic/deptrac/issues/240)
-- ::class construct not resolved as dependency [\#239](https://github.com/qossmic/deptrac/issues/239)
-- Anonymous class extending class from different layer not resolved as dependency [\#238](https://github.com/qossmic/deptrac/issues/238)
-- bool collector not working as documented [\#237](https://github.com/qossmic/deptrac/issues/237)
-- Deprecated Graphviz windows download link in README.md [\#222](https://github.com/qossmic/deptrac/issues/222)
-- idea, replace nikic/php-parser with syntect [\#181](https://github.com/qossmic/deptrac/issues/181)
-- Sign the phar file [\#112](https://github.com/qossmic/deptrac/issues/112)
-- add support for routing [\#21](https://github.com/qossmic/deptrac/issues/21)
 
 **Merged pull requests:**
 
@@ -670,17 +479,11 @@
 
 **Implemented enhancements:**
 
-- Configurable cache file path [\#207](https://github.com/qossmic/deptrac/issues/207)
 - Prototype: using php-parser NodeVisitor insteadof custom analysing methods [\#211](https://github.com/qossmic/deptrac/pull/211) ([smoench](https://github.com/smoench))
 
 **Fixed bugs:**
 
 - don't apply dependencies from prev classes to current class when file… [\#210](https://github.com/qossmic/deptrac/pull/210) ([smoench](https://github.com/smoench))
-
-**Closed issues:**
-
-- Installation: Why we --force-accept-unsigned [\#220](https://github.com/qossmic/deptrac/issues/220)
-- Slow. Cache not working? [\#208](https://github.com/qossmic/deptrac/issues/208)
 
 **Merged pull requests:**
 
@@ -695,22 +498,6 @@
 ## [0.4.0](https://github.com/qossmic/deptrac/tree/0.4.0) (2019-01-11)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.3.0...0.4.0)
-
-**Implemented enhancements:**
-
-- \(re-\)integrate astrunner [\#187](https://github.com/qossmic/deptrac/issues/187)
-- Implement a proper --version [\#165](https://github.com/qossmic/deptrac/issues/165)
-
-**Closed issues:**
-
-- Skip violations [\#199](https://github.com/qossmic/deptrac/issues/199)
-- Bump minimum PHP version to 7.1 [\#189](https://github.com/qossmic/deptrac/issues/189)
-- Building 0.3.0 phar fails [\#188](https://github.com/qossmic/deptrac/issues/188)
-- Alpha version release [\#186](https://github.com/qossmic/deptrac/issues/186)
-- provide a shim repository [\#185](https://github.com/qossmic/deptrac/issues/185)
-- Create a cache to speedup [\#144](https://github.com/qossmic/deptrac/issues/144)
-- Cache parsing [\#71](https://github.com/qossmic/deptrac/issues/71)
-- add documentation why you should use the phar build [\#50](https://github.com/qossmic/deptrac/issues/50)
 
 **Merged pull requests:**
 
@@ -732,17 +519,6 @@
 ## [0.3.0](https://github.com/qossmic/deptrac/tree/0.3.0) (2018-11-05)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.2.0...0.3.0)
-
-**Fixed bugs:**
-
-- deptrac fails if user hase no write permission on the binary [\#173](https://github.com/qossmic/deptrac/issues/173)
-- DirectoryCollector not working [\#168](https://github.com/qossmic/deptrac/issues/168)
-
-**Closed issues:**
-
-- I would like to use this lib, but it depends on a dev-master lib [\#169](https://github.com/qossmic/deptrac/issues/169)
-- `ClassNameCollector` defines its own regex modifiers and delimiters - shouldn't [\#139](https://github.com/qossmic/deptrac/issues/139)
-- Add JUnit formatter [\#89](https://github.com/qossmic/deptrac/issues/89)
 
 **Merged pull requests:**
 
@@ -775,69 +551,6 @@
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0cb43398db512ae21e6fb4d2fa2c033073a78e3b...0.2.0)
 
-**Implemented enhancements:**
-
-- Enhance the visual progress of generating AstMap [\#114](https://github.com/qossmic/deptrac/issues/114)
-- add --self-update to deptrac analyze run [\#99](https://github.com/qossmic/deptrac/issues/99)
-
-**Fixed bugs:**
-
-- Syntax error on php 7.1 [\#113](https://github.com/qossmic/deptrac/issues/113)
-- running a global installed deptrac.phar as non-root fails [\#106](https://github.com/qossmic/deptrac/issues/106)
-- graphviz formatter should show layers, not just dependencies. [\#11](https://github.com/qossmic/deptrac/issues/11)
-
-**Closed issues:**
-
-- LayerCollector [\#143](https://github.com/qossmic/deptrac/issues/143)
-- deptrac.phar -v failing [\#136](https://github.com/qossmic/deptrac/issues/136)
-- Limit on external dependencies [\#132](https://github.com/qossmic/deptrac/issues/132)
-- Add a version, Tag Releases and allow downloading specific versions [\#130](https://github.com/qossmic/deptrac/issues/130)
-- Self return types throw illegal offset warnings [\#126](https://github.com/qossmic/deptrac/issues/126)
-- Nullable FQCNs throw illegal offset warnings [\#124](https://github.com/qossmic/deptrac/issues/124)
-- PHP Warnings after self-update [\#123](https://github.com/qossmic/deptrac/issues/123)
-- Obey HTTP\_PROXY environment variables for selfupdate [\#107](https://github.com/qossmic/deptrac/issues/107)
-- Integration with Structure101 [\#104](https://github.com/qossmic/deptrac/issues/104)
-- Shorthand analyze options don't work [\#102](https://github.com/qossmic/deptrac/issues/102)
-- Add support for AppVeyor [\#92](https://github.com/qossmic/deptrac/issues/92)
-- Analyze only one specific file against some deptrac configuration / IDE integration  [\#88](https://github.com/qossmic/deptrac/issues/88)
-- print a warning if someone tries to install deptrac as a composer dependency [\#87](https://github.com/qossmic/deptrac/issues/87)
-- Collectors configuration [\#79](https://github.com/qossmic/deptrac/issues/79)
-- Missing layer [\#75](https://github.com/qossmic/deptrac/issues/75)
-- Add a third color [\#74](https://github.com/qossmic/deptrac/issues/74)
-- Add a legend [\#73](https://github.com/qossmic/deptrac/issues/73)
-- additional configuration required to run 'make build' [\#72](https://github.com/qossmic/deptrac/issues/72)
-- Invalid argument in foreach [\#70](https://github.com/qossmic/deptrac/issues/70)
-- Sub groups or sublayers [\#68](https://github.com/qossmic/deptrac/issues/68)
-- Hide console output for generating AstMap [\#66](https://github.com/qossmic/deptrac/issues/66)
-- Directory collector [\#65](https://github.com/qossmic/deptrac/issues/65)
-- Support `.depfile.yml` as default configuration file [\#61](https://github.com/qossmic/deptrac/issues/61)
-- Download over HTTPS [\#60](https://github.com/qossmic/deptrac/issues/60)
-- Options for Graphviz-Formatter are being ignored [\#57](https://github.com/qossmic/deptrac/issues/57)
-- Issue with tilde in depfile's exclude\_files [\#52](https://github.com/qossmic/deptrac/issues/52)
-- Add support to Symfony 3 [\#48](https://github.com/qossmic/deptrac/issues/48)
-- Add a MethodNameCollector [\#42](https://github.com/qossmic/deptrac/issues/42)
-- provide phar file [\#41](https://github.com/qossmic/deptrac/issues/41)
-- document new formatter cli interface [\#40](https://github.com/qossmic/deptrac/issues/40)
-- formatter cli interface [\#32](https://github.com/qossmic/deptrac/issues/32)
-- namespace zu SensioLabs\Deptrac [\#30](https://github.com/qossmic/deptrac/issues/30)
-- init command vereinfachen [\#28](https://github.com/qossmic/deptrac/issues/28)
-- fehler bei zu alter php version [\#27](https://github.com/qossmic/deptrac/issues/27)
-- muss ohne graphviz halbwegs laufen [\#26](https://github.com/qossmic/deptrac/issues/26)
-- andere lösung für foo/vendors [\#25](https://github.com/qossmic/deptrac/issues/25)
-- check composer.lock [\#24](https://github.com/qossmic/deptrac/issues/24)
-- cleanup history [\#23](https://github.com/qossmic/deptrac/issues/23)
-- 0 Violations should be green [\#22](https://github.com/qossmic/deptrac/issues/22)
-- travis support [\#18](https://github.com/qossmic/deptrac/issues/18)
-- provide downloadable phar file [\#17](https://github.com/qossmic/deptrac/issues/17)
-- add version in code and some kind of usage tracking [\#15](https://github.com/qossmic/deptrac/issues/15)
-- add note that deptrac is alpha [\#14](https://github.com/qossmic/deptrac/issues/14)
-- self updater [\#13](https://github.com/qossmic/deptrac/issues/13)
-- documentation [\#12](https://github.com/qossmic/deptrac/issues/12)
-- update phpparser version [\#10](https://github.com/qossmic/deptrac/issues/10)
-- add integration tests [\#9](https://github.com/qossmic/deptrac/issues/9)
-- use filesystem component in ConfigurationLoader [\#8](https://github.com/qossmic/deptrac/issues/8)
-- Inject AstMap to OutputFormatterInterface [\#7](https://github.com/qossmic/deptrac/issues/7)
-
 **Merged pull requests:**
 
 - DirectoryCollector: move tests + cs fixes [\#149](https://github.com/qossmic/deptrac/pull/149) ([smoench](https://github.com/smoench))
@@ -860,7 +573,7 @@
 - Update nikic/php-parser to 3.0. [\#117](https://github.com/qossmic/deptrac/pull/117) ([dbrumann](https://github.com/dbrumann))
 - allow PHPUnit 5 too for forward compatibility [\#116](https://github.com/qossmic/deptrac/pull/116) ([xabbuh](https://github.com/xabbuh))
 - detect static method call and property access deps [\#115](https://github.com/qossmic/deptrac/pull/115) ([xabbuh](https://github.com/xabbuh))
-- Update path in command example in README [\#110](https://github.com/qossmic/deptrac/pull/110) ([richardmiller](https://github.com/richardmiller))
+- Update path in command example in README [\#110](https://github.com/qossmic/deptrac/pull/110) ([richardmiller-zz](https://github.com/richardmiller-zz))
 - Fix composer file permissions [\#100](https://github.com/qossmic/deptrac/pull/100) ([amansilla](https://github.com/amansilla))
 - Add tests for self update command [\#98](https://github.com/qossmic/deptrac/pull/98) ([amansilla](https://github.com/amansilla))
 - Sort composer packages [\#97](https://github.com/qossmic/deptrac/pull/97) ([amansilla](https://github.com/amansilla))

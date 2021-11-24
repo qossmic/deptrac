@@ -50,6 +50,6 @@ gpg:
 	gpg --detach-sign --armor --default-key 41DDE07547459FAECFA17813B8F640134AB1782E --output deptrac.phar.asc deptrac.phar
 	gpg --verify deptrac.phar.asc deptrac.phar
 
-generate-changelog:
-	#gem install github_changelog_generator
-	github_changelog_generator -u qossmic -p deptrac
+#generate-changelog:
+#	gem install github_changelog_generator
+#	github_changelog_generator -u qossmic -p deptrac --no-issues --future-release <version>
