@@ -31,17 +31,6 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: "Cache tools installed with phive"
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.phive
-          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
-          restore-keys: |
-            phive-${{ runner.os }}-${{ matrix.php-version }}-
-            phive-${{ runner.os }}-
-            phive-
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -64,8 +53,8 @@ jobs:
             composer-${{ runner.os }}-
             composer-
 
-      - name: "Install tools with phive"
-        run: make tools-install
+      - name: "Install phpunit"
+        run: composer require phpunit/phpunit --dev
 
       - name: "Run tests"
         run: make tests
