@@ -13,7 +13,7 @@ trait CrossOsAgnosticEqualsTrait {
 
     public function setUp(): void
     {
-        // make assertEquals* comparison EOL agnostic
+        // make assertEquals* comparisons PHP_EOL and DIRECTORY_SEPARATOR agnostic
         $this->comparator = new CrossOsAgnosticStringComparator();
 
         $factory = Factory::getInstance();
