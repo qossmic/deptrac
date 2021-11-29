@@ -12,6 +12,8 @@ use SplFileInfo;
 
 final class PathNameFilterIteratorTest extends TestCase
 {
+    use CrossOsAgnosticEqualsTrait;
+    
     /**
      * @dataProvider getTestFilterData
      */
@@ -38,27 +40,27 @@ final class PathNameFilterIteratorTest extends TestCase
 
         //PATH:   A/B/C/abc.dat
         $inner[] = new SplFileInfo(
-            'A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'C'.FileHelper::DIR_SEPARATOR.'abc.dat'
+            'A/B/C/abc.dat'
         );
 
         //PATH:   A/B/ab.dat
-        $inner[] = new SplFileInfo('A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'ab.dat');
+        $inner[] = new SplFileInfo('A/B/ab.dat');
 
         //PATH:   A/a.dat
-        $inner[] = new SplFileInfo('A'.FileHelper::DIR_SEPARATOR.'a.dat');
+        $inner[] = new SplFileInfo('A/a.dat');
 
         //PATH:   copy/A/B/C/abc.dat.copy
         $inner[] = new SplFileInfo(
-            'copy'.FileHelper::DIR_SEPARATOR.'A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'C'.FileHelper::DIR_SEPARATOR.'abc.dat.copy'
+            'copy/A/B/C/abc.dat.copy'
         );
 
         //PATH:   copy/A/B/ab.dat.copy
         $inner[] = new SplFileInfo(
-            'copy'.FileHelper::DIR_SEPARATOR.'A'.FileHelper::DIR_SEPARATOR.'B'.FileHelper::DIR_SEPARATOR.'ab.dat.copy'
+            'copy/A/B/ab.dat.copy'
         );
 
         //PATH:   copy/A/a.dat.copy
-        $inner[] = new SplFileInfo('copy'.FileHelper::DIR_SEPARATOR.'A'.FileHelper::DIR_SEPARATOR.'a.dat.copy');
+        $inner[] = new SplFileInfo('copy/A/a.dat.copy');
 
         return [
             [$inner, ['/^A/'], [], ['A/B/C/abc.dat', 'A/B/ab.dat', 'A/a.dat']],
