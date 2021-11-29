@@ -51,7 +51,6 @@ OUT;
 
 
 OUT;
-            // $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
         }
 
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
@@ -79,7 +78,6 @@ OUT;
 
 
 OUT;
-            $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
         }
 
         self::assertSame($expectedOutput, $formatter->fetch());
