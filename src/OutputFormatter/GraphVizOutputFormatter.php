@@ -88,7 +88,11 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         }
 
         if ($dumpDotPath = (string) $outputFormatterInput->getOption(self::DUMP_DOT)) {
-            file_put_contents($dumpDotPath, (string) $graph);
+            $dotContent = (string) $graph;
+            // make sure we get a uniform line-ending in the dotfile
+            $dotContent = str_replace("\r\n", "\n", $dotContent);
+            file_put_contents($dumpDotPath, $dotContent);
+
             $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
         }
 
