@@ -10,6 +10,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
+use Qossmic\Deptrac\File\FileHelper;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -59,7 +60,8 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        $dotFile = str_replace('/', DIRECTORY_SEPARATOR, $dotFile);
+        self::assertSame(sprintf("Script dumped to %s".PHP_EOL, $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
@@ -106,7 +108,8 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        $dotFile = str_replace('/', DIRECTORY_SEPARATOR, $dotFile);
+        self::assertSame(sprintf("Script dumped to %s".PHP_EOL, $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
 
         unlink($dotFile);
