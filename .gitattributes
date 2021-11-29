@@ -4,3 +4,4 @@
 *.json		text eol=lf
 *.xml		text eol=lf
 *.md		text eol=lf
+*.dot		text eol=lf
