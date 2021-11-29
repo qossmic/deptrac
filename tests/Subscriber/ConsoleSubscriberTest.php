@@ -20,9 +20,12 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\CrossOsAgnosticEqualsTrait;
 
 final class ConsoleSubscriberTest extends TestCase
 {
+    use CrossOsAgnosticEqualsTrait;
+    
     public function testSubscribedEvents(): void
     {
         self::assertSame(

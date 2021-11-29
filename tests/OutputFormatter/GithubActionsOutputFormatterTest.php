@@ -128,7 +128,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12".PHP_EOL,
+            "::error file=originalA.php,line=12::ClassA must not depend on ClassB (LayerA on LayerB)%0AClassInheritD::6 ->%0AClassInheritC::5 ->%0AClassInheritB::4 ->%0AClassInheritA::3 ->%0AACME\OriginalB::12\n",
         ];
 
         yield 'an error occurred' => [
