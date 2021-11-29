@@ -10,7 +10,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
-use Qossmic\Deptrac\File\FileHelper;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
