@@ -44,7 +44,7 @@ final class ProgressSubscriberTest extends TestCase
 
 
 OUT;
-        if ("\\" === DIRECTORY_SEPARATOR) {
+        if ('\\' === DIRECTORY_SEPARATOR) {
             $expectedOutput = <<<OUT
  0/1 [>---------------------------]   0%
  1/1 [============================] 100%
@@ -72,7 +72,7 @@ OUT;
 
 OUT;
 
-        if ("\\" === DIRECTORY_SEPARATOR) {
+        if ('\\' === DIRECTORY_SEPARATOR) {
             $expectedOutput = <<<OUT
  0/1 [>---------------------------]   0%
  1/1 [============================] 100%
