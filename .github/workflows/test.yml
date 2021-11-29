@@ -54,7 +54,7 @@ jobs:
             composer-
 
       - name: "Install phpunit"
-        run: composer require phpunit/phpunit --dev
+        run: composer require phpunit/phpunit:^9.5 --dev
 
       - name: "Run tests"
         run: vendor/bin/phpunit -c .
