@@ -44,6 +44,15 @@ final class ProgressSubscriberTest extends TestCase
 
 
 OUT;
+        if ("\\" === DIRECTORY_SEPARATOR) {
+            $expectedOutput = <<<OUT
+ 0/1 [>---------------------------]   0%
+ 1/1 [============================] 100%
+
+
+OUT;
+            $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
+        }
 
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
     }
@@ -62,6 +71,16 @@ OUT;
 
 
 OUT;
+
+        if ("\\" === DIRECTORY_SEPARATOR) {
+            $expectedOutput = <<<OUT
+ 0/1 [>---------------------------]   0%
+ 1/1 [============================] 100%
+
+
+OUT;
+            $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
+        }
 
         self::assertSame($expectedOutput, $formatter->fetch());
     }
