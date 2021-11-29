@@ -1,0 +1,6 @@
+# make sure windows uses LF for files, which we expect to always use LF, no matter the platform
+*.yml		text eol=lf
+*.yaml		text eol=lf
+*.json		text eol=lf
+*.xml		text eol=lf
+*.md		text eol=lf
