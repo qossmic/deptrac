@@ -51,7 +51,7 @@ OUT;
 
 
 OUT;
-            $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
+            // $expectedOutput = str_replace("\n", PHP_EOL, $expectedOutput);
         }
 
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
