@@ -54,6 +54,6 @@
         "sort-packages": true
     },
     "require-dev": {
-        "staabm/phpunit-cross-os": "^0.2.1"
+        "staabm/phpunit-cross-os": "^0.2.2"
     }
 }
