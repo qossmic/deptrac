@@ -44,7 +44,7 @@ final class ProgressSubscriberTest extends TestCase
 
 
 OUT;
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if ($this->isWindowsPlatform()) {
             $expectedOutput = <<<OUT
  0/1 [>---------------------------]   0%
  1/1 [============================] 100%
@@ -71,7 +71,7 @@ OUT;
 
 OUT;
 
-        if ('\\' === DIRECTORY_SEPARATOR) {
+        if ($this->isWindowsPlatform()) {
             $expectedOutput = <<<OUT
  0/1 [>---------------------------]   0%
  1/1 [============================] 100%
@@ -89,5 +89,10 @@ OUT;
             $bufferedOutput,
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
+    }
+
+    private function isWindowsPlatform(): bool
+    {
+        return '\\' === DIRECTORY_SEPARATOR;
     }
 }
