@@ -20,9 +20,12 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\CrossOsAgnosticEqualsTrait;
 
 final class GraphVizOutputFormatterTest extends TestCase
 {
+    use CrossOsAgnosticEqualsTrait;
+    
     public function testGetName(): void
     {
         self::assertEquals('graphviz', (new GraphVizOutputFormatter())->getName());
@@ -60,8 +63,7 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        $dotFile = str_replace('/', DIRECTORY_SEPARATOR, $dotFile);
-        self::assertSame(sprintf("Script dumped to %s".PHP_EOL, $dotFile), $bufferedOutput->fetch());
+        self::assertEquals(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
@@ -108,8 +110,7 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        $dotFile = str_replace('/', DIRECTORY_SEPARATOR, $dotFile);
-        self::assertSame(sprintf("Script dumped to %s".PHP_EOL, $dotFile), $bufferedOutput->fetch());
+        self::assertEquals(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
 
         unlink($dotFile);

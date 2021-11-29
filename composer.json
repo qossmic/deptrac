@@ -52,5 +52,8 @@
             "php": "7.4.20"
         },
         "sort-packages": true
+    },
+    "require-dev": {
+        "staabm/phpunit-cross-os": "^0.2"
     }
 }

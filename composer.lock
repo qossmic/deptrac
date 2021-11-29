@@ -2103,7 +2103,53 @@
             "time": "2021-11-28T15:25:38+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "staabm/phpunit-cross-os",
+            "version": "0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staabm/phpunit-cross-os.git",
+                "reference": "fa35f82ad0a1ca6cfc6ef830da23d1fb1172ddb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staabm/phpunit-cross-os/zipball/fa35f82ad0a1ca6cfc6ef830da23d1fb1172ddb6",
+                "reference": "fa35f82ad0a1ca6cfc6ef830da23d1fb1172ddb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "staabm\\PHPUnitCrossOs\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "issues": "https://github.com/staabm/phpunit-cross-os/issues",
+                "source": "https://github.com/staabm/phpunit-cross-os/tree/0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/staabm",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-29T15:37:11+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

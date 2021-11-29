@@ -25,9 +25,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Tests\Qossmic\Deptrac\EmptyEnv;
+use Tests\Qossmic\Deptrac\CrossOsAgnosticEqualsTrait;
 
 final class GithubActionsOutputFormatterTest extends TestCase
 {
+    use CrossOsAgnosticEqualsTrait;
+
     public function testGetName(): void
     {
         self::assertSame('github-actions', (new GithubActionsOutputFormatter())->getName());
@@ -51,7 +54,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ])
         );
 
-        self::assertSame($expectedOutput, $bufferedOutput->fetch());
+        self::assertEquals($expectedOutput, $bufferedOutput->fetch());
     }
 
     public function finishProvider(): iterable
@@ -77,7 +80,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)".PHP_EOL,
+            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
         yield 'Skipped Violation' => [
@@ -90,7 +93,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)".PHP_EOL,
+            "::warning file=/home/testuser/originalA.php,line=12::[SKIPPED] ACME\OriginalA must not depend on ACME\OriginalB (LayerA on LayerB)\n",
         ];
 
         yield 'Uncovered Dependency' => [
@@ -102,7 +105,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ],
             'errors' => [],
             'warnings' => [],
-            "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)".PHP_EOL,
+            "::warning file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
         ];
 
         yield 'Inherit dependency' => [
@@ -132,7 +135,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             'violations' => [],
             'errors' => [new Error('an error occurred')],
             'warnings' => [],
-            "::error ::an error occurred".PHP_EOL,
+            "::error ::an error occurred\n",
         ];
 
         yield 'an warning occurred' => [
@@ -141,7 +144,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             'warnings' => [
                 Warning::tokenIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2']),
             ],
-            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one token should only be in one layer.".PHP_EOL,
+            "::warning ::Foo\Bar is in more than one layer [\"Layer 1\", \"Layer 2\"]. It is recommended that one token should only be in one layer.\n",
         ];
     }
 
@@ -201,8 +204,8 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ])
         );
 
-        self::assertSame(
-            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)".PHP_EOL,
+        self::assertEquals(
+            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
             $bufferedOutput->fetch()
         );
     }
