@@ -57,7 +57,7 @@ jobs:
         run: composer require phpunit/phpunit --dev
 
       - name: "Run tests"
-        run: phpunit -c .
+        run: vendor/bin/phpunit -c .
 
   infection:
     runs-on: ${{ matrix.os }}
