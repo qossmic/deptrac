@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstMap;
 
-use Qossmic\Deptrac\File\FileHelper;
+use Symfony\Component\Filesystem\Path;
 
 final class FileName implements TokenName
 {
@@ -12,7 +12,7 @@ final class FileName implements TokenName
 
     public function __construct(string $path)
     {
-        $this->path = FileHelper::normalizePath($path);
+        $this->path = Path::normalize($path);
     }
 
     public function toString(): string
@@ -20,7 +20,7 @@ final class FileName implements TokenName
         $wd = getcwd();
 
         if (false !== $wd) {
-            $wd = FileHelper::normalizePath($wd);
+            $wd = Path::normalize($wd);
         }
 
         if (false !== $wd && 0 === strpos($this->path, $wd)) {

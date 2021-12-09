@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
-use Qossmic\Deptrac\File\FileHelper;
+use const DIRECTORY_SEPARATOR;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Iterator\PathFilterIterator;
 
 class PathNameFilterIterator extends PathFilterIterator
@@ -12,12 +13,13 @@ class PathNameFilterIterator extends PathFilterIterator
     public function accept(): bool
     {
         $fileInfo = $this->current();
-        $filename = $fileInfo->getPathname();
-
-        if ('\\' === \DIRECTORY_SEPARATOR) {
-            $filename = FileHelper::normalizePath($filename);
-        }
+        $filename = $this->isWindows() ? Path::normalize($fileInfo->getPathname()) : $fileInfo->getPathName();
 
         return $this->isAccepted($filename);
+    }
+
+    private function isWindows(): bool
+    {
+        return '\\' === DIRECTORY_SEPARATOR;
     }
 }
