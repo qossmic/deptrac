@@ -11,5 +11,5 @@ updates:
     open-pull-requests-limit: 99
     package-ecosystem: composer
     schedule:
-      interval: daily
+      interval: weekly
     versioning-strategy: "lockfile-only"
