@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\File\FileHelper;
+use Symfony\Component\Filesystem\Path;
 
 class DirectoryCollector extends RegexCollector implements CollectorInterface
 {
@@ -29,7 +29,7 @@ class DirectoryCollector extends RegexCollector implements CollectorInterface
 
         $filePath = $fileReference->getFilepath();
         $validatedPattern = $this->getValidatedPattern($configuration);
-        $normalizedPath = FileHelper::normalizePath($filePath);
+        $normalizedPath = Path::normalize($filePath);
 
         return 1 === preg_match($validatedPattern, $normalizedPath);
     }

@@ -29,6 +29,7 @@
         "symfony/console": "^5.1 || ^6.0",
         "symfony/dependency-injection": "^5.1 || ^6.0",
         "symfony/event-dispatcher": "^5.1 || ^6.0",
+        "symfony/filesystem": "^5.4",
         "symfony/finder": "^5.1 || ^6.0",
         "symfony/options-resolver": "^5.1 || ^6.0",
         "symfony/yaml": "^5.1 || ^6.0"
