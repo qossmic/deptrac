@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
-use function dirname;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Exception\Configuration\FileCannotBeParsedAsYamlException;
 use Qossmic\Deptrac\Exception\Configuration\ParsedYamlIsNotAnArrayException;
@@ -33,7 +32,7 @@ class Loader
     public function load(string $file): Configuration
     {
         $absolutePath = Path::makeAbsolute($file, $this->workingDirectory);
-        $depfileDirectory = dirname($absolutePath);
+        $depfileDirectory = Path::getDirectory($absolutePath);
 
         $configs = [];
         $configs[] = $mainConfig = $this->fileLoader->parseFile($absolutePath);

@@ -18,6 +18,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
 use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\Exception\AstRunner\AstParser\FileNotExistsException;
 use Qossmic\Deptrac\File\FileReader;
+use Symfony\Component\Filesystem\Path;
 
 class AstFileReferenceFileCache implements AstFileReferenceCache
 {
@@ -139,7 +140,7 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
 
     public function write(): void
     {
-        if (!is_writable(\dirname($this->cacheFile))) {
+        if (!is_writable(Path::getDirectory($this->cacheFile))) {
             return;
         }
 
