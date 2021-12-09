@@ -1,6 +1,21 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Property PhpParser\\\\Node\\\\Stmt\\\\ClassLike\\:\\:\\$namespacedName \\(PhpParser\\\\Node\\\\Name\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: src/AstRunner/AstParser/NikicPhpParser/FileReferenceVisitor.php
+
+		-
+			message: "#^Property PhpParser\\\\Node\\\\Stmt\\\\Function_\\:\\:\\$namespacedName \\(PhpParser\\\\Node\\\\Name\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: src/AstRunner/AstParser/NikicPhpParser/FileReferenceVisitor.php
+
+		-
+			message: "#^Property PhpParser\\\\Node\\\\Stmt\\\\ClassLike\\:\\:\\$namespacedName \\(PhpParser\\\\Node\\\\Name\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: src/AstRunner/AstParser/NikicPhpParser/NikicPhpParser.php
+
+		-
 			message: "#^Parameter \\#1 \\$options of class Qossmic\\\\Deptrac\\\\Configuration\\\\Configuration constructor expects array\\{parameters\\: array\\<string, string\\>, formatters\\: array\\|null, layers\\: array\\<array\\{name\\: string, collectors\\: array\\<array\\<string, string\\>\\>\\}\\>, paths\\: array\\<int, string\\>, exclude_files\\: array\\|null, ruleset\\: array\\<string, array\\<string\\>\\>, skip_violations\\: array\\<string, array\\<string\\>\\>, analyser\\: array\\<string, mixed\\>, \\.\\.\\.\\}, array given\\.$#"
 			count: 1
 			path: src/Configuration/Configuration.php

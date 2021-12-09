@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.x-dev@">
+  <file src="src/AstRunner/AstParser/NikicPhpParser/FileReferenceVisitor.php">
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>isset($node-&gt;namespacedName)</code>
+      <code>isset($node-&gt;namespacedName)</code>
+    </RedundantConditionGivenDocblockType>
+    <UnnecessaryVarAnnotation occurrences="2">
+      <code>\PhpParser\Node\Name</code>
+      <code>\PhpParser\Node\Name</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/AstRunner/AstParser/NikicPhpParser/NikicPhpParser.php">
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>isset($classLikeNode-&gt;namespacedName)</code>
+    </RedundantConditionGivenDocblockType>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>\PhpParser\Node\Name</code>
+    </UnnecessaryVarAnnotation>
+  </file>
   <file src="src/Configuration/Configuration.php">
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$options</code>
@@ -14,7 +32,7 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="110">
+    <MixedMethodCall occurrences="109">
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -119,7 +137,6 @@
       <code>scalarPrototype</code>
       <code>setDeprecated</code>
       <code>setDeprecated</code>
-      <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
