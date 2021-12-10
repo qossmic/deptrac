@@ -27,7 +27,8 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     public const DUMP_IMAGE = self::NAME.'-dump-image';
     public const DUMP_DOT = self::NAME.'-dump-dot';
     public const DUMP_HTML = self::NAME.'-dump-html';
-    private const DELAY_OPEN = 2.0;
+    /** @var positive-int */
+    private const DELAY_OPEN = 2;
 
     public function getName(): string
     {
@@ -120,7 +121,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             $filename = $this->getTempImage($graph);
             static $next = 0;
             if ($next > microtime(true)) {
-                sleep((int) self::DELAY_OPEN);
+                sleep(self::DELAY_OPEN);
             }
 
             if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
@@ -130,7 +131,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
             } else {
                 exec('xdg-open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
             }
-            $next = microtime(true) + self::DELAY_OPEN;
+            $next = microtime(true) + (float) self::DELAY_OPEN;
         } catch (Exception $exception) {
             throw new \LogicException('Unable to display output: '.$exception->getMessage());
         }
