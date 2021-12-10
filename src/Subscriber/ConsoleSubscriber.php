@@ -8,18 +8,18 @@ use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
 use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
 use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleSubscriber implements EventSubscriberInterface
 {
-    private OutputInterface $output;
+    private Output $output;
 
-    public function __construct(OutputInterface $output)
+    public function __construct(Output $output)
     {
         $this->output = $output;
     }
@@ -43,31 +43,33 @@ class ConsoleSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
-        $this->output->writeln(
-            sprintf(
-                'Start to create an AstMap for <info>%u</info> Files.',
-                $preCreateAstMapEvent->getExpectedFileCount()
-            ),
-            OutputInterface::VERBOSITY_VERBOSE
-        );
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted(
+                sprintf(
+                    'Start to create an AstMap for <info>%u</info> Files.',
+                    $preCreateAstMapEvent->getExpectedFileCount()
+                )
+            );
+        }
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
-        $this->output->writeln('AstMap created.', OutputInterface::VERBOSITY_VERBOSE);
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted('AstMap created.');
+        }
     }
 
     public function onAstFileAnalysedEvent(AstFileAnalysedEvent $analysedEvent): void
     {
-        $this->output->writeln(
-            sprintf('Parsing File %s', $analysedEvent->getFile()),
-            OutputInterface::VERBOSITY_VERBOSE
-        );
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted(sprintf('Parsing File %s', $analysedEvent->getFile()));
+        }
     }
 
     public function onAstFileSyntaxErrorEvent(AstFileSyntaxErrorEvent $astFileSyntaxErrorEvent): void
     {
-        $this->output->writeln(sprintf(
+        $this->output->writeLineFormatted(sprintf(
             "\nSyntax Error on File %s\n<error>%s</error>\n",
             $astFileSyntaxErrorEvent->getFile(),
             $astFileSyntaxErrorEvent->getSyntaxError()
@@ -76,24 +78,31 @@ class ConsoleSubscriber implements EventSubscriberInterface
 
     public function onPreDependencyEmit(PreEmitEvent $event): void
     {
-        $this->output->writeln(
-            sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName()),
-            OutputInterface::VERBOSITY_VERBOSE
-        );
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted(
+                sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName())
+            );
+        }
     }
 
     public function onPostDependencyEmit(PostEmitEvent $event): void
     {
-        $this->output->writeln('<info>end emitting dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted('<info>end emitting dependencies</info>');
+        }
     }
 
     public function onPreDependencyFlatten(PreFlattenEvent $event): void
     {
-        $this->output->writeln('<info>start flatten dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted('<info>start flatten dependencies</info>');
+        }
     }
 
     public function onPostDependencyFlatten(PostFlattenEvent $event): void
     {
-        $this->output->writeln('<info>end flatten dependencies</info>', OutputInterface::VERBOSITY_VERBOSE);
+        if ($this->output->isVerbose()) {
+            $this->output->writeLineFormatted('<info>end flatten dependencies</info>');
+        }
     }
 }
