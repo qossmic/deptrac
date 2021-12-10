@@ -32,6 +32,7 @@ use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
+use Qossmic\Deptrac\Console\Command\DebugLayerRunner;
 use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
 use Qossmic\Deptrac\Console\Command\DebugTokenRunner;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
@@ -267,19 +268,20 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services
+        ->set(DebugLayerRunner::class)
+        ->autowire();
+
+    $services
+        ->set(DebugLayerCommand::class)
+        ->autowire();
+
+    $services
         ->set(DebugTokenRunner::class)
         ->autowire();
 
     $services
         ->set(DebugTokenCommand::class)
         ->autowire();
-
-    $services
-        ->set(DebugLayerCommand::class)
-        ->args([
-            service(LayerAnalyser::class),
-            service(Loader::class),
-        ]);
 
     $services
         ->set(DebugUnassignedRunner::class)

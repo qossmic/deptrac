@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Configuration\ConfigurationLayer;
-use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\LayerAnalyser;
+use Qossmic\Deptrac\Exception\Console\InvalidLayerException;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -23,17 +20,13 @@ class DebugLayerCommand extends Command
 
     protected static $defaultName = 'debug:layer';
 
-    private LayerAnalyser $analyser;
-    private Loader $loader;
+    private DebugLayerRunner $runner;
 
-    public function __construct(
-        LayerAnalyser $analyser,
-        Loader $loader
-    ) {
+    public function __construct(DebugLayerRunner $runner)
+    {
         parent::__construct();
 
-        $this->analyser = $analyser;
-        $this->loader = $loader;
+        $this->runner = $runner;
     }
 
     protected function configure(): void
@@ -45,6 +38,7 @@ class DebugLayerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $outputStyle = new Style(new SymfonyStyle($input, $output));
+        $symfonyOutput = new SymfonyOutput($output, $outputStyle);
         /** @var ?string $layer */
         $layer = $input->getArgument('layer');
         $options = new DebugLayerOptions(
@@ -52,31 +46,12 @@ class DebugLayerCommand extends Command
             $layer
         );
 
-        $configuration = $this->loader->load($options->getConfigurationFile());
-
-        $configurationLayers = array_map(
-            static fn (ConfigurationLayer $configurationLayer) => $configurationLayer->getName(),
-            $configuration->getLayers()
-        );
-
-        if (null !== $options->getLayer() && !in_array($options->getLayer(), $configurationLayers, true)) {
+        try {
+            $this->runner->run($options, $symfonyOutput);
+        } catch (InvalidLayerException $invalidLayerException) {
             $outputStyle->error('Layer not found.');
 
             return 1;
-        }
-
-        $layers = null === $options->getLayer() ? $configurationLayers : (array) $options->getLayer();
-
-        foreach ($layers as $layer) {
-            $matchedLayers = array_map(
-                static fn (string $token) => (array) $token,
-                $this->analyser->analyse($configuration, $layer)
-            );
-
-            $table = new Table($output);
-            $table->setHeaders([$layer]);
-            $table->setRows($matchedLayers);
-            $table->render();
         }
 
         return 0;
