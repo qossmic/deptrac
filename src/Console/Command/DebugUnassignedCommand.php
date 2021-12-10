@@ -4,29 +4,26 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Configuration\Loader;
-use Qossmic\Deptrac\UnassignedAnalyser;
+use Qossmic\Deptrac\Console\Symfony\Style;
+use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DebugUnassignedCommand extends Command
 {
     protected static $defaultName = 'debug:unassigned';
     protected static $defaultDescription = 'Lists all classes from your paths that are not assigned to any layer.';
 
-    private UnassignedAnalyser $analyser;
-    private Loader $loader;
+    private DebugUnassignedRunner $runner;
 
-    public function __construct(
-        UnassignedAnalyser $analyser,
-        Loader $loader
-    ) {
+    public function __construct(DebugUnassignedRunner $runner)
+    {
         parent::__construct();
 
-        $this->analyser = $analyser;
-        $this->loader = $loader;
+        $this->runner = $runner;
     }
 
     protected function configure(): void
@@ -37,10 +34,9 @@ class DebugUnassignedCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $options = new DebugUnassignedOptions($input->getArgument('depfile'));
+        $output = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
 
-        $configuration = $this->loader->load($options->getConfigurationFile());
-
-        $output->writeln($this->analyser->analyse($configuration));
+        $this->runner->run($options, $output);
 
         return 0;
     }

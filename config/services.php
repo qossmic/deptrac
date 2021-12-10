@@ -34,6 +34,7 @@ use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
+use Qossmic\Deptrac\Console\Command\DebugUnassignedRunner;
 use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
@@ -279,9 +280,10 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services
+        ->set(DebugUnassignedRunner::class)
+        ->autowire();
+
+    $services
         ->set(DebugUnassignedCommand::class)
-        ->args([
-            service(UnassignedAnalyser::class),
-            service(Loader::class),
-        ]);
+        ->autowire();
 };
