@@ -8,7 +8,6 @@ use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\LayerAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -46,29 +45,27 @@ class DebugLayerCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $outputStyle = new Style(new SymfonyStyle($input, $output));
-        $depfile = $input->getOption('depfile') ?? $this->getDefaultFile(new SymfonyOutput($output, $outputStyle));
-
-        if (!is_string($depfile)) {
-            throw InvalidArgumentException::invalidDepfileType($depfile);
-        }
-
         /** @var ?string $layer */
         $layer = $input->getArgument('layer');
+        $options = new DebugLayerOptions(
+            $input->getOption('depfile') ?? $this->getDefaultFile(new SymfonyOutput($output, $outputStyle)),
+            $layer
+        );
 
-        $configuration = $this->loader->load($depfile);
+        $configuration = $this->loader->load($options->getConfigurationFile());
 
         $configurationLayers = array_map(
             static fn (ConfigurationLayer $configurationLayer) => $configurationLayer->getName(),
             $configuration->getLayers()
         );
 
-        if (null !== $layer && !in_array($layer, $configurationLayers, true)) {
+        if (null !== $options->getLayer() && !in_array($options->getLayer(), $configurationLayers, true)) {
             $outputStyle->error('Layer not found.');
 
             return 1;
         }
 
-        $layers = null === $layer ? $configurationLayers : (array) $layer;
+        $layers = null === $options->getLayer() ? $configurationLayers : (array) $options->getLayer();
 
         foreach ($layers as $layer) {
             $matchedLayers = array_map(
