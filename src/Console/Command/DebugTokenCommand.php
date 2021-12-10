@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\TokenAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,17 +17,13 @@ class DebugTokenCommand extends Command
 {
     use DefaultDepFileTrait;
 
-    private TokenAnalyser $analyser;
-    private Loader $loader;
+    private DebugTokenRunner $runner;
 
-    public function __construct(
-        TokenAnalyser $analyser,
-        Loader $loader
-    ) {
+    public function __construct(DebugTokenRunner $runner)
+    {
         parent::__construct();
 
-        $this->analyser = $analyser;
-        $this->loader = $loader;
+        $this->runner = $runner;
     }
 
     protected function configure(): void
@@ -55,13 +49,7 @@ class DebugTokenCommand extends Command
             $tokenType
         );
 
-        $configuration = $this->loader->load($options->getConfigurationFile());
-
-        $layers = $this->analyser->analyse($configuration, $options->getToken());
-
-        natcasesort($layers);
-
-        $symfonyOutput->writeLineFormatted($layers);
+        $this->runner->run($options, $symfonyOutput);
 
         return 0;
     }

@@ -33,6 +33,7 @@ use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
+use Qossmic\Deptrac\Console\Command\DebugTokenRunner;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedRunner;
 use Qossmic\Deptrac\Console\Command\InitCommand;
@@ -266,11 +267,12 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services
+        ->set(DebugTokenRunner::class)
+        ->autowire();
+
+    $services
         ->set(DebugTokenCommand::class)
-        ->args([
-            service(TokenAnalyser::class),
-            service(Loader::class),
-        ]);
+        ->autowire();
 
     $services
         ->set(DebugLayerCommand::class)
