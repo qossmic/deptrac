@@ -11,7 +11,7 @@ skip_violations:
     - Qossmic\Deptrac\AstRunner\AstMap
   Qossmic\Deptrac\Dependency\InheritDependency:
     - Qossmic\Deptrac\AstRunner\AstMap\AstInherit
-  Qossmic\Deptrac\Console\Command\DebugTokenCommand:
+  Qossmic\Deptrac\Console\Command\DebugTokenOptions:
     - Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName
     - Qossmic\Deptrac\AstRunner\AstMap\FileName
     - Qossmic\Deptrac\AstRunner\AstMap\FunctionName
