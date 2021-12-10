@@ -84,7 +84,7 @@ class AnalyseCommand extends Command
             (bool) $input->getOption(self::OPTION_FAIL_ON_UNCOVERED)
         );
 
-        $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
+        $this->dispatcher->addSubscriber(new ConsoleSubscriber($symfonyOutput));
         if ($options->showProgress()) {
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
