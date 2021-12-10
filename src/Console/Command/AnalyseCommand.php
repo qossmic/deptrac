@@ -9,7 +9,6 @@ use Qossmic\Deptrac\Analyser;
 use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
@@ -76,34 +75,28 @@ class AnalyseCommand extends Command
         ini_set('memory_limit', '-1');
 
         $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
-
-        $file = $input->getArgument('depfile') ?? $this->getDefaultFile($symfonyOutput);
-
-        if (!is_string($file)) {
-            throw InvalidArgumentException::invalidDepfileType($file);
-        }
-
-        $configuration = $this->configurationLoader->load($file);
+        /** @var string[] $formatters */
+        $formatters = (array) $input->getOption('formatter');
+        $options = new AnalyseOptions(
+            $input->getArgument('depfile') ?? $this->getDefaultFile($symfonyOutput),
+            (bool) $input->getOption('no-progress'),
+            $formatters,
+            (bool) $input->getOption(self::OPTION_FAIL_ON_UNCOVERED)
+        );
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($output));
-
-        if (!$input->getOption('no-progress')) {
+        if ($options->showProgress()) {
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
+
+        $configuration = $this->configurationLoader->load($options->getConfigurationFile());
 
         $this->printCollectViolations($symfonyOutput);
         $context = $this->analyser->analyse($configuration);
 
         $this->printFormattingStart($symfonyOutput);
 
-        /** @var string[] $formats */
-        $formats = (array) $input->getOption('formatter');
-
-        $formatters = [];
-        if ($formats) {
-            $formatters = $this->formatterFactory->getFormattersByNames($formats);
-        }
-
+        $formatters = $this->formatterFactory->getFormattersByNames($options->getFormatters());
         if ([] === $formatters) {
             $formatters = $this->formatterFactory->getFormattersEnabledByDefault();
         }
@@ -119,7 +112,7 @@ class AnalyseCommand extends Command
             }
         }
 
-        if ($input->getOption(self::OPTION_FAIL_ON_UNCOVERED) && $context->hasUncovered()) {
+        if ($options->failOnUncovered() && $context->hasUncovered()) {
             return 1;
         }
 

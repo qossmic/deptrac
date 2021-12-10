@@ -91,6 +91,7 @@ final class OutputFormatterFactoryTest extends TestCase
             $formatter2 = $this->createNamedFormatter('formatter2'),
         ]);
 
+        self::assertSame([], $formatterFactory->getFormattersByNames([]));
         self::assertSame([$formatter1], $formatterFactory->getFormattersByNames(['formatter1']));
         self::assertSame(
             [$formatter1, $formatter2],
