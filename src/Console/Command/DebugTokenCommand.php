@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\FileName;
-use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\TokenAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -49,34 +45,19 @@ class DebugTokenCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
-        $depfile = $input->getOption('depfile') ?? $this->getDefaultFile($symfonyOutput);
-
-        if (!is_string($depfile)) {
-            throw InvalidArgumentException::invalidDepfileType($depfile);
-        }
-
         /** @var string $tokenName */
         $tokenName = $input->getArgument('token');
         /** @var string $tokenType */
         $tokenType = $input->getArgument('type');
+        $options = new DebugTokenOptions(
+            $input->getOption('depfile') ?? $this->getDefaultFile($symfonyOutput),
+            $tokenName,
+            $tokenType
+        );
 
-        $configuration = $this->loader->load($depfile);
+        $configuration = $this->loader->load($options->getConfigurationFile());
 
-        switch ($tokenType) {
-            case 'class-like':
-                $token = ClassLikeName::fromFQCN($tokenName);
-                break;
-            case 'function':
-                $token = FunctionName::fromFQCN($tokenName);
-                break;
-            case 'file':
-                $token = new FileName($tokenName);
-                break;
-            default:
-                throw new \RuntimeException('Invalid token type "'.$tokenType.'". Only "class-like", "function" or "file" are supported.');
-        }
-
-        $layers = $this->analyser->analyse($configuration, $token);
+        $layers = $this->analyser->analyse($configuration, $options->getToken());
 
         natcasesort($layers);
 
