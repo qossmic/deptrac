@@ -19,6 +19,12 @@ layers:
         must_not:
           - type: className
             regex: ^Qossmic\\Deptrac\\.*
+          - type: className
+            regex: Symfony\\Component\\Console\\.*
+  - name: SymfonyConsole
+    collectors:
+      - type: className
+        regex: Symfony\\Component\\Console\\.*
   - name: Console Formatters
     collectors:
       - type: implements
@@ -112,6 +118,7 @@ layers:
             regex: .*CacheableFileSubscriber
 
 ruleset:
+  SymfonyConsole: ~
   Console Formatters:
     - Console
     - Application
@@ -121,6 +128,7 @@ ruleset:
     - Application
     - Events
     - Utils
+    - SymfonyConsole
   Application:
     - Dependencies
     - Utils
