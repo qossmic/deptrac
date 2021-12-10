@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use function array_values;
+use function ksort;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use function sort;
 use Symfony\Component\Yaml\Yaml;
 
 final class BaselineOutputFormatter implements OutputFormatterInterface
@@ -38,12 +41,18 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     ): void {
         $groupedViolations = $this->collectViolations($context);
 
+        foreach ($groupedViolations as &$violations) {
+            sort($violations);
+        }
+
+        ksort($groupedViolations);
+
         if ($baselineFile = (string) $outputFormatterInput->getOption(self::DUMP_BASELINE)) {
             file_put_contents(
                 $baselineFile,
                 Yaml::dump(
                     [
-                            'skip_violations' => $groupedViolations,
+                        'skip_violations' => $groupedViolations,
                     ],
                     3,
                     2
@@ -53,6 +62,9 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
         }
     }
 
+    /**
+     * @return array<string,array<string>>
+     */
     private function collectViolations(Context $context): array
     {
         $violations = [];
