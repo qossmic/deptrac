@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\Configuration\Loader;
-use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\UnassignedAnalyser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,13 +36,9 @@ class DebugUnassignedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $depfile = $input->getArgument('depfile');
+        $options = new DebugUnassignedOptions($input->getArgument('depfile'));
 
-        if (!is_string($depfile)) {
-            throw InvalidArgumentException::invalidDepfileType($depfile);
-        }
-
-        $configuration = $this->loader->load($depfile);
+        $configuration = $this->loader->load($options->getConfigurationFile());
 
         $output->writeln($this->analyser->analyse($configuration));
 
