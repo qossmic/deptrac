@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
-use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceFileCache;
+use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceCacheInterface;
+use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceDeferredCacheInterface;
+use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceFileCache;
 use Qossmic\Deptrac\Subscriber\CacheableFileSubscriber;
-use Symfony\Component\DependencyInjection\Loader\Configurator as di;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
-return static function (di\ContainerConfigurator $container): void {
+return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services
@@ -15,13 +17,14 @@ return static function (di\ContainerConfigurator $container): void {
         ->private();
 
     $services
-        ->set(CacheableFileSubscriber::class)
-        ->args([di\service(AstFileReferenceCache::class)])
-        ->tag('event_subscriber');
-
-    $services
         ->set(AstFileReferenceFileCache::class)
         ->args(['%deptrac.cache_file%']);
 
-    $services->alias(AstFileReferenceCache::class, AstFileReferenceFileCache::class);
+    $services->alias(AstFileReferenceDeferredCacheInterface::class, AstFileReferenceFileCache::class);
+    $services->alias(AstFileReferenceCacheInterface::class, AstFileReferenceDeferredCacheInterface::class);
+
+    $services
+        ->set(CacheableFileSubscriber::class)
+        ->args([service(AstFileReferenceFileCache::class)])
+        ->tag('event_subscriber');
 };

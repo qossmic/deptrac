@@ -14,8 +14,8 @@ use PhpParser\Parser;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
 use Qossmic\Deptrac\AstRunner\AstMap\FileReferenceBuilder;
-use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
+use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\AstRunner\Resolver\DependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
@@ -31,7 +31,7 @@ class NikicPhpParser implements AstParser
 
     private Parser $parser;
 
-    private AstFileReferenceCache $cache;
+    private AstFileReferenceCacheInterface $cache;
 
     private TypeResolver $typeResolver;
 
@@ -44,7 +44,7 @@ class NikicPhpParser implements AstParser
 
     public function __construct(
         Parser $parser,
-        AstFileReferenceCache $cache,
+        AstFileReferenceCacheInterface $cache,
         TypeResolver $typeResolver,
         DependencyResolver ...$dependencyResolvers
     ) {

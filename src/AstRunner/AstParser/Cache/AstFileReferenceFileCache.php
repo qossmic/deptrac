@@ -2,8 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstParser;
+namespace Qossmic\Deptrac\AstRunner\AstParser\Cache;
 
+use function array_filter;
+use function array_map;
+use function assert;
+use function file_exists;
+use function is_readable;
+use function is_writable;
+use function json_decode;
+use function json_encode;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
 use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
@@ -18,8 +26,11 @@ use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
 use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\Exception\AstRunner\AstParser\FileNotExistsException;
 use Qossmic\Deptrac\File\FileReader;
+use function realpath;
+use function sha1_file;
+use function unserialize;
 
-class AstFileReferenceFileCache implements AstFileReferenceCache
+class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterface
 {
     /** @var array<string, array{hash: string, reference: AstFileReference}> */
     private array $cache;
@@ -32,27 +43,6 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
     {
         $this->cache = [];
         $this->cacheFile = $cacheFile;
-    }
-
-    public function has(string $filepath): bool
-    {
-        $this->load();
-
-        $filepath = $this->normalizeFilepath($filepath);
-
-        if (!isset($this->cache[$filepath])) {
-            return false;
-        }
-
-        $hash = sha1_file($filepath);
-
-        if ($hash !== $this->cache[$filepath]['hash']) {
-            unset($this->cache[$filepath]);
-
-            return false;
-        }
-
-        return true;
     }
 
     public function get(string $filepath): ?AstFileReference
@@ -169,6 +159,27 @@ class AstFileReferenceFileCache implements AstFileReferenceCache
                 ]
             )
         );
+    }
+
+    private function has(string $filepath): bool
+    {
+        $this->load();
+
+        $filepath = $this->normalizeFilepath($filepath);
+
+        if (!isset($this->cache[$filepath])) {
+            return false;
+        }
+
+        $hash = sha1_file($filepath);
+
+        if ($hash !== $this->cache[$filepath]['hash']) {
+            unset($this->cache[$filepath]);
+
+            return false;
+        }
+
+        return true;
     }
 
     private function normalizeFilepath(string $filepath): string
