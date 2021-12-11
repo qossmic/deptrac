@@ -2,7 +2,7 @@
 
 Deptrac has support for different output formatters with various options.
 
-You can get a list of available formatters by running,
+You can get a list of available formatters by running
 
 ```bash
 php deptrac.php analyse --help
@@ -11,7 +11,7 @@ php deptrac.php analyse --help
 * [Baseline Formatter](#baseline-formatter)
 * [Console Formatter](#console-formatter)
 * [GitHubActions Formatter](#githubactions-formatter)
-* [Graphviz Formatter](#graphviz-formatter)
+* [Graphviz Formatters](#graphviz-formatters)
   * [Hide layers in output](#hide-layers-in-output)
   * [Group layers](#group-layers)
 * [JSON Formatter](#json-formatter)
