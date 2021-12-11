@@ -17,16 +17,19 @@ group="Admin"
 group="Admin"
 ]
 }
+compound="true"
 "User Frontend" -> "User Backend" [
 label="1"
 ]
 "User Frontend" -> "Admin" [
+lhead="cluster_Admin"
 label="1"
 ]
 "Admin" -> "Admin Backend" [
 label="1"
 ]
 "User Backend" -> "Admin" [
+lhead="cluster_Admin"
 label="1"
 ]
 }
