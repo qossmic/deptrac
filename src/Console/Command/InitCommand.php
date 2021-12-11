@@ -17,6 +17,7 @@ class InitCommand extends Command
     public function __construct(ConfigurationDumper $dumper)
     {
         $this->dumper = $dumper;
+
         parent::__construct();
     }
 

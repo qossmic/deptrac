@@ -13,31 +13,12 @@ use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Collector\BoolCollector;
-use Qossmic\Deptrac\Collector\ClassNameCollector;
-use Qossmic\Deptrac\Collector\ClassNameRegexCollector;
-use Qossmic\Deptrac\Collector\DirectoryCollector;
-use Qossmic\Deptrac\Collector\ExtendsCollector;
-use Qossmic\Deptrac\Collector\FunctionNameCollector;
-use Qossmic\Deptrac\Collector\ImplementsCollector;
-use Qossmic\Deptrac\Collector\InheritanceLevelCollector;
-use Qossmic\Deptrac\Collector\InheritsCollector;
-use Qossmic\Deptrac\Collector\MethodCollector;
+use Qossmic\Deptrac\Collector\CollectorInterface;
 use Qossmic\Deptrac\Collector\Registry;
-use Qossmic\Deptrac\Collector\SuperglobalCollector;
-use Qossmic\Deptrac\Collector\UsesCollector;
 use Qossmic\Deptrac\Configuration\Dumper;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
-use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
-use Qossmic\Deptrac\Console\Command\DebugLayerRunner;
-use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
-use Qossmic\Deptrac\Console\Command\DebugTokenRunner;
-use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
-use Qossmic\Deptrac\Console\Command\DebugUnassignedRunner;
-use Qossmic\Deptrac\Console\Command\InitCommand;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
@@ -48,14 +29,7 @@ use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\FileResolver;
 use Qossmic\Deptrac\LayerAnalyser;
-use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\JsonOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
+use Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\RulesetEngine;
 use Qossmic\Deptrac\TokenAnalyser;
@@ -66,6 +40,8 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Path;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -74,6 +50,7 @@ return static function (ContainerConfigurator $container): void {
         ->public();
 
     $services->set(EventDispatcher::class);
+    $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
 
     $services->set(AstRunner::class)
         ->args([
@@ -162,75 +139,32 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ParameterResolver::class);
 
     /* Formatters */
+    $services->instanceof(OutputFormatterInterface::class)
+        ->tag('output_formatter');
+
+    $services->load('Qossmic\\Deptrac\\OutputFormatter\\', Path::getDirectory(__DIR__).'/src/OutputFormatter')
+        ->exclude([
+            Path::getDirectory(__DIR__).'/src/OutputFormatter/OutputFormatterInput.php',
+        ])
+        ->autowire();
+
     $services
         ->set(OutputFormatterFactory::class)
         ->args([tagged_iterator('output_formatter')]);
-    $services
-        ->set(ConsoleOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(GithubActionsOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(GraphVizOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(JUnitOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(TableOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(XMLOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(BaselineOutputFormatter::class)
-        ->tag('output_formatter');
-    $services
-        ->set(JsonOutputFormatter::class)
-        ->tag('output_formatter');
 
     /* Collectors */
+    $services->instanceof(CollectorInterface::class)
+        ->tag('collector');
+
+    $services->load('Qossmic\\Deptrac\\Collector\\', Path::getDirectory(__DIR__).'/src/Collector')
+        ->exclude([
+            Path::getDirectory(__DIR__).'/src/Collector/Registry.php',
+        ])
+        ->autowire();
+
     $services
         ->set(Registry::class)
         ->args([tagged_iterator('collector')]);
-    $services
-        ->set(BoolCollector::class)
-        ->tag('collector');
-    $services
-        ->set(ClassNameCollector::class)
-        ->tag('collector');
-    $services
-        ->set(FunctionNameCollector::class)
-        ->tag('collector');
-    $services
-        ->set(ClassNameRegexCollector::class)
-        ->tag('collector');
-    $services
-        ->set(DirectoryCollector::class)
-        ->tag('collector');
-    $services
-        ->set(InheritanceLevelCollector::class)
-        ->tag('collector');
-    $services
-        ->set(ImplementsCollector::class)
-        ->tag('collector');
-    $services
-        ->set(ExtendsCollector::class)
-        ->tag('collector');
-    $services
-        ->set(InheritsCollector::class)
-        ->tag('collector');
-    $services
-        ->set(UsesCollector::class)
-        ->tag('collector');
-    $services
-        ->set(MethodCollector::class)
-        ->args([service(NikicPhpParser::class)])
-        ->tag('collector');
-    $services
-        ->set(SuperglobalCollector::class)
-        ->tag('collector');
 
     /* Dependency resolving */
     $services
@@ -254,40 +188,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(UsesDependencyEmitter::class);
 
     /* Commands */
-    $services
-        ->set(InitCommand::class)
-        ->args([service(Dumper::class)]);
-
-    $services
-        ->set(AnalyseCommand::class)
-        ->args([
-            service(Analyser::class),
-            service(Loader::class),
-            service(EventDispatcher::class),
-            service(OutputFormatterFactory::class),
-        ]);
-
-    $services
-        ->set(DebugLayerRunner::class)
-        ->autowire();
-
-    $services
-        ->set(DebugLayerCommand::class)
-        ->autowire();
-
-    $services
-        ->set(DebugTokenRunner::class)
-        ->autowire();
-
-    $services
-        ->set(DebugTokenCommand::class)
-        ->autowire();
-
-    $services
-        ->set(DebugUnassignedRunner::class)
-        ->autowire();
-
-    $services
-        ->set(DebugUnassignedCommand::class)
+    $services->load('Qossmic\\Deptrac\\Console\\Command\\', Path::getDirectory(__DIR__).'/src/Console/Command')
+        ->exclude([
+            Path::getDirectory(__DIR__).'/src/Console/Command/*Options.php',
+        ])
         ->autowire();
 };
