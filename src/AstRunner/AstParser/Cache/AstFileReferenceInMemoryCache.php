@@ -2,23 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\AstParser;
+namespace Qossmic\Deptrac\AstRunner\AstParser\Cache;
 
 use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
 
-class AstFileReferenceInMemoryCache implements AstFileReferenceCache
+final class AstFileReferenceInMemoryCache implements AstFileReferenceCacheInterface
 {
     /**
      * @var array<string, AstFileReference>
      */
     private array $cache = [];
-
-    public function has(string $filepath): bool
-    {
-        $filepath = realpath($filepath);
-
-        return isset($this->cache[$filepath]);
-    }
 
     public function get(string $filepath): ?AstFileReference
     {
@@ -32,13 +25,5 @@ class AstFileReferenceInMemoryCache implements AstFileReferenceCache
         $filepath = (string) realpath($fileReference->getFilepath());
 
         $this->cache[$filepath] = $fileReference;
-    }
-
-    public function load(): void
-    {
-    }
-
-    public function write(): void
-    {
     }
 }

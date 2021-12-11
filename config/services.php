@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use PhpParser\Parser;
 use Qossmic\Deptrac\Analyser;
-use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceCache;
-use Qossmic\Deptrac\AstRunner\AstParser\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceCacheInterface;
+use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
@@ -82,7 +82,7 @@ return static function (ContainerConfigurator $container): void {
         ]);
 
     $services->set(AstFileReferenceInMemoryCache::class);
-    $services->alias(AstFileReferenceCache::class, AstFileReferenceInMemoryCache::class);
+    $services->alias(AstFileReferenceCacheInterface::class, AstFileReferenceInMemoryCache::class);
 
     $services
         ->set(Parser::class)
@@ -92,7 +92,7 @@ return static function (ContainerConfigurator $container): void {
         ->set(NikicPhpParser::class)
         ->args([
             service(Parser::class),
-            service(AstFileReferenceCache::class),
+            service(AstFileReferenceCacheInterface::class),
             service(TypeResolver::class),
             service(AnnotationDependencyResolver::class),
             service(AnonymousClassResolver::class),
