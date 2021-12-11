@@ -30,7 +30,7 @@ class OutputFormatterFactory
     public function getFormatterByName(string $name): OutputFormatterInterface
     {
         foreach ($this->formatters as $formatter) {
-            if (strtolower($name) !== strtolower($formatter->getName())) {
+            if (strtolower($name) !== strtolower($formatter::getName())) {
                 continue;
             }
 
