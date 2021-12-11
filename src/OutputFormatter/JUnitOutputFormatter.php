@@ -18,7 +18,7 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
-    public const DEFAULT_PATH = './junit-report.xml';
+    private const DEFAULT_PATH = './junit-report.xml';
 
     public static function getName(): string
     {

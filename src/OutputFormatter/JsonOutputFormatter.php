@@ -16,7 +16,6 @@ use function sprintf;
 
 final class JsonOutputFormatter implements OutputFormatterInterface
 {
-    public const DUMP_JSON = 'json-dump';
 
     public static function getName(): string
     {
