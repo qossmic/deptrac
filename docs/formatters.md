@@ -44,8 +44,7 @@ baseline: depfile.baseline.yml
 
 ## Console Formatter
 
-The default formatter is the console formatter, which dumps basic information
-to *STDOUT*,
+This formatter dumps basic information to *STDOUT*,
 
 ```
 examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
@@ -274,5 +273,5 @@ Supported options:
 
 ## Table Formatter
 
-The table formatter groups results by layers to its own table. It can be
+The default formatter is the table formatter, which groups results by layers to its own table. It can be also
 activated with `--formatter=table`.
