@@ -10,7 +10,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDotFormatter;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
@@ -20,13 +20,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class GraphVizOutputFormatterTest extends TestCase
+final class GraphVizDotOutputFormatterTest extends TestCase
 {
-    public function testGetName(): void
-    {
-        self::assertEquals('graphviz', (new GraphVizOutputFormatter())->getName());
-    }
-
     public function testFinish(): void
     {
         $dotFile = __DIR__.'/data/graphviz.dot';
@@ -44,12 +39,10 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
-            [
-                GraphVizOutputFormatter::DISPLAY => false,
-                GraphVizOutputFormatter::DUMP_IMAGE => false,
-                GraphVizOutputFormatter::DUMP_DOT => $dotFile,
-                GraphVizOutputFormatter::DUMP_HTML => false,
-            ],
+            $dotFile,
+            false,
+            false,
+            false,
             [
                 'hidden_layers' => [
                     'LayerHidden',
@@ -57,7 +50,7 @@ final class GraphVizOutputFormatterTest extends TestCase
             ]
         );
 
-        (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+        (new GraphVizOutputDotFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
@@ -84,12 +77,10 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
-            [
-                GraphVizOutputFormatter::DISPLAY => false,
-                GraphVizOutputFormatter::DUMP_IMAGE => false,
-                GraphVizOutputFormatter::DUMP_DOT => $dotFile,
-                GraphVizOutputFormatter::DUMP_HTML => false,
-            ],
+            $dotFile,
+            false,
+            false,
+            false,
             [
                 'groups' => [
                     'User' => [
@@ -104,7 +95,7 @@ final class GraphVizOutputFormatterTest extends TestCase
             ]
         );
 
-        (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+        (new GraphVizOutputDotFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);

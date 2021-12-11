@@ -107,7 +107,7 @@ class BaselineOutputFormatterTest extends TestCase
             $formatter->finish(
                 new Context($rules, [], []),
                 $this->createSymfonyOutput($output),
-                new OutputFormatterInput(['baseline-dump' => $generatedBaselineFile])
+                new OutputFormatterInput($generatedBaselineFile, false, false, false)
             );
 
             static::assertEquals(
@@ -117,16 +117,6 @@ class BaselineOutputFormatterTest extends TestCase
         } finally {
             unlink($generatedBaselineFile);
         }
-    }
-
-    public function testGetOptions(): void
-    {
-        static::assertCount(1, (new BaselineOutputFormatter())->configureOptions());
-    }
-
-    public function testConsoleOutputFormatterIsEnabledByDefault(): void
-    {
-        static::assertFalse((new BaselineOutputFormatter())->enabledByDefault());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

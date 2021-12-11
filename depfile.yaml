@@ -126,6 +126,7 @@ ruleset:
     - Utils
   Console:
     - Application
+    - Console Formatters
     - Events
     - Utils
     - SymfonyConsole

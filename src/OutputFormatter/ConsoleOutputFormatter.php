@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\OutputFormatter;
 
 use function count;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\RulesetEngine\Context;
@@ -16,19 +15,9 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
-    public function getName(): string
+    public static function getName(): string
     {
         return 'console';
-    }
-
-    public function configureOptions(): array
-    {
-        return [];
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return false;
     }
 
     public function finish(
@@ -36,7 +25,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
+        $reportSkipped = $outputFormatterInput->getReportSkipped();
 
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
@@ -50,7 +39,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $this->printViolation($rule, $output);
         }
 
-        if ($outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED)) {
+        if ($outputFormatterInput->getReportUncovered()) {
             $this->printUncovered($context, $output);
         }
 

@@ -15,26 +15,11 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class XMLOutputFormatter implements OutputFormatterInterface
 {
-    public const DUMP_XML = 'xml-dump';
+    private const DEFAULT_PATH = './deptrac-report.xml';
 
-    public function getName(): string
+    public static function getName(): string
     {
         return 'xml';
-    }
-
-    /**
-     * @return OutputFormatterOption[]
-     */
-    public function configureOptions(): array
-    {
-        return [
-            OutputFormatterOption::newValueOption(self::DUMP_XML, 'path to a dumped xml file', './deptrac-report.xml'),
-        ];
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return false;
     }
 
     /**
@@ -49,10 +34,9 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($context);
 
-        if ($dumpXmlPath = (string) $outputFormatterInput->getOption(self::DUMP_XML)) {
-            file_put_contents($dumpXmlPath, $xml);
-            $output->writeLineFormatted('<info>XML Report dumped to '.realpath($dumpXmlPath).'</info>');
-        }
+        $dumpXmlPath = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        file_put_contents($dumpXmlPath, $xml);
+        $output->writeLineFormatted('<info>XML Report dumped to '.realpath($dumpXmlPath).'</info>');
     }
 
     /**

@@ -15,14 +15,7 @@ interface OutputFormatterInterface
      *
      * @example "graphviz"
      */
-    public function getName(): string;
-
-    /**
-     * @return OutputFormatterOption[]
-     */
-    public function configureOptions(): array;
-
-    public function enabledByDefault(): bool;
+    public static function getName(): string;
 
     /**
      * Renders the final result.

@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -192,10 +191,12 @@ final class ConsoleOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, $errors, $warnings),
             $output,
-            new OutputFormatterInput([
-                                         AnalyseCommand::OPTION_REPORT_UNCOVERED => true,
-                                         AnalyseCommand::OPTION_REPORT_SKIPPED => true,
-            ])
+            new OutputFormatterInput(
+                null,
+                true,
+                true,
+                false,
+            )
         );
 
         $o = $bufferedOutput->fetch();
@@ -227,10 +228,12 @@ final class ConsoleOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $output,
-            new OutputFormatterInput([
-                                         AnalyseCommand::OPTION_REPORT_UNCOVERED => true,
-                                         AnalyseCommand::OPTION_REPORT_SKIPPED => false,
-            ])
+            new OutputFormatterInput(
+                null,
+                false,
+                true,
+                false,
+            )
         );
 
         $o = $bufferedOutput->fetch();
@@ -252,18 +255,8 @@ final class ConsoleOutputFormatterTest extends TestCase
         );
     }
 
-    public function testGetOptions(): void
-    {
-        self::assertCount(0, (new ConsoleOutputFormatter())->configureOptions());
-    }
-
     private function normalize($str)
     {
         return str_replace(["\r", "\t", "\n", ' '], '', $str);
-    }
-
-    public function testConsoleOutputFormatterIsDisabledByDefault(): void
-    {
-        self::assertFalse((new ConsoleOutputFormatter())->enabledByDefault());
     }
 }

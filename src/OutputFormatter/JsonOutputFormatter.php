@@ -7,7 +7,6 @@ namespace Qossmic\Deptrac\OutputFormatter;
 use Exception;
 use function json_encode;
 use function json_last_error;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
@@ -19,24 +18,9 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 {
     public const DUMP_JSON = 'json-dump';
 
-    public function getName(): string
+    public static function getName(): string
     {
         return 'json';
-    }
-
-    /**
-     * @return OutputFormatterOption[]
-     */
-    public function configureOptions(): array
-    {
-        return [
-            OutputFormatterOption::newValueOption(self::DUMP_JSON, 'path to a dumped json file'),
-        ];
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return false;
     }
 
     /**
@@ -49,9 +33,6 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
-        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED);
-
         $jsonArray = [];
         $violations = [];
         foreach ($context->rules() as $rule) {
@@ -59,11 +40,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
                 continue;
             }
 
-            if (!$reportSkipped && $rule instanceof SkippedViolation) {
+            if (!($outputFormatterInput->getReportSkipped()) && $rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!$reportUncovered && $rule instanceof Uncovered) {
+            if (!($outputFormatterInput->getReportUncovered()) && $rule instanceof Uncovered) {
                 continue;
             }
 
@@ -100,8 +81,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             throw new Exception(sprintf('Unable to render json output. %s', $this->jsonLastError()));
         }
 
-        $dumpJsonPath = (string) $outputFormatterInput->getOption(self::DUMP_JSON);
-        if ($dumpJsonPath) {
+        $dumpJsonPath = $outputFormatterInput->getOutputPath();
+        if (null !== $dumpJsonPath) {
             file_put_contents($dumpJsonPath, $json);
             $output->writeLineFormatted('<info>JSON Report dumped to '.realpath($dumpJsonPath).'</info>');
 

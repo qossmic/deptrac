@@ -9,13 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\OutputFormatter\JsonOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
@@ -365,11 +363,10 @@ final class JsonOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
-                [
-                    AnalyseCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyseCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
-                    JsonOutputFormatter::DUMP_JSON => __DIR__.'/data/'.self::$actual_json_report_file,
-                ]
+                __DIR__.'/data/'.self::$actual_json_report_file,
+                $reportSkipped,
+                $reportUncovered,
+                false,
             )
         );
 
@@ -395,11 +392,10 @@ final class JsonOutputFormatterTest extends TestCase
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
-                [
-                    AnalyseCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                    AnalyseCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
-                    JsonOutputFormatter::DUMP_JSON => null,
-                ]
+                null,
+                $reportSkipped,
+                $reportUncovered,
+                false
             )
         );
 
@@ -432,18 +428,12 @@ final class JsonOutputFormatterTest extends TestCase
             new Context([$violation], [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
-                [
-                    AnalyseCommand::OPTION_REPORT_UNCOVERED => false,
-                    AnalyseCommand::OPTION_REPORT_SKIPPED => false,
-                    JsonOutputFormatter::DUMP_JSON => null,
-                ]
+                null,
+                    false,
+                    false,
+                    false,
             )
         );
-    }
-
-    public function testGetOptions(): void
-    {
-        self::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

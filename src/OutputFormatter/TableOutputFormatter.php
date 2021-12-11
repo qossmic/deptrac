@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use function count;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -20,19 +19,9 @@ use Symfony\Component\Console\Helper\TableSeparator;
 
 final class TableOutputFormatter implements OutputFormatterInterface
 {
-    public function getName(): string
+    public static function getName(): string
     {
         return 'table';
-    }
-
-    public function configureOptions(): array
-    {
-        return [];
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return true;
     }
 
     public function finish(
@@ -41,18 +30,14 @@ final class TableOutputFormatter implements OutputFormatterInterface
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED);
-        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_FAIL_ON_UNCOVERED);
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
-
         foreach ($context->rules() as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
 
-            if ($rule instanceof Violation || ($reportSkipped && $rule instanceof SkippedViolation)) {
+            if ($rule instanceof Violation || ($outputFormatterInput->getReportSkipped() && $rule instanceof SkippedViolation)) {
                 $groupedRules[$rule->getDependantLayerName()][] = $rule;
-            } elseif ($reportUncovered && $rule instanceof Uncovered) {
+            } elseif ($outputFormatterInput->getReportUncovered() && $rule instanceof Uncovered) {
                 $groupedRules[$rule->getLayer()][] = $rule;
             }
         }
@@ -63,7 +48,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $rows = [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Uncovered) {
-                    $rows[] = $this->uncoveredRow($rule, $reportUncoveredAsError);
+                    $rows[] = $this->uncoveredRow($rule, $outputFormatterInput->getFailOnUncovered());
                 } else {
                     $rows[] = $this->violationRow($rule);
                 }
@@ -80,7 +65,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $this->printWarnings($context, $output);
         }
 
-        $this->printSummary($context, $output, $reportUncoveredAsError);
+        $this->printSummary($context, $output, $outputFormatterInput->getFailOnUncovered());
     }
 
     /**
