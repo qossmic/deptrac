@@ -20,7 +20,7 @@ class OutputFormatterFactory
     public function __construct(iterable $formatters)
     {
         foreach ($formatters as $formatter) {
-            $this->formatters[$formatter->getName()] = $formatter;
+            $this->formatters[$formatter::getName()] = $formatter;
         }
     }
 
