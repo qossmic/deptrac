@@ -20,6 +20,11 @@ use function tempnam;
 
 abstract class GraphVizOutputFormatter implements OutputFormatterInterface
 {
+    public static function getConfigName(): string
+    {
+        return 'graphviz';
+    }
+
     public function finish(
         Context $context,
         Output $output,

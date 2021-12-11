@@ -24,6 +24,11 @@ final class TableOutputFormatter implements OutputFormatterInterface
         return 'table';
     }
 
+    public static function getConfigName(): string
+    {
+        return self::getName();
+    }
+
     public function finish(
         Context $context,
         Output $output,

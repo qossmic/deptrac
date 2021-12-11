@@ -23,6 +23,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         return 'json';
     }
 
+    public static function getConfigName(): string
+    {
+        return self::getName();
+    }
+
     /**
      * {@inheritdoc}
      *

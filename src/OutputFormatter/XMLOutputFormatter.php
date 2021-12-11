@@ -22,6 +22,11 @@ final class XMLOutputFormatter implements OutputFormatterInterface
         return 'xml';
     }
 
+    public static function getConfigName(): string
+    {
+        return self::getName();
+    }
+
     /**
      * {@inheritdoc}
      *

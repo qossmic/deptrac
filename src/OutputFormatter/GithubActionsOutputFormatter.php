@@ -19,6 +19,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         return 'github-actions';
     }
 
+    public static function getConfigName(): string
+    {
+        return self::getName();
+    }
+
     /**
      * {@inheritdoc}
      */

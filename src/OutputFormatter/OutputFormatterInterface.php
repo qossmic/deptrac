@@ -18,6 +18,11 @@ interface OutputFormatterInterface
     public static function getName(): string;
 
     /**
+     * Name of the section in configuration file.
+     */
+    public static function getConfigName(): string;
+
+    /**
      * Renders the final result.
      */
     public function finish(

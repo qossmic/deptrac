@@ -20,6 +20,11 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         return 'console';
     }
 
+    public static function getConfigName(): string
+    {
+        return self::getName();
+    }
+
     public function finish(
         Context $context,
         Output $output,

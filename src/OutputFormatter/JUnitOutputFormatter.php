@@ -18,12 +18,16 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
-    public const DUMP_XML = 'junit-dump-xml';
     public const DEFAULT_PATH = './junit-report.xml';
 
     public static function getName(): string
     {
         return 'junit';
+    }
+
+    public static function getConfigName(): string
+    {
+        return self::getName();
     }
 
     /**
@@ -38,11 +42,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($context);
 
-        $dumpXmlPath = $outputFormatterInput->getOutputPath();
-        if (null !== $dumpXmlPath) {
-            file_put_contents($dumpXmlPath, $xml);
-            $output->writeLineFormatted('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
-        }
+        $dumpXmlPath = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        file_put_contents($dumpXmlPath, $xml);
+        $output->writeLineFormatted('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
     }
 
     /**

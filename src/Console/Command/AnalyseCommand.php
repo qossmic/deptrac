@@ -111,7 +111,7 @@ class AnalyseCommand extends Command
                         null === $input->getOption('output') ? null : (string) $input->getOption('output'),
                         (bool) $input->getOption(self::OPTION_REPORT_SKIPPED),
                         (bool) $input->getOption(self::OPTION_REPORT_UNCOVERED),
-                        $failOnUncovered, $configuration->getFormatterConfig($formatter::getName())
+                        $failOnUncovered, $configuration->getFormatterConfig($formatter::getConfigName())
                     )
                 );
             } catch (Exception $ex) {
