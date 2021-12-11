@@ -250,10 +250,10 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                 $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
                 $graph->link($edge);
                 if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge->setAttribute('label', (string) $layerViolations[$layer][$layerDependOn]);
-                    $edge->setAttribute('color', 'red');
+                    $edge->setLabel((string) $layerViolations[$layer][$layerDependOn]);
+                    $edge->setColor('red');
                 } else {
-                    $edge->setAttribute('label', (string) $layerDependOnCount);
+                    $edge->setLabel((string) $layerDependOnCount);
                 }
             }
         }
