@@ -18,12 +18,16 @@ use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use staabm\PHPUnitCrossOs\Comparator\EolAgnosticString;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\CrossOsAgnosticEqualsTrait;
 
 class BaselineOutputFormatterTest extends TestCase
 {
+    use CrossOsAgnosticEqualsTrait;
+
     public function testGetName(): void
     {
         static::assertEquals('baseline', (new BaselineOutputFormatter())->getName());
@@ -111,7 +115,7 @@ class BaselineOutputFormatterTest extends TestCase
             );
 
             static::assertEquals(
-                $expectedOutput,
+                new EolAgnosticString($expectedOutput),
                 file_get_contents($generatedBaselineFile)
             );
         } finally {

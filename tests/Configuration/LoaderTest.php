@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Configuration;
 
+use Tests\Qossmic\Deptrac\CrossOsAgnosticEqualsTrait;
 use function array_map;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\Loader;
@@ -35,7 +36,7 @@ final class LoaderTest extends TestCase
         self::assertSame(
             [
                 'currentWorkingDirectory' => __DIR__,
-                'depfileDirectory' => __DIR__.'/Fixtures',
+                'depfileDirectory' =>Path::normalize( __DIR__.'/Fixtures'),
             ],
             $configuration->getParameters()
         );
