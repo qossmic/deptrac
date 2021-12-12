@@ -16,6 +16,7 @@ use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use staabm\PHPUnitCrossOs\Comparator\EolAgnosticString;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -62,7 +63,7 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertEquals(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertEquals(new EolAgnosticString(sprintf("Script dumped to %s\n", $dotFile)), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
@@ -109,7 +110,7 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertEquals(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertEquals(new EolAgnosticString(sprintf("Script dumped to %s\n", $dotFile)), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
 
         unlink($dotFile);

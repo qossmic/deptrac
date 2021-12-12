@@ -21,6 +21,7 @@ use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
 use Qossmic\Deptrac\RulesetEngine\Warning;
+use staabm\PHPUnitCrossOs\Comparator\EolAgnosticString;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -54,7 +55,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
             ])
         );
 
-        self::assertEquals($expectedOutput, $bufferedOutput->fetch());
+        self::assertEquals(new EolAgnosticString($expectedOutput), $bufferedOutput->fetch());
     }
 
     public function finishProvider(): iterable
@@ -205,7 +206,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         );
 
         self::assertEquals(
-            "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
+            new EolAgnosticString("::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n"),
             $bufferedOutput->fetch()
         );
     }

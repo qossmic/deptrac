@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\File\FileHelper;
 use Qossmic\Deptrac\PathNameFilterIterator;
 use SplFileInfo;
+use staabm\PHPUnitCrossOs\Comparator\DirSeparatorAgnosticString;
 
 final class PathNameFilterIteratorTest extends TestCase
 {
@@ -23,7 +24,7 @@ final class PathNameFilterIteratorTest extends TestCase
 
         $values = array_map(
             static function (SplFileInfo $fileInfo) {
-                return $fileInfo->getPathname();
+                return (new DirSeparatorAgnosticString($fileInfo->getPathname()))->getNormalized();
             },
             iterator_to_array($iterator, false)
         );

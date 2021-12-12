@@ -3,18 +3,18 @@
 namespace Tests\Qossmic\Deptrac;
 
 use SebastianBergmann\Comparator\Factory;
-use staabm\PHPUnitCrossOs\Comparator\CrossOsAgnosticStringComparator;
+use staabm\PHPUnitCrossOs\Comparator\CrossOsAgnosticComparator;
 
 trait CrossOsAgnosticEqualsTrait {
     /**
-     * @var CrossOsAgnosticStringComparator
+     * @var CrossOsAgnosticComparator
      */
     private $comparator;
 
     public function setUp(): void
     {
-        // make assertEquals* comparisons PHP_EOL and DIRECTORY_SEPARATOR agnostic
-        $this->comparator = new CrossOsAgnosticStringComparator();
+        // make assert* comparisons support EolAgnosticString and DirSeparatorAgnosticString aware
+        $this->comparator = new CrossOsAgnosticComparator();
 
         $factory = Factory::getInstance();
         $factory->register($this->comparator);

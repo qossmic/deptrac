@@ -16,6 +16,7 @@ use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
+use staabm\PHPUnitCrossOs\Comparator\EolAgnosticString;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,7 +52,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
 
-        self::assertSame("Start to create an AstMap for 9999999 Files.\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("Start to create an AstMap for 9999999 Files.\n"), $symfonyOutput->fetch());
     }
 
     public function testOnPostCreateAstMapEventWithVerboseVerbosity(): void
@@ -62,7 +63,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
-        self::assertSame("AstMap created.\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("AstMap created.\n"), $symfonyOutput->fetch());
     }
 
     public function testOnAstFileAnalysedEventWithVerboseVerbosity(): void
@@ -73,7 +74,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onAstFileAnalysedEvent(new AstFileAnalysedEvent('foo.php'));
 
-        self::assertSame("Parsing File foo.php\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("Parsing File foo.php\n"), $symfonyOutput->fetch());
     }
 
     public function testOnAstFileSyntaxErrorEvent(): void
@@ -86,7 +87,7 @@ final class ConsoleSubscriberTest extends TestCase
             new AstFileSyntaxErrorEvent('foo.php', 'Invalid')
         );
 
-        self::assertSame("\nSyntax Error on File foo.php\nInvalid\n\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("\nSyntax Error on File foo.php\nInvalid\n\n"), $symfonyOutput->fetch());
     }
 
     public function testOnPreDependencyEmit(): void
@@ -97,7 +98,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
 
-        self::assertSame("start emitting dependencies \"emitter-name\"\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("start emitting dependencies \"emitter-name\"\n"), $symfonyOutput->fetch());
     }
 
     public function testOnPostDependencyEmit(): void
@@ -108,7 +109,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostDependencyEmit(new PostEmitEvent());
 
-        self::assertSame("end emitting dependencies\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("end emitting dependencies\n"), $symfonyOutput->fetch());
     }
 
     public function testOnPreDependencyFlatten(): void
@@ -119,7 +120,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
 
-        self::assertSame("start flatten dependencies\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("start flatten dependencies\n"), $symfonyOutput->fetch());
     }
 
     public function testOnPostDependencyFlatten(): void
@@ -130,6 +131,6 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostDependencyFlatten(new PostFlattenEvent());
 
-        self::assertSame("end flatten dependencies\n", $symfonyOutput->fetch());
+        self::assertEquals(new EolAgnosticString("end flatten dependencies\n"), $symfonyOutput->fetch());
     }
 }
