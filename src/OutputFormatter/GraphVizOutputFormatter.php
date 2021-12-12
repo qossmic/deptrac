@@ -42,8 +42,8 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
             $graph->setAttribute('compound', 'true');
         }
         $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
-        $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
         $this->addNodesToGraph($graph, $nodes, $outputConfig);
+        $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
         $this->output($graph, $output, $outputFormatterInput);
     }
 

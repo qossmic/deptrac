@@ -122,12 +122,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
-            [
-                GraphVizOutputFormatter::DISPLAY => false,
-                GraphVizOutputFormatter::DUMP_IMAGE => false,
-                GraphVizOutputFormatter::DUMP_DOT => $dotFile,
-                GraphVizOutputFormatter::DUMP_HTML => false,
-            ],
+            $dotFile,
+            false,
+            false,
+            false,
             [
                 'groups' => [
                     'User' => [
@@ -143,7 +141,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             ]
         );
 
-        (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+        (new GraphVizOutputDotFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups-point.dot', $dotFile);
