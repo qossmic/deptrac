@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dfb670f4fee894b799e69b5584974f69",
+    "content-hash": "0cce8edac4a083c1648f987a46120441",
     "packages": [
         {
             "name": "composer/pcre",
@@ -2386,16 +2386,16 @@
         },
         {
             "name": "staabm/phpunit-cross-os",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/staabm/phpunit-cross-os.git",
-                "reference": "c94bad5329a167fdb4b02ed4dfe92918e167cdc6"
+                "reference": "e9653f982075d000b0f86b47fe1d79ca311d4c20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/staabm/phpunit-cross-os/zipball/c94bad5329a167fdb4b02ed4dfe92918e167cdc6",
-                "reference": "c94bad5329a167fdb4b02ed4dfe92918e167cdc6",
+                "url": "https://api.github.com/repos/staabm/phpunit-cross-os/zipball/e9653f982075d000b0f86b47fe1d79ca311d4c20",
+                "reference": "e9653f982075d000b0f86b47fe1d79ca311d4c20",
                 "shasum": ""
             },
             "require": {
@@ -2403,6 +2403,7 @@
                 "sebastian/comparator": "^4.0"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "2.19.3",
                 "phpstan/extension-installer": "^1.1",
                 "phpstan/phpstan": "^1.2",
                 "phpstan/phpstan-phpunit": "^1.0",
@@ -2420,7 +2421,7 @@
             ],
             "support": {
                 "issues": "https://github.com/staabm/phpunit-cross-os/issues",
-                "source": "https://github.com/staabm/phpunit-cross-os/tree/0.2.2"
+                "source": "https://github.com/staabm/phpunit-cross-os/tree/0.2.3"
             },
             "funding": [
                 {
@@ -2428,7 +2429,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-29T16:52:59+00:00"
+            "time": "2021-12-12T09:38:40+00:00"
         }
     ],
     "aliases": [],
