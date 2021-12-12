@@ -77,9 +77,9 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         $context = new Context([
                 new Allowed($dependency, 'User Frontend', 'User Backend'),
-                new Allowed($dependency, 'Admin Frontend', 'Admin Backend'),
-                new Allowed($dependency, 'User Frontend', 'Admin Frontend'),
-                new Allowed($dependency, 'User Backend', 'Admin Frontend'),
+                new Allowed($dependency, 'Admin', 'Admin Backend'),
+                new Allowed($dependency, 'User Frontend', 'Admin'),
+                new Allowed($dependency, 'User Backend', 'Admin'),
         ], [], []);
 
         $bufferedOutput = new BufferedOutput();
@@ -97,7 +97,7 @@ final class GraphVizOutputFormatterTest extends TestCase
                         'User Backend',
                     ],
                     'Admin' => [
-                        'Admin Frontend',
+                        'Admin',
                         'Admin Backend',
                     ],
                 ],
@@ -108,6 +108,54 @@ final class GraphVizOutputFormatterTest extends TestCase
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
+
+        unlink($dotFile);
+    }
+
+    public function testPointToGroups(): void
+    {
+        $dotFile = __DIR__.'/data/graphviz.dot';
+
+        $dependency = new Dependency(
+            ClassLikeName::fromFQCN('ClassA'),
+            ClassLikeName::fromFQCN('ClassC'),
+            FileOccurrence::fromFilepath('classA.php', 0)
+        );
+
+        $context = new Context([
+                                   new Allowed($dependency, 'User Frontend', 'User Backend'),
+                                   new Allowed($dependency, 'Admin', 'Admin Backend'),
+                                   new Allowed($dependency, 'User Frontend', 'Admin'),
+                                   new Allowed($dependency, 'User Backend', 'Admin'),
+                               ], [], []);
+
+        $bufferedOutput = new BufferedOutput();
+        $input = new OutputFormatterInput(
+            [
+                GraphVizOutputFormatter::DISPLAY => false,
+                GraphVizOutputFormatter::DUMP_IMAGE => false,
+                GraphVizOutputFormatter::DUMP_DOT => $dotFile,
+                GraphVizOutputFormatter::DUMP_HTML => false,
+            ],
+            [
+                'groups' => [
+                    'User' => [
+                        'User Frontend',
+                        'User Backend',
+                    ],
+                    'Admin' => [
+                        'Admin',
+                        'Admin Backend',
+                    ],
+                ],
+                'pointToGroups' => true,
+            ]
+        );
+
+        (new GraphVizOutputFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+
+        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertFileEquals(__DIR__.'/data/graphviz-groups-point.dot', $dotFile);
 
         unlink($dotFile);
     }

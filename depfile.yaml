@@ -156,3 +156,4 @@ formatters:
       Console:
         - Console
         - Console Formatters
+    pointToGroups: true

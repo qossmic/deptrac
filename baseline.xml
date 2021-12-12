@@ -32,7 +32,7 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="109">
+    <MixedMethodCall occurrences="112">
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -56,6 +56,7 @@
       <code>arrayPrototype</code>
       <code>booleanNode</code>
       <code>booleanNode</code>
+      <code>booleanNode</code>
       <code>cannotBeEmpty</code>
       <code>cannotBeEmpty</code>
       <code>children</code>
@@ -64,10 +65,12 @@
       <code>children</code>
       <code>children</code>
       <code>children</code>
+      <code>defaultFalse</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>

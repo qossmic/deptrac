@@ -61,14 +61,17 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $layerViolations = $this->calculateViolations($context->violations());
         $layersDependOnLayers = $this->calculateLayerDependencies($context->rules());
 
-        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>} $outputConfig */
+        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool} $outputConfig */
         $outputConfig = $outputFormatterInput->getConfig();
         $outputConfig = ConfigurationGraphViz::fromArray($outputConfig);
 
         $graph = Graph::create('');
+        if ($outputConfig->getPointToGroups()) {
+            $graph->setAttribute('compound', 'true');
+        }
         $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
-        $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
         $this->addNodesToGraph($graph, $nodes, $outputConfig);
+        $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
 
         if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
             $this->display($graph);
@@ -248,6 +251,9 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
                     continue;
                 }
                 $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
+                if ($outputConfig->getPointToGroups() && $graph->hasGraph($this->getSubgraphName($layerDependOn))) {
+                    $edge->setLhead($this->getSubgraphName($layerDependOn));
+                }
                 $graph->link($edge);
                 if (isset($layerViolations[$layer][$layerDependOn])) {
                     $edge->setLabel((string) $layerViolations[$layer][$layerDependOn]);
@@ -265,7 +271,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     private function addNodesToGraph(Graph $graph, array $nodes, ConfigurationGraphViz $outputConfig): void
     {
         foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
-            $subgraph = Graph::create('cluster_'.$groupName)
+            $subgraph = Graph::create($this->getSubgraphName($groupName))
                 ->setAttribute('label', $groupName);
             $graph->addGraph($subgraph);
 
@@ -296,5 +302,10 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $graph->export('png', $filename);
 
         return $filename;
+    }
+
+    private function getSubgraphName(string $groupName): string
+    {
+        return 'cluster_'.$groupName;
     }
 }

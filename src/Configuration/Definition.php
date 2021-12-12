@@ -92,6 +92,7 @@ final class Definition implements ConfigurationInterface
                                         ->scalarPrototype()->end()
                                     ->end()
                                 ->end()
+                                ->booleanNode('pointToGroups')->defaultFalse()->end()
                             ->end()
                         ->end()
                     ->end()
