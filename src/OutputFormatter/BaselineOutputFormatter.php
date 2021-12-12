@@ -15,23 +15,16 @@ use Symfony\Component\Yaml\Yaml;
 
 final class BaselineOutputFormatter implements OutputFormatterInterface
 {
-    private const DUMP_BASELINE = 'baseline-dump';
+    private const DEFAULT_PATH = './depfile.baseline.yml';
 
-    public function getName(): string
+    public static function getName(): string
     {
         return 'baseline';
     }
 
-    public function configureOptions(): array
+    public static function getConfigName(): string
     {
-        return [
-            OutputFormatterOption::newValueOption(self::DUMP_BASELINE, 'path to a dumped baseline file', './depfile.baseline.yml'),
-        ];
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return false;
+        return self::getName();
     }
 
     public function finish(
@@ -46,9 +39,8 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
         }
 
         ksort($groupedViolations);
-
-        if ($baselineFile = (string) $outputFormatterInput->getOption(self::DUMP_BASELINE)) {
-            file_put_contents(
+        $baselineFile = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        file_put_contents(
                 $baselineFile,
                 Yaml::dump(
                     [
@@ -58,8 +50,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
                     2
                 )
             );
-            $output->writeLineFormatted('<info>Baseline dumped to '.realpath($baselineFile).'</info>');
-        }
+        $output->writeLineFormatted('<info>Baseline dumped to '.realpath($baselineFile).'</info>');
     }
 
     /**

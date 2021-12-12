@@ -4,45 +4,49 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use InvalidArgumentException;
-
 class OutputFormatterInput
 {
-    /**
-     * @var mixed[]
-     */
-    private array $options;
-
     /** @var array<string, mixed> */
     private array $config;
 
+    private ?string $outputPath;
+
+    private bool $reportSkipped;
+
+    private bool $reportUncovered;
+
+    private bool $failOnUncovered;
+
     /**
-     * @param mixed[]              $options
      * @param array<string, mixed> $config
      */
-    public function __construct(array $options, array $config = [])
+    public function __construct(?string $outputPath, bool $reportSkipped, bool $reportUncovered, bool $failOnUncovered, array $config = [])
     {
-        $this->options = $options;
+        $this->outputPath = $outputPath;
+        $this->reportSkipped = $reportSkipped;
+        $this->reportUncovered = $reportUncovered;
+        $this->failOnUncovered = $failOnUncovered;
         $this->config = $config;
     }
 
-    /**
-     * @throws InvalidArgumentException on not configured option
-     *
-     * @return mixed
-     */
-    public function getOption(string $name)
+    public function getOutputPath(): ?string
     {
-        if (!array_key_exists($name, $this->options)) {
-            throw new InvalidArgumentException('option '.$name.' is not configured.');
-        }
-
-        return $this->options[$name];
+        return $this->outputPath;
     }
 
-    public function getOptionAsBoolean(string $name): bool
+    public function getReportSkipped(): bool
     {
-        return true === filter_var($this->getOption($name), FILTER_VALIDATE_BOOLEAN);
+        return $this->reportSkipped;
+    }
+
+    public function getReportUncovered(): bool
+    {
+        return $this->reportUncovered;
+    }
+
+    public function getFailOnUncovered(): bool
+    {
+        return $this->failOnUncovered;
     }
 
     /**

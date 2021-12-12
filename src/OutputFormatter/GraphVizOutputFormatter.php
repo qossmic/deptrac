@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use function base64_encode;
-use function file_get_contents;
 use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
@@ -20,37 +18,11 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 use function sys_get_temp_dir;
 use function tempnam;
 
-final class GraphVizOutputFormatter implements OutputFormatterInterface
+abstract class GraphVizOutputFormatter implements OutputFormatterInterface
 {
-    private const NAME = 'graphviz';
-    public const DISPLAY = self::NAME.'-display';
-    public const DUMP_IMAGE = self::NAME.'-dump-image';
-    public const DUMP_DOT = self::NAME.'-dump-dot';
-    public const DUMP_HTML = self::NAME.'-dump-html';
-    /** @var positive-int */
-    private const DELAY_OPEN = 2;
-
-    public function getName(): string
+    public static function getConfigName(): string
     {
-        return self::NAME;
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @return OutputFormatterOption[]
-     */
-    public function configureOptions(): array
-    {
-        return [
-            OutputFormatterOption::newValueOption(self::DISPLAY, 'Should try to open graphviz image.', true),
-            OutputFormatterOption::newValueOption(self::DUMP_IMAGE, 'Path to a dumped png file.'),
-            OutputFormatterOption::newValueOption(self::DUMP_DOT, 'Path to a dumped dot file.'),
-            OutputFormatterOption::newValueOption(self::DUMP_HTML, 'Path to a dumped html file.'),
-        ];
+        return 'graphviz';
     }
 
     public function finish(
@@ -72,72 +44,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
         $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
         $this->addNodesToGraph($graph, $nodes, $outputConfig);
         $this->connectEdges($graph, $nodes, $outputConfig, $layersDependOnLayers, $layerViolations);
-
-        if ($outputFormatterInput->getOptionAsBoolean(self::DISPLAY)) {
-            $this->display($graph);
-        }
-
-        if ($dumpImagePath = (string) $outputFormatterInput->getOption(self::DUMP_IMAGE)) {
-            $imageFile = new \SplFileInfo($dumpImagePath);
-            if (!is_dir($imageFile->getPath()) && !mkdir($imageFile->getPath())) {
-                throw new \LogicException(sprintf('Unable to dump image: Path "%s" does not exist and is not writable.', $imageFile->getPath()));
-            }
-            try {
-                $graph->export('png', $dumpImagePath);
-                $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
-            } catch (Exception $exception) {
-                throw new \LogicException('Unable to display output: '.$exception->getMessage());
-            }
-        }
-
-        if ($dumpDotPath = (string) $outputFormatterInput->getOption(self::DUMP_DOT)) {
-            file_put_contents($dumpDotPath, (string) $graph);
-            $output->writeLineFormatted('<info>Script dumped to '.realpath($dumpDotPath).'</info>');
-        }
-
-        if ($dumpHtmlPath = (string) $outputFormatterInput->getOption(self::DUMP_HTML)) {
-            try {
-                $filename = $this->getTempImage($graph);
-                $imageData = file_get_contents($filename);
-                if (false === $imageData) {
-                    throw new \RuntimeException('Unable to create temp file for output.');
-                }
-                file_put_contents(
-                    $dumpHtmlPath,
-                    '<img src="data:image/png;base64,'.base64_encode($imageData).'" />'
-                );
-                $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
-            } catch (Exception $exception) {
-                throw new \LogicException('Unable to generate HTML file: '.$exception->getMessage());
-            } finally {
-                /** @psalm-suppress RedundantCondition */
-                if (isset($filename) && false !== $filename) {
-                    unlink($filename);
-                }
-            }
-        }
-    }
-
-    public function display(Graph $graph): void
-    {
-        try {
-            $filename = $this->getTempImage($graph);
-            static $next = 0;
-            if ($next > microtime(true)) {
-                sleep(self::DELAY_OPEN);
-            }
-
-            if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) {
-                exec('start "" '.escapeshellarg($filename).' >NUL');
-            } elseif ('DARWIN' === strtoupper(PHP_OS)) {
-                exec('open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
-            } else {
-                exec('xdg-open '.escapeshellarg($filename).' > /dev/null 2>&1 &');
-            }
-            $next = microtime(true) + (float) self::DELAY_OPEN;
-        } catch (Exception $exception) {
-            throw new \LogicException('Unable to display output: '.$exception->getMessage());
-        }
+        $this->output($graph, $output, $outputFormatterInput);
     }
 
     /**
@@ -292,7 +199,7 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     /**
      * @throws Exception
      */
-    private function getTempImage(Graph $graph): string
+    protected function getTempImage(Graph $graph): string
     {
         $filename = tempnam(sys_get_temp_dir(), 'deptrac');
         if (false === $filename) {
@@ -308,4 +215,6 @@ final class GraphVizOutputFormatter implements OutputFormatterInterface
     {
         return 'cluster_'.$groupName;
     }
+
+    abstract protected function output(Graph $graph, Output $output, OutputFormatterInput $outputFormatterInput): void;
 }

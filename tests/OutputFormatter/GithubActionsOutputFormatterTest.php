@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -24,7 +23,6 @@ use Qossmic\Deptrac\RulesetEngine\Warning;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Tests\Qossmic\Deptrac\EmptyEnv;
 
 final class GithubActionsOutputFormatterTest extends TestCase
 {
@@ -44,11 +42,12 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, $errors, $warnings),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                                         AnalyseCommand::OPTION_REPORT_SKIPPED => true,
-                                         AnalyseCommand::OPTION_REPORT_UNCOVERED => true,
-                                         AnalyseCommand::OPTION_FAIL_ON_UNCOVERED => false,
-            ])
+            new OutputFormatterInput(
+                null,
+                true,
+                true,
+                false
+            )
         );
 
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
@@ -165,11 +164,12 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                                         AnalyseCommand::OPTION_REPORT_SKIPPED => false,
-                                         AnalyseCommand::OPTION_REPORT_UNCOVERED => true,
-                                         AnalyseCommand::OPTION_FAIL_ON_UNCOVERED => false,
-            ])
+            new OutputFormatterInput(
+                null,
+                false,
+                true,
+                false,
+            )
         );
 
         self::assertSame('', $bufferedOutput->fetch());
@@ -194,27 +194,18 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                                         AnalyseCommand::OPTION_REPORT_SKIPPED => false,
-                                         AnalyseCommand::OPTION_REPORT_UNCOVERED => true,
-                                         AnalyseCommand::OPTION_FAIL_ON_UNCOVERED => true,
-            ])
+            new OutputFormatterInput(
+                null,
+                false,
+                true,
+                true,
+            )
         );
 
         self::assertSame(
             "::error file=/home/testuser/originalA.php,line=12::ACME\OriginalA has uncovered dependency on ACME\OriginalB (LayerA)\n",
             $bufferedOutput->fetch()
         );
-    }
-
-    public function testGithubActionsOutputFormatterIsNotEnabledByDefault(): void
-    {
-        self::assertFalse((new GithubActionsOutputFormatter(new EmptyEnv()))->enabledByDefault());
-    }
-
-    public function testGetOptions(): void
-    {
-        self::assertCount(0, (new GithubActionsOutputFormatter(new EmptyEnv()))->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

@@ -11,16 +11,14 @@ class AnalyseOptions
 
     private bool $noProgress;
 
-    /** @var string[] */
-    private array $formatters;
+    private string $formatter;
 
     private bool $failOnUncovered;
 
     /**
-     * @param mixed    $configurationFile
-     * @param string[] $formatters
+     * @param mixed $configurationFile
      */
-    public function __construct($configurationFile, bool $noProgress, array $formatters, bool $failOnUncovered)
+    public function __construct($configurationFile, bool $noProgress, string $formatter, bool $failOnUncovered)
     {
         if (!is_string($configurationFile)) {
             throw InvalidArgumentException::invalidDepfileType($configurationFile);
@@ -28,7 +26,7 @@ class AnalyseOptions
 
         $this->configurationFile = $configurationFile;
         $this->noProgress = $noProgress;
-        $this->formatters = $formatters;
+        $this->formatter = $formatter;
         $this->failOnUncovered = $failOnUncovered;
     }
 
@@ -42,12 +40,9 @@ class AnalyseOptions
         return !$this->noProgress;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getFormatters(): array
+    public function getFormatter(): string
     {
-        return $this->formatters;
+        return $this->formatter;
     }
 
     public function failOnUncovered(): bool

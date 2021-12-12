@@ -127,20 +127,14 @@ final class JUnitOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput(new BufferedOutput()),
-            new OutputFormatterInput([
-                JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
-            ])
+            new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
+            false, false, false)
         );
 
         self::assertXmlFileEqualsXmlFile(
             __DIR__.'/data/'.self::$actual_junit_report_file,
             __DIR__.'/data/'.$expectedOutputFile
         );
-    }
-
-    public function testGetOptions(): void
-    {
-        self::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
     }
 
     public function testUnmatchedSkipped(): void
@@ -151,9 +145,8 @@ final class JUnitOutputFormatterTest extends TestCase
                 new Error('Skipped violation "Class1" for "Class2" was not matched.'),
             ], []),
             $this->createSymfonyOutput(new BufferedOutput()),
-            new OutputFormatterInput([
-                JUnitOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_junit_report_file,
-            ])
+            new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
+            false, false, false)
         );
 
         self::assertXmlFileEqualsXmlFile(

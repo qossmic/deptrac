@@ -2,10 +2,8 @@
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\Env;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
@@ -13,32 +11,17 @@ use Qossmic\Deptrac\RulesetEngine\Violation;
 
 final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
-    private Env $env;
-
-    public function __construct(Env $env = null)
-    {
-        $this->env = $env ?? new Env();
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function getName(): string
+    public static function getName(): string
     {
         return 'github-actions';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(): array
+    public static function getConfigName(): string
     {
-        return [];
-    }
-
-    public function enabledByDefault(): bool
-    {
-        return false !== $this->env->get('GITHUB_ACTIONS');
+        return self::getName();
     }
 
     /**
@@ -46,15 +29,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
-        $reportSkipped = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_SKIPPED);
-        $reportUncovered = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_REPORT_UNCOVERED);
-        $reportUncoveredAsError = $outputFormatterInput->getOptionAsBoolean(AnalyseCommand::OPTION_FAIL_ON_UNCOVERED);
-
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
-            if (!$reportSkipped && $rule instanceof SkippedViolation) {
+            if ($rule instanceof SkippedViolation && !$outputFormatterInput->getReportSkipped()) {
                 continue;
             }
 
@@ -82,8 +61,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             ));
         }
 
-        if ($reportUncovered && $context->hasUncovered()) {
-            $this->printUncovered($context, $output, $reportUncoveredAsError);
+        if ($outputFormatterInput->getReportUncovered() && $context->hasUncovered()) {
+            $this->printUncovered($context, $output, $outputFormatterInput->getFailOnUncovered());
         }
 
         if ($context->hasErrors()) {

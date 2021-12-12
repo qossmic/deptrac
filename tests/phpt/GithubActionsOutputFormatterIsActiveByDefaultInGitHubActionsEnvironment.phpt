@@ -7,9 +7,7 @@ GITHUB_ACTIONS=true
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-var_dump((new \Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter())->enabledByDefault());
-var_dump((new \Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter())->enabledByDefault());
+var_dump(\Qossmic\Deptrac\Console\Command\AnalyseCommand::getDefaultFormatter());
 
 --EXPECT--
-bool(false)
-bool(true)
+string(14) "github-actions"

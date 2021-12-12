@@ -51,7 +51,10 @@ use Qossmic\Deptrac\LayerAnalyser;
 use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputFormatter;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDisplayFormatter;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDotFormatter;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputHtmlFormatter;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputImageFormatter;
 use Qossmic\Deptrac\OutputFormatter\JsonOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
@@ -172,7 +175,16 @@ return static function (ContainerConfigurator $container): void {
         ->set(GithubActionsOutputFormatter::class)
         ->tag('output_formatter');
     $services
-        ->set(GraphVizOutputFormatter::class)
+        ->set(GraphVizOutputDisplayFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(GraphVizOutputImageFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(GraphVizOutputDotFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(GraphVizOutputHtmlFormatter::class)
         ->tag('output_formatter');
     $services
         ->set(JUnitOutputFormatter::class)

@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
 use Qossmic\Deptrac\RulesetEngine\Context;
@@ -122,20 +121,13 @@ final class XMLOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
-            new OutputFormatterInput([
-                XMLOutputFormatter::DUMP_XML => __DIR__.'/data/'.self::$actual_xml_report_file,
-            ])
+            new OutputFormatterInput(__DIR__.'/data/'.self::$actual_xml_report_file, false, false, false)
         );
 
         self::assertXmlFileEqualsXmlFile(
             __DIR__.'/data/'.self::$actual_xml_report_file,
             __DIR__.'/data/'.$expectedOutputFile
         );
-    }
-
-    public function testGetOptions(): void
-    {
-        self::assertCount(1, (new JUnitOutputFormatter())->configureOptions());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

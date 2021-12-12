@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
@@ -330,23 +329,14 @@ class TableOutputFormatterTest extends TestCase
         $formatter->finish(
             new Context($rules, $errors, $warnings),
             $output,
-            new OutputFormatterInput([
-                                         AnalyseCommand::OPTION_REPORT_UNCOVERED => $reportUncovered,
-                                         AnalyseCommand::OPTION_REPORT_SKIPPED => $reportSkipped,
-                                         AnalyseCommand::OPTION_FAIL_ON_UNCOVERED => false,
-            ])
+            new OutputFormatterInput(
+                null,
+                $reportSkipped,
+                $reportUncovered,
+                false
+            )
         );
 
         static::assertEquals($expectedOutput, $bufferedOutput->fetch());
-    }
-
-    public function testGetOptions(): void
-    {
-        static::assertCount(0, (new TableOutputFormatter())->configureOptions());
-    }
-
-    public function testConsoleOutputFormatterIsEnabledByDefault(): void
-    {
-        static::assertTrue((new TableOutputFormatter())->enabledByDefault());
     }
 }

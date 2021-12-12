@@ -15,14 +15,12 @@ interface OutputFormatterInterface
      *
      * @example "graphviz"
      */
-    public function getName(): string;
+    public static function getName(): string;
 
     /**
-     * @return OutputFormatterOption[]
+     * Name of the section in configuration file.
      */
-    public function configureOptions(): array;
-
-    public function enabledByDefault(): bool;
+    public static function getConfigName(): string;
 
     /**
      * Renders the final result.
