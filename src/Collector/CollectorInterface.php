@@ -43,4 +43,6 @@ interface CollectorInterface
         AstMap $astMap,
         Registry $collectorRegistry
     ): bool;
+
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool;
 }

@@ -26,6 +26,11 @@ final class TokenLayerResolverTest extends TestCase
             $this->isInstanceOf(AstMap::class),
             $this->isInstanceOf(Registry::class)
         )->willReturn($return);
+        $collector->method('resolvable')->with(
+            $this->isType('array'),
+            $this->isInstanceOf(Registry::class),
+            $this->isType('array')
+        )->willReturn(true);
 
         return $collector;
     }

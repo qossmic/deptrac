@@ -19,6 +19,11 @@ class UsesCollector implements CollectorInterface
         return 'uses';
     }
 
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    {
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */

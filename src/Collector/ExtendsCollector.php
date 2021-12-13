@@ -19,6 +19,11 @@ class ExtendsCollector implements CollectorInterface
         return 'extends';
     }
 
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    {
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */

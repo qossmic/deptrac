@@ -19,6 +19,11 @@ class ImplementsCollector implements CollectorInterface
         return 'implements';
     }
 
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    {
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -19,6 +19,11 @@ class InheritsCollector implements CollectorInterface
         return 'inherits';
     }
 
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    {
+        return true;
+    }
+
     /**
      * {@inheritdoc}
      */

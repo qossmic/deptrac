@@ -11,6 +11,12 @@ abstract class RegexCollector
      */
     abstract protected function getPattern(array $configuration): string;
 
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    {
+        return true;
+    }
+
+
     /**
      * @param array<string, string|array> $configuration
      */
