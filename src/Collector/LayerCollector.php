@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
-use InvalidArgumentException;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\Configuration\ConfigurationCollector;
 

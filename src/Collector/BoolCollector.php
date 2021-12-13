@@ -75,6 +75,7 @@ class BoolCollector implements CollectorInterface
                 return false;
             }
         }
+
         return true;
     }
 
@@ -91,6 +92,7 @@ class BoolCollector implements CollectorInterface
         if (!$configuration['must'] && !$configuration['must_not']) {
             throw new InvalidArgumentException('"bool" collector must have a "must" or a "must_not" attribute.');
         }
+
         return $configuration;
     }
 }

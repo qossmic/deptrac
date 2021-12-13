@@ -7,8 +7,6 @@ namespace Tests\Qossmic\Deptrac\Collector;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
-use Qossmic\Deptrac\Collector\BoolCollector;
-use Qossmic\Deptrac\Collector\CollectorInterface;
 use Qossmic\Deptrac\Collector\LayerCollector;
 use Qossmic\Deptrac\Collector\Registry;
 
@@ -31,5 +29,4 @@ final class LayerCollectorTest extends TestCase
     {
         self::assertEquals('layer', (new LayerCollector())->getType());
     }
-
 }

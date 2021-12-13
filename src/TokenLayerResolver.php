@@ -53,14 +53,13 @@ class TokenLayerResolver implements TokenLayerResolverInterface
             throw new ShouldNotHappenException();
         }
 
-
         /** @var array<string, bool> $layers */
         $layers = [];
 
         $layerRegistry = [];
         $numberOfLayersToResolve = count($this->configuration->getLayers());
         $resolvedBeforeLoop = 0;
-        while(count($layerRegistry) < $numberOfLayersToResolve) {
+        while (count($layerRegistry) < $numberOfLayersToResolve) {
             foreach ($this->configuration->getLayers() as $configurationLayer) {
                 foreach ($configurationLayer->getCollectors() as $configurationCollector) {
                     $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
@@ -70,7 +69,7 @@ class TokenLayerResolver implements TokenLayerResolverInterface
                         $this->configuration->getParameters()
                     );
 
-                    if($collector->resolvable($configuration, $this->collectorRegistry, $layerRegistry)) {
+                    if ($collector->resolvable($configuration, $this->collectorRegistry, $layerRegistry)) {
                         if ($collector->satisfy(
                             $configuration,
                             $astTokenReference,
@@ -86,8 +85,7 @@ class TokenLayerResolver implements TokenLayerResolverInterface
                 }
                 $layerRegistry[] = $configurationLayer->getName();
             }
-            if($resolvedBeforeLoop === count($layerRegistry)) {
-                var_dump($numberOfLayersToResolve);
+            if ($resolvedBeforeLoop === count($layerRegistry)) {
                 throw new \RuntimeException('Circular dependency between layers detected');
             }
             $resolvedBeforeLoop = count($layerRegistry);

@@ -16,7 +16,6 @@ abstract class RegexCollector
         return true;
     }
 
-
     /**
      * @param array<string, string|array> $configuration
      */
