@@ -78,7 +78,6 @@ class TokenLayerResolver implements TokenLayerResolverInterface
                             $layers[$configurationLayer->getName()] = true;
                         }
                     } else {
-                        var_dump($configurationLayer->getName());
                         continue 2;
                     }
                 }

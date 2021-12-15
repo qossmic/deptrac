@@ -22,9 +22,9 @@ interface CollectorInterface
     public function getType(): string;
 
     /**
-     * @param array<string, string|array> $configuration     List of arguments passed for this collector declaration
-     * @param AstMap\AstTokenReference    $astTokenReference Token being checked
-     * @param  ConfigurationLayer[] $allLayersConfiguration
+     * @param array<string, string|array> $configuration          List of arguments passed for this collector declaration
+     * @param AstMap\AstTokenReference    $astTokenReference      Token being checked
+     * @param ConfigurationLayer[]        $allLayersConfiguration
      *
      * @example
      *  For the YAML configuration:

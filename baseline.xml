@@ -31,6 +31,14 @@
       <code>(bool) $options['ignore_uncovered_internal_classes']</code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="src/Configuration/ConfigurationCollector.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$this-&gt;getArgs()</code>
+    </LessSpecificReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>array{type: string, args: array&lt;string, string&gt;}</code>
+    </MoreSpecificReturnType>
+  </file>
   <file src="src/Configuration/Definition.php">
     <MixedMethodCall occurrences="112">
       <code>arrayNode</code>
@@ -158,12 +166,14 @@
     <MixedArgument occurrences="1">
       <code>$mergedConfig['paths']</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>$mergedConfig['paths']</code>
-    </MixedArrayAccess>
     <MixedArrayAssignment occurrences="2">
       <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
       <code>$mergedConfig['parameters']['depfileDirectory']</code>
     </MixedArrayAssignment>
+  </file>
+  <file src="src/TokenLayerResolver.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$this-&gt;parameterResolver-&gt;resolve($configurationLayer-&gt;toArray(), $this-&gt;configuration-&gt;getParameters())</code>
+    </ArgumentTypeCoercion>
   </file>
 </files>
