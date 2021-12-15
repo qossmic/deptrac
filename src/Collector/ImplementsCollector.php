@@ -31,7 +31,8 @@ class ImplementsCollector implements CollectorInterface
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
-        Registry $collectorRegistry
+        Registry $collectorRegistry,
+        array $allLayersConfiguration = []
     ): bool {
         if (!$astTokenReference instanceof AstClassReference) {
             return false;

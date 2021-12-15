@@ -143,6 +143,7 @@ ruleset:
     - Utils
     - AstRunner
     - Dependencies
+    - Application
   Events:
     - Utils
     - Console

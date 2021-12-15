@@ -19,7 +19,8 @@ class BoolCollector implements CollectorInterface
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
-        Registry $collectorRegistry
+        Registry $collectorRegistry,
+        array $allLayersConfiguration = []
     ): bool {
         $configuration = $this->normalizeConfiguration($configuration);
 
@@ -31,7 +32,8 @@ class BoolCollector implements CollectorInterface
                 $configurationForCollector->getArgs(),
                 $astTokenReference,
                 $astMap,
-                $collectorRegistry
+                $collectorRegistry,
+                $allLayersConfiguration
             )) {
                 return false;
             }
@@ -45,7 +47,8 @@ class BoolCollector implements CollectorInterface
                 $configurationForCollector->getArgs(),
                 $astTokenReference,
                 $astMap,
-                $collectorRegistry
+                $collectorRegistry,
+                $allLayersConfiguration
             )) {
                 return false;
             }

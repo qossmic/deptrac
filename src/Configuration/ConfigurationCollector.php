@@ -46,4 +46,12 @@ final class ConfigurationCollector
     {
         return $this->args;
     }
+
+    /**
+     * @return array{type: string, args: array<string, string>}
+     */
+    public function toArray(): array
+    {
+        return $this->getArgs();
+    }
 }

@@ -8,6 +8,7 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 
@@ -59,28 +60,26 @@ class TokenLayerResolver implements TokenLayerResolverInterface
         $layerRegistry = [];
         $numberOfLayersToResolve = count($this->configuration->getLayers());
         $resolvedBeforeLoop = 0;
+        $resolvedLayerConfiguration = $this->getResolvedLayerConfiguration();
         while (count($layerRegistry) < $numberOfLayersToResolve) {
-            foreach ($this->configuration->getLayers() as $configurationLayer) {
+            foreach ($resolvedLayerConfiguration as $configurationLayer) {
                 foreach ($configurationLayer->getCollectors() as $configurationCollector) {
                     $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                    $configuration = $this->parameterResolver->resolve(
-                        $configurationCollector->getArgs(),
-                        $this->configuration->getParameters()
-                    );
-
-                    if ($collector->resolvable($configuration, $this->collectorRegistry, $layerRegistry)) {
+                    if ($collector->resolvable($configurationCollector->getArgs(), $this->collectorRegistry, $layerRegistry)) {
                         if ($collector->satisfy(
-                            $configuration,
+                            $configurationCollector->toArray(),
                             $astTokenReference,
                             $this->astMap,
-                            $this->collectorRegistry
+                            $this->collectorRegistry,
+                            $resolvedLayerConfiguration
                         )
                         ) {
                             $layers[$configurationLayer->getName()] = true;
                         }
                     } else {
-                        break 2;
+                        var_dump($configurationLayer->getName());
+                        continue 2;
                     }
                 }
                 $layerRegistry[] = $configurationLayer->getName();
@@ -95,5 +94,17 @@ class TokenLayerResolver implements TokenLayerResolverInterface
         $layerNames = array_keys($layers);
 
         return $layerNames;
+    }
+
+    /**
+     * @return ConfigurationLayer[]
+     */
+    private function getResolvedLayerConfiguration(): array
+    {
+        return array_map(function (ConfigurationLayer $configurationLayer): ConfigurationLayer {
+            return ConfigurationLayer::fromArray(
+                $this->parameterResolver->resolve($configurationLayer->toArray(), $this->configuration->getParameters())
+            );
+        }, $this->configuration->getLayers());
     }
 }
