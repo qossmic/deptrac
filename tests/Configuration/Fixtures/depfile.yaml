@@ -1,12 +1,13 @@
-paths: ["./examples/Uncovered/"]
+parameters:
+  paths: ["./examples/Uncovered/"]
 
-use_relative_path_from_depfile: false
+  use_relative_path_from_depfile: false
 
-layers:
-  - name: Core
-    collectors:
-      - type: className
-        regex: Core
+  layers:
+    - name: Core
+      collectors:
+        - type: className
+          regex: Core
 
-ruleset:
-  Core: ~
+  ruleset:
+    Core: ~

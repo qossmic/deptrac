@@ -1,1 +1,2 @@
-baseline: non-existent-file.yaml
+parameters:
+  baseline: non-existent-file.yaml

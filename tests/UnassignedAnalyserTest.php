@@ -4,7 +4,7 @@ namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\ContainerBuilder;
+use Qossmic\Deptrac\Console\ServiceContainerBuilder;
 use Qossmic\Deptrac\UnassignedAnalyser;
 use Tests\Qossmic\Deptrac\Fixtures\LayerAnalyser\ClassBar;
 
@@ -31,7 +31,7 @@ class UnassignedAnalyserTest extends TestCase
             'ruleset' => [],
         ]);
 
-        $container = (new ContainerBuilder(__DIR__))->build();
+        $container = (new ServiceContainerBuilder(__DIR__))->build();
         /** @var UnassignedAnalyser $analyser */
         $analyser = $container->get(UnassignedAnalyser::class);
         $classLikes = $analyser->analyse($configuration);

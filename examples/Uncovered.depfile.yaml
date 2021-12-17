@@ -1,9 +1,10 @@
-paths: ["./Uncovered/"]
-layers:
-  - name: Core
-    collectors:
-      - type: className
-        regex: Core
+parameters:
+  paths: ["./Uncovered/"]
+  layers:
+    - name: Core
+      collectors:
+        - type: className
+          regex: Core
 
-ruleset:
-  Core: ~
+  ruleset:
+    Core: ~

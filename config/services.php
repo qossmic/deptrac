@@ -275,7 +275,8 @@ return static function (ContainerConfigurator $container): void {
     /* Commands */
     $services
         ->set(InitCommand::class)
-        ->args([service(Dumper::class)]);
+        ->args([service(Dumper::class)])
+        ->tag('console.command');
 
     $services
         ->set(AnalyseRunner::class)
@@ -283,7 +284,8 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(AnalyseCommand::class)
-        ->autowire();
+        ->autowire()
+        ->tag('console.command');
 
     $services
         ->set(DebugLayerRunner::class)
@@ -291,7 +293,8 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(DebugLayerCommand::class)
-        ->autowire();
+        ->autowire()
+        ->tag('console.command');
 
     $services
         ->set(DebugTokenRunner::class)
@@ -299,7 +302,8 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(DebugTokenCommand::class)
-        ->autowire();
+        ->autowire()
+        ->tag('console.command');
 
     $services
         ->set(DebugUnassignedRunner::class)
@@ -307,5 +311,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(DebugUnassignedCommand::class)
-        ->autowire();
+        ->autowire()
+        ->tag('console.command');
 };

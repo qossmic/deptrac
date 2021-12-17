@@ -7,7 +7,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileName;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\ContainerBuilder;
+use Qossmic\Deptrac\Console\ServiceContainerBuilder;
 use Qossmic\Deptrac\TokenAnalyser;
 use Tests\Qossmic\Deptrac\Fixtures\TokenAnalyser\ClassFoo;
 
@@ -36,7 +36,7 @@ class TokenAnalyserTest extends TestCase
             ]
         );
 
-        $container = (new ContainerBuilder(__DIR__))->build();
+        $container = (new ServiceContainerBuilder(__DIR__))->build();
         $analyser = $container->get(TokenAnalyser::class);
         $layers = $analyser->analyse($configuration, ClassLikeName::fromFQCN(ClassFoo::class));
 
@@ -63,7 +63,7 @@ class TokenAnalyserTest extends TestCase
             ]
         );
 
-        $container = (new ContainerBuilder(__DIR__))->build();
+        $container = (new ServiceContainerBuilder(__DIR__))->build();
         $analyser = $container->get(TokenAnalyser::class);
         $layers = $analyser->analyse($configuration, FunctionName::fromFQCN('Tests\Qossmic\Deptrac\Fixtures\TokenAnalyser\FunctionFoo'));
 
@@ -90,7 +90,7 @@ class TokenAnalyserTest extends TestCase
             ]
         );
 
-        $container = (new ContainerBuilder(__DIR__))->build();
+        $container = (new ServiceContainerBuilder(__DIR__))->build();
         $analyser = $container->get(TokenAnalyser::class);
         $layers = $analyser->analyse($configuration, new FileName('/tests/Fixtures/TokenAnalyser/ClassFoo.php'));
 

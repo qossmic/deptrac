@@ -45,7 +45,7 @@ class DebugLayerCommand extends Command
         /** @var ?string $layer */
         $layer = $input->getArgument('layer');
         $options = new DebugLayerOptions(
-            $input->getOption('depfile') ?? $this->getDefaultFile(new SymfonyOutput($output, $outputStyle)),
+            self::getConfigFile($input, $symfonyOutput),
             $layer
         );
 

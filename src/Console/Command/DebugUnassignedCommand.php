@@ -14,6 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DebugUnassignedCommand extends Command
 {
+    use DefaultDepFileTrait;
+
     public static $defaultName = 'debug:unassigned';
     public static $defaultDescription = 'Lists tokens that are not assigned to any layer';
 
@@ -35,8 +37,10 @@ class DebugUnassignedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $options = new DebugUnassignedOptions($input->getArgument('depfile'));
         $output = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+        $options = new DebugUnassignedOptions(
+            self::getConfigFile($input, $output)
+        );
 
         $this->runner->run($options, $output);
 

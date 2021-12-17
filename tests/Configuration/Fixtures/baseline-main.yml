@@ -1,20 +1,21 @@
-paths:
-  - src
+parameters:
+  paths:
+    - src
 
-layers:
-  - name: Dummy
-    collectors:
-      - type: directory
-        regex: src/
+  layers:
+    - name: Dummy
+      collectors:
+        - type: directory
+          regex: src/
 
-ruleset:
-  Dummy:
+  ruleset:
+    Dummy:
 
-ignore_uncovered_internal_classes: false
-use_relative_path_from_depfile: true
+  ignore_uncovered_internal_classes: false
+  use_relative_path_from_depfile: true
 
-skip_violations:
-  DummyClass:
-    - FooClass
+  skip_violations:
+    DummyClass:
+      - FooClass
 
-baseline: baseline-import.yml
+  baseline: baseline-import.yml

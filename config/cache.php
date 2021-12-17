@@ -14,7 +14,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->defaults()
-        ->private();
+        ->public();
 
     $services
         ->set(AstFileReferenceFileCache::class)

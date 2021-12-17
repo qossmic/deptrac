@@ -1,21 +1,22 @@
-paths: ["./ControllerServiceRepository1/"]
-exclude_files: []
-layers:
-  - name: Controller
-    collectors:
-      - type: className
-        regex: .*MyNamespace\\.*Controller.*
-  - name: Repository
-    collectors:
-      - type: className
-        regex: .*MyNamespace\\.*Repository.*
-  - name: Service
-    collectors:
-      - type: className
-        regex: .*MyNamespace\\.*Service.*
-ruleset:
-  Controller:
-    - Service
-  Service:
-    - Repository
-  Repository:
+parameters:
+  paths: ["./ControllerServiceRepository1/"]
+  exclude_files: []
+  layers:
+    - name: Controller
+      collectors:
+        - type: className
+          regex: .*MyNamespace\\.*Controller.*
+    - name: Repository
+      collectors:
+        - type: className
+          regex: .*MyNamespace\\.*Repository.*
+    - name: Service
+      collectors:
+        - type: className
+          regex: .*MyNamespace\\.*Service.*
+  ruleset:
+    Controller:
+      - Service
+    Service:
+      - Repository
+    Repository:
