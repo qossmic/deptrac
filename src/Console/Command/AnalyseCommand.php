@@ -29,6 +29,9 @@ class AnalyseCommand extends Command
     public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
+    public static $defaultName = 'analyse|analyze';
+    public static $defaultDescription = 'Analyses your project using the provided depfile';
+
     private AnalyseRunner $runner;
     private EventDispatcherInterface $dispatcher;
     private OutputFormatterFactory $formatterFactory;
@@ -47,8 +50,7 @@ class AnalyseCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('analyse');
-        $this->setAliases(['analyze']);
+        parent::configure();
 
         $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile');
         $this->addOption(

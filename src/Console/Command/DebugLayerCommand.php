@@ -18,19 +18,22 @@ class DebugLayerCommand extends Command
 {
     use DefaultDepFileTrait;
 
-    protected static $defaultName = 'debug:layer';
+    public static $defaultName = 'debug:layer';
+    public static $defaultDescription = 'Checks which tokens belong to the provided layer';
 
     private DebugLayerRunner $runner;
 
     public function __construct(DebugLayerRunner $runner)
     {
-        parent::__construct();
-
         $this->runner = $runner;
+
+        parent::__construct();
     }
 
     protected function configure(): void
     {
+        parent::configure();
+
         $this->addArgument('layer', InputArgument::OPTIONAL, 'Layer to debug');
         $this->addOption('depfile', null, InputOption::VALUE_OPTIONAL, 'Path to the depfile');
     }
