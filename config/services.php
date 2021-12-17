@@ -31,6 +31,7 @@ use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
+use Qossmic\Deptrac\Console\Command\AnalyseRunner;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Console\Command\DebugLayerRunner;
 use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
@@ -69,6 +70,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -77,6 +79,7 @@ return static function (ContainerConfigurator $container): void {
         ->public();
 
     $services->set(EventDispatcher::class);
+    $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
 
     $services->set(AstRunner::class)
         ->args([
@@ -271,13 +274,12 @@ return static function (ContainerConfigurator $container): void {
         ->args([service(Dumper::class)]);
 
     $services
+        ->set(AnalyseRunner::class)
+        ->autowire();
+
+    $services
         ->set(AnalyseCommand::class)
-        ->args([
-            service(Analyser::class),
-            service(Loader::class),
-            service(EventDispatcher::class),
-            service(OutputFormatterFactory::class),
-        ]);
+        ->autowire();
 
     $services
         ->set(DebugLayerRunner::class)
