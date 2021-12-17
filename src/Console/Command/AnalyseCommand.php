@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Exception;
-use LogicException;
-use Qossmic\Deptrac\Analyser;
-use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Env;
+use Qossmic\Deptrac\Exception\Console\AnalyseException;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
@@ -33,19 +29,16 @@ class AnalyseCommand extends Command
     public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
-    private Analyser $analyser;
-    private ConfigurationLoader $configurationLoader;
+    private AnalyseRunner $runner;
     private EventDispatcherInterface $dispatcher;
     private OutputFormatterFactory $formatterFactory;
 
     public function __construct(
-        Analyser $analyser,
-        ConfigurationLoader $configurationLoader,
+        AnalyseRunner $runner,
         EventDispatcherInterface $dispatcher,
         OutputFormatterFactory $formatterFactory
     ) {
-        $this->analyser = $analyser;
-        $this->configurationLoader = $configurationLoader;
+        $this->runner = $runner;
         $this->dispatcher = $dispatcher;
         $this->formatterFactory = $formatterFactory;
 
@@ -82,11 +75,15 @@ class AnalyseCommand extends Command
         /** @var ?string $formatter */
         $formatter = $input->getOption('formatter');
         $formatter = $formatter ?? self::getDefaultFormatter();
-        $failOnUncovered = (bool) $input->getOption(self::OPTION_FAIL_ON_UNCOVERED);
+
         $options = new AnalyseOptions(
             $input->getArgument('depfile') ?? $this->getDefaultFile($symfonyOutput),
             (bool) $input->getOption('no-progress'),
-            $formatter, $failOnUncovered
+            $formatter,
+            null === $input->getOption('output') ? null : (string) $input->getOption('output'),
+            (bool) $input->getOption(self::OPTION_REPORT_SKIPPED),
+            (bool) $input->getOption(self::OPTION_REPORT_UNCOVERED),
+            (bool) $input->getOption(self::OPTION_FAIL_ON_UNCOVERED)
         );
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($symfonyOutput));
@@ -94,76 +91,13 @@ class AnalyseCommand extends Command
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
 
-        $configuration = $this->configurationLoader->load($options->getConfigurationFile());
-
-        $this->printCollectViolations($symfonyOutput);
-        $context = $this->analyser->analyse($configuration);
-
-        $this->printFormattingStart($symfonyOutput);
-
         try {
-            $formatter = $this->formatterFactory->getFormatterByName($options->getFormatter());
-            try {
-                $formatter->finish(
-                    $context,
-                    $symfonyOutput,
-                    new OutputFormatterInput(
-                        null === $input->getOption('output') ? null : (string) $input->getOption('output'),
-                        (bool) $input->getOption(self::OPTION_REPORT_SKIPPED),
-                        (bool) $input->getOption(self::OPTION_REPORT_UNCOVERED),
-                        $failOnUncovered, $configuration->getFormatterConfig($formatter::getConfigName())
-                    )
-                );
-            } catch (Exception $ex) {
-                $this->printFormatterException($symfonyOutput, $formatter::getName(), $ex);
-            }
-        } catch (LogicException $exception) {
-            $this->printFormatterNotFoundException($symfonyOutput, $options->getFormatter());
-        }
-
-        if ($options->failOnUncovered() && $context->hasUncovered()) {
+            $this->runner->run($options, $symfonyOutput);
+        } catch (AnalyseException $analyseException) {
             return 1;
         }
 
-        return $context->hasViolations() || $context->hasErrors() ? 1 : 0;
-    }
-
-    protected function printCollectViolations(SymfonyOutput $output): void
-    {
-        if ($output->isVerbose()) {
-            $output->writeLineFormatted('<info>collecting violations.</info>');
-        }
-    }
-
-    protected function printFormattingStart(SymfonyOutput $output): void
-    {
-        if ($output->isVerbose()) {
-            $output->writeLineFormatted('<info>formatting dependencies.</info>');
-        }
-    }
-
-    protected function printFormatterException(SymfonyOutput $output, string $formatterName, Exception $exception): void
-    {
-        $output->writeLineFormatted('');
-        $output->getStyle()->error([
-            '',
-            sprintf('Output formatter %s threw an Exception:', $formatterName),
-            sprintf('Message: %s', $exception->getMessage()),
-            '',
-        ]);
-        $output->writeLineFormatted('');
-    }
-
-    protected function printFormatterNotFoundException(SymfonyOutput $output, string $formatterName): void
-    {
-        $output->writeLineFormatted('');
-        $output->getStyle()->error([
-            '',
-            sprintf('Output formatter %s not found.', $formatterName),
-            sprintf('Available formatters: ["%s"]', implode('", "', $this->formatterFactory->getFormatterNames())),
-            '',
-        ]);
-        $output->writeLineFormatted('');
+        return 0;
     }
 
     public static function getDefaultFormatter(): string
