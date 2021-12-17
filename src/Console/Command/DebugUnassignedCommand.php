@@ -14,20 +14,22 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DebugUnassignedCommand extends Command
 {
-    protected static $defaultName = 'debug:unassigned';
-    protected static $defaultDescription = 'Lists all classes from your paths that are not assigned to any layer.';
+    public static $defaultName = 'debug:unassigned';
+    public static $defaultDescription = 'Lists tokens that are not assigned to any layer';
 
     private DebugUnassignedRunner $runner;
 
     public function __construct(DebugUnassignedRunner $runner)
     {
-        parent::__construct();
-
         $this->runner = $runner;
+
+        parent::__construct();
     }
 
     protected function configure(): void
     {
+        parent::configure();
+
         $this->addArgument('depfile', InputArgument::REQUIRED, 'Path to the depfile');
     }
 

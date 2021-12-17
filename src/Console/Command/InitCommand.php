@@ -12,16 +12,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InitCommand extends Command
 {
+    public static $defaultName = 'init';
+    public static $defaultDescription = 'Creates a depfile template';
+
     private ConfigurationDumper $dumper;
 
     public function __construct(ConfigurationDumper $dumper)
     {
         $this->dumper = $dumper;
+
         parent::__construct();
     }
 
     protected function configure(): void
     {
+        parent::configure();
+
         $this->setName('init');
     }
 

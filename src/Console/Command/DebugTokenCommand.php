@@ -17,19 +17,21 @@ class DebugTokenCommand extends Command
 {
     use DefaultDepFileTrait;
 
+    public static $defaultName = 'debug:token|debug:class-like';
+    public static $defaultDescription = 'Checks which layers the provided token belongs to';
+
     private DebugTokenRunner $runner;
 
     public function __construct(DebugTokenRunner $runner)
     {
-        parent::__construct();
-
         $this->runner = $runner;
+
+        parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->setName('debug:token');
-        $this->setAliases(['debug:class-like']);
+        parent::configure();
 
         $this->addArgument('token', InputArgument::REQUIRED, 'Full qualified token name to debug');
         $this->addArgument('type', InputArgument::OPTIONAL, 'Token type (class-like, function, file)', 'class-like');
