@@ -11,6 +11,7 @@ multiple different collectors for a layer.
 * [`functionName` Collector](#functionname-collector)
 * [`implements` Collector](#implements-collector)
 * [`inherits` Collector](#inherits-collector)
+* [`layer` Collector](#layer-collector)
 * [`method` Collector](#method-collector)
 * [`superglobal` Collector](#superglobal-collector)
 * [`uses` Collector](#uses-collector)
@@ -22,17 +23,17 @@ The `bool` collector allows combining other collectors with or without negation.
 
 ```yml
 layers:
-    -   name: Asset
-        collectors:
-            -   type: bool
-                must:
-                    -   type: className
-                        regex: .*Foo\\.*
-                    -   type: className
-                        regex: .*\\Asset.*
-                must_not:
-                    -   type: className
-                        regex: .*Assetic.*
+  - name: Asset
+    collectors:
+      - type: bool
+        must:
+          - type: className
+            regex: .*Foo\\.*
+          - type: className
+            regex: .*\\Asset.*
+        must_not:
+          - type: className
+            regex: .*Assetic.*
 ```
 
 Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part
@@ -46,10 +47,10 @@ added to the assigned layer.
 
 ```yaml
 layers:
-    -   name: Controller
-        collectors:
-            -   type: className
-                regex: .*Controller.*
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*Controller.*
 ```
 
 Every class name that matches the regular expression becomes a part of the
@@ -64,10 +65,10 @@ assigned layer.
 
 ```yaml
 layers:
-    -   name: Controller
-        collectors:
-            -   type: classNameRegex
-                regex: '#.*Controller.*#'
+  - name: Controller
+    collectors:
+      - type: classNameRegex
+        regex: '#.*Controller.*#'
 ```
 
 Every class name that matches the regular expression becomes a part of the
@@ -81,10 +82,10 @@ be added to the assigned layer.
 
 ```yaml
 layers:
-    -   name: Controller
-        collectors:
-            -   type: directory
-                regex: src/Controller/.*
+  - name: Controller
+    collectors:
+      - type: directory
+        regex: src/Controller/.*
 ```
 
 Every file path that matches the regular expression `src/Controller/.*` becomes
@@ -98,10 +99,10 @@ matching recursively for a fully qualified class or interface name.
 
 ```yaml
 layers:
-    -   name: Foo
-        collectors:
-            -   type: extends
-                extends: 'App\SomeClass'
+  - name: Foo
+    collectors:
+      - type: extends
+        extends: 'App\SomeClass'
 ```
 
 ## `functionName` Collector
@@ -112,10 +113,10 @@ added to the assigned layer.
 
 ```yaml
 layers:
-    -   name: Foo
-        collectors:
-            -   type: functionName
-                regex: .*array_.*
+  - name: Foo
+    collectors:
+      - type: functionName
+        regex: .*array_.*
 ```
 
 ## `implements` Collector
@@ -125,10 +126,10 @@ interface by matching recursively for a fully qualified interface name.
 
 ```yaml
 layers:
-    -   name: Foo
-        collectors:
-            -   type: implements
-                implements: 'App\SomeInterface'
+  - name: Foo
+    collectors:
+      - type: implements
+        implements: 'App\SomeInterface'
 ```
 
 ## `inherits` Collector
@@ -139,10 +140,34 @@ a trait, by matching recursively for a fully qualified class name.
 
 ```yaml
 layers:
-    -   name: Foo
-        collectors:
-            -   type: inherits
-                inherits: 'App\SomeInterface'
+  - name: Foo
+    collectors:
+      - type: inherits
+        inherits: 'App\SomeInterface'
+```
+
+## `layer` Collector
+
+This collector collects all the tokens collected by another layer. It is not
+very useful by itself (unless you want to have tokens in multiple layers), but
+it is very useful to exclude classes in combination with
+the [`bool` Collector](#bool-collector):
+
+```yml
+layers:
+  - name: SubDomain
+    collectors:
+      - type: directory
+        regex: src/Domain/Subdomain/.*
+  - name: Domain
+    collectors:
+      - type: bool
+        must:
+          - type: directory
+            regex: src/Domain/.*
+        must_not:
+          - type: layer
+            layer: SubDomain
 ```
 
 ## `method` Collector
@@ -152,10 +177,10 @@ to a regular expression. Any matching class will be added to the assigned layer.
 
 ```yaml
 layers:
-    -   name: Foo services
-        collectors:
-            -   type: method
-                name: .*foo
+  - name: Foo services
+    collectors:
+      - type: method
+        name: .*foo
 ```
 
 Every class having a method that matches the regular expression `.*foo`,
@@ -163,17 +188,17 @@ e.g. `getFoo()` or `setFoo()` becomes a part of the *Foo services* layer.
 
 ## `superglobal` Collector
 
-The `superglobal` collector allows collecting superglobal PHP variables
-matching the specified superglobal name.
+The `superglobal` collector allows collecting superglobal PHP variables matching
+the specified superglobal name.
 
 ```yaml
 layers:
-    -   name: Foo
-        collectors:
-            -   type: superglobal
-                names:
-                  - _POST
-                  - _GET
+  - name: Foo
+    collectors:
+      - type: superglobal
+        names:
+          - _POST
+          - _GET
 ```
 
 ## `uses` Collector
@@ -183,10 +208,10 @@ matching recursively for a fully qualified trait name.
 
 ```yaml
 layers:
-    -   name: Foo
-        collectors:
-            -   type: uses
-                uses: 'App\SomeTrait'
+  - name: Foo
+    collectors:
+      - type: uses
+        uses: 'App\SomeTrait'
 ```
 
 ## Custom Collectors

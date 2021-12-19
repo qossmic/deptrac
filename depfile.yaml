@@ -154,8 +154,10 @@ formatters:
   graphviz:
     hidden_layers:
       - Utils
+      - Events
     groups:
       Console:
         - Console
         - Console Formatters
+        - SymfonyConsole
     pointToGroups: true
