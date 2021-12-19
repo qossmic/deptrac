@@ -159,14 +159,14 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
                 }
                 $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
                 if ($outputConfig->getPointToGroups() && $graph->hasGraph($this->getSubgraphName($layerDependOn))) {
-                    $edge->setLhead($this->getSubgraphName($layerDependOn));
+                    $edge->setAttribute('lhead', $this->getSubgraphName($layerDependOn));
                 }
                 $graph->link($edge);
                 if (isset($layerViolations[$layer][$layerDependOn])) {
-                    $edge->setLabel((string) $layerViolations[$layer][$layerDependOn]);
-                    $edge->setColor('red');
+                    $edge->setAttribute('label', (string) $layerViolations[$layer][$layerDependOn]);
+                    $edge->setAttribute('color', 'red');
                 } else {
-                    $edge->setLabel((string) $layerDependOnCount);
+                    $edge->setAttribute('label', (string) $layerDependOnCount);
                 }
             }
         }
