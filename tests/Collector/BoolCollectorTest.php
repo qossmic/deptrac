@@ -33,9 +33,9 @@ final class BoolCollectorTest extends TestCase
             'must' => [
                 [
                     'type' => (new ClassNameCollector())->getType(),
-                    'regex' => ''
-                ]
-            ]
+                    'regex' => '',
+                ],
+            ],
         ];
         $collectorRegistry = $this->createMock(Registry::class);
         $collectorRegistry->method('getCollector')
@@ -55,9 +55,9 @@ final class BoolCollectorTest extends TestCase
             'must' => [
                 [
                     'type' => $type,
-                    'regex' => ''
-                ]
-            ]
+                    'regex' => '',
+                ],
+            ],
         ];
         $collectorRegistry = $this->createMock(Registry::class);
         $collectorRegistry->method('getCollector')

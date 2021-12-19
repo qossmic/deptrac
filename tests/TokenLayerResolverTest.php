@@ -9,6 +9,7 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\CollectorInterface;
+use Qossmic\Deptrac\Collector\LayerCollector;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationLayer;
@@ -122,5 +123,47 @@ final class TokenLayerResolverTest extends TestCase
             $expectedLayers,
             $resolver->getLayersByTokenName(ClassLikeName::fromFQCN('classA'))
         );
+    }
+
+    public function testCircularDependency(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Circular dependency between layers detected');
+
+        $configuration = $this->createMock(Configuration::class);
+        $configuration->method('getLayers')
+            ->willReturn([
+                ConfigurationLayer::fromArray([
+                    'name' => 'LayerA',
+                    'collectors' => [
+                        [
+                            'type' => 'layer',
+                            'layer' => 'LayerB',
+                        ],
+                    ],
+                ]),
+                ConfigurationLayer::fromArray([
+                    'name' => 'LayerB',
+                    'collectors' => [
+                        [
+                            'type' => 'layer',
+                            'layer' => 'LayerA',
+                        ],
+                    ],
+                ]),
+            ]);
+        $configuration->method('getParameters')
+            ->willReturn([]);
+
+        $collectorRegistry = $this->createMock(Registry::class);
+        $collectorRegistry->method('getCollector')
+            ->willReturnMap([
+                ['layer', new LayerCollector()],
+            ]);
+
+        $resolver = new TokenLayerResolver(
+            $configuration, $this->createMock(AstMap::class), $collectorRegistry, new ParameterResolver()
+        );
+        $resolver->getLayersByTokenName(ClassLikeName::fromFQCN('GET'));
     }
 }
