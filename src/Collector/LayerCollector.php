@@ -35,7 +35,8 @@ class LayerCollector implements CollectorInterface
                     $configurationForCollector->getArgs(),
                     $astTokenReference,
                     $astMap,
-                    $collectorRegistry
+                    $collectorRegistry,
+                    $allLayersConfiguration
                 )) {
                 return true;
             }
