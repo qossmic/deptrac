@@ -22,7 +22,6 @@ class ClassNameCollector extends RegexCollector implements CollectorInterface
         Registry $collectorRegistry,
         array $allLayersConfiguration = []
     ): bool {
-        var_dump($astTokenReference);
         if (!$astTokenReference instanceof AstClassReference) {
             return false;
         }
