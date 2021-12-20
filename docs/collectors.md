@@ -3,19 +3,6 @@
 Collectors decide if a node (typically a class) is part of a layer. You can use
 multiple different collectors for a layer.
 
-* [`bool` Collector](#bool-collector)
-* [`className` Collector](#classname-collector)
-* [`classNameRegex` Collector](#classnameregex-collector)
-* [`directory` Collector](#directory-collector)
-* [`extends` Collector](#extends-collector)
-* [`functionName` Collector](#functionname-collector)
-* [`implements` Collector](#implements-collector)
-* [`inherits` Collector](#inherits-collector)
-* [`method` Collector](#method-collector)
-* [`superglobal` Collector](#superglobal-collector)
-* [`uses` Collector](#uses-collector)
-* [Custom Collectors](#custom-collectors)
-
 ## `bool` Collector
 
 The `bool` collector allows combining other collectors with or without negation.

@@ -3,27 +3,6 @@
 The depfile describes your [layers, ruleset](concepts.md) and other project
 configuration.
 
-* [`analyser`](#analyser)
-  * [`count_use_statements`](#count_use_statements)
-  * [`types`](#types)
-* [`baseline`](#baseline)
-* [`exclude_files`](#exclude_files)
-* [`formatters`](#formatters)
-    * [`graphviz`](#graphviz)
-        * [`groups`](#groups)
-        * [`hidden_layers`](#hidden_layers)
-* [`imports`](#imports)
-* [`ignore_uncovered_internal_classes`](#ignore_uncovered_internal_classes)
-* [`layers`](#layers)
-    * [`name`](#name)
-    * [`collectors`](#collectors)
-* [`parameters`](#parameters)
-* [`paths`](#paths)
-* [`ruleset`](#ruleset)
-  * [Allowing transitive dependencies](#allowing-transitive-dependencies)
-* [`skip_violations`](#skip_violations)
-* [`use_relative_path_from_depfile`](#use_relative_path_from_depfile)
-
 ## `analyser`
 
 ### `count_use_statements`

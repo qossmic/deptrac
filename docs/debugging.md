@@ -4,10 +4,6 @@ Deptrac provides a series of debug commands that help you identify issues in
 your depfile. All commands output one issue per line and can therefore be easily
 combined with other tools like `wc` or `grep`.
 
-* [`debug:layer`](#debuglayer)
-* [`debug:token`](#debugtoken)
-* [`debug:unassigned`](#debugunassigned)
-
 ## `debug:layer`
 
 With the `debug:layer`-command you can list all tokens which are matched in
