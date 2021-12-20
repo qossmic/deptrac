@@ -8,16 +8,6 @@ You can get a list of available formatters by running
 php deptrac.php analyse --help
 ```
 
-* [Baseline Formatter](#baseline-formatter)
-* [Console Formatter](#console-formatter)
-* [GitHubActions Formatter](#githubactions-formatter)
-* [Graphviz Formatters](#graphviz-formatters)
-  * [Hide layers in output](#hide-layers-in-output)
-  * [Group layers](#group-layers)
-* [JSON Formatter](#json-formatter)
-* [JUnit Formatter](#junit-formatter)
-* [Table Formatter](#table-formatter)
-
 ## Baseline Formatter
 
 The Baseline formatter is a console formatter, which generates

@@ -199,7 +199,7 @@ class SomeRepository { }
 If we remove the `use` statement and rerun Deptrac, the violation will
 disappear.
 
-## Different Layers and Different Views
+### Different Layers and Different Views
 
 In the example above we defined 3 different layers (*controller*, *repository*
 and *service*). Deptrac gives architects the power to define what kind of layers

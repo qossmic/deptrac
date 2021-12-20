@@ -1,5 +1,5 @@
 parameters:
-  paths: ["../tests/DependencyEmitter/Fixtures/"]
+  paths: ["../../tests/DependencyEmitter/Fixtures/"]
   exclude_files: []
   layers:
     - name: Models

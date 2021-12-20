@@ -18,26 +18,6 @@ imports:
 
 ## Parameter section
 
-* [`analyser`](#analyser)
-  * [`count_use_statements`](#count_use_statements)
-  * [`types`](#types)
-* [`baseline`](#baseline)
-* [`exclude_files`](#exclude_files)
-* [`formatters`](#formatters)
-    * [`graphviz`](#graphviz)
-        * [`groups`](#groups)
-        * [`hidden_layers`](#hidden_layers)
-* [`ignore_uncovered_internal_classes`](#ignore_uncovered_internal_classes)
-* [`layers`](#layers)
-    * [`name`](#name)
-    * [`collectors`](#collectors)
-* [`paths`](#paths)
-* [`ruleset`](#ruleset)
-  * [Allowing transitive dependencies](#allowing-transitive-dependencies)
-* [`skip_violations`](#skip_violations)
-* [`use_relative_path_from_depfile`](#use_relative_path_from_depfile)
-* [Parameters](#parameters)
-
 ### `analyser`
 
 #### `count_use_statements`
