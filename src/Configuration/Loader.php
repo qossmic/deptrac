@@ -99,6 +99,7 @@ class Loader
             'ruleset' => $this->normalizeValue($config, 'ruleset', $filename),
             'skip_violations' => $this->normalizeValue($config, 'skip_violations', $filename),
             'analyser' => $this->normalizeValue($config, 'analyser', $filename),
+            'analyzer' => $this->normalizeValue($config, 'analyzer', $filename),
             'ignore_uncovered_internal_classes' => $this->normalizeValue($config, 'ignore_uncovered_internal_classes', $filename),
         ];
 
