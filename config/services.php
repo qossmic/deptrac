@@ -67,11 +67,11 @@ use Qossmic\Deptrac\TokenAnalyser;
 use Qossmic\Deptrac\TokenLayerResolverFactory;
 use Qossmic\Deptrac\UnassignedAnalyser;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();

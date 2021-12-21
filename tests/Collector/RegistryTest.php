@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Collector;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Collector\BoolCollector;
 use Qossmic\Deptrac\Collector\ClassNameCollector;
@@ -27,7 +28,7 @@ final class RegistryTest extends TestCase
 
     public function testGetUnknownCollector(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         (new Registry([]))->getCollector('foo');
     }

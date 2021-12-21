@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Collector;
 
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\Collector\DirectoryCollector;
@@ -49,7 +50,7 @@ final class DirectoryCollectorTest extends TestCase
         $fileReferenceBuilder->newClassLike('Test');
         $fileReference = $fileReferenceBuilder->build();
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('DirectoryCollector needs the regex configuration.');
 
         (new DirectoryCollector())->satisfy(
@@ -66,7 +67,7 @@ final class DirectoryCollectorTest extends TestCase
         $fileReferenceBuilder->newClassLike('Test');
         $fileReference = $fileReferenceBuilder->build();
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
 
         (new DirectoryCollector())->satisfy(
             ['regex' => '\\'],

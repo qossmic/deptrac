@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use function implode;
 use LogicException;
 use Qossmic\Deptrac\Analyser;
 use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
@@ -12,8 +11,9 @@ use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Exception\Console\AnalyseException;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatterFactory;
-use function sprintf;
 use Throwable;
+use function implode;
+use function sprintf;
 
 /**
  * @internal Should only be used by AnalyseCommand

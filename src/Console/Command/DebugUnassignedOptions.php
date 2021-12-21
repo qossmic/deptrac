@@ -2,8 +2,8 @@
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use function is_string;
 use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
+use function is_string;
 
 class DebugUnassignedOptions
 {

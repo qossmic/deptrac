@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac;
 
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
@@ -24,7 +25,7 @@ final class OutputFormatterFactoryTest extends TestCase
 
     public function testGetFormatterByNameNotFound(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
 
         (new OutputFormatterFactory([]))->getFormatterByName('formatter1');
     }

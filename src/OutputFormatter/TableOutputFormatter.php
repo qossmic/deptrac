@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use function count;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -16,6 +15,7 @@ use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
 use Qossmic\Deptrac\RulesetEngine\Warning;
 use Symfony\Component\Console\Helper\TableSeparator;
+use function count;
 
 final class TableOutputFormatter implements OutputFormatterInterface
 {

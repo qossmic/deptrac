@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use function count;
 use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
@@ -12,6 +11,7 @@ use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use function count;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {

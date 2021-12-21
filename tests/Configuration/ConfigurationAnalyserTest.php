@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Configuration;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 
@@ -59,7 +60,7 @@ final class ConfigurationAnalyserTest extends TestCase
 
     public function testUnknownTypes(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         ConfigurationAnalyser::fromArray([
             'types' => [

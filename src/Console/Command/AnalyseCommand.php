@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use const DIRECTORY_SEPARATOR;
-use function getcwd;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Env;
@@ -22,6 +20,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use function getcwd;
+use const DIRECTORY_SEPARATOR;
 
 class AnalyseCommand extends Command
 {

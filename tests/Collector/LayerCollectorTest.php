@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Collector;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
@@ -16,7 +17,7 @@ final class LayerCollectorTest extends TestCase
 {
     public function testConfig(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('LayerCollector needs the layer configuration');
 
         (new LayerCollector())->satisfy(
@@ -64,8 +65,8 @@ final class LayerCollectorTest extends TestCase
         $collectorRegistry = $this->createMock(Registry::class);
         $collectorRegistry->method('getCollector')
             ->willReturnMap([
-                                [(new ClassNameCollector())->getType(), new ClassNameCollector()],
-                            ]);
+                [(new ClassNameCollector())->getType(), new ClassNameCollector()],
+            ]);
         $resolved = (new LayerCollector())->satisfy(
             $configuration['layerCollectorLayer']->getCollectors()[0]->getArgs(),
             new AstClassReference(AstMap\ClassLikeName::fromFQCN($className)),

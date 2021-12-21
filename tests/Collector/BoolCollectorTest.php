@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Collector;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
@@ -16,7 +17,7 @@ final class BoolCollectorTest extends TestCase
 {
     public function testSatisfy(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('"bool" collector must have a "must" or a "must_not" attribute.');
 
         (new BoolCollector())->satisfy(
@@ -40,7 +41,7 @@ final class BoolCollectorTest extends TestCase
         $collectorRegistry = $this->createMock(Registry::class);
         $collectorRegistry->method('getCollector')
             ->willReturnMap([
-                 [(new ClassNameCollector())->getType(), new ClassNameCollector()],
+                [(new ClassNameCollector())->getType(), new ClassNameCollector()],
             ]);
 
         $stat = (new BoolCollector())->resolvable($configuration, $collectorRegistry, []);

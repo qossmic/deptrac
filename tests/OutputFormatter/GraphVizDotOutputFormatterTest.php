@@ -69,10 +69,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         );
 
         $context = new Context([
-                new Allowed($dependency, 'User Frontend', 'User Backend'),
-                new Allowed($dependency, 'Admin', 'Admin Backend'),
-                new Allowed($dependency, 'User Frontend', 'Admin'),
-                new Allowed($dependency, 'User Backend', 'Admin'),
+            new Allowed($dependency, 'User Frontend', 'User Backend'),
+            new Allowed($dependency, 'Admin', 'Admin Backend'),
+            new Allowed($dependency, 'User Frontend', 'Admin'),
+            new Allowed($dependency, 'User Backend', 'Admin'),
         ], [], []);
 
         $bufferedOutput = new BufferedOutput();
@@ -114,11 +114,11 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         );
 
         $context = new Context([
-                                   new Allowed($dependency, 'User Frontend', 'User Backend'),
-                                   new Allowed($dependency, 'Admin', 'Admin Backend'),
-                                   new Allowed($dependency, 'User Frontend', 'Admin'),
-                                   new Allowed($dependency, 'User Backend', 'Admin'),
-                               ], [], []);
+            new Allowed($dependency, 'User Frontend', 'User Backend'),
+            new Allowed($dependency, 'Admin', 'Admin Backend'),
+            new Allowed($dependency, 'User Frontend', 'Admin'),
+            new Allowed($dependency, 'User Backend', 'Admin'),
+        ], [], []);
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(

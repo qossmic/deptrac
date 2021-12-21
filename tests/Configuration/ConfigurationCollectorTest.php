@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Configuration;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\ConfigurationCollector;
 
@@ -11,7 +12,7 @@ final class ConfigurationCollectorTest extends TestCase
 {
     public function testInvalidFromArray(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         ConfigurationCollector::fromArray([]);
     }

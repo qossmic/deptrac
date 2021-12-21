@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console;
 
-use const DIRECTORY_SEPARATOR;
-use function getcwd;
 use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 use RuntimeException;
 use Symfony\Component\Console\Application as BaseApplication;
@@ -15,6 +13,8 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use function getcwd;
+use const DIRECTORY_SEPARATOR;
 
 final class Application extends BaseApplication
 {

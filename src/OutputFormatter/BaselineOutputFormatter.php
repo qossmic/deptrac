@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use function array_values;
-use function ksort;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
 use Qossmic\Deptrac\RulesetEngine\Violation;
-use function sort;
 use Symfony\Component\Yaml\Yaml;
+use function array_values;
+use function ksort;
+use function sort;
 
 final class BaselineOutputFormatter implements OutputFormatterInterface
 {

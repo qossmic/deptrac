@@ -11,6 +11,7 @@ use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Exception\ShouldNotHappenException;
+use RuntimeException;
 
 class TokenLayerResolver implements TokenLayerResolverInterface
 {
@@ -84,7 +85,7 @@ class TokenLayerResolver implements TokenLayerResolverInterface
                 $layerRegistry[] = $configurationLayer->getName();
             }
             if ($resolvedBeforeLoop === count($layerRegistry)) {
-                throw new \RuntimeException('Circular dependency between layers detected');
+                throw new RuntimeException('Circular dependency between layers detected');
             }
             $resolvedBeforeLoop = count($layerRegistry);
         }

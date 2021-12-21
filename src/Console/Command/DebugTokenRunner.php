@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use function natcasesort;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\TokenAnalyser;
+use function natcasesort;
 
 /**
  * @internal Should only be used by DebugTokenCommand

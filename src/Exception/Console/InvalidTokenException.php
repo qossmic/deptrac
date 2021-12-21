@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Exception\Console;
 
-use function implode;
 use Qossmic\Deptrac\Exception\ExceptionInterface;
 use RuntimeException;
+use function implode;
 
 final class InvalidTokenException extends RuntimeException implements ExceptionInterface
 {

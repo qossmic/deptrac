@@ -15,6 +15,7 @@ use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\TokenLayerResolver;
+use RuntimeException;
 
 final class TokenLayerResolverTest extends TestCase
 {
@@ -127,7 +128,7 @@ final class TokenLayerResolverTest extends TestCase
 
     public function testCircularDependency(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Circular dependency between layers detected');
 
         $configuration = $this->createMock(Configuration::class);

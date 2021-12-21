@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\RulesetEngine;
 
+use function in_array;
+
 /**
  * @psalm-immutable
  */
@@ -30,7 +32,7 @@ final class SkippedViolationHelper
 
     public function isViolationSkipped(string $dependant, string $dependee): bool
     {
-        $matched = isset($this->skippedViolation[$dependant]) && \in_array($dependee, $this->skippedViolation[$dependant], true);
+        $matched = isset($this->skippedViolation[$dependant]) && in_array($dependee, $this->skippedViolation[$dependant], true);
 
         if ($matched && false !== ($key = array_search($dependee, $this->unmatchedSkippedViolation[$dependant], true))) {
             unset($this->unmatchedSkippedViolation[$dependant][$key]);

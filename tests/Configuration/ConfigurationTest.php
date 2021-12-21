@@ -21,24 +21,24 @@ final class ConfigurationTest extends TestCase
         Configuration::fromArray([
             'layers' => [
                 [
-                   'name' => 'foo',
-                   'collectors' => [],
+                    'name' => 'foo',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'foo',
-                   'collectors' => [],
+                    'name' => 'foo',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'bar',
-                   'collectors' => [],
+                    'name' => 'bar',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'baz',
-                   'collectors' => [],
+                    'name' => 'baz',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'baz',
-                   'collectors' => [],
+                    'name' => 'baz',
+                    'collectors' => [],
                 ],
             ],
             'paths' => [
@@ -64,16 +64,16 @@ final class ConfigurationTest extends TestCase
         Configuration::fromArray([
             'layers' => [
                 [
-                   'name' => 'foo',
-                   'collectors' => [],
+                    'name' => 'foo',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'bar',
-                   'collectors' => [],
+                    'name' => 'bar',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'baz',
-                   'collectors' => [],
+                    'name' => 'baz',
+                    'collectors' => [],
                 ],
             ],
             'paths' => [
@@ -98,16 +98,16 @@ final class ConfigurationTest extends TestCase
         $configuration = Configuration::fromArray([
             'layers' => [
                 [
-                   'name' => 'some_name',
-                   'collectors' => [],
+                    'name' => 'some_name',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'xx',
-                   'collectors' => [],
+                    'name' => 'xx',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'yy',
-                   'collectors' => [],
+                    'name' => 'yy',
+                    'collectors' => [],
                 ],
             ],
             'paths' => [
@@ -136,12 +136,12 @@ final class ConfigurationTest extends TestCase
         $configuration = Configuration::fromArray([
             'layers' => [
                 [
-                   'name' => 'some_name',
-                   'collectors' => [],
+                    'name' => 'some_name',
+                    'collectors' => [],
                 ],
                 [
-                   'name' => 'some_other_name',
-                   'collectors' => [],
+                    'name' => 'some_other_name',
+                    'collectors' => [],
                 ],
             ],
             'paths' => [

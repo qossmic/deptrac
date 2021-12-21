@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Exception\File;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
+use RuntimeException;
 
 /**
  * @covers \Qossmic\Deptrac\Exception\File\CouldNotReadFileException
@@ -16,7 +17,7 @@ final class CouldNotReadFileExceptionTest extends TestCase
     {
         $exception = new CouldNotReadFileException();
 
-        self::assertInstanceOf(\RuntimeException::class, $exception);
+        self::assertInstanceOf(RuntimeException::class, $exception);
     }
 
     public function testFromFilenameReturnsException(): void

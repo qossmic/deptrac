@@ -4,14 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\AstRunner\AstParser\Cache;
 
-use function array_filter;
-use function array_map;
-use function assert;
-use function file_exists;
-use function is_readable;
-use function is_writable;
-use function json_decode;
-use function json_encode;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\AstRunner\AstMap\AstDependency;
 use Qossmic\Deptrac\AstRunner\AstMap\AstFileReference;
@@ -26,6 +18,15 @@ use Qossmic\Deptrac\AstRunner\AstMap\SuperGlobalName;
 use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\Exception\AstRunner\AstParser\FileNotExistsException;
 use Qossmic\Deptrac\File\FileReader;
+use function array_filter;
+use function array_map;
+use function assert;
+use function dirname;
+use function file_exists;
+use function is_readable;
+use function is_writable;
+use function json_decode;
+use function json_encode;
 use function realpath;
 use function sha1_file;
 use function unserialize;
@@ -129,7 +130,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 
     public function write(): void
     {
-        if (!is_writable(\dirname($this->cacheFile))) {
+        if (!is_writable(dirname($this->cacheFile))) {
             return;
         }
 
