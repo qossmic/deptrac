@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Exception\Console;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
+use RuntimeException;
 
 /**
  * @covers \Qossmic\Deptrac\Exception\Console\InvalidArgumentException
@@ -16,7 +17,7 @@ final class InvalidArgumentExceptionTest extends TestCase
     {
         $exception = new InvalidArgumentException();
 
-        self::assertInstanceOf(\RuntimeException::class, $exception);
+        self::assertInstanceOf(RuntimeException::class, $exception);
     }
 
     public function provideUnepxectedTypes(): iterable

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use function base64_encode;
-use function file_get_contents;
+use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use Qossmic\Deptrac\Console\Output;
+use RuntimeException;
+use function base64_encode;
+use function file_get_contents;
 
 final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
 {
@@ -25,7 +27,7 @@ final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
                 $filename = $this->getTempImage($graph);
                 $imageData = file_get_contents($filename);
                 if (false === $imageData) {
-                    throw new \RuntimeException('Unable to create temp file for output.');
+                    throw new RuntimeException('Unable to create temp file for output.');
                 }
                 file_put_contents(
                     $dumpHtmlPath,
@@ -33,7 +35,7 @@ final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
                 );
                 $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
             } catch (Exception $exception) {
-                throw new \LogicException('Unable to generate HTML file: '.$exception->getMessage());
+                throw new LogicException('Unable to generate HTML file: '.$exception->getMessage());
             } finally {
                 /** @psalm-suppress RedundantCondition */
                 if (isset($filename) && false !== $filename) {

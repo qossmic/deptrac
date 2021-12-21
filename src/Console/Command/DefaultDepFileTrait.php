@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use function file_exists;
 use Qossmic\Deptrac\Console\Output;
 use Symfony\Component\Console\Input\InputInterface;
+use function file_exists;
 use function trigger_deprecation;
 
 trait DefaultDepFileTrait

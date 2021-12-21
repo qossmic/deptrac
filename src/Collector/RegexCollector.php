@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
+use LogicException;
+
 abstract class RegexCollector
 {
     /**
@@ -25,6 +27,6 @@ abstract class RegexCollector
         if (false !== @preg_match($pattern, '')) {
             return $pattern;
         }
-        throw new \LogicException('Invalid regex pattern '.$pattern);
+        throw new LogicException('Invalid regex pattern '.$pattern);
     }
 }

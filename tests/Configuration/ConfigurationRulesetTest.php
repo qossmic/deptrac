@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Configuration;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\ConfigurationRuleset;
 
@@ -43,7 +44,7 @@ final class ConfigurationRulesetTest extends TestCase
             'b' => ['+c'],
             'c' => ['+a'],
         ], [], false);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $configurationRuleSet->getAllowedDependencies('a');
     }
 }

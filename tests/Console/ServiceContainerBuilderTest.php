@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Console;
 
-use const DIRECTORY_SEPARATOR;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceDeferredCacheInterface;
@@ -12,6 +11,7 @@ use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceFileCache;
 use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Console\ServiceContainerBuilder;
+use const DIRECTORY_SEPARATOR;
 
 final class ServiceContainerBuilderTest extends TestCase
 {

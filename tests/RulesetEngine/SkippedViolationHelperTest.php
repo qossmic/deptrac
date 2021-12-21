@@ -13,16 +13,16 @@ final class SkippedViolationHelperTest extends TestCase
     public function testIsViolationSkipped(): void
     {
         $configuration = [
-                'ClassWithOneDep' => [
-                    'DependencyClass',
-                ],
-                'ClassWithEmptyDeps' => [],
-                'ClassWithMultipleDeps' => [
-                    'DependencyClass1',
-                    'DependencyClass2',
-                    'DependencyClass2',
-                ],
-            ];
+            'ClassWithOneDep' => [
+                'DependencyClass',
+            ],
+            'ClassWithEmptyDeps' => [],
+            'ClassWithMultipleDeps' => [
+                'DependencyClass1',
+                'DependencyClass2',
+                'DependencyClass2',
+            ],
+        ];
         $helper = new SkippedViolationHelper($configuration);
 
         self::assertTrue(
@@ -54,16 +54,16 @@ final class SkippedViolationHelperTest extends TestCase
     public function testUnmatchedSkippedViolations(): void
     {
         $configuration = [
-                'ClassWithOneDep' => [
-                    'DependencyClass',
-                ],
-                'ClassWithEmptyDeps' => [],
-                'ClassWithMultipleDeps' => [
-                    'DependencyClass1',
-                    'DependencyClass2',
-                    'DependencyClass2',
-                ],
-            ];
+            'ClassWithOneDep' => [
+                'DependencyClass',
+            ],
+            'ClassWithEmptyDeps' => [],
+            'ClassWithMultipleDeps' => [
+                'DependencyClass1',
+                'DependencyClass2',
+                'DependencyClass2',
+            ],
+        ];
         $helper = new SkippedViolationHelper($configuration);
 
         self::assertTrue(

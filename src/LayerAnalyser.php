@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
-use function in_array;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\Configuration\Configuration;
+use function in_array;
 use const true;
 
 class LayerAnalyser

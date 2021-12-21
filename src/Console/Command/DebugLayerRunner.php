@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use function array_map;
-use function in_array;
 use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Exception\Console\InvalidLayerException;
 use Qossmic\Deptrac\LayerAnalyser;
+use function array_map;
+use function in_array;
 
 /**
  * @internal Should only be used by DebugLayerCommand

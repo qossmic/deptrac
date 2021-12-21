@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Collector;
 
+use LogicException;
 use PhpParser\Node;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
@@ -12,6 +13,7 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Collector\MethodCollector;
 use Qossmic\Deptrac\Collector\Registry;
+use stdClass;
 
 final class MethodCollectorTest extends TestCase
 {
@@ -100,7 +102,7 @@ final class MethodCollectorTest extends TestCase
         $astClassReference = new AstClassReference(ClassLikeName::fromFQCN('foo'));
         $parser = $this->createMock(NikicPhpParser::class);
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('MethodCollector needs the name configuration.');
 
         (new MethodCollector($parser))->satisfy(
@@ -116,7 +118,7 @@ final class MethodCollectorTest extends TestCase
         $astClassReference = new AstClassReference(ClassLikeName::fromFQCN('foo'));
         $parser = $this->createMock(NikicPhpParser::class);
 
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
 
         (new MethodCollector($parser))->satisfy(
             ['name' => '/'],
@@ -126,9 +128,9 @@ final class MethodCollectorTest extends TestCase
         );
     }
 
-    private function getClassMethod(string $name): \stdClass
+    private function getClassMethod(string $name): stdClass
     {
-        $classMethod = new \stdClass();
+        $classMethod = new stdClass();
         $classMethod->name = $name;
 
         return $classMethod;

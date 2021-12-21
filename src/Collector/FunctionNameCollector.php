@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
+use LogicException;
 use Qossmic\Deptrac\AstRunner\AstMap;
 
 class FunctionNameCollector implements CollectorInterface
@@ -41,7 +42,7 @@ class FunctionNameCollector implements CollectorInterface
     private function getPattern(array $configuration): string
     {
         if (!isset($configuration['regex']) || !is_string($configuration['regex'])) {
-            throw new \LogicException('FunctionNameCollector needs the regex configuration.');
+            throw new LogicException('FunctionNameCollector needs the regex configuration.');
         }
 
         return '/'.$configuration['regex'].'/i';

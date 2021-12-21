@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
-use function array_filter;
-use function array_key_exists;
-use function array_merge;
-use function dirname;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Exception\Configuration\FileCannotBeParsedAsYamlException;
 use Qossmic\Deptrac\Exception\Configuration\ParsedYamlIsNotAnArrayException;
 use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
-use function sprintf;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Path;
+use function array_filter;
+use function array_key_exists;
+use function array_merge;
+use function dirname;
+use function sprintf;
 use function trigger_deprecation;
 
 class Loader

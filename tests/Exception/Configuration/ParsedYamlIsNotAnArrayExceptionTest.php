@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Exception\Configuration;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Exception\Configuration\ParsedYamlIsNotAnArrayException;
+use RuntimeException;
 
 /**
  * @covers \Qossmic\Deptrac\Exception\Configuration\ParsedYamlIsNotAnArrayException
@@ -16,7 +17,7 @@ final class ParsedYamlIsNotAnArrayExceptionTest extends TestCase
     {
         $exception = new ParsedYamlIsNotAnArrayException();
 
-        self::assertInstanceOf(\RuntimeException::class, $exception);
+        self::assertInstanceOf(RuntimeException::class, $exception);
     }
 
     public function testFromFilenameReturnsException(): void

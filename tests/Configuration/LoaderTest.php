@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Configuration;
 
-use function array_map;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
 use Symfony\Component\Filesystem\Path;
+use function array_map;
 
 /**
  * @covers \Qossmic\Deptrac\Configuration\Loader

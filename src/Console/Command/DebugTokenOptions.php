@@ -2,12 +2,12 @@
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use function is_string;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\AstRunner\AstMap\FileName;
 use Qossmic\Deptrac\AstRunner\AstMap\FunctionName;
 use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
 use Qossmic\Deptrac\Exception\Console\InvalidTokenException;
+use function is_string;
 
 class DebugTokenOptions
 {

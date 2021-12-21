@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Collector;
 
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
@@ -40,7 +41,7 @@ final class ClassNameCollectorTest extends TestCase
 
     public function testWrongRegexParam(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
 
         (new ClassNameCollector())->satisfy(
             ['Foo' => 'a'],
@@ -52,7 +53,7 @@ final class ClassNameCollectorTest extends TestCase
 
     public function testInvalidRegexParam(): void
     {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
 
         (new ClassNameCollector())->satisfy(
             ['regex' => '/'],

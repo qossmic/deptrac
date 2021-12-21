@@ -15,6 +15,7 @@ use Qossmic\Deptrac\RulesetEngine\CoveredRule;
 use Qossmic\Deptrac\RulesetEngine\Rule;
 use Qossmic\Deptrac\RulesetEngine\Uncovered;
 use Qossmic\Deptrac\RulesetEngine\Violation;
+use RuntimeException;
 use function sys_get_temp_dir;
 use function tempnam;
 
@@ -203,7 +204,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
     {
         $filename = tempnam(sys_get_temp_dir(), 'deptrac');
         if (false === $filename) {
-            throw new \RuntimeException('Unable to create temp file for output.');
+            throw new RuntimeException('Unable to create temp file for output.');
         }
         $filename .= '.png';
         $graph->export('png', $filename);

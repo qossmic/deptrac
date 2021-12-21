@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Exception\Configuration;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException;
 
@@ -16,7 +17,7 @@ final class InvalidConfigurationExceptionTest extends TestCase
     {
         $exception = new InvalidConfigurationException();
 
-        self::assertInstanceOf(\InvalidArgumentException::class, $exception);
+        self::assertInstanceOf(InvalidArgumentException::class, $exception);
     }
 
     public function testFromDuplicateLayerNamesReturnsException(): void

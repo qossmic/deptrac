@@ -12,6 +12,8 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
 use Qossmic\Deptrac\Configuration\Configuration;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
+use stdClass;
+use TypeError;
 
 final class NikicPhpParserTest extends TestCase
 {
@@ -28,8 +30,8 @@ final class NikicPhpParserTest extends TestCase
 
     public function testParseWithInvalidData(): void
     {
-        $this->expectException(\TypeError::class);
-        $this->parser->parseFile(new \stdClass(), ConfigurationAnalyser::fromArray([]));
+        $this->expectException(TypeError::class);
+        $this->parser->parseFile(new stdClass(), ConfigurationAnalyser::fromArray([]));
     }
 
     public function testParseDoesNotIgnoreUsesByDefault(): void

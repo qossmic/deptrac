@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use Qossmic\Deptrac\Console\Output;
@@ -36,7 +37,7 @@ final class GraphVizOutputDisplayFormatter extends GraphVizOutputFormatter
             }
             $next = microtime(true) + (float) self::DELAY_OPEN;
         } catch (Exception $exception) {
-            throw new \LogicException('Unable to display output: '.$exception->getMessage());
+            throw new LogicException('Unable to display output: '.$exception->getMessage());
         }
     }
 }

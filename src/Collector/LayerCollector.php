@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Collector;
 
+use InvalidArgumentException;
 use Qossmic\Deptrac\AstRunner\AstMap;
 
 class LayerCollector implements CollectorInterface
@@ -21,10 +22,10 @@ class LayerCollector implements CollectorInterface
         array $allLayersConfiguration = []
     ): bool {
         if (!isset($configuration['layer']) || !is_string($configuration['layer'])) {
-            throw new \InvalidArgumentException('LayerCollector needs the layer configuration.');
+            throw new InvalidArgumentException('LayerCollector needs the layer configuration.');
         }
         if (!array_key_exists($configuration['layer'], $allLayersConfiguration)) {
-            throw new \InvalidArgumentException('Referenced layer in LayerCollector does not exist.');
+            throw new InvalidArgumentException('Referenced layer in LayerCollector does not exist.');
         }
 
         $layerConfig = $allLayersConfiguration[$configuration['layer']];

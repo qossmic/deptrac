@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac;
 
-use const DIRECTORY_SEPARATOR;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Iterator\PathFilterIterator;
+use const DIRECTORY_SEPARATOR;
 
 class PathNameFilterIterator extends PathFilterIterator
 {
