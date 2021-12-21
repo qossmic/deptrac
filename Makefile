@@ -41,7 +41,7 @@ deptrac:
 	$(PHP_BIN) deptrac.php analyse --no-progress --ansi
 
 psalm:
-	$(PSALM_BIN) analyse
+	$(PSALM_BIN)
 
 infection: tools-install composer-install
 	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=82

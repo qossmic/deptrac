@@ -79,6 +79,7 @@ class AstMap
 
     /**
      * @param ArrayObject<string, true>|null $alreadyResolved
+     * @param SplStack<AstInherit>           $pathStack
      *
      * @return iterable<AstInherit>
      */
@@ -91,6 +92,7 @@ class AstMap
         $alreadyResolved = $alreadyResolved ?? new ArrayObject();
 
         if (null === $pathStack) {
+            /** @var SplStack<AstInherit> $pathStack */
             $pathStack = new SplStack();
             $pathStack->push($inheritDependency);
         }
