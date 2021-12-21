@@ -8,6 +8,7 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Configuration\Configuration;
+use Qossmic\Deptrac\Configuration\ConfigurationLayer;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 
@@ -35,9 +36,6 @@ class TokenLayerResolver implements TokenLayerResolverInterface
      */
     public function getLayersByTokenName(AstMap\TokenName $tokenName): array
     {
-        /** @var array<string, bool> $layers */
-        $layers = [];
-
         if ($tokenName instanceof ClassLikeName) {
             if (!$astTokenReference = $this->astMap->getClassReferenceByClassName($tokenName)) {
                 $astTokenReference = new AstMap\AstClassReference($tokenName);
@@ -56,24 +54,56 @@ class TokenLayerResolver implements TokenLayerResolverInterface
             throw new ShouldNotHappenException();
         }
 
-        foreach ($this->configuration->getLayers() as $configurationLayer) {
-            foreach ($configurationLayer->getCollectors() as $configurationCollector) {
-                $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
+        /** @var array<string, bool> $layers */
+        $layers = [];
 
-                $configuration = $this->parameterResolver->resolve(
-                    $configurationCollector->getArgs(),
-                    $this->configuration->getParameters()
-                );
+        $layerRegistry = [];
+        $numberOfLayersToResolve = count($this->configuration->getLayers());
+        $resolvedBeforeLoop = 0;
+        $resolvedLayerConfiguration = $this->getResolvedLayerConfiguration();
+        while (count($layerRegistry) < $numberOfLayersToResolve) {
+            foreach ($resolvedLayerConfiguration as $configurationLayer) {
+                foreach ($configurationLayer->getCollectors() as $configurationCollector) {
+                    $collector = $this->collectorRegistry->getCollector($configurationCollector->getType());
 
-                if ($collector->satisfy($configuration, $astTokenReference, $this->astMap, $this->collectorRegistry)) {
-                    $layers[$configurationLayer->getName()] = true;
+                    if ($collector->resolvable($configurationCollector->getArgs(), $this->collectorRegistry, $layerRegistry)) {
+                        if ($collector->satisfy(
+                            $configurationCollector->toArray(),
+                            $astTokenReference,
+                            $this->astMap,
+                            $this->collectorRegistry,
+                            $resolvedLayerConfiguration
+                        )
+                        ) {
+                            $layers[$configurationLayer->getName()] = true;
+                        }
+                    } else {
+                        continue 2;
+                    }
                 }
+                $layerRegistry[] = $configurationLayer->getName();
             }
+            if ($resolvedBeforeLoop === count($layerRegistry)) {
+                throw new \RuntimeException('Circular dependency between layers detected');
+            }
+            $resolvedBeforeLoop = count($layerRegistry);
         }
 
         /** @var string[] $layerNames */
         $layerNames = array_keys($layers);
 
         return $layerNames;
+    }
+
+    /**
+     * @return ConfigurationLayer[]
+     */
+    private function getResolvedLayerConfiguration(): array
+    {
+        return array_map(function (ConfigurationLayer $configurationLayer): ConfigurationLayer {
+            return ConfigurationLayer::fromArray(
+                $this->parameterResolver->resolve($configurationLayer->toArray(), $this->configuration->getParameters())
+            );
+        }, $this->configuration->getLayers());
     }
 }

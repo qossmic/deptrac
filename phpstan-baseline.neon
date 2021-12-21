@@ -21,7 +21,17 @@ parameters:
 			path: src/Configuration/Configuration.php
 
 		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Configuration\\\\ConfigurationCollector\\:\\:toArray\\(\\) should return array\\{type\\: string, args\\: array\\<string, string\\>\\} but returns array\\<string, string\\>\\.$#"
+			count: 1
+			path: src/Configuration/ConfigurationCollector.php
+
+		-
 			message: "#^Call to an undefined method Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition\\:\\:children\\(\\)\\.$#"
 			count: 1
 			path: src/Configuration/Definition.php
+
+		-
+			message: "#^Parameter \\#1 \\$args of static method Qossmic\\\\Deptrac\\\\Configuration\\\\ConfigurationLayer\\:\\:fromArray\\(\\) expects array\\{name\\: string, collectors\\: array\\<array\\<string, string\\>\\>\\}, array\\<string, array\\|string\\> given\\.$#"
+			count: 1
+			path: src/TokenLayerResolver.php
 

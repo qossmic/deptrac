@@ -51,4 +51,17 @@ final class ConfigurationLayer
     {
         return $this->name;
     }
+
+    /**
+     * @return array{name: string, collectors: array<array<string, array|string>>}
+     */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'collectors' => array_map(static function (ConfigurationCollector $collector): array {
+                return $collector->toArray();
+            }, $this->getCollectors()),
+        ];
+    }
 }

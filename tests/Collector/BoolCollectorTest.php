@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 use Qossmic\Deptrac\Collector\BoolCollector;
+use Qossmic\Deptrac\Collector\ClassNameCollector;
 use Qossmic\Deptrac\Collector\CollectorInterface;
 use Qossmic\Deptrac\Collector\Registry;
 
@@ -24,6 +25,49 @@ final class BoolCollectorTest extends TestCase
             $this->createMock(AstMap::class),
             $this->createMock(Registry::class)
         );
+    }
+
+    public function testResolvable(): void
+    {
+        $configuration = [
+            'must' => [
+                [
+                    'type' => (new ClassNameCollector())->getType(),
+                    'regex' => '',
+                ],
+            ],
+        ];
+        $collectorRegistry = $this->createMock(Registry::class);
+        $collectorRegistry->method('getCollector')
+            ->willReturnMap([
+                 [(new ClassNameCollector())->getType(), new ClassNameCollector()],
+            ]);
+
+        $stat = (new BoolCollector())->resolvable($configuration, $collectorRegistry, []);
+
+        self::assertEquals(true, $stat);
+    }
+
+    public function testUnresolvable(): void
+    {
+        $type = 'true';
+        $configuration = [
+            'must' => [
+                [
+                    'type' => $type,
+                    'regex' => '',
+                ],
+            ],
+        ];
+        $collectorRegistry = $this->createMock(Registry::class);
+        $collectorRegistry->method('getCollector')
+            ->willReturnMap([
+                [$type, $this->getCollectorMock((bool) $type, false)],
+            ]);
+
+        $stat = (new BoolCollector())->resolvable($configuration, $collectorRegistry, []);
+
+        self::assertEquals(false, $stat);
     }
 
     public function testType(): void
@@ -139,8 +183,8 @@ final class BoolCollectorTest extends TestCase
     {
         $collectorFactory = $this->createMock(Registry::class);
         $collectorFactory->method('getCollector')->willReturnMap([
-            ['true', $this->getCalculatorMock(true)],
-            ['false', $this->getCalculatorMock(false)],
+            ['true', $this->getCollectorMock(true, true)],
+            ['false', $this->getCollectorMock(false, true)],
         ]);
 
         if (isset($configuration['must'])) {
@@ -164,7 +208,7 @@ final class BoolCollectorTest extends TestCase
         self::assertEquals($expected, $stat);
     }
 
-    private function getCalculatorMock(bool $returns)
+    private function getCollectorMock(bool $returns, bool $resolvable)
     {
         $collector = $this->createMock(CollectorInterface::class);
         $collector
@@ -176,6 +220,9 @@ final class BoolCollectorTest extends TestCase
                 self::isInstanceOf(Registry::class)
             )
             ->willReturn($returns);
+        $collector
+            ->method('resolvable')
+            ->willReturn($resolvable);
 
         return $collector;
     }

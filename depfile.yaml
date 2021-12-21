@@ -19,8 +19,8 @@ layers:
         must_not:
           - type: className
             regex: ^Qossmic\\Deptrac\\.*
-          - type: className
-            regex: Symfony\\Component\\Console\\.*
+          - type: layer
+            layer: SymfonyConsole
   - name: SymfonyConsole
     collectors:
       - type: className
@@ -143,6 +143,7 @@ ruleset:
     - Utils
     - AstRunner
     - Dependencies
+    - Application
   Events:
     - Utils
     - Console
@@ -153,8 +154,10 @@ formatters:
   graphviz:
     hidden_layers:
       - Utils
+      - Events
     groups:
       Console:
         - Console
         - Console Formatters
+        - SymfonyConsole
     pointToGroups: true

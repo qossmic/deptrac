@@ -22,6 +22,7 @@ use Qossmic\Deptrac\Collector\FunctionNameCollector;
 use Qossmic\Deptrac\Collector\ImplementsCollector;
 use Qossmic\Deptrac\Collector\InheritanceLevelCollector;
 use Qossmic\Deptrac\Collector\InheritsCollector;
+use Qossmic\Deptrac\Collector\LayerCollector;
 use Qossmic\Deptrac\Collector\MethodCollector;
 use Qossmic\Deptrac\Collector\Registry;
 use Qossmic\Deptrac\Collector\SuperglobalCollector;
@@ -209,6 +210,9 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(Registry::class)
         ->args([tagged_iterator('collector')]);
+    $services
+        ->set(LayerCollector::class)
+        ->tag('collector');
     $services
         ->set(BoolCollector::class)
         ->tag('collector');
