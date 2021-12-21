@@ -1,12 +1,13 @@
-paths: ["./ModelController2"]
-exclude_files: []
-layers:
-  - name: Models
-    collectors:
-      - type: className
-        regex: .*MyNamespace\\Models\\.*
-  - name: Controller
-    collectors:
-      - type: className
-        regex: .*MyNamespace\\.*Controller.*
-ruleset: []
+parameters:
+  paths: ["./ModelController2"]
+  exclude_files: []
+  layers:
+    - name: Models
+      collectors:
+        - type: className
+          regex: .*MyNamespace\\Models\\.*
+    - name: Controller
+      collectors:
+        - type: className
+          regex: .*MyNamespace\\.*Controller.*
+  ruleset: []

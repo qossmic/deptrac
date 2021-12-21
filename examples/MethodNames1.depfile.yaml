@@ -1,12 +1,13 @@
-paths: ["./MethodNames1/"]
-exclude_files: []
-layers:
-  - name: SomeA
-    collectors:
-      - type: method
-        name: SomeA
-  - name: SomeB
-    collectors:
-      - type: method
-        name: SomeB
-ruleset: []
+parameters:
+  paths: ["./MethodNames1/"]
+  exclude_files: []
+  layers:
+    - name: SomeA
+      collectors:
+        - type: method
+          name: SomeA
+    - name: SomeB
+      collectors:
+        - type: method
+          name: SomeB
+  ruleset: []

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
+use const DIRECTORY_SEPARATOR;
+use function getcwd;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Env;
@@ -52,7 +54,12 @@ class AnalyseCommand extends Command
     {
         parent::configure();
 
-        $this->addArgument('depfile', InputArgument::OPTIONAL, 'Path to the depfile');
+        $this->addArgument(
+            'depfile',
+            InputArgument::OPTIONAL,
+            '!deprecated: use --config-file instead - Path to the depfile',
+            getcwd().DIRECTORY_SEPARATOR.'depfile.yaml'
+        );
         $this->addOption(
             'formatter',
             'f',
@@ -78,8 +85,10 @@ class AnalyseCommand extends Command
         $formatter = $input->getOption('formatter');
         $formatter = $formatter ?? self::getDefaultFormatter();
 
+        $configFile = self::getConfigFile($input, $symfonyOutput);
+
         $options = new AnalyseOptions(
-            $input->getArgument('depfile') ?? $this->getDefaultFile($symfonyOutput),
+            $configFile,
             (bool) $input->getOption('no-progress'),
             $formatter,
             null === $input->getOption('output') ? null : (string) $input->getOption('output'),

@@ -22,18 +22,20 @@ multiple different collectors for a layer.
 The `bool` collector allows combining other collectors with or without negation.
 
 ```yml
-layers:
-  - name: Asset
-    collectors:
-      - type: bool
-        must:
-          - type: className
-            regex: .*Foo\\.*
-          - type: className
-            regex: .*\\Asset.*
-        must_not:
-          - type: className
-            regex: .*Assetic.*
+
+parameters:
+  layers:
+    - name: Asset
+      collectors:
+        - type: bool
+          must:
+            - type: className
+              regex: .*Foo\\.*
+            - type: className
+              regex: .*\\Asset.*
+          must_not:
+            - type: className
+              regex: .*Assetic.*
 ```
 
 Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part
@@ -46,11 +48,12 @@ qualified name to a simplified regular expression. Any matching class will be
 added to the assigned layer.
 
 ```yaml
-layers:
-  - name: Controller
-    collectors:
-      - type: className
-        regex: .*Controller.*
+parameters:
+  layers:
+    - name: Controller
+      collectors:
+        - type: className
+          regex: .*Controller.*
 ```
 
 Every class name that matches the regular expression becomes a part of the
@@ -64,11 +67,12 @@ qualified name to a regular expression. Any matching class will be added to the
 assigned layer.
 
 ```yaml
-layers:
-  - name: Controller
-    collectors:
-      - type: classNameRegex
-        regex: '#.*Controller.*#'
+parameters:
+  layers:
+    - name: Controller
+      collectors:
+        - type: classNameRegex
+          regex: '#.*Controller.*#'
 ```
 
 Every class name that matches the regular expression becomes a part of the
@@ -81,11 +85,12 @@ they are declared in to a simplified regular expression. Any matching class will
 be added to the assigned layer.
 
 ```yaml
-layers:
-  - name: Controller
-    collectors:
-      - type: directory
-        regex: src/Controller/.*
+parameters:
+  layers:
+    - name: Controller
+      collectors:
+        - type: directory
+          regex: src/Controller/.*
 ```
 
 Every file path that matches the regular expression `src/Controller/.*` becomes
@@ -98,11 +103,12 @@ The `extends` collector allows collecting classes extending a specified class by
 matching recursively for a fully qualified class or interface name.
 
 ```yaml
-layers:
-  - name: Foo
-    collectors:
-      - type: extends
-        extends: 'App\SomeClass'
+parameters:
+  layers:
+    - name: Foo
+      collectors:
+        - type: extends
+          extends: 'App\SomeClass'
 ```
 
 ## `functionName` Collector
@@ -112,11 +118,12 @@ qualified name to a simplified regular expression. Any matching function will be
 added to the assigned layer.
 
 ```yaml
-layers:
-  - name: Foo
-    collectors:
-      - type: functionName
-        regex: .*array_.*
+parameters:
+  layers:
+    - name: Foo
+      collectors:
+        - type: functionName
+          regex: .*array_.*
 ```
 
 ## `implements` Collector
@@ -125,11 +132,12 @@ The `implements` collector allows collecting classes implementing a specified
 interface by matching recursively for a fully qualified interface name.
 
 ```yaml
-layers:
-  - name: Foo
-    collectors:
-      - type: implements
-        implements: 'App\SomeInterface'
+parameters:
+  layers:
+    - name: Foo
+      collectors:
+        - type: implements
+          implements: 'App\SomeInterface'
 ```
 
 ## `inherits` Collector
@@ -139,11 +147,12 @@ class, whether by implementing an interface, extending another class or by using
 a trait, by matching recursively for a fully qualified class name.
 
 ```yaml
-layers:
-  - name: Foo
-    collectors:
-      - type: inherits
-        inherits: 'App\SomeInterface'
+parameters:
+  layers:
+    - name: Foo
+      collectors:
+        - type: inherits
+          inherits: 'App\SomeInterface'
 ```
 
 ## `layer` Collector
@@ -154,20 +163,21 @@ it is very useful to exclude classes in combination with
 the [`bool` Collector](#bool-collector):
 
 ```yml
-layers:
-  - name: SubDomain
-    collectors:
-      - type: directory
-        regex: src/Domain/Subdomain/.*
-  - name: Domain
-    collectors:
-      - type: bool
-        must:
-          - type: directory
-            regex: src/Domain/.*
-        must_not:
-          - type: layer
-            layer: SubDomain
+parameters:
+  layers:
+    - name: SubDomain
+      collectors:
+        - type: directory
+          regex: src/Domain/Subdomain/.*
+    - name: Domain
+      collectors:
+        - type: bool
+          must:
+            - type: directory
+              regex: src/Domain/.*
+          must_not:
+            - type: layer
+              layer: SubDomain
 ```
 
 ## `method` Collector
@@ -176,11 +186,12 @@ The `method` collector allows collecting classes by matching their methods name
 to a regular expression. Any matching class will be added to the assigned layer.
 
 ```yaml
-layers:
-  - name: Foo services
-    collectors:
-      - type: method
-        name: .*foo
+parameters:
+  layers:
+    - name: Foo services
+      collectors:
+        - type: method
+          name: .*foo
 ```
 
 Every class having a method that matches the regular expression `.*foo`,
@@ -192,13 +203,14 @@ The `superglobal` collector allows collecting superglobal PHP variables matching
 the specified superglobal name.
 
 ```yaml
-layers:
-  - name: Foo
-    collectors:
-      - type: superglobal
-        names:
-          - _POST
-          - _GET
+parameters:
+  layers:
+    - name: Foo
+      collectors:
+        - type: superglobal
+          names:
+            - _POST
+            - _GET
 ```
 
 ## `uses` Collector
@@ -207,11 +219,12 @@ The `uses` collector allows collecting classes using a specified trait by
 matching recursively for a fully qualified trait name.
 
 ```yaml
-layers:
-  - name: Foo
-    collectors:
-      - type: uses
-        uses: 'App\SomeTrait'
+parameters:
+  layers:
+    - name: Foo
+      collectors:
+        - type: uses
+          uses: 'App\SomeTrait'
 ```
 
 ## Custom Collectors

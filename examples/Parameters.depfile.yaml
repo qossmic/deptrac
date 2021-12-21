@@ -2,26 +2,26 @@ parameters:
   layer1: Layer1
   layer2: Layer2
 
-paths: ["./Layer1/", "./Layer2/"]
-exclude_files: []
-layers:
-  - name: Layer1
-    collectors:
-      - type: directory
-        regex: ^%depfileDirectory%/%layer1%/.*
-  - name: Layer2
-    collectors:
-      - type: directory
-        regex: ^%depfileDirectory%/%layer2%/.*
-  - name: Controller
-    collectors:
-      - type: className
-        regex: .*Controller.*
-ruleset:
-  Controller:
-    - Layer1
-  Layer1:
-    - Layer2
-skip_violations:
-  examples\Layer2\SomeOtherClass:
-    - examples\Layer1\SomeClass
+  paths: ["./Layer1/", "./Layer2/"]
+  exclude_files: []
+  layers:
+    - name: Layer1
+      collectors:
+        - type: directory
+          regex: ^%depfileDirectory%/%layer1%/.*
+    - name: Layer2
+      collectors:
+        - type: directory
+          regex: ^%depfileDirectory%/%layer2%/.*
+    - name: Controller
+      collectors:
+        - type: className
+          regex: .*Controller.*
+  ruleset:
+    Controller:
+      - Layer1
+    Layer1:
+      - Layer2
+  skip_violations:
+    examples\Layer2\SomeOtherClass:
+      - examples\Layer1\SomeClass

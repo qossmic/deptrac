@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Configuration;
 
+use function array_filter;
+use function array_key_exists;
+use function array_merge;
 use function dirname;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
 use Qossmic\Deptrac\Exception\Configuration\FileCannotBeParsedAsYamlException;
 use Qossmic\Deptrac\Exception\Configuration\ParsedYamlIsNotAnArrayException;
 use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
+use function sprintf;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Path;
+use function trigger_deprecation;
 
 class Loader
 {
@@ -36,19 +41,21 @@ class Loader
         $depfileDirectory = dirname($absolutePath);
 
         $configs = [];
-        $configs[] = $mainConfig = $this->fileLoader->parseFile($absolutePath);
+        $configs[] = $mainConfig = $this->normalize($this->fileLoader->parseFile($absolutePath), $absolutePath);
 
         $useRelativePathFromDepfile = (bool) ($mainConfig['use_relative_path_from_depfile'] ?? true);
         $basePath = $useRelativePathFromDepfile ? $depfileDirectory : $this->workingDirectory;
 
         if (isset($mainConfig['baseline'])) {
-            $configs[] = $this->fileLoader->parseFile(Path::makeAbsolute((string) $mainConfig['baseline'], $basePath));
+            $baselineFile = Path::makeAbsolute((string) $mainConfig['baseline'], $basePath);
+            $configs[] = $this->normalize($this->fileLoader->parseFile($baselineFile), $baselineFile);
         }
 
         if (isset($mainConfig['imports'])) {
             /** @var string $importFile */
             foreach ((array) $mainConfig['imports'] as $importFile) {
-                $configs[] = $this->fileLoader->parseFile(Path::makeAbsolute($importFile, $basePath));
+                $file = Path::makeAbsolute($importFile, $basePath);
+                $configs[] = $this->normalize($this->fileLoader->parseFile($file), $file);
             }
         }
 
@@ -78,5 +85,48 @@ class Loader
             'formatters' => $mergedConfig['formatters'] ?? [],
             'analyser' => [] === $analyser ? $analyzer : $analyser,
         ]);
+    }
+
+    private function normalize(array $config, string $filename): array
+    {
+        $normalized = [
+            'use_relative_path_from_depfile' => $this->normalizeValue($config, 'use_relative_path_from_depfile', $filename),
+            'baseline' => $this->normalizeValue($config, 'baseline', $filename),
+            'formatters' => $this->normalizeValue($config, 'formatters', $filename),
+            'layers' => $this->normalizeValue($config, 'layers', $filename),
+            'paths' => $this->normalizeValue($config, 'paths', $filename),
+            'exclude_files' => $this->normalizeValue($config, 'exclude_files', $filename),
+            'ruleset' => $this->normalizeValue($config, 'ruleset', $filename),
+            'skip_violations' => $this->normalizeValue($config, 'skip_violations', $filename),
+            'analyser' => $this->normalizeValue($config, 'analyser', $filename),
+            'ignore_uncovered_internal_classes' => $this->normalizeValue($config, 'ignore_uncovered_internal_classes', $filename),
+        ];
+
+        return array_filter(array_merge($config, $normalized), static fn ($value) => null !== $value);
+    }
+
+    /**
+     * @return array|mixed|string|null
+     */
+    private function normalizeValue(array &$data, string $key, string $file)
+    {
+        /** @psalm-suppress MixedArgument */
+        if (array_key_exists('parameters', $data) && array_key_exists($key, $data['parameters'])) {
+            /** @var array|mixed|string|null $result */
+            $result = $data['parameters'][$key];
+
+            unset($data['parameters'][$key]);
+
+            return $result;
+        }
+
+        if (array_key_exists($key, $data)) {
+            /** @psalm-suppress TooManyArguments,UnusedFunctionCall */
+            trigger_deprecation('qossmic/deptrac', '0.19.0', sprintf('Section "%s" in "%s" should be placed under parameters.', $key, $file));
+
+            return $data[$key];
+        }
+
+        return null;
     }
 }

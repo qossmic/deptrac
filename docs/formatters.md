@@ -35,11 +35,12 @@ Supported options:
 --output[=BASELINE-DUMP] path to a dumped baseline file [default: "./depfile.baseline.yml"]
 ```
 
-Don't forget to include the baseline into your existing `depfile.yml`
+Don't forget to include the baseline into your existing `deptrac.yaml`
 
 ```yaml
-# depfile.yml
-baseline: depfile.baseline.yml
+# deptrac.yaml
+parameters:
+  baseline: depfile.baseline.yml
 ```
 
 ## Console Formatter
@@ -95,26 +96,27 @@ There are 2 main use-cases for this feature:
   will then generate graphs focusing on only the relevant layers.
 
 ```yaml
-layers:
-  -
-    name: Utils
-    collectors:
-      -
-        type: className
-        regex: .*Util.*
-  -
-    name: Controller
-    collectors:
-      -
-        type: className
-        regex: .*Controller.*
-ruleset:
-  Controller:
-    - Utils
-formatters:
-  graphviz:
-    hidden_layers:
+parameters:
+  layers:
+    -
+      name: Utils
+      collectors:
+        -
+          type: className
+          regex: .*Util.*
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          regex: .*Controller.*
+  ruleset:
+    Controller:
       - Utils
+  formatters:
+    graphviz:
+      hidden_layers:
+        - Utils
 ```
 
 #### Group layers
@@ -125,20 +127,21 @@ layers into groups that will be rendered as sub-graphs in GraphViz output.
 The following config:
 
 ```yaml
-layers:
-  - User Frontend
-  - User Backend
-  - Admin Frontend
-  - Admin Backend
-formatters:
-  graphviz:
-    groups:
-      User:
-        - User Frontend
-        - User Backend
-      Admin:
-        - Admin Frontend
-        - Admin Backend
+parameters:
+  layers:
+    - User Frontend
+    - User Backend
+    - Admin Frontend
+    - Admin Backend
+  formatters:
+    graphviz:
+      groups:
+        User:
+          - User Frontend
+          - User Backend
+        Admin:
+          - Admin Frontend
+          - Admin Backend
 ```
 
 Will produce the following graph:

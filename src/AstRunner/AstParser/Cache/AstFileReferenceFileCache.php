@@ -86,12 +86,12 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 
         $contents = FileReader::read($this->cacheFile);
 
-        /** @var array{version: string, payload: array<string, array{hash: string, reference: string}>} $cache */
+        /** @var ?array{version: string, payload: array<string, array{hash: string, reference: string}>} $cache */
         $cache = json_decode($contents, true);
 
         $this->loaded = true;
 
-        if (Application::VERSION !== $cache['version']) {
+        if (null === $cache || Application::VERSION !== $cache['version']) {
             return;
         }
 

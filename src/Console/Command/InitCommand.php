@@ -34,7 +34,9 @@ class InitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->dumper->dump('depfile.yaml');
+            /** @var string $targetFile */
+            $targetFile = $input->getOption('config-file');
+            $this->dumper->dump($targetFile);
             $output->writeln('depfile <info>dumped.</info>');
 
             return 0;

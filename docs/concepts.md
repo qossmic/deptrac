@@ -44,23 +44,24 @@ If your application has *controllers* and *models*, Deptrac allows you to group
 them into layers.
 
 ```yaml
-paths:
-  - ./examples/ModelController
-exclude_files: ~
-layers:
-  -
-    name: Models
-    collectors:
-      -
-        type: className
-        regex: .*MyNamespace\\Models\\.*
-  -
-    name: Controller
-    collectors:
-      -
-        type: className
-        regex: .*MyNamespace\\.*Controller.*
-ruleset: [ ]
+parameters:
+  paths:
+    - ./examples/ModelController
+  exclude_files: ~
+  layers:
+    -
+      name: Models
+      collectors:
+        -
+          type: className
+          regex: .*MyNamespace\\Models\\.*
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          regex: .*MyNamespace\\.*Controller.*
+  ruleset: [ ]
 ```
 
 At first, lets take a closer look at the first layer (named *Models*).
@@ -84,7 +85,7 @@ configuration:
 installed on your system)
 
 ```bash
-php deptrac.php analyse examples/ModelController1.depfile.yaml
+php deptrac.phar analyse --config-file=examples/ModelController1.depfile.yaml
 ```
 
 After Deptrac has finished, an image should be opened:
@@ -131,34 +132,35 @@ As a lot of architectures define some kind of *controllers*, *services* and
 We can define this using the following depfile:
 
 ```yaml
-paths:
-  - ./examples/ControllerServiceRepository1/
-exclude_files: ~
-layers:
-  -
-    name: Controller
-    collectors:
-      -
-        type: className
-        regex: .*MyNamespace\\.*Controller.*
-  -
-    name: Repository
-    collectors:
-      -
-        type: className
-        regex: .*MyNamespace\\.*Repository.*
-  -
-    name: Service
-    collectors:
-      -
-        type: className
-        regex: .*MyNamespace\\.*Service.*
-ruleset:
-  Controller:
-    - Service
-  Service:
-    - Repository
-  Repository: ~
+parameters:
+  paths:
+    - ./examples/ControllerServiceRepository1/
+  exclude_files: ~
+  layers:
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          regex: .*MyNamespace\\.*Controller.*
+    -
+      name: Repository
+      collectors:
+        -
+          type: className
+          regex: .*MyNamespace\\.*Repository.*
+    -
+      name: Service
+      collectors:
+        -
+          type: className
+          regex: .*MyNamespace\\.*Service.*
+  ruleset:
+    Controller:
+      - Service
+    Service:
+      - Repository
+    Repository: ~
 ```
 
 Take a closer look at the ruleset. We allow the *Controller* layer to access
@@ -251,7 +253,7 @@ class SomeController
 After running Deptrac for this example
 
 ```bash
-php deptrac.php analyse examples/ModelController2.depfile.yaml
+php deptrac.phar analyse --config-file=examples/ModelController2.depfile.yaml
 ```
 
 we will get this output:
@@ -290,9 +292,10 @@ Violations can be skipped by provided list of dependencies in *skip_violations*
 configuration section:
 
 ```yaml
-skip_violations:
-  Library\LibClass:
-    - Core\CoreClass
+parameters:
+  skip_violations:
+    Library\LibClass:
+      - Core\CoreClass
 ```
 
 *skip_violations* section contains an associative array where a
@@ -302,7 +305,7 @@ values (`Core\CoreClass`) are dependency tokens.
 Matched violations will be marked as skipped:
 
 ```bash
-php deptrac.php analyse examples/SkipViolations.yaml --report-skipped
+php deptrac.phar analyse --config-file=examples/SkipViolations.yaml --report-skipped
 1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
 [SKIPPED] Library\LibClass must not depend on Core\CoreClass (Library on Core)

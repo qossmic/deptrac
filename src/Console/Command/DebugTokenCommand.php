@@ -46,7 +46,7 @@ class DebugTokenCommand extends Command
         /** @var string $tokenType */
         $tokenType = $input->getArgument('type');
         $options = new DebugTokenOptions(
-            $input->getOption('depfile') ?? $this->getDefaultFile($symfonyOutput),
+            self::getConfigFile($input, $symfonyOutput),
             $tokenName,
             $tokenType
         );

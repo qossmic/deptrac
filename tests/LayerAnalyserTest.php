@@ -4,7 +4,7 @@ namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\ContainerBuilder;
+use Qossmic\Deptrac\Console\ServiceContainerBuilder;
 use Qossmic\Deptrac\LayerAnalyser;
 use Tests\Qossmic\Deptrac\Fixtures\LayerAnalyser\ClassBar;
 use Tests\Qossmic\Deptrac\Fixtures\LayerAnalyser\ClassFoo;
@@ -32,7 +32,7 @@ class LayerAnalyserTest extends TestCase
             'ruleset' => [],
         ]);
 
-        $container = (new ContainerBuilder(__DIR__))->build();
+        $container = (new ServiceContainerBuilder(__DIR__))->build();
         $analyser = $container->get(LayerAnalyser::class);
         $classLikes = $analyser->analyse($configuration, 'LayerFoo');
 

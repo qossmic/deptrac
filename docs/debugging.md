@@ -14,7 +14,7 @@ With the `debug:layer`-command you can list all tokens which are matched in
 a specific layer.
 
 ```bash
-php deptrac.phar debug:layer examples/DirectoryLayer.depfile.yaml Layer1
+php deptrac.phar debug:layer --config-file=examples/DirectoryLayer.depfile.yaml Layer1
 
 examples\Layer1\AnotherClassLikeAController
 examples\Layer1\SomeClass
@@ -26,7 +26,7 @@ examples\Layer1\SomeClass2
 The `debug:token` (previously `debug:class-like`)-command will let you know which layers a specified token belongs to.
 
 ```bash
-php deptrac.phar debug:token examples/DirectoryLayer.depfile.yaml 'examples\Layer1\AnotherClassLikeAController' class-like
+php deptrac.phar debug:token --config-file=examples/DirectoryLayer.depfile.yaml 'examples\Layer1\AnotherClassLikeAController' class-like
 
 Controller
 Layer1
@@ -39,7 +39,7 @@ not assigned to any layer. This is useful to test that your collector
 configuration for layers is correct.
 
 ```bash
-php deptrac.phar debug:unassigned examples/DirectoryLayer.depfile.yaml
+php deptrac.phar debug:unassigned --config-file=examples/DirectoryLayer.depfile.yaml
 
 examples\Layer1\AnotherClassLikeAController
 examples\Layer1\SomeClass

@@ -143,36 +143,37 @@ You can find out more about the [Core Concepts](/docs/concepts.md) in the docs.
 Let's have a look at the generated file:
 
 ```yaml
-# depfile.yaml
-paths:
-  - ./src
-exclude_files:
-  - '#.*test.*#'
-layers:
-  -
-    name: Controller
-    collectors:
-      -
-        type: className
-        regex: .*Controller.*
-  -
-    name: Repository
-    collectors:
-      -
-        type: className
-        regex: .*Repository.*
-  -
-    name: Service
-    collectors:
-      -
-        type: className
-        regex: .*Service.*
-ruleset:
-  Controller:
-    - Service
-  Service:
-    - Repository
-  Repository: ~
+# deptrac.yaml
+parameters:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+  layers:
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          regex: .*Controller.*
+    -
+      name: Repository
+      collectors:
+        -
+          type: className
+          regex: .*Repository.*
+    -
+      name: Service
+      collectors:
+        -
+          type: className
+          regex: .*Service.*
+  ruleset:
+    Controller:
+      - Service
+    Service:
+      - Repository
+    Repository: ~
 ```
 
 By default, Deptrac will search your project's `src/` directory for classes and
@@ -202,7 +203,7 @@ check for violations.
 php deptrac.phar
 
 # which is equivalent to
-php deptrac.phar analyse depfile.yaml
+php deptrac.phar analyse --config-file=deptrac.yaml
 ```
 
 If you run `php deptrac.phar -v` you'll get a more verbose output.
