@@ -110,28 +110,28 @@ jobs:
           coverage: none
 
       - name: "Run deptrac phar without cache"
-        run: php deptrac.phar analyse examples/Fixture.depfile.yaml --no-cache
+        run: php deptrac.phar analyse docs/examples/Fixture.depfile.yaml --no-cache
 
       - name: "Cache file should not exist"
         run: "[ ! -f '.deptrac.cache' ]"
 
       - name: "Run deptrac phar with cache enabled"
-        run: php deptrac.phar analyse examples/Fixture.depfile.yaml
+        run: php deptrac.phar analyse docs/examples/Fixture.depfile.yaml
 
       - name: "Cache file should exist"
         run: "[ -f '.deptrac.cache' ]"
 
       - name: "Run deptrac phar again with cache enabled to be sure the cache file could be reused"
-        run: php deptrac.phar analyse examples/Fixture.depfile.yaml
+        run: php deptrac.phar analyse docs/examples/Fixture.depfile.yaml
 
       - name: "Run deptrac phar with custom cache file output"
-        run: php deptrac.phar analyse examples/Fixture.depfile.yaml --cache-file=.deptrac.cache2
+        run: php deptrac.phar analyse docs/examples/Fixture.depfile.yaml --cache-file=.deptrac.cache2
 
       - name: "Custom cache file should exist"
         run: "[ -f '.deptrac.cache2' ]"
 
       - name: "Run deptrac phar using transitive dependencies example"
-        run: php deptrac.phar analyse examples/Transitive.depfile.yaml
+        run: php deptrac.phar analyse docs/examples/Transitive.depfile.yaml
 
       - name: "Run deptrac phar with --fail-on-uncovered"
         run: sh .github/workflows/test-flag-fail-on-uncovered.sh
