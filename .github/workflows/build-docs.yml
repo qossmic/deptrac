@@ -2,6 +2,8 @@ name: Build and deploy documentation
 on:
   release:
     types: [published]
+  workflow_dispatch: ~
+
 jobs:
   build-documentation:
     runs-on: ubuntu-latest
