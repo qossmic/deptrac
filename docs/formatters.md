@@ -136,7 +136,7 @@ parameters:
 
 Will produce the following graph:
 
-![GraphvizGroups](../examples/GraphvizGroups.png)
+![GraphvizGroups](examples/GraphvizGroups.png)
 
 #### Pointing to groups instead of nodes
 With `formatters.graphviz.pointToGroups` set to `true`, when you have a node inside a groups with the same name as the group itself, edges pointing to that node will point to the group instead. This might be useful for example if you want to provide a "public API" for a module defined by a group.
