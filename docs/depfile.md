@@ -116,7 +116,7 @@ parameters:
 
 The resulting output will look like this:
 
-![GraphvizGroups](../examples/GraphvizGroups.png)
+![GraphvizGroups](examples/GraphvizGroups.png)
 
 ##### `hidden_layers`
 

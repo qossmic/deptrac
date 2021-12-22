@@ -81,7 +81,7 @@ the *Controller* layer.
 
 As we defined our layers, we can generate a dependency graph for the example
 configuration:
-(Make sure that [*Graphviz*](../README.md#optional-dependency-graphviz) (dot) is
+(Make sure that [*Graphviz*](/#optional-dependency-graphviz) (dot) is
 installed on your system)
 
 ```bash
@@ -90,7 +90,7 @@ php deptrac.phar analyse --config-file=examples/ModelController1.depfile.yaml
 
 After Deptrac has finished, an image should be opened:
 
-![ModelController1](../examples/ModelController1.png)
+![ModelController1](examples/ModelController1.png)
 
 On your command line Deptrac will produce this output:
 
@@ -169,7 +169,7 @@ any of the two other layers.
 
 After running Deptrac we will get this result:
 
-![ModelController1](../examples/ControllerServiceRepository1.png)
+![ModelController1](examples/ControllerServiceRepository1.png)
 
 ```bash
 Start to create an AstMap for 3 Files.
@@ -275,7 +275,7 @@ examples\MyNamespace\Controllers\SomeController::9 must not depend on examples\M
 Found 2 Violations
 ```
 
-![ModelController1](../examples/ModelController2.png)
+![ModelController1](examples/ModelController2.png)
 
 Deptrac has found two violations because the relation from the controller to
 model layers is not allowed. The console output shows exactly the lines Deptrac
