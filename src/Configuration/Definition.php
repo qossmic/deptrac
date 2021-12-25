@@ -21,6 +21,7 @@ final class Definition implements ConfigurationInterface
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('class')->end()
+                            ->booleanNode('autowire')->end()
                             ->arrayNode('tags')
                                 ->scalarPrototype()->end()
                             ->end()

@@ -40,7 +40,7 @@
     </MoreSpecificReturnType>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="124">
+    <MixedMethodCall occurrences="126">
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -65,6 +65,7 @@
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
+      <code>booleanNode</code>
       <code>booleanNode</code>
       <code>booleanNode</code>
       <code>booleanNode</code>
@@ -82,6 +83,7 @@
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
