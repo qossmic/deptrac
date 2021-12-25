@@ -40,7 +40,7 @@
     </MoreSpecificReturnType>
   </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="112">
+    <MixedMethodCall occurrences="124">
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -57,6 +57,9 @@
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
@@ -67,6 +70,7 @@
       <code>booleanNode</code>
       <code>cannotBeEmpty</code>
       <code>cannotBeEmpty</code>
+      <code>children</code>
       <code>children</code>
       <code>children</code>
       <code>children</code>
@@ -78,6 +82,12 @@
       <code>defaultTrue</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
+      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -136,6 +146,8 @@
       <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
+      <code>scalarNode</code>
+      <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
