@@ -16,7 +16,7 @@ Deptrac can be used in a CI pipeline to make sure a pull request does not
 violate any of the architectural rules you defined. With the optional Graphviz
 formatter you can visualize your layers, rules and violations.
 
-![ModelController1](examples/ControllerServiceRepository1.png)
+![ModelController1](docs/examples/ControllerServiceRepository1.png)
 
 ## Table of Contents
 
