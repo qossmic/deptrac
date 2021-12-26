@@ -118,6 +118,7 @@ class DefinitionTest extends TestCase
                 ],
             ],
             'imports' => [],
+            'services' => [],
             'exclude_files' => [],
             'ignore_uncovered_internal_classes' => true,
             'use_relative_path_from_depfile' => true,
