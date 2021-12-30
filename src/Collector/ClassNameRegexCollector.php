@@ -20,7 +20,7 @@ class ClassNameRegexCollector extends RegexCollector implements CollectorInterfa
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry,
-        array $allLayersConfiguration = []
+        array $resolutionTable = []
     ): bool {
         if (!$astTokenReference instanceof AstClassReference) {
             return false;

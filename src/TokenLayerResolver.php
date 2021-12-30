@@ -55,7 +55,7 @@ class TokenLayerResolver implements TokenLayerResolverInterface
         while ($remainingToResolve > 0) {
             foreach ($resolutionTable as $layerName => $isResolved) {
                 if (null === $isResolved) {
-                    $resolutionTable[$layerName] = $layerResolvers[$layerName]($astTokenReference, array_keys(array_filter($resolutionTable, static fn (?bool $status): bool => null !== $status)));
+                    $resolutionTable[$layerName] = $layerResolvers[$layerName]($astTokenReference, $resolutionTable);
                 }
             }
             $nowRemaining = count(array_filter($resolutionTable, static fn (?bool $status): bool => null === $status));
@@ -102,14 +102,15 @@ class TokenLayerResolver implements TokenLayerResolverInterface
     }
 
     /**
-     * @return array<string, callable(AstTokenReference, array<string>): ?bool>
+     * @return array<string, callable(AstTokenReference, array<string, ?bool>): ?bool>
      */
     private function layerResolvers(): array
     {
         $layerResolvers = [];
         foreach ($this->resolvedLayerConfiguration as $configurationLayer) {
             $layerResolvers[$configurationLayer->getName()] =
-                function (AstTokenReference $astTokenReference, array $alreadyResolvedLayers) use (
+                /** @param array<string, ?bool> $resolutionTable */
+                function (AstTokenReference $astTokenReference, array $resolutionTable) use (
                     $configurationLayer
                 ): ?bool {
                     foreach ($configurationLayer->getCollectors() as $configurationCollector) {
@@ -117,7 +118,7 @@ class TokenLayerResolver implements TokenLayerResolverInterface
                         if (!$collector->resolvable(
                             $configurationCollector->getArgs(),
                             $this->collectorRegistry,
-                            $alreadyResolvedLayers
+                            $resolutionTable
                         )
                         ) {
                             return null;
@@ -128,7 +129,7 @@ class TokenLayerResolver implements TokenLayerResolverInterface
                             $astTokenReference,
                             $this->astMap,
                             $this->collectorRegistry,
-                            $this->resolvedLayerConfiguration
+                            $resolutionTable
                         )
                         ) {
                             return true;

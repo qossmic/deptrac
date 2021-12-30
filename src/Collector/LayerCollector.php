@@ -19,35 +19,25 @@ class LayerCollector implements CollectorInterface
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry,
-        array $allLayersConfiguration = []
+        array $resolutionTable = []
     ): bool {
         if (!isset($configuration['layer']) || !is_string($configuration['layer'])) {
             throw new InvalidArgumentException('LayerCollector needs the layer configuration.');
         }
-        if (!array_key_exists($configuration['layer'], $allLayersConfiguration)) {
+        if (!array_key_exists($configuration['layer'], $resolutionTable)) {
             throw new InvalidArgumentException('Referenced layer in LayerCollector does not exist.');
         }
 
-        $layerConfig = $allLayersConfiguration[$configuration['layer']];
+        /** @var bool $result */
+        $result = $resolutionTable[$configuration['layer']];
 
-        foreach ($layerConfig->getCollectors() as $configurationForCollector) {
-            if ($collectorRegistry->getCollector($configurationForCollector->getType())
-                ->satisfy(
-                    $configurationForCollector->getArgs(),
-                    $astTokenReference,
-                    $astMap,
-                    $collectorRegistry,
-                    $allLayersConfiguration
-                )) {
-                return true;
-            }
-        }
-
-        return false;
+        return $result;
     }
 
-    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
-        return in_array($configuration['layer'], $alreadyResolvedLayers, true);
+        $key = (string) $configuration['layer'];
+
+        return array_key_exists($key, $resolutionTable) && null !== $resolutionTable[$key];
     }
 }

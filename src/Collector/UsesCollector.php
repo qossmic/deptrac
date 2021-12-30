@@ -19,7 +19,7 @@ class UsesCollector implements CollectorInterface
         return 'uses';
     }
 
-    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;
     }
@@ -32,7 +32,7 @@ class UsesCollector implements CollectorInterface
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry,
-        array $allLayersConfiguration = []
+        array $resolutionTable = []
     ): bool {
         if (!$astTokenReference instanceof AstClassReference) {
             return false;
