@@ -24,6 +24,7 @@ skip_violations:
     - Qossmic\Deptrac\AstRunner\AstMap\AstClassReference
     - Qossmic\Deptrac\AstRunner\AstMap\AstFileReference
     - Qossmic\Deptrac\AstRunner\AstMap\AstFunctionReference
+    - Qossmic\Deptrac\AstRunner\AstMap\AstTokenReference
     - Qossmic\Deptrac\AstRunner\AstMap\AstVariableReference
   Qossmic\Deptrac\TokenLayerResolverFactory:
     - Qossmic\Deptrac\AstRunner\AstMap

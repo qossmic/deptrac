@@ -187,7 +187,7 @@
   </file>
   <file src="src/TokenLayerResolver.php">
     <ArgumentTypeCoercion occurrences="1">
-      <code>$this-&gt;parameterResolver-&gt;resolve($configurationLayer-&gt;toArray(), $this-&gt;configuration-&gt;getParameters())</code>
+      <code>$parameterResolver-&gt;resolve($configurationLayer-&gt;toArray(), $configuration-&gt;getParameters())</code>
     </ArgumentTypeCoercion>
   </file>
 </files>
