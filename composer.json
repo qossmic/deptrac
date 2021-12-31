@@ -52,5 +52,8 @@
             "php": "7.4.20"
         },
         "sort-packages": true
+    },
+    "require-dev": {
+        "phpstan/phpstan-symfony": "^1.0"
     }
 }

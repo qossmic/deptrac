@@ -1,9 +1,14 @@
 includes:
     - phpstan-baseline.neon
     - vendor/phpdocumentor/graphviz/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
 
 parameters:
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
-    level: 8
+    level: max
     paths: [src]
+    stubFiles:
+        - stubs/Function_.php
+        - stubs/ClassLike.php
+        - stubs/Name.php

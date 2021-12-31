@@ -51,6 +51,20 @@ class Configuration
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
         ->resolve($args);
 
+        /**
+         * @var array{
+         *     parameters: array<string, string>,
+         *     formatters: ?array,
+         *     layers: array<array{name: string, collectors: array<array<string, string>>}>,
+         *     paths: list<string>,
+         *     exclude_files: ?array,
+         *     ruleset: array<string, string[]>,
+         *     skip_violations: array<string, string[]>,
+         *     analyser: array<string, mixed>,
+         *     ignore_uncovered_internal_classes: bool,
+         * } $options
+         */
+
         return new self($options);
     }
 

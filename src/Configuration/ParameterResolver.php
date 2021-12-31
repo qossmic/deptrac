@@ -7,10 +7,12 @@ namespace Qossmic\Deptrac\Configuration;
 final class ParameterResolver
 {
     /**
-     * @param array<string, string|array> $values
-     * @param array<string, string>       $parameters
+     * @template T of array
      *
-     * @return array<string, string|array>
+     * @param T                     $values
+     * @param array<string, string> $parameters
+     *
+     * @return T
      */
     public function resolve(array $values, array $parameters): array
     {

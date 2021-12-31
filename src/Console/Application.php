@@ -67,11 +67,16 @@ final class Application extends BaseApplication
             // Errors must be ignored, full binding/validation happens later when the command is known.
         }
 
+        /** @var string|numeric|null $configFile */
+        $configFile = $input->getParameterOption('--config-file', getcwd().DIRECTORY_SEPARATOR.'deptrac.yaml');
         $config = $input->hasParameterOption('--config-file')
-            ? (string) $input->getParameterOption('--config-file', getcwd().DIRECTORY_SEPARATOR.'deptrac.yaml')
+            ? (string) $configFile
             : getcwd().DIRECTORY_SEPARATOR.'deptrac.yaml';
+
+        /** @var string|numeric|null $cacheFile */
+        $cacheFile = $input->getParameterOption('--cache-file', getcwd().DIRECTORY_SEPARATOR.'.deptrac.cache');
         $cache = $input->hasParameterOption('--cache-file')
-            ? (string) $input->getParameterOption('--cache-file', getcwd().DIRECTORY_SEPARATOR.'.deptrac.cache')
+            ? (string) $cacheFile
             : getcwd().DIRECTORY_SEPARATOR.'.deptrac.cache';
 
         $factory = (new ServiceContainerBuilder($currentWorkingDirectory))->withConfig($config);

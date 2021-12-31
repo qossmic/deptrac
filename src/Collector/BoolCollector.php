@@ -24,7 +24,7 @@ class BoolCollector implements CollectorInterface
     ): bool {
         $configuration = $this->normalizeConfiguration($configuration);
 
-        /** @var array<string, string> $v */
+        /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
@@ -39,7 +39,7 @@ class BoolCollector implements CollectorInterface
             }
         }
 
-        /** @var array<string, string> $v */
+        /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must_not'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
 
@@ -60,7 +60,7 @@ class BoolCollector implements CollectorInterface
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         $configuration = $this->normalizeConfiguration($configuration);
-        /** @var array<string, string> $v */
+        /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
             if (!$collectorRegistry->getCollector($configurationForCollector->getType())->resolvable(
@@ -69,7 +69,7 @@ class BoolCollector implements CollectorInterface
                 return false;
             }
         }
-        /** @var array<string, string> $v */
+        /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must_not'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
             if (!$collectorRegistry->getCollector($configurationForCollector->getType())->resolvable(
