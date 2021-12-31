@@ -7,7 +7,6 @@ namespace Qossmic\Deptrac;
 use InvalidArgumentException;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
 use Qossmic\Deptrac\Configuration\ConfigurationRuleset;
 use Qossmic\Deptrac\Dependency\Result;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
@@ -89,11 +88,12 @@ class RulesetEngine
 
     private function ignoreUncoveredInternalClass(ConfigurationRuleset $configuration, ClassLikeName $tokenName): bool
     {
-        if(!$configuration->ignoreUncoveredInternalClasses()) {
+        if (!$configuration->ignoreUncoveredInternalClasses()) {
             return false;
         }
 
         $tokenString = $tokenName->toString();
-        return isset(PhpStormStubsMap::CLASSES[$tokenString]) || $tokenString === 'ReturnTypeWillChange';
+
+        return isset(PhpStormStubsMap::CLASSES[$tokenString]) || 'ReturnTypeWillChange' === $tokenString;
     }
 }
