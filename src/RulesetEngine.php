@@ -87,8 +87,13 @@ class RulesetEngine
         return new Context($rules, $errors, $warnings);
     }
 
-    private function ignoreUncoveredInternalClass(ConfigurationRuleset $configuration, TokenName $tokenName): bool
+    private function ignoreUncoveredInternalClass(ConfigurationRuleset $configuration, ClassLikeName $tokenName): bool
     {
-        return !$tokenName instanceof ClassLikeName || ($configuration->ignoreUncoveredInternalClasses() && isset(PhpStormStubsMap::CLASSES[$tokenName->toString()]));
+        if(!$configuration->ignoreUncoveredInternalClasses()) {
+            return false;
+        }
+
+        $tokenString = $tokenName->toString();
+        return isset(PhpStormStubsMap::CLASSES[$tokenString]) || $tokenString === 'ReturnTypeWillChange';
     }
 }
