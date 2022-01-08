@@ -18,15 +18,17 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
 {
-    public function getDeps(DependencyEmitterInterface $emitter, string $file): array
+    public function getDeps(DependencyEmitterInterface $emitter, $files): array
     {
+        $files = (array) $files;
+
         $parser = new NikicPhpParser(
             ParserFactory::createParser(),
             new AstFileReferenceInMemoryCache(),
             new TypeResolver(),
             new AnonymousClassResolver()
         );
-        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles([$file], ConfigurationAnalyser::fromArray(
+        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles($files, ConfigurationAnalyser::fromArray(
             []));
         $result = new Result();
 

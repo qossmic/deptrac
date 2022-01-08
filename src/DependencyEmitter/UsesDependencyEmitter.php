@@ -41,12 +41,7 @@ class UsesDependencyEmitter implements DependencyEmitterInterface
     protected function isNamespace(AstDependency $dependency, AstMap $astMap): bool
     {
         $dependencyFQDN = $dependency->getTokenName()->toString();
-
-        $functionReferences = array_merge(...array_values(array_map(
-            static function ($file) { return $file->getFunctionReferences(); },
-            $astMap->getAstFileReferences()
-        )));
-        $references = array_merge($astMap->getAstClassReferences(), $functionReferences);
+        $references = array_merge($astMap->getAstClassReferences(), $astMap->getAstFunctionReferences());
 
         $isFQDN = false;
         $isNamespace = false;

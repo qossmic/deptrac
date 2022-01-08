@@ -55,6 +55,14 @@ class AstMap
         return $this->astFileReferences;
     }
 
+    /**
+     * @return AstFunctionReference[]
+     */
+    public function getAstFunctionReferences(): array
+    {
+        return $this->astFunctionReferences;
+    }
+
     public function getClassReferenceByClassName(ClassLikeName $className): ?AstClassReference
     {
         return $this->astClassReferences[$className->toString()] ?? null;
