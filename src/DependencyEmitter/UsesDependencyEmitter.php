@@ -23,7 +23,7 @@ class UsesDependencyEmitter implements DependencyEmitterInterface
             foreach ($fileReference->getAstClassReferences() as $astClassReference) {
                 foreach ($dependencies as $emittedDependency) {
                     if (AstDependency::USE === $emittedDependency->getType() &&
-                        !$this->isNamespace($emittedDependency, $astMap)
+                        $this->isFQDN($emittedDependency, $astMap)
                     ) {
                         $dependencyResult->addDependency(
                             new Dependency(
@@ -38,7 +38,7 @@ class UsesDependencyEmitter implements DependencyEmitterInterface
         }
     }
 
-    protected function isNamespace(AstDependency $dependency, AstMap $astMap): bool
+    protected function isFQDN(AstDependency $dependency, AstMap $astMap): bool
     {
         $dependencyFQDN = $dependency->getTokenName()->toString();
         $references = array_merge($astMap->getAstClassReferences(), $astMap->getAstFunctionReferences());
@@ -60,6 +60,6 @@ class UsesDependencyEmitter implements DependencyEmitterInterface
             }
         }
 
-        return $isNamespace && !$isFQDN;
+        return !$isNamespace || $isFQDN;
     }
 }
