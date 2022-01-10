@@ -18,6 +18,9 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
 {
+    /**
+     * @param string|string[] $files
+     */
     public function getDeps(DependencyEmitterInterface $emitter, $files): array
     {
         $files = (array) $files;
