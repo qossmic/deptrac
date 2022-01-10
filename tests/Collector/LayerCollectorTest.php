@@ -38,7 +38,7 @@ final class LayerCollectorTest extends TestCase
         $resolved = (new LayerCollector())->resolvable(
             ['layer' => 'test'],
             $this->createMock(Registry::class),
-            ['test', 'somethingElse']
+            ['test' => false, 'somethingElse' => true]
         );
         self::assertEquals(true, $resolved);
     }
@@ -72,7 +72,7 @@ final class LayerCollectorTest extends TestCase
             new AstClassReference(AstMap\ClassLikeName::fromFQCN($className)),
             $this->createMock(AstMap::class),
             $collectorRegistry,
-            $configuration
+            [$configuration['otherLayer']->getName() => $expected]
         );
 
         self::assertEquals($expected, $resolved);

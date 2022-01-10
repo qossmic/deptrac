@@ -14,7 +14,7 @@ class FunctionNameCollector implements CollectorInterface
         return 'functionName';
     }
 
-    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class FunctionNameCollector implements CollectorInterface
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry,
-        array $allLayersConfiguration = []
+        array $resolutionTable = []
     ): bool {
         if (!$astTokenReference instanceof AstMap\AstFunctionReference) {
             return false;

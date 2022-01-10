@@ -14,7 +14,7 @@ class SuperglobalCollector implements CollectorInterface
         return 'superglobal';
     }
 
-    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class SuperglobalCollector implements CollectorInterface
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry,
-        array $allLayersConfiguration = []
+        array $resolutionTable = []
     ): bool {
         if (!$astTokenReference instanceof AstMap\AstVariableReference) {
             return false;

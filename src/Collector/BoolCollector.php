@@ -20,7 +20,7 @@ class BoolCollector implements CollectorInterface
         AstMap\AstTokenReference $astTokenReference,
         AstMap $astMap,
         Registry $collectorRegistry,
-        array $allLayersConfiguration = []
+        array $resolutionTable = []
     ): bool {
         $configuration = $this->normalizeConfiguration($configuration);
 
@@ -33,7 +33,7 @@ class BoolCollector implements CollectorInterface
                 $astTokenReference,
                 $astMap,
                 $collectorRegistry,
-                $allLayersConfiguration
+                $resolutionTable
             )) {
                 return false;
             }
@@ -48,7 +48,7 @@ class BoolCollector implements CollectorInterface
                 $astTokenReference,
                 $astMap,
                 $collectorRegistry,
-                $allLayersConfiguration
+                $resolutionTable
             )) {
                 return false;
             }
@@ -57,14 +57,14 @@ class BoolCollector implements CollectorInterface
         return true;
     }
 
-    public function resolvable(array $configuration, Registry $collectorRegistry, array $alreadyResolvedLayers): bool
+    public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         $configuration = $this->normalizeConfiguration($configuration);
         /** @var array<string, string> $v */
         foreach ((array) $configuration['must'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
             if (!$collectorRegistry->getCollector($configurationForCollector->getType())->resolvable(
-                $configurationForCollector->getArgs(), $collectorRegistry, $alreadyResolvedLayers
+                $configurationForCollector->getArgs(), $collectorRegistry, $resolutionTable
             )) {
                 return false;
             }
@@ -73,7 +73,7 @@ class BoolCollector implements CollectorInterface
         foreach ((array) $configuration['must_not'] as $v) {
             $configurationForCollector = ConfigurationCollector::fromArray($v);
             if (!$collectorRegistry->getCollector($configurationForCollector->getType())->resolvable(
-                $configurationForCollector->getArgs(), $collectorRegistry, $alreadyResolvedLayers
+                $configurationForCollector->getArgs(), $collectorRegistry, $resolutionTable
             )) {
                 return false;
             }
