@@ -52,7 +52,6 @@ class Loader
         }
 
         if (isset($mainConfig['imports'])) {
-            /** @var string $importFile */
             foreach ((array) $mainConfig['imports'] as $importFile) {
                 $file = Path::makeAbsolute($importFile, $basePath);
                 $configs[] = $this->normalize($this->fileLoader->parseFile($file), $file);
@@ -64,9 +63,9 @@ class Loader
         $mergedConfig['parameters']['currentWorkingDirectory'] = $this->workingDirectory;
         $mergedConfig['parameters']['depfileDirectory'] = $depfileDirectory;
 
-        /** @var array $analyzer */
+        /** @var array<mixed> $analyzer */
         $analyzer = $mergedConfig['analyzer'] ?? [];
-        /** @var array $analyser */
+        /** @var array<mixed> $analyser */
         $analyser = $mergedConfig['analyser'] ?? [];
 
         return Configuration::fromArray([
@@ -87,6 +86,26 @@ class Loader
         ]);
     }
 
+    /**
+     * @param array{parameters: array<string, mixed>, services: array<string, mixed>, imports?: array<string>} $config
+     *
+     * @return array{
+     *     parameters: array<string, mixed>,
+     *     services: array<string, mixed>,
+     *     imports?: array<string>,
+     *     use_relative_path_from_depfile: mixed,
+     *     baseline?: string,
+     *     formatters: mixed,
+     *     layers: mixed,
+     *     paths: mixed,
+     *     exclude_files: mixed,
+     *     ruleset: mixed,
+     *     skip_violations: mixed,
+     *     analyser: mixed,
+     *     analyzer: mixed,
+     *     ignore_uncovered_internal_classes: mixed
+     * }
+     */
     private function normalize(array $config, string $filename): array
     {
         $normalized = [
@@ -103,10 +122,13 @@ class Loader
             'ignore_uncovered_internal_classes' => $this->normalizeValue($config, 'ignore_uncovered_internal_classes', $filename),
         ];
 
+        /** @phpstan-ignore-next-line */
         return array_filter(array_merge($config, $normalized), static fn ($value) => null !== $value);
     }
 
     /**
+     * @param array{parameters: array<string, mixed>, services: array<string, mixed>, imports?: array<string>} $data
+     *
      * @return array|mixed|string|null
      */
     private function normalizeValue(array &$data, string $key, string $file)

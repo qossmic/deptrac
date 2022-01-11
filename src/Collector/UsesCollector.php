@@ -24,9 +24,6 @@ class UsesCollector implements CollectorInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function satisfy(
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,

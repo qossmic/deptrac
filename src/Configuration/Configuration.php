@@ -54,10 +54,10 @@ class Configuration
         /**
          * @var array{
          *     parameters: array<string, string>,
-         *     formatters: ?array,
+         *     formatters: ?array<string, array<string, mixed>>,
          *     layers: array<array{name: string, collectors: array<array<string, string>>}>,
          *     paths: list<string>,
-         *     exclude_files: ?array,
+         *     exclude_files: ?array<string>,
          *     ruleset: array<string, string[]>,
          *     skip_violations: array<string, string[]>,
          *     analyser: array<string, mixed>,
@@ -71,10 +71,10 @@ class Configuration
     /**
      * @param array{
      *     parameters: array<string, string>,
-     *     formatters: ?array,
+     *     formatters: ?array<string, array<string, mixed>>,
      *     layers: array<array{name: string, collectors: array<array<string, string>>}>,
      *     paths: list<string>,
-     *     exclude_files: ?array,
+     *     exclude_files: ?array<string>,
      *     ruleset: array<string, string[]>,
      *     skip_violations: array<string, string[]>,
      *     analyser: array<string, mixed>,

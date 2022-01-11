@@ -6,10 +6,10 @@ namespace Qossmic\Deptrac\Collector;
 
 use LogicException;
 
-abstract class RegexCollector
+abstract class RegexCollector implements CollectorInterface
 {
     /**
-     * @param array<string, string|array> $configuration
+     * @param array<string, string|array<string, string>> $configuration
      */
     abstract protected function getPattern(array $configuration): string;
 
@@ -19,7 +19,7 @@ abstract class RegexCollector
     }
 
     /**
-     * @param array<string, string|array> $configuration
+     * @param array<string, string|array<string, string>> $configuration
      */
     protected function getValidatedPattern(array $configuration): string
     {

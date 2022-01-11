@@ -10,6 +10,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class YmlFileLoader
 {
+    /**
+     * @return array{parameters: array<string, mixed>, services: array<string, mixed>, imports?: array<string>}
+     */
     public function parseFile(string $file): array
     {
         try {
@@ -22,6 +25,7 @@ class YmlFileLoader
             throw ParsedYamlIsNotAnArrayException::fromFilename($file);
         }
 
+        /** @var array{parameters: array<string, mixed>, services: array<string, mixed>, imports?: array<string>} $data */
         return $data;
     }
 }

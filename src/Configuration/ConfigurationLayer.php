@@ -14,7 +14,7 @@ final class ConfigurationLayer
     private string $name;
 
     /**
-     * @param array{name: string, collectors: array<array<string, array|string>>} $args
+     * @param array{name: string, collectors: array<array<string, array<mixed>|string>>} $args
      */
     public static function fromArray(array $args): self
     {
@@ -53,7 +53,7 @@ final class ConfigurationLayer
     }
 
     /**
-     * @return array{name: string, collectors: array<array<string, array|string>>}
+     * @return array{name: string, collectors: array<array<string, array<mixed>|string>>}
      */
     public function toArray(): array
     {

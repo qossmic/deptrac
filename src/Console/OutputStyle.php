@@ -38,7 +38,7 @@ interface OutputStyle
     public function caution($message): void;
 
     /**
-     * @param string|array|TableSeparator ...$list
+     * @param string|array<string, string|int>|TableSeparator ...$list
      */
     public function definitionList(...$list): void;
 

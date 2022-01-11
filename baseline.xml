@@ -11,6 +11,11 @@
       <code>isset($classLikeNode-&gt;namespacedName)</code>
     </RedundantConditionGivenDocblockType>
   </file>
+  <file src="src/Collector/SuperglobalCollector.php">
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $name</code>
+    </RedundantCastGivenDocblockType>
+  </file>
   <file src="src/Configuration/Configuration.php">
     <MixedPropertyTypeCoercion occurrences="2">
       <code>(array) $options['exclude_files']</code>
@@ -126,6 +131,9 @@
     </UnusedVariable>
   </file>
   <file src="src/Configuration/Loader.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>array_filter(array_merge($config, $normalized), static fn ($value) =&gt; null !== $value)</code>
+    </LessSpecificReturnStatement>
     <MixedArgument occurrences="1">
       <code>$mergedConfig['paths']</code>
     </MixedArgument>
@@ -133,6 +141,11 @@
       <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
       <code>$mergedConfig['parameters']['depfileDirectory']</code>
     </MixedArrayAssignment>
+    <MoreSpecificReturnType occurrences="1"/>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array) $mainConfig['imports']</code>
+      <code>(string) $mainConfig['baseline']</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Configuration/ParameterResolver.php">
     <InvalidReturnStatement occurrences="1">

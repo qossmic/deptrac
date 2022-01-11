@@ -37,7 +37,7 @@ class FunctionNameCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string|array> $configuration
+     * @param array<string, string|array<string, string>> $configuration
      */
     private function getPattern(array $configuration): string
     {

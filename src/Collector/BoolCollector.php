@@ -82,6 +82,11 @@ class BoolCollector implements CollectorInterface
         return true;
     }
 
+    /**
+     * @param array<string, string|array<string, string>> $configuration
+     *
+     * @return array<string, string|array<string, string>>
+     */
     private function normalizeConfiguration(array $configuration): array
     {
         if (!isset($configuration['must'])) {
