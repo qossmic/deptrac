@@ -13,7 +13,10 @@ class PathNameFilterIterator extends PathFilterIterator
 {
     public function accept(): bool
     {
-        /** @phpstan-var SplFileInfo $fileInfo */
+        /**
+         * @psalm-suppress UnnecessaryVarAnnotation
+         * @phpstan-var SplFileInfo $fileInfo
+         */
         $fileInfo = $this->current();
         $filename = $this->isWindows() ? Path::normalize($fileInfo->getPathname()) : $fileInfo->getPathName();
 
