@@ -110,7 +110,6 @@ class NikicPhpParser implements AstParser
 
         foreach ($classLikeNodes as $classLikeNode) {
             if (isset($classLikeNode->namespacedName)) {
-                /** @psalm-var \PhpParser\Node\Name $namespacedName */
                 $namespacedName = $classLikeNode->namespacedName;
                 $className = $namespacedName->toCodeString();
             } elseif ($classLikeNode->name instanceof Identifier) {

@@ -10,11 +10,11 @@ final class ConfigurationCollector
 {
     private string $type;
 
-    /** @var array<string, string> */
+    /** @var array{type: string, args: array<string, string>} */
     private array $args;
 
     /**
-     * @param array<string, string> $args
+     * @param array{type?: string, args: array<string, string>} $args
      */
     public static function fromArray(array $args): self
     {
@@ -26,7 +26,7 @@ final class ConfigurationCollector
     }
 
     /**
-     * @param array<string, string> $args
+     * @param array{type: string, args: array<string, string>} $args
      */
     private function __construct(string $type, array $args)
     {
@@ -40,7 +40,7 @@ final class ConfigurationCollector
     }
 
     /**
-     * @return array<string, string> $args
+     * @return array{type: string, args: array<string, string>}
      */
     public function getArgs(): array
     {

@@ -75,6 +75,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
     /**
      * @param Violation|SkippedViolation $rule
+     *
+     * @return array{string, string}
      */
     private function violationRow(Rule $rule): array
     {
@@ -143,6 +145,9 @@ final class TableOutputFormatter implements OutputFormatterInterface
         );
     }
 
+    /**
+     * @return array{string, string}
+     */
     private function uncoveredRow(Uncovered $rule, bool $reportAsError): array
     {
         $dependency = $rule->getDependency();

@@ -36,8 +36,8 @@ class LayerCollector implements CollectorInterface
 
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
-        $key = (string) $configuration['layer'];
+        /** @var array{layer: string} $configuration */
 
-        return array_key_exists($key, $resolutionTable) && null !== $resolutionTable[$key];
+        return array_key_exists($configuration['layer'], $resolutionTable) && null !== $resolutionTable[$configuration['layer']];
     }
 }

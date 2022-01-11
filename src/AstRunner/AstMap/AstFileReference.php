@@ -21,8 +21,9 @@ class AstFileReference implements AstTokenReference
     private array $functionReferences;
 
     /**
-     * @param AstClassReference[] $classReferences
-     * @param AstDependency[]     $dependencies
+     * @param AstClassReference[]    $classReferences
+     * @param AstFunctionReference[] $functionReferences
+     * @param AstDependency[]        $dependencies
      */
     public function __construct(string $filepath, array $classReferences, array $functionReferences, array $dependencies)
     {

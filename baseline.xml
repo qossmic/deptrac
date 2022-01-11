@@ -5,23 +5,18 @@
       <code>isset($node-&gt;namespacedName)</code>
       <code>isset($node-&gt;namespacedName)</code>
     </RedundantConditionGivenDocblockType>
-    <UnnecessaryVarAnnotation occurrences="2">
-      <code>\PhpParser\Node\Name</code>
-      <code>\PhpParser\Node\Name</code>
-    </UnnecessaryVarAnnotation>
   </file>
   <file src="src/AstRunner/AstParser/NikicPhpParser/NikicPhpParser.php">
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>isset($classLikeNode-&gt;namespacedName)</code>
     </RedundantConditionGivenDocblockType>
-    <UnnecessaryVarAnnotation occurrences="1">
-      <code>\PhpParser\Node\Name</code>
-    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Collector/SuperglobalCollector.php">
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $name</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$options</code>
-    </MixedArgumentTypeCoercion>
     <MixedPropertyTypeCoercion occurrences="2">
       <code>(array) $options['exclude_files']</code>
       <code>(array) $options['formatters']</code>
@@ -31,28 +26,12 @@
       <code>(bool) $options['ignore_uncovered_internal_classes']</code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/Configuration/ConfigurationCollector.php">
-    <LessSpecificReturnStatement occurrences="1">
-      <code>$this-&gt;getArgs()</code>
-    </LessSpecificReturnStatement>
-    <MoreSpecificReturnType occurrences="1">
-      <code>array{type: string, args: array&lt;string, string&gt;}</code>
-    </MoreSpecificReturnType>
-  </file>
   <file src="src/Configuration/Definition.php">
-    <MixedMethodCall occurrences="126">
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
-      <code>arrayNode</code>
+    <MixedMethodCall occurrences="78">
+      <code>append</code>
+      <code>append</code>
+      <code>append</code>
+      <code>append</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
       <code>arrayNode</code>
@@ -63,41 +42,14 @@
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
       <code>arrayPrototype</code>
-      <code>arrayPrototype</code>
-      <code>arrayPrototype</code>
-      <code>booleanNode</code>
       <code>booleanNode</code>
       <code>booleanNode</code>
       <code>booleanNode</code>
       <code>cannotBeEmpty</code>
-      <code>cannotBeEmpty</code>
-      <code>children</code>
-      <code>children</code>
-      <code>children</code>
-      <code>children</code>
-      <code>children</code>
-      <code>children</code>
       <code>children</code>
       <code>defaultFalse</code>
       <code>defaultTrue</code>
       <code>defaultTrue</code>
-      <code>defaultTrue</code>
-      <code>defaultTrue</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
-      <code>end</code>
       <code>end</code>
       <code>end</code>
       <code>end</code>
@@ -139,14 +91,8 @@
       <code>ignoreExtraKeys</code>
       <code>isRequired</code>
       <code>isRequired</code>
-      <code>isRequired</code>
       <code>requiresAtLeastOneElement</code>
       <code>requiresAtLeastOneElement</code>
-      <code>requiresAtLeastOneElement</code>
-      <code>scalarNode</code>
-      <code>scalarNode</code>
-      <code>scalarNode</code>
-      <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarNode</code>
       <code>scalarPrototype</code>
@@ -157,26 +103,37 @@
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
       <code>scalarPrototype</code>
-      <code>scalarPrototype</code>
-      <code>scalarPrototype</code>
-      <code>scalarPrototype</code>
-      <code>setDeprecated</code>
-      <code>setDeprecated</code>
-      <code>useAttributeAsKey</code>
-      <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
       <code>useAttributeAsKey</code>
     </MixedMethodCall>
-    <PossiblyUndefinedMethod occurrences="1">
-      <code>children</code>
+    <PossiblyNullReference occurrences="6">
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>booleanNode</code>
+      <code>end</code>
+      <code>end</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="6">
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>arrayNode</code>
+      <code>booleanNode</code>
+      <code>end</code>
+      <code>end</code>
     </PossiblyUndefinedMethod>
-    <UnusedVariable occurrences="2">
+    <UnusedMethodCall occurrences="1">
+      <code>end</code>
+    </UnusedMethodCall>
+    <UnusedVariable occurrences="1">
       <code>$remove</code>
-      <code>$removeKeyItem</code>
     </UnusedVariable>
   </file>
   <file src="src/Configuration/Loader.php">
+    <LessSpecificReturnStatement occurrences="1">
+      <code>array_filter(array_merge($config, $normalized), static fn ($value) =&gt; null !== $value)</code>
+    </LessSpecificReturnStatement>
     <MixedArgument occurrences="1">
       <code>$mergedConfig['paths']</code>
     </MixedArgument>
@@ -184,10 +141,21 @@
       <code>$mergedConfig['parameters']['currentWorkingDirectory']</code>
       <code>$mergedConfig['parameters']['depfileDirectory']</code>
     </MixedArrayAssignment>
+    <MoreSpecificReturnType occurrences="1"/>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array) $mainConfig['imports']</code>
+      <code>(string) $mainConfig['baseline']</code>
+    </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/TokenLayerResolver.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$parameterResolver-&gt;resolve($configurationLayer-&gt;toArray(), $configuration-&gt;getParameters())</code>
-    </ArgumentTypeCoercion>
+  <file src="src/Configuration/ParameterResolver.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;replace($values, $keys, $parameters)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>T</code>
+    </InvalidReturnType>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$values</code>
+    </MixedArgumentTypeCoercion>
   </file>
 </files>

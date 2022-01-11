@@ -87,11 +87,13 @@ class AnalyseCommand extends Command
 
         $configFile = self::getConfigFile($input, $symfonyOutput);
 
+        /** @var string|numeric|null $output */
+        $output = $input->getOption('output');
         $options = new AnalyseOptions(
             $configFile,
             (bool) $input->getOption('no-progress'),
             $formatter,
-            null === $input->getOption('output') ? null : (string) $input->getOption('output'),
+            null === $output ? null : (string) $output,
             (bool) $input->getOption(self::OPTION_REPORT_SKIPPED),
             (bool) $input->getOption(self::OPTION_REPORT_UNCOVERED),
             (bool) $input->getOption(self::OPTION_FAIL_ON_UNCOVERED)

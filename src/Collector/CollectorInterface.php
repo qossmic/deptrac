@@ -21,9 +21,9 @@ interface CollectorInterface
     public function getType(): string;
 
     /**
-     * @param array<string, string|array> $configuration     List of arguments passed for this collector declaration
-     * @param AstMap\AstTokenReference    $astTokenReference Token being checked
-     * @param array<string, ?bool>        $resolutionTable   layer name => is part of the layer? (NULL = Unknown)
+     * @param array<string, string|array<string, string>> $configuration     List of arguments passed for this collector declaration
+     * @param AstMap\AstTokenReference                    $astTokenReference Token being checked
+     * @param array<string, ?bool>                        $resolutionTable   layer name => is part of the layer? (NULL = Unknown)
      *
      * @example
      *  For the YAML configuration:
@@ -47,7 +47,8 @@ interface CollectorInterface
     ): bool;
 
     /**
-     * @param array<string, ?bool> $resolutionTable layer name => is part of the layer? (NULL = Unknown)
+     * @param array<string, string|array<string, string>> $configuration
+     * @param array<string, ?bool>                        $resolutionTable layer name => is part of the layer? (NULL = Unknown)
      */
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool;
 }
