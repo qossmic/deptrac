@@ -1,21 +1,71 @@
 # Changelog
 
+## [0.19.0](https://github.com/qossmic/deptrac/tree/0.19.0) (2022-01-12)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.18.0...0.19.0)
+
+**Merged pull requests:**
+
+- Bump phpdocumentor/type-resolver from 1.5.1 to 1.6.0 [\#787](https://github.com/qossmic/deptrac/pull/787) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump composer/xdebug-handler from 2.0.3 to 2.0.4 [\#786](https://github.com/qossmic/deptrac/pull/786) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/yaml from 5.4.0 to 5.4.2 [\#783](https://github.com/qossmic/deptrac/pull/783) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/config from 5.4.0 to 5.4.2 [\#782](https://github.com/qossmic/deptrac/pull/782) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/console from 5.4.1 to 5.4.2 [\#781](https://github.com/qossmic/deptrac/pull/781) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/dependency-injection from 5.4.1 to 5.4.2 [\#780](https://github.com/qossmic/deptrac/pull/780) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/finder from 5.4.0 to 5.4.2 [\#779](https://github.com/qossmic/deptrac/pull/779) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix 758 [\#778](https://github.com/qossmic/deptrac/pull/778) ([mdevlamynck](https://github.com/mdevlamynck))
+- Resolves \#715 [\#776](https://github.com/qossmic/deptrac/pull/776) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- ReturnTypeWillChange support [\#775](https://github.com/qossmic/deptrac/pull/775) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Refactor of TokenLayerResolver [\#774](https://github.com/qossmic/deptrac/pull/774) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Fix outdated image reference [\#773](https://github.com/qossmic/deptrac/pull/773) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Support for adding tagged services \(allows for adding formatters, col… [\#772](https://github.com/qossmic/deptrac/pull/772) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Fix link warnings [\#771](https://github.com/qossmic/deptrac/pull/771) ([dbrumann](https://github.com/dbrumann))
+- Allow manual dispatch of doc-build workflow [\#770](https://github.com/qossmic/deptrac/pull/770) ([dbrumann](https://github.com/dbrumann))
+- Documentation website [\#769](https://github.com/qossmic/deptrac/pull/769) ([dbrumann](https://github.com/dbrumann))
+- Fix Invalid type for path "deptrac.parameters.analyzer". [\#767](https://github.com/qossmic/deptrac/pull/767) ([dbrumann](https://github.com/dbrumann))
+- Update tools installed via phive. [\#765](https://github.com/qossmic/deptrac/pull/765) ([dbrumann](https://github.com/dbrumann))
+- Update composer.json for phpdocumentator [\#762](https://github.com/qossmic/deptrac/pull/762) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Move command defaults to static variables [\#761](https://github.com/qossmic/deptrac/pull/761) ([dbrumann](https://github.com/dbrumann))
+- Update php-cs-fixer rules [\#760](https://github.com/qossmic/deptrac/pull/760) ([dbrumann](https://github.com/dbrumann))
+- Extract AnalyseRunner from command [\#759](https://github.com/qossmic/deptrac/pull/759) ([dbrumann](https://github.com/dbrumann))
+- Layer collector [\#757](https://github.com/qossmic/deptrac/pull/757) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Pointing to groups [\#755](https://github.com/qossmic/deptrac/pull/755) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Refactor of output formatters [\#754](https://github.com/qossmic/deptrac/pull/754) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update to support phpdocumentator/graphviz:2.0.0-beta1 [\#753](https://github.com/qossmic/deptrac/pull/753) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Refactor AstParser FileReference cache [\#752](https://github.com/qossmic/deptrac/pull/752) ([dbrumann](https://github.com/dbrumann))
+- Depfile use output instead of symfony [\#748](https://github.com/qossmic/deptrac/pull/748) ([dbrumann](https://github.com/dbrumann))
+- Sort output from baseline formatter [\#747](https://github.com/qossmic/deptrac/pull/747) ([dbrumann](https://github.com/dbrumann))
+- Refactor ConsoleSubscriber for Deptrac-Output [\#746](https://github.com/qossmic/deptrac/pull/746) ([dbrumann](https://github.com/dbrumann))
+- Update phive tools [\#745](https://github.com/qossmic/deptrac/pull/745) ([dbrumann](https://github.com/dbrumann))
+- Extract debug layer command into runner [\#744](https://github.com/qossmic/deptrac/pull/744) ([dbrumann](https://github.com/dbrumann))
+- Extract debug token command runner [\#743](https://github.com/qossmic/deptrac/pull/743) ([dbrumann](https://github.com/dbrumann))
+- Extract debug unassigned command logic into runner [\#742](https://github.com/qossmic/deptrac/pull/742) ([dbrumann](https://github.com/dbrumann))
+- Extract debug unassigned options [\#741](https://github.com/qossmic/deptrac/pull/741) ([dbrumann](https://github.com/dbrumann))
+- Extract debug token command options [\#740](https://github.com/qossmic/deptrac/pull/740) ([dbrumann](https://github.com/dbrumann))
+- Extract debug layer command options [\#739](https://github.com/qossmic/deptrac/pull/739) ([dbrumann](https://github.com/dbrumann))
+- Extract analyse command options. [\#738](https://github.com/qossmic/deptrac/pull/738) ([dbrumann](https://github.com/dbrumann))
+- Replace FileHelper with Symfony's Path. [\#736](https://github.com/qossmic/deptrac/pull/736) ([dbrumann](https://github.com/dbrumann))
+- Update github workflows for PHP 8.1 and 8.2 nightly builds. [\#735](https://github.com/qossmic/deptrac/pull/735) ([dbrumann](https://github.com/dbrumann))
+- Upgrading dependencies [\#734](https://github.com/qossmic/deptrac/pull/734) ([dbrumann](https://github.com/dbrumann))
+- Stop github-actions from closing unwanted issues. [\#725](https://github.com/qossmic/deptrac/pull/725) ([dbrumann](https://github.com/dbrumann))
+- Refactor application configuration [\#706](https://github.com/qossmic/deptrac/pull/706) ([dbrumann](https://github.com/dbrumann))
+
 ## [0.18.0](https://github.com/qossmic/deptrac/tree/0.18.0) (2021-11-24)
 
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.17.0...0.18.0)
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.16.0...0.18.0)
 
 **Merged pull requests:**
 
 - Update Symfony components to allow 6.0 [\#724](https://github.com/qossmic/deptrac/pull/724) ([dbrumann](https://github.com/dbrumann))
 - Update to support PHPStan v1 [\#723](https://github.com/qossmic/deptrac/pull/723) ([patrickkusebauch](https://github.com/patrickkusebauch))
 
-## [0.17.0](https://github.com/qossmic/deptrac/tree/0.17.0) (2021-11-01)
-
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.16.0...0.17.0)
-
 ## [0.16.0](https://github.com/qossmic/deptrac/tree/0.16.0) (2021-11-01)
 
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.2...0.16.0)
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.17.0...0.16.0)
+
+## [0.17.0](https://github.com/qossmic/deptrac/tree/0.17.0) (2021-11-01)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.2...0.17.0)
 
 **Merged pull requests:**
 
