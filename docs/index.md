@@ -183,7 +183,7 @@ check for violations.
 php deptrac.phar
 
 # which is equivalent to
-php deptrac.phar analyse depfile.yaml
+php deptrac.phar analyse --config-file=deptrac.yaml
 ```
 
 If you run `php deptrac.phar -v` you'll get a more verbose output.
