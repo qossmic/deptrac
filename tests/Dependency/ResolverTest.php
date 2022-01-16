@@ -6,14 +6,14 @@ namespace Tests\Qossmic\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Dependency\Emitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\UseDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
-use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\Exception\Dependency\EmitterResolverException;
 use Qossmic\Deptrac\Runtime\Analysis\AnalysisContext;
 use Symfony\Component\DependencyInjection\Container;
@@ -29,7 +29,7 @@ final class ResolverTest extends TestCase
         $dispatcher->method('dispatch')->withConsecutive(
             [new PreEmitEvent(ClassDependencyEmitter::class)],
             [new PostEmitEvent()],
-            [new PreEmitEvent(UsesDependencyEmitter::class)],
+            [new PreEmitEvent(UseDependencyEmitter::class)],
             [new PostEmitEvent()],
             [new PreFlattenEvent()],
             [new PostFlattenEvent()]
@@ -39,7 +39,7 @@ final class ResolverTest extends TestCase
         $inheritanceFlatter->expects(self::once())->method('flattenDependencies');
         $analysisContext = new AnalysisContext([AnalysisContext::CLASS_TOKEN, AnalysisContext::USE_TOKEN]);
         $classEmitter = new ClassDependencyEmitter();
-        $useEmitter = new UsesDependencyEmitter();
+        $useEmitter = new UseDependencyEmitter();
         $emitterLocator = new Container();
         $emitterLocator->set(AnalysisContext::CLASS_TOKEN, $classEmitter);
         $emitterLocator->set(AnalysisContext::USE_TOKEN, $useEmitter);

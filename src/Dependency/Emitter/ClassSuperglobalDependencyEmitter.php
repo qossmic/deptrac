@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\DependencyEmitter;
+namespace Qossmic\Deptrac\Dependency\Emitter;
 
 use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Contracts\Dependency\EmitterInterface;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\Result;
 
-class ClassSuperglobalDependencyEmitter implements DependencyEmitterInterface
+class ClassSuperglobalDependencyEmitter implements EmitterInterface
 {
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void
     {

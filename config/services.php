@@ -40,14 +40,14 @@ use Qossmic\Deptrac\Console\Command\DebugTokenRunner;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Console\Command\DebugUnassignedRunner;
 use Qossmic\Deptrac\Console\Command\InitCommand;
+use Qossmic\Deptrac\Dependency\Emitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\FileDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\FunctionDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\UseDependencyEmitter;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
-use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\FileResolver;
 use Qossmic\Deptrac\LayerAnalyser;
 use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
@@ -276,7 +276,7 @@ return static function (ContainerConfigurator $container): void {
         ->set(FunctionSuperglobalDependencyEmitter::class)
         ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::FUNCTION_SUPERGLOBAL_TOKEN]);
     $services
-        ->set(UsesDependencyEmitter::class)
+        ->set(UseDependencyEmitter::class)
         ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::USE_TOKEN]);
 
     $services

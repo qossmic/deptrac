@@ -7,10 +7,6 @@ skip_violations:
     - Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName
     - Qossmic\Deptrac\AstRunner\AstMap\FileName
     - Qossmic\Deptrac\AstRunner\AstMap\FunctionName
-  Qossmic\Deptrac\Dependency\InheritDependency:
-    - Qossmic\Deptrac\AstRunner\AstMap\AstInherit
-  Qossmic\Deptrac\Dependency\InheritanceFlatter:
-    - Qossmic\Deptrac\AstRunner\AstMap
   Qossmic\Deptrac\LayerAnalyser:
     - Qossmic\Deptrac\AstRunner\AstRunner
   Qossmic\Deptrac\OutputFormatter\TableOutputFormatter:

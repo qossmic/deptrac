@@ -8,11 +8,11 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Qossmic\Deptrac\AstRunner\AstMap;
+use Qossmic\Deptrac\Contracts\Dependency\EmitterInterface;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
-use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Qossmic\Deptrac\Exception\Dependency\EmitterResolverException;
 use Qossmic\Deptrac\Runtime\Analysis\AnalysisContext;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -41,7 +41,7 @@ class Resolver
 
         foreach ($this->analysisContext->getTypes() as $type) {
             try {
-                /** @var DependencyEmitterInterface $emitter */
+                /** @var EmitterInterface $emitter */
                 $emitter = $this->emitterLocator->get($type);
             } catch (ContainerExceptionInterface|NotFoundExceptionInterface $containerException) {
                 throw EmitterResolverException::missingServiceForType($type, $containerException);

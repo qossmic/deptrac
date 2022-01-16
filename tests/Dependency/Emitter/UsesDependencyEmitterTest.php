@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\DependencyEmitter;
+namespace Tests\Qossmic\Deptrac\Dependency\Emitter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\UseDependencyEmitter;
 
 final class UsesDependencyEmitterTest extends TestCase
 {
@@ -14,7 +14,7 @@ final class UsesDependencyEmitterTest extends TestCase
     public function testApplyDependencies(): void
     {
         $deps = $this->getDeps(
-            new UsesDependencyEmitter(),
+            new UseDependencyEmitter(),
             __DIR__.'/Fixtures/Foo.php'
         );
 
@@ -25,7 +25,7 @@ final class UsesDependencyEmitterTest extends TestCase
     public function testIgnoresNamespaces(): void
     {
         $deps = $this->getDeps(
-            new UsesDependencyEmitter(),
+            new UseDependencyEmitter(),
             [
                 __DIR__.'/Fixtures/IgnoreNamespace/Deps/UsedWithFQDN.php',
                 __DIR__.'/Fixtures/IgnoreNamespace/Deps/UsedWithNamespace.php',
@@ -43,7 +43,7 @@ final class UsesDependencyEmitterTest extends TestCase
     public function testIncludesFQDNWhichIsAlsoANamespacePrefix(): void
     {
         $deps = $this->getDeps(
-            new UsesDependencyEmitter(),
+            new UseDependencyEmitter(),
             [
                 __DIR__.'/Fixtures/FQDNNamespacePrefix/FQDN.php',
                 __DIR__.'/Fixtures/FQDNNamespacePrefix/FQDN/SomeClass.php',

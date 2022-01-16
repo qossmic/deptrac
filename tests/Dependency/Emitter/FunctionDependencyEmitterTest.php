@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\DependencyEmitter;
+namespace Tests\Qossmic\Deptrac\Dependency\Emitter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\FunctionDependencyEmitter;
 
 final class FunctionDependencyEmitterTest extends TestCase
 {

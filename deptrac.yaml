@@ -137,6 +137,7 @@ parameters:
       - Resolver
     Dependencies:
       - Utils
+      - AstRunner
     AstRunner:
       - Utils
       - Dependencies

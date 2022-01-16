@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\DependencyEmitter;
+namespace Tests\Qossmic\Deptrac\Dependency\Emitter;
 
 use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
@@ -10,9 +10,9 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
+use Qossmic\Deptrac\Contracts\Dependency\EmitterInterface;
 use Qossmic\Deptrac\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Dependency\Result;
-use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 trait EmitterTrait
@@ -20,7 +20,7 @@ trait EmitterTrait
     /**
      * @param string|string[] $files
      */
-    public function getDeps(DependencyEmitterInterface $emitter, $files): array
+    public function getDeps(EmitterInterface $emitter, $files): array
     {
         $files = (array) $files;
 
