@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.19.1](https://github.com/qossmic/deptrac/tree/0.19.1) (2022-01-16)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.0...0.19.1)
+
+**Merged pull requests:**
+
+- Update docs [\#795](https://github.com/qossmic/deptrac/pull/795) ([dbrumann](https://github.com/dbrumann))
+- Fix wrong file name in error message [\#794](https://github.com/qossmic/deptrac/pull/794) ([dbrumann](https://github.com/dbrumann))
+
 ## [0.19.0](https://github.com/qossmic/deptrac/tree/0.19.0) (2022-01-12)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.18.0...0.19.0)
