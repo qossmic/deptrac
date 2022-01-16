@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $container): void {
     $container->parameters()->set('ignore_uncovered_internal_classes', false);
-    $container->parameters()->set('supported_analyser_types', ['class', 'use']);
+    $container->parameters()->set('analyser.types', ['class', 'use']);
     $container->parameters()->set('baseline', null);
     $container->parameters()->set('paths', []);
     $container->parameters()->set('exclude_files', []);

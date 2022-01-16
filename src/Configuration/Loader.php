@@ -58,15 +58,15 @@ class Loader
             }
         }
 
+        foreach ($configs as &$preliminaryConfig) {
+            // Analyser configuration is no longer handled by ConfigurationLoader
+            unset($preliminaryConfig['parameters']['analyser.types']);
+        }
+
         $mergedConfig = $this->processor->processConfiguration(new Definition(), $configs);
 
         $mergedConfig['parameters']['currentWorkingDirectory'] = $this->workingDirectory;
         $mergedConfig['parameters']['depfileDirectory'] = $depfileDirectory;
-
-        /** @var array<mixed> $analyzer */
-        $analyzer = $mergedConfig['analyzer'] ?? [];
-        /** @var array<mixed> $analyser */
-        $analyser = $mergedConfig['analyser'] ?? [];
 
         return Configuration::fromArray([
             'parameters' => $mergedConfig['parameters'],
@@ -82,7 +82,6 @@ class Loader
             'skip_violations' => $mergedConfig['skip_violations'],
             'ignore_uncovered_internal_classes' => $mergedConfig['ignore_uncovered_internal_classes'],
             'formatters' => $mergedConfig['formatters'] ?? [],
-            'analyser' => [] === $analyser ? $analyzer : $analyser,
         ]);
     }
 
@@ -101,8 +100,6 @@ class Loader
      *     exclude_files: mixed,
      *     ruleset: mixed,
      *     skip_violations: mixed,
-     *     analyser: mixed,
-     *     analyzer: mixed,
      *     ignore_uncovered_internal_classes: mixed
      * }
      */
@@ -117,8 +114,6 @@ class Loader
             'exclude_files' => $this->normalizeValue($config, 'exclude_files', $filename),
             'ruleset' => $this->normalizeValue($config, 'ruleset', $filename),
             'skip_violations' => $this->normalizeValue($config, 'skip_violations', $filename),
-            'analyser' => $this->normalizeValue($config, 'analyser', $filename),
-            'analyzer' => $this->normalizeValue($config, 'analyzer', $filename),
             'ignore_uncovered_internal_classes' => $this->normalizeValue($config, 'ignore_uncovered_internal_classes', $filename),
         ];
 

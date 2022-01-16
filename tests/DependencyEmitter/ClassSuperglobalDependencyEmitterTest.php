@@ -11,11 +11,6 @@ final class ClassSuperglobalDependencyEmitterTest extends TestCase
 {
     use EmitterTrait;
 
-    public function testGetName(): void
-    {
-        self::assertEquals('ClassSuperglobalDependencyEmitter', (new ClassSuperglobalDependencyEmitter())->getName());
-    }
-
     public function testApplyDependencies(): void
     {
         $deps = $this->getDeps(

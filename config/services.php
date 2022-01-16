@@ -63,6 +63,7 @@ use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
 use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\RulesetEngine;
+use Qossmic\Deptrac\Runtime\Analysis\AnalysisContext;
 use Qossmic\Deptrac\TokenAnalyser;
 use Qossmic\Deptrac\TokenLayerResolverFactory;
 use Qossmic\Deptrac\UnassignedAnalyser;
@@ -72,6 +73,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -81,6 +83,12 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(EventDispatcher::class);
     $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
+
+    $services
+        ->set(AnalysisContext::class)
+        ->args([
+            '%analyser.types%',
+        ]);
 
     $services->set(AstRunner::class)
         ->args([
@@ -253,24 +261,34 @@ return static function (ContainerConfigurator $container): void {
 
     /* Dependency resolving */
     $services
+        ->set(ClassDependencyEmitter::class)
+        ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::CLASS_TOKEN]);
+    $services
+        ->set(ClassSuperglobalDependencyEmitter::class)
+        ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::CLASS_SUPERGLOBAL_TOKEN]);
+    $services
+        ->set(FileDependencyEmitter::class)
+        ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::FILE_TOKEN]);
+    $services
+        ->set(FunctionDependencyEmitter::class)
+        ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::FUNCTION_TOKEN]);
+    $services
+        ->set(FunctionSuperglobalDependencyEmitter::class)
+        ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::FUNCTION_SUPERGLOBAL_TOKEN]);
+    $services
+        ->set(UsesDependencyEmitter::class)
+        ->tag('deptrac.dependency_emitter', ['type' => AnalysisContext::USE_TOKEN]);
+
+    $services
         ->set(Resolver::class)
         ->args([
             service(EventDispatcher::class),
             service(InheritanceFlatter::class),
-            service(ClassDependencyEmitter::class),
-            service(ClassSuperglobalDependencyEmitter::class),
-            service(FileDependencyEmitter::class),
-            service(FunctionDependencyEmitter::class),
-            service(FunctionSuperglobalDependencyEmitter::class),
-            service(UsesDependencyEmitter::class),
+            service(AnalysisContext::class),
+            tagged_locator('deptrac.dependency_emitter', 'type'),
         ]);
+
     $services->set(InheritanceFlatter::class);
-    $services->set(ClassDependencyEmitter::class);
-    $services->set(ClassSuperglobalDependencyEmitter::class);
-    $services->set(FileDependencyEmitter::class);
-    $services->set(FunctionDependencyEmitter::class);
-    $services->set(FunctionSuperglobalDependencyEmitter::class);
-    $services->set(UsesDependencyEmitter::class);
 
     /* Commands */
     $services

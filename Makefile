@@ -23,7 +23,7 @@ composer-install:
 
 tests: composer-install
 	$(PHPUNIT_BIN) -c .
-	$(PHP_BIN) deptrac.php analyse docs/examples/Fixture.depfile.yaml --no-cache
+	$(PHP_BIN) deptrac.php analyse --config-file=docs/examples/Fixture.depfile.yaml --no-cache
 
 tests-coverage: composer-install
 	$(PHPUNIT_BIN) -c . --coverage-html coverage

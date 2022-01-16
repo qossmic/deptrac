@@ -10,10 +10,6 @@ use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\Configuration;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
-use stdClass;
-use TypeError;
 
 final class NikicPhpParserTest extends TestCase
 {
@@ -28,12 +24,6 @@ final class NikicPhpParserTest extends TestCase
         );
     }
 
-    public function testParseWithInvalidData(): void
-    {
-        $this->expectException(TypeError::class);
-        $this->parser->parseFile(new stdClass(), ConfigurationAnalyser::fromArray([]));
-    }
-
     public function testParseDoesNotIgnoreUsesByDefault(): void
     {
         $typeResolver = new TypeResolver();
@@ -44,15 +34,7 @@ final class NikicPhpParserTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
-        $configuration = Configuration::fromArray(
-            [
-                'layers' => [],
-                'paths' => [],
-                'ruleset' => [],
-                'parameters' => [],
-            ]
-        );
-        self::assertCount(1, $parser->parseFile($filePath, $configuration->getAnalyser())->getDependencies());
+        self::assertCount(1, $parser->parseFile($filePath)->getDependencies());
     }
 
     /**
@@ -68,15 +50,7 @@ final class NikicPhpParserTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/Attributes.php';
-        $configuration = Configuration::fromArray(
-            [
-                'layers' => [],
-                'paths' => [],
-                'ruleset' => [],
-                'parameters' => [],
-            ]
-        );
-        $astFileReference = $parser->parseFile($filePath, $configuration->getAnalyser());
+        $astFileReference = $parser->parseFile($filePath);
         $astClassReferences = $astFileReference->getAstClassReferences();
         self::assertCount(7, $astClassReferences[0]->getDependencies());
         self::assertCount(2, $astClassReferences[1]->getDependencies());

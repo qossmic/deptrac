@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
@@ -14,11 +13,10 @@ use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
+use Qossmic\Deptrac\Exception\Dependency\EmitterResolverException;
+use Qossmic\Deptrac\Runtime\Analysis\AnalysisContext;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ResolverTest extends TestCase
@@ -29,9 +27,9 @@ final class ResolverTest extends TestCase
 
         $dispatcher = $this->createMock(EventDispatcherInterface::class);
         $dispatcher->method('dispatch')->withConsecutive(
-            [new PreEmitEvent('emitter')],
+            [new PreEmitEvent(ClassDependencyEmitter::class)],
             [new PostEmitEvent()],
-            [new PreEmitEvent('emitter6')],
+            [new PreEmitEvent(UsesDependencyEmitter::class)],
             [new PostEmitEvent()],
             [new PreFlattenEvent()],
             [new PostFlattenEvent()]
@@ -39,33 +37,31 @@ final class ResolverTest extends TestCase
 
         $inheritanceFlatter = $this->createMock(InheritanceFlatter::class);
         $inheritanceFlatter->expects(self::once())->method('flattenDependencies');
+        $analysisContext = new AnalysisContext([AnalysisContext::CLASS_TOKEN, AnalysisContext::USE_TOKEN]);
+        $classEmitter = new ClassDependencyEmitter();
+        $useEmitter = new UsesDependencyEmitter();
+        $emitterLocator = new Container();
+        $emitterLocator->set(AnalysisContext::CLASS_TOKEN, $classEmitter);
+        $emitterLocator->set(AnalysisContext::USE_TOKEN, $useEmitter);
 
-        $emitter = $this->createMock(ClassDependencyEmitter::class);
-        $emitter->method('getName')->willReturn('emitter');
-        $emitter->expects(self::once())->method('applyDependencies');
+        $resolver = new Resolver($dispatcher, $inheritanceFlatter, $analysisContext, $emitterLocator);
 
-        $emitter2 = $this->createMock(ClassSuperglobalDependencyEmitter::class);
-        $emitter2->method('getName')->willReturn('emitter2');
-        $emitter2->expects(self::never())->method('applyDependencies');
+        $resolver->resolve($astMap);
+    }
 
-        $emitter3 = $this->createMock(FileDependencyEmitter::class);
-        $emitter3->method('getName')->willReturn('emitter3');
-        $emitter3->expects(self::never())->method('applyDependencies');
+    public function testInvalidConfigurationThrowsException(): void
+    {
+        $dispatcher = $this->createMock(EventDispatcherInterface::class);
+        $inheritanceFlatter = $this->createMock(InheritanceFlatter::class);
+        $analysisContext = new AnalysisContext([AnalysisContext::CLASS_TOKEN]);
+        $emptyLocator = new Container();
+        $astMap = new AstMap([]);
 
-        $emitter4 = $this->createMock(FunctionDependencyEmitter::class);
-        $emitter4->method('getName')->willReturn('emitter4');
-        $emitter4->expects(self::never())->method('applyDependencies');
+        $resolver = new Resolver($dispatcher, $inheritanceFlatter, $analysisContext, $emptyLocator);
 
-        $emitter5 = $this->createMock(FunctionSuperglobalDependencyEmitter::class);
-        $emitter5->method('getName')->willReturn('emitter5');
-        $emitter5->expects(self::never())->method('applyDependencies');
+        $this->expectException(EmitterResolverException::class);
+        $this->expectExceptionMessage('No emitter is registered for the provided type "class".');
 
-        $emitter6 = $this->createMock(UsesDependencyEmitter::class);
-        $emitter6->method('getName')->willReturn('emitter6');
-        $emitter6->expects(self::once())->method('applyDependencies');
-
-        $resolver = new Resolver($dispatcher, $inheritanceFlatter, $emitter, $emitter2, $emitter3, $emitter4, $emitter5, $emitter6);
-
-        $resolver->resolve($astMap, ConfigurationAnalyser::fromArray([]));
+        $resolver->resolve($astMap);
     }
 }

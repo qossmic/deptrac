@@ -9,7 +9,5 @@ use Qossmic\Deptrac\Dependency\Result;
 
 interface DependencyEmitterInterface
 {
-    public function getName(): string;
-
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void;
 }

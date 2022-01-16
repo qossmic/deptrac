@@ -11,11 +11,6 @@ final class ClassDependencyEmitterTest extends TestCase
 {
     use EmitterTrait;
 
-    public function testGetName(): void
-    {
-        self::assertEquals('ClassDependencyEmitter', (new ClassDependencyEmitter())->getName());
-    }
-
     public function testApplyDependencies(): void
     {
         $deps = $this->getDeps(

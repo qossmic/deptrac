@@ -42,42 +42,6 @@ final class Definition implements ConfigurationInterface
         return $rootNode;
     }
 
-    /**
-     * @return array{ArrayNodeDefinition, ArrayNodeDefinition}
-     */
-    private function getParametersAnalyser(): array
-    {
-        $builder = new TreeBuilder('analyser');
-        /** @var ArrayNodeDefinition $rootNode */
-        $rootNode = $builder->getRootNode();
-        $rootNode
-            ->children()
-                ->scalarNode('count_use_statements')
-                    ->setDeprecated('qossmic/deptrac', '0.15', 'The "%node%" option is deprecated. Use "analyser.types" instead.')
-                    ->defaultTrue()
-                ->end()
-                ->arrayNode('types')
-                    ->scalarPrototype()->end()
-                ->end()
-            ->end()
-        ;
-
-        $deprecatedBuilder = new TreeBuilder('analyzer');
-        /** @var ArrayNodeDefinition $deprecatedRootNode */
-        $deprecatedRootNode = $deprecatedBuilder->getRootNode();
-        $deprecatedRootNode
-            ->setDeprecated('qossmic/deptrac', '0.15', 'The "%node%" option is deprecated. Use "analyser" instead.')
-                ->children()
-                    ->scalarNode('count_use_statements')->defaultTrue()->end()
-                    ->arrayNode('types')
-                        ->scalarPrototype()->end()
-                    ->end()
-                ->end()
-        ;
-
-        return [$deprecatedRootNode, $rootNode];
-    }
-
     private function getParametersLayers(): ArrayNodeDefinition
     {
         $builder = new TreeBuilder('layers');
@@ -141,7 +105,6 @@ final class Definition implements ConfigurationInterface
         $builder = new TreeBuilder('deptrac');
         /** @var ArrayNodeDefinition $rootNode */
         $rootNode = $builder->getRootNode();
-        $parametersAnalyser = $this->getParametersAnalyser();
         $rootNode
             ->append($this->getImports())
             ->append($this->getServices())
@@ -150,8 +113,6 @@ final class Definition implements ConfigurationInterface
                     ->useAttributeAsKey('name')
                     ->scalarPrototype()->end()
                 ->end()
-                ->append($parametersAnalyser[0])
-                ->append($parametersAnalyser[1])
                 ->arrayNode('paths')
                     ->requiresAtLeastOneElement()
                     ->scalarPrototype()->cannotBeEmpty()->end()

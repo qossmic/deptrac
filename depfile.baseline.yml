@@ -3,8 +3,6 @@ skip_violations:
     - Qossmic\Deptrac\AstRunner\AstRunner
   Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceFileCache:
     - Qossmic\Deptrac\Console\Application
-  Qossmic\Deptrac\Configuration\Configuration:
-    - Qossmic\Deptrac\Configuration\ConfigurationAnalyser
   Qossmic\Deptrac\Console\Command\DebugTokenOptions:
     - Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName
     - Qossmic\Deptrac\AstRunner\AstMap\FileName

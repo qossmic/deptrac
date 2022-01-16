@@ -10,7 +10,6 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\AstRunner;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Qossmic\Deptrac\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Dependency\Result;
 use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
@@ -31,8 +30,7 @@ trait EmitterTrait
             new TypeResolver(),
             new AnonymousClassResolver()
         );
-        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles($files, ConfigurationAnalyser::fromArray(
-            []));
+        $astMap = (new AstRunner(new EventDispatcher(), $parser))->createAstMapByFiles($files);
         $result = new Result();
 
         $emitter->applyDependencies($astMap, $result);

@@ -29,7 +29,7 @@ class TokenAnalyser
      */
     public function analyse(Configuration $configuration, TokenName $tokenName): array
     {
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
+        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
 
         return $this->tokenLayerResolverFactory
             ->create($configuration, $astMap)

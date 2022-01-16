@@ -10,11 +10,6 @@ use Qossmic\Deptrac\Dependency\Result;
 
 class ClassDependencyEmitter implements DependencyEmitterInterface
 {
-    public function getName(): string
-    {
-        return 'ClassDependencyEmitter';
-    }
-
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void
     {
         foreach ($astMap->getAstClassReferences() as $classReference) {

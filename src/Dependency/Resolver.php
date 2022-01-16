@@ -4,63 +4,51 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Dependency;
 
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Qossmic\Deptrac\AstRunner\AstMap;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
 use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
 use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
-use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
-use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
-use Qossmic\Deptrac\Exception\ShouldNotHappenException;
+use Qossmic\Deptrac\Exception\Dependency\EmitterResolverException;
+use Qossmic\Deptrac\Runtime\Analysis\AnalysisContext;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver
 {
     private EventDispatcherInterface $dispatcher;
     private InheritanceFlatter $inheritanceFlatter;
+    private AnalysisContext $analysisContext;
+    private ContainerInterface $emitterLocator;
 
-    /** @var DependencyEmitterInterface[] */
-    private array $emitters;
-
-    public function __construct(
-        EventDispatcherInterface $dispatcher,
+    public function __construct(EventDispatcherInterface $dispatcher,
         InheritanceFlatter $inheritanceFlatter,
-        ClassDependencyEmitter $classDependencyEmitter,
-        ClassSuperglobalDependencyEmitter $classSuperglobalDependencyEmitter,
-        FileDependencyEmitter $fileDependencyEmitter,
-        FunctionDependencyEmitter $functionDependencyEmitter,
-        FunctionSuperglobalDependencyEmitter $functionSuperglobalDependencyEmitter,
-        UsesDependencyEmitter $usesDependencyEmitter
-    ) {
+        AnalysisContext $analysisContext,
+        ContainerInterface $emitterLocator)
+    {
         $this->dispatcher = $dispatcher;
         $this->inheritanceFlatter = $inheritanceFlatter;
-        $this->emitters = [
-            ConfigurationAnalyser::CLASS_TOKEN => $classDependencyEmitter,
-            ConfigurationAnalyser::CLASS_SUPERGLOBAL_TOKEN => $classSuperglobalDependencyEmitter,
-            ConfigurationAnalyser::FILE_TOKEN => $fileDependencyEmitter,
-            ConfigurationAnalyser::FUNCTION_TOKEN => $functionDependencyEmitter,
-            ConfigurationAnalyser::FUNCTION_SUPERGLOBAL_TOKEN => $functionSuperglobalDependencyEmitter,
-            ConfigurationAnalyser::USE_TOKEN => $usesDependencyEmitter,
-        ];
+        $this->analysisContext = $analysisContext;
+        $this->emitterLocator = $emitterLocator;
     }
 
-    public function resolve(AstMap $astMap, ConfigurationAnalyser $configurationAnalyser): Result
+    public function resolve(AstMap $astMap): Result
     {
         $result = new Result();
 
-        foreach ($configurationAnalyser->getTypes() as $type) {
-            if (!array_key_exists($type, $this->emitters)) {
-                throw new ShouldNotHappenException();
+        foreach ($this->analysisContext->getTypes() as $type) {
+            try {
+                /** @var DependencyEmitterInterface $emitter */
+                $emitter = $this->emitterLocator->get($type);
+            } catch (ContainerExceptionInterface|NotFoundExceptionInterface $containerException) {
+                throw EmitterResolverException::missingServiceForType($type, $containerException);
             }
 
-            $this->dispatcher->dispatch(new PreEmitEvent($this->emitters[$type]->getName()));
-            $this->emitters[$type]->applyDependencies($astMap, $result);
+            $this->dispatcher->dispatch(new PreEmitEvent(get_class($emitter)));
+            $emitter->applyDependencies($astMap, $result);
             $this->dispatcher->dispatch(new PostEmitEvent());
         }
 

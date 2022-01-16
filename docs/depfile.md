@@ -20,20 +20,6 @@ imports:
 
 ### `analyser`
 
-#### `count_use_statements`
-
-**This feature is deprecated and will be removed in future release, use [types](#types) instead.**
-
-By default, deptrac will analyse all occurrences for classes, including `use`
-statements. If you would like to exempt `use` statements from the analysis, you
-can change this behaviour in the depfile:
-
-```yaml
-parameters:
-  analyser:
-    count_use_statements: false
-```
-
 #### `types`
 
 Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyse file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analysed file:

@@ -10,11 +10,6 @@ use Qossmic\Deptrac\Dependency\Result;
 
 class FunctionSuperglobalDependencyEmitter implements DependencyEmitterInterface
 {
-    public function getName(): string
-    {
-        return 'FunctionSuperglobalDependencyEmitter';
-    }
-
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void
     {
         foreach ($astMap->getAstFileReferences() as $astFileReference) {

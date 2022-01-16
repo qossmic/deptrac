@@ -10,11 +10,6 @@ use Qossmic\Deptrac\Dependency\Result;
 
 class FileDependencyEmitter implements DependencyEmitterInterface
 {
-    public function getName(): string
-    {
-        return 'FileDependencyEmitter';
-    }
-
     public function applyDependencies(AstMap $astMap, Result $dependencyResult): void
     {
         foreach ($astMap->getAstFileReferences() as $fileReference) {

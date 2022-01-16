@@ -18,7 +18,6 @@ class Configuration
     private ConfigurationRuleset $ruleset;
     /** @var array<string, string> */
     private array $parameters;
-    private ConfigurationAnalyser $analyser;
     /** @var array<string, array<string, mixed>> */
     private array $formatters;
 
@@ -38,7 +37,6 @@ class Configuration
         ->setDefault('formatters', [])
         ->setDefault('exclude_files', [])
         ->setDefault('skip_violations', [])
-        ->setDefault('analyser', [])
         ->setDefault('ignore_uncovered_internal_classes', true)
         ->addAllowedTypes('parameters', 'array')
         ->addAllowedTypes('formatters', ['array', 'null'])
@@ -47,7 +45,6 @@ class Configuration
         ->addAllowedTypes('exclude_files', ['array', 'null'])
         ->addAllowedTypes('ruleset', 'array')
         ->addAllowedTypes('skip_violations', 'array')
-        ->addAllowedTypes('analyser', 'array')
         ->addAllowedTypes('ignore_uncovered_internal_classes', 'bool')
         ->resolve($args);
 
@@ -60,7 +57,6 @@ class Configuration
          *     exclude_files: ?array<string>,
          *     ruleset: array<string, string[]>,
          *     skip_violations: array<string, string[]>,
-         *     analyser: array<string, mixed>,
          *     ignore_uncovered_internal_classes: bool,
          * } $options
          */
@@ -77,7 +73,6 @@ class Configuration
      *     exclude_files: ?array<string>,
      *     ruleset: array<string, string[]>,
      *     skip_violations: array<string, string[]>,
-     *     analyser: array<string, mixed>,
      *     ignore_uncovered_internal_classes: bool,
      * } $options
      *
@@ -128,7 +123,6 @@ class Configuration
         $this->paths = $options['paths'];
         $this->excludeFiles = (array) $options['exclude_files'];
         $this->formatters = (array) $options['formatters'];
-        $this->analyser = ConfigurationAnalyser::fromArray($options['analyser']);
     }
 
     /**
@@ -174,10 +168,5 @@ class Configuration
     public function getFormatterConfig(string $formatterName): array
     {
         return $this->formatters[$formatterName] ?? [];
-    }
-
-    public function getAnalyser(): ConfigurationAnalyser
-    {
-        return $this->analyser;
     }
 }

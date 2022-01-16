@@ -1,3 +1,21 @@
+# Upgrade from 0.19 to 0.20
+
+## Depfile (Configuration File)
+
+### What?
+
+The previously deprecated parameter `analyser.count_use_statements` is removed.
+
+### How?
+
+Instead of enabling/disabling this option, set/remove the type in
+`analyser.types` instead:
+
+```yaml
+parameters:
+    analyser.types: ["class", "use"] # Default configuration
+```
+
 # Upgrade from 0.18 to 0.19
 
 ## Depfile (Configuration File)

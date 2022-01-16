@@ -11,11 +11,6 @@ final class FileDependencyEmitterTest extends TestCase
 {
     use EmitterTrait;
 
-    public function testGetName(): void
-    {
-        self::assertEquals('FileDependencyEmitter', (new FileDependencyEmitter())->getName());
-    }
-
     public function testApplyDependencies(): void
     {
         $deps = $this->getDeps(
