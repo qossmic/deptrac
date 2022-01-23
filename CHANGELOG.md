@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.19.2](https://github.com/qossmic/deptrac/tree/0.19.2) (2022-01-23)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.1...0.19.2)
+
+**Merged pull requests:**
+
+- Fix performance issue [\#799](https://github.com/qossmic/deptrac/pull/799) ([pincher2012](https://github.com/pincher2012))
+
 ## [0.19.1](https://github.com/qossmic/deptrac/tree/0.19.1) (2022-01-16)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.0...0.19.1)
@@ -61,20 +69,20 @@
 
 ## [0.18.0](https://github.com/qossmic/deptrac/tree/0.18.0) (2021-11-24)
 
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.16.0...0.18.0)
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.17.0...0.18.0)
 
 **Merged pull requests:**
 
 - Update Symfony components to allow 6.0 [\#724](https://github.com/qossmic/deptrac/pull/724) ([dbrumann](https://github.com/dbrumann))
 - Update to support PHPStan v1 [\#723](https://github.com/qossmic/deptrac/pull/723) ([patrickkusebauch](https://github.com/patrickkusebauch))
 
-## [0.16.0](https://github.com/qossmic/deptrac/tree/0.16.0) (2021-11-01)
-
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.17.0...0.16.0)
-
 ## [0.17.0](https://github.com/qossmic/deptrac/tree/0.17.0) (2021-11-01)
 
-[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.2...0.17.0)
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.16.0...0.17.0)
+
+## [0.16.0](https://github.com/qossmic/deptrac/tree/0.16.0) (2021-11-01)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.15.2...0.16.0)
 
 **Merged pull requests:**
 
