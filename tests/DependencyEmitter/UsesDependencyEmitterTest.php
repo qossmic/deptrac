@@ -59,4 +59,19 @@ final class UsesDependencyEmitterTest extends TestCase
         self::assertCount(1, $deps);
         self::assertContains('FQDNNamespacePrefix\Uses\Foo:5 on FQDNNamespacePrefix\FQDN', $deps);
     }
+
+    public function testIncludesFQDNWhichIsDoesNotExistAndSubstringOfAnotherFQDN(): void
+    {
+        $deps = $this->getDeps(
+            new UsesDependencyEmitter(),
+            [
+                __DIR__.'/Fixtures/FQDNIsSubstring/FQDN/SomeClass.php',
+                __DIR__.'/Fixtures/FQDNIsSubstring/Foo.php',
+            ]
+        );
+
+        self::assertCount(2, $deps);
+        self::assertContains('FQDNIsSubstring\Foo:5 on FQDNIsSubstring\FQDN\Some', $deps);
+        self::assertContains('FQDNIsSubstring\Foo:6 on FQDNIsSubstring\FQDN\SomeClass', $deps);
+    }
 }
