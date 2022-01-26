@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use function getcwd;
+use const DIRECTORY_SEPARATOR;
 
 class DebugTokenCommand extends Command
 {
@@ -35,7 +37,13 @@ class DebugTokenCommand extends Command
 
         $this->addArgument('token', InputArgument::REQUIRED, 'Full qualified token name to debug');
         $this->addArgument('type', InputArgument::OPTIONAL, 'Token type (class-like, function, file)', 'class-like');
-        $this->addOption('depfile', null, InputOption::VALUE_OPTIONAL, 'Path to the depfile');
+        $this->addOption(
+            'depfile',
+            null,
+            InputOption::VALUE_REQUIRED,
+            '!deprecated: use --config-file instead - Path to the depfile',
+            getcwd().DIRECTORY_SEPARATOR.'depfile.yaml'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

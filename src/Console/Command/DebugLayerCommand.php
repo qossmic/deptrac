@@ -13,6 +13,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use function getcwd;
+use const DIRECTORY_SEPARATOR;
 
 class DebugLayerCommand extends Command
 {
@@ -35,7 +37,13 @@ class DebugLayerCommand extends Command
         parent::configure();
 
         $this->addArgument('layer', InputArgument::OPTIONAL, 'Layer to debug');
-        $this->addOption('depfile', null, InputOption::VALUE_OPTIONAL, 'Path to the depfile');
+        $this->addOption(
+            'depfile',
+            null,
+            InputOption::VALUE_REQUIRED,
+            '!deprecated: use --config-file instead - Path to the depfile',
+            getcwd().DIRECTORY_SEPARATOR.'depfile.yaml'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -44,10 +52,9 @@ class DebugLayerCommand extends Command
         $symfonyOutput = new SymfonyOutput($output, $outputStyle);
         /** @var ?string $layer */
         $layer = $input->getArgument('layer');
-        $options = new DebugLayerOptions(
-            self::getConfigFile($input, $symfonyOutput),
-            $layer
-        );
+        $configFile = self::getConfigFile($input, $symfonyOutput);
+
+        $options = new DebugLayerOptions($configFile, $layer);
 
         try {
             $this->runner->run($options, $symfonyOutput);
