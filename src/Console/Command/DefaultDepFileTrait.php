@@ -17,11 +17,18 @@ trait DefaultDepFileTrait
     {
         /** @var string $configFile */
         $configFile = $input->getOption('config-file');
-        /** @var string $legacyFile */
-        $legacyFile = $input->getArgument('depfile');
 
         $defaultConfigFile = DIRECTORY_SEPARATOR.'deptrac.yaml';
         $defaultLegacyFile = DIRECTORY_SEPARATOR.'depfile.yaml';
+
+        $legacyFile = $defaultLegacyFile;
+        if ($input->hasArgument('depfile')) {
+            /** @var string $legacyFile */
+            $legacyFile = $input->getArgument('depfile');
+        } elseif ($input->hasOption('depfile')) {
+            /** @var string $legacyFile */
+            $legacyFile = $input->getOption('depfile');
+        }
 
         if (0 !== substr_compare($configFile, $defaultConfigFile, -strlen($defaultConfigFile))
             || (file_exists($configFile)

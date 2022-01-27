@@ -11,6 +11,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use function getcwd;
+use const DIRECTORY_SEPARATOR;
 
 class DebugUnassignedCommand extends Command
 {
@@ -32,7 +34,12 @@ class DebugUnassignedCommand extends Command
     {
         parent::configure();
 
-        $this->addArgument('depfile', InputArgument::REQUIRED, 'Path to the depfile');
+        $this->addArgument(
+            'depfile',
+            InputArgument::OPTIONAL,
+            '!deprecated: use --config-file instead - Path to the depfile',
+            getcwd().DIRECTORY_SEPARATOR.'depfile.yaml'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
