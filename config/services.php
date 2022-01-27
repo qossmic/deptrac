@@ -51,6 +51,7 @@ use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\FileResolver;
 use Qossmic\Deptrac\LayerAnalyser;
 use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
+use Qossmic\Deptrac\OutputFormatter\CodeclimateOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDisplayFormatter;
@@ -204,6 +205,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(JsonOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(CodeclimateOutputFormatter::class)
         ->tag('output_formatter');
 
     /* Collectors */

@@ -1,0 +1,30 @@
+[
+    {
+        "type": "issue",
+        "check_name": "Dependency violation",
+        "description": "ClassA should not depend on ClassB (LayerA on LayerB)",
+        "categories": ["Style", "Complexity"],
+        "severity": "minor",
+        "location": {
+            "path": "ClassA.php",
+            "lines": {
+                "begin": 12,
+                "end": 12
+            }
+        }
+    },
+    {
+        "type": "issue",
+        "check_name": "Dependency violation",
+        "description": "ClassC should not depend on ClassD (LayerA on LayerB)",
+        "categories": ["Style", "Complexity"],
+        "severity": "minor",
+        "location": {
+            "path": "ClassC.php",
+            "lines": {
+                "begin": 12,
+                "end": 12
+            }
+        }
+    }
+]
