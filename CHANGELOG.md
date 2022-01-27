@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.19.3](https://github.com/qossmic/deptrac/tree/0.19.3) (2022-01-27)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.2...0.19.3)
+
+**Merged pull requests:**
+
+- Fix debug commands when using new config-file option [\#805](https://github.com/qossmic/deptrac/pull/805) ([dbrumann](https://github.com/dbrumann))
+
 ## [0.19.2](https://github.com/qossmic/deptrac/tree/0.19.2) (2022-01-23)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.1...0.19.2)
