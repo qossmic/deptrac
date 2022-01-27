@@ -162,3 +162,8 @@ parameters:
           - Console Formatters
           - SymfonyConsole
       pointToGroups: true
+    codeclimate:
+      severity:
+        violation: major
+        skipped: minor
+        uncovered: info

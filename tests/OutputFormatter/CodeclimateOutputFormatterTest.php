@@ -234,116 +234,132 @@ final class CodeclimateOutputFormatterTest extends TestCase
             true,
         ];
 
-        yield 'Different violations types in one report' => [
-            [
-                new Violation(
-                    new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
-                        new Dependency(
-                            ClassLikeName::fromFQCN('OriginalA'),
-                            ClassLikeName::fromFQCN('OriginalB'),
-                            FileOccurrence::fromFilepath('ClassA.php', 12)
-                        ),
-                        AstInherit::newExtends(
-                            ClassLikeName::fromFQCN('ClassInheritA'),
-                            FileOccurrence::fromFilepath('ClassA.php', 3)
-                        )->withPath(
-                            [
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritB'),
-                                    FileOccurrence::fromFilepath('ClassInheritA.php', 4)
-                                ),
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritC'),
-                                    FileOccurrence::fromFilepath('ClassInheritB.php', 5)
-                                ),
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritD'),
-                                    FileOccurrence::fromFilepath('ClassInheritC.php', 6)
-                                ),
-                            ]
-                        )
-                    ),
-                    'LayerA',
-                    'LayerB'
-                ),
-                new SkippedViolation(
-                    new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
-                        new Dependency(
-                            ClassLikeName::fromFQCN('OriginalA'),
-                            ClassLikeName::fromFQCN('OriginalB'),
-                            FileOccurrence::fromFilepath('ClassA.php', 15)
-                        ),
-                        AstInherit::newExtends(
-                            ClassLikeName::fromFQCN('ClassInheritA'),
-                            FileOccurrence::fromFilepath('ClassA.php', 3)
-                        )->withPath(
-                            [
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritB'),
-                                    FileOccurrence::fromFilepath('ClassInheritA.php', 4)
-                                ),
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritC'),
-                                    FileOccurrence::fromFilepath('ClassInheritB.php', 5)
-                                ),
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritD'),
-                                    FileOccurrence::fromFilepath('ClassInheritC.php', 6)
-                                ),
-                            ]
-                        )
-                    ),
-                    'LayerA',
-                    'LayerB'
-                ),
-                new SkippedViolation(
-                    new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassC'),
-                        ClassLikeName::fromFQCN('ClassD'),
-                        new Dependency(
-                            ClassLikeName::fromFQCN('OriginalA'),
-                            ClassLikeName::fromFQCN('OriginalB'),
-                            FileOccurrence::fromFilepath('ClassC.php', 12)
-                        ),
-                        AstInherit::newExtends(
-                            ClassLikeName::fromFQCN('ClassInheritA'),
-                            FileOccurrence::fromFilepath('ClassA.php', 3)
-                        )->withPath(
-                            [
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritB'),
-                                    FileOccurrence::fromFilepath('ClassInheritA.php', 4)
-                                ),
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritC'),
-                                    FileOccurrence::fromFilepath('ClassInheritB.php', 5)
-                                ),
-                                AstInherit::newExtends(
-                                    ClassLikeName::fromFQCN('ClassInheritD'),
-                                    FileOccurrence::fromFilepath('ClassInheritC.php', 6)
-                                ),
-                            ]
-                        )
-                    ),
-                    'LayerA',
-                    'LayerB'
-                ),
-                new Uncovered(
+        $multipleViolationTypes = [
+            new Violation(
+                new InheritDependency(
+                    ClassLikeName::fromFQCN('ClassA'),
+                    ClassLikeName::fromFQCN('ClassB'),
                     new Dependency(
                         ClassLikeName::fromFQCN('OriginalA'),
                         ClassLikeName::fromFQCN('OriginalB'),
-                        FileOccurrence::fromFilepath('OriginalA.php', 12)
+                        FileOccurrence::fromFilepath('ClassA.php', 12)
                     ),
-                    'LayerA'
+                    AstInherit::newExtends(
+                        ClassLikeName::fromFQCN('ClassInheritA'),
+                        FileOccurrence::fromFilepath('ClassA.php', 3)
+                    )->withPath(
+                        [
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritB'),
+                                FileOccurrence::fromFilepath('ClassInheritA.php', 4)
+                            ),
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritC'),
+                                FileOccurrence::fromFilepath('ClassInheritB.php', 5)
+                            ),
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritD'),
+                                FileOccurrence::fromFilepath('ClassInheritC.php', 6)
+                            ),
+                        ]
+                    )
                 ),
-            ],
+                'LayerA',
+                'LayerB'
+            ),
+            new SkippedViolation(
+                new InheritDependency(
+                    ClassLikeName::fromFQCN('ClassA'),
+                    ClassLikeName::fromFQCN('ClassB'),
+                    new Dependency(
+                        ClassLikeName::fromFQCN('OriginalA'),
+                        ClassLikeName::fromFQCN('OriginalB'),
+                        FileOccurrence::fromFilepath('ClassA.php', 15)
+                    ),
+                    AstInherit::newExtends(
+                        ClassLikeName::fromFQCN('ClassInheritA'),
+                        FileOccurrence::fromFilepath('ClassA.php', 3)
+                    )->withPath(
+                        [
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritB'),
+                                FileOccurrence::fromFilepath('ClassInheritA.php', 4)
+                            ),
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritC'),
+                                FileOccurrence::fromFilepath('ClassInheritB.php', 5)
+                            ),
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritD'),
+                                FileOccurrence::fromFilepath('ClassInheritC.php', 6)
+                            ),
+                        ]
+                    )
+                ),
+                'LayerA',
+                'LayerB'
+            ),
+            new SkippedViolation(
+                new InheritDependency(
+                    ClassLikeName::fromFQCN('ClassC'),
+                    ClassLikeName::fromFQCN('ClassD'),
+                    new Dependency(
+                        ClassLikeName::fromFQCN('OriginalA'),
+                        ClassLikeName::fromFQCN('OriginalB'),
+                        FileOccurrence::fromFilepath('ClassC.php', 12)
+                    ),
+                    AstInherit::newExtends(
+                        ClassLikeName::fromFQCN('ClassInheritA'),
+                        FileOccurrence::fromFilepath('ClassA.php', 3)
+                    )->withPath(
+                        [
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritB'),
+                                FileOccurrence::fromFilepath('ClassInheritA.php', 4)
+                            ),
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritC'),
+                                FileOccurrence::fromFilepath('ClassInheritB.php', 5)
+                            ),
+                            AstInherit::newExtends(
+                                ClassLikeName::fromFQCN('ClassInheritD'),
+                                FileOccurrence::fromFilepath('ClassInheritC.php', 6)
+                            ),
+                        ]
+                    )
+                ),
+                'LayerA',
+                'LayerB'
+            ),
+            new Uncovered(
+                new Dependency(
+                    ClassLikeName::fromFQCN('OriginalA'),
+                    ClassLikeName::fromFQCN('OriginalB'),
+                    FileOccurrence::fromFilepath('OriginalA.php', 12)
+                ),
+                'LayerA'
+            ),
+        ];
+
+        yield 'Different violations types in one report' => [
+            $multipleViolationTypes,
             'expected-codeclimate-report_5.json',
             true,
             true,
+        ];
+
+        yield 'Check custom severities for different violation types in one report' => [
+            $multipleViolationTypes,
+            'expected-codeclimate-report_6.json',
+            true,
+            true,
+            [
+                'severity' => [
+                    'failure' => 'blocker',
+                    'skipped' => 'critical',
+                    'uncovered' => 'minor',
+                ],
+            ],
         ];
     }
 
@@ -354,7 +370,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
         array $rules,
         $expectedOutputFile,
         bool $reportSkipped = false,
-        bool $reportUncovered = false
+        bool $reportUncovered = false,
+        array $inputConfig = []
     ): void {
         $bufferedOutput = new BufferedOutput();
 
@@ -367,6 +384,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                 $reportSkipped,
                 $reportUncovered,
                 false,
+                $inputConfig,
             )
         );
 
@@ -383,7 +401,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
         array $rules,
         $expectedOutputFile,
         bool $reportSkipped = false,
-        bool $reportUncovered = false
+        bool $reportUncovered = false,
+        array $inputConfig = []
     ): void {
         $bufferedOutput = new BufferedOutput();
 
@@ -395,7 +414,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                 null,
                 $reportSkipped,
                 $reportUncovered,
-                false
+                false,
+                $inputConfig
             )
         );
 

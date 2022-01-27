@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use Exception;
+use Qossmic\Deptrac\Configuration\ConfigurationCodeclimate;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\Rule;
@@ -38,6 +39,10 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
+        /** @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}} $outputConfig */
+        $outputConfig = $outputFormatterInput->getConfig();
+        $outputConfig = ConfigurationCodeclimate::fromArray($outputConfig);
+
         $violations = [];
         foreach ($context->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
@@ -54,13 +59,13 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
 
             switch (true) {
                 case $rule instanceof Violation:
-                    $this->addFailure($violations, $rule);
+                    $this->addFailure($violations, $rule, $outputConfig);
                     break;
                 case $rule instanceof SkippedViolation:
-                    $this->addSkipped($violations, $rule);
+                    $this->addSkipped($violations, $rule, $outputConfig);
                     break;
                 case $rule instanceof Uncovered:
-                    $this->addUncovered($violations, $rule);
+                    $this->addUncovered($violations, $rule, $outputConfig);
                     break;
             }
         }
@@ -83,11 +88,15 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<array{type: string, check_name: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int, end: int}}}> $violationsArray
+     * @param array<array{type: string, check_name: string, fingerprint: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int}}}> $violationsArray
      */
-    private function addFailure(array &$violationsArray, Violation $violation): void
+    private function addFailure(array &$violationsArray, Violation $violation, ConfigurationCodeclimate $config): void
     {
-        $violationsArray[] = $this->buildRuleArray($violation, $this->getFailureMessage($violation), 'major');
+        $violationsArray[] = $this->buildRuleArray(
+            $violation,
+            $this->getFailureMessage($violation),
+            $config->getSeverity('failure') ?? 'major'
+        );
     }
 
     private function getFailureMessage(Violation $violation): string
@@ -104,11 +113,15 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<array{type: string, check_name: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int, end: int}}}> $violationsArray
+     * @param array<array{type: string, check_name: string, fingerprint: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int}}}> $violationsArray
      */
-    private function addSkipped(array &$violationsArray, SkippedViolation $violation): void
+    private function addSkipped(array &$violationsArray, SkippedViolation $violation, ConfigurationCodeclimate $config): void
     {
-        $violationsArray[] = $this->buildRuleArray($violation, $this->getWarningMessage($violation), 'minor');
+        $violationsArray[] = $this->buildRuleArray(
+            $violation,
+            $this->getWarningMessage($violation),
+            $config->getSeverity('skipped') ?? 'minor'
+        );
     }
 
     private function getWarningMessage(SkippedViolation $violation): string
@@ -125,11 +138,15 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<array{type: string, check_name: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int, end: int}}}> $violationsArray
+     * @param array<array{type: string, check_name: string, fingerprint: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int}}}> $violationsArray
      */
-    private function addUncovered(array &$violationsArray, Uncovered $violation): void
+    private function addUncovered(array &$violationsArray, Uncovered $violation, ConfigurationCodeclimate $config): void
     {
-        $violationsArray[] = $this->buildRuleArray($violation, $this->getUncoveredMessage($violation), 'info');
+        $violationsArray[] = $this->buildRuleArray(
+            $violation,
+            $this->getUncoveredMessage($violation),
+            $config->getSeverity('uncovered') ?? 'info'
+        );
     }
 
     private function getUncoveredMessage(Uncovered $violation): string
@@ -165,13 +182,14 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @return array{type: string, check_name: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int, end: int}}} $violationsArray
+     * @return array{type: string, check_name: string, fingerprint: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int}}}
      */
     private function buildRuleArray(Rule $rule, string $message, string $severity): array
     {
         return [
             'type' => 'issue',
             'check_name' => 'Dependency violation',
+            'fingerprint' => $this->buildFingerprint($rule),
             'description' => $message,
             'categories' => ['Style', 'Complexity'],
             'severity' => $severity,
@@ -179,9 +197,19 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
                 'path' => $rule->getDependency()->getFileOccurrence()->getFilepath(),
                 'lines' => [
                     'begin' => $rule->getDependency()->getFileOccurrence()->getLine(),
-                    'end' => $rule->getDependency()->getFileOccurrence()->getLine(),
                 ],
             ],
         ];
+    }
+
+    private function buildFingerprint(Rule $rule): string
+    {
+        return sha1(implode(',', [
+            get_class($rule),
+            $rule->getDependency()->getDependant()->toString(),
+            $rule->getDependency()->getDependee()->toString(),
+            $rule->getDependency()->getFileOccurrence()->getFilepath(),
+            $rule->getDependency()->getFileOccurrence()->getLine(),
+        ]));
     }
 }
