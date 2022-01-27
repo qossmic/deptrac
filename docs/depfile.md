@@ -134,6 +134,24 @@ parameters:
         - Controller
 ```
 
+#### `codeclimate`
+
+You can configure the codeclimate output by changing how severity is chosen.
+
+#### `severity`
+
+You can change how a severity of `failure`, `skipped`, `uncovered` violations will be treated.
+
+```yaml
+parameters:
+  formatters:
+    codeclimate:
+      severity:
+        failure: major
+        skipped: minor
+        uncovered: info
+```
+
 ### `ignore_uncovered_internal_classes`
 
 By default, PHP internal classes will not be reported as uncovered, if they are
