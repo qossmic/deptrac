@@ -39,9 +39,9 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        /** @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}} $outputConfig */
-        $outputConfig = $outputFormatterInput->getConfig();
-        $outputConfig = ConfigurationCodeclimate::fromArray($outputConfig);
+        /** @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}} $config */
+        $config = $outputFormatterInput->getConfig();
+        $formatterConfig = ConfigurationCodeclimate::fromArray($config);
 
         $violations = [];
         foreach ($context->rules() as $rule) {
@@ -59,13 +59,13 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
 
             switch (true) {
                 case $rule instanceof Violation:
-                    $this->addFailure($violations, $rule, $outputConfig);
+                    $this->addFailure($violations, $rule, $formatterConfig);
                     break;
                 case $rule instanceof SkippedViolation:
-                    $this->addSkipped($violations, $rule, $outputConfig);
+                    $this->addSkipped($violations, $rule, $formatterConfig);
                     break;
                 case $rule instanceof Uncovered:
-                    $this->addUncovered($violations, $rule, $outputConfig);
+                    $this->addUncovered($violations, $rule, $formatterConfig);
                     break;
             }
         }
