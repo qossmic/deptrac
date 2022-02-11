@@ -125,35 +125,36 @@ Let's have a look at the generated file:
 
 ```yaml
 # depfile.yaml
-paths:
-  - ./src
-exclude_files:
-  - '#.*test.*#'
-layers:
-  -
-    name: Controller
-    collectors:
-      -
-        type: className
-        regex: .*Controller.*
-  -
-    name: Repository
-    collectors:
-      -
-        type: className
-        regex: .*Repository.*
-  -
-    name: Service
-    collectors:
-      -
-        type: className
-        regex: .*Service.*
-ruleset:
-  Controller:
-    - Service
-  Service:
-    - Repository
-  Repository: ~
+parameters:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+  layers:
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          regex: .*Controller.*
+    -
+      name: Repository
+      collectors:
+        -
+          type: className
+          regex: .*Repository.*
+    -
+      name: Service
+      collectors:
+        -
+          type: className
+          regex: .*Service.*
+  ruleset:
+    Controller:
+      - Service
+    Service:
+      - Repository
+    Repository: ~
 ```
 
 By default, Deptrac will search your project's `src/` directory for classes and
