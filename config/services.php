@@ -57,6 +57,7 @@ use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDisplayFormatter;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDotFormatter;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputHtmlFormatter;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputImageFormatter;
+use Qossmic\Deptrac\OutputFormatter\GraphVizOutputSvgFormatter;
 use Qossmic\Deptrac\OutputFormatter\JsonOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
@@ -183,6 +184,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputImageFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(GraphVizOutputSvgFormatter::class)
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputDotFormatter::class)
