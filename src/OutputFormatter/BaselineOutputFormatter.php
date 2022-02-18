@@ -43,6 +43,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
         $dirname = dirname($baselineFile);
         if (!is_dir($dirname) && mkdir($dirname.'/', 0777, true) && !is_dir($dirname)) {
             $output->writeLineFormatted('<error>Unable to create '.realpath($baselineFile).'</error>');
+
             return;
         }
         file_put_contents(
@@ -56,7 +57,6 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
             )
         );
         $output->writeLineFormatted('<info>Baseline dumped to '.realpath($baselineFile).'</info>');
-
     }
 
     /**
