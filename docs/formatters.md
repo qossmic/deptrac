@@ -93,13 +93,13 @@ parameters:
       collectors:
         -
           type: className
-          regex: .*Util.*
+          value: .*Util.*
     -
       name: Controller
       collectors:
         -
           type: className
-          regex: .*Controller.*
+          value: .*Controller.*
   ruleset:
     Controller:
       - Utils

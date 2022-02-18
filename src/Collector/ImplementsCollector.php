@@ -54,10 +54,15 @@ class ImplementsCollector implements CollectorInterface
      */
     private function getInterfaceName(array $configuration): ClassLikeName
     {
-        if (!isset($configuration['implements']) || !is_string($configuration['implements'])) {
+        if (isset($configuration['implements']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'ImplementsCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['implements'];
+        }
+
+        if (!isset($configuration['value']) || !is_string($configuration['value'])) {
             throw new LogicException('ImplementsCollector needs the interface name as a string.');
         }
 
-        return ClassLikeName::fromFQCN($configuration['implements']);
+        return ClassLikeName::fromFQCN($configuration['value']);
     }
 }

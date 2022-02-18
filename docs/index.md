@@ -136,19 +136,19 @@ parameters:
       collectors:
         -
           type: className
-          regex: .*Controller.*
+          value: .*Controller.*
     -
       name: Repository
       collectors:
         -
           type: className
-          regex: .*Repository.*
+          value: .*Repository.*
     -
       name: Service
       collectors:
         -
           type: className
-          regex: .*Service.*
+          value: .*Service.*
   ruleset:
     Controller:
       - Service

@@ -161,7 +161,7 @@ parameters:
       collectors:
         -
           type: className
-          regex: .*Controller.*
+          value: .*Controller.*
 ```
 
 #### `name`
@@ -271,5 +271,5 @@ parameters:
       collectors:
         -
           type: implements
-          implements: '%Project%\SomeInterface'
+          value: '%Project%\SomeInterface'
 ```

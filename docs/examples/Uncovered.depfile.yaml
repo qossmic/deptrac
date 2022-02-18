@@ -4,7 +4,7 @@ parameters:
     - name: Core
       collectors:
         - type: className
-          regex: Core
+          value: Core
 
   ruleset:
     Core: ~

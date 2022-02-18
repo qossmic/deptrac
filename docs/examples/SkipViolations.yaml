@@ -4,11 +4,11 @@ parameters:
   - name: Core
     collectors:
     - type: className
-      regex: Core
+      value: Core
   - name: Library
     collectors:
     - type: className
-      regex: Library
+      value: Library
   ruleset:
     Core:
     - Library

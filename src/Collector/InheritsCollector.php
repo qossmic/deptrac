@@ -54,10 +54,15 @@ class InheritsCollector implements CollectorInterface
      */
     private function getClassLikeName(array $configuration): ClassLikeName
     {
-        if (!isset($configuration['inherits']) || !is_string($configuration['inherits'])) {
+        if (isset($configuration['inherits']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'InheritsCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['inherits'];
+        }
+
+        if (!isset($configuration['value']) || !is_string($configuration['value'])) {
             throw new LogicException('InheritsCollector needs the interface, trait or class name as a string.');
         }
 
-        return ClassLikeName::fromFQCN($configuration['inherits']);
+        return ClassLikeName::fromFQCN($configuration['value']);
     }
 }

@@ -54,10 +54,15 @@ class ExtendsCollector implements CollectorInterface
      */
     private function getInterfaceName(array $configuration): ClassLikeName
     {
-        if (!isset($configuration['extends']) || !is_string($configuration['extends'])) {
+        if (isset($configuration['extends']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'ExtendsCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['extends'];
+        }
+
+        if (!isset($configuration['value']) || !is_string($configuration['value'])) {
             throw new LogicException('ExtendsCollector needs the interface or class name as a string.');
         }
 
-        return ClassLikeName::fromFQCN($configuration['extends']);
+        return ClassLikeName::fromFQCN($configuration['value']);
     }
 }

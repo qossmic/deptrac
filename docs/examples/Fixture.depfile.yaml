@@ -5,9 +5,9 @@ parameters:
     - name: Models
       collectors:
         - type: className
-          regex: .*MyNamespace\\Models\\.*
+          value: .*MyNamespace\\Models\\.*
     - name: Controller
       collectors:
         - type: className
-          regex: .*MyNamespace\\.*Controller.*
+          value: .*MyNamespace\\.*Controller.*
   ruleset: []

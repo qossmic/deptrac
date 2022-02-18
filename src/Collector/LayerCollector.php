@@ -21,23 +21,33 @@ class LayerCollector implements CollectorInterface
         Registry $collectorRegistry,
         array $resolutionTable = []
     ): bool {
-        if (!isset($configuration['layer']) || !is_string($configuration['layer'])) {
+        if (isset($configuration['layer']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['layer'];
+        }
+
+        if (!isset($configuration['value']) || !is_string($configuration['value'])) {
             throw new InvalidArgumentException('LayerCollector needs the layer configuration.');
         }
-        if (!array_key_exists($configuration['layer'], $resolutionTable)) {
+        if (!array_key_exists($configuration['value'], $resolutionTable)) {
             throw new InvalidArgumentException('Referenced layer in LayerCollector does not exist.');
         }
 
         /** @var bool $result */
-        $result = $resolutionTable[$configuration['layer']];
+        $result = $resolutionTable[$configuration['value']];
 
         return $result;
     }
 
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
-        /** @var array{layer: string} $configuration */
+        /** @var array{layer?: string, value?: string} $configuration */
+        if (isset($configuration['layer']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['layer'];
+        }
 
-        return array_key_exists($configuration['layer'], $resolutionTable) && null !== $resolutionTable[$configuration['layer']];
+        /** @var array{layer?: string, value: string} $configuration */
+        return array_key_exists($configuration['value'], $resolutionTable) && null !== $resolutionTable[$configuration['value']];
     }
 }
