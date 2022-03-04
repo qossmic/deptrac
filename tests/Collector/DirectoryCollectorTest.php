@@ -12,11 +12,6 @@ use Qossmic\Deptrac\Collector\Registry;
 
 final class DirectoryCollectorTest extends TestCase
 {
-    public function testType(): void
-    {
-        self::assertSame('directory', (new DirectoryCollector())->getType());
-    }
-
     public function dataProviderSatisfy(): iterable
     {
         yield [['regex' => 'foo/layer1/.*'], 'foo/layer1/bar.php', true];

@@ -11,11 +11,6 @@ use Qossmic\Deptrac\Collector\Registry;
 
 final class ExtendsCollectorTest extends TestCase
 {
-    public function testGetType(): void
-    {
-        self::assertEquals('extends', (new ExtendsCollector())->getType());
-    }
-
     public function dataProviderSatisfy(): iterable
     {
         yield [['extends' => 'App\FizTrait'], false];

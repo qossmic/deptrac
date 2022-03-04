@@ -11,14 +11,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 
 class UsesCollector implements CollectorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getType(): string
-    {
-        return 'uses';
-    }
-
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;

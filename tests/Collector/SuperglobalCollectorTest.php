@@ -18,11 +18,6 @@ final class SuperglobalCollectorTest extends TestCase
         yield [['names' => ['_COOKIE']], '_POST', false];
     }
 
-    public function testType(): void
-    {
-        self::assertEquals('superglobal', (new SuperglobalCollector())->getType());
-    }
-
     /**
      * @dataProvider dataProviderSatisfy
      */

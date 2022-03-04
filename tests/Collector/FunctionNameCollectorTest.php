@@ -18,11 +18,6 @@ final class FunctionNameCollectorTest extends TestCase
         yield [['regex' => 'a'], 'foo\bbr', false];
     }
 
-    public function testType(): void
-    {
-        self::assertEquals('functionName', (new FunctionNameCollector())->getType());
-    }
-
     /**
      * @dataProvider dataProviderSatisfy
      */

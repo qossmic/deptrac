@@ -9,11 +9,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
 class InheritanceLevelCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'inheritanceLevel';
-    }
-
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;

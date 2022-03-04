@@ -10,11 +10,6 @@ use Symfony\Component\Filesystem\Path;
 
 class DirectoryCollector extends RegexCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'directory';
-    }
-
     public function satisfy(
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,

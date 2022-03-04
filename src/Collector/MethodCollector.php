@@ -18,11 +18,6 @@ class MethodCollector extends RegexCollector implements CollectorInterface
         $this->nikicPhpParser = $nikicPhpParser;
     }
 
-    public function getType(): string
-    {
-        return 'method';
-    }
-
     public function satisfy(
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,

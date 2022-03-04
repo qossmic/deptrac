@@ -9,11 +9,6 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 
 class LayerCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'layer';
-    }
-
     public function satisfy(
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,

@@ -17,11 +17,6 @@ use stdClass;
 
 final class MethodCollectorTest extends TestCase
 {
-    public function testType(): void
-    {
-        self::assertSame('method', (new MethodCollector($this->createMock(NikicPhpParser::class)))->getType());
-    }
-
     public function dataProviderSatisfy(): iterable
     {
         yield [

@@ -9,11 +9,6 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 
 class FunctionNameCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'functionName';
-    }
-
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;
