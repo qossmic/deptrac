@@ -40,16 +40,22 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
 
         ksort($groupedViolations);
         $baselineFile = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        $dirname = dirname($baselineFile);
+        if (!is_dir($dirname) && mkdir($dirname.'/', 0777, true) && !is_dir($dirname)) {
+            $output->writeLineFormatted('<error>Unable to create '.realpath($baselineFile).'</error>');
+
+            return;
+        }
         file_put_contents(
-                $baselineFile,
-                Yaml::dump(
-                    [
-                        'skip_violations' => $groupedViolations,
-                    ],
-                    3,
-                    2
-                )
-            );
+            $baselineFile,
+            Yaml::dump(
+                [
+                    'skip_violations' => $groupedViolations,
+                ],
+                3,
+                2
+            )
+        );
         $output->writeLineFormatted('<info>Baseline dumped to '.realpath($baselineFile).'</info>');
     }
 
