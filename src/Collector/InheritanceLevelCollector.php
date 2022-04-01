@@ -27,8 +27,13 @@ class InheritanceLevelCollector implements CollectorInterface
 
         $classInherits = $astMap->getClassInherits($astTokenReference->getTokenName());
 
+        if (isset($configuration['level']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'InheritanceLevelCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['level'];
+        }
+
         foreach ($classInherits as $classInherit) {
-            if (count($classInherit->getPath()) >= $configuration['level']) {
+            if (count($classInherit->getPath()) >= $configuration['value']) {
                 return true;
             }
         }

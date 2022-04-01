@@ -6,19 +6,19 @@ parameters:
     - name: Controller
       collectors:
         - type: className
-          regex: .*Controller.*
+          value: .*Controller.*
     - name: ViewModel
       collectors:
         - type: className
-          regex: ^(.*\\viewmodel\\.*)$
+          value: ^(.*\\viewmodel\\.*)$
     - name: Service
       collectors:
         - type: className
-          regex: .*\\service\\.*
+          value: .*\\service\\.*
     - name: Business
       collectors:
         - type: className
-          regex: .*\\business\\.*
+          value: .*\\business\\.*
   ruleset:
     ViewModel:
       - Business

@@ -5,5 +5,5 @@ parameters:
     - name: Foo
       collectors:
         - type: implements
-          implements: examples\Implements_\Baz
+          value: examples\Implements_\Baz
   ruleset: []

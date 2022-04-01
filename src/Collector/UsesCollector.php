@@ -43,10 +43,15 @@ class UsesCollector implements CollectorInterface
      */
     private function getInterfaceName(array $configuration): ClassLikeName
     {
-        if (!isset($configuration['uses']) || !is_string($configuration['uses'])) {
+        if (isset($configuration['uses']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'UsesCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['uses'];
+        }
+
+        if (!isset($configuration['value']) || !is_string($configuration['value'])) {
             throw new LogicException('UsesCollector needs the trait name as a string.');
         }
 
-        return ClassLikeName::fromFQCN($configuration['uses']);
+        return ClassLikeName::fromFQCN($configuration['value']);
     }
 }

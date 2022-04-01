@@ -8,15 +8,15 @@ parameters:
     - name: Layer1
       collectors:
         - type: directory
-          regex: ^%depfileDirectory%/%layer1%/.*
+          value: ^%depfileDirectory%/%layer1%/.*
     - name: Layer2
       collectors:
         - type: directory
-          regex: ^%depfileDirectory%/%layer2%/.*
+          value: ^%depfileDirectory%/%layer2%/.*
     - name: Controller
       collectors:
         - type: className
-          regex: .*Controller.*
+          value: .*Controller.*
   ruleset:
     Controller:
       - Layer1

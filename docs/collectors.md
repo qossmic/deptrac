@@ -16,12 +16,12 @@ parameters:
         - type: bool
           must:
             - type: className
-              regex: .*Foo\\.*
+              value: .*Foo\\.*
             - type: className
-              regex: .*\\Asset.*
+              value: .*\\Asset.*
           must_not:
             - type: className
-              regex: .*Assetic.*
+              value: .*Assetic.*
 ```
 
 Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part
@@ -39,7 +39,7 @@ parameters:
     - name: Controller
       collectors:
         - type: className
-          regex: .*Controller.*
+          value: .*Controller.*
 ```
 
 Every class name that matches the regular expression becomes a part of the
@@ -58,7 +58,7 @@ parameters:
     - name: Controller
       collectors:
         - type: classNameRegex
-          regex: '#.*Controller.*#'
+          value: '#.*Controller.*#'
 ```
 
 Every class name that matches the regular expression becomes a part of the
@@ -76,7 +76,7 @@ parameters:
     - name: Controller
       collectors:
         - type: directory
-          regex: src/Controller/.*
+          value: src/Controller/.*
 ```
 
 Every file path that matches the regular expression `src/Controller/.*` becomes
@@ -94,7 +94,7 @@ parameters:
     - name: Foo
       collectors:
         - type: extends
-          extends: 'App\SomeClass'
+          value: 'App\SomeClass'
 ```
 
 ## `functionName` Collector
@@ -109,7 +109,7 @@ parameters:
     - name: Foo
       collectors:
         - type: functionName
-          regex: .*array_.*
+          value: .*array_.*
 ```
 
 ## `implements` Collector
@@ -123,7 +123,7 @@ parameters:
     - name: Foo
       collectors:
         - type: implements
-          implements: 'App\SomeInterface'
+          value: 'App\SomeInterface'
 ```
 
 ## `inherits` Collector
@@ -138,7 +138,7 @@ parameters:
     - name: Foo
       collectors:
         - type: inherits
-          inherits: 'App\SomeInterface'
+          value: 'App\SomeInterface'
 ```
 
 ## `layer` Collector
@@ -154,13 +154,13 @@ parameters:
     - name: SubDomain
       collectors:
         - type: directory
-          regex: src/Domain/Subdomain/.*
+          value: src/Domain/Subdomain/.*
     - name: Domain
       collectors:
         - type: bool
           must:
             - type: directory
-              regex: src/Domain/.*
+              value: src/Domain/.*
           must_not:
             - type: layer
               layer: SubDomain
@@ -177,7 +177,7 @@ parameters:
     - name: Foo services
       collectors:
         - type: method
-          name: .*foo
+          value: .*foo
 ```
 
 Every class having a method that matches the regular expression `.*foo`,
@@ -194,7 +194,7 @@ parameters:
     - name: Foo
       collectors:
         - type: superglobal
-          names:
+          value:
             - _POST
             - _GET
 ```
@@ -210,7 +210,7 @@ parameters:
     - name: Foo
       collectors:
         - type: uses
-          uses: 'App\SomeTrait'
+          value: 'App\SomeTrait'
 ```
 
 ## Custom Collectors

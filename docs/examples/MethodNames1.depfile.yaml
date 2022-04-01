@@ -5,9 +5,9 @@ parameters:
     - name: SomeA
       collectors:
         - type: method
-          name: SomeA
+          value: SomeA
     - name: SomeB
       collectors:
         - type: method
-          name: SomeB
+          value: SomeB
   ruleset: []

@@ -27,10 +27,15 @@ class ClassNameRegexCollector extends RegexCollector implements CollectorInterfa
 
     protected function getPattern(array $configuration): string
     {
-        if (!isset($configuration['regex']) || !is_string($configuration['regex'])) {
+        if (isset($configuration['regex']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'ClassNameRegexCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['regex'];
+        }
+
+        if (!isset($configuration['value']) || !is_string($configuration['value'])) {
             throw new LogicException('ClassNameRegexCollector needs the regex configuration.');
         }
 
-        return $configuration['regex'];
+        return $configuration['value'];
     }
 }

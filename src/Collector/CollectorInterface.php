@@ -21,12 +21,12 @@ interface CollectorInterface
      *  ```yaml
      *  collectors:
      *      - type: className
-     *        regex: .*Controller.*
+     *        value: .*Controller.*
      *  ```
      *  The configuration `$configuration` will be:
      *  [
      *      'type' => 'className',
-     *      'regex' => '.*Controller.*',
+     *      'value' => '.*Controller.*',
      *  ]
      */
     public function satisfy(

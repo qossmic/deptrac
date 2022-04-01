@@ -11,16 +11,123 @@
       <code>isset($classLikeNode-&gt;namespacedName)</code>
     </RedundantConditionGivenDocblockType>
   </file>
+  <file src="src/Collector/ClassNameCollector.php">
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'ClassNameCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/ClassNameRegexCollector.php">
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'ClassNameRegexCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/DirectoryCollector.php">
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'ClassNameCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/ExtendsCollector.php">
+    <MixedAssignment occurrences="1">
+      <code>$configuration['value']</code>
+    </MixedAssignment>
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'ExtendsCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/FunctionNameCollector.php">
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'FunctionNameCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/ImplementsCollector.php">
+    <MixedAssignment occurrences="1">
+      <code>$configuration['value']</code>
+    </MixedAssignment>
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'ImplementsCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/InheritanceLevelCollector.php">
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'InheritanceLevelCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/InheritsCollector.php">
+    <MixedAssignment occurrences="1">
+      <code>$configuration['value']</code>
+    </MixedAssignment>
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'InheritsCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/LayerCollector.php">
+    <PossiblyUndefinedArrayOffset occurrences="1">
+      <code>$configuration['value']</code>
+    </PossiblyUndefinedArrayOffset>
+    <TooManyArguments occurrences="2">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version')</code>
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="2">
+      <code>trigger_deprecation</code>
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/MethodCollector.php">
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'MethodCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
   <file src="src/Collector/SuperglobalCollector.php">
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(string) $name</code>
     </RedundantCastGivenDocblockType>
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'SuperglobalCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
+  </file>
+  <file src="src/Collector/UsesCollector.php">
+    <MixedAssignment occurrences="1">
+      <code>$configuration['value']</code>
+    </MixedAssignment>
+    <TooManyArguments occurrences="1">
+      <code>trigger_deprecation('qossmic/deptrac', '0.20.0', 'UsesCollector should use the "value" key from this version')</code>
+    </TooManyArguments>
+    <UnusedFunctionCall occurrences="1">
+      <code>trigger_deprecation</code>
+    </UnusedFunctionCall>
   </file>
   <file src="src/Configuration/Configuration.php">
-    <MixedPropertyTypeCoercion occurrences="2">
-      <code>(array) $options['exclude_files']</code>
-      <code>(array) $options['formatters']</code>
-    </MixedPropertyTypeCoercion>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(array) $rules</code>
       <code>(bool) $options['ignore_uncovered_internal_classes']</code>

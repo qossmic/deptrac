@@ -7,297 +7,297 @@ parameters:
     - name: Component_Addressing
       collectors:
         - type: className
-          regex: .*Component\\Addressing.*
+          value: .*Component\\Addressing.*
     - name: Component_Archetype
       collectors:
         - type: className
-          regex: .*Component\\Archetype.*
+          value: .*Component\\Archetype.*
     - name: Component_Association
       collectors:
         - type: className
-          regex: .*Component\\Association.*
+          value: .*Component\\Association.*
     - name: Component_Attribute
       collectors:
         - type: className
-          regex: .*Component\\Attribute.*
+          value: .*Component\\Attribute.*
     - name: Component_Cart
       collectors:
         - type: className
-          regex: .*Component\\Cart.*
+          value: .*Component\\Cart.*
     - name: Component_Channel
       collectors:
         - type: className
-          regex: .*Component\\Channel.*
+          value: .*Component\\Channel.*
     - name: Component_Contact
       collectors:
         - type: className
-          regex: .*Component\\Contact.*
+          value: .*Component\\Contact.*
     - name: Component_Core
       collectors:
         - type: className
-          regex: .*Component\\Core.*
+          value: .*Component\\Core.*
     - name: Component_Currency
       collectors:
         - type: className
-          regex: .*Component\\Currency.*
+          value: .*Component\\Currency.*
     - name: Component_Inventory
       collectors:
         - type: className
-          regex: .*Component\\Inventory.*
+          value: .*Component\\Inventory.*
     - name: Component_Locale
       collectors:
         - type: className
-          regex: .*Component\\Locale.*
+          value: .*Component\\Locale.*
     - name: Component_Mailer
       collectors:
         - type: className
-          regex: .*Component\\Mailer.*
+          value: .*Component\\Mailer.*
     - name: Component_Metadata
       collectors:
         - type: className
-          regex: .*Component\\Metadata.*
+          value: .*Component\\Metadata.*
     - name: Component_Order
       collectors:
         - type: className
-          regex: .*Component\\Order.*
+          value: .*Component\\Order.*
     - name: Component_Originator
       collectors:
         - type: className
-          regex: .*Component\\Originator.*
+          value: .*Component\\Originator.*
     - name: Component_Payment
       collectors:
         - type: className
-          regex: .*Component\\Payment.*
+          value: .*Component\\Payment.*
     - name: Component_Pricing
       collectors:
         - type: className
-          regex: .*Component\\Pricingg.*
+          value: .*Component\\Pricingg.*
     - name: Component_Product
       collectors:
         - type: className
-          regex: .*Component\\Product.*
+          value: .*Component\\Product.*
     - name: Component_Promotion
       collectors:
         - type: className
-          regex: .*Component\\Promotion.*
+          value: .*Component\\Promotion.*
     - name: Component_Rbac
       collectors:
         - type: className
-          regex: .*Component\\Rbac.*
+          value: .*Component\\Rbac.*
     - name: Component_Registry
       collectors:
         - type: className
-          regex: .*Component\\Registry.*
+          value: .*Component\\Registry.*
     - name: Component_Report
       collectors:
         - type: className
-          regex: .*Component\\Report.*
+          value: .*Component\\Report.*
     - name: Component_Resource
       collectors:
         - type: className
-          regex: .*Component\\Resource.*
+          value: .*Component\\Resource.*
     - name: Component_Review
       collectors:
         - type: className
-          regex: .*Component\\Review.*
+          value: .*Component\\Review.*
     - name: Component_Sequence
       collectors:
         - type: className
-          regex: .*Component\\Sequence.*
+          value: .*Component\\Sequence.*
     - name: Component_Shipping
       collectors:
         - type: className
-          regex: .*Component\\Shipping.*
+          value: .*Component\\Shipping.*
     - name: Component_Storage
       collectors:
         - type: className
-          regex: .*Component\\Storage.*
+          value: .*Component\\Storage.*
     - name: Component_Taxation
       collectors:
         - type: className
-          regex: .*Component\\Taxation.*
+          value: .*Component\\Taxation.*
     - name: Component_Taxonomy
       collectors:
         - type: className
-          regex: .*Component\\Taxonomy.*
+          value: .*Component\\Taxonomy.*
     - name: Component_Translation
       collectors:
         - type: className
-          regex: .*Component\\Translation.*
+          value: .*Component\\Translation.*
     - name: Component_User
       collectors:
         - type: className
-          regex: .*Component\\User.*
+          value: .*Component\\User.*
     - name: Component_Variation
       collectors:
         - type: className
-          regex: .*Component\\Variation.*
+          value: .*Component\\Variation.*
     - name: AddressingBundle
       collectors:
         - type: className
-          regex: .*Bundle\\AddressingBundle.*
+          value: .*Bundle\\AddressingBundle.*
     - name: AdminBundle
       collectors:
         - type: className
-          regex: .*Bundle\\AdminBundle.*
+          value: .*Bundle\\AdminBundle.*
     - name: ApiBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ApiBundle.*
+          value: .*Bundle\\ApiBundle.*
     - name: ArchetypeBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ArchetypeBundle.*
+          value: .*Bundle\\ArchetypeBundle.*
     - name: AssociationBundle
       collectors:
         - type: className
-          regex: .*Bundle\\AssociationBundle.*
+          value: .*Bundle\\AssociationBundle.*
     - name: AttributeBundle
       collectors:
         - type: className
-          regex: .*Bundle\\AttributeBundle.*
+          value: .*Bundle\\AttributeBundle.*
     - name: CartBundle
       collectors:
         - type: className
-          regex: .*Bundle\\CartBundle.*
+          value: .*Bundle\\CartBundle.*
     - name: ChannelBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ChannelBundle.*
+          value: .*Bundle\\ChannelBundle.*
     - name: ContactBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ContactBundle.*
+          value: .*Bundle\\ContactBundle.*
     - name: ContentBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ContentBundle.*
+          value: .*Bundle\\ContentBundle.*
     - name: CoreBundle
       collectors:
         - type: className
-          regex: .*Bundle\\CoreBundle.*
+          value: .*Bundle\\CoreBundle.*
     - name: CurrencyBundle
       collectors:
         - type: className
-          regex: .*Bundle\\CurrencyBundle.*
+          value: .*Bundle\\CurrencyBundle.*
     - name: FixturesBundle
       collectors:
         - type: className
-          regex: .*Bundle\\FixturesBundle.*
+          value: .*Bundle\\FixturesBundle.*
     - name: FlowBundle
       collectors:
         - type: className
-          regex: .*Bundle\\FlowBundle.*
+          value: .*Bundle\\FlowBundle.*
     - name: InstallerBundle
       collectors:
         - type: className
-          regex: .*Bundle\\InstallerBundle.*
+          value: .*Bundle\\InstallerBundle.*
     - name: InventoryBundle
       collectors:
         - type: className
-          regex: .*Bundle\\InventoryBundle.*
+          value: .*Bundle\\InventoryBundle.*
     - name: LocaleBundle
       collectors:
         - type: className
-          regex: .*Bundle\\LocaleBundle.*
+          value: .*Bundle\\LocaleBundle.*
     - name: MailerBundle
       collectors:
         - type: className
-          regex: .*Bundle\\MailerBundle.*
+          value: .*Bundle\\MailerBundle.*
     - name: MetadataBundle
       collectors:
         - type: className
-          regex: .*Bundle\\MetadataBundle.*
+          value: .*Bundle\\MetadataBundle.*
     - name: MoneyBundle
       collectors:
         - type: className
-          regex: .*Bundle\\MoneyBundle.*
+          value: .*Bundle\\MoneyBundle.*
     - name: OrderBundle
       collectors:
         - type: className
-          regex: .*Bundle\\OrderBundle.*
+          value: .*Bundle\\OrderBundle.*
     - name: PaymentBundle
       collectors:
         - type: className
-          regex: .*Bundle\\PaymentBundle.*
+          value: .*Bundle\\PaymentBundle.*
     - name: PayumBundle
       collectors:
         - type: className
-          regex: .*Bundle\\PayumBundle.*
+          value: .*Bundle\\PayumBundle.*
     - name: PricingBundle
       collectors:
         - type: className
-          regex: .*Bundle\\PricingBundle.*
+          value: .*Bundle\\PricingBundle.*
     - name: ProductBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ProductBundle.*
+          value: .*Bundle\\ProductBundle.*
     - name: PromotionBundle
       collectors:
         - type: className
-          regex: .*Bundle\\PromotionBundle.*
+          value: .*Bundle\\PromotionBundle.*
     - name: RbacBundle
       collectors:
         - type: className
-          regex: .*Bundle\\RbacBundle.*
+          value: .*Bundle\\RbacBundle.*
     - name: ReportBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ReportBundle.*
+          value: .*Bundle\\ReportBundle.*
     - name: ResourceBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ResourceBundle.*
+          value: .*Bundle\\ResourceBundle.*
     - name: ReviewBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ReviewBundle.*
+          value: .*Bundle\\ReviewBundle.*
     - name: SearchBundle
       collectors:
         - type: className
-          regex: .*Bundle\\SearchBundle.*
+          value: .*Bundle\\SearchBundle.*
     - name: SequenceBundle
       collectors:
         - type: className
-          regex: .*Bundle\\SequenceBundle.*
+          value: .*Bundle\\SequenceBundle.*
     - name: SettingsBundle
       collectors:
         - type: className
-          regex: .*Bundle\\SettingsBundle.*
+          value: .*Bundle\\SettingsBundle.*
     - name: ShippingBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ShippingBundle.*
+          value: .*Bundle\\ShippingBundle.*
     - name: TaxationBundle
       collectors:
         - type: className
-          regex: .*Bundle\\TaxationBundle.*
+          value: .*Bundle\\TaxationBundle.*
     - name: TaxonomyBundle
       collectors:
         - type: className
-          regex: .*Bundle\\TaxonomyBundle.*
+          value: .*Bundle\\TaxonomyBundle.*
     - name: ThemeBundle
       collectors:
         - type: className
-          regex: .*Bundle\\ThemeBundle.*
+          value: .*Bundle\\ThemeBundle.*
     - name: TranslationBundle
       collectors:
         - type: className
-          regex: .*Bundle\\TranslationBundle.*
+          value: .*Bundle\\TranslationBundle.*
     - name: UiBundle
       collectors:
         - type: className
-          regex: .*Bundle\\UiBundle.*
+          value: .*Bundle\\UiBundle.*
     - name: UserBundle
       collectors:
         - type: className
-          regex: .*Bundle\\UserBundle.*
+          value: .*Bundle\\UserBundle.*
     - name: VariationBundle
       collectors:
         - type: className
-          regex: .*Bundle\\VariationBundle.*
+          value: .*Bundle\\VariationBundle.*
     - name: WebBundle
       collectors:
         - type: className
-          regex: .*Bundle\\WebBundle.*
+          value: .*Bundle\\WebBundle.*
   ruleset: []

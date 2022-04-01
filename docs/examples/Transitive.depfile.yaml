@@ -5,19 +5,19 @@ parameters:
     - name: Foo
       collectors:
         - type: className
-          regex: .*\\Foo$
+          value: .*\\Foo$
     - name: Baz
       collectors:
         - type: className
-          regex: .*\\Baz$
+          value: .*\\Baz$
     - name: Bar
       collectors:
         - type: className
-          regex: .*\\Bar$
+          value: .*\\Bar$
     - name: Bat
       collectors:
         - type: className
-          regex: .*\\Bat$
+          value: .*\\Bat$
   ruleset:
     Foo:
       - Bar

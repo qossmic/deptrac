@@ -6,7 +6,7 @@ parameters:
     - name: Dummy
       collectors:
         - type: directory
-          regex: src/
+          value: src/
 
   ruleset:
     Dummy:

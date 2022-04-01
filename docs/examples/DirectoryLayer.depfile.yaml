@@ -5,15 +5,15 @@ parameters:
     - name: Controller
       collectors:
         - type: className
-          regex: .*Controller.*
+          value: .*Controller.*
     - name: Layer1
       collectors:
         - type: directory
-          regex: ./examples/Layer1/.*
+          value: ./examples/Layer1/.*
     - name: Layer2
       collectors:
         - type: directory
-          regex: ./examples/Layer2/.*
+          value: ./examples/Layer2/.*
   ruleset:
     Controller:
       - Layer1

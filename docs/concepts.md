@@ -54,13 +54,13 @@ parameters:
       collectors:
         -
           type: className
-          regex: .*MyNamespace\\Models\\.*
+          value: .*MyNamespace\\Models\\.*
     -
       name: Controller
       collectors:
         -
           type: className
-          regex: .*MyNamespace\\.*Controller.*
+          value: .*MyNamespace\\.*Controller.*
   ruleset: [ ]
 ```
 
@@ -142,19 +142,19 @@ parameters:
       collectors:
         -
           type: className
-          regex: .*MyNamespace\\.*Controller.*
+          value: .*MyNamespace\\.*Controller.*
     -
       name: Repository
       collectors:
         -
           type: className
-          regex: .*MyNamespace\\.*Repository.*
+          value: .*MyNamespace\\.*Repository.*
     -
       name: Service
       collectors:
         -
           type: className
-          regex: .*MyNamespace\\.*Service.*
+          value: .*MyNamespace\\.*Service.*
   ruleset:
     Controller:
       - Service

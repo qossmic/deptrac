@@ -35,10 +35,15 @@ class SuperglobalCollector implements CollectorInterface
      */
     private function getNames(array $configuration): array
     {
-        if (!isset($configuration['names']) || !is_array($configuration['names'])) {
+        if (isset($configuration['names']) && !isset($configuration['value'])) {
+            trigger_deprecation('qossmic/deptrac', '0.20.0', 'SuperglobalCollector should use the "value" key from this version');
+            $configuration['value'] = $configuration['names'];
+        }
+
+        if (!isset($configuration['value']) || !is_array($configuration['value'])) {
             throw new LogicException('SuperglobalCollector needs the names configuration.');
         }
 
-        return array_map(static fn ($name): string => '$'.(string) $name, $configuration['names']);
+        return array_map(static fn ($name): string => '$'.(string) $name, $configuration['value']);
     }
 }
