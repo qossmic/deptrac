@@ -16,13 +16,10 @@ final class RegistryTest extends TestCase
     public function testGetCollector(): void
     {
         $fooCollector = $this->createMock(CollectorInterface::class);
-        $fooCollector->method('getType')->willReturn('foo');
 
         self::assertSame(
             $fooCollector,
-            (new Registry([
-                $fooCollector,
-            ]))->getCollector('foo')
+            (new Registry(['foo' => $fooCollector]))->getCollector('foo')
         );
     }
 
@@ -36,7 +33,7 @@ final class RegistryTest extends TestCase
     public function testGetCollectorByFQCN(): void
     {
         $classNameCollector = new ClassNameCollector();
-        $registry = new Registry([$classNameCollector]);
+        $registry = new Registry(['RegistryTest' => $classNameCollector]);
 
         self::assertSame($classNameCollector, $registry->getCollector(ClassNameCollector::class));
     }
@@ -44,7 +41,7 @@ final class RegistryTest extends TestCase
     public function testGetUnknownCollectorByFQCN(): void
     {
         $classNameCollector = new ClassNameCollector();
-        $registry = new Registry([$classNameCollector]);
+        $registry = new Registry(['className' => $classNameCollector]);
 
         $collector = $registry->getCollector(BoolCollector::class);
 
@@ -55,21 +52,11 @@ final class RegistryTest extends TestCase
     public function testGetCollectorByFQCNLoadFromCache(): void
     {
         $classNameCollector = new ClassNameCollector();
-        $registry = new Registry([$classNameCollector]);
+        $registry = new Registry(['className' => $classNameCollector]);
 
         $collector = $registry->getCollector(ClassNameCollector::class);
 
         self::assertInstanceOf(ClassNameCollector::class, $collector);
         self::assertSame($collector, $registry->getCollector(ClassNameCollector::class));
-    }
-
-    public function testGetUnknownCollectorByFQCNAndThenByTypeFromCache(): void
-    {
-        $registry = new Registry([]);
-
-        $collector = $registry->getCollector(ClassNameCollector::class);
-
-        self::assertInstanceOf(ClassNameCollector::class, $collector);
-        self::assertSame($collector, $registry->getCollector('className'));
     }
 }

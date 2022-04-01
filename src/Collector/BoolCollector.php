@@ -10,11 +10,6 @@ use Qossmic\Deptrac\Configuration\ConfigurationCollector;
 
 class BoolCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'bool';
-    }
-
     public function satisfy(
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,

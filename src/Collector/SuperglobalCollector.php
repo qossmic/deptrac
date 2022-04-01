@@ -9,11 +9,6 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 
 class SuperglobalCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'superglobal';
-    }
-
     public function resolvable(array $configuration, Registry $collectorRegistry, array $resolutionTable): bool
     {
         return true;

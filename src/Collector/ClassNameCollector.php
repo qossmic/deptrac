@@ -10,11 +10,6 @@ use Qossmic\Deptrac\AstRunner\AstMap\AstClassReference;
 
 class ClassNameCollector extends RegexCollector implements CollectorInterface
 {
-    public function getType(): string
-    {
-        return 'className';
-    }
-
     public function satisfy(
         array $configuration,
         AstMap\AstTokenReference $astTokenReference,

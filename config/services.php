@@ -209,47 +209,47 @@ return static function (ContainerConfigurator $container): void {
     /* Collectors */
     $services
         ->set(Registry::class)
-        ->args([tagged_iterator('collector')]);
+        ->args([tagged_iterator('collector', 'type')]);
     $services
         ->set(LayerCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'layer']);
     $services
         ->set(BoolCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'bool']);
     $services
         ->set(ClassNameCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'className']);
     $services
         ->set(FunctionNameCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'functionName']);
     $services
         ->set(ClassNameRegexCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'classNameRegex']);
     $services
         ->set(DirectoryCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'directory']);
     $services
         ->set(InheritanceLevelCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'inheritanceLevel'], );
     $services
         ->set(ImplementsCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'implements']);
     $services
         ->set(ExtendsCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'extends']);
     $services
         ->set(InheritsCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'inherits']);
     $services
         ->set(UsesCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'uses']);
     $services
         ->set(MethodCollector::class)
         ->args([service(NikicPhpParser::class)])
-        ->tag('collector');
+        ->tag('collector', ['type' => 'method']);
     $services
         ->set(SuperglobalCollector::class)
-        ->tag('collector');
+        ->tag('collector', ['type' => 'superGlobal']);
 
     /* Dependency resolving */
     $services

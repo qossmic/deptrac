@@ -11,11 +11,6 @@ use Qossmic\Deptrac\Collector\UsesCollector;
 
 final class UsesCollectorTest extends TestCase
 {
-    public function testGetType(): void
-    {
-        self::assertEquals('uses', (new UsesCollector())->getType());
-    }
-
     public function dataProviderSatisfy(): iterable
     {
         yield [['uses' => 'App\FizTrait'], true];

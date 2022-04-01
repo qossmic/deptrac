@@ -12,12 +12,12 @@ class Registry
     protected array $collectors = [];
 
     /**
-     * @param iterable<CollectorInterface> $collectors
+     * @param iterable<string, CollectorInterface> $collectors
      */
     public function __construct(iterable $collectors)
     {
-        foreach ($collectors as $collector) {
-            $this->addCollector($collector);
+        foreach ($collectors as $type => $collector) {
+            $this->addCollector($type, $collector);
         }
     }
 
@@ -38,7 +38,7 @@ class Registry
 
         if (class_exists($type) && is_subclass_of($type, CollectorInterface::class)) {
             $collector = new $type();
-            $this->addCollector($collector);
+            $this->addCollector(get_class($collector), $collector);
 
             return $collector;
         }
@@ -46,8 +46,8 @@ class Registry
         throw new InvalidArgumentException(sprintf('unknown collector type "%s", possible collectors are %s', $type, implode(', ', array_keys($this->collectors))));
     }
 
-    private function addCollector(CollectorInterface $collector): void
+    private function addCollector(string $type, CollectorInterface $collector): void
     {
-        $this->collectors[$collector->getType()] = $collector;
+        $this->collectors[$type] = $collector;
     }
 }

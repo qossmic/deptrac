@@ -33,7 +33,7 @@ final class BoolCollectorTest extends TestCase
         $configuration = [
             'must' => [
                 [
-                    'type' => (new ClassNameCollector())->getType(),
+                    'type' => 'className',
                     'regex' => '',
                 ],
             ],
@@ -41,7 +41,7 @@ final class BoolCollectorTest extends TestCase
         $collectorRegistry = $this->createMock(Registry::class);
         $collectorRegistry->method('getCollector')
             ->willReturnMap([
-                [(new ClassNameCollector())->getType(), new ClassNameCollector()],
+                ['className', new ClassNameCollector()],
             ]);
 
         $stat = (new BoolCollector())->resolvable($configuration, $collectorRegistry, []);
@@ -69,11 +69,6 @@ final class BoolCollectorTest extends TestCase
         $stat = (new BoolCollector())->resolvable($configuration, $collectorRegistry, []);
 
         self::assertEquals(false, $stat);
-    }
-
-    public function testType(): void
-    {
-        self::assertEquals('bool', (new BoolCollector())->getType());
     }
 
     public function provideSatisfyBasic(): iterable

@@ -12,15 +12,6 @@ use Qossmic\Deptrac\AstRunner\AstMap;
 interface CollectorInterface
 {
     /**
-     * @return string used as an identifier to access to the collector or to display something more user-friendly
-     *                name to the user when referring to the collector
-     *
-     * @example
-     *  'bool', 'className', etc.
-     */
-    public function getType(): string;
-
-    /**
      * @param array<string, string|array<string, string>> $configuration     List of arguments passed for this collector declaration
      * @param AstMap\AstTokenReference                    $astTokenReference Token being checked
      * @param array<string, ?bool>                        $resolutionTable   layer name => is part of the layer? (NULL = Unknown)

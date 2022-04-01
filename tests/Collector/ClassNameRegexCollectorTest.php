@@ -20,11 +20,6 @@ final class ClassNameRegexCollectorTest extends TestCase
         yield [['regex' => '/^Foo\\\\Bar$/i'], 'Foo\\Baz', false];
     }
 
-    public function testType(): void
-    {
-        self::assertEquals('classNameRegex', (new ClassNameRegexCollector())->getType());
-    }
-
     /**
      * @dataProvider dataProviderSatisfy
      */

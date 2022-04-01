@@ -49,9 +49,4 @@ final class InheritanceLevelCollectorTest extends TestCase
 
         self::assertEquals($expected, $stat);
     }
-
-    public function testType(): void
-    {
-        self::assertEquals('inheritanceLevel', (new InheritanceLevelCollector())->getType());
-    }
 }

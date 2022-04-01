@@ -19,11 +19,6 @@ final class ClassNameCollectorTest extends TestCase
         yield [['regex' => 'a'], 'foo\bbr', false];
     }
 
-    public function testType(): void
-    {
-        self::assertEquals('className', (new ClassNameCollector())->getType());
-    }
-
     /**
      * @dataProvider dataProviderSatisfy
      */

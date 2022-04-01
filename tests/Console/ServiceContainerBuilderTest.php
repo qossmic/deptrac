@@ -72,7 +72,7 @@ final class ServiceContainerBuilderTest extends TestCase
         /** @var Registry $collectorRegistry */
         $collectorRegistry = $container->get(Registry::class);
 
-        $collector = $collectorRegistry->getCollector('dummy');
+        $collector = $collectorRegistry->getCollector(DummyCollector::class);
 
         self::assertInstanceOf(DummyCollector::class, $collector);
     }

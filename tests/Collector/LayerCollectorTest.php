@@ -28,11 +28,6 @@ final class LayerCollectorTest extends TestCase
         );
     }
 
-    public function testType(): void
-    {
-        self::assertEquals('layer', (new LayerCollector())->getType());
-    }
-
     public function testResolvable(): void
     {
         $resolved = (new LayerCollector())->resolvable(
@@ -65,7 +60,7 @@ final class LayerCollectorTest extends TestCase
         $collectorRegistry = $this->createMock(Registry::class);
         $collectorRegistry->method('getCollector')
             ->willReturnMap([
-                [(new ClassNameCollector())->getType(), new ClassNameCollector()],
+                ['className', new ClassNameCollector()],
             ]);
         $resolved = (new LayerCollector())->satisfy(
             $configuration['layerCollectorLayer']->getCollectors()[0]->getArgs(),
@@ -95,7 +90,7 @@ final class LayerCollectorTest extends TestCase
                     'name' => 'otherLayer',
                     'collectors' => [
                         [
-                            'type' => (new ClassNameCollector())->getType(),
+                            'type' => 'className',
                             'regex' => 'a',
                         ],
                     ],
@@ -119,7 +114,7 @@ final class LayerCollectorTest extends TestCase
                     'name' => 'otherLayer',
                     'collectors' => [
                         [
-                            'type' => (new ClassNameCollector())->getType(),
+                            'type' => 'className',
                             'regex' => 'a',
                         ],
                     ],
