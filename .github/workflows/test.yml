@@ -45,7 +45,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, xml, ctype, iconv
           coverage: none
-          tools: phive, composer:v2
+          tools: phive, composer
 
       - name: Get composer cache directory
         id: composercache
@@ -97,7 +97,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, xml, ctype, iconv
           coverage: xdebug
-          tools: phive, composer:v2
+          tools: phive, composer
 
       - name: Get composer cache directory
         id: composercache
@@ -141,7 +141,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, xml, ctype, iconv
           coverage: none
-          tools: phive, composer:v2
+          tools: phive, composer
 
       - name: Get composer cache directory
         id: composercache

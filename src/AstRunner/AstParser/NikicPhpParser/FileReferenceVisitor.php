@@ -124,7 +124,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node)
     {
-        //Resolve current reference scope
+        // Resolve current reference scope
         if ($node instanceof Node\Stmt\Function_) {
             $this->currentReference = $this->fileReferenceBuilder;
 
@@ -136,7 +136,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        //Resolve current type scope
+        // Resolve current type scope
         if ($node instanceof Use_ && Use_::TYPE_NORMAL === $node->type) {
             foreach ($node->uses as $use) {
                 $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
@@ -157,7 +157,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        //Resolve code
+        // Resolve code
         if ($node instanceof Node\Stmt\TraitUse && $this->currentReference instanceof ClassReferenceBuilder) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
                 $this->currentReference->trait($classLikeName, $node->getLine());

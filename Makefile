@@ -2,9 +2,9 @@ BOX_BIN := ./tools/box
 COMPOSER_BIN := composer
 PHP_BIN := php
 PHIVE_BIN := phive
-PHP_CS_FIXER_BIN := ./tools/php-cs-fixer
-PHPSTAN_BIN	:= ./tools/phpstan
-PSALM_BIN	:= ./tools/psalm
+PHP_CS_FIXER_BIN := ./vendor/bin/php-cs-fixer
+PHPSTAN_BIN	:= ./vendor/bin/phpstan
+PSALM_BIN	:= ./vendor/bin/psalm
 PHPUNIT_BIN	:= ./tools/phpunit
 INFECTION_BIN	:= ./tools/infection
 
@@ -35,7 +35,7 @@ php-cs-fix:																		## run cs fixer
 	$(PHP_CS_FIXER_BIN) fix --allow-risky=yes
 
 phpstan:
-	$(PHPSTAN_BIN) analyse
+	$(PHPSTAN_BIN) analyse --memory-limit=256M
 
 deptrac:
 	$(PHP_BIN) deptrac.php analyse --no-progress --ansi

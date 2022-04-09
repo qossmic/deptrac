@@ -29,7 +29,6 @@ class FileResolver
         $finder = new PathNameFilterIterator($customFilterIterator, [], $configuration->getExcludeFiles());
 
         return array_map(
-            /** @phpstan-ignore-next-line */
             static function (SplFileInfo $fileInfo) {
                 return (string) $fileInfo->getRealPath();
             },
