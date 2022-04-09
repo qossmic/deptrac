@@ -1,0 +1,16 @@
+[
+    {
+        "type": "issue",
+        "check_name": "Dependency violation",
+        "fingerprint": "165a8636ff8219528d53bcd0af1d9428d6187204",
+        "description": "OriginalA must not depend on OriginalB (LayerA on LayerB)",
+        "categories": ["Style", "Complexity"],
+        "severity": "major",
+        "location": {
+            "path": "ClassA.php",
+            "lines": {
+                "begin": 12
+            }
+        }
+    }
+]

@@ -268,3 +268,51 @@ Supported options:
 
 The default formatter is the table formatter, which groups results by layers to its own table. It can be also
 activated with `--formatter=table`.
+
+## Codeclimate Formatter
+
+By default, Codeclimate formatter dumps information to *STDOUT*. It can be activated
+with `--formatter=codeclimate`
+
+This formatter is compatible with GitLab CI.
+
+Supported options:
+
+```
+--output= path to a dumped file
+```
+
+#### Change severity of a violation
+
+Under `formatters.codeclimate.severity` you can define which severity string you want to assign to a given violation type. By default, deptrac uses `major` for failures, `minor` for skipped violations and `info` for uncovered dependencies.
+
+```yaml
+parameters:
+  formatters:
+    codeclimate:
+      severity:
+        failure: blocker
+        skipped: minor
+        uncovered: info
+```
+
+#### Example issue raport
+
+```json
+[
+  {
+    "type": "issue",
+    "check_name": "Dependency violation",
+    "fingerprint": "3c6b66029bacb18446b7889430ec5aad7fae01cb",
+    "description": "ClassA must not depend on ClassB (LayerA on LayerB)",
+    "categories": ["Style", "Complexity"],
+    "severity": "major",
+    "location": {
+      "path": "ClassA.php",
+      "lines": {
+        "begin": 12
+      }
+    }
+  }
+]
+```
