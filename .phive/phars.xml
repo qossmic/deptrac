@@ -5,5 +5,5 @@
   <phar name="phpstan" version="^1.0" installed="1.3.3" location="./tools/phpstan" copy="true"/>
   <phar name="psalm" version="^4.8.0" installed="4.18.1" location="./tools/psalm" copy="true"/>
   <phar name="infection" version="^0.25" installed="0.25.6" location="./tools/infection" copy="true"/>
-  <phar name="humbug/box" version="^3.13.0" installed="3.14.0" location="./tools/box" copy="true"/>
+  <phar name="humbug/box" version="^3.16.0" installed="3.16.0" location="./tools/box" copy="true"/>
 </phive>

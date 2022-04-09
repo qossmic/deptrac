@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Isolated\Symfony\Component\Finder\Finder;
+use Isolated\Symfony\Component\Finder\Finder as IsolatedFinder;
 
-$polyfillsBootstrap = Finder::create()
+$polyfillsBootstrap = IsolatedFinder::create()
     ->files()
     ->in(__DIR__ . '/vendor/symfony/polyfill-*')
     ->name('*.php');
@@ -13,17 +13,17 @@ return [
     'prefix' => null,                       // string|null
     'finders' => [],                        // Finder[]
     'patchers' => [],                       // callable[]
-    'files-whitelist' => array_map(
+    'exclude-files' => array_map(
         static function ($file) {
             return $file->getPathName();
         },
         iterator_to_array($polyfillsBootstrap)
     ),
-    'whitelist' => [
-        'Qossmic\\Deptrac\\*',
-        'Symfony\\Polyfill\\*',
+    'exclude-namespaces' => [
+        'Qossmic\Deptrac',
+        'Symfony\Polyfill',
     ],
-    'whitelist-global-constants' => true,   // bool
-    'whitelist-global-classes' => true,     // bool
-    'whitelist-global-functions' => true,   // bool
+    'expose-global-constants' => true,   // bool
+    'expose-global-classes' => true,     // bool
+    'expose-global-functions' => true,   // bool
 ];
