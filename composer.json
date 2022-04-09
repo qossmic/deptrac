@@ -19,7 +19,7 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "composer/xdebug-handler": "^2.0",
+        "composer/xdebug-handler": "^3.0",
         "jetbrains/phpstorm-stubs": "^2020.2",
         "nikic/php-parser": "^4.3",
         "phpdocumentor/graphviz": "^2.1",
@@ -51,9 +51,15 @@
         "platform": {
             "php": "7.4.20"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
     },
     "require-dev": {
-        "phpstan/phpstan-symfony": "^1.0"
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "phpstan/phpstan": "^1.5",
+        "phpstan/phpstan-symfony": "^1.0",
+        "vimeo/psalm": "^4.22"
     }
 }

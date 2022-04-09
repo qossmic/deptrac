@@ -230,7 +230,7 @@ return static function (ContainerConfigurator $container): void {
         ->tag('collector', ['type' => 'directory']);
     $services
         ->set(InheritanceLevelCollector::class)
-        ->tag('collector', ['type' => 'inheritanceLevel'], );
+        ->tag('collector', ['type' => 'inheritanceLevel']);
     $services
         ->set(ImplementsCollector::class)
         ->tag('collector', ['type' => 'implements']);

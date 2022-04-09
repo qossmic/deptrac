@@ -20,7 +20,6 @@ return (new PhpCsFixer\Config())
         'no_empty_phpdoc' => true,
         'no_superfluous_phpdoc_tags' => ['allow_mixed' => true],
         'no_unused_imports' => true,
-        'octal_notation' => true,
         'ordered_imports' => [
             'sort_algorithm' => 'alpha',
             'imports_order' => ['class', 'function', 'const'],
