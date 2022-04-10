@@ -28,7 +28,7 @@ class UnassignedAnalyser
      */
     public function analyse(Configuration $configuration): array
     {
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
+        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
         $tokenLayerResolver = $this->tokenLayerResolverFactory->create($configuration, $astMap);
 
         /** @var string[] $tokenNames */
