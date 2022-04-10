@@ -30,7 +30,7 @@ class LayerAnalyser
      */
     public function analyse(Configuration $configuration, string $layer): array
     {
-        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration), $configuration->getAnalyser());
+        $astMap = $this->astRunner->createAstMapByFiles($this->fileResolver->resolve($configuration));
         $classLikeLayerResolver = $this->classLikeLayerResolverFactory->create($configuration, $astMap);
 
         $tokenNames = [];

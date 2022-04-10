@@ -10,7 +10,6 @@ use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\AstRunner\AstParser\NikicPhpParser\ParserFactory;
 use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 
 final class AnnotationDependencyResolverTest extends TestCase
 {
@@ -25,7 +24,7 @@ final class AnnotationDependencyResolverTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/AnnotationDependency.php';
-        $astFileReference = $parser->parseFile($filePath, ConfigurationAnalyser::fromArray([]));
+        $astFileReference = $parser->parseFile($filePath);
 
         $astClassReferences = $astFileReference->getAstClassReferences();
         $annotationDependency = $astClassReferences[0]->getDependencies();

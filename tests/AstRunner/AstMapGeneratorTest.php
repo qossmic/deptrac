@@ -15,7 +15,6 @@ use Qossmic\Deptrac\AstRunner\Resolver\AnnotationDependencyResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\AnonymousClassResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\ClassConstantResolver;
 use Qossmic\Deptrac\AstRunner\Resolver\TypeResolver;
-use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassB;
 use Tests\Qossmic\Deptrac\AstRunner\Visitor\Fixtures\BasicDependency\BasicDependencyClassC;
@@ -44,7 +43,7 @@ final class AstMapGeneratorTest extends TestCase
             )
         );
 
-        return $astRunner->createAstMapByFiles([$fixture], ConfigurationAnalyser::fromArray([]));
+        return $astRunner->createAstMapByFiles([$fixture]);
     }
 
     public function testBasicDependencyClass(): void
