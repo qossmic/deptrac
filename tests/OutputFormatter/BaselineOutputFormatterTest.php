@@ -68,7 +68,7 @@ class BaselineOutputFormatterTest extends TestCase
 
         yield [
             [],
-            "skip_violations: {  }\n",
+            "parameters:\n  skip_violations: {  }\n",
         ];
 
         yield [

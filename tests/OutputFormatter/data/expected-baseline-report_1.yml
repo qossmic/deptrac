@@ -1,3 +1,4 @@
-skip_violations:
-  ClassA:
-    - ClassB
+parameters:
+  skip_violations:
+    ClassA:
+      - ClassB

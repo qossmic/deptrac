@@ -2,7 +2,7 @@ parameters:
   paths:
     - ./src
 
-  baseline: 'depfile.baseline.yml'
+  baseline: 'deptrac.baseline.yaml'
 
   layers:
     - name: Utils
