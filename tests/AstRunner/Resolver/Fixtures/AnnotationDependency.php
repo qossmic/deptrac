@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Integration\Fixtures;
 
+/**
+ * @phpstan-type AnnotationDependencyChild array{
+ *     ids?: int[]|string[],
+ *     accountId?: int|string,
+ *     activated?: boolean,
+ * }
+ */
 final class AnnotationDependency
 {
     /**
@@ -63,3 +70,4 @@ final class AnnotationDependencyChild
 
     }
 }
+

@@ -1,0 +1,10 @@
+parameters:
+  paths:
+    - .
+  layers:
+    - name: Interface
+      collectors:
+        - type: className
+          value: .*Interface
+  ruleset:
+    Interface: ~
