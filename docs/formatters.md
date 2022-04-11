@@ -61,7 +61,7 @@ on what type of output you are expecting. They can be activated with:
 --formatter=graphviz-display    Automatically tries to open the image
 --formatter=graphviz-dot        Saves the output to a .dot file
 --formatter=graphviz-html       Saves the output to a .html file
---formatter=graphviz-image      Saves the output to a .png file
+--formatter=graphviz-image      Saves the output to a supported image file format such as png, svg or jpg
 ```
 
 Supported options:
