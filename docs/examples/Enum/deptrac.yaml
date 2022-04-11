@@ -1,0 +1,16 @@
+parameters:
+  paths:
+    - .
+  layers:
+    - name: Enum
+      collectors:
+        - type: className
+          value: ^My
+    - name: Usage
+      collectors:
+        - type: className
+          value: ^Example
+  ruleset:
+    Usage:
+      - Enum
+    Enum: null

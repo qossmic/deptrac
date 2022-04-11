@@ -117,7 +117,10 @@ jobs:
         run: "[ -f '.deptrac.cache2' ]"
 
       - name: "Run deptrac phar using transitive dependencies example"
-        run: php deptrac.phar analyse --config-file=docs/examples/Transitive.depfile.yaml
+        run: php deptrac.phar analyse --config-file=docs/examples/Transitive.depfile.yaml --no-cache
 
       - name: "Run deptrac phar with --fail-on-uncovered"
         run: sh .github/workflows/test-flag-fail-on-uncovered.sh
+
+      - name: "Run deptrac phar using enum example"
+        run: php deptrac.phar analyse --config-file=docs/examples/Enum/deptrac.yaml --no-cache --fail-on-uncovered
