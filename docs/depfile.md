@@ -20,20 +20,6 @@ imports:
 
 ### `analyser`
 
-#### `count_use_statements`
-
-**This feature is deprecated and will be removed in future release, use [types](#types) instead.**
-
-By default, deptrac will analyse all occurrences for classes, including `use`
-statements. If you would like to exempt `use` statements from the analysis, you
-can change this behaviour in the depfile:
-
-```yaml
-parameters:
-  analyser:
-    count_use_statements: false
-```
-
 #### `types`
 
 Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyse file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analysed file:
@@ -54,17 +40,6 @@ parameters:
 - `file` - analyses file for everything apart from use statements and function/class definitions.
 - `function` - analyses function definitions for everything apart from superglobal usage.
 - `function_superglobal` - analyses function definitions for superglobal usage.
-
-### `baseline`
-
-You can define a baseline, i.e. existing violations that should not fail a build. The `baseline` option takes the filename where the baseline is defined.
-
-Example:
-
-```yaml
-parameters:
-  baseline: 'deptrac.baseline.yaml'
-```
 
 ### `exclude_files`
 
@@ -257,23 +232,13 @@ parameters:
       - Core\CoreClass
 ```
 
-### `use_relative_path_from_depfile`
-
-By default, all paths in the configuration are assumed to be relative to the depfile they are defined in. If you want to change this behavior set this option to false.
-
-Example:
-
-```yaml
-parameters:
-  use_relative_path_from_depfile: false
-```
-
 ### Parameters
 
 Deptrac provides parameters that can be user in your configuration.
 
 * `%currentWorkingDirectory%` The path Deptrac runs in
 * `%depfileDirectory%` The path where the depfile is stored.
+* `%projectDirectory%` usually points to `%depfileDirectory%`
 
 You can specify your own parameters and reuse them in your configuration:
 

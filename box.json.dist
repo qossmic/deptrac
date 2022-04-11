@@ -1,8 +1,8 @@
 {
   "files": [
+    "config/cache.php",
     "config/parameters.php",
-    "config/services.php",
-    "config/cache.php"
+    "config/services.php"
   ],
   "compression": "GZ",
   "main": "deptrac.php",

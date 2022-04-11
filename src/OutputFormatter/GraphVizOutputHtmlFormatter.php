@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\OutputFormatter;
 use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use RuntimeException;
 use function base64_encode;

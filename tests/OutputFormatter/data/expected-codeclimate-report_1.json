@@ -2,7 +2,7 @@
     {
         "type": "issue",
         "check_name": "Dependency violation",
-        "fingerprint": "3c6b66029bacb18446b7889430ec5aad7fae01cb",
+        "fingerprint": "ac4734c12b47a898cf9897223f7f84b817666381",
         "description": "ClassA must not depend on ClassB (LayerA on LayerB)",
         "categories": ["Style", "Complexity"],
         "severity": "major",
@@ -16,7 +16,7 @@
     {
         "type": "issue",
         "check_name": "Dependency violation",
-        "fingerprint": "698583d6ce99e36d9cefac4a621ac333fe397afb",
+        "fingerprint": "71612440afbf568fd7eeefe98866276e2862cdb7",
         "description": "ClassC must not depend on ClassD (LayerA on LayerC)",
         "categories": ["Style", "Complexity"],
         "severity": "major",
@@ -30,7 +30,7 @@
     {
         "type": "issue",
         "check_name": "Dependency violation",
-        "fingerprint": "c81864a9866493480b6e0c614a2a3e96dc60d272",
+        "fingerprint": "b9d686a9529e304423bac712f009ed53d4550aa7",
         "description": "ClassC must not depend on ClassE (LayerA on LayerE)",
         "categories": ["Style", "Complexity"],
         "severity": "major",

@@ -6,10 +6,10 @@ namespace Tests\Qossmic\Deptrac\Exception\Configuration;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException;
+use Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException;
 
 /**
- * @covers \Qossmic\Deptrac\Exception\Configuration\InvalidConfigurationException
+ * @covers \Qossmic\Deptrac\Configuration\Exception\InvalidConfigurationException
  */
 final class InvalidConfigurationExceptionTest extends TestCase
 {

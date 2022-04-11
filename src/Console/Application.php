@@ -68,18 +68,21 @@ final class Application extends BaseApplication
         }
 
         /** @var string|numeric|null $configFile */
-        $configFile = $input->getParameterOption('--config-file', getcwd().DIRECTORY_SEPARATOR.'deptrac.yaml');
+        $configFile = $input->getParameterOption('--config-file', $currentWorkingDirectory.DIRECTORY_SEPARATOR.'deptrac.yaml');
         $config = $input->hasParameterOption('--config-file')
             ? (string) $configFile
-            : getcwd().DIRECTORY_SEPARATOR.'deptrac.yaml';
+            : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'deptrac.yaml';
 
         /** @var string|numeric|null $cacheFile */
-        $cacheFile = $input->getParameterOption('--cache-file', getcwd().DIRECTORY_SEPARATOR.'.deptrac.cache');
+        $cacheFile = $input->getParameterOption('--cache-file', $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache');
         $cache = $input->hasParameterOption('--cache-file')
             ? (string) $cacheFile
-            : getcwd().DIRECTORY_SEPARATOR.'.deptrac.cache';
+            : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache';
 
-        $factory = (new ServiceContainerBuilder($currentWorkingDirectory))->withConfig($config);
+        $factory = new ServiceContainerBuilder($currentWorkingDirectory);
+        if ('init' !== $input->getArgument('command')) {
+            $factory = $factory->withConfig($config);
+        }
         if (false === $input->hasParameterOption('--no-cache', true)) {
             $factory = $factory->withCache($cache);
         }

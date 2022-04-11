@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Rule;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\Rule;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Violation;
 use function count;
 
 final class ConsoleOutputFormatter implements OutputFormatterInterface
@@ -20,19 +21,14 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         return 'console';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $reportSkipped = $outputFormatterInput->getReportSkipped();
 
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
@@ -45,18 +41,18 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         }
 
         if ($outputFormatterInput->getReportUncovered()) {
-            $this->printUncovered($context, $output);
+            $this->printUncovered($result, $output);
         }
 
-        if ($context->hasErrors()) {
-            $this->printErrors($context, $output);
+        if ($result->hasErrors()) {
+            $this->printErrors($result, $output);
         }
 
-        if ($context->hasWarnings()) {
-            $this->printWarnings($context, $output);
+        if ($result->hasWarnings()) {
+            $this->printWarnings($result, $output);
         }
 
-        $this->printSummary($context, $output);
+        $this->printSummary($result, $output);
     }
 
     /**
@@ -70,10 +66,10 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             sprintf(
                 '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getDependant()->toString(),
-                $dependency->getDependee()->toString(),
-                $rule->getDependantLayerName(),
-                $rule->getDependeeLayerName()
+                $dependency->getDepender()->toString(),
+                $dependency->getDependent()->toString(),
+                $rule->getDependerLayer(),
+                $rule->getDependentLayer()
             )
         );
         $this->printFileOccurrence($output, $dependency->getFileOccurrence());
@@ -94,21 +90,21 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             "\t%s::%d",
-            $dependency->getOriginalDependency()->getDependee()->toString(),
+            $dependency->getOriginalDependency()->getDependent()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
         $output->writeLineFormatted(implode(" -> \n", $buffer));
     }
 
-    private function printSummary(Context $context, Output $output): void
+    private function printSummary(LegacyResult $result, Output $output): void
     {
-        $violationCount = count($context->violations());
-        $skippedViolationCount = count($context->skippedViolations());
-        $uncoveredCount = count($context->uncovered());
-        $allowedCount = count($context->allowed());
-        $warningsCount = count($context->warnings());
-        $errorsCount = count($context->errors());
+        $violationCount = count($result->violations());
+        $skippedViolationCount = count($result->skippedViolations());
+        $uncoveredCount = count($result->uncovered());
+        $allowedCount = count($result->allowed());
+        $warningsCount = count($result->warnings());
+        $errorsCount = count($result->errors());
 
         $output->writeLineFormatted('');
         $output->writeLineFormatted('Report:');
@@ -150,9 +146,9 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function printUncovered(Context $context, Output $output): void
+    private function printUncovered(LegacyResult $result, Output $output): void
     {
-        $uncovered = $context->uncovered();
+        $uncovered = $result->uncovered();
         if ([] === $uncovered) {
             return;
         }
@@ -163,8 +159,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted(
                 sprintf(
                     '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
-                    $dependency->getDependant()->toString(),
-                    $dependency->getDependee()->toString(),
+                    $dependency->getDepender()->toString(),
+                    $dependency->getDependent()->toString(),
                     $u->getLayer()
                 )
             );
@@ -181,18 +177,18 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
     }
 
-    private function printErrors(Context $context, Output $output): void
+    private function printErrors(LegacyResult $result, Output $output): void
     {
         $output->writeLineFormatted('');
-        foreach ($context->errors() as $error) {
+        foreach ($result->errors() as $error) {
             $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', $error->toString()));
         }
     }
 
-    private function printWarnings(Context $context, Output $output): void
+    private function printWarnings(LegacyResult $result, Output $output): void
     {
         $output->writeLineFormatted('');
-        foreach ($context->warnings() as $error) {
+        foreach ($result->warnings() as $error) {
             $output->writeLineFormatted(sprintf('<fg=yellow>[WARNING]</> %s', $error->toString()));
         }
     }

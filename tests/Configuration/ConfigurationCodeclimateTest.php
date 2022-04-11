@@ -23,8 +23,8 @@ final class ConfigurationCodeclimateTest extends TestCase
         ];
         $config = ConfigurationCodeclimate::fromArray($arr);
 
-        self::assertEquals('blocker', $config->getSeverity('failure'));
-        self::assertEquals('critical', $config->getSeverity('skipped'));
-        self::assertEquals('info', $config->getSeverity('uncovered'));
+        self::assertSame('blocker', $config->getSeverity('failure'));
+        self::assertSame('critical', $config->getSeverity('skipped'));
+        self::assertSame('info', $config->getSeverity('uncovered'));
     }
 }

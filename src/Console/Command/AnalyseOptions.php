@@ -2,13 +2,8 @@
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
-use function is_string;
-
 class AnalyseOptions
 {
-    private string $configurationFile;
-
     private bool $noProgress;
 
     private string $formatter;
@@ -21,11 +16,7 @@ class AnalyseOptions
 
     private bool $failOnUncovered;
 
-    /**
-     * @param mixed $configurationFile
-     */
     public function __construct(
-        $configurationFile,
         bool $noProgress,
         string $formatter,
         ?string $output,
@@ -33,22 +24,12 @@ class AnalyseOptions
         bool $reportUncovered,
         bool $failOnUncovered
     ) {
-        if (!is_string($configurationFile)) {
-            throw InvalidArgumentException::invalidDepfileType($configurationFile);
-        }
-
-        $this->configurationFile = $configurationFile;
         $this->noProgress = $noProgress;
         $this->formatter = $formatter;
         $this->output = $output;
         $this->reportSkipped = $reportSkipped;
         $this->reportUncovered = $reportUncovered;
         $this->failOnUncovered = $failOnUncovered;
-    }
-
-    public function getConfigurationFile(): string
-    {
-        return $this->configurationFile;
     }
 
     public function showProgress(): bool

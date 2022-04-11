@@ -22,15 +22,15 @@ It can be activated with `--formatter=baseline`.
 Supported options:
 
 ```
---output[=BASELINE-DUMP] path to a dumped baseline file [default: "./depfile.baseline.yml"]
+--output[=BASELINE-DUMP] path to a dumped baseline file [default: "./deptrac.baseline.yaml"]
 ```
 
 Don't forget to include the baseline into your existing `deptrac.yaml`
 
 ```yaml
 # deptrac.yaml
-parameters:
-  baseline: depfile.baseline.yml
+imports:
+  - deptrac.baseline.yaml
 ```
 
 ## Console Formatter

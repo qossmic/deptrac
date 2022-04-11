@@ -1,5 +1,24 @@
 # Upgrade from 0.19 to 0.20
 
+## Commands
+
+### What?
+
+* You must now use the new `--config-file` option instead of providing the
+  configuration file (Depfile) as command argument
+
+## Depfile (Configuration File)
+
+### What?
+
+ * The `baseline` parameter was removed. You can use `imports` instead.
+ * The `ruleset` is no longer checked for undefined layers. They will be
+   silently ignored instead.
+ * The parameter `use_relative_path_from_depfile` no longer exists. It is
+   replaced by a `projectDirectory` parameter, which by default points to
+   `%depfileDirectory%` and can be changed to `%currentWorkingDirectory%` or any
+   other base directory you want to use as reference for relative paths.
+
 ## Baseline Formatter
 
 ### What?

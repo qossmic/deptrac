@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Dependency;
 
-use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
+use Qossmic\Deptrac\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\TokenInterface;
 
 /**
  * @psalm-immutable
  */
 class InheritDependency implements DependencyInterface
 {
-    private ClassLikeName $dependant;
-    private TokenName $dependee;
+    private ClassLikeToken $depender;
+    private TokenInterface $dependent;
     private AstInherit $path;
     private DependencyInterface $originalDependency;
 
-    public function __construct(ClassLikeName $dependant, TokenName $dependee, DependencyInterface $originalDependency, AstInherit $path)
+    public function __construct(ClassLikeToken $depender, TokenInterface $dependent, DependencyInterface $originalDependency, AstInherit $path)
     {
-        $this->dependant = $dependant;
-        $this->dependee = $dependee;
+        $this->depender = $depender;
+        $this->dependent = $dependent;
         $this->originalDependency = $originalDependency;
         $this->path = $path;
     }
 
-    public function getDependant(): ClassLikeName
+    public function getDepender(): ClassLikeToken
     {
-        return $this->dependant;
+        return $this->depender;
     }
 
     public function getFileOccurrence(): FileOccurrence
@@ -37,9 +37,9 @@ class InheritDependency implements DependencyInterface
         return $this->getOriginalDependency()->getFileOccurrence();
     }
 
-    public function getDependee(): TokenName
+    public function getDependent(): TokenInterface
     {
-        return $this->dependee;
+        return $this->dependent;
     }
 
     public function getInheritPath(): AstInherit

@@ -1,4 +1,0 @@
-parameters:
-  skip_violations:
-    DummyClass:
-      - BarClass

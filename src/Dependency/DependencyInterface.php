@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Dependency;
 
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\TokenInterface;
 
 /**
  * @psalm-immutable
  */
 interface DependencyInterface
 {
-    public function getDependant(): TokenName;
+    public function getDepender(): TokenInterface;
 
-    public function getDependee(): TokenName;
+    public function getDependent(): TokenInterface;
 
     public function getFileOccurrence(): FileOccurrence;
 }

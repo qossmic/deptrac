@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
+use Qossmic\Deptrac\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Env;
-use Qossmic\Deptrac\Exception\Console\AnalyseException;
+use Qossmic\Deptrac\OutputFormatter\FormatterProvider;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
-use Qossmic\Deptrac\OutputFormatterFactory;
 use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
 use Qossmic\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Command\Command;
@@ -25,8 +25,6 @@ use const DIRECTORY_SEPARATOR;
 
 class AnalyseCommand extends Command
 {
-    use DefaultDepFileTrait;
-
     public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
     public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     public const OPTION_REPORT_SKIPPED = 'report-skipped';
@@ -36,16 +34,16 @@ class AnalyseCommand extends Command
 
     private AnalyseRunner $runner;
     private EventDispatcherInterface $dispatcher;
-    private OutputFormatterFactory $formatterFactory;
+    private FormatterProvider $formatterProvider;
 
     public function __construct(
         AnalyseRunner $runner,
         EventDispatcherInterface $dispatcher,
-        OutputFormatterFactory $formatterFactory
+        FormatterProvider $formatterProvider
     ) {
         $this->runner = $runner;
         $this->dispatcher = $dispatcher;
-        $this->formatterFactory = $formatterFactory;
+        $this->formatterProvider = $formatterProvider;
 
         parent::__construct();
     }
@@ -66,7 +64,7 @@ class AnalyseCommand extends Command
             InputOption::VALUE_OPTIONAL,
             sprintf(
                 'Format in which to print the result of the analysis. Possible: ["%s"]',
-                implode('", "', $this->formatterFactory->getFormatterNames())
+                implode('", "', $this->formatterProvider->getKnownFormatters())
             )
         );
         $this->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Output file path for formatter (if applicable)');
@@ -85,12 +83,10 @@ class AnalyseCommand extends Command
         $formatter = $input->getOption('formatter');
         $formatter = $formatter ?? self::getDefaultFormatter();
 
-        $configFile = self::getConfigFile($input, $symfonyOutput);
-
         /** @var string|numeric|null $output */
         $output = $input->getOption('output');
+
         $options = new AnalyseOptions(
-            $configFile,
             (bool) $input->getOption('no-progress'),
             $formatter,
             null === $output ? null : (string) $output,

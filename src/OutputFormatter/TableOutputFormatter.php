@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\RulesetEngine\Allowed;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Error;
-use Qossmic\Deptrac\RulesetEngine\Rule;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Uncovered;
-use Qossmic\Deptrac\RulesetEngine\Violation;
-use Qossmic\Deptrac\RulesetEngine\Warning;
+use Qossmic\Deptrac\Result\Allowed;
+use Qossmic\Deptrac\Result\Error;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\Rule;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Uncovered;
+use Qossmic\Deptrac\Result\Violation;
+use Qossmic\Deptrac\Result\Warning;
 use Symfony\Component\Console\Helper\TableSeparator;
 use function count;
 
@@ -24,24 +25,19 @@ final class TableOutputFormatter implements OutputFormatterInterface
         return 'table';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
 
             if ($rule instanceof Violation || ($outputFormatterInput->getReportSkipped() && $rule instanceof SkippedViolation)) {
-                $groupedRules[$rule->getDependantLayerName()][] = $rule;
+                $groupedRules[$rule->getDependerLayer()][] = $rule;
             } elseif ($outputFormatterInput->getReportUncovered() && $rule instanceof Uncovered) {
                 $groupedRules[$rule->getLayer()][] = $rule;
             }
@@ -62,15 +58,15 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $style->table(['Reason', $layer], $rows);
         }
 
-        if ($context->hasErrors()) {
-            $this->printErrors($context, $output);
+        if ($result->hasErrors()) {
+            $this->printErrors($result, $output);
         }
 
-        if ($context->hasWarnings()) {
-            $this->printWarnings($context, $output);
+        if ($result->hasWarnings()) {
+            $this->printWarnings($result, $output);
         }
 
-        $this->printSummary($context, $output, $outputFormatterInput->getFailOnUncovered());
+        $this->printSummary($result, $output, $outputFormatterInput->getFailOnUncovered());
     }
 
     /**
@@ -84,9 +80,9 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '<info>%s</info> must not depend on <info>%s</info> (%s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
-            $rule->getDependeeLayerName()
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
+            $rule->getDependentLayer()
         );
 
         if ($dependency instanceof InheritDependency) {
@@ -113,21 +109,21 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             '%s::%d',
-            $dependency->getOriginalDependency()->getDependee()->toString(),
+            $dependency->getOriginalDependency()->getDependent()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
         return implode(" -> \n", $buffer);
     }
 
-    private function printSummary(Context $context, Output $output, bool $reportUncoveredAsError): void
+    private function printSummary(LegacyResult $result, Output $output, bool $reportUncoveredAsError): void
     {
-        $violationCount = count($context->violations());
-        $skippedViolationCount = count($context->skippedViolations());
-        $uncoveredCount = count($context->uncovered());
-        $allowedCount = count($context->allowed());
-        $warningsCount = count($context->warnings());
-        $errorsCount = count($context->errors());
+        $violationCount = count($result->violations());
+        $skippedViolationCount = count($result->skippedViolations());
+        $uncoveredCount = count($result->uncovered());
+        $allowedCount = count($result->allowed());
+        $warningsCount = count($result->warnings());
+        $errorsCount = count($result->errors());
 
         $uncoveredFg = $reportUncoveredAsError ? 'red' : 'yellow';
 
@@ -154,8 +150,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '<info>%s</info> has uncovered dependency on <info>%s</info>',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString()
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString()
         );
 
         if ($dependency instanceof InheritDependency) {
@@ -171,7 +167,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    private function printErrors(Context $context, Output $output): void
+    private function printErrors(LegacyResult $result, Output $output): void
     {
         $output->getStyle()->table(
             ['<fg=red>Errors</>'],
@@ -179,12 +175,12 @@ final class TableOutputFormatter implements OutputFormatterInterface
                 static function (Error $error) {
                     return [$error->toString()];
                 },
-                $context->errors()
+                $result->errors()
             )
         );
     }
 
-    private function printWarnings(Context $context, Output $output): void
+    private function printWarnings(LegacyResult $result, Output $output): void
     {
         $output->getStyle()->table(
             ['<fg=yellow>Warnings</>'],
@@ -192,7 +188,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
                 static function (Warning $warning) {
                     return [$warning->toString()];
                 },
-                $context->warnings()
+                $result->warnings()
             )
         );
     }

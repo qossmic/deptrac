@@ -8,10 +8,11 @@ use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use Exception;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Violation;
 
 final class XMLOutputFormatter implements OutputFormatterInterface
 {
@@ -22,22 +23,17 @@ final class XMLOutputFormatter implements OutputFormatterInterface
         return 'xml';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     /**
      * {@inheritdoc}
      *
      * @throws Exception
      */
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $xml = $this->createXml($context);
+        $xml = $this->createXml($result);
 
         $dumpXmlPath = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
         file_put_contents($dumpXmlPath, $xml);
@@ -47,7 +43,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     /**
      * @throws Exception
      */
-    private function createXml(Context $dependencyContext): string
+    private function createXml(LegacyResult $dependencyContext): string
     {
         if (!class_exists(DOMDocument::class)) {
             throw new Exception('Unable to create xml file (php-xml needs to be installed)');
@@ -79,12 +75,12 @@ final class XMLOutputFormatter implements OutputFormatterInterface
         $entry = $xmlDoc->createElement('entry');
         $entry->appendChild(new DOMAttr('type', $type));
 
-        $entry->appendChild($xmlDoc->createElement('LayerA', $rule->getDependantLayerName()));
-        $entry->appendChild($xmlDoc->createElement('LayerB', $rule->getDependeeLayerName()));
+        $entry->appendChild($xmlDoc->createElement('LayerA', $rule->getDependerLayer()));
+        $entry->appendChild($xmlDoc->createElement('LayerB', $rule->getDependentLayer()));
 
         $dependency = $rule->getDependency();
-        $entry->appendChild($xmlDoc->createElement('ClassA', $dependency->getDependant()->toString()));
-        $entry->appendChild($xmlDoc->createElement('ClassB', $dependency->getDependee()->toString()));
+        $entry->appendChild($xmlDoc->createElement('ClassA', $dependency->getDepender()->toString()));
+        $entry->appendChild($xmlDoc->createElement('ClassB', $dependency->getDependent()->toString()));
 
         $fileOccurrence = $dependency->getFileOccurrence();
         $occurrence = $xmlDoc->createElement('occurrence');
