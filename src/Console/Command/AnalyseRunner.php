@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac\Console\Command;
 
 use LogicException;
 use Qossmic\Deptrac\Analyser;
-use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
+use Qossmic\Deptrac\Configuration\LoaderResolver;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Exception\Console\AnalyseException;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
@@ -21,12 +21,12 @@ use function sprintf;
 final class AnalyseRunner
 {
     private Analyser $analyser;
-    private ConfigurationLoader $configurationLoader;
+    private LoaderResolver $configurationLoader;
     private OutputFormatterFactory $formatterFactory;
 
     public function __construct(
         Analyser $analyser,
-        ConfigurationLoader $configurationLoader,
+        LoaderResolver $configurationLoader,
         OutputFormatterFactory $formatterFactory
     ) {
         $this->analyser = $analyser;
@@ -36,7 +36,7 @@ final class AnalyseRunner
 
     public function run(AnalyseOptions $options, Output $output): void
     {
-        $configuration = $this->configurationLoader->load($options->getConfigurationFile());
+        $configuration = $this->configurationLoader->resolve($options->getConfigurationFile())->load($options->getConfigurationFile());
 
         try {
             $formatter = $this->formatterFactory->getFormatterByName($options->getFormatter());

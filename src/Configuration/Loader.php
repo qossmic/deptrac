@@ -17,7 +17,7 @@ use function dirname;
 use function sprintf;
 use function trigger_deprecation;
 
-class Loader
+class Loader implements LoaderInterface
 {
     private YmlFileLoader $fileLoader;
     private Processor $processor;

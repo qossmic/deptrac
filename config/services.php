@@ -30,6 +30,7 @@ use Qossmic\Deptrac\Collector\UsesCollector;
 use Qossmic\Deptrac\Configuration\Dumper;
 use Qossmic\Deptrac\Configuration\Loader;
 use Qossmic\Deptrac\Configuration\Loader\YmlFileLoader;
+use Qossmic\Deptrac\Configuration\LoaderResolver;
 use Qossmic\Deptrac\Configuration\ParameterResolver;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\AnalyseRunner;
@@ -137,6 +138,12 @@ return static function (ContainerConfigurator $container): void {
             service(AstRunner::class),
             service(FileResolver::class),
             service(TokenLayerResolverFactory::class),
+        ]);
+
+    $services
+        ->set(LoaderResolver::class)
+        ->args([
+            service(Loader::class),
         ]);
 
     $services
