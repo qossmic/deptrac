@@ -13,6 +13,7 @@ use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\Result;
 use Qossmic\Deptrac\RulesetEngine;
 use Qossmic\Deptrac\TokenLayerResolverInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * @covers \Qossmic\Deptrac\RulesetEngine
@@ -248,7 +249,7 @@ final class RulesetEngineTest extends TestCase
             'ruleset' => $rulesetConfiguration,
         ]);
 
-        $context = (new RulesetEngine())->process(
+        $context = (new RulesetEngine(new EventDispatcher()))->process(
             $dependencyResult,
             $tokenLayerResolver,
             $configuration->getRuleset()
@@ -318,7 +319,7 @@ final class RulesetEngineTest extends TestCase
             'skip_violations' => $skippedViolationsConfig,
         ]);
 
-        $context = (new RulesetEngine())->process(
+        $context = (new RulesetEngine(new EventDispatcher()))->process(
             $dependencyResult,
             $tokenLayerResolver,
             $configuration->getRuleset()
@@ -375,7 +376,7 @@ final class RulesetEngineTest extends TestCase
             'ignore_uncovered_internal_classes' => $ignoreUncoveredInternalClasses,
         ]);
 
-        $context = (new RulesetEngine())->process(
+        $context = (new RulesetEngine(new EventDispatcher()))->process(
             $dependencyResult,
             $tokenLayerResolver,
             $configuration->getRuleset()

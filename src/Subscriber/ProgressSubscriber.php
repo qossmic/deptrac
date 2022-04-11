@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Subscriber;
 
-use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
-use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
 use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\Event\AstRunner\AstFileAnalysedEvent;
+use Qossmic\Deptrac\Event\AstRunner\PostCreateAstMapEvent;
+use Qossmic\Deptrac\Event\AstRunner\PreCreateAstMapEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressSubscriber implements EventSubscriberInterface

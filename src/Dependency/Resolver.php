@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Dependency;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
-use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
-use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\ClassSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\DependencyEmitterInterface;
@@ -17,8 +14,11 @@ use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
+use Qossmic\Deptrac\Event\Dependency\PostEmitEvent;
+use Qossmic\Deptrac\Event\Dependency\PostFlattenEvent;
+use Qossmic\Deptrac\Event\Dependency\PreEmitEvent;
+use Qossmic\Deptrac\Event\Dependency\PreFlattenEvent;
 use Qossmic\Deptrac\Exception\ShouldNotHappenException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Resolver
 {

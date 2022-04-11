@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use PhpParser\Parser;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Analyser;
 use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceInMemoryCache;
@@ -69,7 +70,6 @@ use Qossmic\Deptrac\TokenLayerResolverFactory;
 use Qossmic\Deptrac\UnassignedAnalyser;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
@@ -85,7 +85,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(AstRunner::class)
         ->args([
-            service(EventDispatcher::class),
+            service(EventDispatcherInterface::class),
             service(NikicPhpParser::class),
         ]);
 
@@ -155,7 +155,12 @@ return static function (ContainerConfigurator $container): void {
             service(TokenLayerResolverFactory::class),
         ]);
 
-    $services->set(RulesetEngine::class);
+    $services
+        ->set(RulesetEngine::class)
+        ->args([
+            service(EventDispatcherInterface::class),
+        ]);
+
     $services->set(FileResolver::class);
 
     /* Configuration */
@@ -259,7 +264,7 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(Resolver::class)
         ->args([
-            service(EventDispatcher::class),
+            service(EventDispatcherInterface::class),
             service(InheritanceFlatter::class),
             service(ClassDependencyEmitter::class),
             service(ClassSuperglobalDependencyEmitter::class),
@@ -288,7 +293,11 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(AnalyseCommand::class)
-        ->autowire()
+        ->args([
+            service(AnalyseRunner::class),
+            service(EventDispatcher::class),
+            service(OutputFormatterFactory::class),
+        ])
         ->tag('console.command');
 
     $services

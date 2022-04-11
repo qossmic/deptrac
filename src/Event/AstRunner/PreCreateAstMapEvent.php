@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\AstRunner\Event;
+namespace Qossmic\Deptrac\Event\AstRunner;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

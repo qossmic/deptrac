@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Dependency\Event;
+namespace Qossmic\Deptrac\Event\Dependency;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

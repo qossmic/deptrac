@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\AstRunner;
 
 use PhpParser\Error;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\AstRunner\AstParser\AstParser;
-use Qossmic\Deptrac\AstRunner\Event\AstFileAnalysedEvent;
-use Qossmic\Deptrac\AstRunner\Event\AstFileSyntaxErrorEvent;
-use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Qossmic\Deptrac\Event\AstRunner\AstFileAnalysedEvent;
+use Qossmic\Deptrac\Event\AstRunner\AstFileSyntaxErrorEvent;
+use Qossmic\Deptrac\Event\AstRunner\PostCreateAstMapEvent;
+use Qossmic\Deptrac\Event\AstRunner\PreCreateAstMapEvent;
 
 class AstRunner
 {

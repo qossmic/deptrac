@@ -7,10 +7,6 @@ namespace Tests\Qossmic\Deptrac\Dependency;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\AstRunner\AstMap;
 use Qossmic\Deptrac\Configuration\ConfigurationAnalyser;
-use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
-use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\Dependency\InheritanceFlatter;
 use Qossmic\Deptrac\Dependency\Resolver;
 use Qossmic\Deptrac\DependencyEmitter\ClassDependencyEmitter;
@@ -19,6 +15,10 @@ use Qossmic\Deptrac\DependencyEmitter\FileDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\DependencyEmitter\UsesDependencyEmitter;
+use Qossmic\Deptrac\Event\Dependency\PostEmitEvent;
+use Qossmic\Deptrac\Event\Dependency\PostFlattenEvent;
+use Qossmic\Deptrac\Event\Dependency\PreEmitEvent;
+use Qossmic\Deptrac\Event\Dependency\PreFlattenEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class ResolverTest extends TestCase

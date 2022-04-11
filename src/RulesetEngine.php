@@ -6,9 +6,12 @@ namespace Qossmic\Deptrac;
 
 use InvalidArgumentException;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
 use Qossmic\Deptrac\Configuration\ConfigurationRuleset;
 use Qossmic\Deptrac\Dependency\Result;
+use Qossmic\Deptrac\Event\RulesetEngine\PostRulesetProcessingEvent;
+use Qossmic\Deptrac\Event\RulesetEngine\ViolationEvent;
 use Qossmic\Deptrac\RulesetEngine\Allowed;
 use Qossmic\Deptrac\RulesetEngine\Context;
 use Qossmic\Deptrac\RulesetEngine\Error;
@@ -20,6 +23,13 @@ use Qossmic\Deptrac\RulesetEngine\Warning;
 
 class RulesetEngine
 {
+    private EventDispatcherInterface $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
     public function process(
         Result $dependencyResult,
         TokenLayerResolverInterface $tokenLayerResolver,
@@ -72,7 +82,16 @@ class RulesetEngine
                         continue;
                     }
 
-                    $rules[] = new Violation($dependency, $dependantLayerName, $dependeeLayerName);
+                    $violation = new Violation($dependency, $dependantLayerName, $dependeeLayerName);
+                    $event = new ViolationEvent($violation);
+                    $this->eventDispatcher->dispatch($event);
+
+                    if ($event->isSkipped()) {
+                        $rules[] = new SkippedViolation($dependency, $dependantLayerName, $dependeeLayerName);
+                        continue;
+                    }
+
+                    $rules[] = $violation;
                 }
             }
         }
@@ -83,7 +102,12 @@ class RulesetEngine
             }
         }
 
-        return new Context($rules, $errors, $warnings);
+        $context = new Context($rules, $errors, $warnings);
+        $event = new PostRulesetProcessingEvent($context);
+
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->getContext();
     }
 
     private function ignoreUncoveredInternalClass(ConfigurationRuleset $configuration, ClassLikeName $tokenName): bool
