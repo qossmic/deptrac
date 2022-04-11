@@ -9,6 +9,7 @@ use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use Qossmic\Deptrac\Console\Output;
 use SplFileInfo;
+use Symfony\Component\Filesystem\Path;
 
 final class GraphVizOutputImageFormatter extends GraphVizOutputFormatter
 {
@@ -22,12 +23,12 @@ final class GraphVizOutputImageFormatter extends GraphVizOutputFormatter
         $dumpImagePath = $outputFormatterInput->getOutputPath();
         if (null !== $dumpImagePath) {
             $imageFile = new SplFileInfo($dumpImagePath);
-            if (!is_dir($imageFile->getPath()) && !mkdir($imageFile->getPath())) {
-                throw new LogicException(sprintf('Unable to dump image: Path "%s" does not exist and is not writable.', $imageFile->getPath()));
+            if (!$imageFile->getPathInfo()->isWritable()) {
+                throw new LogicException(sprintf('Unable to dump image: Path "%s" does not exist or is not writable.', Path::canonicalize($imageFile->getPathInfo()->getPathname())));
             }
             try {
-                $graph->export('png', $dumpImagePath);
-                $output->writeLineFormatted('<info>Image dumped to '.realpath($dumpImagePath).'</info>');
+                $graph->export($imageFile->getExtension() ?: 'png', $imageFile->getPathname());
+                $output->writeLineFormatted('<info>Image dumped to '.$imageFile->getPathname().'</info>');
             } catch (Exception $exception) {
                 throw new LogicException('Unable to display output: '.$exception->getMessage());
             }
