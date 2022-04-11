@@ -1,3 +1,19 @@
+# Upgrade from 0.19 to 0.20
+
+## Baseline Formatter
+
+### What?
+
+* The default filename created by the baseline formatter changed.
+    ```
+    From: depfile.baseline.yml
+    To:   deptrac.baseline.yaml
+    ```
+If you are not using the `-o|--output=` option, then you will end up with 2 files
+(old and new one) and likely import the old one in your main deptrac.yaml. You
+can avoid this by using the `-o` option or updating your deptrac.yaml and
+removing the old baseline file.
+
 # Upgrade from 0.18 to 0.19
 
 ## Depfile (Configuration File)

@@ -1,3 +1,4 @@
-skip_violations:
-  OriginalA:
-    - OriginalB
+parameters:
+  skip_violations:
+    OriginalA:
+      - OriginalB

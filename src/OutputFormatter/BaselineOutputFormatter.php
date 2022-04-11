@@ -15,7 +15,7 @@ use function sort;
 
 final class BaselineOutputFormatter implements OutputFormatterInterface
 {
-    private const DEFAULT_PATH = './depfile.baseline.yml';
+    private const DEFAULT_PATH = './deptrac.baseline.yaml';
 
     public static function getName(): string
     {
@@ -50,9 +50,11 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
             $baselineFile,
             Yaml::dump(
                 [
-                    'skip_violations' => $groupedViolations,
+                    'parameters' => [
+                        'skip_violations' => $groupedViolations,
+                    ],
                 ],
-                3,
+                4,
                 2
             )
         );
