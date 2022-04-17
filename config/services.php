@@ -49,6 +49,8 @@ use Qossmic\Deptrac\File\YmlFileLoader;
 use Qossmic\Deptrac\InputCollector\FileInputCollector;
 use Qossmic\Deptrac\InputCollector\InputCollectorInterface;
 use Qossmic\Deptrac\Layer\Collector\BoolCollector;
+use Qossmic\Deptrac\Layer\Collector\ClassCollector;
+use Qossmic\Deptrac\Layer\Collector\ClassLikeCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassNameCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassNameRegexCollector;
 use Qossmic\Deptrac\Layer\Collector\CollectorProvider;
@@ -61,9 +63,11 @@ use Qossmic\Deptrac\Layer\Collector\FunctionNameCollector;
 use Qossmic\Deptrac\Layer\Collector\ImplementsCollector;
 use Qossmic\Deptrac\Layer\Collector\InheritanceLevelCollector;
 use Qossmic\Deptrac\Layer\Collector\InheritsCollector;
+use Qossmic\Deptrac\Layer\Collector\InterfaceCollector;
 use Qossmic\Deptrac\Layer\Collector\LayerCollector;
 use Qossmic\Deptrac\Layer\Collector\MethodCollector;
 use Qossmic\Deptrac\Layer\Collector\SuperglobalCollector;
+use Qossmic\Deptrac\Layer\Collector\TraitCollector;
 use Qossmic\Deptrac\Layer\Collector\UsesCollector;
 use Qossmic\Deptrac\Layer\LayerResolver;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
@@ -198,6 +202,12 @@ return static function (ContainerConfigurator $container): void {
         ->set(BoolCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_BOOL]);
     $services
+        ->set(ClassCollector::class)
+        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS]);
+    $services
+        ->set(ClassLikeCollector::class)
+        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASSLIKE]);
+    $services
         ->set(ClassNameCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS_NAME]);
     $services
@@ -219,6 +229,9 @@ return static function (ContainerConfigurator $container): void {
         ->set(InheritanceLevelCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_INHERITANCE]);
     $services
+        ->set(InterfaceCollector::class)
+        ->tag('collector', ['type' => CollectorTypes::TYPE_INTERFACE]);
+    $services
         ->set(InheritsCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_INHERITS]);
     $services
@@ -230,6 +243,9 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(SuperglobalCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_SUPERGLOBAL]);
+    $services
+        ->set(TraitCollector::class)
+        ->tag('collector', ['type' => CollectorTypes::TYPE_TRAIT]);
     $services
         ->set(UsesCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_USES]);

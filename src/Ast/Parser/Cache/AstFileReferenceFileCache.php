@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Ast\Parser\Cache;
 use Qossmic\Deptrac\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Ast\AstMap\File\FileToken;
@@ -111,6 +112,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
                             DependencyToken::class,
                             FileToken::class,
                             ClassLikeToken::class,
+                            ClassLikeType::class,
                             FunctionLikeToken::class,
                             SuperGlobalToken::class,
                             FileOccurrence::class,

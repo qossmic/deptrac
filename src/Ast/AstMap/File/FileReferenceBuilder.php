@@ -38,9 +38,42 @@ final class FileReferenceBuilder extends ReferenceBuilder
     /**
      * @param string[] $templateTypes
      */
+    public function newClass(string $classLikeName, array $templateTypes = []): ClassLikeReferenceBuilder
+    {
+        $classReference = ClassLikeReferenceBuilder::createClass($this->filepath, $classLikeName, $templateTypes);
+        $this->classReferences[] = $classReference;
+
+        return $classReference;
+    }
+
+    /**
+     * @param string[] $templateTypes
+     */
+    public function newTrait(string $classLikeName, array $templateTypes = []): ClassLikeReferenceBuilder
+    {
+        $classReference = ClassLikeReferenceBuilder::createTrait($this->filepath, $classLikeName, $templateTypes);
+        $this->classReferences[] = $classReference;
+
+        return $classReference;
+    }
+
+    /**
+     * @param string[] $templateTypes
+     */
     public function newClassLike(string $classLikeName, array $templateTypes = []): ClassLikeReferenceBuilder
     {
-        $classReference = ClassLikeReferenceBuilder::create($this->filepath, $classLikeName, $templateTypes);
+        $classReference = ClassLikeReferenceBuilder::createClassLike($this->filepath, $classLikeName, $templateTypes);
+        $this->classReferences[] = $classReference;
+
+        return $classReference;
+    }
+
+    /**
+     * @param string[] $templateTypes
+     */
+    public function newInterface(string $classLikeName, array $templateTypes = []): ClassLikeReferenceBuilder
+    {
+        $classReference = ClassLikeReferenceBuilder::createInterface($this->filepath, $classLikeName, $templateTypes);
         $this->classReferences[] = $classReference;
 
         return $classReference;

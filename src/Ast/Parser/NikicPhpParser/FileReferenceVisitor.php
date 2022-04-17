@@ -18,6 +18,7 @@ use PhpParser\Node\Stmt\GroupUse;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
+use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
@@ -245,23 +246,36 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     private function enterClassLike(string $name, ClassLike $node): void
     {
-        $this->currentReference =
-            $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node));
-
-        if ($node instanceof Class_) {
-            if ($node->extends instanceof Name) {
-                $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
-            }
-            foreach ($node->implements as $implement) {
-                $this->currentReference->implements($implement->toCodeString(), $implement->getLine());
-            }
-        }
-
         if ($node instanceof Interface_) {
+            $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node));
+
             foreach ($node->extends as $extend) {
                 $this->currentReference->implements($extend->toCodeString(), $extend->getLine());
             }
+
+            return;
         }
+
+        if ($node instanceof Class_) {
+            $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node));
+            if ($node->extends instanceof Name) {
+                $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
+            }
+
+            foreach ($node->implements as $implement) {
+                $this->currentReference->implements($implement->toCodeString(), $implement->getLine());
+            }
+
+            return;
+        }
+
+        if ($node instanceof Trait_) {
+            $this->currentReference = $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node));
+
+            return;
+        }
+
+        $this->currentReference = $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node));
     }
 
     private function enterFunction(string $name, Node\Stmt\Function_ $node): void

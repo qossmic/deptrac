@@ -15,6 +15,7 @@ use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 class ClassLikeReference implements TokenReferenceInterface
 {
     private ClassLikeToken $classLikeName;
+    private ClassLikeType $classLikeType;
 
     private ?FileReference $fileReference = null;
 
@@ -28,9 +29,10 @@ class ClassLikeReference implements TokenReferenceInterface
      * @param AstInherit[]      $inherits
      * @param DependencyToken[] $dependencies
      */
-    public function __construct(ClassLikeToken $classLikeName, array $inherits = [], array $dependencies = [])
+    public function __construct(ClassLikeToken $classLikeName, ClassLikeType $classLikeType = null, array $inherits = [], array $dependencies = [])
     {
         $this->classLikeName = $classLikeName;
+        $this->classLikeType = $classLikeType ?? ClassLikeType::classLike();
         $this->dependencies = $dependencies;
         $this->inherits = $inherits;
     }
@@ -51,6 +53,11 @@ class ClassLikeReference implements TokenReferenceInterface
     public function getToken(): ClassLikeToken
     {
         return $this->classLikeName;
+    }
+
+    public function getType(): ClassLikeType
+    {
+        return $this->classLikeType;
     }
 
     /**
