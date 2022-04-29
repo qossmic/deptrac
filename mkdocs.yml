@@ -20,6 +20,7 @@ nav:
   - Code of Conduct: CODE_OF_CONDUCT.md
   - Contributing: CONTRIBUTING.md
   - Security: SECURITY.md
+  - Extending Deptrac: extending_deptrac.md
 
 theme:
   name: material
