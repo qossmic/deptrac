@@ -4,33 +4,33 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Dependency;
 
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
-use Qossmic\Deptrac\AstRunner\AstMap\TokenName;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\TokenInterface;
 
 /**
  * @psalm-immutable
  */
 class Dependency implements DependencyInterface
 {
-    private TokenName $dependant;
-    private TokenName $dependee;
+    private TokenInterface $depender;
+    private TokenInterface $dependent;
     private FileOccurrence $fileOccurrence;
 
-    public function __construct(TokenName $dependant, TokenName $dependee, FileOccurrence $fileOccurrence)
+    public function __construct(TokenInterface $depender, TokenInterface $dependent, FileOccurrence $fileOccurrence)
     {
-        $this->dependant = $dependant;
-        $this->dependee = $dependee;
+        $this->depender = $depender;
+        $this->dependent = $dependent;
         $this->fileOccurrence = $fileOccurrence;
     }
 
-    public function getDependant(): TokenName
+    public function getDepender(): TokenInterface
     {
-        return $this->dependant;
+        return $this->depender;
     }
 
-    public function getDependee(): TokenName
+    public function getDependent(): TokenInterface
     {
-        return $this->dependee;
+        return $this->dependent;
     }
 
     public function getFileOccurrence(): FileOccurrence

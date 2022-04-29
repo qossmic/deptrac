@@ -2,12 +2,13 @@
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Rule;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\Rule;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Violation;
 
 final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
@@ -19,17 +20,12 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         return 'github-actions';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function finish(Context $context, Output $output, OutputFormatterInput $outputFormatterInput): void
+    public function finish(LegacyResult $result, Output $output, OutputFormatterInput $outputFormatterInput): void
     {
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
@@ -42,10 +38,10 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             $message = sprintf(
                 '%s%s must not depend on %s (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getDependant()->toString(),
-                $dependency->getDependee()->toString(),
-                $rule->getDependantLayerName(),
-                $rule->getDependeeLayerName()
+                $dependency->getDepender()->toString(),
+                $dependency->getDependent()->toString(),
+                $rule->getDependerLayer(),
+                $rule->getDependentLayer()
             );
 
             if ($dependency instanceof InheritDependency) {
@@ -61,16 +57,16 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             ));
         }
 
-        if ($outputFormatterInput->getReportUncovered() && $context->hasUncovered()) {
-            $this->printUncovered($context, $output, $outputFormatterInput->getFailOnUncovered());
+        if ($outputFormatterInput->getReportUncovered() && $result->hasUncovered()) {
+            $this->printUncovered($result, $output, $outputFormatterInput->getFailOnUncovered());
         }
 
-        if ($context->hasErrors()) {
-            $this->printErrors($context, $output);
+        if ($result->hasErrors()) {
+            $this->printErrors($result, $output);
         }
 
-        if ($context->hasWarnings()) {
-            $this->printWarnings($context, $output);
+        if ($result->hasWarnings()) {
+            $this->printWarnings($result, $output);
         }
     }
 
@@ -86,9 +82,9 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printUncovered(Context $context, Output $output, bool $reportAsError): void
+    private function printUncovered(LegacyResult $result, Output $output, bool $reportAsError): void
     {
-        foreach ($context->uncovered() as $u) {
+        foreach ($result->uncovered() as $u) {
             $dependency = $u->getDependency();
             $output->writeLineFormatted(
                 sprintf(
@@ -96,8 +92,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                     $reportAsError ? 'error' : 'warning',
                     $dependency->getFileOccurrence()->getFilepath(),
                     $dependency->getFileOccurrence()->getLine(),
-                    $dependency->getDependant()->toString(),
-                    $dependency->getDependee()->toString(),
+                    $dependency->getDepender()->toString(),
+                    $dependency->getDependent()->toString(),
                     $u->getLayer()
                 )
             );
@@ -115,23 +111,23 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
         $buffer[] = sprintf(
             '%s::%d',
-            $dependency->getOriginalDependency()->getDependee()->toString(),
+            $dependency->getOriginalDependency()->getDependent()->toString(),
             $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
         );
 
         return implode(' ->%0A', $buffer);
     }
 
-    private function printErrors(Context $context, Output $output): void
+    private function printErrors(LegacyResult $result, Output $output): void
     {
-        foreach ($context->errors() as $error) {
+        foreach ($result->errors() as $error) {
             $output->writeLineFormatted('::error ::'.$error->toString());
         }
     }
 
-    private function printWarnings(Context $context, Output $output): void
+    private function printWarnings(LegacyResult $result, Output $output): void
     {
-        foreach ($context->warnings() as $error) {
+        foreach ($result->warnings() as $error) {
             $output->writeLineFormatted('::warning ::'.$error->toString());
         }
     }

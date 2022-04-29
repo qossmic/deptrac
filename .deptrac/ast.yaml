@@ -1,0 +1,47 @@
+parameters:
+  paths:
+    - ../src
+
+  layers:
+    - name: AstLoader
+      collectors:
+        - type: className
+          value: ^Qossmic\\Deptrac\\Ast\\AstLoader
+    - name: AstMap
+      collectors:
+        - type: className
+          value: ^Qossmic\\Deptrac\\Ast\\AstMap
+    - name: Parser
+      collectors:
+        - type: className
+          value: ^Qossmic\\Deptrac\\Ast\\Parser
+    - name: PhpParser
+      collectors:
+        - type: bool
+          must:
+            - type: className
+              value: ^PhpParser\\
+          must_not:
+            - type: className
+              value: ^PhpParser\\Error$
+    - name: PhpDocParser
+      collectors:
+        - type: className
+          value: ^PHPStan\\PhpDocParser\\
+    - name: PhpDocumentor
+      collectors:
+        - type: className
+          value: ^phpDocumentor\\
+
+  ruleset:
+    AstMap: ~
+
+    Parser:
+      - AstMap
+      - PhpParser
+      - PhpDocParser
+      - PhpDocumentor
+
+    AstLoader:
+      - AstMap
+      - Parser

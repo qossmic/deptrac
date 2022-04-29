@@ -27,7 +27,7 @@ final class ConfigurationGraphVizTest extends TestCase
         ];
         $configurationGraphViz = ConfigurationGraphViz::fromArray($arr);
 
-        self::assertEquals($hiddenLayers, $configurationGraphViz->getHiddenLayers());
-        self::assertEquals($groups, $configurationGraphViz->getGroupsLayerMap());
+        self::assertSame($hiddenLayers, $configurationGraphViz->getHiddenLayers());
+        self::assertSame($groups, $configurationGraphViz->getGroupsLayerMap());
     }
 }

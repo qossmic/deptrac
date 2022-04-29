@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceFileCache;
-use Qossmic\Deptrac\AstRunner\Event\PostCreateAstMapEvent;
-use Qossmic\Deptrac\AstRunner\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Ast\Event\PostCreateAstMapEvent;
+use Qossmic\Deptrac\Ast\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceFileCache;
 use Qossmic\Deptrac\Subscriber\CacheableFileSubscriber;
 
 final class CacheableFileSubscriberTest extends TestCase

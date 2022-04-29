@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use phpDocumentor\GraphViz\Graph;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 
 final class GraphVizOutputDotFormatter extends GraphVizOutputFormatter

@@ -6,12 +6,13 @@ namespace Qossmic\Deptrac\OutputFormatter;
 
 use Exception;
 use Qossmic\Deptrac\Configuration\ConfigurationCodeclimate;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Rule;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Uncovered;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\Rule;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Uncovered;
+use Qossmic\Deptrac\Result\Violation;
 use function json_encode;
 use function json_last_error;
 use function sprintf;
@@ -19,14 +20,22 @@ use const JSON_PRETTY_PRINT;
 
 final class CodeclimateOutputFormatter implements OutputFormatterInterface
 {
+    /**
+     * @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}
+     */
+    private array $config;
+
+    /**
+     * @param array{codeclimate?: array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}} $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config['codeclimate'] ?? [];
+    }
+
     public static function getName(): string
     {
         return 'codeclimate';
-    }
-
-    public static function getConfigName(): string
-    {
-        return self::getName();
     }
 
     /**
@@ -35,16 +44,14 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
      * @throws Exception
      */
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        /** @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}} $config */
-        $config = $outputFormatterInput->getConfig();
-        $formatterConfig = ConfigurationCodeclimate::fromArray($config);
+        $formatterConfig = ConfigurationCodeclimate::fromArray($this->config);
 
         $violations = [];
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
                 continue;
             }
@@ -105,10 +112,10 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s must not depend on %s (%s on %s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
-            $violation->getDependantLayerName(),
-            $violation->getDependeeLayerName()
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
+            $violation->getDependerLayer(),
+            $violation->getDependentLayer()
         );
     }
 
@@ -130,10 +137,10 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s should not depend on %s (%s on %s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
-            $violation->getDependantLayerName(),
-            $violation->getDependeeLayerName()
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
+            $violation->getDependerLayer(),
+            $violation->getDependentLayer()
         );
     }
 
@@ -155,8 +162,8 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s has uncovered dependency on %s (%s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
             $violation->getLayer()
         );
     }
@@ -206,8 +213,8 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     {
         return sha1(implode(',', [
             get_class($rule),
-            $rule->getDependency()->getDependant()->toString(),
-            $rule->getDependency()->getDependee()->toString(),
+            $rule->getDependency()->getDepender()->toString(),
+            $rule->getDependency()->getDependent()->toString(),
             $rule->getDependency()->getFileOccurrence()->getFilepath(),
             $rule->getDependency()->getFileOccurrence()->getLine(),
         ]));

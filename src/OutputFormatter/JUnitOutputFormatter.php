@@ -8,13 +8,14 @@ use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use Exception;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\CoveredRule;
-use Qossmic\Deptrac\RulesetEngine\Rule;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Uncovered;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\CoveredRule;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\Rule;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Uncovered;
+use Qossmic\Deptrac\Result\Violation;
 
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
@@ -25,22 +26,17 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         return 'junit';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     /**
      * {@inheritdoc}
      *
      * @throws Exception
      */
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $xml = $this->createXml($context);
+        $xml = $this->createXml($result);
 
         $dumpXmlPath = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
         file_put_contents($dumpXmlPath, $xml);
@@ -50,7 +46,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     /**
      * @throws Exception
      */
-    private function createXml(Context $context): string
+    private function createXml(LegacyResult $result): string
     {
         if (!class_exists(DOMDocument::class)) {
             throw new Exception('Unable to create xml file (php-xml needs to be installed)');
@@ -59,18 +55,18 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $xmlDoc = new DOMDocument('1.0', 'UTF-8');
         $xmlDoc->formatOutput = true;
 
-        $this->addTestSuites($context, $xmlDoc);
+        $this->addTestSuites($result, $xmlDoc);
 
         return (string) $xmlDoc->saveXML();
     }
 
-    private function addTestSuites(Context $context, DOMDocument $xmlDoc): void
+    private function addTestSuites(LegacyResult $result, DOMDocument $xmlDoc): void
     {
         $testSuites = $xmlDoc->createElement('testsuites');
 
         $xmlDoc->appendChild($testSuites);
 
-        if ($context->hasErrors()) {
+        if ($result->hasErrors()) {
             $testSuite = $xmlDoc->createElement('testsuite');
             $testSuite->appendChild(new DOMAttr('id', '0'));
             $testSuite->appendChild(new DOMAttr('package', ''));
@@ -79,9 +75,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $testSuite->appendChild(new DOMAttr('tests', '0'));
             $testSuite->appendChild(new DOMAttr('failures', '0'));
             $testSuite->appendChild(new DOMAttr('skipped', '0'));
-            $testSuite->appendChild(new DOMAttr('errors', (string) count($context->errors())));
+            $testSuite->appendChild(new DOMAttr('errors', (string) count($result->errors())));
             $testSuite->appendChild(new DOMAttr('time', '0'));
-            foreach ($context->errors() as $message) {
+            foreach ($result->errors() as $message) {
                 $error = $xmlDoc->createElement('error');
                 $error->appendChild(new DOMAttr('message', $message->toString()));
                 $error->appendChild(new DOMAttr('type', 'WARNING'));
@@ -91,16 +87,16 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $testSuites->appendChild($testSuite);
         }
 
-        $this->addTestSuite($context, $xmlDoc, $testSuites);
+        $this->addTestSuite($result, $xmlDoc, $testSuites);
     }
 
-    private function addTestSuite(Context $context, DOMDocument $xmlDoc, DOMElement $testSuites): void
+    private function addTestSuite(LegacyResult $result, DOMDocument $xmlDoc, DOMElement $testSuites): void
     {
         /** @var array<string, array<Rule>> $layers */
         $layers = [];
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if ($rule instanceof CoveredRule) {
-                $layers[$rule->getDependantLayerName()][] = $rule;
+                $layers[$rule->getDependerLayer()][] = $rule;
             } elseif ($rule instanceof Uncovered) {
                 $layers[$rule->getLayer()][] = $rule;
             }
@@ -118,7 +114,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
-                $rulesByClassName[$rule->getDependency()->getDependant()->toString()][] = $rule;
+                $rulesByClassName[$rule->getDependency()->getDepender()->toString()][] = $rule;
             }
 
             $testSuite = $xmlDoc->createElement('testsuite');
@@ -169,11 +165,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d must not depend on %s (%s on %s)',
-            $dependency->getDependant()->toString(),
+            $dependency->getDepender()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getDependee()->toString(),
-            $violation->getDependantLayerName(),
-            $violation->getDependeeLayerName()
+            $dependency->getDependent()->toString(),
+            $violation->getDependerLayer(),
+            $violation->getDependentLayer()
         );
 
         $error = $xmlDoc->createElement('failure');
@@ -195,9 +191,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $message = sprintf(
             '%s:%d has uncovered dependency on %s (%s)',
-            $dependency->getDependant()->toString(),
+            $dependency->getDepender()->toString(),
             $dependency->getFileOccurrence()->getLine(),
-            $dependency->getDependee()->toString(),
+            $dependency->getDependent()->toString(),
             $rule->getLayer()
         );
 

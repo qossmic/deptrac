@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Error;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Uncovered;
-use Qossmic\Deptrac\RulesetEngine\Violation;
-use Qossmic\Deptrac\RulesetEngine\Warning;
+use Qossmic\Deptrac\Result\Error;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Uncovered;
+use Qossmic\Deptrac\Result\Violation;
+use Qossmic\Deptrac\Result\Warning;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -28,37 +28,37 @@ class TableOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
     {
-        static::assertEquals('table', (new TableOutputFormatter())->getName());
+        static::assertSame('table', (new TableOutputFormatter())->getName());
     }
 
     public function basicDataProvider(): iterable
     {
-        $originalA = ClassLikeName::fromFQCN('OriginalA');
-        $originalB = ClassLikeName::fromFQCN('OriginalB');
+        $originalA = ClassLikeToken::fromFQCN('OriginalA');
+        $originalB = ClassLikeToken::fromFQCN('OriginalB');
 
         yield [
             [
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
+                        ClassLikeToken::fromFQCN('ClassA'),
+                        ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
                         AstInherit::newExtends(
-                            ClassLikeName::fromFQCN('ClassInheritA'),
+                            ClassLikeToken::fromFQCN('ClassInheritA'),
                             FileOccurrence::fromFilepath('originalA.php', 3)
                         )
                             ->withPath(
                                 [
                                     AstInherit::newExtends(
-                                        ClassLikeName::fromFQCN('ClassInheritB'),
+                                        ClassLikeToken::fromFQCN('ClassInheritB'),
                                         FileOccurrence::fromFilepath('originalA.php', 4)
                                     ),
                                     AstInherit::newExtends(
-                                        ClassLikeName::fromFQCN('ClassInheritC'),
+                                        ClassLikeToken::fromFQCN('ClassInheritC'),
                                         FileOccurrence::fromFilepath('originalA.php', 5)
                                     ),
                                     AstInherit::newExtends(
-                                        ClassLikeName::fromFQCN('ClassInheritD'),
+                                        ClassLikeToken::fromFQCN('ClassInheritD'),
                                         FileOccurrence::fromFilepath('originalA.php', 6)
                                     ),
                                 ]
@@ -291,7 +291,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'an warning occurred' => [
             'rules' => [],
             'errors' => [],
-            'warnings' => [Warning::tokenIsInMoreThanOneLayer(ClassLikeName::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            'warnings' => [Warning::tokenIsInMoreThanOneLayer(ClassLikeToken::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
             ' ------------------------------------------------------------------------------------------------------------------------- 
   Warnings                                                                                                                 
  ------------------------------------------------------------------------------------------------------------------------- 
@@ -327,7 +327,7 @@ class TableOutputFormatterTest extends TestCase
 
         $formatter = new TableOutputFormatter();
         $formatter->finish(
-            new Context($rules, $errors, $warnings),
+            new LegacyResult($rules, $errors, $warnings),
             $output,
             new OutputFormatterInput(
                 null,
@@ -337,6 +337,6 @@ class TableOutputFormatterTest extends TestCase
             )
         );
 
-        static::assertEquals($expectedOutput, $bufferedOutput->fetch());
+        static::assertSame($expectedOutput, $bufferedOutput->fetch());
     }
 }

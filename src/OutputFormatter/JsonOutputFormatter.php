@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use Exception;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Uncovered;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Uncovered;
+use Qossmic\Deptrac\Result\Violation;
 use function json_encode;
 use function json_last_error;
 use function sprintf;
@@ -22,24 +23,19 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         return 'json';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     /**
      * {@inheritdoc}
      *
      * @throws Exception
      */
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $jsonArray = [];
         $violations = [];
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
                 continue;
             }
@@ -66,12 +62,12 @@ final class JsonOutputFormatter implements OutputFormatterInterface
         }
 
         $jsonArray['Report'] = [
-            'Violations' => count($context->violations()),
-            'Skipped violations' => count($context->skippedViolations()),
-            'Uncovered' => count($context->uncovered()),
-            'Allowed' => count($context->allowed()),
-            'Warnings' => count($context->warnings()),
-            'Errors' => count($context->errors()),
+            'Violations' => count($result->violations()),
+            'Skipped violations' => count($result->skippedViolations()),
+            'Uncovered' => count($result->uncovered()),
+            'Allowed' => count($result->allowed()),
+            'Warnings' => count($result->warnings()),
+            'Errors' => count($result->errors()),
         ];
 
         foreach ($violations as &$value) {
@@ -116,10 +112,10 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s must not depend on %s (%s on %s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
-            $violation->getDependantLayerName(),
-            $violation->getDependeeLayerName()
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
+            $violation->getDependerLayer(),
+            $violation->getDependentLayer()
         );
     }
 
@@ -143,10 +139,10 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s should not depend on %s (%s on %s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
-            $violation->getDependantLayerName(),
-            $violation->getDependeeLayerName()
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
+            $violation->getDependerLayer(),
+            $violation->getDependentLayer()
         );
     }
 
@@ -170,8 +166,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
         return sprintf(
             '%s has uncovered dependency on %s (%s)',
-            $dependency->getDependant()->toString(),
-            $dependency->getDependee()->toString(),
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
             $violation->getLayer()
         );
     }

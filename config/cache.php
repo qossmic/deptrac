@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceCacheInterface;
-use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceDeferredCacheInterface;
-use Qossmic\Deptrac\AstRunner\AstParser\Cache\AstFileReferenceFileCache;
+use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceCacheInterface;
+use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceDeferredCacheInterface;
+use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceFileCache;
 use Qossmic\Deptrac\Subscriber\CacheableFileSubscriber;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;

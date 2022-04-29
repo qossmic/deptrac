@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDotFormatter;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\RulesetEngine\Allowed;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Uncovered;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\Allowed;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\Uncovered;
+use Qossmic\Deptrac\Result\Violation;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -27,14 +27,14 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         $dotFile = __DIR__.'/data/graphviz.dot';
 
         $fileOccurrenceA = FileOccurrence::fromFilepath('classA.php', 0);
-        $classA = ClassLikeName::fromFQCN('ClassA');
+        $classA = ClassLikeToken::fromFQCN('ClassA');
 
-        $context = new Context([
-            new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
-            new Violation(new Dependency($classA, ClassLikeName::fromFQCN('ClassHidden'), $fileOccurrenceA), 'LayerA', 'LayerHidden'),
-            new Violation(new Dependency(ClassLikeName::fromFQCN('ClassAB'), ClassLikeName::fromFQCN('ClassBA'), FileOccurrence::fromFilepath('classAB.php', 1)), 'LayerA', 'LayerB'),
-            new Allowed(new Dependency($classA, ClassLikeName::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
-            new Uncovered(new Dependency($classA, ClassLikeName::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
+        $context = new LegacyResult([
+            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
+            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA), 'LayerA', 'LayerHidden'),
+            new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'), FileOccurrence::fromFilepath('classAB.php', 1)), 'LayerA', 'LayerB'),
+            new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
+            new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
         ], [], []);
 
         $bufferedOutput = new BufferedOutput();
@@ -43,14 +43,15 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             false,
             false,
             false,
-            [
+        );
+
+        (new GraphVizOutputDotFormatter([
+            'graphviz' => [
                 'hidden_layers' => [
                     'LayerHidden',
                 ],
-            ]
-        );
-
-        (new GraphVizOutputDotFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+            ],
+        ]))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
@@ -63,12 +64,12 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         $dotFile = __DIR__.'/data/graphviz.dot';
 
         $dependency = new Dependency(
-            ClassLikeName::fromFQCN('ClassA'),
-            ClassLikeName::fromFQCN('ClassC'),
+            ClassLikeToken::fromFQCN('ClassA'),
+            ClassLikeToken::fromFQCN('ClassC'),
             FileOccurrence::fromFilepath('classA.php', 0)
         );
 
-        $context = new Context([
+        $context = new LegacyResult([
             new Allowed($dependency, 'User Frontend', 'User Backend'),
             new Allowed($dependency, 'Admin', 'Admin Backend'),
             new Allowed($dependency, 'User Frontend', 'Admin'),
@@ -81,7 +82,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             false,
             false,
             false,
-            [
+        );
+
+        (new GraphVizOutputDotFormatter([
+            'graphviz' => [
                 'groups' => [
                     'User' => [
                         'User Frontend',
@@ -92,10 +96,8 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                         'Admin Backend',
                     ],
                 ],
-            ]
-        );
-
-        (new GraphVizOutputDotFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+            ],
+        ]))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
@@ -108,12 +110,12 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         $dotFile = __DIR__.'/data/graphviz.dot';
 
         $dependency = new Dependency(
-            ClassLikeName::fromFQCN('ClassA'),
-            ClassLikeName::fromFQCN('ClassC'),
+            ClassLikeToken::fromFQCN('ClassA'),
+            ClassLikeToken::fromFQCN('ClassC'),
             FileOccurrence::fromFilepath('classA.php', 0)
         );
 
-        $context = new Context([
+        $context = new LegacyResult([
             new Allowed($dependency, 'User Frontend', 'User Backend'),
             new Allowed($dependency, 'Admin', 'Admin Backend'),
             new Allowed($dependency, 'User Frontend', 'Admin'),
@@ -126,7 +128,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             false,
             false,
             false,
-            [
+        );
+
+        (new GraphVizOutputDotFormatter([
+            'graphviz' => [
                 'groups' => [
                     'User' => [
                         'User Frontend',
@@ -138,10 +143,8 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                     ],
                 ],
                 'pointToGroups' => true,
-            ]
-        );
-
-        (new GraphVizOutputDotFormatter())->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+            ],
+        ]))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups-point.dot', $dotFile);

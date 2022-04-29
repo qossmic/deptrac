@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Exception\Console;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Exception\Console\InvalidArgumentException;
+use Qossmic\Deptrac\Console\Exception\InvalidArgumentException;
 use RuntimeException;
 
 /**
- * @covers \Qossmic\Deptrac\Exception\Console\InvalidArgumentException
+ * @covers \Qossmic\Deptrac\Console\Exception\InvalidArgumentException
  */
 final class InvalidArgumentExceptionTest extends TestCase
 {

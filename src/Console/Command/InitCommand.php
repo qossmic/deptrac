@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Configuration\Dumper as ConfigurationDumper;
-use Qossmic\Deptrac\Exception\Configuration\FileAlreadyExistsException;
+use Qossmic\Deptrac\File\Dumper as ConfigurationDumper;
+use Qossmic\Deptrac\File\Exception\FileNotWritableException;
+use Qossmic\Deptrac\Finder\Exception\FileAlreadyExistsException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use function sprintf;
 
 class InitCommand extends Command
 {
@@ -37,11 +39,11 @@ class InitCommand extends Command
             /** @var string $targetFile */
             $targetFile = $input->getOption('config-file');
             $this->dumper->dump($targetFile);
-            $output->writeln('depfile <info>dumped.</info>');
+            $output->writeln('Depfile <info>dumped.</info>');
 
             return 0;
-        } catch (FileAlreadyExistsException $e) {
-            $output->writeln('<error>depfile.yaml already exists</error>');
+        } catch (FileNotWritableException|FileAlreadyExistsException $fileException) {
+            $output->writeln(sprintf('<error>%s</error>', $fileException->getMessage()));
 
             return 1;
         }

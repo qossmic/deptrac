@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use LogicException;
-use Qossmic\Deptrac\Analyser;
-use Qossmic\Deptrac\Configuration\Loader as ConfigurationLoader;
+use Psr\Container\ContainerExceptionInterface;
+use Qossmic\Deptrac\Analyser\LegacyDependencyLayersAnalyser;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
+use Qossmic\Deptrac\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\Exception\Console\AnalyseException;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\OutputFormatterFactory;
+use Qossmic\Deptrac\OutputFormatter\FormatterProvider;
 use Throwable;
 use function implode;
 use function sprintf;
@@ -20,27 +19,22 @@ use function sprintf;
  */
 final class AnalyseRunner
 {
-    private Analyser $analyser;
-    private ConfigurationLoader $configurationLoader;
-    private OutputFormatterFactory $formatterFactory;
+    private LegacyDependencyLayersAnalyser $analyser;
+    private FormatterProvider $formatterProvider;
 
     public function __construct(
-        Analyser $analyser,
-        ConfigurationLoader $configurationLoader,
-        OutputFormatterFactory $formatterFactory
+        LegacyDependencyLayersAnalyser $analyser,
+        FormatterProvider $formatterProvider
     ) {
         $this->analyser = $analyser;
-        $this->configurationLoader = $configurationLoader;
-        $this->formatterFactory = $formatterFactory;
+        $this->formatterProvider = $formatterProvider;
     }
 
     public function run(AnalyseOptions $options, Output $output): void
     {
-        $configuration = $this->configurationLoader->load($options->getConfigurationFile());
-
         try {
-            $formatter = $this->formatterFactory->getFormatterByName($options->getFormatter());
-        } catch (LogicException $exception) {
+            $formatter = $this->formatterProvider->get($options->getFormatter());
+        } catch (ContainerExceptionInterface $e) {
             $this->printFormatterNotFoundException($output, $options->getFormatter());
 
             throw AnalyseException::invalidFormatter();
@@ -51,27 +45,27 @@ final class AnalyseRunner
             $options->reportSkipped(),
             $options->reportUncovered(),
             $options->failOnUncovered(),
-            $configuration->getFormatterConfig($formatter::getConfigName())
         );
 
         $this->printCollectViolations($output);
-        $context = $this->analyser->analyse($configuration);
+
+        $result = $this->analyser->analyse();
 
         $this->printFormattingStart($output);
 
         try {
-            $formatter->finish($context, $output, $formatterInput);
+            $formatter->finish($result, $output, $formatterInput);
         } catch (Throwable $error) {
             $this->printFormatterError($output, $formatter::getName(), $error);
         }
 
-        if ($options->failOnUncovered() && $context->hasUncovered()) {
+        if ($options->failOnUncovered() && $result->hasUncovered()) {
             throw AnalyseException::finishedWithUncovered();
         }
-        if ($context->hasViolations()) {
+        if ($result->hasViolations()) {
             throw AnalyseException::finishedWithViolations();
         }
-        if ($context->hasErrors()) {
+        if ($result->hasErrors()) {
             throw AnalyseException::failedWithErrors();
         }
     }
@@ -108,7 +102,7 @@ final class AnalyseRunner
         $output->getStyle()->error([
             '',
             sprintf('Output formatter %s not found.', $formatterName),
-            sprintf('Available formatters: ["%s"]', implode('", "', $this->formatterFactory->getFormatterNames())),
+            sprintf('Available formatters: ["%s"]', implode('", "', $this->formatterProvider->getKnownFormatters())),
             '',
         ]);
         $output->writeLineFormatted('');

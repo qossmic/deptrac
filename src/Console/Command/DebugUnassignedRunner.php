@@ -4,28 +4,23 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Configuration\Loader;
+use Qossmic\Deptrac\Analyser\UnassignedTokenAnalyser;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\UnassignedAnalyser;
 
 /**
  * @internal Should only be used by DebugUnassignedCommand
  */
 final class DebugUnassignedRunner
 {
-    private UnassignedAnalyser $analyser;
-    private Loader $loader;
+    private UnassignedTokenAnalyser $processor;
 
-    public function __construct(UnassignedAnalyser $analyser, Loader $loader)
+    public function __construct(UnassignedTokenAnalyser $processor)
     {
-        $this->analyser = $analyser;
-        $this->loader = $loader;
+        $this->processor = $processor;
     }
 
-    public function run(DebugUnassignedOptions $options, Output $output): void
+    public function run(Output $output): void
     {
-        $configuration = $this->loader->load($options->getConfigurationFile());
-
-        $output->writeLineFormatted($this->analyser->analyse($configuration));
+        $output->writeLineFormatted($this->processor->findUnassignedTokens());
     }
 }

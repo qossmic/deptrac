@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\InheritDependency;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Violation;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -43,13 +43,13 @@ final class XMLOutputFormatterTest extends TestCase
             [
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
-                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
+                        ClassLikeToken::fromFQCN('ClassA'),
+                        ClassLikeToken::fromFQCN('ClassB'),
+                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
                         ])
                     ),
                     'LayerA',
@@ -62,7 +62,7 @@ final class XMLOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                    new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
                     'LayerA',
                     'LayerB'
                 ),
@@ -79,13 +79,13 @@ final class XMLOutputFormatterTest extends TestCase
             [
                 $violations = new SkippedViolation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
-                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
+                        ClassLikeToken::fromFQCN('ClassA'),
+                        ClassLikeToken::fromFQCN('ClassB'),
+                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
                         ])
                     ),
                     'LayerA',
@@ -93,13 +93,13 @@ final class XMLOutputFormatterTest extends TestCase
                 ),
                 new SkippedViolation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassC'),
-                        ClassLikeName::fromFQCN('ClassD'),
-                        new Dependency(ClassLikeName::fromFQCN('OriginalA'), ClassLikeName::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
-                        AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
-                            AstInherit::newExtends(ClassLikeName::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
+                        ClassLikeToken::fromFQCN('ClassC'),
+                        ClassLikeToken::fromFQCN('ClassD'),
+                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
+                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
                         ])
                     ),
                     'LayerA',
@@ -119,7 +119,7 @@ final class XMLOutputFormatterTest extends TestCase
 
         $formatter = new XMLOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new LegacyResult($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_xml_report_file, false, false, false)
         );

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console;
 
-use Qossmic\Deptrac\Exception\Console\CacheFileException;
+use Qossmic\Deptrac\Console\Exception\CacheFileException;
 use SplFileInfo;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\DelegatingLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -69,7 +71,11 @@ final class ServiceContainerBuilder
 
         self::registerCompilerPasses($builder);
         self::loadServices($builder, $this->cacheFile);
-        self::loadConfiguration($builder, $this->configFile);
+
+        $builder->setParameter('depfileDirectory', $this->workingDirectory);
+        if (null !== $this->configFile) {
+            self::loadConfiguration($builder, $this->configFile);
+        }
 
         $builder->compile(true);
 
@@ -106,14 +112,15 @@ final class ServiceContainerBuilder
         $loader->load('cache.php');
     }
 
-    private static function loadConfiguration(ContainerBuilder $builder, ?SplFileInfo $configFile): void
+    private static function loadConfiguration(ContainerBuilder $builder, SplFileInfo $configFile): void
     {
-        // We ignore unreadable files for now to make sure init command and fallback to deprecated config works
-        if (!$configFile instanceof SplFileInfo || !$configFile->isReadable()) {
-            return;
-        }
+        $builder->setParameter('depfileDirectory', $configFile->getPathInfo()->getPathname());
 
-        $loader = new YamlFileLoader($builder, new FileLocator([$configFile->getPath()]));
+        $loader = new DelegatingLoader(new LoaderResolver([
+            new YamlFileLoader($builder, new FileLocator([$configFile->getPathInfo()->getPathname()])),
+            new PhpFileLoader($builder, new FileLocator([$configFile->getPathInfo()->getPathname()])),
+        ]));
+
         $loader->load($configFile->getFilename());
     }
 }

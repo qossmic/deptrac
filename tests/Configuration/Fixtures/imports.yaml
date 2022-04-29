@@ -1,5 +1,0 @@
-imports:
-  - depfile.yaml
-
-parameters:
-  use_relative_path_from_depfile: true

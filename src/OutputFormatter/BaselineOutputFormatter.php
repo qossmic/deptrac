@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Violation;
 use Symfony\Component\Yaml\Yaml;
 use function array_values;
 use function ksort;
@@ -22,17 +23,12 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
         return 'baseline';
     }
 
-    public static function getConfigName(): string
-    {
-        return self::getName();
-    }
-
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $groupedViolations = $this->collectViolations($context);
+        $groupedViolations = $this->collectViolations($result);
 
         foreach ($groupedViolations as &$violations) {
             sort($violations);
@@ -64,22 +60,22 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     /**
      * @return array<string,array<string>>
      */
-    private function collectViolations(Context $context): array
+    private function collectViolations(LegacyResult $result): array
     {
         $violations = [];
-        foreach ($context->rules() as $rule) {
+        foreach ($result->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
             $dependency = $rule->getDependency();
-            $dependantClass = $dependency->getDependant()->toString();
-            $dependencyClass = $dependency->getDependee()->toString();
+            $dependerClass = $dependency->getDepender()->toString();
+            $dependentClass = $dependency->getDependent()->toString();
 
-            if (!array_key_exists($dependantClass, $violations)) {
-                $violations[$dependantClass] = [];
+            if (!array_key_exists($dependerClass, $violations)) {
+                $violations[$dependerClass] = [];
             }
 
-            $violations[$dependantClass][$dependencyClass] = $dependencyClass;
+            $violations[$dependerClass][$dependentClass] = $dependentClass;
         }
 
         return array_map(

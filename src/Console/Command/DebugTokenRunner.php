@@ -4,33 +4,39 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\Configuration\Loader;
+use Qossmic\Deptrac\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\TokenAnalyser;
-use function natcasesort;
+use function implode;
+use function sprintf;
 
 /**
  * @internal Should only be used by DebugTokenCommand
  */
 final class DebugTokenRunner
 {
-    private TokenAnalyser $analyser;
-    private Loader $loader;
+    private LayerForTokenAnalyser $processor;
 
-    public function __construct(TokenAnalyser $analyser, Loader $loader)
+    public function __construct(LayerForTokenAnalyser $processor)
     {
-        $this->analyser = $analyser;
-        $this->loader = $loader;
+        $this->processor = $processor;
     }
 
-    public function run(DebugTokenOptions $options, Output $output): void
+    public function run(string $tokenName, string $tokenType, Output $output): void
     {
-        $configuration = $this->loader->load($options->getConfigurationFile());
+        $matches = $this->processor->findLayerForToken($tokenName, $tokenType);
 
-        $layers = $this->analyser->analyse($configuration, $options->getToken());
+        if ([] === $matches) {
+            $output->writeLineFormatted(sprintf('Could not find a token matching "%s"', $tokenName));
 
-        natcasesort($layers);
+            return;
+        }
 
-        $output->writeLineFormatted($layers);
+        $headers = ['matching token', 'layers'];
+        $rows = [];
+        foreach ($matches as $token => $layers) {
+            $rows[] = [$token, [] !== $layers ? implode(', ', $layers) : '---'];
+        }
+
+        $output->getStyle()->table($headers, $rows);
     }
 }

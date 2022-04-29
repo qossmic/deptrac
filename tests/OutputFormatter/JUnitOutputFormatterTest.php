@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\AstRunner\AstMap\AstInherit;
-use Qossmic\Deptrac\AstRunner\AstMap\ClassLikeName;
-use Qossmic\Deptrac\AstRunner\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\RulesetEngine\Context;
-use Qossmic\Deptrac\RulesetEngine\Error;
-use Qossmic\Deptrac\RulesetEngine\SkippedViolation;
-use Qossmic\Deptrac\RulesetEngine\Violation;
+use Qossmic\Deptrac\Result\Error;
+use Qossmic\Deptrac\Result\LegacyResult;
+use Qossmic\Deptrac\Result\SkippedViolation;
+use Qossmic\Deptrac\Result\Violation;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -40,19 +40,19 @@ final class JUnitOutputFormatterTest extends TestCase
 
     public function basicDataProvider(): iterable
     {
-        $originalA = ClassLikeName::fromFQCN('OriginalA');
-        $originalB = ClassLikeName::fromFQCN('OriginalB');
-        $classInheritA = ClassLikeName::fromFQCN('ClassInheritA');
-        $classInheritB = ClassLikeName::fromFQCN('ClassInheritB');
-        $classInheritC = ClassLikeName::fromFQCN('ClassInheritC');
-        $classInheritD = ClassLikeName::fromFQCN('ClassInheritD');
+        $originalA = ClassLikeToken::fromFQCN('OriginalA');
+        $originalB = ClassLikeToken::fromFQCN('OriginalB');
+        $classInheritA = ClassLikeToken::fromFQCN('ClassInheritA');
+        $classInheritB = ClassLikeToken::fromFQCN('ClassInheritB');
+        $classInheritC = ClassLikeToken::fromFQCN('ClassInheritC');
+        $classInheritD = ClassLikeToken::fromFQCN('ClassInheritD');
 
         yield [
             [
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
+                        ClassLikeToken::fromFQCN('ClassA'),
+                        ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('foo.php', 12)),
                         AstInherit::newExtends($classInheritA, FileOccurrence::fromFilepath('foo.php', 3))->withPath([
                             AstInherit::newExtends($classInheritB, FileOccurrence::fromFilepath('foo.php', 4)),
@@ -87,8 +87,8 @@ final class JUnitOutputFormatterTest extends TestCase
             [
                 new SkippedViolation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassA'),
-                        ClassLikeName::fromFQCN('ClassB'),
+                        ClassLikeToken::fromFQCN('ClassA'),
+                        ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('foo.php', 12)),
                         AstInherit::newExtends($classInheritA, FileOccurrence::fromFilepath('foo.php', 3))->withPath([
                             AstInherit::newExtends($classInheritB, FileOccurrence::fromFilepath('foo.php', 4)),
@@ -101,8 +101,8 @@ final class JUnitOutputFormatterTest extends TestCase
                 ),
                 new Violation(
                     new InheritDependency(
-                        ClassLikeName::fromFQCN('ClassC'),
-                        ClassLikeName::fromFQCN('ClassD'),
+                        ClassLikeToken::fromFQCN('ClassC'),
+                        ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('foo.php', 12)),
                         AstInherit::newExtends($classInheritA, FileOccurrence::fromFilepath('foo.php', 3))->withPath([
                             AstInherit::newExtends($classInheritB, FileOccurrence::fromFilepath('foo.php', 4)),
@@ -125,7 +125,7 @@ final class JUnitOutputFormatterTest extends TestCase
     {
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new Context($rules, [], []),
+            new LegacyResult($rules, [], []),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
             false, false, false)
@@ -141,7 +141,7 @@ final class JUnitOutputFormatterTest extends TestCase
     {
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new Context([], [
+            new LegacyResult([], [
                 new Error('Skipped violation "Class1" for "Class2" was not matched.'),
             ], []),
             $this->createSymfonyOutput(new BufferedOutput()),

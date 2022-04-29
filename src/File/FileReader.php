@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\File;
 
-use Qossmic\Deptrac\Exception\File\CouldNotReadFileException;
+use Qossmic\Deptrac\File\Exception\CouldNotReadFileException;
 
 final class FileReader
 {

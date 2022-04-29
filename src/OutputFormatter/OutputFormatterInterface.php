@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
+use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\RulesetEngine\Context;
+use Qossmic\Deptrac\Result\LegacyResult;
 
 interface OutputFormatterInterface
 {
@@ -18,15 +19,10 @@ interface OutputFormatterInterface
     public static function getName(): string;
 
     /**
-     * Name of the section in configuration file.
-     */
-    public static function getConfigName(): string;
-
-    /**
      * Renders the final result.
      */
     public function finish(
-        Context $context,
+        LegacyResult $result,
         Output $output,
         OutputFormatterInput $outputFormatterInput
     ): void;
