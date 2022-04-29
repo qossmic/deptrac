@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\OutputFormatter;
 
 use Exception;
 use Qossmic\Deptrac\Configuration\ConfigurationCodeclimate;
+use Qossmic\Deptrac\Configuration\FormatterConfiguration;
 use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Result\LegacyResult;
@@ -25,12 +26,11 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
      */
     private array $config;
 
-    /**
-     * @param array{codeclimate?: array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}} $config
-     */
-    public function __construct(array $config)
+    public function __construct(FormatterConfiguration $config)
     {
-        $this->config = $config['codeclimate'] ?? [];
+        /** @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}} $extractedConfig */
+        $extractedConfig = $config->getConfigFor('codeclimate');
+        $this->config = $extractedConfig;
     }
 
     public static function getName(): string

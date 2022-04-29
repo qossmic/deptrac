@@ -7,6 +7,7 @@ namespace Tests\Qossmic\Deptrac\OutputFormatter;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\FormatterConfiguration;
 use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
@@ -45,13 +46,13 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             false,
         );
 
-        (new GraphVizOutputDotFormatter([
+        (new GraphVizOutputDotFormatter(new FormatterConfiguration([
             'graphviz' => [
                 'hidden_layers' => [
                     'LayerHidden',
                 ],
             ],
-        ]))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+        ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
@@ -84,7 +85,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             false,
         );
 
-        (new GraphVizOutputDotFormatter([
+        (new GraphVizOutputDotFormatter(new FormatterConfiguration([
             'graphviz' => [
                 'groups' => [
                     'User' => [
@@ -97,7 +98,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                     ],
                 ],
             ],
-        ]))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+        ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
@@ -130,7 +131,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             false,
         );
 
-        (new GraphVizOutputDotFormatter([
+        (new GraphVizOutputDotFormatter(new FormatterConfiguration([
             'graphviz' => [
                 'groups' => [
                     'User' => [
@@ -144,7 +145,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                 ],
                 'pointToGroups' => true,
             ],
-        ]))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
+        ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
         self::assertFileEquals(__DIR__.'/data/graphviz-groups-point.dot', $dotFile);
