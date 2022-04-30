@@ -20,8 +20,8 @@ class FormatterConfiguration
     /**
      * @return array<mixed>
      */
-    public function getConfigFor(?string $area): array
+    public function getConfigFor(string $area): array
     {
-        return null === $area ? $this->config : ($this->config[$area] ?? []);
+        return $this->config[$area] ?? [];
     }
 }
