@@ -13,6 +13,8 @@ class AstMapExtractor
     private InputCollectorInterface $inputCollector;
     private AstLoader $astLoader;
 
+    private ?AstMap $astMapCache = null;
+
     public function __construct(InputCollectorInterface $inputCollector, AstLoader $astLoader)
     {
         $this->inputCollector = $inputCollector;
@@ -21,6 +23,10 @@ class AstMapExtractor
 
     public function extract(): AstMap
     {
-        return $this->astLoader->createAstMap($this->inputCollector->collect());
+        if (null === $this->astMapCache) {
+            $this->astMapCache = $this->astLoader->createAstMap($this->inputCollector->collect());
+        }
+
+        return $this->astMapCache;
     }
 }
