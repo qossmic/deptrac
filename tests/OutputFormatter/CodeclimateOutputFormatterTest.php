@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Configuration\FormatterConfiguration;
 use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
@@ -375,9 +376,9 @@ final class CodeclimateOutputFormatterTest extends TestCase
     ): void {
         $bufferedOutput = new BufferedOutput();
 
-        $formatter = new CodeclimateOutputFormatter([
+        $formatter = new CodeclimateOutputFormatter(new FormatterConfiguration([
             'codeclimate' => $inputConfig,
-        ]);
+        ]));
         $formatter->finish(
             new LegacyResult($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
@@ -407,9 +408,9 @@ final class CodeclimateOutputFormatterTest extends TestCase
     ): void {
         $bufferedOutput = new BufferedOutput();
 
-        $formatter = new CodeclimateOutputFormatter([
+        $formatter = new CodeclimateOutputFormatter(new FormatterConfiguration([
             'codeclimate' => $inputConfig,
-        ]);
+        ]));
         $formatter->finish(
             new LegacyResult($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
@@ -430,7 +431,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
     public function testJsonRenderError(): void
     {
         $bufferedOutput = new BufferedOutput();
-        $formatter = new CodeclimateOutputFormatter([]);
+        $formatter = new CodeclimateOutputFormatter(new FormatterConfiguration([]));
 
         $malformedCharacters = "\xB1\x31";
         $violation = new Violation(

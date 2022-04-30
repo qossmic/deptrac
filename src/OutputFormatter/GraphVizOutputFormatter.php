@@ -9,6 +9,7 @@ use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
 use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
+use Qossmic\Deptrac\Configuration\FormatterConfiguration;
 use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Result\CoveredRule;
@@ -27,12 +28,11 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
      */
     private array $config;
 
-    /**
-     * @param array{graphviz?: array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool}} $config
-     */
-    public function __construct(array $config)
+    public function __construct(FormatterConfiguration $config)
     {
-        $this->config = $config['graphviz'] ?? [];
+        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool}  $extractedConfig */
+        $extractedConfig = $config->getConfigFor('graphviz');
+        $this->config = $extractedConfig;
     }
 
     public function finish(

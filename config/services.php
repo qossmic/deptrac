@@ -25,6 +25,7 @@ use Qossmic\Deptrac\Ast\Parser\ClassConstantExtractor;
 use Qossmic\Deptrac\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Configuration\FormatterConfiguration;
 use Qossmic\Deptrac\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Console\Command\AnalyseRunner;
 use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
@@ -274,6 +275,11 @@ return static function (ContainerConfigurator $container): void {
      * OutputFormatter
      */
     $services
+        ->set(FormatterConfiguration::class)
+        ->args([
+            '$config' => param('formatters'),
+        ]);
+    $services
         ->set(FormatterProvider::class)
         ->args([
             '$formatterLocator' => tagged_locator('output_formatter', null, 'getName'),
@@ -301,33 +307,18 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputDisplayFormatter::class)
-        ->args([
-            '$config' => param('formatters'),
-        ])
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputImageFormatter::class)
-        ->args([
-            '$config' => param('formatters'),
-        ])
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputDotFormatter::class)
-        ->args([
-            '$config' => param('formatters'),
-        ])
         ->tag('output_formatter');
     $services
         ->set(GraphVizOutputHtmlFormatter::class)
-        ->args([
-            '$config' => param('formatters'),
-        ])
         ->tag('output_formatter');
     $services
         ->set(CodeclimateOutputFormatter::class)
-        ->args([
-            '$config' => param('formatters'),
-        ])
         ->tag('output_formatter');
 
     /*
