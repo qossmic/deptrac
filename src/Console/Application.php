@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use function getcwd;
+use function in_array;
 use const DIRECTORY_SEPARATOR;
 
 final class Application extends BaseApplication
@@ -67,6 +68,10 @@ final class Application extends BaseApplication
             // Errors must be ignored, full binding/validation happens later when the command is known.
         }
 
+        if (null === $input->getArgument('command') && true === $input->getOption('version')) {
+            return parent::doRun($input, $output);
+        }
+
         /** @var string|numeric|null $configFile */
         $configFile = $input->getParameterOption('--config-file', $currentWorkingDirectory.DIRECTORY_SEPARATOR.'deptrac.yaml');
         $config = $input->hasParameterOption('--config-file')
@@ -80,7 +85,7 @@ final class Application extends BaseApplication
             : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache';
 
         $factory = new ServiceContainerBuilder($currentWorkingDirectory);
-        if ('init' !== $input->getArgument('command')) {
+        if (!in_array($input->getArgument('command'), ['init', 'list', 'help', 'completion'], true)) {
             $factory = $factory->withConfig($config);
         }
         if (false === $input->hasParameterOption('--no-cache', true)) {

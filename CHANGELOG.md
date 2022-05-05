@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.20.0](https://github.com/qossmic/deptrac/tree/0.20.0) (2022-05-05)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.3...0.20.0)
+
+**Merged pull requests:**
+
+- Bump phpstan/phpstan from 1.5.4 to 1.6.3 [\#873](https://github.com/qossmic/deptrac/pull/873) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/finder from 5.4.3 to 5.4.8 [\#872](https://github.com/qossmic/deptrac/pull/872) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump vimeo/psalm from 4.22.0 to 4.23.0 [\#871](https://github.com/qossmic/deptrac/pull/871) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/dependency-injection from 5.4.7 to 5.4.8 [\#870](https://github.com/qossmic/deptrac/pull/870) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/config from 5.4.7 to 5.4.8 [\#868](https://github.com/qossmic/deptrac/pull/868) ([dependabot[bot]](https://github.com/apps/dependabot))
+- AstMap In Memory Cache [\#866](https://github.com/qossmic/deptrac/pull/866) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Add formatter configuration, so that extensions can autowire it. [\#865](https://github.com/qossmic/deptrac/pull/865) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Bump phpstan/phpdoc-parser from 1.4.3 to 1.4.5 [\#863](https://github.com/qossmic/deptrac/pull/863) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Configuration overhaul [\#860](https://github.com/qossmic/deptrac/pull/860) ([dbrumann](https://github.com/dbrumann))
+- Update baseline file to adhere to new file format. [\#855](https://github.com/qossmic/deptrac/pull/855) ([dbrumann](https://github.com/dbrumann))
+- Allow graphviz-image to output image in different formats. [\#854](https://github.com/qossmic/deptrac/pull/854) ([dbrumann](https://github.com/dbrumann))
+- Remove unused dependency from AstRunner and its dependencies. [\#853](https://github.com/qossmic/deptrac/pull/853) ([dbrumann](https://github.com/dbrumann))
+- Upgrade tools and dependencies [\#852](https://github.com/qossmic/deptrac/pull/852) ([dbrumann](https://github.com/dbrumann))
+- Update box from 3.14 to 3.16 [\#851](https://github.com/qossmic/deptrac/pull/851) ([dbrumann](https://github.com/dbrumann))
+- 801 remove getType [\#833](https://github.com/qossmic/deptrac/pull/833) ([gennadigennadigennadi](https://github.com/gennadigennadigennadi))
+- Update collector keys [\#826](https://github.com/qossmic/deptrac/pull/826) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Create baseline directory if it does not exist. [\#825](https://github.com/qossmic/deptrac/pull/825) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update docs to reflect 0.19 depfile structure [\#822](https://github.com/qossmic/deptrac/pull/822) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Bump phpstan/phpstan-symfony from 1.0.4 to 1.1.5 [\#819](https://github.com/qossmic/deptrac/pull/819) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/yaml from 5.4.2 to 5.4.3 [\#817](https://github.com/qossmic/deptrac/pull/817) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/options-resolver from 5.4.0 to 5.4.3 [\#816](https://github.com/qossmic/deptrac/pull/816) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/finder from 5.4.2 to 5.4.3 [\#815](https://github.com/qossmic/deptrac/pull/815) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/console from 5.4.2 to 5.4.3 [\#814](https://github.com/qossmic/deptrac/pull/814) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/dependency-injection from 5.4.2 to 5.4.3 [\#813](https://github.com/qossmic/deptrac/pull/813) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/config from 5.4.2 to 5.4.3 [\#812](https://github.com/qossmic/deptrac/pull/812) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/filesystem from 5.4.0 to 5.4.3 [\#811](https://github.com/qossmic/deptrac/pull/811) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/event-dispatcher from 5.4.0 to 5.4.3 [\#810](https://github.com/qossmic/deptrac/pull/810) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Added a Codeclimate output formatter [\#808](https://github.com/qossmic/deptrac/pull/808) ([marekstodolny](https://github.com/marekstodolny))
+
 ## [0.19.3](https://github.com/qossmic/deptrac/tree/0.19.3) (2022-01-27)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.2...0.19.3)
