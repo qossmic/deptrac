@@ -15,35 +15,54 @@ parameters:
       collectors:
         - type: bool
           must:
-            - type: className
+            - type: classLike
               value: .*Foo\\.*
-            - type: className
+            - type: classLike
               value: .*\\Asset.*
           must_not:
-            - type: className
+            - type: classLike
               value: .*Assetic.*
 ```
 
 Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part
 of the *Asset* layer.
 
-## `className` Collector
+## `class` Collector
 
-The `className` collector allows collecting classes by matching their fully
-qualified name to a simplified regular expression. Any matching class will be
+The `class` collector allows collecting only classes by matching their fully
+qualified name to a simplified regular expression. Any match will be
 added to the assigned layer.
 
 ```yaml
 parameters:
   layers:
-    - name: Controller
+    - name: Provider
       collectors:
-        - type: className
-          value: .*Controller.*
+        - type: class
+          value: .*Provider.*
 ```
 
 Every class name that matches the regular expression becomes a part of the
-*controller* layer. This collector has predefined delimiters and
+*Provider* layer. This collector has predefined delimiters and
+modifier: `/YOUR_EXPRESSION/i`
+
+## `classLike` Collector
+
+The `classLike` collector allows collecting classes by matching their fully
+qualified name to a simplified regular expression. Any match will be
+added to the assigned layer.
+
+```yaml
+parameters:
+  layers:
+    - name: Domain
+      collectors:
+        - type: classLike
+          value: .*Domain.*
+```
+
+Every classLike name that matches the regular expression becomes a part of the
+*domain* layer. This collector has predefined delimiters and
 modifier: `/YOUR_EXPRESSION/i`
 
 ## `classNameRegex` Collector
@@ -125,6 +144,24 @@ parameters:
         - type: implements
           value: 'App\SomeInterface'
 ```
+# `interface` Collector
+
+The `interface` collector allows collecting only interfaces by matching their fully
+qualified name to a simplified regular expression. Any matching interface will be
+added to the assigned layer.
+
+```yaml
+parameters:
+  layers:
+    - name: Contracts
+      collectors:
+        - type: interface
+          value: .*Contracts.*
+```
+
+Every interface name that matches the regular expression becomes a part of the
+*Interfaces* layer. This collector has predefined delimiters and
+modifier: `/YOUR_EXPRESSION/i`
 
 ## `inherits` Collector
 
@@ -198,6 +235,25 @@ parameters:
             - _POST
             - _GET
 ```
+
+# `trait` Collector
+
+The `trait` collector allows collecting only traits by matching their fully
+qualified name to a simplified regular expression. Any matching trait will be
+added to the assigned layer.
+
+```yaml
+parameters:
+  layers:
+    - name: Traits
+      collectors:
+        - type: trait
+          value: .*Traits.*
+```
+
+Every trait name that matches the regular expression becomes a part of the
+*traits* layer. This collector has predefined delimiters and
+modifier: `/YOUR_EXPRESSION/i`
 
 ## `uses` Collector
 
