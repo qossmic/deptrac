@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Ast\AstMap\ClassLike;
 
-use LogicException;
 use Qossmic\Deptrac\Ast\AstMap\TokenInterface;
 use Qossmic\Deptrac\Layer\Collector\CollectorTypes;
 
