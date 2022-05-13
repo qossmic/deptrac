@@ -51,7 +51,6 @@ use Qossmic\Deptrac\InputCollector\InputCollectorInterface;
 use Qossmic\Deptrac\Layer\Collector\BoolCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassLikeCollector;
-use Qossmic\Deptrac\Layer\Collector\ClassNameCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassNameRegexCollector;
 use Qossmic\Deptrac\Layer\Collector\CollectorProvider;
 use Qossmic\Deptrac\Layer\Collector\CollectorResolver;
@@ -206,9 +205,7 @@ return static function (ContainerConfigurator $container): void {
         ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS]);
     $services
         ->set(ClassLikeCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASSLIKE]);
-    $services
-        ->set(ClassNameCollector::class)
+        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASSLIKE])
         ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS_NAME]);
     $services
         ->set(ClassNameRegexCollector::class)
