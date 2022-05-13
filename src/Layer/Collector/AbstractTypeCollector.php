@@ -26,15 +26,10 @@ abstract class AbstractTypeCollector extends RegexCollector
             return false;
         }
 
-        if (
-            false === (
-                ClassLikeType::classLike()->matches($this->getType()) ||
-                $reference->getType()->matches($this->getType())
-            )) {
-            return false;
-        }
+        $isClassLike = ClassLikeType::classLike()->matches($this->getType());
+        $isSameType = $reference->getType()->matches($this->getType());
 
-        return $reference->getToken()->match($this->getValidatedPattern($config));
+        return ($isClassLike || $isSameType) && $reference->getToken()->match($this->getValidatedPattern($config));
     }
 
     protected function getPattern(array $config): string
