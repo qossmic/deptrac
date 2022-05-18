@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<phive xmlns="https://phar.io/phive">
-  <phar name="phpunit" version="^9.5" installed="9.5.11" location="./tools/phpunit" copy="true"/>
-  <phar name="infection" version="^0.25" installed="0.25.6" location="./tools/infection" copy="true"/>
-  <phar name="humbug/box" version="^3.16.0" installed="3.16.0" location="./tools/box" copy="true"/>
-</phive>
