@@ -16,22 +16,16 @@ your merge request can be accepted.
 
 - PHP in version 7.4 or above
 - [Composer](https://getcomposer.org/)
-- [PHIVE](https://phar.io/)
 - `make`
 
 ## Installing tools
 
-We do not bundle tools like phpunit as dev-dependencies via composer. Instead,
-we use [PHIVE](https://phar.io/). You can install all tools needed for developing
-Deptrac using the Makefile by running the following command:
+You can install all tools needed for developing Deptrac using the Makefile by
+running the following command:
 
 ```bash
-make tools-install
+make composer-install
 ```
-
-If you would rather use composer, then consider installing the dependencies
-globally using `composer global require` and make sure to use the appropriate
-versions.
 
 ## Pipeline
 
@@ -44,10 +38,9 @@ Any merge request must pass our build pipeline which consists of the following:
 
 You can use the provided Makefile to execute these steps locally. The `make`
 command is supported by most major operating systems, but you might need to
-install it first. The Makefile will use PHIVE to install the required tools like
-PHPUnit, Psalm or PHPStan. We do not provide these tools as dev-dependencies in
-composer. If you don't want to use PHIVE or the Makefile you will need to
-install them yourself.
+install it first. The Makefile will use Composer to install the required tools
+like PHPUnit, Psalm or PHPStan. If you don't want to use Composer or the
+Makefile you will need to install them yourself.
 
 ### Tests
 
