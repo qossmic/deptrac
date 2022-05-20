@@ -48,7 +48,7 @@ modifier: `/YOUR_EXPRESSION/i`
 
 ## `classLike` Collector
 
-The `classLike` collector allows collecting classes by matching their fully
+The `classLike` collector allows collecting classes and anything similar to classes like interfaces, traits or enums, by matching their fully
 qualified name to a simplified regular expression. Any match will be
 added to the assigned layer.
 
