@@ -19,8 +19,8 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "composer/xdebug-handler": "^3.0",
-        "jetbrains/phpstorm-stubs": "^2020.2",
+        "composer/xdebug-handler": "^2.0",
+        "jetbrains/phpstorm-stubs": "^2021.3",
         "nikic/php-parser": "^4.3",
         "phpdocumentor/graphviz": "^2.1",
         "phpdocumentor/type-resolver": "^1.0",
@@ -57,9 +57,12 @@
         }
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.8",
+        "friendsofphp/php-cs-fixer": "^3.4",
+        "humbug/box": "^3.16.0",
+        "infection/infection": "^0.25",
         "phpstan/phpstan": "^1.5",
         "phpstan/phpstan-symfony": "^1.0",
+        "phpunit/phpunit": "^9.5",
         "vimeo/psalm": "^4.22"
     }
 }

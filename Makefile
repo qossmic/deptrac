@@ -1,22 +1,16 @@
-BOX_BIN := ./tools/box
+BOX_BIN := ./vendor/bin/box
 COMPOSER_BIN := composer
 PHP_BIN := php
-PHIVE_BIN := phive
 PHP_CS_FIXER_BIN := ./vendor/bin/php-cs-fixer
 PHPSTAN_BIN	:= ./vendor/bin/phpstan
 PSALM_BIN	:= ./vendor/bin/psalm
-PHPUNIT_BIN	:= ./tools/phpunit
-INFECTION_BIN	:= ./tools/infection
+PHPUNIT_BIN	:= ./vendor/bin/phpunit
+INFECTION_BIN	:= ./vendor/bin/infection
 
-.PHONY: build tools-install composer-install tests tests-coverage gpg php-cs-check php-cs-fix phpstan
+.PHONY: build composer-install tests tests-coverage gpg php-cs-check php-cs-fix phpstan
 
-build: tools-install tests
+build: tests
 	$(BOX_BIN) compile
-
-tools-install:
-	gpg --keyserver hkps://keyserver.ubuntu.com --receive-keys E82B2FB314E9906E
-	gpg --keyserver hkps://keys.openpgp.org --receive-keys 4AA394086372C20A CF1A108D0E7AE720 C5095986493B4AA0 12CE0F1D262429A5
-	$(PHIVE_BIN) --no-progress install --copy --trust-gpg-keys E82B2FB314E9906E,4AA394086372C20A,CF1A108D0E7AE720,C5095986493B4AA0,12CE0F1D262429A5 --force-accept-unsigned
 
 composer-install:
 	$(COMPOSER_BIN) install --optimize-autoloader
@@ -43,7 +37,7 @@ deptrac:
 psalm:
 	$(PSALM_BIN)
 
-infection: tools-install composer-install
+infection: composer-install
 	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=80
 
 gpg:

@@ -24,17 +24,6 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v2
 
-      - name: "Cache tools installed with phive"
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.phive
-          key: phive-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('.phive/phars.xml') }}
-          restore-keys: |
-            phive-${{ runner.os }}-${{ matrix.php-version }}-
-            phive-${{ runner.os }}-
-            phive-
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -42,7 +31,7 @@ jobs:
           extensions: mbstring, xml, ctype, iconv
           ini-values: phar.readonly=0
           coverage: none
-          tools: phive, composer
+          tools: composer
 
       - name: Get composer cache directory
         id: composercache
@@ -57,9 +46,6 @@ jobs:
             composer-${{ runner.os }}-${{ matrix.php-version }}-
             composer-${{ runner.os }}-
             composer-
-
-      - name: "Install tools with phive"
-        run: make tools-install
 
       - name: "Install dependencies with composer"
         run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
