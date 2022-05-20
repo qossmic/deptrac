@@ -15,9 +15,6 @@ var_dump($env->get('BAR'));
 var_dump($env->get('TEST'));
 
 --EXPECT--
-Standard input code:7:
 string(4) "true"
-Standard input code:8:
 bool(false)
-Standard input code:9:
 string(4) "test"

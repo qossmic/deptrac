@@ -33,7 +33,7 @@ jobs:
           tools: composer
 
       - name: "Install dependencies with composer"
-        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: make composer-install
 
       - name: "Check cs"
         run: make php-cs-check
@@ -76,7 +76,7 @@ jobs:
             composer-
 
       - name: "Install dependencies with composer"
-        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: make composer-install
 
       - name: PHPStan
         run: make phpstan
@@ -119,7 +119,7 @@ jobs:
             composer-
 
       - name: "Install dependencies with composer"
-        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: make composer-install
 
       - name: Psalm
         run: make psalm

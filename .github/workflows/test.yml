@@ -133,7 +133,7 @@ jobs:
             composer-
 
       - name: "Install dependencies with composer"
-        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: make composer-install
 
       - name: "Run deptrac"
         run: make deptrac

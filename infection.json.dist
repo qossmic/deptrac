@@ -10,8 +10,5 @@
     },
     "mutators": {
         "@default": true
-    },
-    "phpUnit": {
-        "customPath": "tools/phpunit"
     }
 }
