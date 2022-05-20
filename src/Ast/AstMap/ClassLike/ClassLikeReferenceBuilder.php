@@ -10,7 +10,8 @@ use Qossmic\Deptrac\Ast\AstMap\ReferenceBuilder;
 
 final class ClassLikeReferenceBuilder extends ReferenceBuilder
 {
-    private string $classLikeName;
+    private ClassLikeToken $classLikeToken;
+    private ClassLikeType $classLikeType;
 
     /** @var AstInherit[] */
     private array $inherits = [];
@@ -18,25 +19,52 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath, string $classLikeName)
+    protected function __construct(array $tokenTemplates, string $filepath, ClassLikeToken $classLikeToken, ClassLikeType $classLikeType)
     {
         parent::__construct($tokenTemplates, $filepath);
-        $this->classLikeName = $classLikeName;
+
+        $this->classLikeToken = $classLikeToken;
+        $this->classLikeType = $classLikeType;
     }
 
     /**
      * @param string[] $classTemplates
      */
-    public static function create(string $filepath, string $classLikeName, array $classTemplates): self
+    public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates): self
     {
-        return new self($classTemplates, $filepath, $classLikeName);
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::classLike());
+    }
+
+    /**
+     * @param string[] $classTemplates
+     */
+    public static function createClass(string $filepath, string $classLikeName, array $classTemplates): self
+    {
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::class());
+    }
+
+    /**
+     * @param string[] $classTemplates
+     */
+    public static function createTrait(string $filepath, string $classLikeName, array $classTemplates): self
+    {
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::trait());
+    }
+
+    /**
+     * @param string[] $classTemplates
+     */
+    public static function createInterface(string $filepath, string $classLikeName, array $classTemplates): self
+    {
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::interface());
     }
 
     /** @internal */
     public function build(): ClassLikeReference
     {
         return new ClassLikeReference(
-            ClassLikeToken::fromFQCN($this->classLikeName),
+            $this->classLikeToken,
+            $this->classLikeType,
             $this->inherits,
             $this->dependencies
         );
