@@ -48,10 +48,10 @@ jobs:
             composer-
 
       - name: "Install dependencies with composer"
-        run: composer install --no-interaction --no-progress --no-suggest --optimize-autoloader
+        run: make composer-install
 
       - name: "Compile deptrac phar"
-        run: ./tools/box compile
+        run: make build
 
       - name: "Upload phar file artifact"
         uses: actions/upload-artifact@v2
