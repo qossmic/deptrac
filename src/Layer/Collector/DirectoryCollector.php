@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 use Symfony\Component\Filesystem\Path;
 
-final class DirectoryCollector extends RegexCollector implements CollectorInterface
+final class DirectoryCollector extends RegexCollector
 {
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
     {

@@ -15,11 +15,6 @@ abstract class AbstractTypeCollector extends RegexCollector
 {
     abstract protected function getType(): ClassLikeType;
 
-    public function resolvable(array $config): bool
-    {
-        return true;
-    }
-
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
     {
         if (!$reference instanceof ClassLikeReference) {

@@ -12,14 +12,6 @@ use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 
 final class ExtendsCollector implements CollectorInterface
 {
-    public function resolvable(array $config): bool
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
     {
         if (!$reference instanceof ClassLikeReference) {

@@ -10,7 +10,7 @@ use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Ast\Parser\NikicPhpParser\NikicPhpParser;
 
-final class MethodCollector extends RegexCollector implements CollectorInterface
+final class MethodCollector extends RegexCollector
 {
     private NikicPhpParser $astParser;
 

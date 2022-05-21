@@ -8,6 +8,7 @@ use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface;
+use Qossmic\Deptrac\Layer\Collector\ConditionalCollectorInterface;
 use Qossmic\Deptrac\Layer\Exception\InvalidLayerDefinitionException;
 use function array_key_exists;
 use function array_unique;
@@ -50,10 +51,15 @@ class LayerResolver implements LayerResolverInterface
 
         foreach ($this->layers as $layer => $collectables) {
             foreach ($collectables as $collectable) {
-                if ($collectable->getCollector()->resolvable($collectable->getAttributes())) {
-                    if ($collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap)) {
-                        $this->resolved[$tokenName][] = $layer;
-                    }
+                $collector = $collectable->getCollector();
+                if ($collector instanceof ConditionalCollectorInterface
+                    && !$collector->resolvable($collectable->getAttributes())
+                ) {
+                    continue;
+                }
+
+                if ($collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap)) {
+                    $this->resolved[$tokenName][] = $layer;
                 }
             }
         }
@@ -77,10 +83,15 @@ class LayerResolver implements LayerResolverInterface
         $collectables = $this->layers[$layer];
 
         foreach ($collectables as $collectable) {
-            if ($collectable->getCollector()->resolvable($collectable->getAttributes())) {
-                if ($collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap)) {
-                    return true;
-                }
+            $collector = $collectable->getCollector();
+            if ($collector instanceof ConditionalCollectorInterface
+                && !$collector->resolvable($collectable->getAttributes())
+            ) {
+                continue;
+            }
+
+            if ($collector->satisfy($collectable->getAttributes(), $reference, $astMap)) {
+                return true;
             }
         }
 

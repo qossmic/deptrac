@@ -11,8 +11,8 @@ use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Layer\Collector\BoolCollector;
 use Qossmic\Deptrac\Layer\Collector\Collectable;
-use Qossmic\Deptrac\Layer\Collector\CollectorInterface;
 use Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface;
+use Qossmic\Deptrac\Layer\Collector\ConditionalCollectorInterface;
 
 final class BoolCollectorTest extends TestCase
 {
@@ -22,7 +22,7 @@ final class BoolCollectorTest extends TestCase
     {
         parent::setUp();
 
-        $collector = $this->createMock(CollectorInterface::class);
+        $collector = $this->createMock(ConditionalCollectorInterface::class);
         $collector
             ->method('resolvable')
             ->with($this->callback(static fn (array $config): bool => 'custom' === $config['type']))

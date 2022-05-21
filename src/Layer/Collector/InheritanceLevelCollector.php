@@ -13,11 +13,6 @@ use function trigger_deprecation;
 
 final class InheritanceLevelCollector implements CollectorInterface
 {
-    public function resolvable(array $config): bool
-    {
-        return true;
-    }
-
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
     {
         if (!$reference instanceof ClassLikeReference) {
