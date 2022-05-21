@@ -2,14 +2,10 @@
 
 ## Commands
 
-### What?
-
 * You must now use the new `--config-file` option instead of providing the
   configuration file (Depfile) as command argument
 
 ## Depfile (Configuration File)
-
-### What?
 
  * The `baseline` parameter was removed. You can use `imports` instead.
  * The `ruleset` is no longer checked for undefined layers. They will be
@@ -20,8 +16,6 @@
    other base directory you want to use as reference for relative paths.
 
 ## Baseline Formatter
-
-### What?
 
 * The default filename created by the baseline formatter changed.
     ```
