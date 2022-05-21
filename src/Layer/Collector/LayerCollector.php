@@ -14,7 +14,7 @@ use function is_string;
 use function sprintf;
 use function trigger_deprecation;
 
-final class LayerCollector implements CollectorInterface
+final class LayerCollector implements ConditionalCollectorInterface
 {
     private LayerResolverInterface $resolver;
 

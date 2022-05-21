@@ -13,11 +13,6 @@ abstract class RegexCollector implements CollectorInterface
      */
     abstract protected function getPattern(array $config): string;
 
-    public function resolvable(array $config): bool
-    {
-        return true;
-    }
-
     /**
      * @param array<string, string|array<string, string>> $config
      */

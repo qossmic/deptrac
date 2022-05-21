@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 
-final class ClassNameRegexCollector extends RegexCollector implements CollectorInterface
+final class ClassNameRegexCollector extends RegexCollector
 {
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
     {

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 
-final class BoolCollector implements CollectorInterface
+final class BoolCollector implements ConditionalCollectorInterface
 {
     private CollectorResolverInterface $collectorResolver;
 
@@ -51,9 +51,11 @@ final class BoolCollector implements CollectorInterface
         /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
+            $collector = $collectable->getCollector();
 
-            $resolvable = $collectable->getCollector()->resolvable($collectable->getAttributes());
-            if (!$resolvable) {
+            if ($collector instanceof ConditionalCollectorInterface
+                && !$collector->resolvable($collectable->getAttributes())
+            ) {
                 return false;
             }
         }
@@ -61,9 +63,11 @@ final class BoolCollector implements CollectorInterface
         /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must_not'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
+            $collector = $collectable->getCollector();
 
-            $resolvable = $collectable->getCollector()->resolvable($collectable->getAttributes());
-            if (!$resolvable) {
+            if ($collector instanceof ConditionalCollectorInterface
+                && !$collector->resolvable($collectable->getAttributes())
+            ) {
                 return false;
             }
         }

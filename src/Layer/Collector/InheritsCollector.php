@@ -12,11 +12,6 @@ use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 
 final class InheritsCollector implements CollectorInterface
 {
-    public function resolvable(array $config): bool
-    {
-        return true;
-    }
-
     /**
      * {@inheritdoc}
      */

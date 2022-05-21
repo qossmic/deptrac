@@ -16,9 +16,4 @@ interface CollectorInterface
      * @param array<string, string|array<string, string>> $config
      */
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool;
-
-    /**
-     * @param array<string, string|array<string, string>> $config
-     */
-    public function resolvable(array $config): bool;
 }

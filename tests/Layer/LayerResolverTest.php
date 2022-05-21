@@ -9,8 +9,8 @@ use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Layer\Collector\Collectable;
-use Qossmic\Deptrac\Layer\Collector\CollectorInterface;
 use Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface;
+use Qossmic\Deptrac\Layer\Collector\ConditionalCollectorInterface;
 use Qossmic\Deptrac\Layer\Exception\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Layer\LayerResolver;
 
@@ -213,7 +213,7 @@ final class LayerResolverTest extends TestCase
 
     private function buildCollectorResolverWithFakeCollector(): CollectorResolverInterface
     {
-        $collector = $this->createMock(CollectorInterface::class);
+        $collector = $this->createMock(ConditionalCollectorInterface::class);
         $collector
             ->method('resolvable')
             ->with($this->callback(static fn (array $config): bool => 'custom' === $config['type']))
