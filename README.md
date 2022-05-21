@@ -12,6 +12,13 @@ Deptrac can be used in a CI pipeline to make sure a pull request does not
 violate any of the architectural rules you defined. With the optional Graphviz
 formatter you can visualize your layers, rules and violations.
 
+## Stability
+
+Deptrac is still in development. We follow [semantic versioning](https://semver.org/).
+You should expect breaking changes between minor versions in 0.x.
+We advise following the [upgrade guide](docs/upgrade.md) for any breaking
+changes between releases and how to address them.
+
 ## Documentation
 
 You can find the documentation in the /docs directory or visit the doc page:
@@ -19,9 +26,22 @@ https://qossmic.github.io/deptrac
 
 ## Getting Started
 
-You will need to create a [configuration file](docs/depfile.md),
-where you define your layers and communication ruleset. Once you have done that,
-you can analyse your code by running deptrac:
+You can install Deptrac via Composer. We recommend using the
+[deptrac-shim](https://github.com/qossmic/deptrac-shim) package for this:
+
+```
+composer require --dev qossmic/deptrac-shim
+```
+
+Alternatively, you can also use [Phive](https://phar.io/) or download the
+binary attached to each release on GitHub. We strongly advise against using the
+deptrac package directly as a composer dependency. We update dependencies
+regularly, which might cause disruptions in your project.
+
+Once you have downloaded the phar file, you will need to create a
+[configuration file](docs/depfile.md), where you define your layers and
+communication ruleset. When you have this file, you can analyse your code by
+running the analyse command:
 
 ```bash
 php deptrac.phar
