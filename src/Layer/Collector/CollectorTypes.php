@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Layer\Collector;
 
 final class CollectorTypes
 {
+    public const TYPE_ATTRIBUTE = 'attribute';
     public const TYPE_BOOL = 'bool';
     public const TYPE_CLASS = 'class';
     public const TYPE_CLASSLIKE = 'classLike';
