@@ -68,6 +68,7 @@ use Qossmic\Deptrac\Layer\Collector\MethodCollector;
 use Qossmic\Deptrac\Layer\Collector\SuperglobalCollector;
 use Qossmic\Deptrac\Layer\Collector\TraitCollector;
 use Qossmic\Deptrac\Layer\Collector\UsesCollector;
+use Qossmic\Deptrac\Layer\LayerProvider;
 use Qossmic\Deptrac\Layer\LayerResolver;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
@@ -261,10 +262,12 @@ return static function (ContainerConfigurator $container): void {
         ->set(MatchingLayersHandler::class)
         ->tag('event_listener', ['priority' => 16]);
     $services
-        ->set(AllowDependencyHandler::class)
+        ->set(LayerProvider::class)
         ->args([
             '$allowedLayers' => param('ruleset'),
-        ])
+        ]);
+    $services
+        ->set(AllowDependencyHandler::class)
         ->tag('event_listener', ['priority' => 4]);
     $services
         ->set(ViolationHandler::class)
