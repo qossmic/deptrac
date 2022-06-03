@@ -1,7 +1,6 @@
 {
   "files": [
     "config/cache.php",
-    "config/parameters.php",
     "config/services.php"
   ],
   "compression": "GZ",

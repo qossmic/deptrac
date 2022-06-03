@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Console;
+namespace Qossmic\Deptrac\DependencyInjection;
 
 use Qossmic\Deptrac\Console\Exception\CacheFileException;
 use SplFileInfo;
@@ -66,36 +66,39 @@ final class ServiceContainerBuilder
 
     public function build(): ContainerBuilder
     {
-        $builder = new ContainerBuilder();
-        $builder->setParameter('currentWorkingDirectory', $this->workingDirectory);
+        $container = new ContainerBuilder();
 
-        self::registerCompilerPasses($builder);
-        self::loadServices($builder, $this->cacheFile);
+        $container->setParameter('currentWorkingDirectory', $this->workingDirectory);
 
-        $builder->setParameter('depfileDirectory', $this->workingDirectory);
+        self::registerCompilerPasses($container);
+        self::loadServices($container, $this->cacheFile);
+
+        $container->registerExtension(new DeptracExtension());
+
+        $container->setParameter('depfileDirectory', $this->workingDirectory);
         if (null !== $this->configFile) {
-            self::loadConfiguration($builder, $this->configFile);
+            self::loadConfiguration($container, $this->configFile);
         }
 
-        $builder->compile(true);
+        $container->compile(true);
 
-        return $builder;
+        return $container;
     }
 
-    private static function registerCompilerPasses(ContainerBuilder $builder): void
+    private static function registerCompilerPasses(ContainerBuilder $container): void
     {
-        $builder->addCompilerPass(new AddConsoleCommandPass());
-    }
+        $container->addCompilerPass(new AddConsoleCommandPass());
 
-    private static function loadServices(ContainerBuilder $builder, ?SplFileInfo $cacheFile): void
-    {
-        $loader = new PhpFileLoader($builder, new FileLocator([__DIR__.'/../../config']));
-        $loader->load('parameters.php');
-        $loader->load('services.php');
-
-        $builder->addCompilerPass(
+        $container->addCompilerPass(
             new RegisterListenersPass(EventDispatcher::class, 'event_listener', 'event_subscriber')
         );
+    }
+
+    private static function loadServices(ContainerBuilder $container, ?SplFileInfo $cacheFile): void
+    {
+        $loader = new PhpFileLoader($container, new FileLocator([__DIR__.'/../../config']));
+
+        $loader->load('services.php');
 
         if (!$cacheFile instanceof SplFileInfo) {
             return;
@@ -108,17 +111,17 @@ final class ServiceContainerBuilder
             throw CacheFileException::notWritable($cacheFile);
         }
 
-        $builder->setParameter('deptrac.cache_file', $cacheFile->getPathname());
+        $container->setParameter('deptrac.cache_file', $cacheFile->getPathname());
         $loader->load('cache.php');
     }
 
-    private static function loadConfiguration(ContainerBuilder $builder, SplFileInfo $configFile): void
+    private static function loadConfiguration(ContainerBuilder $container, SplFileInfo $configFile): void
     {
-        $builder->setParameter('depfileDirectory', $configFile->getPathInfo()->getPathname());
+        $container->setParameter('depfileDirectory', $configFile->getPathInfo()->getPathname());
 
         $loader = new DelegatingLoader(new LoaderResolver([
-            new YamlFileLoader($builder, new FileLocator([$configFile->getPathInfo()->getPathname()])),
-            new PhpFileLoader($builder, new FileLocator([$configFile->getPathInfo()->getPathname()])),
+            new YamlFileLoader($container, new FileLocator([$configFile->getPathInfo()->getPathname()])),
+            new PhpFileLoader($container, new FileLocator([$configFile->getPathInfo()->getPathname()])),
         ]));
 
         $loader->load($configFile->getFilename());

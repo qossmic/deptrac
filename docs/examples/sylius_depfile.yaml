@@ -1,4 +1,4 @@
-parameters:
+deptrac:
   paths:
     - /tmp/c1023228a
   exclude_files:

@@ -1,3 +1,26 @@
+# Upgrade from 0.20 to 0.21
+
+# Depfile (Configuration File)
+
+In order to fix an issue where the same parameter from an imported file was
+being replaced instead of merged, we needed to reinstate the semantic
+configuration that was previously removed. We recommend switching back to
+semantic configuration, especially if you rely on imports.
+
+The following parameters can now be moved to `deptrac:`:
+
+   * paths
+   * exclude_files
+   * layers
+   * ruleset
+   * skip_violations
+   * formatters
+   * analyser
+   * use_relative_path_from_depfile
+   * ignore_uncovered_internal_classes
+
+The examples and documentation were updated accordingly.
+
 # Upgrade from 0.19 to 0.20
 
 ## Commands

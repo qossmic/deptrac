@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console;
 
+use Qossmic\Deptrac\DependencyInjection\ServiceContainerBuilder;
 use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 use RuntimeException;
 use Symfony\Component\Console\Application as BaseApplication;

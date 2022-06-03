@@ -16,7 +16,7 @@ imports:
   - some/depfile.yaml
 ```
 
-## Parameter section
+## deptrac section
 
 ### `analyser`
 
@@ -25,7 +25,7 @@ imports:
 Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyse file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analysed file:
 
 ```yaml
-parameters:
+deptrac:
   analyser:
     types:
       - use
@@ -50,7 +50,7 @@ defined here, than it will not be collected and added to your layers.
 Example:
 
 ```yaml
-parameters:
+deptrac:
   exclude_files:
     - '#.*Test\.php$#'
 ```
@@ -72,7 +72,7 @@ You can group multiple layers.
 Example:
 
 ```yaml
-parameters:
+deptrac:
   layers:
     - User Frontend
     - User Backend
@@ -102,7 +102,7 @@ the generated image.
 Example:
 
 ```yaml
-parameters:
+deptrac:
   formatters:
     graphviz:
       hidden_layers:
@@ -118,7 +118,7 @@ You can configure the codeclimate output by changing how severity is chosen.
 You can change how a severity of `failure`, `skipped`, `uncovered` violations will be treated.
 
 ```yaml
-parameters:
+deptrac:
   formatters:
     codeclimate:
       severity:
@@ -136,7 +136,7 @@ option to false.
 Example:
 
 ```yaml
-parameters:
+deptrac:
   ignore_uncovered_internal_classes: false
 ```
 
@@ -147,7 +147,7 @@ For more details on layers see the [Concepts](concepts.md#layers) documentation.
 Example:
 
 ```yaml
-parameters:
+deprac:
   layers:
     -
       name: Controller
@@ -179,7 +179,7 @@ as well.
 Example:
 
 ```yaml
-parameters:
+deptrac:
   paths:
     - src/
     - vendor/
@@ -192,7 +192,7 @@ A ruleset is a list of layer names, which again take a list of layer names.
 Example:
 
 ```yaml
-parameters:
+deprac:
   ruleset:
     Controller:
       - Service
@@ -208,7 +208,7 @@ all layers it allows. In the example below, the Controller can now use classes
 from the Service and the Repository layer, not just the Service layer.
 
 ```yaml
-parameters:
+deptrac:
   ruleset:
     Controller:
       - +Service
@@ -226,19 +226,21 @@ listed violations are encountered. For more on this see
 Example:
 
 ```yaml
-parameters:
+deptrac:
   skip_violations:
     Library\LibClass:
       - Core\CoreClass
 ```
 
-### Parameters
+## parameters section
 
 Deptrac provides parameters that can be user in your configuration.
 
 * `%currentWorkingDirectory%` The path Deptrac runs in
 * `%depfileDirectory%` The path where the depfile is stored.
 * `%projectDirectory%` usually points to `%depfileDirectory%`
+* `%deptrac.cache_file%` contains the filename and path for the cache file.
+  Note: This parameter is set by `--cache-file=` and will be overwritten.
 
 You can specify your own parameters and reuse them in your configuration:
 
@@ -248,6 +250,7 @@ Example:
 parameters:
   Project: MyProject
 
+deptrac:
   layers:
     -
       name: Foo
