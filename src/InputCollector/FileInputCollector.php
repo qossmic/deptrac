@@ -51,7 +51,7 @@ final class FileInputCollector implements InputCollectorInterface
      */
     public function collect(): array
     {
-        if ($this->paths === []) {
+        if ([] === $this->paths) {
             throw new LogicException("No 'paths' defined in the depfile.");
         }
 
