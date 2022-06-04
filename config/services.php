@@ -59,6 +59,7 @@ use Qossmic\Deptrac\Layer\Collector\CollectorTypes;
 use Qossmic\Deptrac\Layer\Collector\DirectoryCollector;
 use Qossmic\Deptrac\Layer\Collector\ExtendsCollector;
 use Qossmic\Deptrac\Layer\Collector\FunctionNameCollector;
+use Qossmic\Deptrac\Layer\Collector\GlobCollector;
 use Qossmic\Deptrac\Layer\Collector\ImplementsCollector;
 use Qossmic\Deptrac\Layer\Collector\InheritanceLevelCollector;
 use Qossmic\Deptrac\Layer\Collector\InheritsCollector;
@@ -220,6 +221,12 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(FunctionNameCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_FUNCTION_NAME]);
+    $services
+        ->set(GlobCollector::class)
+        ->args([
+            '$basePath' => param('projectDirectory'),
+        ])
+        ->tag('collector', ['type' => CollectorTypes::TYPE_GLOB]);
     $services
         ->set(ImplementsCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_IMPLEMENTS]);

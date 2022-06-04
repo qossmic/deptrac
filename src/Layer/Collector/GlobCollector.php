@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Qossmic\Deptrac\Layer\Collector;
+
+use LogicException;
+use Qossmic\Deptrac\Ast\AstMap\AstMap;
+use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
+use Symfony\Component\Filesystem\Path;
+use Symfony\Component\Finder\Glob;
+
+final class GlobCollector extends RegexCollector
+{
+    private string $basePath;
+
+    public function __construct(string $basePath)
+    {
+        $this->basePath = Path::normalize($basePath);
+    }
+
+    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    {
+        $fileReference = $reference->getFileReference();
+
+        if (null === $fileReference) {
+            return false;
+        }
+
+        $filePath = $fileReference->getFilepath();
+        $validatedPattern = $this->getValidatedPattern($config);
+        $normalizedPath = Path::normalize($filePath);
+        $relativeFilePath = Path::makeRelative($normalizedPath, $this->basePath);
+
+        return 1 === preg_match($validatedPattern, $relativeFilePath);
+    }
+
+    protected function getPattern(array $config): string
+    {
+        if (!isset($config['value']) || !is_string($config['value'])) {
+            throw new LogicException('GlobCollector needs the glob pattern configuration.');
+        }
+
+        return Glob::toRegex($config['value']);
+    }
+}

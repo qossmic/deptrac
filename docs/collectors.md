@@ -131,6 +131,19 @@ parameters:
           value: .*array_.*
 ```
 
+## `glob` Collector
+
+The `glob` collector finds all files matching the provided glob pattern.
+
+```yaml
+deptrac:
+  layers:
+    - name: Repositories
+      collectors:
+        - type: glob
+          value: src/Modules/**/Repository
+```
+
 ## `implements` Collector
 
 The `implements` collector allows collecting classes implementing a specified
