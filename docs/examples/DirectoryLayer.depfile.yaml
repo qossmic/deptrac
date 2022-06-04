@@ -1,4 +1,4 @@
-parameters:
+deptrac:
   paths: ["./Layer1/", "./Layer2/"]
   exclude_files: []
   layers:

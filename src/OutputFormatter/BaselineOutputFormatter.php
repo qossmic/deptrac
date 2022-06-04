@@ -46,7 +46,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
             $baselineFile,
             Yaml::dump(
                 [
-                    'parameters' => [
+                    'deptrac' => [
                         'skip_violations' => $groupedViolations,
                     ],
                 ],

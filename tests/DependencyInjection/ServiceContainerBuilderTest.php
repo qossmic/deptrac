@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Console;
+namespace Tests\Qossmic\Deptrac\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Console\ServiceContainerBuilder;
+use Qossmic\Deptrac\DependencyInjection\ServiceContainerBuilder;
 
 final class ServiceContainerBuilderTest extends TestCase
 {

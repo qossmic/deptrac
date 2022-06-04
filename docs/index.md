@@ -124,8 +124,8 @@ You can find out more about the [Core Concepts](concepts.md) in the docs.
 Let's have a look at the generated file:
 
 ```yaml
-# depfile.yaml
-parameters:
+# deptrac.yaml
+deptrac:
   paths:
     - ./src
   exclude_files:

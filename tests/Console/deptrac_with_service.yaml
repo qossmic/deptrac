@@ -1,9 +1,0 @@
-parameters:
-  layers:
-    Dummy:
-      - name: dummy
-
-services:
-  test.dummy_collector:
-    class: Tests\Qossmic\Deptrac\Console\DummyCollector
-    tags: ['collector']

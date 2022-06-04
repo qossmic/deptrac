@@ -1,4 +1,4 @@
-parameters:
+deptrac:
   paths: ["./ModelController1"]
   exclude_files: []
   layers:
