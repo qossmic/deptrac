@@ -26,12 +26,17 @@ class DependencyResolver
     /**
      * @var array{types: array<string>}
      */
-    private array $config = [
+    public const DEFAULT_EMITTERS = [
         'types' => [
             EmitterTypes::CLASS_TOKEN,
             EmitterTypes::USE_TOKEN,
         ],
     ];
+
+    /**
+     * @var array{types: array<string>}
+     */
+    private array $config;
 
     /**
      * @param array{types?: array<string>} $config
@@ -42,7 +47,7 @@ class DependencyResolver
         ContainerInterface $emitterLocator,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->config = array_merge($this->config, $config);
+        $this->config = array_merge(self::DEFAULT_EMITTERS, $config);
         $this->inheritanceFlattener = $inheritanceFlattener;
         $this->emitterLocator = $emitterLocator;
         $this->eventDispatcher = $eventDispatcher;
