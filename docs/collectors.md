@@ -3,6 +3,21 @@
 Collectors decide if a node (typically a class) is part of a layer. You can use
 multiple different collectors for a layer.
 
+## `attribute` Collector
+
+The `attribute` collector finds all class-likes, functions or files using the
+provided attribute. You can provide the full attribute name or a substring that
+should be matched.
+
+```yaml
+parameters:
+  layers:
+    - name: Entities
+      collectors:
+        - type: attribute
+          value: Doctrine\ORM\Mapping\Entity
+```
+
 ## `bool` Collector
 
 The `bool` collector allows combining other collectors with or without negation.

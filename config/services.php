@@ -48,6 +48,7 @@ use Qossmic\Deptrac\File\Dumper;
 use Qossmic\Deptrac\File\YmlFileLoader;
 use Qossmic\Deptrac\InputCollector\FileInputCollector;
 use Qossmic\Deptrac\InputCollector\InputCollectorInterface;
+use Qossmic\Deptrac\Layer\Collector\AttributeCollector;
 use Qossmic\Deptrac\Layer\Collector\BoolCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassCollector;
 use Qossmic\Deptrac\Layer\Collector\ClassLikeCollector;
@@ -198,6 +199,9 @@ return static function (ContainerConfigurator $container): void {
         ]);
     $services->set(CollectorResolver::class);
     $services->alias(CollectorResolverInterface::class, CollectorResolver::class);
+    $services
+        ->set(AttributeCollector::class)
+        ->tag('collector', ['type' => CollectorTypes::TYPE_ATTRIBUTE]);
     $services
         ->set(BoolCollector::class)
         ->tag('collector', ['type' => CollectorTypes::TYPE_BOOL]);

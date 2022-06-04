@@ -18,10 +18,10 @@ final class UsesCollector implements CollectorInterface
             return false;
         }
 
-        $interfaceName = $this->getInterfaceName($config);
+        $traitName = $this->getTraitName($config);
 
         foreach ($astMap->getClassInherits($reference->getToken()) as $inherit) {
-            if ($inherit->isUses() && $inherit->getClassLikeName()->equals($interfaceName)) {
+            if ($inherit->isUses() && $inherit->getClassLikeName()->equals($traitName)) {
                 return true;
             }
         }
@@ -32,7 +32,7 @@ final class UsesCollector implements CollectorInterface
     /**
      * @param array<string, string|array<string, string>> $config
      */
-    private function getInterfaceName(array $config): ClassLikeToken
+    private function getTraitName(array $config): ClassLikeToken
     {
         if (isset($config['uses']) && !isset($config['value'])) {
             trigger_deprecation('qossmic/deptrac', '0.20.0', 'UsesCollector should use the "value" key from this version');
