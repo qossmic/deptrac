@@ -15,6 +15,7 @@ final class CollectorTypes
     public const TYPE_DIRECTORY = 'directory';
     public const TYPE_EXTENDS = 'extends';
     public const TYPE_FUNCTION_NAME = 'functionName';
+    public const TYPE_GLOB = 'glob';
     public const TYPE_IMPLEMENTS = 'implements';
     public const TYPE_INHERITANCE = 'inheritanceLevel';
     public const TYPE_INHERITS = 'inherits';
