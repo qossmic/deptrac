@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Analyser;
 
 use Qossmic\Deptrac\Dependency\DependencyResolver;
-use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
 use Qossmic\Deptrac\Dependency\TokenResolver;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use function array_values;
@@ -18,9 +17,9 @@ class UnassignedTokenAnalyser
     private LayerResolverInterface $layerResolver;
 
     /**
-     * @var array{types: array<string>}
+     * @var array<string>
      */
-    private array $config;
+    private array $tokenTypes;
 
     /**
      * @param array{types?: array<string>} $config
@@ -34,7 +33,17 @@ class UnassignedTokenAnalyser
         $this->astMapExtractor = $astMapExtractor;
         $this->tokenResolver = $tokenResolver;
         $this->layerResolver = $layerResolver;
-        $this->config = array_merge(DependencyResolver::DEFAULT_EMITTERS, $config);
+        $emitters = array_merge(DependencyResolver::DEFAULT_EMITTERS, $config);
+        $this->tokenTypes = array_filter(
+            array_map(
+                static function (string $emitterType): ?string {
+                    $tokenType = TokenType::tryFromEmitterType($emitterType);
+
+                    return null === $tokenType ? null : $tokenType->value;
+                },
+                $emitters['types']
+            )
+        );
     }
 
     /**
@@ -45,7 +54,7 @@ class UnassignedTokenAnalyser
         $astMap = $this->astMapExtractor->extract();
         $unassignedTokens = [];
 
-        if (in_array(EmitterTypes::CLASS_TOKEN, $this->config['types'], true)) {
+        if (in_array(TokenType::CLASS_LIKE, $this->tokenTypes, true)) {
             foreach ($astMap->getClassLikeReferences() as $classReference) {
                 $token = $this->tokenResolver->resolve($classReference->getToken(), $astMap);
                 $matchingLayers = $this->layerResolver->getLayersForReference($token, $astMap);
@@ -55,7 +64,7 @@ class UnassignedTokenAnalyser
             }
         }
 
-        if (in_array(EmitterTypes::FUNCTION_TOKEN, $this->config['types'], true)) {
+        if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
             foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
                 $token = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
                 $matchingLayers = $this->layerResolver->getLayersForReference($token, $astMap);
@@ -65,7 +74,7 @@ class UnassignedTokenAnalyser
             }
         }
 
-        if (in_array(EmitterTypes::FILE_TOKEN, $this->config['types'], true)) {
+        if (in_array(TokenType::FILE, $this->tokenTypes, true)) {
             foreach ($astMap->getFileReferences() as $fileReference) {
                 $token = $this->tokenResolver->resolve($fileReference->getToken(), $astMap);
                 $matchingLayers = $this->layerResolver->getLayersForReference($token, $astMap);

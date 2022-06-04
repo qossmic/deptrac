@@ -6,8 +6,8 @@ namespace Qossmic\Deptrac\Analyser;
 
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
-use Qossmic\Deptrac\Console\Exception\InvalidTokenException;
 use Qossmic\Deptrac\Dependency\TokenResolver;
+use Qossmic\Deptrac\Exception\ShouldNotHappenException;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use function array_values;
 use function ksort;
@@ -33,20 +33,20 @@ class LayerForTokenAnalyser
     /**
      * @return array<string, string[]>
      */
-    public function findLayerForToken(string $tokenName, string $tokenType): array
+    public function findLayerForToken(string $tokenName, TokenType $tokenType): array
     {
         $astMap = $this->astMapExtractor->extract();
 
-        switch ($tokenType) {
-            case 'class-like':
+        switch ($tokenType->value) {
+            case TokenType::CLASS_LIKE:
                 return $this->findLayersForReferences($astMap->getClassLikeReferences(), $tokenName, $astMap);
-            case 'function':
+            case TokenType::FUNCTION:
                 return $this->findLayersForReferences($astMap->getFunctionLikeReferences(), $tokenName, $astMap);
-            case 'file':
+            case TokenType::FILE:
                 return $this->findLayersForReferences($astMap->getFileReferences(), $tokenName, $astMap);
+            default:
+                throw new ShouldNotHappenException();
         }
-
-        throw InvalidTokenException::invalidTokenType($tokenType, ['class-like', 'function', 'file']);
     }
 
     /**

@@ -298,7 +298,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LayerForTokenAnalyser::class);
     $services->set(UnassignedTokenAnalyser::class)
         ->args([
-            '$config' => param('analyser')
+            '$config' => param('analyser'),
         ]);
 
     /*
