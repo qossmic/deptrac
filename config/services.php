@@ -296,7 +296,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LegacyDependencyLayersAnalyser::class);
     $services->set(TokenInLayerAnalyser::class)
         ->args([
-             '$config' => param('analyser'),
+            '$config' => param('analyser'),
         ]);
     $services->set(LayerForTokenAnalyser::class);
     $services->set(UnassignedTokenAnalyser::class)
