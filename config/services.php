@@ -299,7 +299,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(UnassignedTokenAnalyser::class)
         ->args([
             '$config' => param('analyser')
-        );
+        ]);
 
     /*
      * OutputFormatter
