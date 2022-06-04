@@ -294,7 +294,10 @@ return static function (ContainerConfigurator $container): void {
             '$dependentLayerResolver' => service('layer_resolver.dependent'),
         ]);
     $services->set(LegacyDependencyLayersAnalyser::class);
-    $services->set(TokenInLayerAnalyser::class);
+    $services->set(TokenInLayerAnalyser::class)
+        ->args([
+             '$config' => param('analyser'),
+        ]);
     $services->set(LayerForTokenAnalyser::class);
     $services->set(UnassignedTokenAnalyser::class)
         ->args([

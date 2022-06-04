@@ -22,6 +22,9 @@ class TokenInLayerAnalyser
      */
     private array $tokenTypes;
 
+    /**
+     * @param array{types?: array<string>} $config
+     */
     public function __construct(
         AstMapExtractor $astMapExtractor,
         TokenResolver $tokenResolver,
