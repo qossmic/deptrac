@@ -116,6 +116,7 @@ class AstInherit
     public function withPath(array $path): self
     {
         $self = clone $this;
+
         $self->path = $path;
 
         return $self;
