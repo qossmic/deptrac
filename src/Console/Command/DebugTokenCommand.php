@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
+use Qossmic\Deptrac\Analyser\TokenType;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
 use Symfony\Component\Console\Command\Command;
@@ -42,7 +43,7 @@ class DebugTokenCommand extends Command
         /** @var string $tokenType */
         $tokenType = $input->getArgument('type');
 
-        $this->runner->run($tokenName, $tokenType, $symfonyOutput);
+        $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
 
         return 0;
     }

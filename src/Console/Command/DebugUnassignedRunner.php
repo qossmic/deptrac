@@ -21,6 +21,13 @@ final class DebugUnassignedRunner
 
     public function run(Output $output): void
     {
-        $output->writeLineFormatted($this->processor->findUnassignedTokens());
+        $unassignedTokens = $this->processor->findUnassignedTokens();
+        if ([] === $unassignedTokens) {
+            $output->writeLineFormatted('There are not unassigned tokens.');
+
+            return;
+        }
+
+        $output->writeLineFormatted($unassignedTokens);
     }
 }
