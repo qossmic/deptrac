@@ -159,6 +159,12 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         // Resolve code
+        if ($node instanceof Node\Expr\FuncCall) {
+            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->name) as $functionName) {
+                $this->currentReference->unresolvedFunctionCall($functionName, $node->getLine());
+            }
+        }
+
         if ($node instanceof Node\Stmt\TraitUse && $this->currentReference instanceof ClassLikeReferenceBuilder) {
             foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
                 $this->currentReference->trait($classLikeName, $node->getLine());

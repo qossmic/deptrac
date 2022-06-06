@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Ast\AstMap;
 
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Ast\AstMap\Variable\SuperGlobalToken;
 
 abstract class ReferenceBuilder
@@ -32,6 +33,24 @@ abstract class ReferenceBuilder
     final public function getTokenTemplates(): array
     {
         return $this->tokenTemplates;
+    }
+
+    /**
+     * Unqualified function and constant names inside a namespace cannot be
+     * statically resolved. Inside a namespace Foo, a call to strlen() may
+     * either refer to the namespaced \Foo\strlen(), or the global \strlen().
+     * Because PHP-Parser does not have the necessary context to decide this,
+     * such names are left unresolved.
+     */
+    public function unresolvedFunctionCall(string $functionName, int $occursAtLine): self
+    {
+        $this->dependencies[] = DependencyToken::fromType(
+            FunctionLikeToken::fromFQCN($functionName),
+            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
+            DependencyToken::UNRESOLVED_FUNCTION_CALL
+        );
+
+        return $this;
     }
 
     public function variable(string $classLikeName, int $occursAtLine): self

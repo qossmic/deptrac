@@ -10,7 +10,7 @@ new \SomeOtherClass();
 $foo = function (SomeOtherParam $someOtherParam) {
 };
 
-assert($foo instanceof SomeInstanceOf);
+\assert($foo instanceof SomeInstanceOf);
 
 SomeClass::staticMethodCall();
 
@@ -57,7 +57,7 @@ new class extends BarExtends implements BarInterface1, \BarInterface2 {
         $foo = function (SomeOtherParam $someOtherParam) {
         };
 
-        assert($foo instanceof SomeInstanceOf);
+        \assert($foo instanceof SomeInstanceOf);
 
         SomeClass::staticMethodCall();
 
