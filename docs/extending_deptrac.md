@@ -9,7 +9,7 @@ Apart from those, Deptrac also offers many other [extension points](#Other exten
 
 ## Output Formatters
 
-Creating an output formatter is very simple. Create a new class implementing the `Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface` and register it in your `deptrac.yaml` file like this:
+Creating an output formatter requires only to create a new class implementing the `Qossmic\Deptrac\OutputFormatter\OutputFormatterInterface` and register it in your `deptrac.yaml` file like this:
 
 ```yaml
 services:
@@ -25,19 +25,19 @@ And you are done. You can call your formatter by using the `-f` or `--formatter`
 
 TODO
 
-### Analyser Events
+### Analyser Events (Qossmic\Deptrac\Analyser\Event)
 
 - `ProcessEvent`
 - `PostPorcessEvent`
 
-### Ast Events
+### Ast Events (Qossmic\Deptrac\Ast\Event)
 
 - `PreCreateAstMapEvent`
 - `AstFileAnalysedEvent`
 - `AstFileSyntaxErrorEvent`
 - `PostCreateAstMapEvent`
 
-### Dependency Events
+### Dependency Events (Qossmic\Deptrac\Dependency\Event)
 
 - `PreEmitEvent`
 - `PostEmitEvent`
