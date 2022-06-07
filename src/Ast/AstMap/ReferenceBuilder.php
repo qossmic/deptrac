@@ -188,4 +188,18 @@ abstract class ReferenceBuilder
 
         return $this;
     }
+
+    public function addTokenTemplate(string $tokenTemplate): void
+    {
+        $this->tokenTemplates[] = $tokenTemplate;
+    }
+
+    public function removeTokenTemplate(string $tokenTemplate): void
+    {
+        $key = array_search($tokenTemplate, $this->tokenTemplates, true);
+        if (false === $key) {
+            return;
+        }
+        unset($this->tokenTemplates[$key]);
+    }
 }
