@@ -157,7 +157,7 @@ final class LayerResolverTest extends TestCase
         );
 
         self::assertSame(
-            ['test'],
+            ['test' => true],
             $resolver->getLayersForReference($reference, new AstMap([]))
         );
     }

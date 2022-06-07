@@ -11,8 +11,6 @@ use Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Layer\Collector\ConditionalCollectorInterface;
 use Qossmic\Deptrac\Layer\Exception\InvalidLayerDefinitionException;
 use function array_key_exists;
-use function array_unique;
-use function array_values;
 use function in_array;
 
 class LayerResolver implements LayerResolverInterface
@@ -25,7 +23,7 @@ class LayerResolver implements LayerResolverInterface
     private array $layers;
 
     /**
-     * @var array<string, string[]>
+     * @var array<string, array<string, bool>>
      */
     private array $resolved = [];
 
@@ -39,9 +37,6 @@ class LayerResolver implements LayerResolverInterface
         $this->initializeLayers($layers);
     }
 
-    /**
-     * @return string[]
-     */
     public function getLayersForReference(TokenReferenceInterface $reference, AstMap $astMap): array
     {
         $tokenName = $reference->getToken()->toString();
@@ -50,21 +45,28 @@ class LayerResolver implements LayerResolverInterface
         }
 
         foreach ($this->layers as $layer => $collectables) {
+            $this->resolved[$tokenName] = [];
             foreach ($collectables as $collectable) {
                 $collector = $collectable->getCollector();
+                $attributes = $collectable->getAttributes();
                 if ($collector instanceof ConditionalCollectorInterface
-                    && !$collector->resolvable($collectable->getAttributes())
+                    && !$collector->resolvable($attributes)
                 ) {
                     continue;
                 }
 
-                if ($collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap)) {
-                    $this->resolved[$tokenName][] = $layer;
+                if ($collectable->getCollector()->satisfy($attributes, $reference, $astMap)) {
+                    if (array_key_exists($layer, $this->resolved[$tokenName]) && true === $this->resolved[$tokenName][$layer]) {
+                        continue;
+                    }
+                    if (array_key_exists('private', $attributes) && true === $attributes['private']) {
+                        $this->resolved[$tokenName][$layer] = false;
+                    } else {
+                        $this->resolved[$tokenName][$layer] = true;
+                    }
                 }
             }
         }
-
-        $this->resolved[$tokenName] = array_values(array_unique($this->resolved[$tokenName] ?? []));
 
         return $this->resolved[$tokenName];
     }

@@ -13,7 +13,7 @@ use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 interface CollectorInterface
 {
     /**
-     * @param array<string, string|array<string, string>> $config
+     * @param array<string, bool|string|array<string, string>> $config
      */
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool;
 }

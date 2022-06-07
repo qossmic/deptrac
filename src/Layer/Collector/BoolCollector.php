@@ -76,9 +76,9 @@ final class BoolCollector implements ConditionalCollectorInterface
     }
 
     /**
-     * @param array<string, string|array<string, string>> $configuration
+     * @param array<string, bool|string|array<string, string>> $configuration
      *
-     * @return array<string, string|array<string, string>>
+     * @return array<string, bool|string|array<string, string>>
      */
     private function normalizeConfiguration(array $configuration): array
     {

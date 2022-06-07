@@ -10,7 +10,7 @@ use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 interface LayerResolverInterface
 {
     /**
-     * @return string[]
+     * @return array<string, bool> layer name and whether the dependency is public(true) or private(false)
      */
     public function getLayersForReference(TokenReferenceInterface $reference, AstMap $astMap): array;
 

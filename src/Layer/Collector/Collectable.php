@@ -28,7 +28,7 @@ class Collectable
     }
 
     /**
-     * @return array<string, string|array<string, string>>
+     * @return array<string, bool|string|array<string, string>>
      */
     public function getAttributes(): array
     {
