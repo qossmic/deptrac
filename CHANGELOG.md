@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.21.0](https://github.com/qossmic/deptrac/tree/0.21.0) (2022-06-07)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.20.0...0.21.0)
+
+**Merged pull requests:**
+
+- Misc quick fixes and improvements [\#901](https://github.com/qossmic/deptrac/pull/901) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update dependencies [\#900](https://github.com/qossmic/deptrac/pull/900) ([dbrumann](https://github.com/dbrumann))
+- New collector for glob patterns [\#899](https://github.com/qossmic/deptrac/pull/899) ([dbrumann](https://github.com/dbrumann))
+- Restore semantic configuration to allow deep merge on import [\#898](https://github.com/qossmic/deptrac/pull/898) ([dbrumann](https://github.com/dbrumann))
+- Make allowed layer resolution public [\#897](https://github.com/qossmic/deptrac/pull/897) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update License to 2022 [\#896](https://github.com/qossmic/deptrac/pull/896) ([TheCadien](https://github.com/TheCadien))
+- Add upgrade guide to docs and add install instructions to GitHub-README [\#886](https://github.com/qossmic/deptrac/pull/886) ([dbrumann](https://github.com/dbrumann))
+- Add new Attribute-Collector [\#885](https://github.com/qossmic/deptrac/pull/885) ([dbrumann](https://github.com/dbrumann))
+- Avoid redundant code for unconditional collectors [\#884](https://github.com/qossmic/deptrac/pull/884) ([dbrumann](https://github.com/dbrumann))
+- Investigate test output being different in CI [\#882](https://github.com/qossmic/deptrac/pull/882) ([dbrumann](https://github.com/dbrumann))
+- Get rid of phive [\#881](https://github.com/qossmic/deptrac/pull/881) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- add interfaceNameRegexCollector [\#836](https://github.com/qossmic/deptrac/pull/836) ([gennadigennadigennadi](https://github.com/gennadigennadigennadi))
+
 ## [0.20.0](https://github.com/qossmic/deptrac/tree/0.20.0) (2022-05-05)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.19.3...0.20.0)
