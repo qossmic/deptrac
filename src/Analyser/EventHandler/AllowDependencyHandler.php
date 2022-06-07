@@ -26,13 +26,17 @@ class AllowDependencyHandler
         $dependerLayer = $event->getDependerLayer();
         $ruleset = $event->getResult();
 
-        foreach ($event->getDependentLayers() as $dependentLayer) {
+        foreach ($event->getDependentLayers() as $dependentLayer => $isPublic) {
             try {
                 $allowedLayers = $this->layerProvider->getAllowedLayers($dependerLayer);
             } catch (CircularReferenceException $circularReferenceException) {
                 $ruleset->addError(new Error($circularReferenceException->getMessage()));
                 $event->stopPropagation();
 
+                return;
+            }
+
+            if (!$isPublic && $dependerLayer !== $dependentLayer) {
                 return;
             }
 

@@ -20,14 +20,14 @@ class ProcessEvent extends Event
     private TokenReferenceInterface $dependentReference;
 
     /**
-     * @var string[]
+     * @var array<string, bool>
      */
     private array $dependentLayers;
 
     private Result $result;
 
     /**
-     * @param string[] $dependentLayers
+     * @param array<string, bool> $dependentLayers
      */
     public function __construct(
         DependencyInterface $dependency,
@@ -66,7 +66,7 @@ class ProcessEvent extends Event
     }
 
     /**
-     * @return string[]
+     * @return array<string, bool>
      */
     public function getDependentLayers(): array
     {
