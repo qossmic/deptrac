@@ -145,6 +145,7 @@ class Configuration implements ConfigurationInterface
             EmitterTypes::CLASS_SUPERGLOBAL_TOKEN,
             EmitterTypes::FILE_TOKEN,
             EmitterTypes::FUNCTION_TOKEN,
+            EmitterTypes::FUNCTION_CALL,
             EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN,
             EmitterTypes::USE_TOKEN,
         ];
