@@ -169,8 +169,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
             return null;
         }
-        if($node instanceof Node\FunctionLike) {
-
+        if ($node instanceof Node\FunctionLike) {
         }
 
         // Resolve code
