@@ -169,8 +169,6 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
             return null;
         }
-        if ($node instanceof Node\FunctionLike) {
-        }
 
         // Resolve code
         if ($node instanceof Node\Stmt\TraitUse && $this->currentReference instanceof ClassLikeReferenceBuilder) {
