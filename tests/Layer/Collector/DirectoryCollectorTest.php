@@ -40,7 +40,7 @@ final class DirectoryCollectorTest extends TestCase
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
         $fileReferenceBuilder = FileReferenceBuilder::create($filePath);
-        $fileReferenceBuilder->newClassLike('Test');
+        $fileReferenceBuilder->newClassLike('Test', [], false);
         $fileReference = $fileReferenceBuilder->build();
 
         $actual = $this->collector->satisfy(
@@ -55,7 +55,7 @@ final class DirectoryCollectorTest extends TestCase
     public function testMissingRegexThrowsException(): void
     {
         $fileReferenceBuilder = FileReferenceBuilder::create('/some/path/to/file.php');
-        $fileReferenceBuilder->newClassLike('Test');
+        $fileReferenceBuilder->newClassLike('Test', [], false);
         $fileReference = $fileReferenceBuilder->build();
 
         $this->expectException(LogicException::class);
@@ -71,7 +71,7 @@ final class DirectoryCollectorTest extends TestCase
     public function testInvalidRegexParam(): void
     {
         $fileReferenceBuilder = FileReferenceBuilder::create('/some/path/to/file.php');
-        $fileReferenceBuilder->newClassLike('Test');
+        $fileReferenceBuilder->newClassLike('Test', [], false);
         $fileReference = $fileReferenceBuilder->build();
 
         $this->expectException(LogicException::class);

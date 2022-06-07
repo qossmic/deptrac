@@ -246,8 +246,16 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     private function enterClassLike(string $name, ClassLike $node): void
     {
+        $isInternal = false;
+        $docComment = $node->getDocComment();
+        if (null !== $docComment) {
+            $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+            $docNode = $this->docParser->parse($tokens);
+            $isInternal = [] !== array_merge($docNode->getTagsByName('@internal'), $docNode->getTagsByName('@deptrac-internal'));
+        }
+
         if ($node instanceof Interface_) {
-            $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node));
+            $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node), $isInternal);
 
             foreach ($node->extends as $extend) {
                 $this->currentReference->implements($extend->toCodeString(), $extend->getLine());
@@ -257,7 +265,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Class_) {
-            $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node));
+            $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node), $isInternal);
             if ($node->extends instanceof Name) {
                 $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
             }
@@ -270,12 +278,12 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         if ($node instanceof Trait_) {
-            $this->currentReference = $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node));
+            $this->currentReference = $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node), $isInternal);
 
             return;
         }
 
-        $this->currentReference = $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node));
+        $this->currentReference = $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node), $isInternal);
     }
 
     private function enterFunction(string $name, Node\Stmt\Function_ $node): void

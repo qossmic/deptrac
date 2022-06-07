@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Analyser\EventHandler;
 
 use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Layer\LayerProvider;
 use Qossmic\Deptrac\Result\Allowed;
@@ -38,6 +39,15 @@ class AllowDependencyHandler
 
             if (!in_array($dependentLayer, $allowedLayers, true)) {
                 return;
+            }
+
+            if ($dependerLayer !== $dependentLayer) {
+                $dependentReference = $event->getDependentReference();
+                if (($dependentReference instanceof ClassLikeReference)
+                    && $dependentReference->isInternal()
+                ) {
+                    return;
+                }
             }
 
             $ruleset->add(new Allowed($dependency, $dependerLayer, $dependentLayer));
