@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Dependency\Emitter;
 
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
+use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\DependencyToken;
+use Qossmic\Deptrac\Ast\AstMap\File\FileReference;
+use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Dependency\Dependency;
 use Qossmic\Deptrac\Dependency\DependencyList;
@@ -24,10 +27,18 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
 
     public function applyDependencies(AstMap $astMap, DependencyList $dependencyList): void
     {
-        foreach ($astMap->getClassLikeReferences() as $classReference) {
-            $classLikeName = $classReference->getToken();
+        $this->createDependenciesForReferences($astMap->getClassLikeReferences(), $astMap, $dependencyList);
+        $this->createDependenciesForReferences($astMap->getFunctionLikeReferences(), $astMap, $dependencyList);
+        $this->createDependenciesForReferences($astMap->getFileReferences(), $astMap, $dependencyList);
+    }
 
-            foreach ($classReference->getDependencies() as $dependency) {
+    /**
+     * @param array<FunctionLikeReference|ClassLikeReference|FileReference> $references
+     */
+    private function createDependenciesForReferences(array $references, AstMap $astMap, DependencyList $dependencyList): void
+    {
+        foreach ($references as $reference) {
+            foreach ($reference->getDependencies() as $dependency) {
                 if (DependencyToken::UNRESOLVED_FUNCTION_CALL !== $dependency->getType()) {
                     continue;
                 }
@@ -40,7 +51,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
 
                 $dependencyList->addDependency(
                     new Dependency(
-                        $classLikeName, $dependency->getToken(), $dependency->getFileOccurrence()
+                        $reference->getToken(), $dependency->getToken(), $dependency->getFileOccurrence()
                     )
                 );
             }

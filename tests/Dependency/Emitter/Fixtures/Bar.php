@@ -82,4 +82,6 @@ function testAnonymousClass() {
             $post = $_POST;
         }
     };
+
+    test(null, null);
 }
