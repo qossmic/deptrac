@@ -47,10 +47,13 @@ deptrac:
           value: ^Qossmic\\Deptrac\\Layer\\LayerResolverInterface$
         - type: implements
           value: Qossmic\Deptrac\Layer\LayerResolverInterface
+          private: true
         - type: implements
           value: Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface
+          private: true
         - type: className
           value: ^Qossmic\\Deptrac\\Layer\\Collector\\Collectable$
+          private: true
     - name: Analyser
       collectors:
         - type: className

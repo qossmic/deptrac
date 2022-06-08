@@ -44,8 +44,9 @@ class LayerResolver implements LayerResolverInterface
             return $this->resolved[$tokenName];
         }
 
+        $this->resolved[$tokenName] = [];
+
         foreach ($this->layers as $layer => $collectables) {
-            $this->resolved[$tokenName] = [];
             foreach ($collectables as $collectable) {
                 $collector = $collectable->getCollector();
                 $attributes = $collectable->getAttributes();
