@@ -14,6 +14,9 @@ use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
 
+/**
+ * @internal
+ */
 final class XMLOutputFormatter implements OutputFormatterInterface
 {
     private const DEFAULT_PATH = './deptrac-report.xml';

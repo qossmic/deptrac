@@ -7,6 +7,9 @@ use Qossmic\Deptrac\File\Exception\ParsedYamlIsNotAnArrayException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @internal
+ */
 class YmlFileLoader
 {
     /**

@@ -14,6 +14,9 @@ use function array_values;
 use function ksort;
 use function sort;
 
+/**
+ * @internal
+ */
 final class BaselineOutputFormatter implements OutputFormatterInterface
 {
     private const DEFAULT_PATH = './deptrac.baseline.yaml';

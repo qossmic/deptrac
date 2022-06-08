@@ -8,6 +8,9 @@ use Qossmic\Deptrac\Ast\AstLoader;
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\InputCollector\InputCollectorInterface;
 
+/**
+ * @internal
+ */
 class AstMapExtractor
 {
     private InputCollectorInterface $inputCollector;

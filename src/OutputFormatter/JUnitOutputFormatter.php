@@ -17,6 +17,9 @@ use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Uncovered;
 use Qossmic\Deptrac\Result\Violation;
 
+/**
+ * @internal
+ */
 final class JUnitOutputFormatter implements OutputFormatterInterface
 {
     private const DEFAULT_PATH = './junit-report.xml';

@@ -10,6 +10,9 @@ use phpDocumentor\GraphViz\Graph;
 use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 
+/**
+ * @internal
+ */
 final class GraphVizOutputDisplayFormatter extends GraphVizOutputFormatter
 {
     /** @var positive-int */

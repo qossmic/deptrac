@@ -8,6 +8,9 @@ use Qossmic\Deptrac\Exception\ExceptionInterface;
 use RuntimeException;
 use Symfony\Component\Yaml\Exception\ParseException;
 
+/**
+ * @internal
+ */
 final class FileCannotBeParsedAsYamlException extends RuntimeException implements ExceptionInterface
 {
     public static function fromFilenameAndException(string $filename, ParseException $exception): self

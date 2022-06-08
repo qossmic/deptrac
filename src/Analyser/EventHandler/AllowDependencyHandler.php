@@ -12,6 +12,9 @@ use Qossmic\Deptrac\Result\Allowed;
 use Qossmic\Deptrac\Result\Error;
 use function in_array;
 
+/**
+ * @internal
+ */
 class AllowDependencyHandler
 {
     private LayerProvider $layerProvider;
