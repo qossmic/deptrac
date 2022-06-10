@@ -14,7 +14,10 @@ var_dump($env->get('FOO'));
 var_dump($env->get('BAR'));
 var_dump($env->get('TEST'));
 
---EXPECT--
+--EXPECTF--
+%A
 string(4) "true"
+%A
 bool(false)
+%A
 string(4) "test"

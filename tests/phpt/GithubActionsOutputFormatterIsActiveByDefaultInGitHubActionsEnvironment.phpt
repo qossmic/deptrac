@@ -9,5 +9,6 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 var_dump(\Qossmic\Deptrac\Console\Command\AnalyseCommand::getDefaultFormatter());
 
---EXPECT--
+--EXPECTF--
+%A
 string(14) "github-actions"
