@@ -11,7 +11,6 @@ use Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Layer\Collector\ConditionalCollectorInterface;
 use Qossmic\Deptrac\Layer\Exception\InvalidLayerDefinitionException;
 use function array_key_exists;
-use function in_array;
 
 class LayerResolver implements LayerResolverInterface
 {
@@ -76,7 +75,7 @@ class LayerResolver implements LayerResolverInterface
     {
         $tokenName = $reference->getToken()->toString();
         if (array_key_exists($tokenName, $this->resolved)) {
-            return in_array($layer, $this->resolved[$tokenName], true);
+            return array_key_exists($layer, $this->resolved[$tokenName]);
         }
 
         if (!array_key_exists($layer, $this->layers)) {
