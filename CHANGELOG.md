@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.22.0](https://github.com/qossmic/deptrac/tree/0.22.0) (2022-06-10)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.21.1...0.22.0)
+
+**Merged pull requests:**
+
+- Fix license info [\#908](https://github.com/qossmic/deptrac/pull/908) ([dbrumann](https://github.com/dbrumann))
+
+## [0.21.1](https://github.com/qossmic/deptrac/tree/0.21.1) (2022-06-10)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.21.0...0.21.1)
+
+**Merged pull requests:**
+
+- Private collectors [\#905](https://github.com/qossmic/deptrac/pull/905) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Internal call implementation [\#904](https://github.com/qossmic/deptrac/pull/904) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
 ## [0.21.0](https://github.com/qossmic/deptrac/tree/0.21.0) (2022-06-07)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.20.0...0.21.0)
