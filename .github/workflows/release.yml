@@ -1,0 +1,26 @@
+on:
+  workflow_dispatch:
+    inputs
+      version:
+        description: 'Please pick a release version in the format x.y.z, e.g. 0.22.1'
+        required: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Check-out"
+        uses: actions/checkout@v1
+      - name: "✏️ Generate full changelog"
+        uses: heinrichreimer/github-changelog-generator-action@v2.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          futureRelease: ${{ github.event.inputs.version }}
+          issues: false
+          output: CHANGELOG.md
+      - name: "📥 Commit changelog"
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: CHANGELOG.md
+          message: "Prepare release ${{ github.event.inputs.version }}"
+          push: true
