@@ -21,7 +21,7 @@ final class SuperglobalCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string|array<string, string>> $config
+     * @param array<string, bool|string|array<string, string>> $config
      *
      * @return string[]
      */

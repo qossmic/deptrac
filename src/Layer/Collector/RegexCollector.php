@@ -9,12 +9,12 @@ use LogicException;
 abstract class RegexCollector implements CollectorInterface
 {
     /**
-     * @param array<string, string|array<string, string>> $config
+     * @param array<string, bool|string|array<string, string>> $config
      */
     abstract protected function getPattern(array $config): string;
 
     /**
-     * @param array<string, string|array<string, string>> $config
+     * @param array<string, bool|string|array<string, string>> $config
      */
     protected function getValidatedPattern(array $config): string
     {

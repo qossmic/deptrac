@@ -12,9 +12,6 @@ use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 
 final class ImplementsCollector implements CollectorInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
     {
         if (!$reference instanceof ClassLikeReference) {
@@ -33,7 +30,7 @@ final class ImplementsCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string|array<string, string>> $config
+     * @param array<string, bool|string|array<string, string>> $config
      */
     private function getInterfaceName(array $config): ClassLikeToken
     {

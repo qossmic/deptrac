@@ -32,14 +32,14 @@ class ViolationHandler
         $dependentLayers = $event->getDependentLayers();
         $ruleset = $event->getResult();
 
-        foreach ($dependentLayers as $dependeeLayer) {
+        foreach ($dependentLayers as $dependentLayer => $_) {
             if ($this->skippedViolationHelper->isViolationSkipped($depender->toString(), $dependent->toString())) {
-                $ruleset->add(new SkippedViolation($dependency, $dependerLayer, $dependeeLayer));
+                $ruleset->add(new SkippedViolation($dependency, $dependerLayer, $dependentLayer));
 
                 continue;
             }
 
-            $ruleset->add(new Violation($dependency, $dependerLayer, $dependeeLayer));
+            $ruleset->add(new Violation($dependency, $dependerLayer, $dependentLayer));
         }
     }
 

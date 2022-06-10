@@ -59,7 +59,7 @@ class TokenInLayerAnalyser
         if (in_array(TokenType::CLASS_LIKE, $this->tokenTypes, true)) {
             foreach ($astMap->getClassLikeReferences() as $classReference) {
                 $classToken = $this->tokenResolver->resolve($classReference->getToken(), $astMap);
-                if (in_array($layer, $this->layerResolver->getLayersForReference($classToken, $astMap), true)) {
+                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($classToken, $astMap))) {
                     $matchingTokens[] = $classToken->getToken()
                         ->toString();
                 }
@@ -69,7 +69,7 @@ class TokenInLayerAnalyser
         if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
             foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
                 $functionToken = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
-                if (in_array($layer, $this->layerResolver->getLayersForReference($functionToken, $astMap), true)) {
+                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($functionToken, $astMap))) {
                     $matchingTokens[] = $functionToken->getToken()
                         ->toString();
                 }
@@ -79,7 +79,7 @@ class TokenInLayerAnalyser
         if (in_array(TokenType::FILE, $this->tokenTypes, true)) {
             foreach ($astMap->getFileReferences() as $fileReference) {
                 $fileToken = $this->tokenResolver->resolve($fileReference->getToken(), $astMap);
-                if (in_array($layer, $this->layerResolver->getLayersForReference($fileToken, $astMap), true)) {
+                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($fileToken, $astMap))) {
                     $matchingTokens[] = $fileToken->getToken()
                         ->toString();
                 }

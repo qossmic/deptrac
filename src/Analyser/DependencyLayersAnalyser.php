@@ -51,7 +51,7 @@ class DependencyLayersAnalyser
         foreach ($dependencies->getDependenciesAndInheritDependencies() as $dependency) {
             $depender = $dependency->getDepender();
             $dependerRef = $this->tokenResolver->resolve($depender, $astMap);
-            $dependerLayers = $this->dependerLayerResolver->getLayersForReference($dependerRef, $astMap);
+            $dependerLayers = array_keys($this->dependerLayerResolver->getLayersForReference($dependerRef, $astMap));
 
             if (!isset($warnings[$depender->toString()]) && count($dependerLayers) > 1) {
                 $warnings[$depender->toString()] = Warning::tokenIsInMoreThanOneLayer($depender, $dependerLayers);

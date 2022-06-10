@@ -305,3 +305,23 @@ project. With this you can create collectors specific for your use case.
 
 If you would like to make your collector available to others, feel free to
 [contribute](contributing.md) it by making a pull request.
+
+## Extra collector configuration
+
+Any collector can also specify parameter `private:true` like this:
+
+```yaml
+deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: uses
+          value: 'App\SomeTrait'
+          private: true
+```
+
+This means that tokens collected by this specific collector can be referenced only by other tokens in the same layer. References from other layers will be considered violations, even if they would normally be allowed by configured ruleset.
+
+This can be useful at least in 2 cases:
+ - **External library that should be used only by one particular layer** - In this case, you might via vendor include a library that should be used only by this particular layer and nobody else.
+ - **Layer that has a public API and private implementation** - You might want to provide only a few classes to be available to use by other layers (public API) that call the internal implementation of the layer that on the other hand should not be available to anybody else other than the public API of the layer.

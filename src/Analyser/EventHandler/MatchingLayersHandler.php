@@ -13,7 +13,7 @@ class MatchingLayersHandler
         $dependerLayer = $event->getDependerLayer();
         $dependentLayers = $event->getDependentLayers();
 
-        foreach ($dependentLayers as $dependeeLayer) {
+        foreach ($dependentLayers as $dependeeLayer => $_) {
             if ($dependerLayer !== $dependeeLayer) {
                 return;
             }

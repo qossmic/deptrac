@@ -30,7 +30,7 @@ final class UsesCollector implements CollectorInterface
     }
 
     /**
-     * @param array<string, string|array<string, string>> $config
+     * @param array<string, bool|string|array<string, string>> $config
      */
     private function getTraitName(array $config): ClassLikeToken
     {
