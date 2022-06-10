@@ -12,6 +12,9 @@ use Qossmic\Deptrac\Console\Output;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
 
+/**
+ * @internal
+ */
 final class GraphVizOutputImageFormatter extends GraphVizOutputFormatter
 {
     public static function getName(): string

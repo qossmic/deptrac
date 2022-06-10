@@ -7,6 +7,9 @@ namespace Qossmic\Deptrac\File\Exception;
 use Qossmic\Deptrac\Exception\ExceptionInterface;
 use RuntimeException;
 
+/**
+ * @internal
+ */
 final class ParsedYamlIsNotAnArrayException extends RuntimeException implements ExceptionInterface
 {
     public static function fromFilename(string $filename): self

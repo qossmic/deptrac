@@ -9,6 +9,9 @@ use phpDocumentor\GraphViz\Graph;
 use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 
+/**
+ * @internal
+ */
 final class GraphVizOutputDotFormatter extends GraphVizOutputFormatter
 {
     public static function getName(): string

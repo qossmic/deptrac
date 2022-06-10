@@ -16,47 +16,50 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     /** @var AstInherit[] */
     private array $inherits = [];
 
+    private bool $isInternal;
+
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath, ClassLikeToken $classLikeToken, ClassLikeType $classLikeType)
+    protected function __construct(array $tokenTemplates, string $filepath, ClassLikeToken $classLikeToken, ClassLikeType $classLikeType, bool $isInternal)
     {
         parent::__construct($tokenTemplates, $filepath);
 
         $this->classLikeToken = $classLikeToken;
         $this->classLikeType = $classLikeType;
+        $this->isInternal = $isInternal;
     }
 
     /**
      * @param string[] $classTemplates
      */
-    public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates): self
+    public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::classLike());
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::classLike(), $isInternal);
     }
 
     /**
      * @param string[] $classTemplates
      */
-    public static function createClass(string $filepath, string $classLikeName, array $classTemplates): self
+    public static function createClass(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::class());
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::class(), $isInternal);
     }
 
     /**
      * @param string[] $classTemplates
      */
-    public static function createTrait(string $filepath, string $classLikeName, array $classTemplates): self
+    public static function createTrait(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::trait());
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::trait(), $isInternal);
     }
 
     /**
      * @param string[] $classTemplates
      */
-    public static function createInterface(string $filepath, string $classLikeName, array $classTemplates): self
+    public static function createInterface(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::interface());
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::interface(), $isInternal);
     }
 
     /** @internal */
@@ -66,7 +69,8 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
             $this->classLikeToken,
             $this->classLikeType,
             $this->inherits,
-            $this->dependencies
+            $this->dependencies,
+            $this->isInternal
         );
     }
 
@@ -98,5 +102,10 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
         );
 
         return $this;
+    }
+
+    public function isInternal(): bool
+    {
+        return $this->isInternal;
     }
 }

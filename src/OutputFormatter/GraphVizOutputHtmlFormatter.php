@@ -13,6 +13,9 @@ use RuntimeException;
 use function base64_encode;
 use function file_get_contents;
 
+/**
+ * @internal
+ */
 final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
 {
     public static function getName(): string

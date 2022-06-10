@@ -11,6 +11,9 @@ use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
 use function sprintf;
 
+/**
+ * @internal
+ */
 class ViolationHandler
 {
     private SkippedViolationHelper $skippedViolationHelper;

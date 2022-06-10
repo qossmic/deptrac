@@ -14,6 +14,9 @@ use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
 use function count;
 
+/**
+ * @internal
+ */
 final class ConsoleOutputFormatter implements OutputFormatterInterface
 {
     public static function getName(): string

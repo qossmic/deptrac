@@ -10,6 +10,9 @@ use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @internal
+ */
 final class FileInputCollector implements InputCollectorInterface
 {
     /**

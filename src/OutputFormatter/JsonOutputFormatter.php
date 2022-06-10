@@ -16,6 +16,9 @@ use function json_last_error;
 use function sprintf;
 use const JSON_PRETTY_PRINT;
 
+/**
+ * @internal
+ */
 final class JsonOutputFormatter implements OutputFormatterInterface
 {
     public static function getName(): string

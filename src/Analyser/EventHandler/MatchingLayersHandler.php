@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\Analyser\EventHandler;
 
 use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
 
+/**
+ * @internal
+ */
 class MatchingLayersHandler
 {
     public function __invoke(ProcessEvent $event): void

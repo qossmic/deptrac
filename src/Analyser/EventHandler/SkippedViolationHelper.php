@@ -8,6 +8,8 @@ use function in_array;
 
 /**
  * @psalm-immutable
+ *
+ * @internal
  */
 final class SkippedViolationHelper
 {

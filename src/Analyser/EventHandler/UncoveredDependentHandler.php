@@ -9,6 +9,9 @@ use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Result\Uncovered;
 
+/**
+ * @internal
+ */
 class UncoveredDependentHandler
 {
     private bool $ignoreUncoveredInternalClasses;

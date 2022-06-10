@@ -25,16 +25,19 @@ class ClassLikeReference implements TokenReferenceInterface
     /** @var AstInherit[] */
     private array $inherits;
 
+    private bool $isInternal;
+
     /**
      * @param AstInherit[]      $inherits
      * @param DependencyToken[] $dependencies
      */
-    public function __construct(ClassLikeToken $classLikeName, ClassLikeType $classLikeType = null, array $inherits = [], array $dependencies = [])
+    public function __construct(ClassLikeToken $classLikeName, ClassLikeType $classLikeType = null, array $inherits = [], array $dependencies = [], bool $isInternal = false)
     {
         $this->classLikeName = $classLikeName;
         $this->classLikeType = $classLikeType ?? ClassLikeType::classLike();
         $this->dependencies = $dependencies;
         $this->inherits = $inherits;
+        $this->isInternal = $isInternal;
     }
 
     public function withFileReference(FileReference $astFileReference): self
@@ -74,5 +77,10 @@ class ClassLikeReference implements TokenReferenceInterface
     public function getInherits(): array
     {
         return $this->inherits;
+    }
+
+    public function isInternal(): bool
+    {
+        return $this->isInternal;
     }
 }
