@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.22.1](https://github.com/qossmic/deptrac/tree/0.22.1) (2022-06-11)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.22.0...0.22.1)
+
+**Merged pull requests:**
+
+- Fixes \#910 [\#912](https://github.com/qossmic/deptrac/pull/912) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Fixed locally failed tests [\#911](https://github.com/qossmic/deptrac/pull/911) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
 ## [0.22.0](https://github.com/qossmic/deptrac/tree/0.22.0) (2022-06-10)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.21.1...0.22.0)
