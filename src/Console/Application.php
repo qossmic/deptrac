@@ -39,6 +39,12 @@ final class Application extends BaseApplication
                 'Disable caching mechanisms (wins over --cache-file)'
             ),
             new InputOption(
+                '--clear-cache',
+                null,
+                InputOption::VALUE_NONE,
+                'Clears cache file before run'
+            ),
+            new InputOption(
                 '--cache-file',
                 null,
                 InputOption::VALUE_REQUIRED,
@@ -86,6 +92,9 @@ final class Application extends BaseApplication
             : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache';
 
         $factory = new ServiceContainerBuilder($currentWorkingDirectory);
+        if (false === $input->hasParameterOption('--clear-cache', true)) {
+            $factory = $factory->clearCache($cache);
+        }
         if (!in_array($input->getArgument('command'), ['init', 'list', 'help', 'completion'], true)) {
             $factory = $factory->withConfig($config);
         }
