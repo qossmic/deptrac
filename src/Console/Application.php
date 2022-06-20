@@ -92,7 +92,7 @@ final class Application extends BaseApplication
             : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache';
 
         $factory = new ServiceContainerBuilder($currentWorkingDirectory);
-        if (false === $input->hasParameterOption('--clear-cache', true)) {
+        if ($input->hasParameterOption('--clear-cache', true)) {
             $factory = $factory->clearCache($cache);
         }
         if (!in_array($input->getArgument('command'), ['init', 'list', 'help', 'completion'], true)) {
