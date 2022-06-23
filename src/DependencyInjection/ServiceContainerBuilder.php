@@ -64,6 +64,23 @@ final class ServiceContainerBuilder
         return $builder;
     }
 
+    public function clearCache(?string $cacheFile): self
+    {
+        if (null === $cacheFile) {
+            return $this;
+        }
+
+        $builder = clone $this;
+
+        if (Path::isRelative($cacheFile)) {
+            $cacheFile = Path::makeAbsolute($cacheFile, $this->workingDirectory);
+        }
+
+        unlink($cacheFile);
+
+        return $builder;
+    }
+
     public function build(): ContainerBuilder
     {
         $container = new ContainerBuilder();
