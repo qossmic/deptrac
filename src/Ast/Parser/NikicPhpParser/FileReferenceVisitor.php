@@ -120,11 +120,23 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             return null;
         }
 
+        if ($node instanceof Node\FunctionLike) {
+            foreach ($this->templatesFromDocs($node) as $template) {
+                $this->currentReference->addTokenTemplate($template);
+            }
+        }
+
         return null;
     }
 
     public function leaveNode(Node $node)
     {
+        if ($node instanceof Node\FunctionLike) {
+            foreach ($this->templatesFromDocs($node) as $template) {
+                $this->currentReference->removeTokenTemplate($template);
+            }
+        }
+
         // Resolve current reference scope
         if ($node instanceof Node\Stmt\Function_) {
             $this->currentReference = $this->fileReferenceBuilder;
