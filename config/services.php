@@ -39,6 +39,7 @@ use Qossmic\Deptrac\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Dependency\Emitter\ClassDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FileDependencyEmitter;
+use Qossmic\Deptrac\Dependency\Emitter\FunctionCallDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\UsesDependencyEmitter;
@@ -174,6 +175,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('dependency_emitter');
     $services
         ->set(FunctionDependencyEmitter::class)
+        ->tag('dependency_emitter');
+    $services
+        ->set(FunctionCallDependencyEmitter::class)
         ->tag('dependency_emitter');
     $services
         ->set(FunctionSuperglobalDependencyEmitter::class)

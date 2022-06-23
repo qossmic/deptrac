@@ -25,6 +25,7 @@ class DependencyToken
     public const ANONYMOUS_CLASS_TRAIT = 'anonymous_class_trait';
     public const ATTRIBUTE = 'attribute';
     public const SUPERGLOBAL_VARIABLE = 'superglobal_variable';
+    public const UNRESOLVED_FUNCTION_CALL = 'unresolved_function_call';
 
     private TokenInterface $token;
     private FileOccurrence $fileOccurrence;

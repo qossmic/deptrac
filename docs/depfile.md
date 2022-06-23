@@ -32,6 +32,7 @@ deptrac:
       - file
       - class_superglobal
       - function_superglobal
+      - function_call
 ```
 
 - `class` (default) - analyses class definitions for everything apart from superglobal usage.
@@ -40,6 +41,7 @@ deptrac:
 - `file` - analyses file for everything apart from use statements and function/class definitions.
 - `function` - analyses function definitions for everything apart from superglobal usage.
 - `function_superglobal` - analyses function definitions for superglobal usage.
+- `function_call` - analyses calls to custom(user-defined) functions
 
 ### `exclude_files`
 

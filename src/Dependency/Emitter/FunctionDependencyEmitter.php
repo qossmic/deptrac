@@ -29,6 +29,11 @@ final class FunctionDependencyEmitter implements DependencyEmitterInterface
                     if (DependencyToken::SUPERGLOBAL_VARIABLE === $dependency->getType()) {
                         continue;
                     }
+
+                    if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->getType()) {
+                        continue;
+                    }
+
                     $dependencyList->addDependency(
                         new Dependency(
                             $astFunctionReference->getToken(),

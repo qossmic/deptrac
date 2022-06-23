@@ -25,15 +25,20 @@ final class FileDependencyEmitter implements DependencyEmitterInterface
     {
         foreach ($astMap->getFileReferences() as $fileReference) {
             $dependencies = $fileReference->getDependencies();
-            foreach ($dependencies as $emittedDependency) {
-                if (DependencyToken::USE === $emittedDependency->getType()) {
+            foreach ($dependencies as $dependency) {
+                if (DependencyToken::USE === $dependency->getType()) {
                     continue;
                 }
+
+                if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->getType()) {
+                    continue;
+                }
+
                 $dependencyList->addDependency(
                     new Dependency(
                         $fileReference->getToken(),
-                        $emittedDependency->getToken(),
-                        $emittedDependency->getFileOccurrence()
+                        $dependency->getToken(),
+                        $dependency->getFileOccurrence()
                     )
                 );
             }
