@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.23.0](https://github.com/qossmic/deptrac/tree/0.23.0) (2022-06-24)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.22.1...0.23.0)
+
+**Merged pull requests:**
+
+- Add option to clear cache [\#918](https://github.com/qossmic/deptrac/pull/918) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Resolution of template vars defined at function-like level [\#903](https://github.com/qossmic/deptrac/pull/903) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Make AST map aware of custom function calls [\#902](https://github.com/qossmic/deptrac/pull/902) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
 ## [0.22.1](https://github.com/qossmic/deptrac/tree/0.22.1) (2022-06-11)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.22.0...0.22.1)
