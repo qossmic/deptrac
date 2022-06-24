@@ -15,12 +15,12 @@ use Qossmic\Deptrac\Dependency\Emitter\FileDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\UsesDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
-use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
 use Qossmic\Deptrac\Dependency\InheritanceFlattener;
-use Qossmic\Deptrac\Exception\ShouldNotHappenException;
+use Qossmic\Deptrac\Events\Dependency\PostEmitEvent;
+use Qossmic\Deptrac\Events\Dependency\PostFlattenEvent;
+use Qossmic\Deptrac\Events\Dependency\PreEmitEvent;
+use Qossmic\Deptrac\Events\Dependency\PreFlattenEvent;
+use Qossmic\Deptrac\Utils\ShouldNotHappenException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

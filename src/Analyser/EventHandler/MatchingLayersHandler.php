@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Analyser\EventHandler;
 
-use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
+use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 
 /**
  * @internal

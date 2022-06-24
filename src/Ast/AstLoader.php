@@ -6,11 +6,11 @@ namespace Qossmic\Deptrac\Ast;
 
 use PhpParser\Error;
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Ast\Event\AstFileAnalysedEvent;
-use Qossmic\Deptrac\Ast\Event\AstFileSyntaxErrorEvent;
-use Qossmic\Deptrac\Ast\Event\PostCreateAstMapEvent;
-use Qossmic\Deptrac\Ast\Event\PreCreateAstMapEvent;
 use Qossmic\Deptrac\Ast\Parser\ParserInterface;
+use Qossmic\Deptrac\Events\Ast\AstFileAnalysedEvent;
+use Qossmic\Deptrac\Events\Ast\AstFileSyntaxErrorEvent;
+use Qossmic\Deptrac\Events\Ast\PostCreateAstMapEvent;
+use Qossmic\Deptrac\Events\Ast\PreCreateAstMapEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AstLoader

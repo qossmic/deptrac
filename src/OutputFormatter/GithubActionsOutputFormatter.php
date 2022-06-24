@@ -2,7 +2,6 @@
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\Result\LegacyResult;

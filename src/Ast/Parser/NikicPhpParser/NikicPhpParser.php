@@ -18,8 +18,8 @@ use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Ast\Parser\ReferenceExtractorInterface;
 use Qossmic\Deptrac\Ast\Parser\TypeResolver;
-use Qossmic\Deptrac\Exception\ShouldNotHappenException;
-use Qossmic\Deptrac\File\FileReader;
+use Qossmic\Deptrac\Utils\File\FileReader;
+use Qossmic\Deptrac\Utils\ShouldNotHappenException;
 
 class NikicPhpParser implements ParserInterface
 {

@@ -8,7 +8,6 @@ use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use Exception;
-use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Result\CoveredRule;
 use Qossmic\Deptrac\Result\LegacyResult;

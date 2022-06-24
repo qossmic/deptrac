@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Configuration\Loader;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\File\Exception\CouldNotReadFileException;
-use Qossmic\Deptrac\File\Exception\FileCannotBeParsedAsYamlException;
-use Qossmic\Deptrac\File\Exception\ParsedYamlIsNotAnArrayException;
-use Qossmic\Deptrac\File\YmlFileLoader;
+use Qossmic\Deptrac\Utils\File\Exception\CouldNotReadFileException;
+use Qossmic\Deptrac\Utils\File\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Utils\File\Exception\ParsedYamlIsNotAnArrayException;
+use Qossmic\Deptrac\Utils\File\YmlFileLoader;
 
 /**
- * @covers \Qossmic\Deptrac\File\YmlFileLoader
+ * @covers \Qossmic\Deptrac\Utils\File\YmlFileLoader
  */
 final class YmlFileLoaderTest extends TestCase
 {

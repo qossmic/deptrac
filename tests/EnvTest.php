@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Env;
+use Qossmic\Deptrac\Console\Env;
 
 class EnvTest extends TestCase
 {

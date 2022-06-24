@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
+use Qossmic\Deptrac\OutputFormatter\Configuration\ConfigurationGraphViz;
 
 /**
- * @covers \Qossmic\Deptrac\Configuration\ConfigurationGraphViz
+ * @covers \Qossmic\Deptrac\OutputFormatter\Configuration\ConfigurationGraphViz
  */
 final class ConfigurationGraphVizTest extends TestCase
 {

@@ -9,12 +9,13 @@ use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Dependency\Emitter\DependencyEmitterInterface;
 use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
-use Qossmic\Deptrac\Dependency\Event\PostEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PostFlattenEvent;
-use Qossmic\Deptrac\Dependency\Event\PreEmitEvent;
-use Qossmic\Deptrac\Dependency\Event\PreFlattenEvent;
-use Qossmic\Deptrac\Exception\ShouldNotHappenException;
+use Qossmic\Deptrac\Events\Dependency\PostEmitEvent;
+use Qossmic\Deptrac\Events\Dependency\PostFlattenEvent;
+use Qossmic\Deptrac\Events\Dependency\PreEmitEvent;
+use Qossmic\Deptrac\Events\Dependency\PreFlattenEvent;
+use Qossmic\Deptrac\Utils\ShouldNotHappenException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 use function array_merge;
 
 class DependencyResolver

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
-use Qossmic\Deptrac\File\Dumper as ConfigurationDumper;
-use Qossmic\Deptrac\File\Exception\FileNotWritableException;
-use Qossmic\Deptrac\Finder\Exception\FileAlreadyExistsException;
+use Qossmic\Deptrac\Utils\File\Dumper as ConfigurationDumper;
+use Qossmic\Deptrac\Utils\File\Exception\FileAlreadyExistsException;
+use Qossmic\Deptrac\Utils\File\Exception\FileNotWritableException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+
 use function sprintf;
 
 class InitCommand extends Command

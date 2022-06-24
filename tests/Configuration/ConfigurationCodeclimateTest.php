@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Configuration\ConfigurationCodeclimate;
+use Qossmic\Deptrac\OutputFormatter\Configuration\ConfigurationCodeclimate;
 
 /**
- * @covers \Qossmic\Deptrac\Configuration\ConfigurationCodeclimate
+ * @covers \Qossmic\Deptrac\OutputFormatter\Configuration\ConfigurationCodeclimate
  */
 final class ConfigurationCodeclimateTest extends TestCase
 {

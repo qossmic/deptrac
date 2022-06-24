@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Layer\Exception;
 
 use Psr\Container\ContainerExceptionInterface;
-use Qossmic\Deptrac\Exception\ExceptionInterface;
+use Qossmic\Deptrac\Utils\ExceptionInterface;
 use RuntimeException;
 use function implode;
 

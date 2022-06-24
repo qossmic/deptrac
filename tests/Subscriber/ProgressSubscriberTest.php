@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Subscriber;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Ast\Event\AstFileAnalysedEvent;
-use Qossmic\Deptrac\Ast\Event\PostCreateAstMapEvent;
-use Qossmic\Deptrac\Ast\Event\PreCreateAstMapEvent;
+use Qossmic\Deptrac\Console\Subscriber\ProgressSubscriber;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\Subscriber\ProgressSubscriber;
+use Qossmic\Deptrac\Events\Ast\AstFileAnalysedEvent;
+use Qossmic\Deptrac\Events\Ast\PostCreateAstMapEvent;
+use Qossmic\Deptrac\Events\Ast\PreCreateAstMapEvent;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;

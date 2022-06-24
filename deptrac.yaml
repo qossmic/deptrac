@@ -1,6 +1,14 @@
 imports:
   - deptrac.baseline.yaml
 
+services:
+  - class: IgnoreDependenciesOnUtils
+    tags:
+     - { name: event_listener, event: Qossmic\Deptrac\Events\Analyser\ProcessEvent }
+  - class: IgnoreDependenciesOnEvents
+    tags:
+      - { name: event_listener, event: Qossmic\Deptrac\Events\Analyser\ProcessEvent }
+
 deptrac:
   paths:
     - ./src
@@ -8,96 +16,99 @@ deptrac:
   formatters:
     graphviz:
       pointToGroups: true
+      hidden_layers:
+        - Utils
 
   layers:
-    - name: File
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\File\\(?!Exception)
-    - name: Input
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\InputCollector\\
-    - name: Output
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\OutputFormatter\\
-    - name: Result
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Result\\
-    - name: Ast
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Ast\\AstLoader$
-        - type: className
-          value: ^Qossmic\\Deptrac\\Ast\\AstMap
-    - name: Dependency
-      collectors:
-        - type: bool
-          must:
-            - type: className
-              value: ^Qossmic\\Deptrac\\Dependency\\[^\\]+$
-          must_not:
-            - type: className
-              value: ^Qossmic\\Deptrac\\Dependency\\TokenResolver$
-    - name: Layer
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Layer\\LayerResolverInterface$
-        - type: implements
-          value: Qossmic\Deptrac\Layer\LayerResolverInterface
-          private: true
-        - type: implements
-          value: Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface
-          private: true
-        - type: className
-          value: ^Qossmic\\Deptrac\\Layer\\Collector\\Collectable$
-          private: true
+    # Domains
     - name: Analyser
       collectors:
+        - type: directory
+          value: src/Analyser/.*
         - type: className
-          value: ^Qossmic\\Deptrac\\Analyser\\(?!Exception)
+          value: ^JetBrains\\PHPStormStub\\.*
+          private: true
+    - name: Ast
+      collectors:
+        - type: directory
+          value: src/Ast/.*
+        - type: className
+          value: ^PHPStan\\PhpDocParser\\.*
+          private: true
+        - type: className
+          value: ^PhpParser\\.*
+          private: true
+        - type: className
+          value: ^phpDocumentor\\Reflection\\.*
+          private: true
     - name: Console
       collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Console\\(?!Exception)
-        - type: className
-          value: ^Qossmic\\Deptrac\\Env$
-    - name: Configuration
+        - type: directory
+          value: src/Console/.*
+    - name: Dependency
       collectors:
+        - type: directory
+          value: src/Dependency/.*
+    - name: DependencyInjection
+      collectors:
+        - type: directory
+          value: src/DependencyInjection/.*
+    - name: Events
+      collectors:
+        - type: directory
+          value: src/Events/.*
+    - name: InputCollector
+      collectors:
+        - type: directory
+          value: src/InputCollector/.*
+    - name: Layer
+      collectors:
+        - type: directory
+          value: src/Layer/.*
+    - name: OutputFormatter
+      collectors:
+        - type: directory
+          value: src/OutputFormatter/.*
         - type: className
-          value: ^Qossmic\\Deptrac\\Configuration\\(?!Exception)
+          value: ^phpDocumentor\\GraphViz\\.*
+          private: true
+    - name: Result
+      collectors:
+        - type: directory
+          value: src/Result/.*
+    - name: Utils
+      collectors:
+        - type: directory
+          value: src/Utils/.*
 
   ruleset:
-    # Utilities
-    File: ~
-    Configuration:
-      - File
-
-    # Models
-    Ast: ~
     Layer:
       - Ast
+    Console:
+      - Analyser
+      - OutputFormatter
+      - DependencyInjection
     Dependency:
       - Ast
+    DependencyInjection:
+      - Dependency
+      - Console
     Result:
       - Dependency
       - Ast
-
-    # Domain
     Analyser:
-      - Input
-      - +Layer
-      - +Result
-
-    # Infrastructure
-    Output:
+      - Result
+      - Layer
+      - Dependency
       - Console
-      - Configuration
-      - +Result
-    Console:
-      - File
-      - Configuration
-      - Analyser
-      - Output
+      - InputCollector
+      - Ast
+    OutputFormatter:
+      - Result
+      - Console
+      - Dependency
+      - Ast
+      - DependencyInjection
+    Ast:
+      - Layer
+      - Console

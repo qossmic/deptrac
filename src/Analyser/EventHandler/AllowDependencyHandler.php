@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Analyser\EventHandler;
 
-use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeReference;
+use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Layer\LayerProvider;
 use Qossmic\Deptrac\Result\Allowed;
 use Qossmic\Deptrac\Result\Error;
+
 use function in_array;
 
 /**

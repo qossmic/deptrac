@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Analyser\EventHandler;
 
-use Qossmic\Deptrac\Analyser\Event\PostProcessEvent;
-use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
+use Qossmic\Deptrac\Events\Analyser\PostProcessEvent;
+use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Result\Error;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
+
 use function sprintf;
 
 /**

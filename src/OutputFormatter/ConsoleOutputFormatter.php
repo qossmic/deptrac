@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use Qossmic\Deptrac\Ast\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Dependency\InheritDependency;
 use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\Rule;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
+
 use function count;
 
 /**

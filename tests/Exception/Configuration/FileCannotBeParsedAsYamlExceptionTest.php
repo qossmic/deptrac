@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Exception\Configuration;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\File\Exception\FileCannotBeParsedAsYamlException;
+use Qossmic\Deptrac\Utils\File\Exception\FileCannotBeParsedAsYamlException;
 use RuntimeException;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 /**
- * @covers \Qossmic\Deptrac\File\Exception\FileCannotBeParsedAsYamlException
+ * @covers \Qossmic\Deptrac\Utils\File\Exception\FileCannotBeParsedAsYamlException
  */
 final class FileCannotBeParsedAsYamlExceptionTest extends TestCase
 {

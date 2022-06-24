@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Command;
 
+use Qossmic\Deptrac\Console\Env;
 use Qossmic\Deptrac\Console\Exception\AnalyseException;
+use Qossmic\Deptrac\Console\Subscriber\ConsoleSubscriber;
+use Qossmic\Deptrac\Console\Subscriber\ProgressSubscriber;
 use Qossmic\Deptrac\Console\Symfony\Style;
 use Qossmic\Deptrac\Console\Symfony\SymfonyOutput;
-use Qossmic\Deptrac\Env;
 use Qossmic\Deptrac\OutputFormatter\FormatterProvider;
 use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
 use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
-use Qossmic\Deptrac\Subscriber\ConsoleSubscriber;
-use Qossmic\Deptrac\Subscriber\ProgressSubscriber;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +20,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 use function getcwd;
+
 use const DIRECTORY_SEPARATOR;
 
 class AnalyseCommand extends Command

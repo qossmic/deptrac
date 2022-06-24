@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Analyser;
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Dependency\TokenResolver;
-use Qossmic\Deptrac\Exception\ShouldNotHappenException;
+use Qossmic\Deptrac\Utils\ShouldNotHappenException;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use function array_values;
 use function ksort;

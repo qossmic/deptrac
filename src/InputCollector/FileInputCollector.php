@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\InputCollector;
 
 use LogicException;
-use Qossmic\Deptrac\File\Exception\InvalidPathException;
+use Qossmic\Deptrac\Utils\File\Exception\InvalidPathException;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Finder;
@@ -31,14 +31,14 @@ final class FileInputCollector implements InputCollectorInterface
      */
     public function __construct(array $paths, array $excludedFilePatterns, string $basePath)
     {
-        $basePath = new SplFileInfo($basePath);
-        if (!$basePath->isDir() || !$basePath->isReadable()) {
-            throw InvalidPathException::unreadablePath($basePath);
+        $basePathInfo = new SplFileInfo($basePath);
+        if (!$basePathInfo->isDir() || !$basePathInfo->isReadable()) {
+            throw InvalidPathException::unreadablePath($basePathInfo);
         }
         $this->paths = [];
         foreach ($paths as $originalPath) {
             $path = Path::isRelative($originalPath)
-                ? Path::makeAbsolute($originalPath, $basePath->getPathname())
+                ? Path::makeAbsolute($originalPath, $basePathInfo->getPathname())
                 : $originalPath;
             $path = new SplFileInfo($path);
             if (!$path->isReadable()) {

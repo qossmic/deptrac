@@ -44,7 +44,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Qossmic\\Deptrac\\": "tests/"
+            "Tests\\Qossmic\\Deptrac\\": "tests/",
+            "": "codeQuality/deptrac"
         }
     },
     "config": {

@@ -16,9 +16,10 @@ use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Ast\AstMap\Variable\VariableReference;
-use Qossmic\Deptrac\Ast\Exception\FileNotExistsException;
 use Qossmic\Deptrac\Console\Application;
-use Qossmic\Deptrac\File\FileReader;
+use Qossmic\Deptrac\Utils\File\Exception\FileNotExistsException;
+use Qossmic\Deptrac\Utils\File\FileReader;
+
 use function array_filter;
 use function array_map;
 use function assert;

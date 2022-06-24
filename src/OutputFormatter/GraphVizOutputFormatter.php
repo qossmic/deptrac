@@ -8,16 +8,16 @@ use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
-use Qossmic\Deptrac\Configuration\ConfigurationGraphViz;
-use Qossmic\Deptrac\Configuration\FormatterConfiguration;
-use Qossmic\Deptrac\Configuration\OutputFormatterInput;
 use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\OutputFormatter\Configuration\ConfigurationGraphViz;
+use Qossmic\Deptrac\OutputFormatter\Configuration\FormatterConfiguration;
 use Qossmic\Deptrac\Result\CoveredRule;
 use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\Rule;
 use Qossmic\Deptrac\Result\Uncovered;
 use Qossmic\Deptrac\Result\Violation;
 use RuntimeException;
+
 use function sys_get_temp_dir;
 use function tempnam;
 

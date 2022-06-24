@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Exception;
 
-use Qossmic\Deptrac\Exception\ExceptionInterface;
+use Qossmic\Deptrac\Utils\ExceptionInterface;
 use RuntimeException;
 
 final class InvalidArgumentException extends RuntimeException implements ExceptionInterface

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Analyser\EventHandler;
 
 use JetBrains\PHPStormStub\PhpStormStubsMap;
-use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
 use Qossmic\Deptrac\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Result\Uncovered;
 
 /**

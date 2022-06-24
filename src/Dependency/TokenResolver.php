@@ -15,7 +15,7 @@ use Qossmic\Deptrac\Ast\AstMap\TokenInterface;
 use Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Ast\AstMap\Variable\VariableReference;
-use Qossmic\Deptrac\Exception\ShouldNotHappenException;
+use Qossmic\Deptrac\Utils\ShouldNotHappenException;
 
 class TokenResolver
 {

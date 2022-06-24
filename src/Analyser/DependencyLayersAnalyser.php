@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Analyser;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Qossmic\Deptrac\Analyser\Event\PostProcessEvent;
-use Qossmic\Deptrac\Analyser\Event\ProcessEvent;
 use Qossmic\Deptrac\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Dependency\TokenResolver;
+use Qossmic\Deptrac\Events\Analyser\PostProcessEvent;
+use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\Result\Result;
 use Qossmic\Deptrac\Result\Warning;
+
 use function count;
 
 class DependencyLayersAnalyser

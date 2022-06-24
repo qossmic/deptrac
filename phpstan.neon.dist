@@ -12,6 +12,6 @@ parameters:
     level: max
     paths: [src]
     stubFiles:
-        - stubs/Function_.php
-        - stubs/ClassLike.php
-        - stubs/Name.php
+        - codeQuality/stubs/Function_.php
+        - codeQuality/stubs/ClassLike.php
+        - codeQuality/stubs/Name.php
