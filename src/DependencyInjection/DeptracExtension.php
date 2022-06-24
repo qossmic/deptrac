@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\DependencyInjection;
 
-use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+
 use function getcwd;
 
 /**

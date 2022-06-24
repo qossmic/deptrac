@@ -18,6 +18,19 @@ deptrac:
       pointToGroups: true
       hidden_layers:
         - Utils
+        - Events
+      groups:
+        Application:
+          - Console
+          - DependencyInjection
+          - Analyser
+          - InputCollector
+          - OutputFormatter
+        Engine:
+          - Ast
+          - Result
+          - Dependency
+          - Layer
 
   layers:
     # Domains
@@ -103,12 +116,10 @@ deptrac:
       - Console
       - InputCollector
       - Ast
+      - DependencyInjection
     OutputFormatter:
       - Result
       - Console
       - Dependency
       - Ast
       - DependencyInjection
-    Ast:
-      - Layer
-      - Console

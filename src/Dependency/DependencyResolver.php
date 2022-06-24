@@ -8,7 +8,6 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Dependency\Emitter\DependencyEmitterInterface;
-use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
 use Qossmic\Deptrac\Events\Dependency\PostEmitEvent;
 use Qossmic\Deptrac\Events\Dependency\PostFlattenEvent;
 use Qossmic\Deptrac\Events\Dependency\PreEmitEvent;
@@ -27,20 +26,10 @@ class DependencyResolver
     /**
      * @var array{types: array<string>}
      */
-    public const DEFAULT_EMITTERS = [
-        'types' => [
-            EmitterTypes::CLASS_TOKEN,
-            EmitterTypes::USE_TOKEN,
-        ],
-    ];
-
-    /**
-     * @var array{types: array<string>}
-     */
     private array $config;
 
     /**
-     * @param array{types?: array<string>} $config
+     * @param array{types: array<string>} $config
      */
     public function __construct(
         array $config,
@@ -48,7 +37,7 @@ class DependencyResolver
         ContainerInterface $emitterLocator,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->config = array_merge(self::DEFAULT_EMITTERS, $config);
+        $this->config = $config;
         $this->inheritanceFlattener = $inheritanceFlattener;
         $this->emitterLocator = $emitterLocator;
         $this->eventDispatcher = $eventDispatcher;

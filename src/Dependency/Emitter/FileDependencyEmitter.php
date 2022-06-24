@@ -11,10 +11,6 @@ use Qossmic\Deptrac\Dependency\DependencyList;
 
 final class FileDependencyEmitter implements DependencyEmitterInterface
 {
-    public static function getAlias(): string
-    {
-        return EmitterTypes::FILE_TOKEN;
-    }
 
     public function getName(): string
     {

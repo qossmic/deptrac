@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\DependencyInjection;
 
-use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -14,6 +13,22 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+
+    public const ALLOWED_EMITTER_TYPES = [
+        EmitterTypes::CLASS_TOKEN,
+        EmitterTypes::CLASS_SUPERGLOBAL_TOKEN,
+        EmitterTypes::FILE_TOKEN,
+        EmitterTypes::FUNCTION_TOKEN,
+        EmitterTypes::FUNCTION_CALL,
+        EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN,
+        EmitterTypes::USE_TOKEN,
+    ];
+
+    public const DEFAULT_EMITTER_TYPES = [
+        EmitterTypes::CLASS_TOKEN,
+        EmitterTypes::USE_TOKEN
+    ];
+
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder('deptrac');
@@ -140,16 +155,6 @@ class Configuration implements ConfigurationInterface
 
     private function appendEmitterTypes(ArrayNodeDefinition $node): void
     {
-        $emitterTypes = [
-            EmitterTypes::CLASS_TOKEN,
-            EmitterTypes::CLASS_SUPERGLOBAL_TOKEN,
-            EmitterTypes::FILE_TOKEN,
-            EmitterTypes::FUNCTION_TOKEN,
-            EmitterTypes::FUNCTION_CALL,
-            EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN,
-            EmitterTypes::USE_TOKEN,
-        ];
-
         $node
             ->children()
                 ->arrayNode('analyser')
@@ -157,10 +162,10 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('types')
                             ->isRequired()
-                            ->defaultValue([EmitterTypes::CLASS_TOKEN, EmitterTypes::USE_TOKEN])
+                            ->defaultValue(self::DEFAULT_EMITTER_TYPES)
                             ->scalarPrototype()
                                 ->beforeNormalization()
-                                    ->ifNotInArray($emitterTypes)
+                                    ->ifNotInArray(self::ALLOWED_EMITTER_TYPES)
                                     ->thenInvalid('Invalid type %s')
                                 ->end()
                             ->end()

@@ -22,7 +22,7 @@ class UnassignedTokenAnalyser
     private array $tokenTypes;
 
     /**
-     * @param array{types?: array<string>} $config
+     * @param array{types: array<string>} $config
      */
     public function __construct(
         AstMapExtractor $astMapExtractor,
@@ -33,7 +33,6 @@ class UnassignedTokenAnalyser
         $this->astMapExtractor = $astMapExtractor;
         $this->tokenResolver = $tokenResolver;
         $this->layerResolver = $layerResolver;
-        $emitters = array_merge(DependencyResolver::DEFAULT_EMITTERS, $config);
         $this->tokenTypes = array_filter(
             array_map(
                 static function (string $emitterType): ?string {
@@ -41,7 +40,7 @@ class UnassignedTokenAnalyser
 
                     return null === $tokenType ? null : $tokenType->value;
                 },
-                $emitters['types']
+                $config['types']
             )
         );
     }

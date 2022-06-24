@@ -9,8 +9,6 @@ use Qossmic\Deptrac\Dependency\DependencyList;
 
 interface DependencyEmitterInterface
 {
-    public static function getAlias(): string;
-
     public function getName(): string;
 
     public function applyDependencies(AstMap $astMap, DependencyList $dependencyList): void;

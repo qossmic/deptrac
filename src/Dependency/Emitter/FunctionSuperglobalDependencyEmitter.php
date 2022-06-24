@@ -11,10 +11,6 @@ use Qossmic\Deptrac\Dependency\DependencyList;
 
 final class FunctionSuperglobalDependencyEmitter implements DependencyEmitterInterface
 {
-    public static function getAlias(): string
-    {
-        return EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN;
-    }
 
     public function getName(): string
     {

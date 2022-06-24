@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Ast\AstMap\ClassLike;
 
 use Qossmic\Deptrac\Ast\AstMap\TokenInterface;
-use Qossmic\Deptrac\Layer\Collector\CollectorTypes;
 
 final class ClassLikeType implements TokenInterface
 {
+    private const TYPE_CLASSLIKE = 'classLike';
+    private const TYPE_CLASS = 'class';
+    private const TYPE_INTERFACE = 'interface';
+    private const TYPE_TRAIT = 'trait';
+
     private string $type;
 
     private function __construct(string $type)
@@ -18,22 +22,22 @@ final class ClassLikeType implements TokenInterface
 
     public static function classLike(): self
     {
-        return new self(CollectorTypes::TYPE_CLASSLIKE);
+        return new self(self::TYPE_CLASSLIKE);
     }
 
     public static function class(): self
     {
-        return new self(CollectorTypes::TYPE_CLASS);
+        return new self(self::TYPE_CLASS);
     }
 
     public static function interface(): self
     {
-        return new self(CollectorTypes::TYPE_INTERFACE);
+        return new self(self::TYPE_INTERFACE);
     }
 
     public static function trait(): self
     {
-        return new self(CollectorTypes::TYPE_TRAIT);
+        return new self(self::TYPE_TRAIT);
     }
 
     public function matches(ClassLikeType $type): bool

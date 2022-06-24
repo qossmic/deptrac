@@ -44,6 +44,7 @@ use Qossmic\Deptrac\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\Dependency\InheritanceFlattener;
 use Qossmic\Deptrac\Dependency\TokenResolver;
+use Qossmic\Deptrac\DependencyInjection\EmitterTypes;
 use Qossmic\Deptrac\InputCollector\FileInputCollector;
 use Qossmic\Deptrac\InputCollector\InputCollectorInterface;
 use Qossmic\Deptrac\Layer\Collector\AttributeCollector;
@@ -161,31 +162,31 @@ return static function (ContainerConfigurator $container): void {
         ->set(DependencyResolver::class)
         ->args([
             '$config' => param('analyser'),
-            '$emitterLocator' => tagged_locator('dependency_emitter', null, 'getAlias'),
+            '$emitterLocator' => tagged_locator('dependency_emitter', 'key'),
         ]);
     $services->set(TokenResolver::class);
     $services->set(InheritanceFlattener::class);
     $services
         ->set(ClassDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::CLASS_TOKEN]);
     $services
         ->set(ClassSuperglobalDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::CLASS_SUPERGLOBAL_TOKEN]);
     $services
         ->set(FileDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FILE_TOKEN]);
     $services
         ->set(FunctionDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_TOKEN]);
     $services
         ->set(FunctionCallDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_CALL]);
     $services
         ->set(FunctionSuperglobalDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN]);
     $services
         ->set(UsesDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::USE_TOKEN]);
 
     /*
      * Layer

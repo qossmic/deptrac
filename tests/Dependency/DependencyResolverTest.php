@@ -10,12 +10,13 @@ use Qossmic\Deptrac\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Dependency\Emitter\ClassDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
 use Qossmic\Deptrac\Dependency\Emitter\FileDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Dependency\Emitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\Dependency\InheritanceFlattener;
+use Qossmic\Deptrac\DependencyInjection\Configuration;
+use Qossmic\Deptrac\DependencyInjection\EmitterTypes;
 use Qossmic\Deptrac\Events\Dependency\PostEmitEvent;
 use Qossmic\Deptrac\Events\Dependency\PostFlattenEvent;
 use Qossmic\Deptrac\Events\Dependency\PreEmitEvent;
@@ -62,7 +63,7 @@ final class DependencyResolverTest extends TestCase
         $this->flattener->expects(self::once())->method('flattenDependencies');
 
         $resolver = new DependencyResolver(
-            [],
+            ['types' => Configuration::DEFAULT_EMITTER_TYPES],
             $this->flattener,
             $this->container,
             $this->dispatcher

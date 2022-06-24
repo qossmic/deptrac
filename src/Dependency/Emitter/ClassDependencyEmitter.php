@@ -11,10 +11,6 @@ use Qossmic\Deptrac\Dependency\DependencyList;
 
 final class ClassDependencyEmitter implements DependencyEmitterInterface
 {
-    public static function getAlias(): string
-    {
-        return EmitterTypes::CLASS_TOKEN;
-    }
 
     public function getName(): string
     {

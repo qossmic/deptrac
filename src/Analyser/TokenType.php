@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Analyser;
 
 use Qossmic\Deptrac\Console\Exception\InvalidTokenException;
-use Qossmic\Deptrac\Dependency\Emitter\EmitterTypes;
+use Qossmic\Deptrac\DependencyInjection\EmitterTypes;
 
 /**
  * @psalm-immutable

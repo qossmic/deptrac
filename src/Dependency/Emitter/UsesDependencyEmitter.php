@@ -14,10 +14,6 @@ use function explode;
 
 final class UsesDependencyEmitter implements DependencyEmitterInterface
 {
-    public static function getAlias(): string
-    {
-        return EmitterTypes::USE_TOKEN;
-    }
 
     public function getName(): string
     {

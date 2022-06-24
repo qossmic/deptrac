@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Dependency\Emitter;
+namespace Qossmic\Deptrac\DependencyInjection;
 
 final class EmitterTypes
 {

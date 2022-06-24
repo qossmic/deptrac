@@ -16,7 +16,6 @@ use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Ast\AstMap\Variable\VariableReference;
-use Qossmic\Deptrac\Console\Application;
 use Qossmic\Deptrac\Utils\File\Exception\FileNotExistsException;
 use Qossmic\Deptrac\Utils\File\FileReader;
 
@@ -42,10 +41,13 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     /** @var array<string, bool> */
     private array $parsedFiles = [];
 
-    public function __construct(string $cacheFile)
+    private string $cacheVersion;
+
+    public function __construct(string $cacheFile, string $cacheVersion)
     {
         $this->cache = [];
         $this->cacheFile = $cacheFile;
+        $this->cacheVersion = $cacheVersion;
     }
 
     public function get(string $filepath): ?FileReference
@@ -94,7 +96,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 
         $this->loaded = true;
 
-        if (null === $cache || Application::VERSION !== $cache['version']) {
+        if (null === $cache || $this->cacheVersion !== $cache['version']) {
             return;
         }
 
@@ -158,7 +160,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
             $this->cacheFile,
             json_encode(
                 [
-                    'version' => Application::VERSION,
+                    'version' => $this->cacheVersion,
                     'payload' => $payload,
                 ]
             )
