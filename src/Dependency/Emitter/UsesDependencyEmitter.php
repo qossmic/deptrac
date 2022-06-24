@@ -14,7 +14,6 @@ use function explode;
 
 final class UsesDependencyEmitter implements DependencyEmitterInterface
 {
-
     public function getName(): string
     {
         return 'UsesDependencyEmitter';

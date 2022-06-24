@@ -11,7 +11,6 @@ use Qossmic\Deptrac\Dependency\DependencyList;
 
 final class FunctionSuperglobalDependencyEmitter implements DependencyEmitterInterface
 {
-
     public function getName(): string
     {
         return 'FunctionSuperglobalDependencyEmitter';

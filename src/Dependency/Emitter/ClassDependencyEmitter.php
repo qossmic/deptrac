@@ -11,7 +11,6 @@ use Qossmic\Deptrac\Dependency\DependencyList;
 
 final class ClassDependencyEmitter implements DependencyEmitterInterface
 {
-
     public function getName(): string
     {
         return 'ClassDependencyEmitter';

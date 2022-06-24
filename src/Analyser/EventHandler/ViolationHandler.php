@@ -9,7 +9,6 @@ use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Result\Error;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
-
 use function sprintf;
 
 /**

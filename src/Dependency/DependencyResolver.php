@@ -15,8 +15,6 @@ use Qossmic\Deptrac\Events\Dependency\PreFlattenEvent;
 use Qossmic\Deptrac\Utils\ShouldNotHappenException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-use function array_merge;
-
 class DependencyResolver
 {
     private ContainerInterface $emitterLocator;

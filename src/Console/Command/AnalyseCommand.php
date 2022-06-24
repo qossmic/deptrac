@@ -20,9 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
 use function getcwd;
-
 use const DIRECTORY_SEPARATOR;
 
 class AnalyseCommand extends Command

@@ -8,7 +8,6 @@ use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceFileCache;
 use Qossmic\Deptrac\Ast\Parser\Cache\CacheableFileSubscriber;
 use Qossmic\Deptrac\Console\Application;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container): void {

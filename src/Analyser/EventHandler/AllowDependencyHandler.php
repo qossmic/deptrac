@@ -10,7 +10,6 @@ use Qossmic\Deptrac\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Layer\LayerProvider;
 use Qossmic\Deptrac\Result\Allowed;
 use Qossmic\Deptrac\Result\Error;
-
 use function in_array;
 
 /**

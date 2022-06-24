@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Events\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\Result\Result;
 use Qossmic\Deptrac\Result\Warning;
-
 use function count;
 
 class DependencyLayersAnalyser

@@ -9,7 +9,6 @@ use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
 use Symfony\Component\Yaml\Yaml;
-
 use function array_values;
 use function ksort;
 use function sort;

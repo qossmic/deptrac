@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Analyser;
 
-use Qossmic\Deptrac\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Dependency\TokenResolver;
 use Qossmic\Deptrac\Layer\LayerResolverInterface;
 use function array_values;

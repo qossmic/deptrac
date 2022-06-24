@@ -13,7 +13,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-
     public const ALLOWED_EMITTER_TYPES = [
         EmitterTypes::CLASS_TOKEN,
         EmitterTypes::CLASS_SUPERGLOBAL_TOKEN,
@@ -26,7 +25,7 @@ class Configuration implements ConfigurationInterface
 
     public const DEFAULT_EMITTER_TYPES = [
         EmitterTypes::CLASS_TOKEN,
-        EmitterTypes::USE_TOKEN
+        EmitterTypes::USE_TOKEN,
     ];
 
     public function getConfigTreeBuilder(): TreeBuilder
