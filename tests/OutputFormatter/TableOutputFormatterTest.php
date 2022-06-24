@@ -291,7 +291,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'an warning occurred' => [
             'rules' => [],
             'errors' => [],
-            'warnings' => [Warning::tokenIsInMoreThanOneLayer(ClassLikeToken::fromFQCN('Foo\Bar'), ['Layer 1', 'Layer 2'])],
+            'warnings' => [Warning::tokenIsInMoreThanOneLayer(ClassLikeToken::fromFQCN('Foo\Bar')->toString(), ['Layer 1', 'Layer 2'])],
             ' ------------------------------------------------------------------------------------------------------------------------- 
   Warnings                                                                                                                 
  ------------------------------------------------------------------------------------------------------------------------- 
