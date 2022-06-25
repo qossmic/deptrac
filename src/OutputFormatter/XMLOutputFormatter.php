@@ -8,7 +8,6 @@ use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use Exception;
-use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;

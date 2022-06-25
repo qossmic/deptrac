@@ -6,7 +6,8 @@ namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Analyser\TokenType;
-use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\OutputFormatter\Output;
+
 use function implode;
 use function sprintf;
 

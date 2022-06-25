@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Subscriber;
 
-use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Events\Ast\AstFileAnalysedEvent;
 use Qossmic\Deptrac\Events\Ast\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\Events\Ast\PostCreateAstMapEvent;
@@ -13,6 +12,7 @@ use Qossmic\Deptrac\Events\Dependency\PostEmitEvent;
 use Qossmic\Deptrac\Events\Dependency\PostFlattenEvent;
 use Qossmic\Deptrac\Events\Dependency\PreEmitEvent;
 use Qossmic\Deptrac\Events\Dependency\PreFlattenEvent;
+use Qossmic\Deptrac\OutputFormatter\Output;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleSubscriber implements EventSubscriberInterface

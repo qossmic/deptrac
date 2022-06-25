@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\Analyser\UnassignedTokenAnalyser;
-use Qossmic\Deptrac\Console\Output;
+use Qossmic\Deptrac\OutputFormatter\Output;
 
 /**
  * @internal Should only be used by DebugUnassignedCommand

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Console;
+namespace Qossmic\Deptrac\OutputFormatter;
 
 interface Output
 {

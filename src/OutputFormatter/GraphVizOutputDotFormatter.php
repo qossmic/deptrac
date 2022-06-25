@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\OutputFormatter;
 
 use LogicException;
 use phpDocumentor\GraphViz\Graph;
-use Qossmic\Deptrac\Console\Output;
 
 /**
  * @internal

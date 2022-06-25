@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\OutputFormatter;
 
-use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Result\LegacyResult;
 
 interface OutputFormatterInterface

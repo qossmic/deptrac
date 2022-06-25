@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\OutputFormatter;
 
 use Exception;
-use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Uncovered;
 use Qossmic\Deptrac\Result\Violation;
+
 use function json_encode;
 use function json_last_error;
 use function sprintf;
+
 use const JSON_PRETTY_PRINT;
 
 /**

@@ -7,10 +7,11 @@ namespace Qossmic\Deptrac\Console\Command;
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Analyser\LegacyDependencyLayersAnalyser;
 use Qossmic\Deptrac\Console\Exception\AnalyseException;
-use Qossmic\Deptrac\Console\Output;
 use Qossmic\Deptrac\OutputFormatter\FormatterProvider;
+use Qossmic\Deptrac\OutputFormatter\Output;
 use Qossmic\Deptrac\OutputFormatter\OutputFormatterInput;
 use Throwable;
+
 use function implode;
 use function sprintf;
 

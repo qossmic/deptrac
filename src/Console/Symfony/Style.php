@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Symfony;
 
-use Qossmic\Deptrac\Console\OutputStyle;
+use Qossmic\Deptrac\OutputFormatter\OutputStyle;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Console\Symfony;
 
-use Qossmic\Deptrac\Console\Output;
-use Qossmic\Deptrac\Console\OutputStyle;
+use Qossmic\Deptrac\OutputFormatter\Output;
+use Qossmic\Deptrac\OutputFormatter\OutputStyle;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
