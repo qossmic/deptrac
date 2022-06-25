@@ -23,7 +23,6 @@ deptrac:
         Application:
           - Console
           - DependencyInjection
-          - Analyser
           - InputCollector
           - OutputFormatter
         Engine:
