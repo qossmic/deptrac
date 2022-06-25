@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Configuration;
+namespace Tests\Qossmic\Deptrac\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\OutputFormatter\Configuration\ConfigurationCodeclimate;

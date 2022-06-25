@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Subscriber;
+namespace Tests\Qossmic\Deptrac\Ast\Parser;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceFileCache;

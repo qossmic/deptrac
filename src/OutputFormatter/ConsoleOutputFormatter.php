@@ -9,7 +9,6 @@ use Qossmic\Deptrac\Result\LegacyResult;
 use Qossmic\Deptrac\Result\Rule;
 use Qossmic\Deptrac\Result\SkippedViolation;
 use Qossmic\Deptrac\Result\Violation;
-
 use function count;
 
 /**

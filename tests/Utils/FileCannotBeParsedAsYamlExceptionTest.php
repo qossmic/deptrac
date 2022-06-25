@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Exception\Configuration;
+namespace Tests\Qossmic\Deptrac\Utils;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Utils\File\Exception\FileCannotBeParsedAsYamlException;

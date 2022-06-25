@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Console\Command;
 
 use Qossmic\Deptrac\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\OutputFormatter\Output;
-
 use function array_map;
 
 /**

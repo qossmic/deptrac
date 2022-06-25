@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Configuration\Loader;
+namespace Tests\Qossmic\Deptrac\Utils;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Utils\File\Exception\CouldNotReadFileException;
@@ -17,7 +17,7 @@ final class YmlFileLoaderTest extends TestCase
 {
     public function testLoadThrowsFileDoesNotExistsExceptionWhenFileDoesNotExist(): void
     {
-        $file = __DIR__.'/../Fixtures/non-existent-file.yaml';
+        $file = __DIR__.'/Fixtures/non-existent-file.yaml';
 
         $loader = new YmlFileLoader();
 
@@ -39,7 +39,7 @@ final class YmlFileLoaderTest extends TestCase
 
     public function testSyntaxErrorDetailsPrinted(): void
     {
-        $file = __DIR__.'/../Fixtures/depfile-syntax-error.yaml';
+        $file = __DIR__.'/Fixtures/depfile-syntax-error.yaml';
 
         $loader = new YmlFileLoader();
 
@@ -51,7 +51,7 @@ final class YmlFileLoaderTest extends TestCase
 
     public function testLoadThrowsParsedYamlIsNotAnArrayExceptionWhenFileDoesNotContainYamlThatCanBeParsedToAnArray(): void
     {
-        $file = __DIR__.'/../Fixtures/does-not-contain-array.yml';
+        $file = __DIR__.'/Fixtures/does-not-contain-array.yml';
 
         $loader = new YmlFileLoader();
 

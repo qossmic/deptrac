@@ -16,7 +16,6 @@ use Qossmic\Deptrac\Result\Rule;
 use Qossmic\Deptrac\Result\Uncovered;
 use Qossmic\Deptrac\Result\Violation;
 use RuntimeException;
-
 use function sys_get_temp_dir;
 use function tempnam;
 

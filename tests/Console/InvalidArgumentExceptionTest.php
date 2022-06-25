@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Exception\Console;
+namespace Tests\Qossmic\Deptrac\Console;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Console\Exception\InvalidArgumentException;

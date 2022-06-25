@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac;
+namespace Tests\Qossmic\Deptrac\Console;
 
 use Qossmic\Deptrac\Console\Env;
 

@@ -8,7 +8,6 @@ use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use RuntimeException;
-
 use function base64_encode;
 use function file_get_contents;
 

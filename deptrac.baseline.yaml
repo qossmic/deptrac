@@ -1,2 +1,13 @@
 deptrac:
   skip_violations:
+    Qossmic\Deptrac\Analyser\TokenType:
+      - Qossmic\Deptrac\DependencyInjection\EmitterTypes
+    Qossmic\Deptrac\Events\Analyser\ProcessEvent:
+      - Qossmic\Deptrac\Ast\AstMap\TokenReferenceInterface
+      - Qossmic\Deptrac\Dependency\DependencyInterface
+    Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter:
+      - Qossmic\Deptrac\Dependency\InheritDependency
+    Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter:
+      - Qossmic\Deptrac\Dependency\InheritDependency
+    Qossmic\Deptrac\OutputFormatter\TableOutputFormatter:
+      - Qossmic\Deptrac\Dependency\InheritDependency
