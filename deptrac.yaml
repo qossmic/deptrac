@@ -23,7 +23,6 @@ deptrac:
         Application:
           - Console
           - DependencyInjection
-          - InputCollector
           - OutputFormatter
         Engine:
           - Ast
@@ -102,23 +101,15 @@ deptrac:
       - DependencyInjection
     Dependency:
       - Ast
-    DependencyInjection:
-      - Dependency
-      - Console
     Result:
       - Dependency
-      - Ast
     Analyser:
       - Result
       - Layer
       - Dependency
-      - Console
       - InputCollector
       - Ast
-      - DependencyInjection
     OutputFormatter:
       - Result
       - Console
-      - Dependency
-      - Ast
       - DependencyInjection
