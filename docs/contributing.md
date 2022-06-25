@@ -96,3 +96,68 @@ make build
 ```
 
 This will create an executable file `deptrac.phar` in the current directory.
+
+## Deptrac Engine (Internals)
+
+The internal Deptrac engine consists of several parts, some of those can be influenced by configuration or extensions (`Analyser`, `InputCollector`, `Dependency`, `Layer`), while others cannot (`Ast`). To give you a brief overview of how the pieces lock together, a diagram of `DependencyLayerAnalyser` run:
+
+```mermaid
+sequenceDiagram
+    participant A as Analyser
+    participant I as InputCollector
+    participant As as Ast
+    participant D as Dependency
+    participant L as Layer
+
+    A->>I:  Collect files to analyse
+    I->>A:  List of files to analyse
+
+    A->>As: Create Ast for collected files
+    alt Cached
+        As->>As:        Load cached "AstMap"
+    else Not cached
+        note over As:   Will collect all possible connections <br/> regradless of deptrac configuration
+        As->>As:        Apply "ReferenceExtractors"
+    end
+    As->>A: "AstMap" for all files
+
+    A->>D:  Resolve all dependencies between Ast Nodes
+    D->>D:  Apply all registered "DependencyEmmiters"
+    D->>A:  "DependencyList" of all dependencies
+
+    loop for each dependency
+        A->>L: Resolve layers for both sides of the dependency
+        L->>A: One or more layers for each side
+        A->>A: Build "Result" based on defined ruleset
+    end
+```
+
+### InputCollector
+
+Is responsible to collect all the files to be analysed. By default, it uses the [`deptrac.paths`](depfile.md#paths) section of the Depfile.
+
+### Ast
+
+The Ast module is responsible for parsing all the provided files and building an Abstract Syntax Tree(Ast) for those files. It parses everything it possibly can, even if you have configured deptrac to ignore some parts of the file(for example you might configure to only care about dependencies between classes, but Ast will also parse dependencies between functions).
+
+The main part of the parsing is done in the `FileReferenceVisior`. This file is primarily concerned with keeping the appropriate scope (are you inside a class or a function) and also keeping track of currently applicable `@template` annotations. You can extend the functionality by adding extractors implementing the `ReferenceExtractorInterface` to build more connections between the nodes.
+
+The result of the parsing is an `AstMap` that is cached between runs for performance. This is what gets saved into the `.deptrac.cache` file.
+
+### Dependency
+
+Dependency module is concerned with taking the generated `AstMap` and converting it into a `DependencyList` of applicable dependencies between nodes based on the [`deptrac.analyser.types`](depfile.md#types) section of the Depfile.
+
+Each type corresponds to an emitter implementing `DependencyEmitterInterface`.
+
+### Layers
+
+As the name suggests, this module resolves what layers should each token be a part of. It leverages the [collectors](collectors.md) defined in the [`deptrac.layers`](depfile.md#layers) section of the Depfile.
+
+### Analyser
+
+Analyser is the orchestrator of all this work. It usually (but not necessarily - for example in debug commands) calls the `InputCollector`, `Ast` and `Dependency` modules to ultimately get a list of requested dependencies.
+
+It then compares dependencies against the [`deptrac.ruleset`](depfile.md#ruleset) section of the Depfile, consulting the `Layers` module.
+
+As an output it generates a `Result` that is a collection of `Allowed`, `Error`, `Warning`, `Violation`, `Skipped` and `Uncovered` Rules. Those are then processed by the [`OutputFormatters`](formatters.md) to give you the desired output you can see when you call a command.
