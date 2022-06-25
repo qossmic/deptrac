@@ -1,4 +1,2 @@
 deptrac:
   skip_violations:
-    Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceFileCache:
-      - Qossmic\Deptrac\Console\Application
