@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\DependencyInjection;
 
-use Qossmic\Deptrac\Console\Exception\CacheFileException;
+use Qossmic\Deptrac\DependencyInjection\Exception\CacheFileException;
 use SplFileInfo;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Console\Exception;
+namespace Qossmic\Deptrac\DependencyInjection\Exception;
 
 use Qossmic\Deptrac\Utils\ExceptionInterface;
 use RuntimeException;
