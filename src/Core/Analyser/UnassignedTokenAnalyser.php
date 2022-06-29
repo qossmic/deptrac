@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
-
 use function array_values;
 use function natcasesort;
 

@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\Rule;
-
 use function array_merge;
 use function array_reduce;
 use function array_values;

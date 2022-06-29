@@ -15,22 +15,22 @@ use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseA;
+use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseC;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceA;
+use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceC;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceD;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceE;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceInterfaceA;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceInterfaceB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceInterfaceC;
+use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceInterfaceD;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceInterfaceE;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\MultipleInteritanceA;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\MultipleInteritanceA1;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\MultipleInteritanceA2;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\MultipleInteritanceB;
-use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceB;
-use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\FixtureBasicInheritanceInterfaceD;
-use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\MultipleInteritanceC;
 
 final class AstMapFlattenGeneratorTest extends TestCase

@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Contract\Result\Rule;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Dependency\InheritDependency;
-
 use function count;
 
 /**

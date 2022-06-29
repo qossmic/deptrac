@@ -15,11 +15,9 @@ use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\ConfigurationCodeclimate;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
-
 use function json_encode;
 use function json_last_error;
 use function sprintf;
-
 use const JSON_PRETTY_PRINT;
 
 /**

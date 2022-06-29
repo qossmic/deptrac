@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Contract\Result\Warning;
 use Qossmic\Deptrac\Core\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
-
 use function count;
 
 class DependencyLayersAnalyser

@@ -14,10 +14,8 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use function getcwd;
 use function in_array;
-
 use const DIRECTORY_SEPARATOR;
 
 final class Application extends BaseApplication

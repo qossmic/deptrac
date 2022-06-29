@@ -10,7 +10,6 @@ use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
 use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
-
 use function array_key_exists;
 
 class LayerResolver implements LayerResolverInterface

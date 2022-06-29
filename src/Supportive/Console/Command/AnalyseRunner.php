@@ -11,7 +11,6 @@ use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
 use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Throwable;
-
 use function implode;
 use function sprintf;
 

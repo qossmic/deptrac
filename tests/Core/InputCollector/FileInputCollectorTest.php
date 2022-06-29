@@ -7,7 +7,6 @@ namespace Tests\Qossmic\Deptrac\Core\InputCollector;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\InputCollector\FileInputCollector;
 use Symfony\Component\Filesystem\Path;
-
 use function array_values;
 use function natcasesort;
 use function sys_get_temp_dir;

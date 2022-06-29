@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
-
 use function str_contains;
 
 class AttributeCollector implements CollectorInterface

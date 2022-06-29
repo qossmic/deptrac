@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
-
 use function implode;
 
 final class InvalidTokenException extends RuntimeException implements ExceptionInterface

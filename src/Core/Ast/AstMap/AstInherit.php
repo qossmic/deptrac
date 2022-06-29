@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-
 use function array_reverse;
 use function implode;
 use function sprintf;

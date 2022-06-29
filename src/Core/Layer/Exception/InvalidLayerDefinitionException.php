@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Layer\Exception;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
-
 use function sprintf;
 
 final class InvalidLayerDefinitionException extends RuntimeException implements ExceptionInterface

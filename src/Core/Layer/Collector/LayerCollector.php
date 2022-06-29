@@ -9,7 +9,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
-
 use function array_key_exists;
 use function is_string;
 use function sprintf;

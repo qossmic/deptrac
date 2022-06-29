@@ -7,7 +7,6 @@ namespace Qossmic\Deptrac\Core\InputCollector;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Iterator\PathFilterIterator;
-
 use const DIRECTORY_SEPARATOR;
 
 /**
