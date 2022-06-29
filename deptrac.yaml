@@ -2,12 +2,12 @@ imports:
   - deptrac.baseline.yaml
 
 services:
-  - class: IgnoreDependenciesOnUtils
+  - class: IgnoreDependenciesOnContract
     tags:
-     - { name: event_listener, event: Qossmic\Deptrac\Events\Analyser\ProcessEvent }
-  - class: IgnoreDependenciesOnEvents
+     - { name: event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
+  - class: IgnoreDependenciesOnShouldNotHappenException
     tags:
-      - { name: event_listener, event: Qossmic\Deptrac\Events\Analyser\ProcessEvent }
+      - { name: event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
 
 deptrac:
   paths:
@@ -17,17 +17,19 @@ deptrac:
     graphviz:
       pointToGroups: true
       hidden_layers:
-        - Utils
-        - Events
+        - Supportive
+        - Contract
       groups:
-        Application:
+        Supportive:
           - Console
           - DependencyInjection
           - OutputFormatter
-        Engine:
+          - Supportive
+        Core:
+          - Analyser
           - Ast
-          - Result
           - Dependency
+          - InputCollector
           - Layer
 
   layers:
@@ -35,14 +37,14 @@ deptrac:
     - name: Analyser
       collectors:
         - type: directory
-          value: src/Analyser/.*
+          value: src/Core/Analyser/.*
         - type: className
           value: ^JetBrains\\PHPStormStub\\.*
           private: true
     - name: Ast
       collectors:
         - type: directory
-          value: src/Ast/.*
+          value: src/Core/Ast/.*
         - type: className
           value: ^PHPStan\\PhpDocParser\\.*
           private: true
@@ -55,42 +57,47 @@ deptrac:
     - name: Console
       collectors:
         - type: directory
-          value: src/Console/.*
+          value: src/Supportive/Console/.*
     - name: Dependency
       collectors:
         - type: directory
-          value: src/Dependency/.*
+          value: src/Core/Dependency/.*
     - name: DependencyInjection
       collectors:
         - type: directory
-          value: src/DependencyInjection/.*
-    - name: Events
+          value: src/Supportive/DependencyInjection/.*
+    - name: Contract
       collectors:
         - type: directory
-          value: src/Events/.*
+          value: src/Contract/.*
     - name: InputCollector
       collectors:
         - type: directory
-          value: src/InputCollector/.*
+          value: src/Core/InputCollector/.*
     - name: Layer
       collectors:
         - type: directory
-          value: src/Layer/.*
+          value: src/Core/Layer/.*
     - name: OutputFormatter
       collectors:
         - type: directory
-          value: src/OutputFormatter/.*
+          value: src/Supportive/OutputFormatter/.*
         - type: className
           value: ^phpDocumentor\\GraphViz\\.*
           private: true
-    - name: Result
+    - name: File
       collectors:
         - type: directory
-          value: src/Result/.*
-    - name: Utils
+          value: src/Supportive/File/.*
+    - name: Supportive
       collectors:
-        - type: directory
-          value: src/Utils/.*
+        - type: bool
+          must_not:
+            - type: directory
+              value: src/Supportive/.*/.*
+          must:
+            - type: directory
+              value: src/Supportive/.*
 
   ruleset:
     Layer:
@@ -99,6 +106,7 @@ deptrac:
       - Analyser
       - OutputFormatter
       - DependencyInjection
+      - File
     Dependency:
       - Ast
     Result:
@@ -115,3 +123,7 @@ deptrac:
       - DependencyInjection
     Events:
       - Result
+    Ast:
+      - File
+    InputCollector:
+      - File
