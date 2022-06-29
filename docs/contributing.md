@@ -134,19 +134,19 @@ sequenceDiagram
 
 ### InputCollector
 
-Is responsible to collect all the files to be analysed. By default, it uses the [`deptrac.paths`](depfile.md#paths) section of the Depfile.
+Is responsible for collecting all the files to be analysed. By default, it uses the [`deptrac.paths`](depfile.md#paths) section of the Depfile to determine which files to collect and [`exclude_files`][depfile.md#exclude_files] to exclude filenames matching the specified patterns.
 
 ### Ast
 
-The Ast module is responsible for parsing all the provided files and building an Abstract Syntax Tree(Ast) for those files. It parses everything it possibly can, even if you have configured deptrac to ignore some parts of the file(for example you might configure to only care about dependencies between classes, but Ast will also parse dependencies between functions).
+The Ast module is responsible for parsing all the provided files and building an Abstract Syntax Tree (AST) for those files. The `AstLoader` fetches everything, even if you have configured Deptrac to ignore some parts of the file, e.g. because the class is not in any layer or you configured [`types`](depfile.md#types) to ignore certain things like use-statements. Filtering the found dependencies happens in the next phase.
 
 The main part of the parsing is done in the `FileReferenceVisior`. This file is primarily concerned with keeping the appropriate scope (are you inside a class or a function) and also keeping track of currently applicable `@template` annotations. You can extend the functionality by adding extractors implementing the `ReferenceExtractorInterface` to build more connections between the nodes.
 
-The result of the parsing is an `AstMap` that is cached between runs for performance. This is what gets saved into the `.deptrac.cache` file.
+The result is an `AstMap` containing all occurrences of found files, classes and functions. This is what gets saved into the `.deptrac.cache` file.
 
 ### Dependency
 
-Dependency module is concerned with taking the generated `AstMap` and converting it into a `DependencyList` of applicable dependencies between nodes based on the [`deptrac.analyser.types`](depfile.md#types) section of the Depfile.
+The Dependency module is concerned with taking the generated `AstMap` and converting it into a `DependencyList` of applicable dependencies between nodes based on the [`deptrac.analyser.types`](depfile.md#types) section of the Depfile.
 
 Each type corresponds to an emitter implementing `DependencyEmitterInterface`.
 
@@ -156,8 +156,6 @@ As the name suggests, this module resolves what layers should each token be a pa
 
 ### Analyser
 
-Analyser is the orchestrator of all this work. It usually (but not necessarily - for example in debug commands) calls the `InputCollector`, `Ast` and `Dependency` modules to ultimately get a list of requested dependencies.
+The Analyser orchestrates between these modules. It calls the `InputCollector`, `Ast` and `Dependency` modules to generate a list of relevant dependencies matched to their layers, compares them against the [`deptrac.ruleset`](depfile.md#ruleset) section of the Depfile and finally generates a `Result`, which will be returned in the output.
 
-It then compares dependencies against the [`deptrac.ruleset`](depfile.md#ruleset) section of the Depfile, consulting the `Layers` module.
-
-As an output it generates a `Result` that is a collection of `Allowed`, `Error`, `Warning`, `Violation`, `Skipped` and `Uncovered` Rules. Those are then processed by the [`OutputFormatters`](formatters.md) to give you the desired output you can see when you call a command.
+The `Result` is a collection of `Allowed`, `Error`, `Warning`, `Violation`, `Skipped` and `Uncovered` Rules. Those are then processed by the [`OutputFormatters`](formatters.md) to give you the desired output you can see when you call a command.

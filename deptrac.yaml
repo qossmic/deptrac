@@ -2,10 +2,10 @@ imports:
   - deptrac.baseline.yaml
 
 services:
-  - class: IgnoreDependenciesOnContract
+  - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract
     tags:
      - { name: event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
-  - class: IgnoreDependenciesOnShouldNotHappenException
+  - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException
     tags:
       - { name: event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
 
@@ -16,15 +16,16 @@ deptrac:
   formatters:
     graphviz:
       pointToGroups: true
-      hidden_layers:
-        - Supportive
-        - Contract
       groups:
+        Contract:
+          - Contract
         Supportive:
+          - Supportive
+          - File
+        Symfony:
           - Console
           - DependencyInjection
           - OutputFormatter
-          - Supportive
         Core:
           - Analyser
           - Ast

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Internal\Qossmic\Deptrac;
+
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 
 class IgnoreDependenciesOnContract

@@ -21,6 +21,7 @@ deptrac:
     Qossmic\Deptrac\Core\Analyser\TokenType:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes
     Qossmic\Deptrac\Supportive\OutputFormatter\ConsoleOutputFormatter:
+      - Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence
       - Qossmic\Deptrac\Core\Dependency\InheritDependency
     Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter:
       - Qossmic\Deptrac\Core\Dependency\InheritDependency

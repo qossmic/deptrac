@@ -11,6 +11,7 @@ use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\Rule;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
+use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use function count;
 
@@ -75,7 +76,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                 $rule->getDependentLayer()
             )
         );
-        $this->printFileOccurrence($output, $dependency->getFileOccurrence()->getFilepath(), $dependency->getFileOccurrence()->getLine());
+        $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
         if ($dependency instanceof InheritDependency) {
             $this->printInheritPath($output, $dependency);
@@ -167,7 +168,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                     $u->getLayer()
                 )
             );
-            $this->printFileOccurrence($output, $dependency->getFileOccurrence()->getFilepath(), $dependency->getFileOccurrence()->getLine());
+            $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
             if ($dependency instanceof InheritDependency) {
                 $this->printInheritPath($output, $dependency);
@@ -175,9 +176,9 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printFileOccurrence(Output $output, string $path, int $line): void
+    private function printFileOccurrence(Output $output, FileOccurrence $fileOccurrence): void
     {
-        $output->writeLineFormatted($path.'::'.$line);
+        $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
     }
 
     private function printErrors(LegacyResult $result, Output $output): void
