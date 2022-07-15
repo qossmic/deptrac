@@ -1,16 +1,16 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Ast\\\\AstMap\\\\AstInherit\\:\\:\\$path is assigned outside of the constructor\\.$#"
+			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\AstInherit\\:\\:\\$path is assigned outside of the constructor\\.$#"
 			count: 1
-			path: src/Ast/AstMap/AstInherit.php
+			path: src/Core/Ast/AstMap/AstInherit.php
 
 		-
-			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Ast\\\\AstMap\\\\ClassLike\\\\ClassLikeReference\\:\\:\\$fileReference is assigned outside of the constructor\\.$#"
+			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\ClassLike\\\\ClassLikeReference\\:\\:\\$fileReference is assigned outside of the constructor\\.$#"
 			count: 1
-			path: src/Ast/AstMap/ClassLike/ClassLikeReference.php
+			path: src/Core/Ast/AstMap/ClassLike/ClassLikeReference.php
 
 		-
-			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Ast\\\\AstMap\\\\FunctionLike\\\\FunctionLikeReference\\:\\:\\$fileReference is assigned outside of the constructor\\.$#"
+			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\FunctionLike\\\\FunctionLikeReference\\:\\:\\$fileReference is assigned outside of the constructor\\.$#"
 			count: 1
-			path: src/Ast/AstMap/FunctionLike/FunctionLikeReference.php
+			path: src/Core/Ast/AstMap/FunctionLike/FunctionLikeReference.php

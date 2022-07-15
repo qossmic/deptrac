@@ -6,87 +6,88 @@ use PhpParser\Lexer;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Qossmic\Deptrac\Analyser\AstMapExtractor;
-use Qossmic\Deptrac\Analyser\DependencyLayersAnalyser;
-use Qossmic\Deptrac\Analyser\EventHandler\AllowDependencyHandler;
-use Qossmic\Deptrac\Analyser\EventHandler\MatchingLayersHandler;
-use Qossmic\Deptrac\Analyser\EventHandler\UncoveredDependentHandler;
-use Qossmic\Deptrac\Analyser\EventHandler\ViolationHandler;
-use Qossmic\Deptrac\Analyser\LayerForTokenAnalyser;
-use Qossmic\Deptrac\Analyser\LegacyDependencyLayersAnalyser;
-use Qossmic\Deptrac\Analyser\TokenInLayerAnalyser;
-use Qossmic\Deptrac\Analyser\UnassignedTokenAnalyser;
-use Qossmic\Deptrac\Ast\AstLoader;
-use Qossmic\Deptrac\Ast\Parser\AnnotationReferenceExtractor;
-use Qossmic\Deptrac\Ast\Parser\AnonymousClassExtractor;
-use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceCacheInterface;
-use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\Ast\Parser\ClassConstantExtractor;
-use Qossmic\Deptrac\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Ast\Parser\ParserInterface;
-use Qossmic\Deptrac\Ast\Parser\TypeResolver;
-use Qossmic\Deptrac\Configuration\FormatterConfiguration;
-use Qossmic\Deptrac\Console\Command\AnalyseCommand;
-use Qossmic\Deptrac\Console\Command\AnalyseRunner;
-use Qossmic\Deptrac\Console\Command\DebugLayerCommand;
-use Qossmic\Deptrac\Console\Command\DebugLayerRunner;
-use Qossmic\Deptrac\Console\Command\DebugTokenCommand;
-use Qossmic\Deptrac\Console\Command\DebugTokenRunner;
-use Qossmic\Deptrac\Console\Command\DebugUnassignedCommand;
-use Qossmic\Deptrac\Console\Command\DebugUnassignedRunner;
-use Qossmic\Deptrac\Console\Command\InitCommand;
-use Qossmic\Deptrac\Dependency\DependencyResolver;
-use Qossmic\Deptrac\Dependency\Emitter\ClassDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\FileDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\FunctionCallDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\FunctionDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
-use Qossmic\Deptrac\Dependency\Emitter\UsesDependencyEmitter;
-use Qossmic\Deptrac\Dependency\InheritanceFlattener;
-use Qossmic\Deptrac\Dependency\TokenResolver;
-use Qossmic\Deptrac\File\Dumper;
-use Qossmic\Deptrac\File\YmlFileLoader;
-use Qossmic\Deptrac\InputCollector\FileInputCollector;
-use Qossmic\Deptrac\InputCollector\InputCollectorInterface;
-use Qossmic\Deptrac\Layer\Collector\AttributeCollector;
-use Qossmic\Deptrac\Layer\Collector\BoolCollector;
-use Qossmic\Deptrac\Layer\Collector\ClassCollector;
-use Qossmic\Deptrac\Layer\Collector\ClassLikeCollector;
-use Qossmic\Deptrac\Layer\Collector\ClassNameRegexCollector;
-use Qossmic\Deptrac\Layer\Collector\CollectorProvider;
-use Qossmic\Deptrac\Layer\Collector\CollectorResolver;
-use Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface;
-use Qossmic\Deptrac\Layer\Collector\CollectorTypes;
-use Qossmic\Deptrac\Layer\Collector\DirectoryCollector;
-use Qossmic\Deptrac\Layer\Collector\ExtendsCollector;
-use Qossmic\Deptrac\Layer\Collector\FunctionNameCollector;
-use Qossmic\Deptrac\Layer\Collector\GlobCollector;
-use Qossmic\Deptrac\Layer\Collector\ImplementsCollector;
-use Qossmic\Deptrac\Layer\Collector\InheritanceLevelCollector;
-use Qossmic\Deptrac\Layer\Collector\InheritsCollector;
-use Qossmic\Deptrac\Layer\Collector\InterfaceCollector;
-use Qossmic\Deptrac\Layer\Collector\LayerCollector;
-use Qossmic\Deptrac\Layer\Collector\MethodCollector;
-use Qossmic\Deptrac\Layer\Collector\SuperglobalCollector;
-use Qossmic\Deptrac\Layer\Collector\TraitCollector;
-use Qossmic\Deptrac\Layer\Collector\UsesCollector;
-use Qossmic\Deptrac\Layer\LayerProvider;
-use Qossmic\Deptrac\Layer\LayerResolver;
-use Qossmic\Deptrac\Layer\LayerResolverInterface;
-use Qossmic\Deptrac\OutputFormatter\BaselineOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\CodeclimateOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\ConsoleOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\FormatterProvider;
-use Qossmic\Deptrac\OutputFormatter\GithubActionsOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDisplayFormatter;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputDotFormatter;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputHtmlFormatter;
-use Qossmic\Deptrac\OutputFormatter\GraphVizOutputImageFormatter;
-use Qossmic\Deptrac\OutputFormatter\JsonOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\JUnitOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\TableOutputFormatter;
-use Qossmic\Deptrac\OutputFormatter\XMLOutputFormatter;
+use Qossmic\Deptrac\Core\Analyser\AstMapExtractor;
+use Qossmic\Deptrac\Core\Analyser\DependencyLayersAnalyser;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\AllowDependencyHandler;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\UncoveredDependentHandler;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\ViolationHandler;
+use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
+use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
+use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
+use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
+use Qossmic\Deptrac\Core\Ast\AstLoader;
+use Qossmic\Deptrac\Core\Ast\Parser\AnnotationReferenceExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\AnonymousClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceCacheInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\Core\Ast\Parser\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Core\Dependency\DependencyResolver;
+use Qossmic\Deptrac\Core\Dependency\Emitter\ClassDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\Emitter\FileDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionCallDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\Emitter\UsesDependencyEmitter;
+use Qossmic\Deptrac\Core\Dependency\InheritanceFlattener;
+use Qossmic\Deptrac\Core\Dependency\TokenResolver;
+use Qossmic\Deptrac\Core\InputCollector\FileInputCollector;
+use Qossmic\Deptrac\Core\InputCollector\InputCollectorInterface;
+use Qossmic\Deptrac\Core\Layer\Collector\AttributeCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\BoolCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\ClassCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\ClassLikeCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\ClassNameRegexCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\CollectorProvider;
+use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolver;
+use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
+use Qossmic\Deptrac\Core\Layer\Collector\CollectorTypes;
+use Qossmic\Deptrac\Core\Layer\Collector\DirectoryCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\ExtendsCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\FunctionNameCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\GlobCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\ImplementsCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\InheritanceLevelCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\InterfaceCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\MethodCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\TraitCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\UsesCollector;
+use Qossmic\Deptrac\Core\Layer\LayerProvider;
+use Qossmic\Deptrac\Core\Layer\LayerResolver;
+use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
+use Qossmic\Deptrac\Supportive\Console\Command\AnalyseCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\AnalyseRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugLayerCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugLayerRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugTokenCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugTokenRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugUnassignedCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugUnassignedRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\InitCommand;
+use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes;
+use Qossmic\Deptrac\Supportive\File\Dumper;
+use Qossmic\Deptrac\Supportive\File\YmlFileLoader;
+use Qossmic\Deptrac\Supportive\OutputFormatter\BaselineOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\CodeclimateOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
+use Qossmic\Deptrac\Supportive\OutputFormatter\ConsoleOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
+use Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputDisplayFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputDotFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputHtmlFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputImageFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\JsonOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\JUnitOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\XMLOutputFormatter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
@@ -160,31 +161,31 @@ return static function (ContainerConfigurator $container): void {
         ->set(DependencyResolver::class)
         ->args([
             '$config' => param('analyser'),
-            '$emitterLocator' => tagged_locator('dependency_emitter', null, 'getAlias'),
+            '$emitterLocator' => tagged_locator('dependency_emitter', 'key'),
         ]);
     $services->set(TokenResolver::class);
     $services->set(InheritanceFlattener::class);
     $services
         ->set(ClassDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::CLASS_TOKEN]);
     $services
         ->set(ClassSuperglobalDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::CLASS_SUPERGLOBAL_TOKEN]);
     $services
         ->set(FileDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FILE_TOKEN]);
     $services
         ->set(FunctionDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_TOKEN]);
     $services
         ->set(FunctionCallDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_CALL]);
     $services
         ->set(FunctionSuperglobalDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN]);
     $services
         ->set(UsesDependencyEmitter::class)
-        ->tag('dependency_emitter');
+        ->tag('dependency_emitter', ['key' => EmitterTypes::USE_TOKEN]);
 
     /*
      * Layer

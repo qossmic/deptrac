@@ -1,7 +1,7 @@
 <?php
 
 use Composer\XdebugHandler\XdebugHandler;
-use Qossmic\Deptrac\Console\Application;
+use Qossmic\Deptrac\Supportive\Console\Application;
 
 if (PHP_VERSION_ID < 70400) {
     echo 'Required at least PHP version 7.4.0, your version: '.PHP_VERSION."\n";

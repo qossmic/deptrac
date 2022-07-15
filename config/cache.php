@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceCacheInterface;
-use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceDeferredCacheInterface;
-use Qossmic\Deptrac\Ast\Parser\Cache\AstFileReferenceFileCache;
-use Qossmic\Deptrac\Subscriber\CacheableFileSubscriber;
+use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceCacheInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceDeferredCacheInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceFileCache;
+use Qossmic\Deptrac\Core\Ast\Parser\Cache\CacheableFileSubscriber;
+use Qossmic\Deptrac\Supportive\Console\Application;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -18,7 +19,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(AstFileReferenceFileCache::class)
-        ->args(['%deptrac.cache_file%']);
+        ->args(['%deptrac.cache_file%', Application::VERSION]);
 
     $services->alias(AstFileReferenceDeferredCacheInterface::class, AstFileReferenceFileCache::class);
     $services->alias(AstFileReferenceCacheInterface::class, AstFileReferenceDeferredCacheInterface::class);

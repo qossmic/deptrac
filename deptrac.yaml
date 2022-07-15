@@ -1,6 +1,14 @@
 imports:
   - deptrac.baseline.yaml
 
+services:
+  - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract
+    tags:
+     - { name: event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
+  - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException
+    tags:
+      - { name: event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
+
 deptrac:
   paths:
     - ./src
@@ -8,96 +16,115 @@ deptrac:
   formatters:
     graphviz:
       pointToGroups: true
+      groups:
+        Contract:
+          - Contract
+        Supportive:
+          - Supportive
+          - File
+        Symfony:
+          - Console
+          - DependencyInjection
+          - OutputFormatter
+        Core:
+          - Analyser
+          - Ast
+          - Dependency
+          - InputCollector
+          - Layer
 
   layers:
-    - name: File
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\File\\(?!Exception)
-    - name: Input
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\InputCollector\\
-    - name: Output
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\OutputFormatter\\
-    - name: Result
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Result\\
-    - name: Ast
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Ast\\AstLoader$
-        - type: className
-          value: ^Qossmic\\Deptrac\\Ast\\AstMap
-    - name: Dependency
-      collectors:
-        - type: bool
-          must:
-            - type: className
-              value: ^Qossmic\\Deptrac\\Dependency\\[^\\]+$
-          must_not:
-            - type: className
-              value: ^Qossmic\\Deptrac\\Dependency\\TokenResolver$
-    - name: Layer
-      collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Layer\\LayerResolverInterface$
-        - type: implements
-          value: Qossmic\Deptrac\Layer\LayerResolverInterface
-          private: true
-        - type: implements
-          value: Qossmic\Deptrac\Layer\Collector\CollectorResolverInterface
-          private: true
-        - type: className
-          value: ^Qossmic\\Deptrac\\Layer\\Collector\\Collectable$
-          private: true
+    # Domains
     - name: Analyser
       collectors:
+        - type: directory
+          value: src/Core/Analyser/.*
         - type: className
-          value: ^Qossmic\\Deptrac\\Analyser\\(?!Exception)
+          value: ^JetBrains\\PHPStormStub\\.*
+          private: true
+    - name: Ast
+      collectors:
+        - type: directory
+          value: src/Core/Ast/.*
+        - type: className
+          value: ^PHPStan\\PhpDocParser\\.*
+          private: true
+        - type: className
+          value: ^PhpParser\\.*
+          private: true
+        - type: className
+          value: ^phpDocumentor\\Reflection\\.*
+          private: true
     - name: Console
       collectors:
-        - type: className
-          value: ^Qossmic\\Deptrac\\Console\\(?!Exception)
-        - type: className
-          value: ^Qossmic\\Deptrac\\Env$
-    - name: Configuration
+        - type: directory
+          value: src/Supportive/Console/.*
+    - name: Dependency
       collectors:
+        - type: directory
+          value: src/Core/Dependency/.*
+    - name: DependencyInjection
+      collectors:
+        - type: directory
+          value: src/Supportive/DependencyInjection/.*
+    - name: Contract
+      collectors:
+        - type: directory
+          value: src/Contract/.*
+    - name: InputCollector
+      collectors:
+        - type: directory
+          value: src/Core/InputCollector/.*
+    - name: Layer
+      collectors:
+        - type: directory
+          value: src/Core/Layer/.*
+    - name: OutputFormatter
+      collectors:
+        - type: directory
+          value: src/Supportive/OutputFormatter/.*
         - type: className
-          value: ^Qossmic\\Deptrac\\Configuration\\(?!Exception)
+          value: ^phpDocumentor\\GraphViz\\.*
+          private: true
+    - name: File
+      collectors:
+        - type: directory
+          value: src/Supportive/File/.*
+    - name: Supportive
+      collectors:
+        - type: bool
+          must_not:
+            - type: directory
+              value: src/Supportive/.*/.*
+          must:
+            - type: directory
+              value: src/Supportive/.*
 
   ruleset:
-    # Utilities
-    File: ~
-    Configuration:
-      - File
-
-    # Models
-    Ast: ~
     Layer:
       - Ast
+    Console:
+      - Analyser
+      - OutputFormatter
+      - DependencyInjection
+      - File
     Dependency:
       - Ast
     Result:
       - Dependency
-      - Ast
-
-    # Domain
     Analyser:
-      - Input
-      - +Layer
-      - +Result
-
-    # Infrastructure
-    Output:
+      - Result
+      - Layer
+      - Dependency
+      - InputCollector
+      - Ast
+    OutputFormatter:
+      - Result
       - Console
-      - Configuration
-      - +Result
-    Console:
+      - DependencyInjection
+    Events:
+      - Result
+    Ast:
       - File
-      - Configuration
-      - Analyser
-      - Output
+    InputCollector:
+      - File
