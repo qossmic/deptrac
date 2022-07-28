@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "composer/xdebug-handler": "^2.0",
         "jetbrains/phpstorm-stubs": "^2021.3",
@@ -50,7 +50,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4.20"
+            "php": "8.1"
         },
         "sort-packages": true,
         "allow-plugins": {
