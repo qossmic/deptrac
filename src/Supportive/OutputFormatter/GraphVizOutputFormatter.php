@@ -25,13 +25,13 @@ use function tempnam;
 abstract class GraphVizOutputFormatter implements OutputFormatterInterface
 {
     /**
-     * @var array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool}
+     * @var array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool}
      */
     private array $config;
 
     public function __construct(FormatterConfiguration $config)
     {
-        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool}  $extractedConfig */
+        /** @var array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool}  $extractedConfig */
         $extractedConfig = $config->getConfigFor('graphviz');
         $this->config = $extractedConfig;
     }

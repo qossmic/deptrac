@@ -15,11 +15,11 @@ final class ConfigurationGraphViz
     private bool $pointToGroups;
 
     /**
-     * @param array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool} $arr
+     * @param array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool} $arr
      */
     public static function fromArray(array $arr): self
     {
-        return new self($arr['hidden_layers'] ?? [], $arr['groups'] ?? [], $arr['pointToGroups'] ?? false);
+        return new self($arr['hidden_layers'], $arr['groups'], $arr['point_to_groups']);
     }
 
     /**

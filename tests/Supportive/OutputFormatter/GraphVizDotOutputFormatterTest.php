@@ -51,6 +51,8 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                 'hidden_layers' => [
                     'LayerHidden',
                 ],
+                'groups' => [],
+                'point_to_groups' => false,
             ],
         ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
@@ -87,6 +89,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
 
         (new GraphVizOutputDotFormatter(new FormatterConfiguration([
             'graphviz' => [
+                'hidden_layers' => [],
                 'groups' => [
                     'User' => [
                         'User Frontend',
@@ -97,6 +100,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                         'Admin Backend',
                     ],
                 ],
+                'point_to_groups' => false,
             ],
         ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
@@ -133,6 +137,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
 
         (new GraphVizOutputDotFormatter(new FormatterConfiguration([
             'graphviz' => [
+                'hidden_layers' => [],
                 'groups' => [
                     'User' => [
                         'User Frontend',
@@ -143,7 +148,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                         'Admin Backend',
                     ],
                 ],
-                'pointToGroups' => true,
+                'point_to_groups' => true,
             ],
         ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 

@@ -25,7 +25,7 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('layers', $configs['layers']);
         $container->setParameter('ruleset', $configs['ruleset']);
         $container->setParameter('skip_violations', $configs['skip_violations']);
-        $container->setParameter('formatters', $configs['formatters']);
+        $container->setParameter('formatters', $configs['formatters'] ?? []);
         $container->setParameter('analyser', $configs['analyser']);
         $container->setParameter('use_relative_path_from_depfile', $configs['use_relative_path_from_depfile']);
         $container->setParameter('ignore_uncovered_internal_classes', $configs['ignore_uncovered_internal_classes']);
