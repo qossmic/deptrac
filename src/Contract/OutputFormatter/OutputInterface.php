@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
-interface Output
+interface OutputInterface
 {
     public function writeFormatted(string $message): void;
 
@@ -15,7 +15,7 @@ interface Output
 
     public function writeRaw(string $message): void;
 
-    public function getStyle(): OutputStyle;
+    public function getStyle(): OutputStyleInterface;
 
     public function isVerbose(): bool;
 

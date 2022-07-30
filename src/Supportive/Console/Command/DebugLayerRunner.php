@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use function array_map;
 
@@ -29,7 +29,7 @@ final class DebugLayerRunner
         $this->layers = $layers;
     }
 
-    public function run(?string $layer, Output $output): void
+    public function run(?string $layer, OutputInterface $output): void
     {
         $debugLayers = $layer
             ? [$layer]

@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Core\Dependency\DependencyInterface;
 /**
  * @psalm-immutable
  */
-final class Allowed implements CoveredRule
+final class Allowed implements CoveredRuleInterface
 {
     private DependencyInterface $dependency;
     private string $dependerLayer;

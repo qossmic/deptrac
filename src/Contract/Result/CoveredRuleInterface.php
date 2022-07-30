@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Contract\Result;
 /**
  * @psalm-immutable
  */
-interface CoveredRule extends Rule
+interface CoveredRuleInterface extends RuleInterface
 {
     public function getDependerLayer(): string;
 

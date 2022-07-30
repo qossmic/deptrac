@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -29,7 +29,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         LegacyResult $result,
-        Output $output,
+        OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedViolations = $this->collectViolations($result);

@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Core\Dependency\DependencyInterface;
 /**
  * @psalm-immutable
  */
-interface Rule
+interface RuleInterface
 {
     public function getDependency(): DependencyInterface;
 }

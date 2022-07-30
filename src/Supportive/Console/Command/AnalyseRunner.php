@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Psr\Container\ContainerExceptionInterface;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
 use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
@@ -30,7 +30,7 @@ final class AnalyseRunner
         $this->formatterProvider = $formatterProvider;
     }
 
-    public function run(AnalyseOptions $options, Output $output): void
+    public function run(AnalyseOptions $options, OutputInterface $output): void
     {
         try {
             $formatter = $this->formatterProvider->get($options->getFormatter());
@@ -70,21 +70,21 @@ final class AnalyseRunner
         }
     }
 
-    private function printCollectViolations(Output $output): void
+    private function printCollectViolations(OutputInterface $output): void
     {
         if ($output->isVerbose()) {
             $output->writeLineFormatted('<info>collecting violations.</info>');
         }
     }
 
-    private function printFormattingStart(Output $output): void
+    private function printFormattingStart(OutputInterface $output): void
     {
         if ($output->isVerbose()) {
             $output->writeLineFormatted('<info>formatting dependencies.</info>');
         }
     }
 
-    private function printFormatterError(Output $output, string $formatterName, Throwable $error): void
+    private function printFormatterError(OutputInterface $output, string $formatterName, Throwable $error): void
     {
         $output->writeLineFormatted('');
         $output->getStyle()->error([
@@ -96,7 +96,7 @@ final class AnalyseRunner
         $output->writeLineFormatted('');
     }
 
-    private function printFormatterNotFoundException(Output $output, string $formatterName): void
+    private function printFormatterNotFoundException(OutputInterface $output, string $formatterName): void
     {
         $output->writeLineFormatted('');
         $output->getStyle()->error([

@@ -2,11 +2,11 @@
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Rule;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Dependency\InheritDependency;
@@ -24,7 +24,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function finish(LegacyResult $result, Output $output, OutputFormatterInput $outputFormatterInput): void
+    public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
         foreach ($result->rules() as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
@@ -71,7 +71,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function determineLogLevel(Rule $rule): string
+    private function determineLogLevel(RuleInterface $rule): string
     {
         switch (get_class($rule)) {
             case Violation::class:
@@ -83,7 +83,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printUncovered(LegacyResult $result, Output $output, bool $reportAsError): void
+    private function printUncovered(LegacyResult $result, OutputInterface $output, bool $reportAsError): void
     {
         foreach ($result->uncovered() as $u) {
             $dependency = $u->getDependency();
@@ -119,14 +119,14 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         return implode(' ->%0A', $buffer);
     }
 
-    private function printErrors(LegacyResult $result, Output $output): void
+    private function printErrors(LegacyResult $result, OutputInterface $output): void
     {
         foreach ($result->errors() as $error) {
             $output->writeLineFormatted('::error ::'.$error->toString());
         }
     }
 
-    private function printWarnings(LegacyResult $result, Output $output): void
+    private function printWarnings(LegacyResult $result, OutputInterface $output): void
     {
         foreach ($result->warnings() as $error) {
             $output->writeLineFormatted('::warning ::'.$error->toString());
