@@ -6,9 +6,6 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 
-/**
- * @psalm-immutable
- */
 interface TokenReferenceInterface
 {
     public function getFileReference(): ?FileReference;
