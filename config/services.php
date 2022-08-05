@@ -86,6 +86,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputHtmlFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputImageFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\JsonOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\JUnitOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\MermaidJSOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\XMLOutputFormatter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -357,6 +358,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(CodeclimateOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(MermaidJSOutputFormatter::class)
         ->tag('output_formatter');
 
     /*
