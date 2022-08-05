@@ -9,9 +9,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
-/**
- * @psalm-immutable
- */
 class FunctionLikeReference implements TokenReferenceInterface
 {
     private ?FileReference $fileReference = null;
