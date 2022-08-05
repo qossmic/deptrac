@@ -7,6 +7,8 @@ namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use function array_key_exists;
+use function is_array;
 
 /**
  * @psalm-suppress all
@@ -146,8 +148,53 @@ class Configuration implements ConfigurationInterface
             ->fixXmlConfig('formatter')
             ->children()
                 ->arrayNode('formatters')
-                    ->info('Configure formatters')
-                    ->variablePrototype()->end()
+                    ->children()
+                        ->arrayNode('graphviz')
+                            ->info('Configure Graphviz output formatters')
+                            ->children()
+                                ->arrayNode('hidden_layers')
+                                    ->info('Specify any layer name, that you wish to exclude from the output')
+                                    ->scalarPrototype()->end()
+                                ->end()
+                                ->arrayNode('groups')
+                                    ->info('Combine multiple layers to a group')
+                                    ->useAttributeAsKey('name')
+                                    ->arrayPrototype()
+                                        ->scalarPrototype()->end()
+                                    ->end()
+                                ->end()
+                                ->booleanNode('point_to_groups')
+                                    ->info('When a layer is part of a group, should edges point towards the group or the layer?')
+                                    ->defaultFalse()
+                                ->end()
+                            ->end()
+                            ->beforeNormalization()
+                                ->ifTrue(static function ($v) {
+                                    return is_array($v) && array_key_exists('pointToGroups', $v);
+                                })
+                                ->then(static function ($v) {
+                                    $v['point_to_groups'] = $v['pointToGroups'];
+                                    unset($v['pointToGroups']);
+
+                                    return $v;
+                                })
+                            ->end()
+                        ->end()
+                        ->arrayNode('codeclimate')
+                            ->info('Configure Codeclimate output formatters')
+                            ->children()
+                                ->arrayNode('severity')
+                                    ->info('Map how failures, skipped and uncovered dependencies map to severity in CodeClimate')
+                                    ->addDefaultsIfNotSet()
+                                    ->children()
+                                        ->enumNode('failure')->values(['info', 'minor', 'major', 'critical', 'blocker'])->defaultValue('major')->end()
+                                        ->enumNode('skipped')->values(['info', 'minor', 'major', 'critical', 'blocker'])->defaultValue('minor')->end()
+                                        ->enumNode('uncovered')->values(['info', 'minor', 'major', 'critical', 'blocker'])->defaultValue('info')->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end();
     }
