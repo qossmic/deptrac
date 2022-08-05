@@ -284,30 +284,6 @@ final class DeptracExtensionTest extends TestCase
         );
     }
 
-    public function testFormatters(): void
-    {
-        $configs = [
-            'deptrac' => [
-                'formatters' => [
-                    'graphviz' => [
-                        'hidden_layers' => ['Utils'],
-                    ],
-                ],
-            ],
-        ];
-
-        $this->extension->load($configs, $this->container);
-
-        self::assertSame(
-            [
-                'graphviz' => [
-                    'hidden_layers' => ['Utils'],
-                ],
-            ],
-            $this->container->getParameter('formatters')
-        );
-    }
-
     public function testNullAnalyser(): void
     {
         $configs = [
@@ -430,5 +406,135 @@ final class DeptracExtensionTest extends TestCase
         $this->extension->load($configs, $this->container);
 
         self::assertSame(false, $this->container->getParameter('use_relative_path_from_depfile'));
+    }
+
+    public function testGraphvizFormatterWithEmptyNodes(): void
+    {
+        $configs = [
+            'deptrac' => [
+                'formatters' => [
+                    'graphviz' => [],
+                ],
+            ],
+        ];
+
+        $this->extension->load($configs, $this->container);
+
+        self::assertSame(
+            [
+                'graphviz' => [
+                    'hidden_layers' => [],
+                    'groups' => [],
+                    'point_to_groups' => false,
+                ],
+            ],
+            $this->container->getParameter('formatters')
+        );
+    }
+
+    public function testGraphvizFormatterWithOldPointToGroupsConfig(): void
+    {
+        $configs = [
+            'deptrac' => [
+                'formatters' => [
+                    'graphviz' => [
+                        'pointToGroups' => true,
+                    ],
+                ],
+            ],
+        ];
+
+        $this->extension->load($configs, $this->container);
+
+        self::assertSame(
+            [
+                'graphviz' => [
+                    'point_to_groups' => true,
+                    'hidden_layers' => [],
+                    'groups' => [],
+                ],
+            ],
+            $this->container->getParameter('formatters')
+        );
+    }
+
+    public function testGraphvizFormattersWithHiddenLayers(): void
+    {
+        $configs = [
+            'deptrac' => [
+                'formatters' => [
+                    'graphviz' => [
+                        'hidden_layers' => ['Utils'],
+                        'groups' => [
+                            'App' => ['Controller', 'View'],
+                            'Domain' => ['User', 'Checkout', 'Product'],
+                        ],
+                        'point_to_groups' => true,
+                    ],
+                ],
+            ],
+        ];
+
+        $this->extension->load($configs, $this->container);
+
+        self::assertSame(
+            [
+                'graphviz' => [
+                    'hidden_layers' => ['Utils'],
+                    'groups' => [
+                        'App' => ['Controller', 'View'],
+                        'Domain' => ['User', 'Checkout', 'Product'],
+                    ],
+                    'point_to_groups' => true,
+                ],
+            ],
+            $this->container->getParameter('formatters')
+        );
+    }
+
+    public function testCodeclimateFormatterWithEmptyNodes(): void
+    {
+        $configs = [
+            'deptrac' => [
+                'formatters' => [
+                    'codeclimate' => [],
+                ],
+            ],
+        ];
+
+        $this->extension->load($configs, $this->container);
+
+        self::assertSame(
+            [
+                'codeclimate' => [
+                    'severity' => [
+                        'failure' => 'major',
+                        'skipped' => 'minor',
+                        'uncovered' => 'info',
+                    ],
+                ],
+            ],
+            $this->container->getParameter('formatters')
+        );
+    }
+
+    public function testCodeclimateFormatterRequiresValidSeverity(): void
+    {
+        $configs = [
+            'deptrac' => [
+                'formatters' => [
+                    'codeclimate' => [
+                        'severity' => [
+                            'failure' => 'super duper important',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('The value "super duper important" is not allowed for path "deptrac.formatters.codeclimate.severity.failure".');
+
+        $this->extension->load($configs, $this->container);
     }
 }

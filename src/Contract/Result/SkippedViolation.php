@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Core\Dependency\DependencyInterface;
 /**
  * @psalm-immutable
  */
-final class SkippedViolation implements CoveredRule
+final class SkippedViolation implements CoveredRuleInterface
 {
     private DependencyInterface $dependency;
     private string $dependerLayer;

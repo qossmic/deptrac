@@ -21,7 +21,7 @@ interface OutputFormatterInterface
      */
     public function finish(
         LegacyResult $result,
-        Output $output,
+        OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void;
 }

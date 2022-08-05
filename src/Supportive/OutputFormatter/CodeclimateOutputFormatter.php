@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use Exception;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Rule;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -49,7 +49,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
      */
     public function finish(
         LegacyResult $result,
-        Output $output,
+        OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $formatterConfig = ConfigurationCodeclimate::fromArray($this->config);
@@ -195,7 +195,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     /**
      * @return array{type: string, check_name: string, fingerprint: string, description: string, categories: array<string>, severity: string, location: array{path: string, lines: array{begin: int}}}
      */
-    private function buildRuleArray(Rule $rule, string $message, string $severity): array
+    private function buildRuleArray(RuleInterface $rule, string $message, string $severity): array
     {
         return [
             'type' => 'issue',
@@ -213,7 +213,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    private function buildFingerprint(Rule $rule): string
+    private function buildFingerprint(RuleInterface $rule): string
     {
         return sha1(implode(',', [
             get_class($rule),

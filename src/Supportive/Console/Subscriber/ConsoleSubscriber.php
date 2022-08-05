@@ -12,14 +12,14 @@ use Qossmic\Deptrac\Contract\Dependency\PostEmitEvent;
 use Qossmic\Deptrac\Contract\Dependency\PostFlattenEvent;
 use Qossmic\Deptrac\Contract\Dependency\PreEmitEvent;
 use Qossmic\Deptrac\Contract\Dependency\PreFlattenEvent;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ConsoleSubscriber implements EventSubscriberInterface
 {
-    private Output $output;
+    private OutputInterface $output;
 
-    public function __construct(Output $output)
+    public function __construct(OutputInterface $output)
     {
         $this->output = $output;
     }

@@ -8,12 +8,12 @@ use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use Exception;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
-use Qossmic\Deptrac\Contract\Result\CoveredRule;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Rule;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -37,7 +37,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
      */
     public function finish(
         LegacyResult $result,
-        Output $output,
+        OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $xml = $this->createXml($result);
@@ -96,10 +96,10 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
     private function addTestSuite(LegacyResult $result, DOMDocument $xmlDoc, DOMElement $testSuites): void
     {
-        /** @var array<string, array<Rule>> $layers */
+        /** @var array<string, array<RuleInterface>> $layers */
         $layers = [];
         foreach ($result->rules() as $rule) {
-            if ($rule instanceof CoveredRule) {
+            if ($rule instanceof CoveredRuleInterface) {
                 $layers[$rule->getDependerLayer()][] = $rule;
             } elseif ($rule instanceof Uncovered) {
                 $layers[$rule->getLayer()][] = $rule;
@@ -108,11 +108,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $layerIndex = 0;
         foreach ($layers as $layer => $rules) {
-            $violationsByLayer = array_filter($rules, static function (Rule $rule) {
+            $violationsByLayer = array_filter($rules, static function (RuleInterface $rule) {
                 return $rule instanceof Violation;
             });
 
-            $skippedViolationsByLayer = array_filter($rules, static function (Rule $rule) {
+            $skippedViolationsByLayer = array_filter($rules, static function (RuleInterface $rule) {
                 return $rule instanceof SkippedViolation;
             });
 
@@ -139,7 +139,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param array<string, Rule[]> $rulesByClassName
+     * @param array<string, RuleInterface[]> $rulesByClassName
      */
     private function addTestCase(string $layer, array $rulesByClassName, DOMDocument $xmlDoc, DOMElement $testSuite): void
     {

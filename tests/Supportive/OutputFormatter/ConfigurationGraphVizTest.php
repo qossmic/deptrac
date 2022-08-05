@@ -21,13 +21,16 @@ final class ConfigurationGraphVizTest extends TestCase
                 'layer2',
             ],
         ];
+        $pointToGroups = true;
         $arr = [
             'hidden_layers' => $hiddenLayers,
             'groups' => $groups,
+            'point_to_groups' => $pointToGroups,
         ];
         $configurationGraphViz = ConfigurationGraphViz::fromArray($arr);
 
         self::assertSame($hiddenLayers, $configurationGraphViz->getHiddenLayers());
         self::assertSame($groups, $configurationGraphViz->getGroupsLayerMap());
+        self::assertSame($pointToGroups, $configurationGraphViz->getPointToGroups());
     }
 }

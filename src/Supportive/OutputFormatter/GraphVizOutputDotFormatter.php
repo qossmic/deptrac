@@ -6,8 +6,8 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use LogicException;
 use phpDocumentor\GraphViz\Graph;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 
 /**
  * @internal
@@ -19,7 +19,7 @@ final class GraphVizOutputDotFormatter extends GraphVizOutputFormatter
         return 'graphviz-dot';
     }
 
-    protected function output(Graph $graph, Output $output, OutputFormatterInput $outputFormatterInput): void
+    protected function output(Graph $graph, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
         $dumpDotPath = $outputFormatterInput->getOutputPath();
         if (null === $dumpDotPath) {

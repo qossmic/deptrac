@@ -7,8 +7,8 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use RuntimeException;
 use function base64_encode;
 use function file_get_contents;
@@ -23,7 +23,7 @@ final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
         return 'graphviz-html';
     }
 
-    protected function output(Graph $graph, Output $output, OutputFormatterInput $outputFormatterInput): void
+    protected function output(Graph $graph, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
         $dumpHtmlPath = $outputFormatterInput->getOutputPath();
         if (null === $dumpHtmlPath) {

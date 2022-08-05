@@ -74,7 +74,7 @@ class LayerResolver implements LayerResolverInterface
     public function isReferenceInLayer(string $layer, TokenReferenceInterface $reference, AstMap $astMap): bool
     {
         $tokenName = $reference->getToken()->toString();
-        if (array_key_exists($tokenName, $this->resolved)) {
+        if (array_key_exists($tokenName, $this->resolved) && [] !== $this->resolved[$tokenName]) {
             return array_key_exists($layer, $this->resolved[$tokenName]);
         }
 

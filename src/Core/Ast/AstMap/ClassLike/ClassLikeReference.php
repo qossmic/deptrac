@@ -9,9 +9,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
-/**
- * @psalm-immutable
- */
 class ClassLikeReference implements TokenReferenceInterface
 {
     private ClassLikeToken $classLikeName;

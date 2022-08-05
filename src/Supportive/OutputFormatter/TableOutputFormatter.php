@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\Allowed;
 use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Rule;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -28,7 +28,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         LegacyResult $result,
-        Output $output,
+        OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
@@ -75,7 +75,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
      *
      * @return array{string, string}
      */
-    private function violationRow(Rule $rule): array
+    private function violationRow(RuleInterface $rule): array
     {
         $dependency = $rule->getDependency();
 
@@ -117,7 +117,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         return implode(" -> \n", $buffer);
     }
 
-    private function printSummary(LegacyResult $result, Output $output, bool $reportUncoveredAsError): void
+    private function printSummary(LegacyResult $result, OutputInterface $output, bool $reportUncoveredAsError): void
     {
         $violationCount = count($result->violations());
         $skippedViolationCount = count($result->skippedViolations());
@@ -168,7 +168,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    private function printErrors(LegacyResult $result, Output $output): void
+    private function printErrors(LegacyResult $result, OutputInterface $output): void
     {
         $output->getStyle()->table(
             ['<fg=red>Errors</>'],
@@ -181,7 +181,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function printWarnings(LegacyResult $result, Output $output): void
+    private function printWarnings(LegacyResult $result, OutputInterface $output): void
     {
         $output->getStyle()->table(
             ['<fg=yellow>Warnings</>'],

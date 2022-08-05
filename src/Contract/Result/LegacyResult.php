@@ -13,7 +13,7 @@ use function count;
 final class LegacyResult
 {
     /**
-     * @var Rule[]
+     * @var RuleInterface[]
      */
     private array $rules;
     /**
@@ -26,9 +26,9 @@ final class LegacyResult
     private array $warnings;
 
     /**
-     * @param Rule[]    $rules
-     * @param Error[]   $errors
-     * @param Warning[] $warnings
+     * @param RuleInterface[] $rules
+     * @param Error[]         $errors
+     * @param Warning[]       $warnings
      */
     public function __construct(array $rules, array $errors, array $warnings)
     {
@@ -38,7 +38,7 @@ final class LegacyResult
     }
 
     /**
-     * @return Rule[]
+     * @return RuleInterface[]
      */
     public function rules(): array
     {
@@ -50,7 +50,7 @@ final class LegacyResult
      */
     public function violations(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
+        return array_filter($this->rules, static function (RuleInterface $rule) {
             return $rule instanceof Violation;
         });
     }
@@ -65,7 +65,7 @@ final class LegacyResult
      */
     public function skippedViolations(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
+        return array_filter($this->rules, static function (RuleInterface $rule) {
             return $rule instanceof SkippedViolation;
         });
     }
@@ -75,7 +75,7 @@ final class LegacyResult
      */
     public function uncovered(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
+        return array_filter($this->rules, static function (RuleInterface $rule) {
             return $rule instanceof Uncovered;
         });
     }
@@ -90,7 +90,7 @@ final class LegacyResult
      */
     public function allowed(): array
     {
-        return array_filter($this->rules, static function (Rule $rule) {
+        return array_filter($this->rules, static function (RuleInterface $rule) {
             return $rule instanceof Allowed;
         });
     }

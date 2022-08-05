@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenType;
 use function implode;
@@ -22,7 +22,7 @@ final class DebugTokenRunner
         $this->processor = $processor;
     }
 
-    public function run(string $tokenName, TokenType $tokenType, Output $output): void
+    public function run(string $tokenName, TokenType $tokenType, OutputInterface $output): void
     {
         $matches = $this->processor->findLayerForToken($tokenName, $tokenType);
 
