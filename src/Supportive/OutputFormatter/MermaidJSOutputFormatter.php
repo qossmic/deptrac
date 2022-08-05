@@ -15,11 +15,9 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfigurat
  */
 class MermaidJSOutputFormatter implements OutputFormatterInterface
 {
+    /** @var array<string, array<array<string>|string>|bool> */
     private array $config;
 
-    /**
-     * @param FormatterConfiguration $config
-     */
     public function __construct(FormatterConfiguration $config)
     {
         /** @var array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool}  $extractedConfig */
@@ -32,21 +30,19 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
         return 'mermaidjs';
     }
 
-    /**
-     * @param LegacyResult $result
-     * @param OutputInterface $output
-     * @param OutputFormatterInput $outputFormatterInput
-     * @return void
-     */
     public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
         $graph = $this->parseResults($result);
 
         $output->writeLineFormatted('flowchart TD;');
 
-        if ([] !== $this->config['groups']) {
+        if ([] !== $this->config['groups'] && is_iterable($this->config['groups'])) {
             foreach ($this->config['groups'] as $subGraphName => $layers) {
                 $output->writeLineFormatted('  subgraph '.$subGraphName.'Group;');
+
+                if (!is_iterable($layers)) {
+                    continue;
+                }
 
                 foreach ($layers as $layer) {
                     $output->writeLineFormatted('    '.$layer.';');
@@ -58,13 +54,16 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
 
         if ([] !== $graph) {
             foreach ($graph as $dependerLayer => $layers) {
-                foreach ($layers as $depentendLayer => $count) {
-                    $output->writeLineFormatted('    '.$dependerLayer.' -->|'.(string) $count.'| '.$depentendLayer.';');
+                foreach ($layers as $dependentLayer => $count) {
+                    $output->writeLineFormatted('    '.$dependerLayer.' -->|'.(string) $count.'| '.$dependentLayer.';');
                 }
             }
         }
     }
 
+    /**
+     * @return array<string, array<string, int<1, max>>>
+     */
     protected function parseResults(LegacyResult $result): array
     {
         $graph = [];
