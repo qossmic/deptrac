@@ -106,6 +106,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\MermaidJSOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\XMLOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\MermaidJSOutputFormatter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
