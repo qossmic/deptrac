@@ -105,6 +105,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\JsonOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\XMLOutputFormatter;
+use Qossmic\Deptrac\Supportive\OutputFormatter\MermaidJSOutputFormatter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -409,6 +410,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('output_formatter');
     $services
         ->set(CodeclimateOutputFormatter::class)
+        ->tag('output_formatter');
+    $services
+        ->set(MermaidJSOutputFormatter::class)
         ->tag('output_formatter');
 
     /*

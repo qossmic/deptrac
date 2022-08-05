@@ -35,6 +35,23 @@ deptrac:
           - Dependency
           - InputCollector
           - Layer
+    mermaidjs:
+      groups:
+        Contract:
+          - Contract
+        Supportive:
+          - Supportive
+          - File
+        Symfony:
+          - Console
+          - DependencyInjection
+          - OutputFormatter
+        Core:
+          - Analyser
+          - Ast
+          - Dependency
+          - InputCollector
+          - Layer
 
   layers:
     # Domains
