@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
 
 /**
@@ -19,7 +19,7 @@ final class DebugUnassignedRunner
         $this->processor = $processor;
     }
 
-    public function run(Output $output): void
+    public function run(OutputInterface $output): void
     {
         $unassignedTokens = $this->processor->findUnassignedTokens();
         if ([] === $unassignedTokens) {

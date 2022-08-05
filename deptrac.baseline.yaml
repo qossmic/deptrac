@@ -8,9 +8,9 @@ deptrac:
       - Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface
     Qossmic\Deptrac\Contract\Result\Allowed:
       - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\CoveredRule:
+    Qossmic\Deptrac\Contract\Result\CoveredRuleInterface:
       - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\Rule:
+    Qossmic\Deptrac\Contract\Result\RuleInterface:
       - Qossmic\Deptrac\Core\Dependency\DependencyInterface
     Qossmic\Deptrac\Contract\Result\SkippedViolation:
       - Qossmic\Deptrac\Core\Dependency\DependencyInterface

@@ -8,12 +8,12 @@ use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
-use Qossmic\Deptrac\Contract\Result\CoveredRule;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Rule;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\ConfigurationGraphViz;
@@ -38,7 +38,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
 
     public function finish(
         LegacyResult $result,
-        Output $output,
+        OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $layerViolations = $this->calculateViolations($result->violations());
@@ -80,7 +80,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param Rule[] $rules
+     * @param RuleInterface[] $rules
      *
      * @return array<string, array<string, int>>
      */
@@ -89,7 +89,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
         $layersDependOnLayers = [];
 
         foreach ($rules as $rule) {
-            if ($rule instanceof CoveredRule) {
+            if ($rule instanceof CoveredRuleInterface) {
                 $layerA = $rule->getDependerLayer();
                 $layerB = $rule->getDependentLayer();
 
@@ -225,5 +225,5 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
         return 'cluster_'.$groupName;
     }
 
-    abstract protected function output(Graph $graph, Output $output, OutputFormatterInput $outputFormatterInput): void;
+    abstract protected function output(Graph $graph, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void;
 }

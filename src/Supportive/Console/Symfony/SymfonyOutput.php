@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Symfony;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\Output;
-use Qossmic\Deptrac\Contract\OutputFormatter\OutputStyle;
-use Symfony\Component\Console\Output\OutputInterface;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputStyleInterface;
+use Symfony\Component\Console\Output\OutputInterface as SymfonyOutputInterface;
 
 /**
  * @internal
  */
-class SymfonyOutput implements Output
+class SymfonyOutput implements OutputInterface
 {
-    private OutputInterface $symfonyOutput;
-    private OutputStyle $style;
+    private SymfonyOutputInterface $symfonyOutput;
+    private OutputStyleInterface $style;
 
     public function __construct(
-        OutputInterface $symfonyOutput,
-        OutputStyle $style
+        SymfonyOutputInterface $symfonyOutput,
+        OutputStyleInterface $style
     ) {
         $this->symfonyOutput = $symfonyOutput;
         $this->style = $style;
@@ -26,7 +26,7 @@ class SymfonyOutput implements Output
 
     public function writeFormatted(string $message): void
     {
-        $this->symfonyOutput->write($message, false, OutputInterface::OUTPUT_NORMAL);
+        $this->symfonyOutput->write($message, false, SymfonyOutputInterface::OUTPUT_NORMAL);
     }
 
     /**
@@ -34,15 +34,15 @@ class SymfonyOutput implements Output
      */
     public function writeLineFormatted($message): void
     {
-        $this->symfonyOutput->writeln($message, OutputInterface::OUTPUT_NORMAL);
+        $this->symfonyOutput->writeln($message, SymfonyOutputInterface::OUTPUT_NORMAL);
     }
 
     public function writeRaw(string $message): void
     {
-        $this->symfonyOutput->write($message, false, OutputInterface::OUTPUT_RAW);
+        $this->symfonyOutput->write($message, false, SymfonyOutputInterface::OUTPUT_RAW);
     }
 
-    public function getStyle(): OutputStyle
+    public function getStyle(): OutputStyleInterface
     {
         return $this->style;
     }

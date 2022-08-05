@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Symfony;
 
-use Qossmic\Deptrac\Contract\OutputFormatter\OutputStyle;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputStyleInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @internal
  */
-class Style implements OutputStyle
+class Style implements OutputStyleInterface
 {
     private SymfonyStyle $symfonyStyle;
 

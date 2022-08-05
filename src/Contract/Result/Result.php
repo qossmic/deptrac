@@ -10,7 +10,7 @@ use function spl_object_id;
 class Result
 {
     /**
-     * @var array<string, array<int, Rule>>
+     * @var array<string, array<int, RuleInterface>>
      */
     private array $rules = [];
 
@@ -24,18 +24,18 @@ class Result
      */
     private array $errors = [];
 
-    public function add(Rule $rule): void
+    public function add(RuleInterface $rule): void
     {
         $this->rules[get_class($rule)][spl_object_id($rule)] = $rule;
     }
 
-    public function remove(Rule $rule): void
+    public function remove(RuleInterface $rule): void
     {
         unset($this->rules[get_class($rule)][spl_object_id($rule)]);
     }
 
     /**
-     * @return array<string, array<int, Rule>>
+     * @return array<string, array<int, RuleInterface>>
      */
     public function all(): array
     {
@@ -45,7 +45,7 @@ class Result
     /**
      * @param class-string $type
      *
-     * @return array<int, Rule>
+     * @return array<int, RuleInterface>
      */
     public function allOf(string $type): array
     {
