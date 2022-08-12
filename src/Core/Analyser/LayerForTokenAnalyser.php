@@ -8,7 +8,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
-use Qossmic\Deptrac\Supportive\ShouldNotHappenException;
 use function array_values;
 use function ksort;
 use function natcasesort;

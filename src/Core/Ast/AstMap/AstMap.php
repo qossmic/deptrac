@@ -109,7 +109,6 @@ class AstMap
     ): iterable {
         $alreadyResolved ??= new ArrayObject();
         /** @var ArrayObject<string, true> $alreadyResolved */
-
         if (null === $pathStack) {
             /** @var SplStack<AstInherit> $pathStack */
             $pathStack = new SplStack();
