@@ -23,6 +23,10 @@ final class DeptracExtensionTest extends TestCase
             'groups' => [],
             'point_to_groups' => false,
         ],
+        'mermaidjs' => [
+            'direction' => 'TD',
+            'groups' => [],
+        ],
         'codeclimate' => [
             'severity' => [
                 'failure' => 'major',

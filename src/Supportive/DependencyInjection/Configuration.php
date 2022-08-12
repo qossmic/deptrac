@@ -180,6 +180,8 @@ class Configuration implements ConfigurationInterface
                             ->info('Configure MermaidJS output formatter')
                             ->addDefaultsIfNotSet()
                             ->children()
+                                ->scalarNode('direction')->defaultValue('TD')
+                                ->end()
                                 ->arrayNode('groups')
                                 ->info('Combine multiple layers to a group')
                                     ->useAttributeAsKey('name')

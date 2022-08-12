@@ -36,6 +36,7 @@ deptrac:
           - InputCollector
           - Layer
     mermaidjs:
+      direction: TD
       groups:
         Contract:
           - Contract

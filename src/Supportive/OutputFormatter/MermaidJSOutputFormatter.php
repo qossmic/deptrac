@@ -15,12 +15,12 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfigurat
  */
 class MermaidJSOutputFormatter implements OutputFormatterInterface
 {
-    /** @var array<string, array<array<string>|string>|bool> */
+    /** @var array{direction: string, groups: array<string, string[]>} */
     private array $config;
 
     public function __construct(FormatterConfiguration $config)
     {
-        /** @var array{hidden_layers?: string[], groups?: array<string, string[]>, pointToGroups?: bool}  $extractedConfig */
+        /** @var array{direction: string, groups: array<string, string[]>}  $extractedConfig */
         $extractedConfig = $config->getConfigFor('mermaidjs');
         $this->config = $extractedConfig;
     }
@@ -34,15 +34,11 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
     {
         $graph = $this->parseResults($result);
 
-        $output->writeLineFormatted('flowchart TD;');
+        $output->writeLineFormatted('flowchart '.$this->config['direction'].';');
 
-        if ([] !== $this->config['groups'] && is_iterable($this->config['groups'])) {
+        if ([] !== $this->config['groups']) {
             foreach ($this->config['groups'] as $subGraphName => $layers) {
                 $output->writeLineFormatted('  subgraph '.$subGraphName.'Group;');
-
-                if (!is_iterable($layers)) {
-                    continue;
-                }
 
                 foreach ($layers as $layer) {
                     $output->writeLineFormatted('    '.$layer.';');
