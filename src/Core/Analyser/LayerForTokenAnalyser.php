@@ -30,8 +30,7 @@ class LayerForTokenAnalyser
         return match ($tokenType->value) {
             TokenType::CLASS_LIKE => $this->findLayersForReferences($astMap->getClassLikeReferences(), $tokenName, $astMap),
             TokenType::FUNCTION => $this->findLayersForReferences($astMap->getFunctionLikeReferences(), $tokenName, $astMap),
-            TokenType::FILE => $this->findLayersForReferences($astMap->getFileReferences(), $tokenName, $astMap),
-            default => throw new ShouldNotHappenException(),
+            TokenType::FILE => $this->findLayersForReferences($astMap->getFileReferences(), $tokenName, $astMap)
         };
     }
 
