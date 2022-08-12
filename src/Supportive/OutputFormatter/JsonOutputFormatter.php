@@ -178,21 +178,14 @@ final class JsonOutputFormatter implements OutputFormatterInterface
 
     private function jsonLastError(): string
     {
-        switch (json_last_error()) {
-            case JSON_ERROR_NONE:
-                return 'No errors';
-            case JSON_ERROR_DEPTH:
-                return 'Maximum stack depth exceeded';
-            case JSON_ERROR_STATE_MISMATCH:
-                return 'Underflow or the modes mismatch';
-            case JSON_ERROR_CTRL_CHAR:
-                return 'Unexpected control character found';
-            case JSON_ERROR_SYNTAX:
-                return 'Syntax error, malformed JSON';
-            case JSON_ERROR_UTF8:
-                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
-            default:
-                return 'Unknown error';
-        }
+        return match (json_last_error()) {
+            JSON_ERROR_NONE => 'No errors',
+            JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
+            JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
+            JSON_ERROR_CTRL_CHAR => 'Unexpected control character found',
+            JSON_ERROR_SYNTAX => 'Syntax error, malformed JSON',
+            JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+            default => 'Unknown error',
+        };
     }
 }

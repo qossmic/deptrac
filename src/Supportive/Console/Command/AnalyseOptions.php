@@ -4,32 +4,8 @@ namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 class AnalyseOptions
 {
-    private bool $noProgress;
-
-    private string $formatter;
-
-    private ?string $output;
-
-    private bool $reportSkipped;
-
-    private bool $reportUncovered;
-
-    private bool $failOnUncovered;
-
-    public function __construct(
-        bool $noProgress,
-        string $formatter,
-        ?string $output,
-        bool $reportSkipped,
-        bool $reportUncovered,
-        bool $failOnUncovered
-    ) {
-        $this->noProgress = $noProgress;
-        $this->formatter = $formatter;
-        $this->output = $output;
-        $this->reportSkipped = $reportSkipped;
-        $this->reportUncovered = $reportUncovered;
-        $this->failOnUncovered = $failOnUncovered;
+    public function __construct(private bool $noProgress, private string $formatter, private ?string $output, private bool $reportSkipped, private bool $reportUncovered, private bool $failOnUncovered)
+    {
     }
 
     public function showProgress(): bool

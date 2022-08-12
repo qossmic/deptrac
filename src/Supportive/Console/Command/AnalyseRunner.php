@@ -19,22 +19,15 @@ use function sprintf;
  */
 final class AnalyseRunner
 {
-    private LegacyDependencyLayersAnalyser $analyser;
-    private FormatterProvider $formatterProvider;
-
-    public function __construct(
-        LegacyDependencyLayersAnalyser $analyser,
-        FormatterProvider $formatterProvider
-    ) {
-        $this->analyser = $analyser;
-        $this->formatterProvider = $formatterProvider;
+    public function __construct(private LegacyDependencyLayersAnalyser $analyser, private FormatterProvider $formatterProvider)
+    {
     }
 
     public function run(AnalyseOptions $options, OutputInterface $output): void
     {
         try {
             $formatter = $this->formatterProvider->get($options->getFormatter());
-        } catch (ContainerExceptionInterface $e) {
+        } catch (ContainerExceptionInterface) {
             $this->printFormatterNotFoundException($output, $options->getFormatter());
 
             throw AnalyseException::invalidFormatter();

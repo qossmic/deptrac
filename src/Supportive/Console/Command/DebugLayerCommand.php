@@ -18,12 +18,8 @@ class DebugLayerCommand extends Command
     public static $defaultName = 'debug:layer';
     public static $defaultDescription = 'Checks which tokens belong to the provided layer';
 
-    private DebugLayerRunner $runner;
-
-    public function __construct(DebugLayerRunner $runner)
+    public function __construct(private DebugLayerRunner $runner)
     {
-        $this->runner = $runner;
-
         parent::__construct();
     }
 
@@ -44,7 +40,7 @@ class DebugLayerCommand extends Command
 
         try {
             $this->runner->run($layer, $symfonyOutput);
-        } catch (InvalidLayerException $invalidLayerException) {
+        } catch (InvalidLayerException) {
             $outputStyle->error('Layer not found.');
 
             return 1;

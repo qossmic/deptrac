@@ -10,7 +10,6 @@ use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\Allowed;
 use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -71,11 +70,9 @@ final class TableOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param Violation|SkippedViolation $rule
-     *
      * @return array{string, string}
      */
-    private function violationRow(RuleInterface $rule): array
+    private function violationRow(Violation|SkippedViolation $rule): array
     {
         $dependency = $rule->getDependency();
 
@@ -173,9 +170,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $output->getStyle()->table(
             ['<fg=red>Errors</>'],
             array_map(
-                static function (Error $error) {
-                    return [$error->toString()];
-                },
+                static fn (Error $error) => [$error->toString()],
                 $result->errors()
             )
         );
@@ -186,9 +181,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $output->getStyle()->table(
             ['<fg=yellow>Warnings</>'],
             array_map(
-                static function (Warning $warning) {
-                    return [$warning->toString()];
-                },
+                static fn (Warning $warning) => [$warning->toString()],
                 $result->warnings()
             )
         );

@@ -29,19 +29,11 @@ class AnalyseCommand extends Command
     public static $defaultName = 'analyse|analyze';
     public static $defaultDescription = 'Analyses your project using the provided depfile';
 
-    private AnalyseRunner $runner;
-    private EventDispatcherInterface $dispatcher;
-    private FormatterProvider $formatterProvider;
-
     public function __construct(
-        AnalyseRunner $runner,
-        EventDispatcherInterface $dispatcher,
-        FormatterProvider $formatterProvider
+        private AnalyseRunner $runner,
+        private EventDispatcherInterface $dispatcher,
+        private FormatterProvider $formatterProvider
     ) {
-        $this->runner = $runner;
-        $this->dispatcher = $dispatcher;
-        $this->formatterProvider = $formatterProvider;
-
         parent::__construct();
     }
 
@@ -72,7 +64,7 @@ class AnalyseCommand extends Command
         $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
         /** @var ?string $formatter */
         $formatter = $input->getOption('formatter');
-        $formatter = $formatter ?? self::getDefaultFormatter();
+        $formatter ??= self::getDefaultFormatter();
 
         /** @var string|numeric|null $output */
         $output = $input->getOption('output');
@@ -93,7 +85,7 @@ class AnalyseCommand extends Command
 
         try {
             $this->runner->run($options, $symfonyOutput);
-        } catch (AnalyseException $analyseException) {
+        } catch (AnalyseException) {
             return 1;
         }
 

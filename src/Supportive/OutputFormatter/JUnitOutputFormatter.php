@@ -108,13 +108,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
 
         $layerIndex = 0;
         foreach ($layers as $layer => $rules) {
-            $violationsByLayer = array_filter($rules, static function (RuleInterface $rule) {
-                return $rule instanceof Violation;
-            });
+            $violationsByLayer = array_filter($rules, static fn (RuleInterface $rule) => $rule instanceof Violation);
 
-            $skippedViolationsByLayer = array_filter($rules, static function (RuleInterface $rule) {
-                return $rule instanceof SkippedViolation;
-            });
+            $skippedViolationsByLayer = array_filter($rules, static fn (RuleInterface $rule) => $rule instanceof SkippedViolation);
 
             $rulesByClassName = [];
             foreach ($rules as $rule) {
