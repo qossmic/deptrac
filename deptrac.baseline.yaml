@@ -1,27 +1,14 @@
 deptrac:
   skip_violations:
-    Qossmic\Deptrac\Contract\Analyser\ProcessEvent:
-      - Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
     Qossmic\Deptrac\Contract\Layer\CollectorInterface:
       - Qossmic\Deptrac\Core\Ast\AstMap\AstMap
-      - Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface
-    Qossmic\Deptrac\Contract\Result\Allowed:
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\CoveredRuleInterface:
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\RuleInterface:
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\SkippedViolation:
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\Uncovered:
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
-    Qossmic\Deptrac\Contract\Result\Violation:
-      - Qossmic\Deptrac\Core\Dependency\DependencyInterface
+    Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser:
+      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Core\Analyser\TokenType:
-      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes
+      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
+    Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser:
+      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Supportive\OutputFormatter\ConsoleOutputFormatter:
-      - Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence
       - Qossmic\Deptrac\Core\Dependency\InheritDependency
     Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter:
       - Qossmic\Deptrac\Core\Dependency\InheritDependency
