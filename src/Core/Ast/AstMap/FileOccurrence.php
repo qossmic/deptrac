@@ -9,14 +9,8 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
  */
 final class FileOccurrence
 {
-    private string $filepath;
-
-    private int $line;
-
-    private function __construct(string $filepath, int $line)
+    private function __construct(private readonly string $filepath, private readonly int $line)
     {
-        $this->filepath = $filepath;
-        $this->line = $line;
     }
 
     public static function fromFilepath(string $filepath, int $occursAtLine): self

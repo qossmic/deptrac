@@ -18,7 +18,7 @@ class DebugTokenCommand extends Command
     public static $defaultName = 'debug:token|debug:class-like';
     public static $defaultDescription = 'Checks which layers the provided token belongs to';
 
-    public function __construct(private DebugTokenRunner $runner)
+    public function __construct(private readonly DebugTokenRunner $runner)
     {
         parent::__construct();
     }

@@ -11,27 +11,20 @@ use function natcasesort;
 
 class UnassignedTokenAnalyser
 {
-    private AstMapExtractor $astMapExtractor;
-    private TokenResolver $tokenResolver;
-    private LayerResolverInterface $layerResolver;
-
     /**
      * @var array<string>
      */
-    private array $tokenTypes;
+    private readonly array $tokenTypes;
 
     /**
      * @param array{types: array<string>} $config
      */
     public function __construct(
-        AstMapExtractor $astMapExtractor,
-        TokenResolver $tokenResolver,
-        LayerResolverInterface $layerResolver,
+        private readonly AstMapExtractor $astMapExtractor,
+        private readonly TokenResolver $tokenResolver,
+        private readonly LayerResolverInterface $layerResolver,
         array $config
     ) {
-        $this->astMapExtractor = $astMapExtractor;
-        $this->tokenResolver = $tokenResolver;
-        $this->layerResolver = $layerResolver;
         $this->tokenTypes = array_filter(
             array_map(
                 static function (string $emitterType): ?string {

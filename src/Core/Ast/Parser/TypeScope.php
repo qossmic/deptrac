@@ -6,16 +6,13 @@ namespace Qossmic\Deptrac\Core\Ast\Parser;
 
 class TypeScope
 {
-    private string $namespace;
-
     /**
      * @var array<string, string> alias => className
      */
     private array $uses;
 
-    public function __construct(string $namespace)
+    public function __construct(private readonly string $namespace)
     {
-        $this->namespace = $namespace;
         $this->uses = [];
     }
 

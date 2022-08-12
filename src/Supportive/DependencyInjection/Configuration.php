@@ -15,7 +15,7 @@ use function is_array;
  */
 class Configuration implements ConfigurationInterface
 {
-    public const ALLOWED_EMITTER_TYPES = [
+    final public const ALLOWED_EMITTER_TYPES = [
         EmitterTypes::CLASS_TOKEN,
         EmitterTypes::CLASS_SUPERGLOBAL_TOKEN,
         EmitterTypes::FILE_TOKEN,
@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
         EmitterTypes::USE_TOKEN,
     ];
 
-    public const DEFAULT_EMITTER_TYPES = [
+    final public const DEFAULT_EMITTER_TYPES = [
         EmitterTypes::CLASS_TOKEN,
         EmitterTypes::USE_TOKEN,
     ];
@@ -171,9 +171,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                             ->beforeNormalization()
-                                ->ifTrue(static function ($v) {
-                                    return is_array($v) && array_key_exists('pointToGroups', $v);
-                                })
+                                ->ifTrue(static fn ($v) => is_array($v) && array_key_exists('pointToGroups', $v))
                                 ->then(static function ($v) {
                                     $v['point_to_groups'] = $v['pointToGroups'];
                                     unset($v['pointToGroups']);

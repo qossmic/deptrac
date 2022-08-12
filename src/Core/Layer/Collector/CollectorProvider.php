@@ -13,11 +13,8 @@ use function sprintf;
 
 final class CollectorProvider implements ContainerInterface
 {
-    private ServiceLocator $collectorLocator;
-
-    public function __construct(ServiceLocator $collectorLocator)
+    public function __construct(private readonly ServiceLocator $collectorLocator)
     {
-        $this->collectorLocator = $collectorLocator;
     }
 
     public function get(string $id): CollectorInterface

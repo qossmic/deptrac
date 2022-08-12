@@ -18,7 +18,7 @@ class DebugLayerCommand extends Command
     public static $defaultName = 'debug:layer';
     public static $defaultDescription = 'Checks which tokens belong to the provided layer';
 
-    public function __construct(private DebugLayerRunner $runner)
+    public function __construct(private readonly DebugLayerRunner $runner)
     {
         parent::__construct();
     }

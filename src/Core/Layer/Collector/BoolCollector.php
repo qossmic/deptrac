@@ -10,11 +10,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 final class BoolCollector implements ConditionalCollectorInterface
 {
-    private CollectorResolverInterface $collectorResolver;
-
-    public function __construct(CollectorResolverInterface $collectorResolver)
+    public function __construct(private readonly CollectorResolverInterface $collectorResolver)
     {
-        $this->collectorResolver = $collectorResolver;
     }
 
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool

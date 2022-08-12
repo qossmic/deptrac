@@ -8,11 +8,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
 
 final class FunctionLikeToken implements TokenInterface
 {
-    private string $functionName;
-
-    private function __construct(string $functionName)
+    private function __construct(private readonly string $functionName)
     {
-        $this->functionName = $functionName;
     }
 
     public static function fromFQCN(string $functionName): self

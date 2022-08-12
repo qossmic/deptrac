@@ -12,17 +12,12 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 class FunctionLikeReference implements TokenReferenceInterface
 {
     private ?FileReference $fileReference = null;
-    /** @var DependencyToken[] */
-    private array $dependencies;
-    private FunctionLikeToken $functionName;
 
     /**
      * @param DependencyToken[] $dependencies
      */
-    public function __construct(FunctionLikeToken $functionName, array $dependencies = [])
+    public function __construct(private readonly FunctionLikeToken $functionName, private readonly array $dependencies = [])
     {
-        $this->functionName = $functionName;
-        $this->dependencies = $dependencies;
     }
 
     /**

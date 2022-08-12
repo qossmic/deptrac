@@ -9,33 +9,26 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
  */
 class DependencyToken
 {
-    public const USE = 'use';
-    public const RETURN_TYPE = 'returntype';
-    public const PARAMETER = 'parameter';
-    public const NEW = 'new';
-    public const STATIC_PROPERTY = 'static_property';
-    public const STATIC_METHOD = 'static_method';
-    public const INSTANCEOF = 'instanceof';
-    public const CATCH = 'catch';
-    public const VARIABLE = 'variable';
-    public const THROW = 'throw';
-    public const CONST = 'const';
-    public const ANONYMOUS_CLASS_EXTENDS = 'anonymous_class_extends';
-    public const ANONYMOUS_CLASS_IMPLEMENTS = 'anonymous_class_implements';
-    public const ANONYMOUS_CLASS_TRAIT = 'anonymous_class_trait';
-    public const ATTRIBUTE = 'attribute';
-    public const SUPERGLOBAL_VARIABLE = 'superglobal_variable';
-    public const UNRESOLVED_FUNCTION_CALL = 'unresolved_function_call';
+    final public const USE = 'use';
+    final public const RETURN_TYPE = 'returntype';
+    final public const PARAMETER = 'parameter';
+    final public const NEW = 'new';
+    final public const STATIC_PROPERTY = 'static_property';
+    final public const STATIC_METHOD = 'static_method';
+    final public const INSTANCEOF = 'instanceof';
+    final public const CATCH = 'catch';
+    final public const VARIABLE = 'variable';
+    final public const THROW = 'throw';
+    final public const CONST = 'const';
+    final public const ANONYMOUS_CLASS_EXTENDS = 'anonymous_class_extends';
+    final public const ANONYMOUS_CLASS_IMPLEMENTS = 'anonymous_class_implements';
+    final public const ANONYMOUS_CLASS_TRAIT = 'anonymous_class_trait';
+    final public const ATTRIBUTE = 'attribute';
+    final public const SUPERGLOBAL_VARIABLE = 'superglobal_variable';
+    final public const UNRESOLVED_FUNCTION_CALL = 'unresolved_function_call';
 
-    private TokenInterface $token;
-    private FileOccurrence $fileOccurrence;
-    private string $type;
-
-    private function __construct(TokenInterface $token, FileOccurrence $fileOccurrence, string $type)
+    private function __construct(private readonly TokenInterface $token, private readonly FileOccurrence $fileOccurrence, private readonly string $type)
     {
-        $this->token = $token;
-        $this->fileOccurrence = $fileOccurrence;
-        $this->type = $type;
     }
 
     public function getToken(): TokenInterface

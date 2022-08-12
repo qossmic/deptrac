@@ -13,11 +13,8 @@ final class ClassLikeType implements TokenInterface
     private const TYPE_INTERFACE = 'interface';
     private const TYPE_TRAIT = 'trait';
 
-    private string $type;
-
-    private function __construct(string $type)
+    private function __construct(private readonly string $type)
     {
-        $this->type = $type;
     }
 
     public static function classLike(): self

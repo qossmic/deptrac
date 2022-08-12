@@ -15,7 +15,7 @@ use function sprintf;
  */
 final class DebugTokenRunner
 {
-    public function __construct(private LayerForTokenAnalyser $processor)
+    public function __construct(private readonly LayerForTokenAnalyser $processor)
     {
     }
 

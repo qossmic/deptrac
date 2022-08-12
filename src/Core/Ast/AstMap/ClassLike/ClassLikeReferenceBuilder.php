@@ -10,24 +10,15 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
 final class ClassLikeReferenceBuilder extends ReferenceBuilder
 {
-    private ClassLikeToken $classLikeToken;
-    private ClassLikeType $classLikeType;
-
     /** @var AstInherit[] */
     private array $inherits = [];
-
-    private bool $isInternal;
 
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath, ClassLikeToken $classLikeToken, ClassLikeType $classLikeType, bool $isInternal)
+    protected function __construct(array $tokenTemplates, string $filepath, private readonly ClassLikeToken $classLikeToken, private readonly ClassLikeType $classLikeType, private readonly bool $isInternal)
     {
         parent::__construct($tokenTemplates, $filepath);
-
-        $this->classLikeToken = $classLikeToken;
-        $this->classLikeType = $classLikeType;
-        $this->isInternal = $isInternal;
     }
 
     /**

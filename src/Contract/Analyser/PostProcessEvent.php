@@ -8,11 +8,8 @@ use Qossmic\Deptrac\Contract\Result\Result;
 
 class PostProcessEvent
 {
-    private Result $result;
-
-    public function __construct(Result $result)
+    public function __construct(private Result $result)
     {
-        $this->result = $result;
     }
 
     public function getResult(): Result

@@ -27,7 +27,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
     /**
      * @var array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool}
      */
-    private array $config;
+    private readonly array $config;
 
     public function __construct(FormatterConfiguration $config)
     {

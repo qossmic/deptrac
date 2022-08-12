@@ -12,11 +12,8 @@ use function array_values;
 
 class LegacyDependencyLayersAnalyser
 {
-    private DependencyLayersAnalyser $decorated;
-
-    public function __construct(DependencyLayersAnalyser $decorated)
+    public function __construct(private readonly DependencyLayersAnalyser $decorated)
     {
-        $this->decorated = $decorated;
     }
 
     public function analyse(): LegacyResult

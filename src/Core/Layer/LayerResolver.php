@@ -14,8 +14,6 @@ use function array_key_exists;
 
 class LayerResolver implements LayerResolverInterface
 {
-    private CollectorResolverInterface $collectorResolver;
-
     /**
      * @var array<string, Collectable[]>
      */
@@ -29,10 +27,8 @@ class LayerResolver implements LayerResolverInterface
     /**
      * @param array<array{name?: string, collectors: array<array<string, string|array<string, string>>>}> $layers
      */
-    public function __construct(CollectorResolverInterface $collectorResolver, array $layers)
+    public function __construct(private readonly CollectorResolverInterface $collectorResolver, array $layers)
     {
-        $this->collectorResolver = $collectorResolver;
-
         $this->initializeLayers($layers);
     }
 

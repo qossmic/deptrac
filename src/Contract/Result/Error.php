@@ -9,11 +9,8 @@ namespace Qossmic\Deptrac\Contract\Result;
  */
 class Error
 {
-    private string $message;
-
-    public function __construct(string $message)
+    public function __construct(private readonly string $message)
     {
-        $this->message = $message;
     }
 
     public function toString(): string

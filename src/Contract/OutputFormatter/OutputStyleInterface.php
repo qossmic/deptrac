@@ -15,32 +15,32 @@ interface OutputStyleInterface
     /**
      * @param string|string[] $message
      */
-    public function success($message): void;
+    public function success(string|array $message): void;
 
     /**
      * @param string|string[] $message
      */
-    public function error($message): void;
+    public function error(string|array $message): void;
 
     /**
      * @param string|string[] $message
      */
-    public function warning($message): void;
+    public function warning(string|array $message): void;
 
     /**
      * @param string|string[] $message
      */
-    public function note($message): void;
+    public function note(string|array $message): void;
 
     /**
      * @param string|string[] $message
      */
-    public function caution($message): void;
+    public function caution(string|array $message): void;
 
     /**
      * @param string|array<string, string|int>|TableSeparator ...$list
      */
-    public function definitionList(...$list): void;
+    public function definitionList(string|array|TableSeparator ...$list): void;
 
     /**
      * @param mixed[] $headers

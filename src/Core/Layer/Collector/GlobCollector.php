@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Glob;
 
 final class GlobCollector extends RegexCollector
 {
-    private string $basePath;
+    private readonly string $basePath;
 
     public function __construct(string $basePath)
     {

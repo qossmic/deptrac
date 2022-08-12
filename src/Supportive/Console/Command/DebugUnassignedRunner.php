@@ -12,7 +12,7 @@ use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
  */
 final class DebugUnassignedRunner
 {
-    public function __construct(private UnassignedTokenAnalyser $processor)
+    public function __construct(private readonly UnassignedTokenAnalyser $processor)
     {
     }
 

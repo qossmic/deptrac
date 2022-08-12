@@ -16,7 +16,7 @@ class DebugUnassignedCommand extends Command
     public static $defaultName = 'debug:unassigned';
     public static $defaultDescription = 'Lists tokens that are not assigned to any layer';
 
-    public function __construct(private DebugUnassignedRunner $runner)
+    public function __construct(private readonly DebugUnassignedRunner $runner)
     {
         parent::__construct();
     }

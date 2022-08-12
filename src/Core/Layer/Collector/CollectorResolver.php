@@ -11,11 +11,8 @@ use function is_string;
 
 final class CollectorResolver implements CollectorResolverInterface
 {
-    private CollectorProvider $collectorProvider;
-
-    public function __construct(CollectorProvider $collectorProvider)
+    public function __construct(private readonly CollectorProvider $collectorProvider)
     {
-        $this->collectorProvider = $collectorProvider;
     }
 
     /**

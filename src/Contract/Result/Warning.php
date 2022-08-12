@@ -9,11 +9,8 @@ namespace Qossmic\Deptrac\Contract\Result;
  */
 final class Warning
 {
-    private string $message;
-
-    private function __construct(string $message)
+    private function __construct(private readonly string $message)
     {
-        $this->message = $message;
     }
 
     /**

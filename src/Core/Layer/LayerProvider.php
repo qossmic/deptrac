@@ -9,16 +9,10 @@ use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 class LayerProvider
 {
     /**
-     * @var array<string, string[]>
-     */
-    private array $allowedLayers;
-
-    /**
      * @param array<string, string[]> $allowedLayers
      */
-    public function __construct(array $allowedLayers)
+    public function __construct(private readonly array $allowedLayers)
     {
-        $this->allowedLayers = $allowedLayers;
     }
 
     /**
@@ -45,7 +39,7 @@ class LayerProvider
         }
         $dependencies = [];
         foreach ($this->allowedLayers[$layerName] ?? [] as $layer) {
-            if (0 === strncmp($layer, '+', 1)) {
+            if (str_starts_with($layer, '+')) {
                 $layer = ltrim($layer, '+');
                 $dependencies[] = $this->getTransitiveDependencies($layer, array_merge([$layerName], $previousLayers));
             }

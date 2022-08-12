@@ -8,20 +8,11 @@ use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 
 class Collectable
 {
-    private CollectorInterface $collector;
-
-    /**
-     * @var array<string, string|array<string, string>>
-     */
-    private array $attributes;
-
     /**
      * @param array<string, string|array<string, string>> $attributes
      */
-    public function __construct(CollectorInterface $collector, array $attributes)
+    public function __construct(private readonly CollectorInterface $collector, private readonly array $attributes)
     {
-        $this->collector = $collector;
-        $this->attributes = $attributes;
     }
 
     public function getCollector(): CollectorInterface

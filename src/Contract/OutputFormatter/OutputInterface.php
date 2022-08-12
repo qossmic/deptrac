@@ -11,7 +11,7 @@ interface OutputInterface
     /**
      * @param string|string[] $message
      */
-    public function writeLineFormatted($message): void;
+    public function writeLineFormatted(string|array $message): void;
 
     public function writeRaw(string $message): void;
 

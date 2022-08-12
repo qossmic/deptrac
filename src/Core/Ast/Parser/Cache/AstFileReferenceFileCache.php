@@ -35,18 +35,13 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 {
     /** @var array<string, array{hash: string, reference: FileReference}> */
     private array $cache;
-    private string $cacheFile;
     private bool $loaded = false;
     /** @var array<string, bool> */
     private array $parsedFiles = [];
 
-    private string $cacheVersion;
-
-    public function __construct(string $cacheFile, string $cacheVersion)
+    public function __construct(private readonly string $cacheFile, private readonly string $cacheVersion)
     {
         $this->cache = [];
-        $this->cacheFile = $cacheFile;
-        $this->cacheVersion = $cacheVersion;
     }
 
     public function get(string $filepath): ?FileReference
@@ -140,9 +135,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 
         $cache = array_filter(
             $this->cache,
-            function (string $key): bool {
-                return isset($this->parsedFiles[$key]);
-            },
+            fn (string $key): bool => isset($this->parsedFiles[$key]),
             ARRAY_FILTER_USE_KEY
         );
 

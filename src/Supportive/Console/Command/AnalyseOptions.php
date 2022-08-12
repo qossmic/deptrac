@@ -4,7 +4,7 @@ namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 class AnalyseOptions
 {
-    public function __construct(private bool $noProgress, private string $formatter, private ?string $output, private bool $reportSkipped, private bool $reportUncovered, private bool $failOnUncovered)
+    public function __construct(private readonly bool $noProgress, private readonly string $formatter, private readonly ?string $output, private readonly bool $reportSkipped, private readonly bool $reportUncovered, private readonly bool $failOnUncovered)
     {
     }
 

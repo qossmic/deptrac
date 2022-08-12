@@ -19,7 +19,7 @@ use function sprintf;
  */
 final class AnalyseRunner
 {
-    public function __construct(private LegacyDependencyLayersAnalyser $analyser, private FormatterProvider $formatterProvider)
+    public function __construct(private readonly LegacyDependencyLayersAnalyser $analyser, private readonly FormatterProvider $formatterProvider)
     {
     }
 

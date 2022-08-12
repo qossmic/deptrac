@@ -17,18 +17,11 @@ class AstInherit
     private const TYPE_EXTENDS = 1;
     private const TYPE_IMPLEMENTS = 2;
     private const TYPE_USES = 3;
-
-    private ClassLikeToken $classLikeName;
-    private FileOccurrence $fileOccurrence;
-    private int $type;
     /** @var AstInherit[] */
     private array $path;
 
-    private function __construct(ClassLikeToken $className, FileOccurrence $fileOccurrence, int $type)
+    private function __construct(private readonly ClassLikeToken $classLikeName, private readonly FileOccurrence $fileOccurrence, private readonly int $type)
     {
-        $this->classLikeName = $className;
-        $this->fileOccurrence = $fileOccurrence;
-        $this->type = $type;
         $this->path = [];
     }
 
@@ -49,19 +42,12 @@ class AstInherit
 
     public function __toString(): string
     {
-        switch ($this->type) {
-            case self::TYPE_EXTENDS:
-                $type = 'Extends';
-                break;
-            case self::TYPE_USES:
-                $type = 'Uses';
-                break;
-            case self::TYPE_IMPLEMENTS:
-                $type = 'Implements';
-                break;
-            default:
-                $type = 'Unknown';
-        }
+        $type = match ($this->type) {
+            self::TYPE_EXTENDS => 'Extends',
+            self::TYPE_USES => 'Uses',
+            self::TYPE_IMPLEMENTS => 'Implements',
+            default => 'Unknown',
+        };
 
         $description = "{$this->classLikeName->toString()}::{$this->fileOccurrence->getLine()} ($type)";
 

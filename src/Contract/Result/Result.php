@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Result;
 
-use function get_class;
 use function spl_object_id;
 
 class Result
@@ -26,12 +25,12 @@ class Result
 
     public function add(RuleInterface $rule): void
     {
-        $this->rules[get_class($rule)][spl_object_id($rule)] = $rule;
+        $this->rules[$rule::class][spl_object_id($rule)] = $rule;
     }
 
     public function remove(RuleInterface $rule): void
     {
-        unset($this->rules[get_class($rule)][spl_object_id($rule)]);
+        unset($this->rules[$rule::class][spl_object_id($rule)]);
     }
 
     /**

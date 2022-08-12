@@ -28,33 +28,17 @@ class NikicPhpParser implements ParserInterface
      */
     private static array $classAstMap = [];
 
-    private Parser $parser;
-
-    private AstFileReferenceCacheInterface $cache;
-
-    private TypeResolver $typeResolver;
-
-    /**
-     * @var ReferenceExtractorInterface[]
-     */
-    private iterable $extractors;
-
-    private NodeTraverser $traverser;
+    private readonly NodeTraverser $traverser;
 
     /**
      * @param ReferenceExtractorInterface[] $extractors
      */
     public function __construct(
-        Parser $parser,
-        AstFileReferenceCacheInterface $cache,
-        TypeResolver $typeResolver,
-        iterable $extractors
+        private readonly Parser $parser,
+        private readonly AstFileReferenceCacheInterface $cache,
+        private readonly TypeResolver $typeResolver,
+        private readonly iterable $extractors
     ) {
-        $this->parser = $parser;
-        $this->cache = $cache;
-        $this->typeResolver = $typeResolver;
-        $this->extractors = $extractors;
-
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new NameResolver());
     }

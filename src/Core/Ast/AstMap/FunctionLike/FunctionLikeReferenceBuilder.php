@@ -8,15 +8,12 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
 class FunctionLikeReferenceBuilder extends ReferenceBuilder
 {
-    private string $functionName;
-
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath, string $functionName)
+    protected function __construct(array $tokenTemplates, string $filepath, private readonly string $functionName)
     {
         parent::__construct($tokenTemplates, $filepath);
-        $this->functionName = $functionName;
     }
 
     /**

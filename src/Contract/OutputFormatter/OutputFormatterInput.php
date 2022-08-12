@@ -6,20 +6,8 @@ namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
 class OutputFormatterInput
 {
-    private ?string $outputPath;
-
-    private bool $reportSkipped;
-
-    private bool $reportUncovered;
-
-    private bool $failOnUncovered;
-
-    public function __construct(?string $outputPath, bool $reportSkipped, bool $reportUncovered, bool $failOnUncovered)
+    public function __construct(private readonly ?string $outputPath, private readonly bool $reportSkipped, private readonly bool $reportUncovered, private readonly bool $failOnUncovered)
     {
-        $this->outputPath = $outputPath;
-        $this->reportSkipped = $reportSkipped;
-        $this->reportUncovered = $reportUncovered;
-        $this->failOnUncovered = $failOnUncovered;
     }
 
     public function getOutputPath(): ?string

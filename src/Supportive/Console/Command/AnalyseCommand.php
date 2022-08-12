@@ -22,17 +22,17 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyseCommand extends Command
 {
-    public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
-    public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
-    public const OPTION_REPORT_SKIPPED = 'report-skipped';
+    final public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
+    final public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
+    final public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
     public static $defaultName = 'analyse|analyze';
     public static $defaultDescription = 'Analyses your project using the provided depfile';
 
     public function __construct(
-        private AnalyseRunner $runner,
-        private EventDispatcherInterface $dispatcher,
-        private FormatterProvider $formatterProvider
+        private readonly AnalyseRunner $runner,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly FormatterProvider $formatterProvider
     ) {
         parent::__construct();
     }

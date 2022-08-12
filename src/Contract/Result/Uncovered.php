@@ -11,13 +11,8 @@ use Qossmic\Deptrac\Core\Dependency\DependencyInterface;
  */
 final class Uncovered implements RuleInterface
 {
-    private DependencyInterface $dependency;
-    private string $layer;
-
-    public function __construct(DependencyInterface $dependency, string $layer)
+    public function __construct(private readonly DependencyInterface $dependency, private readonly string $layer)
     {
-        $this->dependency = $dependency;
-        $this->layer = $layer;
     }
 
     public function getDependency(): DependencyInterface

@@ -9,7 +9,7 @@ use Symfony\Component\Filesystem\Path;
 
 final class FileToken implements TokenInterface
 {
-    private string $path;
+    private readonly string $path;
 
     public function __construct(string $path)
     {
@@ -24,7 +24,7 @@ final class FileToken implements TokenInterface
             $wd = Path::normalize($wd);
         }
 
-        if (false !== $wd && 0 === strpos($this->path, $wd)) {
+        if (false !== $wd && str_starts_with($this->path, $wd)) {
             return substr($this->path, strlen($wd));
         }
 

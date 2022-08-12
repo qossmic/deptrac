@@ -8,11 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AstFileAnalysedEvent extends Event
 {
-    private string $file;
-
-    public function __construct(string $file)
+    public function __construct(private readonly string $file)
     {
-        $this->file = $file;
     }
 
     public function getFile(): string

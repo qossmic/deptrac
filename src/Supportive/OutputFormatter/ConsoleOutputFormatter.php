@@ -8,7 +8,6 @@ use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
@@ -59,10 +58,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $this->printSummary($result, $output);
     }
 
-    /**
-     * @param Violation|SkippedViolation $rule
-     */
-    private function printViolation(RuleInterface $rule, OutputInterface $output): void
+    private function printViolation(Violation|SkippedViolation $rule, OutputInterface $output): void
     {
         $dependency = $rule->getDependency();
 

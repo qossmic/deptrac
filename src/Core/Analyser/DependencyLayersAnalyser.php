@@ -16,27 +16,8 @@ use function count;
 
 class DependencyLayersAnalyser
 {
-    private AstMapExtractor $astMapExtractor;
-    private DependencyResolver $dependencyResolver;
-    private TokenResolver $tokenResolver;
-    private LayerResolverInterface $dependerLayerResolver;
-    private LayerResolverInterface $dependentLayerResolver;
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(
-        AstMapExtractor $astMapExtractor,
-        DependencyResolver $dependencyResolver,
-        TokenResolver $tokenResolver,
-        LayerResolverInterface $dependerLayerResolver,
-        LayerResolverInterface $dependentLayerResolver,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->astMapExtractor = $astMapExtractor;
-        $this->dependencyResolver = $dependencyResolver;
-        $this->tokenResolver = $tokenResolver;
-        $this->dependerLayerResolver = $dependerLayerResolver;
-        $this->dependentLayerResolver = $dependentLayerResolver;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private readonly AstMapExtractor $astMapExtractor, private readonly DependencyResolver $dependencyResolver, private readonly TokenResolver $tokenResolver, private readonly LayerResolverInterface $dependerLayerResolver, private readonly LayerResolverInterface $dependentLayerResolver, private readonly EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     public function process(): Result

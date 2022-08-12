@@ -17,7 +17,7 @@ class InitCommand extends Command
     public static $defaultName = 'init';
     public static $defaultDescription = 'Creates a depfile template';
 
-    public function __construct(private ConfigurationDumper $dumper)
+    public function __construct(private readonly ConfigurationDumper $dumper)
     {
         parent::__construct();
     }

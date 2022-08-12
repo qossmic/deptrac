@@ -13,11 +13,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
  */
 class VariableReference implements TokenReferenceInterface
 {
-    private SuperGlobalToken $tokenName;
-
-    public function __construct(SuperGlobalToken $tokenName)
+    public function __construct(private readonly SuperGlobalToken $tokenName)
     {
-        $this->tokenName = $tokenName;
     }
 
     public function getFileReference(): ?FileReference

@@ -17,11 +17,8 @@ use function in_array;
  */
 class AllowDependencyHandler
 {
-    private LayerProvider $layerProvider;
-
-    public function __construct(LayerProvider $layerProvider)
+    public function __construct(private readonly LayerProvider $layerProvider)
     {
-        $this->layerProvider = $layerProvider;
     }
 
     public function __invoke(ProcessEvent $event): void

@@ -16,18 +16,8 @@ use function str_contains;
 
 class LayerForTokenAnalyser
 {
-    private AstMapExtractor $astMapExtractor;
-    private TokenResolver $tokenResolver;
-    private LayerResolverInterface $layerResolver;
-
-    public function __construct(
-        AstMapExtractor $astMapExtractor,
-        TokenResolver $tokenResolver,
-        LayerResolverInterface $layerResolver
-    ) {
-        $this->astMapExtractor = $astMapExtractor;
-        $this->tokenResolver = $tokenResolver;
-        $this->layerResolver = $layerResolver;
+    public function __construct(private readonly AstMapExtractor $astMapExtractor, private readonly TokenResolver $tokenResolver, private readonly LayerResolverInterface $layerResolver)
+    {
     }
 
     /**
@@ -37,16 +27,12 @@ class LayerForTokenAnalyser
     {
         $astMap = $this->astMapExtractor->extract();
 
-        switch ($tokenType->value) {
-            case TokenType::CLASS_LIKE:
-                return $this->findLayersForReferences($astMap->getClassLikeReferences(), $tokenName, $astMap);
-            case TokenType::FUNCTION:
-                return $this->findLayersForReferences($astMap->getFunctionLikeReferences(), $tokenName, $astMap);
-            case TokenType::FILE:
-                return $this->findLayersForReferences($astMap->getFileReferences(), $tokenName, $astMap);
-            default:
-                throw new ShouldNotHappenException();
-        }
+        return match ($tokenType->value) {
+            TokenType::CLASS_LIKE => $this->findLayersForReferences($astMap->getClassLikeReferences(), $tokenName, $astMap),
+            TokenType::FUNCTION => $this->findLayersForReferences($astMap->getFunctionLikeReferences(), $tokenName, $astMap),
+            TokenType::FILE => $this->findLayersForReferences($astMap->getFileReferences(), $tokenName, $astMap),
+            default => throw new ShouldNotHappenException(),
+        };
     }
 
     /**

@@ -16,7 +16,7 @@ use function sprintf;
  */
 class ViolationHandler
 {
-    private SkippedViolationHelper $skippedViolationHelper;
+    private readonly SkippedViolationHelper $skippedViolationHelper;
 
     /**
      * @param array<string, string[]>|null $skippedViolations

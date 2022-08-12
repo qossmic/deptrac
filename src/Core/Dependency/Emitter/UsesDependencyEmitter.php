@@ -23,9 +23,7 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
     {
         $references = array_merge($astMap->getClassLikeReferences(), $astMap->getFunctionLikeReferences());
         $referencesFQDN = array_map(
-            static function ($ref) {
-                return $ref->getToken()->toString();
-            },
+            static fn ($ref) => $ref->getToken()->toString(),
             $references
         );
 

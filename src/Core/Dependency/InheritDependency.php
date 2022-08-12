@@ -14,17 +14,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
  */
 class InheritDependency implements DependencyInterface
 {
-    private ClassLikeToken $depender;
-    private TokenInterface $dependent;
-    private AstInherit $path;
-    private DependencyInterface $originalDependency;
-
-    public function __construct(ClassLikeToken $depender, TokenInterface $dependent, DependencyInterface $originalDependency, AstInherit $path)
+    public function __construct(private readonly ClassLikeToken $depender, private readonly TokenInterface $dependent, private readonly DependencyInterface $originalDependency, private readonly AstInherit $path)
     {
-        $this->depender = $depender;
-        $this->dependent = $dependent;
-        $this->originalDependency = $originalDependency;
-        $this->path = $path;
     }
 
     public function getDepender(): ClassLikeToken

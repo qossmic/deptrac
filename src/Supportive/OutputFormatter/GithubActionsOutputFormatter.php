@@ -73,14 +73,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
 
     private function determineLogLevel(RuleInterface $rule): string
     {
-        switch (get_class($rule)) {
-            case Violation::class:
-                return 'error';
-            case SkippedViolation::class:
-                return 'warning';
-            default:
-                return 'debug';
-        }
+        return match ($rule::class) {
+            Violation::class => 'error',
+            SkippedViolation::class => 'warning',
+            default => 'debug',
+        };
     }
 
     private function printUncovered(LegacyResult $result, OutputInterface $output, bool $reportAsError): void

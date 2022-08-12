@@ -11,17 +11,13 @@ use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes;
  */
 class TokenType
 {
-    public const CLASS_LIKE = 'class-like';
-    public const FUNCTION = 'function';
-    public const FILE = 'file';
-
-    /** @var 'class-like'|'function'|'file' */
-    public string $value;
+    final public const CLASS_LIKE = 'class-like';
+    final public const FUNCTION = 'function';
+    final public const FILE = 'file';
 
     /** @param 'class-like'|'function'|'file' $value */
-    private function __construct(string $value)
+    private function __construct(public string $value)
     {
-        $this->value = $value;
     }
 
     /**
@@ -53,7 +49,7 @@ class TokenType
 
         try {
             return self::from($emitterType);
-        } catch (InvalidTokenException $exception) {
+        } catch (InvalidTokenException) {
             return null;
         }
     }

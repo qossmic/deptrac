@@ -14,11 +14,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
  */
 class UncoveredDependentHandler
 {
-    private bool $ignoreUncoveredInternalClasses;
-
-    public function __construct(bool $ignoreUncoveredInternalClasses)
+    public function __construct(private readonly bool $ignoreUncoveredInternalClasses)
     {
-        $this->ignoreUncoveredInternalClasses = $ignoreUncoveredInternalClasses;
     }
 
     public function __invoke(ProcessEvent $event): void

@@ -11,38 +11,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ProcessEvent extends Event
 {
-    private DependencyInterface $dependency;
-
-    private TokenReferenceInterface $dependerReference;
-
-    private string $dependerLayer;
-
-    private TokenReferenceInterface $dependentReference;
-
-    /**
-     * @var array<string, bool>
-     */
-    private array $dependentLayers;
-
-    private Result $result;
-
     /**
      * @param array<string, bool> $dependentLayers
      */
-    public function __construct(
-        DependencyInterface $dependency,
-        TokenReferenceInterface $dependerReference,
-        string $dependerLayer,
-        TokenReferenceInterface $dependentReference,
-        array $dependentLayers,
-        ?Result $result = null
-    ) {
-        $this->dependency = $dependency;
-        $this->dependerReference = $dependerReference;
-        $this->dependerLayer = $dependerLayer;
-        $this->dependentReference = $dependentReference;
-        $this->dependentLayers = $dependentLayers;
-        $this->result = $result ?? new Result();
+    public function __construct(private readonly DependencyInterface $dependency, private readonly TokenReferenceInterface $dependerReference, private readonly string $dependerLayer, private readonly TokenReferenceInterface $dependentReference, private readonly array $dependentLayers, private Result $result = new Result())
+    {
     }
 
     public function getDependency(): DependencyInterface

@@ -8,11 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PreCreateAstMapEvent extends Event
 {
-    private int $expectedFileCount;
-
-    public function __construct(int $expectedFileCount)
+    public function __construct(private readonly int $expectedFileCount)
     {
-        $this->expectedFileCount = $expectedFileCount;
     }
 
     public function getExpectedFileCount(): int

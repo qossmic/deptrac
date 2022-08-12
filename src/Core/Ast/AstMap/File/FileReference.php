@@ -15,26 +15,19 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
  */
 class FileReference implements TokenReferenceInterface
 {
-    private string $filepath;
-
     /** @var ClassLikeReference[] */
-    private array $classLikeReferences;
-
-    /** @var DependencyToken[] */
-    private array $dependencies;
+    private readonly array $classLikeReferences;
 
     /** @var FunctionLikeReference[] */
-    private array $functionLikeReferences;
+    private readonly array $functionLikeReferences;
 
     /**
      * @param ClassLikeReference[]    $classLikeReferences
      * @param FunctionLikeReference[] $functionLikeReferences
      * @param DependencyToken[]       $dependencies
      */
-    public function __construct(string $filepath, array $classLikeReferences, array $functionLikeReferences, array $dependencies)
+    public function __construct(private readonly string $filepath, array $classLikeReferences, array $functionLikeReferences, private readonly array $dependencies)
     {
-        $this->filepath = $filepath;
-        $this->dependencies = $dependencies;
         /** @psalm-suppress ImpureFunctionCall */
         $this->classLikeReferences = array_map(
             fn (ClassLikeReference $classReference) => $classReference->withFileReference($this),

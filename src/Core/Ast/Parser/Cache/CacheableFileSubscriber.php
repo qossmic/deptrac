@@ -10,11 +10,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CacheableFileSubscriber implements EventSubscriberInterface
 {
-    private AstFileReferenceDeferredCacheInterface $deferredCache;
-
-    public function __construct(AstFileReferenceDeferredCacheInterface $deferredCache)
+    public function __construct(private readonly AstFileReferenceDeferredCacheInterface $deferredCache)
     {
-        $this->deferredCache = $deferredCache;
     }
 
     /**

@@ -10,21 +10,14 @@ use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 
 abstract class ReferenceBuilder
 {
-    /** @var string[] */
-    protected array $tokenTemplates;
-
-    protected string $filepath;
-
     /** @var DependencyToken[] */
     protected array $dependencies = [];
 
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath)
+    protected function __construct(protected array $tokenTemplates, protected string $filepath)
     {
-        $this->tokenTemplates = $tokenTemplates;
-        $this->filepath = $filepath;
     }
 
     /**

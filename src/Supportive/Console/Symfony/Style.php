@@ -12,11 +12,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class Style implements OutputStyleInterface
 {
-    private SymfonyStyle $symfonyStyle;
-
-    public function __construct(SymfonyStyle $symfonyStyle)
+    public function __construct(private readonly SymfonyStyle $symfonyStyle)
     {
-        $this->symfonyStyle = $symfonyStyle;
     }
 
     public function title(string $message): void
