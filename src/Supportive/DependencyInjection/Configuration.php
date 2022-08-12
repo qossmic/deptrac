@@ -178,6 +178,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->arrayNode('mermaidjs')
                             ->info('Configure MermaidJS output formatter')
+                            ->addDefaultsIfNotSet()
                             ->children()
                                 ->arrayNode('groups')
                                 ->info('Combine multiple layers to a group')
