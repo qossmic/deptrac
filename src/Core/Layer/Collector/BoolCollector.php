@@ -22,7 +22,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         foreach ((array) $configuration['must'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
 
-            $satisfied = $collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap);
+            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference, $astMap);
             if (!$satisfied) {
                 return false;
             }
@@ -32,7 +32,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         foreach ((array) $configuration['must_not'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
 
-            $satisfied = $collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap);
+            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference, $astMap);
             if ($satisfied) {
                 return false;
             }
@@ -48,10 +48,10 @@ final class BoolCollector implements ConditionalCollectorInterface
         /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
-            $collector = $collectable->getCollector();
+            $collector = $collectable->collector;
 
             if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->getAttributes())
+                && !$collector->resolvable($collectable->attributes)
             ) {
                 return false;
             }
@@ -60,10 +60,10 @@ final class BoolCollector implements ConditionalCollectorInterface
         /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must_not'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
-            $collector = $collectable->getCollector();
+            $collector = $collectable->collector;
 
             if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->getAttributes())
+                && !$collector->resolvable($collectable->attributes)
             ) {
                 return false;
             }

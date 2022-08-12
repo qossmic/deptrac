@@ -10,6 +10,6 @@ class InterfaceCollector extends AbstractTypeCollector
 {
     protected function getType(): ClassLikeType
     {
-        return ClassLikeType::interface();
+        return ClassLikeType::TYPE_INTERFACE;
     }
 }

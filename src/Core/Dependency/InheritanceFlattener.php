@@ -13,7 +13,7 @@ class InheritanceFlattener
         foreach ($astMap->getClassLikeReferences() as $classReference) {
             $classLikeName = $classReference->getToken();
             foreach ($astMap->getClassInherits($classLikeName) as $inherit) {
-                foreach ($dependencyList->getDependenciesByClass($inherit->getClassLikeName()) as $dep) {
+                foreach ($dependencyList->getDependenciesByClass($inherit->classLikeName) as $dep) {
                     $dependencyList->addInheritDependency(
                         new InheritDependency(
                             $classLikeName, $dep->getDependent(), $dep, $inherit

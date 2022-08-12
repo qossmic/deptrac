@@ -43,15 +43,15 @@ class LayerResolver implements LayerResolverInterface
 
         foreach ($this->layers as $layer => $collectables) {
             foreach ($collectables as $collectable) {
-                $collector = $collectable->getCollector();
-                $attributes = $collectable->getAttributes();
+                $collector = $collectable->collector;
+                $attributes = $collectable->attributes;
                 if ($collector instanceof ConditionalCollectorInterface
                     && !$collector->resolvable($attributes)
                 ) {
                     continue;
                 }
 
-                if ($collectable->getCollector()->satisfy($attributes, $reference, $astMap)) {
+                if ($collectable->collector->satisfy($attributes, $reference, $astMap)) {
                     if (array_key_exists($layer, $this->resolved[$tokenName]) && true === $this->resolved[$tokenName][$layer]) {
                         continue;
                     }
@@ -81,14 +81,14 @@ class LayerResolver implements LayerResolverInterface
         $collectables = $this->layers[$layer];
 
         foreach ($collectables as $collectable) {
-            $collector = $collectable->getCollector();
+            $collector = $collectable->collector;
             if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->getAttributes())
+                && !$collector->resolvable($collectable->attributes)
             ) {
                 continue;
             }
 
-            if ($collector->satisfy($collectable->getAttributes(), $reference, $astMap)) {
+            if ($collector->satisfy($collectable->attributes, $reference, $astMap)) {
                 return true;
             }
         }

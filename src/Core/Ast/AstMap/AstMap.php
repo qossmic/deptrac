@@ -115,7 +115,7 @@ class AstMap
             $pathStack->push($inheritDependency);
         }
 
-        $className = $inheritDependency->getClassLikeName()->toString();
+        $className = $inheritDependency->classLikeName->toString();
 
         if (isset($alreadyResolved[$className])) {
             $pathStack->pop();
@@ -123,7 +123,7 @@ class AstMap
             return [];
         }
 
-        $classReference = $this->getClassReferenceForToken($inheritDependency->getClassLikeName());
+        $classReference = $this->getClassReferenceForToken($inheritDependency->classLikeName);
 
         if (null === $classReference) {
             return [];

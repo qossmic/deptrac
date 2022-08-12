@@ -16,8 +16,14 @@ use function count;
 
 class DependencyLayersAnalyser
 {
-    public function __construct(private readonly AstMapExtractor $astMapExtractor, private readonly DependencyResolver $dependencyResolver, private readonly TokenResolver $tokenResolver, private readonly LayerResolverInterface $dependerLayerResolver, private readonly LayerResolverInterface $dependentLayerResolver, private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly AstMapExtractor $astMapExtractor,
+        private readonly DependencyResolver $dependencyResolver,
+        private readonly TokenResolver $tokenResolver,
+        private readonly LayerResolverInterface $dependerLayerResolver,
+        private readonly LayerResolverInterface $dependentLayerResolver,
+        private readonly EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     public function process(): Result

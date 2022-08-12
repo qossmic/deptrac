@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\AstMap\ClassLike;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
@@ -31,7 +32,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
      */
     public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::classLike(), $isInternal);
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::TYPE_CLASSLIKE, $isInternal);
     }
 
     /**
@@ -39,7 +40,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
      */
     public static function createClass(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::class(), $isInternal);
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::TYPE_CLASS, $isInternal);
     }
 
     /**
@@ -47,7 +48,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
      */
     public static function createTrait(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::trait(), $isInternal);
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::TYPE_TRAIT, $isInternal);
     }
 
     /**
@@ -55,7 +56,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
      */
     public static function createInterface(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
-        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::interface(), $isInternal);
+        return new self($classTemplates, $filepath, ClassLikeToken::fromFQCN($classLikeName), ClassLikeType::TYPE_INTERFACE, $isInternal);
     }
 
     /** @internal */
@@ -72,9 +73,10 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
 
     public function extends(string $classLikeName, int $occursAtLine): self
     {
-        $this->inherits[] = AstInherit::newExtends(
+        $this->inherits[] = new AstInherit(
             ClassLikeToken::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
+            new FileOccurrence($this->filepath, $occursAtLine),
+            AstInheritType::EXTENDS
         );
 
         return $this;
@@ -82,9 +84,10 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
 
     public function implements(string $classLikeName, int $occursAtLine): self
     {
-        $this->inherits[] = AstInherit::newImplements(
+        $this->inherits[] = new AstInherit(
             ClassLikeToken::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
+            new FileOccurrence($this->filepath, $occursAtLine),
+            AstInheritType::IMPLEMENTS
         );
 
         return $this;
@@ -92,9 +95,10 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
 
     public function trait(string $classLikeName, int $occursAtLine): self
     {
-        $this->inherits[] = AstInherit::newTraitUse(
+        $this->inherits[] = new AstInherit(
             ClassLikeToken::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine)
+            new FileOccurrence($this->filepath, $occursAtLine),
+            AstInheritType::USES
         );
 
         return $this;

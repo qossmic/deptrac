@@ -10,6 +10,7 @@ use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
@@ -45,11 +46,28 @@ final class XMLOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
-                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
+                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
+                                       new FileOccurrence('ClassA.php', 12)
+                        ),
+                        (new AstInherit(
+                            ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
+                            AstInheritType::EXTENDS
+                        ))->withPath([
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritB'),
+                                new FileOccurrence('ClassInheritA.php', 4),
+                                AstInheritType::EXTENDS
+                            ),
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritC'),
+                                new FileOccurrence('ClassInheritB.php', 5),
+                                AstInheritType::EXTENDS
+                            ),
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritD'),
+                                new FileOccurrence('ClassInheritC.php', 6),
+                                AstInheritType::EXTENDS
+                            ),
                         ])
                     ),
                     'LayerA',
@@ -62,7 +80,9 @@ final class XMLOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
+                    new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
+                                   new FileOccurrence('ClassA.php', 12)
+                    ),
                     'LayerA',
                     'LayerB'
                 ),
@@ -81,11 +101,28 @@ final class XMLOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
-                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
+                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
+                                       new FileOccurrence('ClassA.php', 12)
+                        ),
+                        (new AstInherit(
+                            ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
+                            AstInheritType::EXTENDS
+                        ))->withPath([
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritB'),
+                                new FileOccurrence('ClassInheritA.php', 4),
+                                AstInheritType::EXTENDS
+                            ),
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritC'),
+                                new FileOccurrence('ClassInheritB.php', 5),
+                                AstInheritType::EXTENDS
+                            ),
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritD'),
+                                new FileOccurrence('ClassInheritC.php', 6),
+                                AstInheritType::EXTENDS
+                            ),
                         ])
                     ),
                     'LayerA',
@@ -95,11 +132,28 @@ final class XMLOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassC'),
                         ClassLikeToken::fromFQCN('ClassD'),
-                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'), FileOccurrence::fromFilepath('ClassA.php', 12)),
-                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('ClassA.php', 3))->withPath([
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('ClassInheritA.php', 4)),
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('ClassInheritB.php', 5)),
-                            AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('ClassInheritC.php', 6)),
+                        new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
+                                       new FileOccurrence('ClassA.php', 12)
+                        ),
+                        (new AstInherit(
+                            ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
+                            AstInheritType::EXTENDS
+                        ))->withPath([
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritB'),
+                                new FileOccurrence('ClassInheritA.php', 4),
+                                AstInheritType::EXTENDS
+                            ),
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritC'),
+                                new FileOccurrence('ClassInheritB.php', 5),
+                                AstInheritType::EXTENDS
+                            ),
+                            new AstInherit(
+                                ClassLikeToken::fromFQCN('ClassInheritD'),
+                                new FileOccurrence('ClassInheritC.php', 6),
+                                AstInheritType::EXTENDS
+                            ),
                         ])
                     ),
                     'LayerA',

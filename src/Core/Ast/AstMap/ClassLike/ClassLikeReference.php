@@ -26,7 +26,7 @@ class ClassLikeReference implements TokenReferenceInterface
         public readonly array $dependencies = [],
         public readonly bool $isInternal = false
     ) {
-        $this->type = $classLikeType ?? ClassLikeType::classLike();
+        $this->type = $classLikeType ?? ClassLikeType::TYPE_CLASSLIKE;
     }
 
     public function withFileReference(FileReference $astFileReference): self

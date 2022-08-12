@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Core\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
@@ -17,19 +18,19 @@ final class InheritDependencyTest extends TestCase
     {
         $classLikeNameA = ClassLikeToken::fromFQCN('a');
         $classLikeNameB = ClassLikeToken::fromFQCN('b');
-        $fileOccurrence = FileOccurrence::fromFilepath('a.php', 1);
+        $fileOccurrence = new FileOccurrence('a.php', 1);
 
         $dependency = new InheritDependency(
             $classLikeNameA,
             $classLikeNameB,
             $dep = new Dependency($classLikeNameA, $classLikeNameB, $fileOccurrence),
-            $astInherit = AstInherit::newExtends($classLikeNameB, $fileOccurrence)
+            $astInherit = new AstInherit($classLikeNameB, $fileOccurrence, AstInheritType::EXTENDS)
         );
 
         self::assertSame($classLikeNameA, $dependency->getDepender());
         self::assertSame($classLikeNameB, $dependency->getDependent());
         self::assertSame(1, $dependency->getFileOccurrence()->line);
-        self::assertSame($dep, $dependency->getOriginalDependency());
-        self::assertSame($astInherit, $dependency->getInheritPath());
+        self::assertSame($dep, $dependency->originalDependency);
+        self::assertSame($astInherit, $dependency->inheritPath);
     }
 }

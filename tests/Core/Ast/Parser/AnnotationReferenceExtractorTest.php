@@ -42,7 +42,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
         );
         self::assertSame($filePath, $annotationDependency[0]->fileOccurrence->filepath);
         self::assertSame(9, $annotationDependency[0]->fileOccurrence->line);
-        self::assertSame('variable', $annotationDependency[0]->type);
+        self::assertSame('variable', $annotationDependency[0]->type->value);
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\AnnotationDependencyChild',
@@ -50,7 +50,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
         );
         self::assertSame($filePath, $annotationDependency[1]->fileOccurrence->filepath);
         self::assertSame(23, $annotationDependency[1]->fileOccurrence->line);
-        self::assertSame('variable', $annotationDependency[1]->type);
+        self::assertSame('variable', $annotationDependency[1]->type->value);
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\AnnotationDependencyChild',
@@ -58,7 +58,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
         );
         self::assertSame($filePath, $annotationDependency[2]->fileOccurrence->filepath);
         self::assertSame(26, $annotationDependency[2]->fileOccurrence->line);
-        self::assertSame('variable', $annotationDependency[2]->type);
+        self::assertSame('variable', $annotationDependency[2]->type->value);
 
         self::assertSame(
             'Symfony\Component\Console\Exception\RuntimeException',
@@ -66,7 +66,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
         );
         self::assertSame($filePath, $annotationDependency[3]->fileOccurrence->filepath);
         self::assertSame(29, $annotationDependency[3]->fileOccurrence->line);
-        self::assertSame('variable', $annotationDependency[3]->type);
+        self::assertSame('variable', $annotationDependency[3]->type->value);
 
         self::assertSame(
             'Symfony\Component\Finder\SplFileInfo',
@@ -74,7 +74,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
         );
         self::assertSame($filePath, $annotationDependency[4]->fileOccurrence->filepath);
         self::assertSame(14, $annotationDependency[4]->fileOccurrence->line);
-        self::assertSame('parameter', $annotationDependency[4]->type);
+        self::assertSame('parameter', $annotationDependency[4]->type->value);
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\AnnotationDependencyChild',
@@ -82,6 +82,6 @@ final class AnnotationReferenceExtractorTest extends TestCase
         );
         self::assertSame($filePath, $annotationDependency[5]->fileOccurrence->filepath);
         self::assertSame(14, $annotationDependency[5]->fileOccurrence->line);
-        self::assertSame('returntype', $annotationDependency[5]->type);
+        self::assertSame('returntype', $annotationDependency[5]->type->value);
     }
 }

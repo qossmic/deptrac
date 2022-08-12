@@ -10,6 +10,6 @@ class TraitCollector extends AbstractTypeCollector
 {
     protected function getType(): ClassLikeType
     {
-        return ClassLikeType::trait();
+        return ClassLikeType::TYPE_TRAIT;
     }
 }

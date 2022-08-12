@@ -80,16 +80,16 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     private function printInheritPath(OutputInterface $output, InheritDependency $dependency): void
     {
         $buffer = [];
-        $astInherit = $dependency->getInheritPath();
+        $astInherit = $dependency->inheritPath;
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->line));
+            array_unshift($buffer, sprintf("\t%s::%d", $p->classLikeName->toString(), $p->fileOccurrence->line));
         }
 
-        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->line);
+        $buffer[] = sprintf("\t%s::%d", $astInherit->classLikeName->toString(), $astInherit->fileOccurrence->line);
         $buffer[] = sprintf(
             "\t%s::%d",
-            $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->line
+            $dependency->originalDependency->getDependent()->toString(),
+            $dependency->originalDependency->getFileOccurrence()->line
         );
 
         $output->writeLineFormatted(implode(" -> \n", $buffer));

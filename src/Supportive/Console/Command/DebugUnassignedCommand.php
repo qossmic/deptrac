@@ -27,6 +27,6 @@ class DebugUnassignedCommand extends Command
 
         $this->runner->run($output);
 
-        return 0;
+        return self::SUCCESS;
     }
 }

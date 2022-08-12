@@ -22,7 +22,7 @@ final class InheritsCollector implements CollectorInterface
         $classLikeName = $this->getClassLikeName($config);
 
         foreach ($astMap->getClassInherits($reference->getToken()) as $inherit) {
-            if ($inherit->getClassLikeName()->equals($classLikeName)) {
+            if ($inherit->classLikeName->equals($classLikeName)) {
                 return true;
             }
         }

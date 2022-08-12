@@ -41,6 +41,6 @@ class DebugTokenCommand extends Command
 
         $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
 
-        return 0;
+        return self::SUCCESS;
     }
 }

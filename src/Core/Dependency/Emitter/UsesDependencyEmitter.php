@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Dependency\Emitter;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 use function array_map;
@@ -36,7 +37,7 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
         foreach ($astMap->getFileReferences() as $fileReference) {
             foreach ($fileReference->classLikeReferences as $astClassReference) {
                 foreach ($fileReference->dependencies as $emittedDependency) {
-                    if (DependencyToken::USE === $emittedDependency->type &&
+                    if (DependencyTokenType::USE === $emittedDependency->type &&
                         $this->isFQDN($emittedDependency, $FQDNIndex)
                     ) {
                         $dependencyList->addDependency(

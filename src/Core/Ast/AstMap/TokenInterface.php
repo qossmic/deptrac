@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
-use Stringable;
-
 /**
  * Represents an AST-Token, which can be referenced as dependency.
  */
-interface TokenInterface extends Stringable
+interface TokenInterface
 {
     public function toString(): string;
 }

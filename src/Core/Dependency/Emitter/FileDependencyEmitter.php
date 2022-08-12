@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Dependency\Emitter;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 
@@ -20,11 +20,11 @@ final class FileDependencyEmitter implements DependencyEmitterInterface
     {
         foreach ($astMap->getFileReferences() as $fileReference) {
             foreach ($fileReference->dependencies as $dependency) {
-                if (DependencyToken::USE === $dependency->type) {
+                if (DependencyTokenType::USE === $dependency->type) {
                     continue;
                 }
 
-                if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->type) {
+                if (DependencyTokenType::UNRESOLVED_FUNCTION_CALL === $dependency->type) {
                     continue;
                 }
 

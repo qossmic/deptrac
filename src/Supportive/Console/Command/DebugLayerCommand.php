@@ -43,9 +43,9 @@ class DebugLayerCommand extends Command
         } catch (InvalidLayerException) {
             $outputStyle->error('Layer not found.');
 
-            return 1;
+            return self::FAILURE;
         }
 
-        return 0;
+        return self::SUCCESS;
     }
 }

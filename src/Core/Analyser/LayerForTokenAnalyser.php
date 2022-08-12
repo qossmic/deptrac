@@ -15,8 +15,11 @@ use function str_contains;
 
 class LayerForTokenAnalyser
 {
-    public function __construct(private readonly AstMapExtractor $astMapExtractor, private readonly TokenResolver $tokenResolver, private readonly LayerResolverInterface $layerResolver)
-    {
+    public function __construct(
+        private readonly AstMapExtractor $astMapExtractor,
+        private readonly TokenResolver $tokenResolver,
+        private readonly LayerResolverInterface $layerResolver
+    ) {
     }
 
     /**
@@ -26,7 +29,7 @@ class LayerForTokenAnalyser
     {
         $astMap = $this->astMapExtractor->extract();
 
-        return match ($tokenType->value) {
+        return match ($tokenType) {
             TokenType::CLASS_LIKE => $this->findLayersForReferences($astMap->getClassLikeReferences(), $tokenName, $astMap),
             TokenType::FUNCTION => $this->findLayersForReferences($astMap->getFunctionLikeReferences(), $tokenName, $astMap),
             TokenType::FILE => $this->findLayersForReferences($astMap->getFileReferences(), $tokenName, $astMap)

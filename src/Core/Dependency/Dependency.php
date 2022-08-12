@@ -12,8 +12,11 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
  */
 class Dependency implements DependencyInterface
 {
-    public function __construct(private readonly TokenInterface $depender, private readonly TokenInterface $dependent, private readonly FileOccurrence $fileOccurrence)
-    {
+    public function __construct(
+        private readonly TokenInterface $depender,
+        private readonly TokenInterface $dependent,
+        private readonly FileOccurrence $fileOccurrence
+    ) {
     }
 
     public function getDepender(): TokenInterface

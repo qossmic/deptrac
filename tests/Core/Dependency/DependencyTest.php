@@ -15,8 +15,7 @@ final class DependencyTest extends TestCase
     {
         $dependency = new Dependency(
             ClassLikeToken::fromFQCN('a'),
-            ClassLikeToken::fromFQCN('b'),
-            FileOccurrence::fromFilepath('/foo.php', 23)
+            ClassLikeToken::fromFQCN('b'), new FileOccurrence('/foo.php', 23)
         );
         self::assertSame('a', $dependency->getDepender()->toString());
         self::assertSame('/foo.php', $dependency->getFileOccurrence()->filepath);

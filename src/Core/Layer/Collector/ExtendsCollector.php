@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -22,7 +23,7 @@ final class ExtendsCollector implements CollectorInterface
         $interfaceName = $this->getInterfaceName($config);
 
         foreach ($astMap->getClassInherits($reference->getToken()) as $inherit) {
-            if ($inherit->isExtends() && $inherit->getClassLikeName()->equals($interfaceName)) {
+            if (AstInheritType::EXTENDS === $inherit->type && $inherit->classLikeName->equals($interfaceName)) {
                 return true;
             }
         }

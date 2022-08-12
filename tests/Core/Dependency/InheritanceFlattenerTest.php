@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Core\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -61,13 +62,23 @@ final class InheritanceFlattenerTest extends TestCase
             [],
             // classWeihnachtsbaum
             [
-                AstInherit::newTraitUse(ClassLikeToken::fromFQCN('classBaum'), FileOccurrence::fromFilepath('classWeihnachtsbaum.php', 3)),
+                new AstInherit(
+                    ClassLikeToken::fromFQCN('classBaum'), new FileOccurrence('classWeihnachtsbaum.php', 3),
+                    AstInheritType::USES
+                ),
             ],
             // classGeschmückterWeihnachtsbaum
             [
-                AstInherit::newExtends(ClassLikeToken::fromFQCN('classBaum'), FileOccurrence::fromFilepath('classGeschmückterWeihnachtsbaum.php', 3))
+                (new AstInherit(
+                    ClassLikeToken::fromFQCN('classBaum'), new FileOccurrence('classGeschmückterWeihnachtsbaum.php', 3),
+                    AstInheritType::EXTENDS
+                ))
                     ->withPath([
-                        AstInherit::newTraitUse(ClassLikeToken::fromFQCN('classWeihnachtsbaum'), FileOccurrence::fromFilepath('classBaum.php', 3)),
+                        new AstInherit(
+                            ClassLikeToken::fromFQCN('classWeihnachtsbaum'),
+                            new FileOccurrence('classBaum.php', 3),
+                            AstInheritType::USES
+                        ),
                     ]),
             ]
         );

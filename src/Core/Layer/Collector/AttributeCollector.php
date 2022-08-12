@@ -8,7 +8,7 @@ use LogicException;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
@@ -28,7 +28,7 @@ class AttributeCollector implements CollectorInterface
         $match = $this->getSearchedSubstring($config);
 
         foreach ($reference->dependencies as $dependency) {
-            if (DependencyToken::ATTRIBUTE !== $dependency->type) {
+            if (DependencyTokenType::ATTRIBUTE !== $dependency->type) {
                 continue;
             }
 

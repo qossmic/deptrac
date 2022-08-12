@@ -20,8 +20,12 @@ class DependencyResolver
     /**
      * @param array{types: array<string>} $config
      */
-    public function __construct(private readonly array $config, private readonly InheritanceFlattener $inheritanceFlattener, private readonly ContainerInterface $emitterLocator, private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly array $config,
+        private readonly InheritanceFlattener $inheritanceFlattener,
+        private readonly ContainerInterface $emitterLocator,
+        private readonly EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     public function resolve(AstMap $astMap): DependencyList

@@ -21,22 +21,12 @@ class TokenResolver
 {
     public function resolve(TokenInterface $token, AstMap $astMap): TokenReferenceInterface
     {
-        if ($token instanceof ClassLikeToken) {
-            return $astMap->getClassReferenceForToken($token) ?? new ClassLikeReference($token);
-        }
-
-        if ($token instanceof FunctionLikeToken) {
-            return $astMap->getFunctionReferenceForToken($token) ?? new FunctionLikeReference($token);
-        }
-
-        if ($token instanceof SuperGlobalToken) {
-            return new VariableReference($token);
-        }
-
-        if ($token instanceof FileToken) {
-            return $astMap->getFileReferenceForToken($token) ?? new FileReference($token->path, [], [], []);
-        }
-
-        throw new ShouldNotHappenException();
+        return match (true) {
+            $token instanceof ClassLikeToken => $astMap->getClassReferenceForToken($token) ?? new ClassLikeReference($token),
+            $token instanceof FunctionLikeToken => $astMap->getFunctionReferenceForToken($token) ?? new FunctionLikeReference($token),
+            $token instanceof SuperGlobalToken => new VariableReference($token),
+            $token instanceof FileToken => $astMap->getFileReferenceForToken($token) ?? new FileReference($token->path, [], [], []),
+            default => throw new ShouldNotHappenException()
+        };
     }
 }

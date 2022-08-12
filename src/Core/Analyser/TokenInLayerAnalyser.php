@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
+use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use function array_values;
 use function in_array;
 use function natcasesort;
@@ -13,7 +14,7 @@ use function natcasesort;
 class TokenInLayerAnalyser
 {
     /**
-     * @var array<string>
+     * @var array<TokenType>
      */
     private readonly array $tokenTypes;
 
@@ -28,11 +29,7 @@ class TokenInLayerAnalyser
     ) {
         $this->tokenTypes = array_filter(
             array_map(
-                static function (string $emitterType): ?string {
-                    $tokenType = TokenType::tryFromEmitterType($emitterType);
-
-                    return null === $tokenType ? null : $tokenType->value;
-                },
+                static fn (string $emitterType): ?TokenType => TokenType::tryFromEmitterType(EmitterType::from($emitterType)),
                 $config['types']
             )
         );

@@ -15,8 +15,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AstLoader
 {
-    public function __construct(private readonly ParserInterface $parser, private readonly EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private readonly ParserInterface $parser,
+        private readonly EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     /**

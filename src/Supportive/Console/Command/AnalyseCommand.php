@@ -86,10 +86,10 @@ class AnalyseCommand extends Command
         try {
             $this->runner->run($options, $symfonyOutput);
         } catch (AnalyseException) {
-            return 1;
+            return self::FAILURE;
         }
 
-        return 0;
+        return self::SUCCESS;
     }
 
     public static function getDefaultFormatter(): string

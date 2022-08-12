@@ -11,8 +11,11 @@ use Qossmic\Deptrac\Core\Dependency\DependencyInterface;
  */
 final class Violation implements CoveredRuleInterface
 {
-    public function __construct(private readonly DependencyInterface $dependency, private readonly string $dependerLayer, private readonly string $dependentLayer)
-    {
+    public function __construct(
+        private readonly DependencyInterface $dependency,
+        private readonly string $dependerLayer,
+        private readonly string $dependentLayer
+    ) {
     }
 
     public function getDependency(): DependencyInterface

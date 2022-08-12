@@ -99,16 +99,16 @@ final class TableOutputFormatter implements OutputFormatterInterface
     private function formatInheritPath(InheritDependency $dependency): string
     {
         $buffer = [];
-        $astInherit = $dependency->getInheritPath();
+        $astInherit = $dependency->inheritPath;
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->line));
+            array_unshift($buffer, sprintf('%s::%d', $p->classLikeName->toString(), $p->fileOccurrence->line));
         }
 
-        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->line);
+        $buffer[] = sprintf('%s::%d', $astInherit->classLikeName->toString(), $astInherit->fileOccurrence->line);
         $buffer[] = sprintf(
             '%s::%d',
-            $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->line
+            $dependency->originalDependency->getDependent()->toString(),
+            $dependency->originalDependency->getFileOccurrence()->line
         );
 
         return implode(" -> \n", $buffer);

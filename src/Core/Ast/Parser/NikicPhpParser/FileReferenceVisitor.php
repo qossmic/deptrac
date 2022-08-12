@@ -46,8 +46,11 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     private ReferenceBuilder $currentReference;
 
-    public function __construct(private readonly FileReferenceBuilder $fileReferenceBuilder, private readonly TypeResolver $typeResolver, ReferenceExtractorInterface ...$dependencyResolvers)
-    {
+    public function __construct(
+        private readonly FileReferenceBuilder $fileReferenceBuilder,
+        private readonly TypeResolver $typeResolver,
+        ReferenceExtractorInterface ...$dependencyResolvers
+    ) {
         $this->currentTypeScope = new TypeScope('');
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
@@ -183,7 +186,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if ($node instanceof Node\Expr\Variable && in_array($node->name, SuperGlobalToken::ALLOWED_NAMES, true)) {
+        if ($node instanceof Node\Expr\Variable && in_array($node->name, SuperGlobalToken::allowedNames(), true)) {
             $this->currentReference->superglobal($node->name, $node->getLine());
         }
 

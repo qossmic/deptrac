@@ -21,8 +21,8 @@ abstract class AbstractTypeCollector extends RegexCollector
             return false;
         }
 
-        $isClassLike = ClassLikeType::classLike()->matches($this->getType());
-        $isSameType = $reference->type->matches($this->getType());
+        $isClassLike = ClassLikeType::TYPE_CLASSLIKE === $this->getType();
+        $isSameType = $reference->type === $this->getType();
 
         return ($isClassLike || $isSameType) && $reference->getToken()->match($this->getValidatedPattern($config));
     }

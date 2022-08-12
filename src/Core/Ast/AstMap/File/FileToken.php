@@ -16,7 +16,6 @@ final class FileToken implements TokenInterface
         $this->path = Path::normalize($path);
     }
 
-    //TODO: Replace with String representation (Patrick Kusebauch @ 12.08.22)
     public function toString(): string
     {
         $wd = getcwd();
@@ -30,10 +29,5 @@ final class FileToken implements TokenInterface
         }
 
         return $this->path;
-    }
-
-    public function __toString()
-    {
-        return $this->toString();
     }
 }

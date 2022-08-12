@@ -15,21 +15,6 @@ use function is_array;
  */
 class Configuration implements ConfigurationInterface
 {
-    final public const ALLOWED_EMITTER_TYPES = [
-        EmitterTypes::CLASS_TOKEN,
-        EmitterTypes::CLASS_SUPERGLOBAL_TOKEN,
-        EmitterTypes::FILE_TOKEN,
-        EmitterTypes::FUNCTION_TOKEN,
-        EmitterTypes::FUNCTION_CALL,
-        EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN,
-        EmitterTypes::USE_TOKEN,
-    ];
-
-    final public const DEFAULT_EMITTER_TYPES = [
-        EmitterTypes::CLASS_TOKEN,
-        EmitterTypes::USE_TOKEN,
-    ];
-
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder('deptrac');
@@ -209,10 +194,13 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('types')
                             ->isRequired()
-                            ->defaultValue(self::DEFAULT_EMITTER_TYPES)
+                            ->defaultValue([
+                                EmitterType::CLASS_TOKEN->value,
+                                EmitterType::USE_TOKEN->value,
+                            ])
                             ->scalarPrototype()
                                 ->beforeNormalization()
-                                    ->ifNotInArray(self::ALLOWED_EMITTER_TYPES)
+                                    ->ifNotInArray(EmitterType::values())
                                     ->thenInvalid('Invalid type %s')
                                 ->end()
                             ->end()

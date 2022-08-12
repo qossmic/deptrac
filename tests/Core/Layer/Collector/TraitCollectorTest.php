@@ -34,7 +34,7 @@ final class TraitCollectorTest extends TestCase
     {
         $stat = $this->sut->satisfy(
             $configuration,
-            new ClassLikeReference(ClassLikeToken::fromFQCN($className), ClassLikeType::trait()),
+            new ClassLikeReference(ClassLikeToken::fromFQCN($className), ClassLikeType::TYPE_TRAIT),
             $this->createMock(AstMap::class),
         );
 
@@ -43,10 +43,10 @@ final class TraitCollectorTest extends TestCase
 
     public function provideTypes(): iterable
     {
-        yield 'classLike' => [ClassLikeType::classLike(), false];
-        yield 'class' => [ClassLikeType::class(), false];
-        yield 'interface' => [ClassLikeType::interface(), false];
-        yield 'trait' => [ClassLikeType::trait(), true];
+        yield 'classLike' => [ClassLikeType::TYPE_CLASSLIKE, false];
+        yield 'class' => [ClassLikeType::TYPE_CLASS, false];
+        yield 'interface' => [ClassLikeType::TYPE_INTERFACE, false];
+        yield 'trait' => [ClassLikeType::TYPE_TRAIT, true];
     }
 
     /**
@@ -69,7 +69,7 @@ final class TraitCollectorTest extends TestCase
 
         $this->sut->satisfy(
             ['Foo' => 'a'],
-            new ClassLikeReference(ClassLikeToken::fromFQCN('Foo'), ClassLikeType::trait()),
+            new ClassLikeReference(ClassLikeToken::fromFQCN('Foo'), ClassLikeType::TYPE_TRAIT),
             $this->createMock(AstMap::class),
         );
     }

@@ -37,11 +37,11 @@ class InitCommand extends Command
             $this->dumper->dump($targetFile);
             $output->writeln('Depfile <info>dumped.</info>');
 
-            return 0;
+            return self::SUCCESS;
         } catch (FileNotWritableException|FileAlreadyExistsException $fileException) {
             $output->writeln(sprintf('<error>%s</error>', $fileException->getMessage()));
 
-            return 1;
+            return self::FAILURE;
         }
     }
 }

@@ -41,6 +41,6 @@ final class ClassConstantExtractorTest extends TestCase
         );
         self::assertSame($filePath, $dependencies[0]->fileOccurrence->filepath);
         self::assertSame(15, $dependencies[0]->fileOccurrence->line);
-        self::assertSame('const', $dependencies[0]->type);
+        self::assertSame('const', $dependencies[0]->type->value);
     }
 }

@@ -13,9 +13,4 @@ class AnalyseOptions
         public readonly bool $failOnUncovered
     ) {
     }
-
-    public function failOnUncovered(): bool
-    {
-        return $this->failOnUncovered;
-    }
 }

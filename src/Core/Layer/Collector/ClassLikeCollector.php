@@ -10,6 +10,6 @@ class ClassLikeCollector extends AbstractTypeCollector
 {
     protected function getType(): ClassLikeType
     {
-        return ClassLikeType::classLike();
+        return ClassLikeType::TYPE_CLASSLIKE;
     }
 }
