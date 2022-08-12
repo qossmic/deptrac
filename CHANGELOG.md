@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.24.0](https://github.com/qossmic/deptrac/tree/0.24.0) (2022-08-12)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.23.0...0.24.0)
+
+**Merged pull requests:**
+
+- Remove unused depfile option from analyse command [\#952](https://github.com/qossmic/deptrac/pull/952) ([dbrumann](https://github.com/dbrumann))
+- Fix missing graphviz config breaks command usage [\#951](https://github.com/qossmic/deptrac/pull/951) ([dbrumann](https://github.com/dbrumann))
+- Bump phpstan/phpstan-symfony from 1.2.8 to 1.2.9 [\#950](https://github.com/qossmic/deptrac/pull/950) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Revert b3ef802 [\#947](https://github.com/qossmic/deptrac/pull/947) ([dbrumann](https://github.com/dbrumann))
+- Update dependencies [\#946](https://github.com/qossmic/deptrac/pull/946) ([dbrumann](https://github.com/dbrumann))
+- add interface suffix [\#937](https://github.com/qossmic/deptrac/pull/937) ([gennadigennadigennadi](https://github.com/gennadigennadigennadi))
+- Restore semantic formatter configuration. [\#936](https://github.com/qossmic/deptrac/pull/936) ([dbrumann](https://github.com/dbrumann))
+- Fix issue when using layer-collector [\#932](https://github.com/qossmic/deptrac/pull/932) ([dbrumann](https://github.com/dbrumann))
+- Modularization [\#923](https://github.com/qossmic/deptrac/pull/923) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
 ## [0.23.0](https://github.com/qossmic/deptrac/tree/0.23.0) (2022-06-24)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.22.1...0.23.0)
