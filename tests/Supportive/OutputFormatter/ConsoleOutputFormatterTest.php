@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
@@ -15,7 +16,6 @@ use Qossmic\Deptrac\Contract\Result\Warning;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;

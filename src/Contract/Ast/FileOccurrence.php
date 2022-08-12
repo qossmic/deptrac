@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\AstMap;
+namespace Qossmic\Deptrac\Contract\Ast;
 
 /**
  * @psalm-immutable

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Dependency;
+namespace Qossmic\Deptrac\Contract\Dependency;
 
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
 /**
  * @psalm-immutable

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike;
 
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 class FunctionLikeReference implements TokenReferenceInterface
 {
@@ -30,9 +30,9 @@ class FunctionLikeReference implements TokenReferenceInterface
         return $instance;
     }
 
-    public function getFileReference(): ?FileReference
+    public function getFilepath(): ?string
     {
-        return $this->fileReference;
+        return $this->fileReference?->filepath;
     }
 
     public function getToken(): TokenInterface

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use function count;
 

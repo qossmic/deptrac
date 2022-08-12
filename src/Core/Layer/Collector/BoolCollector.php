@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use InvalidArgumentException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 final class BoolCollector implements ConditionalCollectorInterface
 {

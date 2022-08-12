@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\ClassLike;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
 final class ClassLikeReferenceBuilder extends ReferenceBuilder

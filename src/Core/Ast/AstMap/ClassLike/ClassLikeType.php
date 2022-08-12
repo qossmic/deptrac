@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\ClassLike;
 
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
 enum ClassLikeType: string implements TokenInterface
 {

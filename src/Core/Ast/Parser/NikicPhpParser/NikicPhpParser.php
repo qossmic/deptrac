@@ -74,15 +74,15 @@ class NikicPhpParser implements ParserInterface
             return self::$classAstMap[$classLikeName];
         }
 
-        $astFileReference = $classReference->getFileReference();
+        $filepath = $classReference->getFilepath();
 
-        if (null === $astFileReference) {
+        if (null === $filepath) {
             return null;
         }
 
         $findingVisitor = new FindingVisitor(static fn (Node $node): bool => $node instanceof ClassLike);
 
-        $nodes = $this->parser->parse(FileReader::read($astFileReference->filepath));
+        $nodes = $this->parser->parse(FileReader::read($filepath));
         if (null === $nodes) {
             throw new ShouldNotHappenException();
         }

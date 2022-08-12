@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\File;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\Cache;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -11,7 +12,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
