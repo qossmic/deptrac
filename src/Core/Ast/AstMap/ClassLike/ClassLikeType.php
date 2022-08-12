@@ -46,4 +46,10 @@ final class ClassLikeType implements TokenInterface
     {
         return $this->type;
     }
+
+    //TODO: Replace with String representation (Patrick Kusebauch @ 12.08.22)
+    public function __toString()
+    {
+        return $this->type;
+    }
 }

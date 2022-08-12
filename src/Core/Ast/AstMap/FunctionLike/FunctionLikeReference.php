@@ -16,16 +16,10 @@ class FunctionLikeReference implements TokenReferenceInterface
     /**
      * @param DependencyToken[] $dependencies
      */
-    public function __construct(private readonly FunctionLikeToken $functionName, private readonly array $dependencies = [])
-    {
-    }
-
-    /**
-     * @return DependencyToken[]
-     */
-    public function getDependencies(): array
-    {
-        return $this->dependencies;
+    public function __construct(
+        private readonly FunctionLikeToken $functionName,
+        public readonly array $dependencies = []
+    ) {
     }
 
     public function withFileReference(FileReference $astFileReference): self

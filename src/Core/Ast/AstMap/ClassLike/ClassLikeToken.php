@@ -22,6 +22,7 @@ final class ClassLikeToken implements TokenInterface
         return 1 === preg_match($pattern, $this->className);
     }
 
+    //TODO: Replace with String representation (Patrick Kusebauch @ 12.08.22)
     public function toString(): string
     {
         return $this->className;
@@ -30,5 +31,10 @@ final class ClassLikeToken implements TokenInterface
     public function equals(ClassLikeToken $classLikeName): bool
     {
         return $this->className === $classLikeName->className;
+    }
+
+    public function __toString()
+    {
+        return $this->className;
     }
 }

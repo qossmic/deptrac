@@ -44,7 +44,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
             $this->output->writeLineFormatted(
                 sprintf(
                     'Start to create an AstMap for <info>%u</info> Files.',
-                    $preCreateAstMapEvent->getExpectedFileCount()
+                    $preCreateAstMapEvent->expectedFileCount
                 )
             );
         }
@@ -60,7 +60,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function onAstFileAnalysedEvent(AstFileAnalysedEvent $analysedEvent): void
     {
         if ($this->output->isVerbose()) {
-            $this->output->writeLineFormatted(sprintf('Parsing File %s', $analysedEvent->getFile()));
+            $this->output->writeLineFormatted(sprintf('Parsing File %s', $analysedEvent->file));
         }
     }
 
@@ -68,8 +68,8 @@ class ConsoleSubscriber implements EventSubscriberInterface
     {
         $this->output->writeLineFormatted(sprintf(
             "\nSyntax Error on File %s\n<error>%s</error>\n",
-            $astFileSyntaxErrorEvent->getFile(),
-            $astFileSyntaxErrorEvent->getSyntaxError()
+            $astFileSyntaxErrorEvent->file,
+            $astFileSyntaxErrorEvent->syntaxError
         ));
     }
 
@@ -77,7 +77,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
     {
         if ($this->output->isVerbose()) {
             $this->output->writeLineFormatted(
-                sprintf('start emitting dependencies <info>"%s"</info>', $event->getEmitterName())
+                sprintf('start emitting dependencies <info>"%s"</info>', $event->emitterName)
             );
         }
     }

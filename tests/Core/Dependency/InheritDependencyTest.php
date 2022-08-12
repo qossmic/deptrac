@@ -28,7 +28,7 @@ final class InheritDependencyTest extends TestCase
 
         self::assertSame($classLikeNameA, $dependency->getDepender());
         self::assertSame($classLikeNameB, $dependency->getDependent());
-        self::assertSame(1, $dependency->getFileOccurrence()->getLine());
+        self::assertSame(1, $dependency->getFileOccurrence()->line);
         self::assertSame($dep, $dependency->getOriginalDependency());
         self::assertSame($astInherit, $dependency->getInheritPath());
     }

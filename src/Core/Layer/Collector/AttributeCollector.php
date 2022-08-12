@@ -27,12 +27,12 @@ class AttributeCollector implements CollectorInterface
 
         $match = $this->getSearchedSubstring($config);
 
-        foreach ($reference->getDependencies() as $dependency) {
-            if (DependencyToken::ATTRIBUTE !== $dependency->getType()) {
+        foreach ($reference->dependencies as $dependency) {
+            if (DependencyToken::ATTRIBUTE !== $dependency->type) {
                 continue;
             }
 
-            $usedAttribute = $dependency->getToken()->toString();
+            $usedAttribute = $dependency->token->toString();
 
             if (str_contains($usedAttribute, $match)) {
                 return true;

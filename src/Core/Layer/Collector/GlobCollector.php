@@ -27,9 +27,8 @@ final class GlobCollector extends RegexCollector
             return false;
         }
 
-        $filePath = $fileReference->getFilepath();
         $validatedPattern = $this->getValidatedPattern($config);
-        $normalizedPath = Path::normalize($filePath);
+        $normalizedPath = Path::normalize($fileReference->filepath);
         $relativeFilePath = Path::makeRelative($normalizedPath, $this->basePath);
 
         return 1 === preg_match($validatedPattern, $relativeFilePath);

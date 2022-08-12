@@ -18,28 +18,10 @@ final class ConfigurationGraphViz
      * @param string[]                $hiddenLayers
      * @param array<string, string[]> $groupsLayerMap
      */
-    private function __construct(private readonly array $hiddenLayers, private readonly array $groupsLayerMap, private readonly bool $pointToGroups)
-    {
-    }
-
-    /**
-     * @return array<string, string[]>
-     */
-    public function getGroupsLayerMap(): array
-    {
-        return $this->groupsLayerMap;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getHiddenLayers(): array
-    {
-        return $this->hiddenLayers;
-    }
-
-    public function getPointToGroups(): bool
-    {
-        return $this->pointToGroups;
+    private function __construct(
+        public readonly array $hiddenLayers,
+        public readonly array $groupsLayerMap,
+        public readonly bool $pointToGroups
+    ) {
     }
 }

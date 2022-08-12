@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
+use Stringable;
 use function array_reverse;
 use function implode;
 use function sprintf;
@@ -12,7 +13,7 @@ use function sprintf;
 /**
  * @psalm-immutable
  */
-class AstInherit
+class AstInherit implements Stringable
 {
     private const TYPE_EXTENDS = 1;
     private const TYPE_IMPLEMENTS = 2;
@@ -49,7 +50,7 @@ class AstInherit
             default => 'Unknown',
         };
 
-        $description = "{$this->classLikeName->toString()}::{$this->fileOccurrence->getLine()} ($type)";
+        $description = "{$this->classLikeName->toString()}::{$this->fileOccurrence->line} ($type)";
 
         if (0 === count($this->path)) {
             return $description;

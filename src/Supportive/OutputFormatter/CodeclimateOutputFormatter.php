@@ -55,16 +55,16 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
         $formatterConfig = ConfigurationCodeclimate::fromArray($this->config);
 
         $violations = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
                 continue;
             }
 
-            if (!($outputFormatterInput->getReportSkipped()) && $rule instanceof SkippedViolation) {
+            if (!($outputFormatterInput->reportSkipped) && $rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!($outputFormatterInput->getReportUncovered()) && $rule instanceof Uncovered) {
+            if (!($outputFormatterInput->reportUncovered) && $rule instanceof Uncovered) {
                 continue;
             }
 
@@ -87,7 +87,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             throw new Exception(sprintf('Unable to render codeclimate output. %s', $this->jsonLastError()));
         }
 
-        $dumpJsonPath = $outputFormatterInput->getOutputPath();
+        $dumpJsonPath = $outputFormatterInput->outputPath;
         if (null !== $dumpJsonPath) {
             file_put_contents($dumpJsonPath, $json);
             $output->writeLineFormatted('<info>Codeclimate Report dumped to '.realpath($dumpJsonPath).'</info>');
@@ -168,7 +168,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             '%s has uncovered dependency on %s (%s)',
             $dependency->getDepender()->toString(),
             $dependency->getDependent()->toString(),
-            $violation->getLayer()
+            $violation->layer
         );
     }
 
@@ -198,9 +198,9 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             'categories' => ['Style', 'Complexity'],
             'severity' => $severity,
             'location' => [
-                'path' => $rule->getDependency()->getFileOccurrence()->getFilepath(),
+                'path' => $rule->getDependency()->getFileOccurrence()->filepath,
                 'lines' => [
-                    'begin' => $rule->getDependency()->getFileOccurrence()->getLine(),
+                    'begin' => $rule->getDependency()->getFileOccurrence()->line,
                 ],
             ],
         ];
@@ -212,8 +212,8 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             $rule::class,
             $rule->getDependency()->getDepender()->toString(),
             $rule->getDependency()->getDependent()->toString(),
-            $rule->getDependency()->getFileOccurrence()->getFilepath(),
-            $rule->getDependency()->getFileOccurrence()->getLine(),
+            $rule->getDependency()->getFileOccurrence()->filepath,
+            $rule->getDependency()->getFileOccurrence()->line,
         ]));
     }
 }

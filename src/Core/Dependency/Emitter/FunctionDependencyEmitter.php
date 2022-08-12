@@ -19,21 +19,21 @@ final class FunctionDependencyEmitter implements DependencyEmitterInterface
     public function applyDependencies(AstMap $astMap, DependencyList $dependencyList): void
     {
         foreach ($astMap->getFileReferences() as $astFileReference) {
-            foreach ($astFileReference->getFunctionLikeReferences() as $astFunctionReference) {
-                foreach ($astFunctionReference->getDependencies() as $dependency) {
-                    if (DependencyToken::SUPERGLOBAL_VARIABLE === $dependency->getType()) {
+            foreach ($astFileReference->functionLikeReferences as $astFunctionReference) {
+                foreach ($astFunctionReference->dependencies as $dependency) {
+                    if (DependencyToken::SUPERGLOBAL_VARIABLE === $dependency->type) {
                         continue;
                     }
 
-                    if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->getType()) {
+                    if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->type) {
                         continue;
                     }
 
                     $dependencyList->addDependency(
                         new Dependency(
                             $astFunctionReference->getToken(),
-                            $dependency->getToken(),
-                            $dependency->getFileOccurrence()
+                            $dependency->token,
+                            $dependency->fileOccurrence
                         )
                     );
                 }

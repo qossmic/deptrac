@@ -39,16 +39,16 @@ final class JsonOutputFormatter implements OutputFormatterInterface
     ): void {
         $jsonArray = [];
         $violations = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
                 continue;
             }
 
-            if (!($outputFormatterInput->getReportSkipped()) && $rule instanceof SkippedViolation) {
+            if (!($outputFormatterInput->reportSkipped) && $rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!($outputFormatterInput->getReportUncovered()) && $rule instanceof Uncovered) {
+            if (!($outputFormatterInput->reportUncovered) && $rule instanceof Uncovered) {
                 continue;
             }
 
@@ -70,8 +70,8 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             'Skipped violations' => count($result->skippedViolations()),
             'Uncovered' => count($result->uncovered()),
             'Allowed' => count($result->allowed()),
-            'Warnings' => count($result->warnings()),
-            'Errors' => count($result->errors()),
+            'Warnings' => count($result->warnings),
+            'Errors' => count($result->errors),
         ];
 
         foreach ($violations as &$value) {
@@ -85,7 +85,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             throw new Exception(sprintf('Unable to render json output. %s', $this->jsonLastError()));
         }
 
-        $dumpJsonPath = $outputFormatterInput->getOutputPath();
+        $dumpJsonPath = $outputFormatterInput->outputPath;
         if (null !== $dumpJsonPath) {
             file_put_contents($dumpJsonPath, $json);
             $output->writeLineFormatted('<info>JSON Report dumped to '.realpath($dumpJsonPath).'</info>');
@@ -101,11 +101,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      */
     private function addFailure(array &$violationsArray, Violation $violation): void
     {
-        $className = $violation->getDependency()->getFileOccurrence()->getFilepath();
+        $className = $violation->getDependency()->getFileOccurrence()->filepath;
 
         $violationsArray[$className]['messages'][] = [
             'message' => $this->getFailureMessage($violation),
-            'line' => $violation->getDependency()->getFileOccurrence()->getLine(),
+            'line' => $violation->getDependency()->getFileOccurrence()->line,
             'type' => 'error',
         ];
     }
@@ -128,11 +128,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      */
     private function addSkipped(array &$violationsArray, SkippedViolation $violation): void
     {
-        $className = $violation->getDependency()->getFileOccurrence()->getFilepath();
+        $className = $violation->getDependency()->getFileOccurrence()->filepath;
 
         $violationsArray[$className]['messages'][] = [
             'message' => $this->getWarningMessage($violation),
-            'line' => $violation->getDependency()->getFileOccurrence()->getLine(),
+            'line' => $violation->getDependency()->getFileOccurrence()->line,
             'type' => 'warning',
         ];
     }
@@ -155,11 +155,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      */
     private function addUncovered(array &$violationsArray, Uncovered $violation): void
     {
-        $className = $violation->getDependency()->getFileOccurrence()->getFilepath();
+        $className = $violation->getDependency()->getFileOccurrence()->filepath;
 
         $violationsArray[$className]['messages'][] = [
             'message' => $this->getUncoveredMessage($violation),
-            'line' => $violation->getDependency()->getFileOccurrence()->getLine(),
+            'line' => $violation->getDependency()->getFileOccurrence()->line,
             'type' => 'warning',
         ];
     }
@@ -172,7 +172,7 @@ final class JsonOutputFormatter implements OutputFormatterInterface
             '%s has uncovered dependency on %s (%s)',
             $dependency->getDepender()->toString(),
             $dependency->getDependent()->toString(),
-            $violation->getLayer()
+            $violation->layer
         );
     }
 

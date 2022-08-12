@@ -42,7 +42,7 @@ trait EmitterTrait
             static function (DependencyInterface $d) {
                 return sprintf('%s:%d on %s',
                     $d->getDepender()->toString(),
-                    $d->getFileOccurrence()->getLine(),
+                    $d->getFileOccurrence()->line,
                     $d->getDependent()->toString()
                 );
             },

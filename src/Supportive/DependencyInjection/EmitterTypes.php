@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
+//TODO: Convert to ENUM (Patrick Kusebauch @ 12.08.22)
 final class EmitterTypes
 {
     public const CLASS_TOKEN = 'class';

@@ -31,15 +31,15 @@ final class TableOutputFormatter implements OutputFormatterInterface
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
 
-            if ($rule instanceof Violation || ($outputFormatterInput->getReportSkipped() && $rule instanceof SkippedViolation)) {
+            if ($rule instanceof Violation || ($outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation)) {
                 $groupedRules[$rule->getDependerLayer()][] = $rule;
-            } elseif ($outputFormatterInput->getReportUncovered() && $rule instanceof Uncovered) {
-                $groupedRules[$rule->getLayer()][] = $rule;
+            } elseif ($outputFormatterInput->reportUncovered && $rule instanceof Uncovered) {
+                $groupedRules[$rule->layer][] = $rule;
             }
         }
 
@@ -49,7 +49,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $rows = [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Uncovered) {
-                    $rows[] = $this->uncoveredRow($rule, $outputFormatterInput->getFailOnUncovered());
+                    $rows[] = $this->uncoveredRow($rule, $outputFormatterInput->failOnUncovered);
                 } else {
                     $rows[] = $this->violationRow($rule);
                 }
@@ -66,7 +66,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $this->printWarnings($result, $output);
         }
 
-        $this->printSummary($result, $output, $outputFormatterInput->getFailOnUncovered());
+        $this->printSummary($result, $output, $outputFormatterInput->failOnUncovered);
     }
 
     /**
@@ -88,7 +88,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         }
 
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();
-        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+        $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [
             $rule instanceof SkippedViolation ? '<fg=yellow>Skipped</>' : '<fg=red>Violation</>',
@@ -101,14 +101,14 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $buffer = [];
         $astInherit = $dependency->getInheritPath();
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->line));
         }
 
-        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->line);
         $buffer[] = sprintf(
             '%s::%d',
             $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+            $dependency->getOriginalDependency()->getFileOccurrence()->line
         );
 
         return implode(" -> \n", $buffer);
@@ -120,8 +120,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $skippedViolationCount = count($result->skippedViolations());
         $uncoveredCount = count($result->uncovered());
         $allowedCount = count($result->allowed());
-        $warningsCount = count($result->warnings());
-        $errorsCount = count($result->errors());
+        $warningsCount = count($result->warnings);
+        $errorsCount = count($result->errors);
 
         $uncoveredFg = $reportUncoveredAsError ? 'red' : 'yellow';
 
@@ -157,7 +157,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         }
 
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();
-        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+        $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [
             sprintf('<fg=%s>Uncovered</>', $reportAsError ? 'red' : 'yellow'),
@@ -170,8 +170,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $output->getStyle()->table(
             ['<fg=red>Errors</>'],
             array_map(
-                static fn (Error $error) => [$error->toString()],
-                $result->errors()
+                static fn (Error $error) => [(string) $error],
+                $result->errors
             )
         );
     }
@@ -181,8 +181,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $output->getStyle()->table(
             ['<fg=yellow>Warnings</>'],
             array_map(
-                static fn (Warning $warning) => [$warning->toString()],
-                $result->warnings()
+                static fn (Warning $warning) => [(string) $warning],
+                $result->warnings
             )
         );
     }

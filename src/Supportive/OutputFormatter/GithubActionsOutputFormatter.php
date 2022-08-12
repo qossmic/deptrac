@@ -26,11 +26,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
-            if ($rule instanceof SkippedViolation && !$outputFormatterInput->getReportSkipped()) {
+            if ($rule instanceof SkippedViolation && !$outputFormatterInput->reportSkipped) {
                 continue;
             }
 
@@ -52,14 +52,14 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted(sprintf(
                 '::%s file=%s,line=%s::%s',
                 $this->determineLogLevel($rule),
-                $dependency->getFileOccurrence()->getFilepath(),
-                $dependency->getFileOccurrence()->getLine(),
+                $dependency->getFileOccurrence()->filepath,
+                $dependency->getFileOccurrence()->line,
                 $message
             ));
         }
 
-        if ($outputFormatterInput->getReportUncovered() && $result->hasUncovered()) {
-            $this->printUncovered($result, $output, $outputFormatterInput->getFailOnUncovered());
+        if ($outputFormatterInput->reportUncovered && $result->hasUncovered()) {
+            $this->printUncovered($result, $output, $outputFormatterInput->failOnUncovered);
         }
 
         if ($result->hasErrors()) {
@@ -88,11 +88,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 sprintf(
                     '::%s file=%s,line=%s::%s has uncovered dependency on %s (%s)',
                     $reportAsError ? 'error' : 'warning',
-                    $dependency->getFileOccurrence()->getFilepath(),
-                    $dependency->getFileOccurrence()->getLine(),
+                    $dependency->getFileOccurrence()->filepath,
+                    $dependency->getFileOccurrence()->line,
                     $dependency->getDepender()->toString(),
                     $dependency->getDependent()->toString(),
-                    $u->getLayer()
+                    $u->layer
                 )
             );
         }
@@ -103,14 +103,14 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         $buffer = [];
         $astInherit = $dependency->getInheritPath();
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->line));
         }
 
-        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->line);
         $buffer[] = sprintf(
             '%s::%d',
             $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+            $dependency->getOriginalDependency()->getFileOccurrence()->line
         );
 
         return implode(' ->%0A', $buffer);
@@ -118,15 +118,15 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
 
     private function printErrors(LegacyResult $result, OutputInterface $output): void
     {
-        foreach ($result->errors() as $error) {
-            $output->writeLineFormatted('::error ::'.$error->toString());
+        foreach ($result->errors as $error) {
+            $output->writeLineFormatted('::error ::'.(string) $error);
         }
     }
 
     private function printWarnings(LegacyResult $result, OutputInterface $output): void
     {
-        foreach ($result->warnings() as $error) {
-            $output->writeLineFormatted('::warning ::'.$error->toString());
+        foreach ($result->warnings as $warning) {
+            $output->writeLineFormatted('::warning ::'.(string) $warning);
         }
     }
 }

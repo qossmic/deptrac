@@ -8,6 +8,7 @@ use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes;
 
 /**
  * @psalm-immutable
+ * //TODO: Convert to ENUM (Patrick Kusebauch @ 12.08.22)
  */
 class TokenType
 {

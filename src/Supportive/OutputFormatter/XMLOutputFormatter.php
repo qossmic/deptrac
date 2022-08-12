@@ -39,7 +39,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($result);
 
-        $dumpXmlPath = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        $dumpXmlPath = $outputFormatterInput->outputPath ?? self::DEFAULT_PATH;
         file_put_contents($dumpXmlPath, $xml);
         $output->writeLineFormatted('<info>XML Report dumped to '.realpath($dumpXmlPath).'</info>');
     }
@@ -85,8 +85,8 @@ final class XMLOutputFormatter implements OutputFormatterInterface
 
         $fileOccurrence = $dependency->getFileOccurrence();
         $occurrence = $xmlDoc->createElement('occurrence');
-        $occurrence->setAttribute('file', $fileOccurrence->getFilepath());
-        $occurrence->setAttribute('line', (string) $fileOccurrence->getLine());
+        $occurrence->setAttribute('file', $fileOccurrence->filepath);
+        $occurrence->setAttribute('line', (string) $fileOccurrence->line);
         $entry->appendChild($occurrence);
 
         $rootEntry->appendChild($entry);

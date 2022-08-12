@@ -19,9 +19,8 @@ final class DirectoryCollector extends RegexCollector
             return false;
         }
 
-        $filePath = $fileReference->getFilepath();
         $validatedPattern = $this->getValidatedPattern($config);
-        $normalizedPath = Path::normalize($filePath);
+        $normalizedPath = Path::normalize($fileReference->filepath);
 
         return 1 === preg_match($validatedPattern, $normalizedPath);
     }

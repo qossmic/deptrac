@@ -22,7 +22,7 @@ abstract class AbstractTypeCollector extends RegexCollector
         }
 
         $isClassLike = ClassLikeType::classLike()->matches($this->getType());
-        $isSameType = $reference->getType()->matches($this->getType());
+        $isSameType = $reference->type->matches($this->getType());
 
         return ($isClassLike || $isSameType) && $reference->getToken()->match($this->getValidatedPattern($config));
     }

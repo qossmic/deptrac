@@ -21,7 +21,7 @@ final class GraphVizOutputDotFormatter extends GraphVizOutputFormatter
 
     protected function output(Graph $graph, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
-        $dumpDotPath = $outputFormatterInput->getOutputPath();
+        $dumpDotPath = $outputFormatterInput->outputPath;
         if (null === $dumpDotPath) {
             throw new LogicException("No '--output' defined for GraphViz formatter");
         }

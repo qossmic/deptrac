@@ -10,7 +10,7 @@ class IgnoreDependenciesOnContract
 {
     public function __invoke(ProcessEvent $event): void
     {
-        if (array_key_exists('Contract', $event->getDependentLayers())) {
+        if (array_key_exists('Contract', $event->dependentLayers)) {
             $event->stopPropagation();
         }
     }

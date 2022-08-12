@@ -8,17 +8,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AstFileSyntaxErrorEvent extends Event
 {
-    public function __construct(private readonly string $file, private readonly string $syntaxError)
-    {
-    }
-
-    public function getFile(): string
-    {
-        return $this->file;
-    }
-
-    public function getSyntaxError(): string
-    {
-        return $this->syntaxError;
+    public function __construct(
+        public readonly string $file,
+        public readonly string $syntaxError
+    ) {
     }
 }

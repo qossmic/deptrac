@@ -34,17 +34,16 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
         }
 
         foreach ($astMap->getFileReferences() as $fileReference) {
-            $dependencies = $fileReference->getDependencies();
-            foreach ($fileReference->getClassLikeReferences() as $astClassReference) {
-                foreach ($dependencies as $emittedDependency) {
-                    if (DependencyToken::USE === $emittedDependency->getType() &&
+            foreach ($fileReference->classLikeReferences as $astClassReference) {
+                foreach ($fileReference->dependencies as $emittedDependency) {
+                    if (DependencyToken::USE === $emittedDependency->type &&
                         $this->isFQDN($emittedDependency, $FQDNIndex)
                     ) {
                         $dependencyList->addDependency(
                             new Dependency(
                                 $astClassReference->getToken(),
-                                $emittedDependency->getToken(),
-                                $emittedDependency->getFileOccurrence()
+                                $emittedDependency->token,
+                                $emittedDependency->fileOccurrence
                             )
                         );
                     }
@@ -55,7 +54,7 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
 
     private function isFQDN(DependencyToken $dependency, FQDNIndexNode $FQDNIndex): bool
     {
-        $dependencyFQDN = $dependency->getToken()->toString();
+        $dependencyFQDN = $dependency->token->toString();
         $path = explode('\\', $dependencyFQDN);
         $value = $FQDNIndex->getNestedNode($path);
         if (null === $value) {

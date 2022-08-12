@@ -33,12 +33,12 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
     private function createDependenciesForReferences(array $references, AstMap $astMap, DependencyList $dependencyList): void
     {
         foreach ($references as $reference) {
-            foreach ($reference->getDependencies() as $dependency) {
-                if (DependencyToken::UNRESOLVED_FUNCTION_CALL !== $dependency->getType()) {
+            foreach ($reference->dependencies as $dependency) {
+                if (DependencyToken::UNRESOLVED_FUNCTION_CALL !== $dependency->type) {
                     continue;
                 }
 
-                $token = $dependency->getToken();
+                $token = $dependency->token;
                 assert($token instanceof FunctionLikeToken);
                 if (null === $astMap->getFunctionReferenceForToken($token)) {
                     continue;
@@ -46,7 +46,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
 
                 $dependencyList->addDependency(
                     new Dependency(
-                        $reference->getToken(), $dependency->getToken(), $dependency->getFileOccurrence()
+                        $reference->getToken(), $dependency->token, $dependency->fileOccurrence
                     )
                 );
             }

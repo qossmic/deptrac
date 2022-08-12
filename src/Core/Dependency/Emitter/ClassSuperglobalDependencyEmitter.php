@@ -19,15 +19,15 @@ final class ClassSuperglobalDependencyEmitter implements DependencyEmitterInterf
     public function applyDependencies(AstMap $astMap, DependencyList $dependencyList): void
     {
         foreach ($astMap->getClassLikeReferences() as $classReference) {
-            foreach ($classReference->getDependencies() as $dependency) {
-                if (DependencyToken::SUPERGLOBAL_VARIABLE !== $dependency->getType()) {
+            foreach ($classReference->dependencies as $dependency) {
+                if (DependencyToken::SUPERGLOBAL_VARIABLE !== $dependency->type) {
                     continue;
                 }
                 $dependencyList->addDependency(
                     new Dependency(
                         $classReference->getToken(),
-                        $dependency->getToken(),
-                        $dependency->getFileOccurrence()
+                        $dependency->token,
+                        $dependency->fileOccurrence
                     )
                 );
             }

@@ -29,21 +29,19 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $reportSkipped = $outputFormatterInput->getReportSkipped();
-
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!$reportSkipped && $rule instanceof SkippedViolation) {
+            if (!$outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation) {
                 continue;
             }
 
             $this->printViolation($rule, $output);
         }
 
-        if ($outputFormatterInput->getReportUncovered()) {
+        if ($outputFormatterInput->reportUncovered) {
             $this->printUncovered($result, $output);
         }
 
@@ -84,14 +82,14 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $buffer = [];
         $astInherit = $dependency->getInheritPath();
         foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
+            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->line));
         }
 
-        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
+        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->line);
         $buffer[] = sprintf(
             "\t%s::%d",
             $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+            $dependency->getOriginalDependency()->getFileOccurrence()->line
         );
 
         $output->writeLineFormatted(implode(" -> \n", $buffer));
@@ -103,8 +101,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $skippedViolationCount = count($result->skippedViolations());
         $uncoveredCount = count($result->uncovered());
         $allowedCount = count($result->allowed());
-        $warningsCount = count($result->warnings());
-        $errorsCount = count($result->errors());
+        $warningsCount = count($result->warnings);
+        $errorsCount = count($result->errors);
 
         $output->writeLineFormatted('');
         $output->writeLineFormatted('Report:');
@@ -161,7 +159,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                     '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
                     $dependency->getDepender()->toString(),
                     $dependency->getDependent()->toString(),
-                    $u->getLayer()
+                    $u->layer
                 )
             );
             $this->printFileOccurrence($output, $dependency->getFileOccurrence());
@@ -174,22 +172,22 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     private function printFileOccurrence(OutputInterface $output, FileOccurrence $fileOccurrence): void
     {
-        $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
+        $output->writeLineFormatted($fileOccurrence->filepath.'::'.$fileOccurrence->line);
     }
 
     private function printErrors(LegacyResult $result, OutputInterface $output): void
     {
         $output->writeLineFormatted('');
-        foreach ($result->errors() as $error) {
-            $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', $error->toString()));
+        foreach ($result->errors as $error) {
+            $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', (string) $error));
         }
     }
 
     private function printWarnings(LegacyResult $result, OutputInterface $output): void
     {
         $output->writeLineFormatted('');
-        foreach ($result->warnings() as $error) {
-            $output->writeLineFormatted(sprintf('<fg=yellow>[WARNING]</> %s', $error->toString()));
+        foreach ($result->warnings as $warning) {
+            $output->writeLineFormatted(sprintf('<fg=yellow>[WARNING]</> %s', (string) $warning));
         }
     }
 }

@@ -79,7 +79,7 @@ class AnalyseCommand extends Command
         );
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($symfonyOutput));
-        if ($options->showProgress()) {
+        if (!$options->noProgress) {
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
 

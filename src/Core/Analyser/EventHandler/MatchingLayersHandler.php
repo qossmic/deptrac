@@ -13,11 +13,8 @@ class MatchingLayersHandler
 {
     public function __invoke(ProcessEvent $event): void
     {
-        $dependerLayer = $event->getDependerLayer();
-        $dependentLayers = $event->getDependentLayers();
-
-        foreach ($dependentLayers as $dependeeLayer => $_) {
-            if ($dependerLayer !== $dependeeLayer) {
+        foreach ($event->dependentLayers as $dependeeLayer => $_) {
+            if ($event->dependerLayer !== $dependeeLayer) {
                 return;
             }
         }

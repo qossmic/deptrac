@@ -27,23 +27,11 @@ class DependencyToken
     final public const SUPERGLOBAL_VARIABLE = 'superglobal_variable';
     final public const UNRESOLVED_FUNCTION_CALL = 'unresolved_function_call';
 
-    private function __construct(private readonly TokenInterface $token, private readonly FileOccurrence $fileOccurrence, private readonly string $type)
-    {
-    }
-
-    public function getToken(): TokenInterface
-    {
-        return $this->token;
-    }
-
-    public function getFileOccurrence(): FileOccurrence
-    {
-        return $this->fileOccurrence;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
+    private function __construct(
+        public readonly TokenInterface $token,
+        public readonly FileOccurrence $fileOccurrence,
+        public readonly string $type
+    ) {
     }
 
     public static function fromType(TokenInterface $tokenName, FileOccurrence $fileOccurrence, string $type): self

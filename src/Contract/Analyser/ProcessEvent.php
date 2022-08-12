@@ -14,36 +14,14 @@ class ProcessEvent extends Event
     /**
      * @param array<string, bool> $dependentLayers
      */
-    public function __construct(private readonly DependencyInterface $dependency, private readonly TokenReferenceInterface $dependerReference, private readonly string $dependerLayer, private readonly TokenReferenceInterface $dependentReference, private readonly array $dependentLayers, private Result $result = new Result())
-    {
-    }
-
-    public function getDependency(): DependencyInterface
-    {
-        return $this->dependency;
-    }
-
-    public function getDependerReference(): TokenReferenceInterface
-    {
-        return $this->dependerReference;
-    }
-
-    public function getDependerLayer(): string
-    {
-        return $this->dependerLayer;
-    }
-
-    public function getDependentReference(): TokenReferenceInterface
-    {
-        return $this->dependentReference;
-    }
-
-    /**
-     * @return array<string, bool>
-     */
-    public function getDependentLayers(): array
-    {
-        return $this->dependentLayers;
+    public function __construct(
+        public readonly DependencyInterface $dependency,
+        public readonly TokenReferenceInterface $dependerReference,
+        public readonly string $dependerLayer,
+        public readonly TokenReferenceInterface $dependentReference,
+        public readonly array $dependentLayers,
+        private Result $result = new Result()
+    ) {
     }
 
     public function getResult(): Result

@@ -30,7 +30,7 @@ class ProgressSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
-        $this->output->getStyle()->progressStart($preCreateAstMapEvent->getExpectedFileCount());
+        $this->output->getStyle()->progressStart($preCreateAstMapEvent->expectedFileCount);
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void

@@ -42,12 +42,12 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
         OutputFormatterInput $outputFormatterInput
     ): void {
         $layerViolations = $this->calculateViolations($result->violations());
-        $layersDependOnLayers = $this->calculateLayerDependencies($result->rules());
+        $layersDependOnLayers = $this->calculateLayerDependencies($result->rules);
 
         $outputConfig = ConfigurationGraphViz::fromArray($this->config);
 
         $graph = Graph::create('');
-        if ($outputConfig->getPointToGroups()) {
+        if ($outputConfig->pointToGroups) {
             $graph->setAttribute('compound', 'true');
         }
         $nodes = $this->createNodes($outputConfig, $layersDependOnLayers);
@@ -104,9 +104,8 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
 
                 ++$layersDependOnLayers[$layerA][$layerB];
             } elseif ($rule instanceof Uncovered) {
-                $layer = $rule->getLayer();
-                if (!isset($layersDependOnLayers[$layer])) {
-                    $layersDependOnLayers[$layer] = [];
+                if (!isset($layersDependOnLayers[$rule->layer])) {
+                    $layersDependOnLayers[$rule->layer] = [];
                 }
             }
         }
@@ -121,10 +120,9 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
      */
     private function createNodes(ConfigurationGraphViz $outputConfig, array $layersDependOnLayers): array
     {
-        $hiddenLayers = $outputConfig->getHiddenLayers();
         $nodes = [];
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (in_array($layer, $hiddenLayers, true)) {
+            if (in_array($layer, $outputConfig->hiddenLayers, true)) {
                 continue;
             }
             if (!isset($nodes[$layer])) {
@@ -132,7 +130,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
             }
 
             foreach ($layersDependOn as $layerDependOn => $_) {
-                if (in_array($layerDependOn, $hiddenLayers, true)) {
+                if (in_array($layerDependOn, $outputConfig->hiddenLayers, true)) {
                     continue;
                 }
                 if (!isset($nodes[$layerDependOn])) {
@@ -156,18 +154,16 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
         array $layersDependOnLayers,
         array $layerViolations
     ): void {
-        $hiddenLayers = $outputConfig->getHiddenLayers();
-
         foreach ($layersDependOnLayers as $layer => $layersDependOn) {
-            if (in_array($layer, $hiddenLayers, true)) {
+            if (in_array($layer, $outputConfig->hiddenLayers, true)) {
                 continue;
             }
             foreach ($layersDependOn as $layerDependOn => $layerDependOnCount) {
-                if (in_array($layerDependOn, $hiddenLayers, true)) {
+                if (in_array($layerDependOn, $outputConfig->hiddenLayers, true)) {
                     continue;
                 }
                 $edge = new Edge($nodes[$layer], $nodes[$layerDependOn]);
-                if ($outputConfig->getPointToGroups() && $graph->hasGraph($this->getSubgraphName($layerDependOn))) {
+                if ($outputConfig->pointToGroups && $graph->hasGraph($this->getSubgraphName($layerDependOn))) {
                     $edge->setAttribute('lhead', $this->getSubgraphName($layerDependOn));
                 }
                 $graph->link($edge);
@@ -186,7 +182,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
      */
     private function addNodesToGraph(Graph $graph, array $nodes, ConfigurationGraphViz $outputConfig): void
     {
-        foreach ($outputConfig->getGroupsLayerMap() as $groupName => $groupLayerNames) {
+        foreach ($outputConfig->groupsLayerMap as $groupName => $groupLayerNames) {
             $subgraph = Graph::create($this->getSubgraphName($groupName))
                 ->setAttribute('label', $groupName);
             $graph->addGraph($subgraph);

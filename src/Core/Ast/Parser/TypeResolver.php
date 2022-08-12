@@ -133,7 +133,7 @@ class TypeResolver
      */
     public function resolveString(string $type, TypeScope $nameScope): array
     {
-        $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
+        $context = new Context($nameScope->namespace, $nameScope->getUses());
         try {
             $resolvedType = $this->typeResolver->resolve($type, $context);
         } catch (Throwable) {

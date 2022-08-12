@@ -63,7 +63,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     {
         $this->load();
 
-        $filepath = $this->normalizeFilepath($fileReference->getFilepath());
+        $filepath = $this->normalizeFilepath($fileReference->filepath);
 
         $this->parsedFiles[$filepath] = true;
 

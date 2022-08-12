@@ -16,8 +16,13 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath, private readonly ClassLikeToken $classLikeToken, private readonly ClassLikeType $classLikeType, private readonly bool $isInternal)
-    {
+    protected function __construct(
+        array $tokenTemplates,
+        string $filepath,
+        private readonly ClassLikeToken $classLikeToken,
+        private readonly ClassLikeType $classLikeType,
+        private readonly bool $isInternal
+    ) {
         parent::__construct($tokenTemplates, $filepath);
     }
 
@@ -93,10 +98,5 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
         );
 
         return $this;
-    }
-
-    public function isInternal(): bool
-    {
-        return $this->isInternal;
     }
 }

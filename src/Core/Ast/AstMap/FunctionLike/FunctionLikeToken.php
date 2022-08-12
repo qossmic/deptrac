@@ -31,4 +31,9 @@ final class FunctionLikeToken implements TokenInterface
     {
         return $this->functionName === $functionName->functionName;
     }
+
+    public function __toString()
+    {
+        return $this->functionName.'()';
+    }
 }

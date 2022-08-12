@@ -9,13 +9,14 @@ use Symfony\Component\Filesystem\Path;
 
 final class FileToken implements TokenInterface
 {
-    private readonly string $path;
+    public readonly string $path;
 
     public function __construct(string $path)
     {
         $this->path = Path::normalize($path);
     }
 
+    //TODO: Replace with String representation (Patrick Kusebauch @ 12.08.22)
     public function toString(): string
     {
         $wd = getcwd();
@@ -31,8 +32,8 @@ final class FileToken implements TokenInterface
         return $this->path;
     }
 
-    public function getFilepath(): string
+    public function __toString()
     {
-        return $this->path;
+        return $this->toString();
     }
 }

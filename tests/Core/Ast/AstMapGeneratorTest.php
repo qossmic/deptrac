@@ -117,9 +117,9 @@ final class AstMapGeneratorTest extends TestCase
             ],
             array_map(
                 static function (DependencyToken $dependency) {
-                    return $dependency->getToken()->toString();
+                    return $dependency->token->toString();
                 },
-                $astMap->getFileReferences()[__DIR__.'/Fixtures/Issue319.php']->getDependencies()
+                $astMap->getFileReferences()[__DIR__.'/Fixtures/Issue319.php']->dependencies
             )
         );
     }
@@ -133,6 +133,6 @@ final class AstMapGeneratorTest extends TestCase
             return [];
         }
 
-        return array_map('strval', $classReference->getInherits());
+        return array_map('strval', $classReference->inherits);
     }
 }

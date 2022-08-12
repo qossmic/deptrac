@@ -21,19 +21,19 @@ final class ClassDependencyEmitter implements DependencyEmitterInterface
         foreach ($astMap->getClassLikeReferences() as $classReference) {
             $classLikeName = $classReference->getToken();
 
-            foreach ($classReference->getDependencies() as $dependency) {
-                if (DependencyToken::SUPERGLOBAL_VARIABLE === $dependency->getType()) {
+            foreach ($classReference->dependencies as $dependency) {
+                if (DependencyToken::SUPERGLOBAL_VARIABLE === $dependency->type) {
                     continue;
                 }
-                if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->getType()) {
+                if (DependencyToken::UNRESOLVED_FUNCTION_CALL === $dependency->type) {
                     continue;
                 }
 
                 $dependencyList->addDependency(
                     new Dependency(
                         $classLikeName,
-                        $dependency->getToken(),
-                        $dependency->getFileOccurrence()
+                        $dependency->token,
+                        $dependency->fileOccurrence
                     )
                 );
             }

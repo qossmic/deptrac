@@ -42,7 +42,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     ): void {
         $xml = $this->createXml($result);
 
-        $dumpXmlPath = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        $dumpXmlPath = $outputFormatterInput->outputPath ?? self::DEFAULT_PATH;
         file_put_contents($dumpXmlPath, $xml);
         $output->writeLineFormatted('<info>JUnit Report dumped to '.realpath($dumpXmlPath).'</info>');
     }
@@ -79,11 +79,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
             $testSuite->appendChild(new DOMAttr('tests', '0'));
             $testSuite->appendChild(new DOMAttr('failures', '0'));
             $testSuite->appendChild(new DOMAttr('skipped', '0'));
-            $testSuite->appendChild(new DOMAttr('errors', (string) count($result->errors())));
+            $testSuite->appendChild(new DOMAttr('errors', (string) count($result->errors)));
             $testSuite->appendChild(new DOMAttr('time', '0'));
-            foreach ($result->errors() as $message) {
+            foreach ($result->errors as $message) {
                 $error = $xmlDoc->createElement('error');
-                $error->appendChild(new DOMAttr('message', $message->toString()));
+                $error->appendChild(new DOMAttr('message', (string) $message));
                 $error->appendChild(new DOMAttr('type', 'WARNING'));
                 $testSuite->appendChild($error);
             }
@@ -98,11 +98,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     {
         /** @var array<string, array<RuleInterface>> $layers */
         $layers = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if ($rule instanceof CoveredRuleInterface) {
                 $layers[$rule->getDependerLayer()][] = $rule;
             } elseif ($rule instanceof Uncovered) {
-                $layers[$rule->getLayer()][] = $rule;
+                $layers[$rule->layer][] = $rule;
             }
         }
 
@@ -166,7 +166,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $message = sprintf(
             '%s:%d must not depend on %s (%s on %s)',
             $dependency->getDepender()->toString(),
-            $dependency->getFileOccurrence()->getLine(),
+            $dependency->getFileOccurrence()->line,
             $dependency->getDependent()->toString(),
             $violation->getDependerLayer(),
             $violation->getDependentLayer()
@@ -192,9 +192,9 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $message = sprintf(
             '%s:%d has uncovered dependency on %s (%s)',
             $dependency->getDepender()->toString(),
-            $dependency->getFileOccurrence()->getLine(),
+            $dependency->getFileOccurrence()->line,
             $dependency->getDependent()->toString(),
-            $rule->getLayer()
+            $rule->layer
         );
 
         $error = $xmlDoc->createElement('warning');

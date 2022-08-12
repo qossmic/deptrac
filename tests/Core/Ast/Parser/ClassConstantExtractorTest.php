@@ -28,19 +28,19 @@ final class ClassConstantExtractorTest extends TestCase
         $filePath = __DIR__.'/Fixtures/ClassConst.php';
         $astFileReference = $parser->parseFile($filePath);
 
-        $astClassReferences = $astFileReference->getClassLikeReferences();
+        $astClassReferences = $astFileReference->classLikeReferences;
 
         self::assertCount(2, $astClassReferences);
-        self::assertCount(0, $astClassReferences[0]->getDependencies());
-        self::assertCount(1, $astClassReferences[1]->getDependencies());
+        self::assertCount(0, $astClassReferences[0]->dependencies);
+        self::assertCount(1, $astClassReferences[1]->dependencies);
 
-        $dependencies = $astClassReferences[1]->getDependencies();
+        $dependencies = $astClassReferences[1]->dependencies;
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\ClassA',
-            $dependencies[0]->getToken()->toString()
+            $dependencies[0]->token->toString()
         );
-        self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
-        self::assertSame(15, $dependencies[0]->getFileOccurrence()->getLine());
-        self::assertSame('const', $dependencies[0]->getType());
+        self::assertSame($filePath, $dependencies[0]->fileOccurrence->filepath);
+        self::assertSame(15, $dependencies[0]->fileOccurrence->line);
+        self::assertSame('const', $dependencies[0]->type);
     }
 }

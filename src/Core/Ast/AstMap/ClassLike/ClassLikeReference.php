@@ -11,7 +11,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 class ClassLikeReference implements TokenReferenceInterface
 {
-    private readonly ClassLikeType $classLikeType;
+    public readonly ClassLikeType $type;
 
     private ?FileReference $fileReference = null;
 
@@ -19,9 +19,14 @@ class ClassLikeReference implements TokenReferenceInterface
      * @param AstInherit[]      $inherits
      * @param DependencyToken[] $dependencies
      */
-    public function __construct(private readonly ClassLikeToken $classLikeName, ClassLikeType $classLikeType = null, private readonly array $inherits = [], private readonly array $dependencies = [], private readonly bool $isInternal = false)
-    {
-        $this->classLikeType = $classLikeType ?? ClassLikeType::classLike();
+    public function __construct(
+        private readonly ClassLikeToken $classLikeName,
+        ClassLikeType $classLikeType = null,
+        public readonly array $inherits = [],
+        public readonly array $dependencies = [],
+        public readonly bool $isInternal = false
+    ) {
+        $this->type = $classLikeType ?? ClassLikeType::classLike();
     }
 
     public function withFileReference(FileReference $astFileReference): self
@@ -40,31 +45,5 @@ class ClassLikeReference implements TokenReferenceInterface
     public function getToken(): ClassLikeToken
     {
         return $this->classLikeName;
-    }
-
-    public function getType(): ClassLikeType
-    {
-        return $this->classLikeType;
-    }
-
-    /**
-     * @return DependencyToken[]
-     */
-    public function getDependencies(): array
-    {
-        return $this->dependencies;
-    }
-
-    /**
-     * @return AstInherit[]
-     */
-    public function getInherits(): array
-    {
-        return $this->inherits;
-    }
-
-    public function isInternal(): bool
-    {
-        return $this->isInternal;
     }
 }

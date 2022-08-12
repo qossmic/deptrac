@@ -19,8 +19,8 @@ final class DependencyTest extends TestCase
             FileOccurrence::fromFilepath('/foo.php', 23)
         );
         self::assertSame('a', $dependency->getDepender()->toString());
-        self::assertSame('/foo.php', $dependency->getFileOccurrence()->getFilepath());
-        self::assertSame(23, $dependency->getFileOccurrence()->getLine());
+        self::assertSame('/foo.php', $dependency->getFileOccurrence()->filepath);
+        self::assertSame(23, $dependency->getFileOccurrence()->line);
         self::assertSame('b', $dependency->getDependent()->toString());
     }
 }

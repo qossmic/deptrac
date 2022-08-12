@@ -11,7 +11,7 @@ class TypeScope
      */
     private array $uses;
 
-    public function __construct(private readonly string $namespace)
+    public function __construct(public readonly string $namespace)
     {
         $this->uses = [];
     }
@@ -19,11 +19,6 @@ class TypeScope
     public function addUse(string $className, ?string $alias): void
     {
         $this->uses[$alias ?: $className] = $className;
-    }
-
-    public function getNamespace(): string
-    {
-        return $this->namespace;
     }
 
     /**

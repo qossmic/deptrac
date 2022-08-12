@@ -16,18 +16,22 @@ use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 class FileReference implements TokenReferenceInterface
 {
     /** @var ClassLikeReference[] */
-    private readonly array $classLikeReferences;
+    public readonly array $classLikeReferences;
 
     /** @var FunctionLikeReference[] */
-    private readonly array $functionLikeReferences;
+    public readonly array $functionLikeReferences;
 
     /**
      * @param ClassLikeReference[]    $classLikeReferences
      * @param FunctionLikeReference[] $functionLikeReferences
      * @param DependencyToken[]       $dependencies
      */
-    public function __construct(private readonly string $filepath, array $classLikeReferences, array $functionLikeReferences, private readonly array $dependencies)
-    {
+    public function __construct(
+        public readonly string $filepath,
+        array $classLikeReferences,
+        array $functionLikeReferences,
+        public readonly array $dependencies
+    ) {
         /** @psalm-suppress ImpureFunctionCall */
         $this->classLikeReferences = array_map(
             fn (ClassLikeReference $classReference) => $classReference->withFileReference($this),
@@ -40,35 +44,6 @@ class FileReference implements TokenReferenceInterface
         );
     }
 
-    public function getFilepath(): string
-    {
-        return $this->filepath;
-    }
-
-    /**
-     * @return ClassLikeReference[]
-     */
-    public function getClassLikeReferences(): array
-    {
-        return $this->classLikeReferences;
-    }
-
-    /**
-     * @return DependencyToken[]
-     */
-    public function getDependencies(): array
-    {
-        return $this->dependencies;
-    }
-
-    /**
-     * @return FunctionLikeReference[]
-     */
-    public function getFunctionLikeReferences(): array
-    {
-        return $this->functionLikeReferences;
-    }
-
     public function getFileReference(): ?FileReference
     {
         return $this;
@@ -76,6 +51,6 @@ class FileReference implements TokenReferenceInterface
 
     public function getToken(): TokenInterface
     {
-        return new FileToken($this->getFilepath());
+        return new FileToken($this->filepath);
     }
 }

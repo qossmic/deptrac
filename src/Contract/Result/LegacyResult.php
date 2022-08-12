@@ -17,16 +17,11 @@ final class LegacyResult
      * @param Error[]         $errors
      * @param Warning[]       $warnings
      */
-    public function __construct(private readonly array $rules, private readonly array $errors, private readonly array $warnings)
-    {
-    }
-
-    /**
-     * @return RuleInterface[]
-     */
-    public function rules(): array
-    {
-        return $this->rules;
+    public function __construct(
+        public readonly array $rules,
+        public readonly array $errors,
+        public readonly array $warnings
+    ) {
     }
 
     /**
@@ -76,24 +71,8 @@ final class LegacyResult
         return count($this->errors) > 0;
     }
 
-    /**
-     * @return Error[]
-     */
-    public function errors(): array
-    {
-        return $this->errors;
-    }
-
     public function hasWarnings(): bool
     {
         return count($this->warnings) > 0;
-    }
-
-    /**
-     * @return Warning[]
-     */
-    public function warnings(): array
-    {
-        return $this->warnings;
     }
 }

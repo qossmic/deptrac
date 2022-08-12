@@ -34,7 +34,7 @@ class TokenResolver
         }
 
         if ($token instanceof FileToken) {
-            return $astMap->getFileReferenceForToken($token) ?? new FileReference($token->getFilepath(), [], [], []);
+            return $astMap->getFileReferenceForToken($token) ?? new FileReference($token->path, [], [], []);
         }
 
         throw new ShouldNotHappenException();
