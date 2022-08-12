@@ -14,14 +14,11 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use function getcwd;
-use const DIRECTORY_SEPARATOR;
 
 class AnalyseCommand extends Command
 {
@@ -52,12 +49,6 @@ class AnalyseCommand extends Command
     {
         parent::configure();
 
-        $this->addArgument(
-            'depfile',
-            InputArgument::OPTIONAL,
-            '!deprecated: use --config-file instead - Path to the depfile',
-            getcwd().DIRECTORY_SEPARATOR.'depfile.yaml'
-        );
         $this->addOption(
             'formatter',
             'f',
