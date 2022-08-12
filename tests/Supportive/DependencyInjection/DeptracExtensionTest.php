@@ -10,11 +10,26 @@ use Qossmic\Deptrac\Supportive\DependencyInjection\DeptracExtension;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function krsort;
 
 final class DeptracExtensionTest extends TestCase
 {
     private ContainerBuilder $container;
     private DeptracExtension $extension;
+    private array $formatterDefaults = [
+        'graphviz' => [
+            'hidden_layers' => [],
+            'groups' => [],
+            'point_to_groups' => false,
+        ],
+        'codeclimate' => [
+            'severity' => [
+                'failure' => 'major',
+                'skipped' => 'minor',
+                'uncovered' => 'info',
+            ],
+        ],
+    ];
 
     protected function setUp(): void
     {
@@ -35,7 +50,7 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('layers'));
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
-        self::assertSame([], $this->container->getParameter('formatters'));
+        self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
         self::assertSame(['types' => [EmitterTypes::CLASS_TOKEN, EmitterTypes::USE_TOKEN]], $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
         self::assertSame(true, $this->container->getParameter('use_relative_path_from_depfile'));
@@ -54,7 +69,7 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('layers'));
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
-        self::assertSame([], $this->container->getParameter('formatters'));
+        self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
         self::assertSame(['types' => [EmitterTypes::CLASS_TOKEN, EmitterTypes::USE_TOKEN]], $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
         self::assertSame(true, $this->container->getParameter('use_relative_path_from_depfile'));
@@ -420,16 +435,13 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        self::assertSame(
-            [
-                'graphviz' => [
-                    'hidden_layers' => [],
-                    'groups' => [],
-                    'point_to_groups' => false,
-                ],
-            ],
-            $this->container->getParameter('formatters')
-        );
+        $expectedFormatterConfig = $this->formatterDefaults;
+        $actualFormatterConfig = $this->container->getParameter('formatters');
+
+        krsort($expectedFormatterConfig);
+        krsort($actualFormatterConfig);
+
+        self::assertSame($expectedFormatterConfig, $actualFormatterConfig);
     }
 
     public function testGraphvizFormatterWithOldPointToGroupsConfig(): void
@@ -446,16 +458,14 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        self::assertSame(
-            [
-                'graphviz' => [
-                    'point_to_groups' => true,
-                    'hidden_layers' => [],
-                    'groups' => [],
-                ],
-            ],
-            $this->container->getParameter('formatters')
-        );
+        $expectedFormatterConfig = $this->formatterDefaults;
+        $expectedFormatterConfig['graphviz'] = [
+            'point_to_groups' => true,
+            'hidden_layers' => [],
+            'groups' => [],
+        ];
+
+        self::assertSame($expectedFormatterConfig, $this->container->getParameter('formatters'));
     }
 
     public function testGraphvizFormattersWithHiddenLayers(): void
@@ -477,19 +487,17 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        self::assertSame(
-            [
-                'graphviz' => [
-                    'hidden_layers' => ['Utils'],
-                    'groups' => [
-                        'App' => ['Controller', 'View'],
-                        'Domain' => ['User', 'Checkout', 'Product'],
-                    ],
-                    'point_to_groups' => true,
-                ],
+        $expectedFormatterConfig = $this->formatterDefaults;
+        $expectedFormatterConfig['graphviz'] = [
+            'hidden_layers' => ['Utils'],
+            'groups' => [
+                'App' => ['Controller', 'View'],
+                'Domain' => ['User', 'Checkout', 'Product'],
             ],
-            $this->container->getParameter('formatters')
-        );
+            'point_to_groups' => true,
+        ];
+
+        self::assertSame($expectedFormatterConfig, $this->container->getParameter('formatters'));
     }
 
     public function testCodeclimateFormatterWithEmptyNodes(): void
@@ -504,18 +512,13 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        self::assertSame(
-            [
-                'codeclimate' => [
-                    'severity' => [
-                        'failure' => 'major',
-                        'skipped' => 'minor',
-                        'uncovered' => 'info',
-                    ],
-                ],
-            ],
-            $this->container->getParameter('formatters')
-        );
+        $expectedFormatterConfig = $this->formatterDefaults;
+        $actualFormatterConfig = $this->container->getParameter('formatters');
+
+        krsort($expectedFormatterConfig);
+        krsort($actualFormatterConfig);
+
+        self::assertSame($expectedFormatterConfig, $actualFormatterConfig);
     }
 
     public function testCodeclimateFormatterRequiresValidSeverity(): void
