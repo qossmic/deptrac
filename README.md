@@ -50,6 +50,11 @@ php deptrac.phar
 php deptrac.phar analyse --config-file=deptrac.yaml
 ```
 
+In order to run Deptrac you need at least PHP 8.1.
+
+You can analyse projects that require an older PHP version as long as
+[nikic/php-parser](https://github.com/nikic/PHP-Parser) can parse it.
+
 ## Contribute
 
 Deptrac is in active development. We are looking for your suggestions and help

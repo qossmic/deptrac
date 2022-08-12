@@ -14,7 +14,7 @@ your merge request can be accepted.
 
 ## Requirements
 
-- PHP in version 7.4 or above
+- PHP in version 8.1 or above
 - [Composer](https://getcomposer.org/)
 - `make`
 
