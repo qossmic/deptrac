@@ -7,9 +7,6 @@ namespace Qossmic\Deptrac\Contract\Dependency;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
-/**
- * @psalm-immutable
- */
 interface DependencyInterface
 {
     public function getDepender(): TokenInterface;
@@ -17,4 +14,9 @@ interface DependencyInterface
     public function getDependent(): TokenInterface;
 
     public function getFileOccurrence(): FileOccurrence;
+
+    /**
+     * @return array<array{name:string, line:int}>
+     */
+    public function serialize(): array;
 }

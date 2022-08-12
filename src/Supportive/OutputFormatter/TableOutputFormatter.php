@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
@@ -14,7 +15,6 @@ use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Contract\Result\Warning;
-use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use Symfony\Component\Console\Helper\TableSeparator;
 use function count;
 
@@ -83,8 +83,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $rule->getDependentLayer()
         );
 
-        if ($dependency instanceof InheritDependency) {
-            $message .= "\n".$this->formatInheritPath($dependency);
+        if (count($dependency->serialize()) > 1) {
+            $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();
@@ -96,22 +96,15 @@ final class TableOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    private function formatInheritPath(InheritDependency $dependency): string
+    private function formatMultilinePath(DependencyInterface $dep): string
     {
-        $buffer = [];
-        $astInherit = $dependency->inheritPath;
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->classLikeName->toString(), $p->fileOccurrence->line));
-        }
-
-        $buffer[] = sprintf('%s::%d', $astInherit->classLikeName->toString(), $astInherit->fileOccurrence->line);
-        $buffer[] = sprintf(
-            '%s::%d',
-            $dependency->originalDependency->getDependent()->toString(),
-            $dependency->originalDependency->getFileOccurrence()->line
+        return implode(
+            " -> \n",
+            array_map(
+                static fn (array $dependency): string => sprintf('%s::%d', $dependency['name'], $dependency['line']),
+                $dep->serialize()
+            )
         );
-
-        return implode(" -> \n", $buffer);
     }
 
     private function printSummary(LegacyResult $result, OutputInterface $output, bool $reportUncoveredAsError): void
@@ -152,8 +145,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $dependency->getDependent()->toString()
         );
 
-        if ($dependency instanceof InheritDependency) {
-            $message .= "\n".$this->formatInheritPath($dependency);
+        if (count($dependency->serialize()) > 1) {
+            $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();

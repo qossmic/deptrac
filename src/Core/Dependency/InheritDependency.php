@@ -10,9 +10,6 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 
-/**
- * @psalm-immutable
- */
 class InheritDependency implements DependencyInterface
 {
     public function __construct(
@@ -21,6 +18,19 @@ class InheritDependency implements DependencyInterface
         public readonly DependencyInterface $originalDependency,
         public readonly AstInherit $inheritPath
     ) {
+    }
+
+    public function serialize(): array
+    {
+        $buffer = [];
+        foreach ($this->inheritPath->getPath() as $p) {
+            array_unshift($buffer, ['name' => $p->classLikeName->toString(), 'line' => $p->fileOccurrence->line]);
+        }
+
+        $buffer[] = ['name' => $this->inheritPath->classLikeName->toString(), 'line' => $this->inheritPath->fileOccurrence->line];
+        $buffer[] = ['name' => $this->originalDependency->getDependent()->toString(), 'line' => $this->originalDependency->getFileOccurrence()->line];
+
+        return $buffer;
     }
 
     public function getDepender(): ClassLikeToken

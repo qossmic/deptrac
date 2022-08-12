@@ -8,9 +8,3 @@ deptrac:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
-    Qossmic\Deptrac\Supportive\OutputFormatter\ConsoleOutputFormatter:
-      - Qossmic\Deptrac\Core\Dependency\InheritDependency
-    Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter:
-      - Qossmic\Deptrac\Core\Dependency\InheritDependency
-    Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter:
-      - Qossmic\Deptrac\Core\Dependency\InheritDependency

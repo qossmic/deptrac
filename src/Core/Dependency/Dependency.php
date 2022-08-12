@@ -8,9 +8,6 @@ use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 
-/**
- * @psalm-immutable
- */
 class Dependency implements DependencyInterface
 {
     public function __construct(
@@ -18,6 +15,14 @@ class Dependency implements DependencyInterface
         private readonly TokenInterface $dependent,
         private readonly FileOccurrence $fileOccurrence
     ) {
+    }
+
+    public function serialize(): array
+    {
+        return [[
+            'name' => $this->dependent->toString(),
+            'line' => $this->fileOccurrence->line,
+        ]];
     }
 
     public function getDepender(): TokenInterface

@@ -2,6 +2,7 @@
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
@@ -9,7 +10,6 @@ use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
-use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 
 final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
@@ -45,8 +45,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 $rule->getDependentLayer()
             );
 
-            if ($dependency instanceof InheritDependency) {
-                $message .= '%0A'.$this->inheritPathMessage($dependency);
+            if (count($dependency->serialize()) > 1) {
+                $message .= '%0A'.$this->multilinePathMessage($dependency);
             }
 
             $output->writeLineFormatted(sprintf(
@@ -98,22 +98,15 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function inheritPathMessage(InheritDependency $dependency): string
+    private function multilinePathMessage(DependencyInterface $dep): string
     {
-        $buffer = [];
-        $astInherit = $dependency->inheritPath;
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->classLikeName->toString(), $p->fileOccurrence->line));
-        }
-
-        $buffer[] = sprintf('%s::%d', $astInherit->classLikeName->toString(), $astInherit->fileOccurrence->line);
-        $buffer[] = sprintf(
-            '%s::%d',
-            $dependency->originalDependency->getDependent()->toString(),
-            $dependency->originalDependency->getFileOccurrence()->line
+        return implode(
+            ' ->%0A',
+            array_map(
+                static fn (array $dependency): string => sprintf('%s::%d', $dependency['name'], $dependency['line']),
+                $dep->serialize()
+            )
         );
-
-        return implode(' ->%0A', $buffer);
     }
 
     private function printErrors(LegacyResult $result, OutputInterface $output): void
