@@ -19,32 +19,25 @@ use function sprintf;
  */
 final class AnalyseRunner
 {
-    private LegacyDependencyLayersAnalyser $analyser;
-    private FormatterProvider $formatterProvider;
-
-    public function __construct(
-        LegacyDependencyLayersAnalyser $analyser,
-        FormatterProvider $formatterProvider
-    ) {
-        $this->analyser = $analyser;
-        $this->formatterProvider = $formatterProvider;
+    public function __construct(private readonly LegacyDependencyLayersAnalyser $analyser, private readonly FormatterProvider $formatterProvider)
+    {
     }
 
     public function run(AnalyseOptions $options, OutputInterface $output): void
     {
         try {
-            $formatter = $this->formatterProvider->get($options->getFormatter());
-        } catch (ContainerExceptionInterface $e) {
-            $this->printFormatterNotFoundException($output, $options->getFormatter());
+            $formatter = $this->formatterProvider->get($options->formatter);
+        } catch (ContainerExceptionInterface) {
+            $this->printFormatterNotFoundException($output, $options->formatter);
 
             throw AnalyseException::invalidFormatter();
         }
 
         $formatterInput = new OutputFormatterInput(
-            $options->getOutput(),
-            $options->reportSkipped(),
-            $options->reportUncovered(),
-            $options->failOnUncovered(),
+            $options->output,
+            $options->reportSkipped,
+            $options->reportUncovered,
+            $options->failOnUncovered,
         );
 
         $this->printCollectViolations($output);
@@ -59,7 +52,7 @@ final class AnalyseRunner
             $this->printFormatterError($output, $formatter::getName(), $error);
         }
 
-        if ($options->failOnUncovered() && $result->hasUncovered()) {
+        if ($options->failOnUncovered && $result->hasUncovered()) {
             throw AnalyseException::finishedWithUncovered();
         }
         if ($result->hasViolations()) {

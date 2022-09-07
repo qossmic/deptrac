@@ -14,27 +14,21 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
  */
 class UncoveredDependentHandler
 {
-    private bool $ignoreUncoveredInternalClasses;
-
-    public function __construct(bool $ignoreUncoveredInternalClasses)
+    public function __construct(private readonly bool $ignoreUncoveredInternalClasses)
     {
-        $this->ignoreUncoveredInternalClasses = $ignoreUncoveredInternalClasses;
     }
 
     public function __invoke(ProcessEvent $event): void
     {
-        $dependency = $event->getDependency();
-        $dependent = $dependency->getDependent();
-        $dependerLayer = $event->getDependerLayer();
-        $dependentLayers = $event->getDependentLayers();
+        $dependent = $event->dependency->getDependent();
         $ruleset = $event->getResult();
 
-        if ([] !== $dependentLayers) {
+        if ([] !== $event->dependentLayers) {
             return;
         }
 
         if ($dependent instanceof ClassLikeToken && !$this->ignoreUncoveredInternalClass($dependent)) {
-            $ruleset->add(new Uncovered($dependency, $dependerLayer));
+            $ruleset->add(new Uncovered($event->dependency, $event->dependerLayer));
         }
 
         $event->stopPropagation();

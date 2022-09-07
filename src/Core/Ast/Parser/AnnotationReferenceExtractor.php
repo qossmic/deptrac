@@ -19,15 +19,13 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
 class AnnotationReferenceExtractor implements ReferenceExtractorInterface
 {
-    private Lexer $lexer;
-    private PhpDocParser $docParser;
-    private TypeResolver $typeResolver;
+    private readonly Lexer $lexer;
+    private readonly PhpDocParser $docParser;
 
-    public function __construct(TypeResolver $typeResolver)
+    public function __construct(private readonly TypeResolver $typeResolver)
     {
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
-        $this->typeResolver = $typeResolver;
     }
 
     public function processNode(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void

@@ -17,28 +17,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class DependencyResolver
 {
-    private ContainerInterface $emitterLocator;
-    private InheritanceFlattener $inheritanceFlattener;
-    private EventDispatcherInterface $eventDispatcher;
-
-    /**
-     * @var array{types: array<string>}
-     */
-    private array $config;
-
     /**
      * @param array{types: array<string>} $config
      */
     public function __construct(
-        array $config,
-        InheritanceFlattener $inheritanceFlattener,
-        ContainerInterface $emitterLocator,
-        EventDispatcherInterface $eventDispatcher
+        private readonly array $config,
+        private readonly InheritanceFlattener $inheritanceFlattener,
+        private readonly ContainerInterface $emitterLocator,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->config = $config;
-        $this->inheritanceFlattener = $inheritanceFlattener;
-        $this->emitterLocator = $emitterLocator;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function resolve(AstMap $astMap): DependencyList
@@ -48,7 +35,7 @@ class DependencyResolver
         foreach ($this->config['types'] as $type) {
             try {
                 $emitter = $this->emitterLocator->get($type);
-            } catch (ContainerExceptionInterface $containerException) {
+            } catch (ContainerExceptionInterface) {
                 throw new ShouldNotHappenException();
             }
             if (!$emitter instanceof DependencyEmitterInterface) {

@@ -17,22 +17,17 @@ use function in_array;
  */
 class AllowDependencyHandler
 {
-    private LayerProvider $layerProvider;
-
-    public function __construct(LayerProvider $layerProvider)
+    public function __construct(private readonly LayerProvider $layerProvider)
     {
-        $this->layerProvider = $layerProvider;
     }
 
     public function __invoke(ProcessEvent $event): void
     {
-        $dependency = $event->getDependency();
-        $dependerLayer = $event->getDependerLayer();
         $ruleset = $event->getResult();
 
-        foreach ($event->getDependentLayers() as $dependentLayer => $isPublic) {
+        foreach ($event->dependentLayers as $dependentLayer => $isPublic) {
             try {
-                $allowedLayers = $this->layerProvider->getAllowedLayers($dependerLayer);
+                $allowedLayers = $this->layerProvider->getAllowedLayers($event->dependerLayer);
             } catch (CircularReferenceException $circularReferenceException) {
                 $ruleset->addError(new Error($circularReferenceException->getMessage()));
                 $event->stopPropagation();
@@ -40,7 +35,7 @@ class AllowDependencyHandler
                 return;
             }
 
-            if (!$isPublic && $dependerLayer !== $dependentLayer) {
+            if (!$isPublic && $event->dependerLayer !== $dependentLayer) {
                 return;
             }
 
@@ -48,16 +43,14 @@ class AllowDependencyHandler
                 return;
             }
 
-            if ($dependerLayer !== $dependentLayer) {
-                $dependentReference = $event->getDependentReference();
-                if (($dependentReference instanceof ClassLikeReference)
-                    && $dependentReference->isInternal()
-                ) {
-                    return;
-                }
+            if ($event->dependerLayer !== $dependentLayer
+                && $event->dependentReference instanceof ClassLikeReference
+                && $event->dependentReference->isInternal
+            ) {
+                return;
             }
 
-            $ruleset->add(new Allowed($dependency, $dependerLayer, $dependentLayer));
+            $ruleset->add(new Allowed($event->dependency, $event->dependerLayer, $dependentLayer));
 
             $event->stopPropagation();
         }

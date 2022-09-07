@@ -12,11 +12,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ProgressSubscriber implements EventSubscriberInterface
 {
-    private OutputInterface $output;
-
-    public function __construct(OutputInterface $output)
+    public function __construct(private readonly OutputInterface $output)
     {
-        $this->output = $output;
     }
 
     /**
@@ -33,7 +30,7 @@ class ProgressSubscriber implements EventSubscriberInterface
 
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
-        $this->output->getStyle()->progressStart($preCreateAstMapEvent->getExpectedFileCount());
+        $this->output->getStyle()->progressStart($preCreateAstMapEvent->expectedFileCount);
     }
 
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void

@@ -10,7 +10,7 @@ class IgnoreDependenciesOnShouldNotHappenException
 {
     public function __invoke(ProcessEvent $event): void
     {
-        if ("Qossmic\Deptrac\Supportive\ShouldNotHappenException" === $event->getDependentReference()->getToken()->toString()) {
+        if ("Qossmic\Deptrac\Supportive\ShouldNotHappenException" === $event->dependentReference->getToken()->toString()) {
             $event->stopPropagation();
         }
     }

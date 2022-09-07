@@ -17,12 +17,8 @@ class InitCommand extends Command
     public static $defaultName = 'init';
     public static $defaultDescription = 'Creates a depfile template';
 
-    private ConfigurationDumper $dumper;
-
-    public function __construct(ConfigurationDumper $dumper)
+    public function __construct(private readonly ConfigurationDumper $dumper)
     {
-        $this->dumper = $dumper;
-
         parent::__construct();
     }
 
@@ -41,11 +37,11 @@ class InitCommand extends Command
             $this->dumper->dump($targetFile);
             $output->writeln('Depfile <info>dumped.</info>');
 
-            return 0;
+            return self::SUCCESS;
         } catch (FileNotWritableException|FileAlreadyExistsException $fileException) {
             $output->writeln(sprintf('<error>%s</error>', $fileException->getMessage()));
 
-            return 1;
+            return self::FAILURE;
         }
     }
 }

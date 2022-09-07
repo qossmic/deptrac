@@ -39,7 +39,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
         }
 
         ksort($groupedViolations);
-        $baselineFile = $outputFormatterInput->getOutputPath() ?? self::DEFAULT_PATH;
+        $baselineFile = $outputFormatterInput->outputPath ?? self::DEFAULT_PATH;
         $dirname = dirname($baselineFile);
         if (!is_dir($dirname) && mkdir($dirname.'/', 0777, true) && !is_dir($dirname)) {
             $output->writeLineFormatted('<error>Unable to create '.realpath($baselineFile).'</error>');
@@ -67,7 +67,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     private function collectViolations(LegacyResult $result): array
     {
         $violations = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
@@ -83,9 +83,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
         }
 
         return array_map(
-            static function (array $dependencies): array {
-                return array_values($dependencies);
-            },
+            static fn (array $dependencies): array => array_values($dependencies),
             $violations
         );
     }

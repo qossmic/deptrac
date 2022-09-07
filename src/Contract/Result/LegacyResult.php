@@ -13,36 +13,15 @@ use function count;
 final class LegacyResult
 {
     /**
-     * @var RuleInterface[]
-     */
-    private array $rules;
-    /**
-     * @var Error[]
-     */
-    private array $errors;
-    /**
-     * @var Warning[]
-     */
-    private array $warnings;
-
-    /**
      * @param RuleInterface[] $rules
      * @param Error[]         $errors
      * @param Warning[]       $warnings
      */
-    public function __construct(array $rules, array $errors, array $warnings)
-    {
-        $this->rules = $rules;
-        $this->errors = $errors;
-        $this->warnings = $warnings;
-    }
-
-    /**
-     * @return RuleInterface[]
-     */
-    public function rules(): array
-    {
-        return $this->rules;
+    public function __construct(
+        public readonly array $rules,
+        public readonly array $errors,
+        public readonly array $warnings
+    ) {
     }
 
     /**
@@ -50,9 +29,7 @@ final class LegacyResult
      */
     public function violations(): array
     {
-        return array_filter($this->rules, static function (RuleInterface $rule) {
-            return $rule instanceof Violation;
-        });
+        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof Violation);
     }
 
     public function hasViolations(): bool
@@ -65,9 +42,7 @@ final class LegacyResult
      */
     public function skippedViolations(): array
     {
-        return array_filter($this->rules, static function (RuleInterface $rule) {
-            return $rule instanceof SkippedViolation;
-        });
+        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof SkippedViolation);
     }
 
     /**
@@ -75,9 +50,7 @@ final class LegacyResult
      */
     public function uncovered(): array
     {
-        return array_filter($this->rules, static function (RuleInterface $rule) {
-            return $rule instanceof Uncovered;
-        });
+        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof Uncovered);
     }
 
     public function hasUncovered(): bool
@@ -90,9 +63,7 @@ final class LegacyResult
      */
     public function allowed(): array
     {
-        return array_filter($this->rules, static function (RuleInterface $rule) {
-            return $rule instanceof Allowed;
-        });
+        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof Allowed);
     }
 
     public function hasErrors(): bool
@@ -100,24 +71,8 @@ final class LegacyResult
         return count($this->errors) > 0;
     }
 
-    /**
-     * @return Error[]
-     */
-    public function errors(): array
-    {
-        return $this->errors;
-    }
-
     public function hasWarnings(): bool
     {
         return count($this->warnings) > 0;
-    }
-
-    /**
-     * @return Warning[]
-     */
-    public function warnings(): array
-    {
-        return $this->warnings;
     }
 }

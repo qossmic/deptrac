@@ -46,7 +46,7 @@ final class NikicPhpParserTest extends TestCase
         );
 
         $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
-        self::assertCount(1, $parser->parseFile($filePath)->getDependencies());
+        self::assertCount(1, $parser->parseFile($filePath)->dependencies);
     }
 
     /**
@@ -64,10 +64,10 @@ final class NikicPhpParserTest extends TestCase
 
         $filePath = __DIR__.'/Fixtures/Attributes.php';
         $astFileReference = $parser->parseFile($filePath);
-        $astClassReferences = $astFileReference->getClassLikeReferences();
-        self::assertCount(7, $astClassReferences[0]->getDependencies());
-        self::assertCount(2, $astClassReferences[1]->getDependencies());
-        self::assertCount(1, $astClassReferences[2]->getDependencies());
+        $astClassReferences = $astFileReference->classLikeReferences;
+        self::assertCount(7, $astClassReferences[0]->dependencies);
+        self::assertCount(2, $astClassReferences[1]->dependencies);
+        self::assertCount(1, $astClassReferences[2]->dependencies);
     }
 
     public function testParseTemplateTypes(): void
@@ -82,7 +82,7 @@ final class NikicPhpParserTest extends TestCase
 
         $filePath = __DIR__.'/Fixtures/TemplateTypes.php';
         $astFileReference = $parser->parseFile($filePath);
-        $astClassReferences = $astFileReference->getClassLikeReferences();
-        self::assertCount(0, $astClassReferences[0]->getDependencies());
+        $astClassReferences = $astFileReference->classLikeReferences;
+        self::assertCount(0, $astClassReferences[0]->dependencies);
     }
 }

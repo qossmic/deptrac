@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use function count;
 
 /**
@@ -30,21 +29,19 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        $reportSkipped = $outputFormatterInput->getReportSkipped();
-
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!$reportSkipped && $rule instanceof SkippedViolation) {
+            if (!$outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation) {
                 continue;
             }
 
             $this->printViolation($rule, $output);
         }
 
-        if ($outputFormatterInput->getReportUncovered()) {
+        if ($outputFormatterInput->reportUncovered) {
             $this->printUncovered($result, $output);
         }
 
@@ -59,10 +56,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $this->printSummary($result, $output);
     }
 
-    /**
-     * @param Violation|SkippedViolation $rule
-     */
-    private function printViolation(RuleInterface $rule, OutputInterface $output): void
+    private function printViolation(Violation|SkippedViolation $rule, OutputInterface $output): void
     {
         $dependency = $rule->getDependency();
 
@@ -70,35 +64,32 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             sprintf(
                 '%s<info>%s</info> must not depend on <info>%s</info> (%s on %s)',
                 $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getDepender()->toString(),
-                $dependency->getDependent()->toString(),
+                $dependency->getDepender()
+                    ->toString(),
+                $dependency->getDependent()
+                    ->toString(),
                 $rule->getDependerLayer(),
                 $rule->getDependentLayer()
             )
         );
         $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
-        if ($dependency instanceof InheritDependency) {
-            $this->printInheritPath($output, $dependency);
+        if (count($dependency->serialize()) > 1) {
+            $this->printMultilinePath($output, $dependency);
         }
     }
 
-    private function printInheritPath(OutputInterface $output, InheritDependency $dependency): void
+    private function printMultilinePath(OutputInterface $output, DependencyInterface $dep): void
     {
-        $buffer = [];
-        $astInherit = $dependency->getInheritPath();
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf("\t%s::%d", $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
-        }
-
-        $buffer[] = sprintf("\t%s::%d", $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
-        $buffer[] = sprintf(
-            "\t%s::%d",
-            $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+        $buffer = implode(
+            " -> \n",
+            array_map(
+                static fn (array $dependency): string => sprintf("\t%s::%d", $dependency['name'], $dependency['line']),
+                $dep->serialize()
+            )
         );
 
-        $output->writeLineFormatted(implode(" -> \n", $buffer));
+        $output->writeLineFormatted($buffer);
     }
 
     private function printSummary(LegacyResult $result, OutputInterface $output): void
@@ -107,8 +98,8 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $skippedViolationCount = count($result->skippedViolations());
         $uncoveredCount = count($result->uncovered());
         $allowedCount = count($result->allowed());
-        $warningsCount = count($result->warnings());
-        $errorsCount = count($result->errors());
+        $warningsCount = count($result->warnings);
+        $errorsCount = count($result->errors);
 
         $output->writeLineFormatted('');
         $output->writeLineFormatted('Report:');
@@ -163,37 +154,39 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
             $output->writeLineFormatted(
                 sprintf(
                     '<info>%s</info> has uncovered dependency on <info>%s</info> (%s)',
-                    $dependency->getDepender()->toString(),
-                    $dependency->getDependent()->toString(),
-                    $u->getLayer()
+                    $dependency->getDepender()
+                        ->toString(),
+                    $dependency->getDependent()
+                        ->toString(),
+                    $u->layer
                 )
             );
             $this->printFileOccurrence($output, $dependency->getFileOccurrence());
 
-            if ($dependency instanceof InheritDependency) {
-                $this->printInheritPath($output, $dependency);
+            if (count($dependency->serialize()) > 1) {
+                $this->printMultilinePath($output, $dependency);
             }
         }
     }
 
     private function printFileOccurrence(OutputInterface $output, FileOccurrence $fileOccurrence): void
     {
-        $output->writeLineFormatted($fileOccurrence->getFilepath().'::'.$fileOccurrence->getLine());
+        $output->writeLineFormatted($fileOccurrence->filepath.'::'.$fileOccurrence->line);
     }
 
     private function printErrors(LegacyResult $result, OutputInterface $output): void
     {
         $output->writeLineFormatted('');
-        foreach ($result->errors() as $error) {
-            $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', $error->toString()));
+        foreach ($result->errors as $error) {
+            $output->writeLineFormatted(sprintf('<fg=red>[ERROR]</> %s', (string) $error));
         }
     }
 
     private function printWarnings(LegacyResult $result, OutputInterface $output): void
     {
         $output->writeLineFormatted('');
-        foreach ($result->warnings() as $error) {
-            $output->writeLineFormatted(sprintf('<fg=yellow>[WARNING]</> %s', $error->toString()));
+        foreach ($result->warnings as $warning) {
+            $output->writeLineFormatted(sprintf('<fg=yellow>[WARNING]</> %s', (string) $warning));
         }
     }
 }

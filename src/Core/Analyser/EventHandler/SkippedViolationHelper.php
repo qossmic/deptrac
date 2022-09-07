@@ -16,20 +16,14 @@ final class SkippedViolationHelper
     /**
      * @var array<string, string[]>
      */
-    private array $skippedViolation;
-
-    /**
-     * @var array<string, string[]>
-     */
     private array $unmatchedSkippedViolation;
 
     /**
-     * @param array<string, string[]> $skipViolations
+     * @param array<string, string[]> $skippedViolation
      */
-    public function __construct(array $skipViolations)
+    public function __construct(private readonly array $skippedViolation)
     {
-        $this->skippedViolation = $skipViolations;
-        $this->unmatchedSkippedViolation = $skipViolations;
+        $this->unmatchedSkippedViolation = $skippedViolation;
     }
 
     public function isViolationSkipped(string $depender, string $dependent): bool

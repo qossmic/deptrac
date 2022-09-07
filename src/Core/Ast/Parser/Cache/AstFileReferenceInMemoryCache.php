@@ -22,7 +22,7 @@ final class AstFileReferenceInMemoryCache implements AstFileReferenceCacheInterf
 
     public function set(FileReference $fileReference): void
     {
-        $filepath = (string) realpath($fileReference->getFilepath());
+        $filepath = (string) realpath($fileReference->filepath);
 
         $this->cache[$filepath] = $fileReference;
     }

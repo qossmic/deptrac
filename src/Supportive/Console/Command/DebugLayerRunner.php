@@ -13,20 +13,11 @@ use function array_map;
  */
 final class DebugLayerRunner
 {
-    private TokenInLayerAnalyser $processor;
-
-    /**
-     * @var array<array{name: string, collectors: array<array<string, string|array<string, string>>>}>
-     */
-    private array $layers;
-
     /**
      * @param array<array{name: string, collectors: array<array<string, string|array<string, string>>>}> $layers
      */
-    public function __construct(TokenInLayerAnalyser $processor, array $layers)
+    public function __construct(private readonly TokenInLayerAnalyser $processor, private readonly array $layers)
     {
-        $this->processor = $processor;
-        $this->layers = $layers;
     }
 
     public function run(?string $layer, OutputInterface $output): void

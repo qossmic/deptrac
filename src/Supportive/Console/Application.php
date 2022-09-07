@@ -71,7 +71,7 @@ final class Application extends BaseApplication
 
         try {
             $input->bind($this->getDefinition());
-        } catch (ExceptionInterface $e) {
+        } catch (ExceptionInterface) {
             // Errors must be ignored, full binding/validation happens later when the command is known.
         }
 

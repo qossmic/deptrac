@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
@@ -40,12 +41,27 @@ class BaselineOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
-                        AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritA'), FileOccurrence::fromFilepath('originalA.php', 3))
+                        new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                        (new AstInherit(
+                            ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('originalA.php', 3),
+                            AstInheritType::EXTENDS
+                        ))
                             ->withPath([
-                                AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritB'), FileOccurrence::fromFilepath('originalA.php', 4)),
-                                AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritC'), FileOccurrence::fromFilepath('originalA.php', 5)),
-                                AstInherit::newExtends(ClassLikeToken::fromFQCN('ClassInheritD'), FileOccurrence::fromFilepath('originalA.php', 6)),
+                                new AstInherit(
+                                    ClassLikeToken::fromFQCN('ClassInheritB'),
+                                    new FileOccurrence('originalA.php', 4),
+                                    AstInheritType::EXTENDS
+                                ),
+                                new AstInherit(
+                                    ClassLikeToken::fromFQCN('ClassInheritC'),
+                                    new FileOccurrence('originalA.php', 5),
+                                    AstInheritType::EXTENDS
+                                ),
+                                new AstInherit(
+                                    ClassLikeToken::fromFQCN('ClassInheritD'),
+                                    new FileOccurrence('originalA.php', 6),
+                                    AstInheritType::EXTENDS
+                                ),
                             ])
                     ),
                     'LayerA',
@@ -58,7 +74,7 @@ class BaselineOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
                     'LayerA',
                     'LayerB'
                 ),
@@ -74,7 +90,7 @@ class BaselineOutputFormatterTest extends TestCase
         yield [
             [
                 new SkippedViolation(
-                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
                     'LayerA',
                     'LayerB'
                 ),
@@ -85,7 +101,7 @@ class BaselineOutputFormatterTest extends TestCase
         yield [
             [
                 new Uncovered(
-                    new Dependency($originalA, $originalB, FileOccurrence::fromFilepath('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
                     'LayerA'
                 ),
             ],

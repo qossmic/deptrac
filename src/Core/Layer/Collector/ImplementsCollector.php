@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
+use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 final class ImplementsCollector implements CollectorInterface
 {
@@ -22,7 +23,7 @@ final class ImplementsCollector implements CollectorInterface
         $interfaceName = $this->getInterfaceName($config);
 
         foreach ($astMap->getClassInherits($reference->getToken()) as $inherit) {
-            if ($inherit->isImplements() && $inherit->getClassLikeName()->equals($interfaceName)) {
+            if (AstInheritType::IMPLEMENTS === $inherit->type && $inherit->classLikeName->equals($interfaceName)) {
                 return true;
             }
         }

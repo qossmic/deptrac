@@ -4,37 +4,34 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\File;
 
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 /**
  * @psalm-immutable
  */
 class FileReference implements TokenReferenceInterface
 {
-    private string $filepath;
-
     /** @var ClassLikeReference[] */
-    private array $classLikeReferences;
-
-    /** @var DependencyToken[] */
-    private array $dependencies;
+    public readonly array $classLikeReferences;
 
     /** @var FunctionLikeReference[] */
-    private array $functionLikeReferences;
+    public readonly array $functionLikeReferences;
 
     /**
      * @param ClassLikeReference[]    $classLikeReferences
      * @param FunctionLikeReference[] $functionLikeReferences
      * @param DependencyToken[]       $dependencies
      */
-    public function __construct(string $filepath, array $classLikeReferences, array $functionLikeReferences, array $dependencies)
-    {
-        $this->filepath = $filepath;
-        $this->dependencies = $dependencies;
+    public function __construct(
+        public readonly string $filepath,
+        array $classLikeReferences,
+        array $functionLikeReferences,
+        public readonly array $dependencies
+    ) {
         /** @psalm-suppress ImpureFunctionCall */
         $this->classLikeReferences = array_map(
             fn (ClassLikeReference $classReference) => $classReference->withFileReference($this),
@@ -47,42 +44,13 @@ class FileReference implements TokenReferenceInterface
         );
     }
 
-    public function getFilepath(): string
+    public function getFilepath(): ?string
     {
         return $this->filepath;
     }
 
-    /**
-     * @return ClassLikeReference[]
-     */
-    public function getClassLikeReferences(): array
-    {
-        return $this->classLikeReferences;
-    }
-
-    /**
-     * @return DependencyToken[]
-     */
-    public function getDependencies(): array
-    {
-        return $this->dependencies;
-    }
-
-    /**
-     * @return FunctionLikeReference[]
-     */
-    public function getFunctionLikeReferences(): array
-    {
-        return $this->functionLikeReferences;
-    }
-
-    public function getFileReference(): ?FileReference
-    {
-        return $this;
-    }
-
     public function getToken(): TokenInterface
     {
-        return new FileToken($this->getFilepath());
+        return new FileToken($this->filepath);
     }
 }

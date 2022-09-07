@@ -16,7 +16,7 @@ use function sprintf;
  */
 class ViolationHandler
 {
-    private SkippedViolationHelper $skippedViolationHelper;
+    private readonly SkippedViolationHelper $skippedViolationHelper;
 
     /**
      * @param array<string, string[]>|null $skippedViolations
@@ -28,21 +28,18 @@ class ViolationHandler
 
     public function handleViolation(ProcessEvent $event): void
     {
-        $dependency = $event->getDependency();
-        $depender = $dependency->getDepender();
-        $dependent = $dependency->getDependent();
-        $dependerLayer = $event->getDependerLayer();
-        $dependentLayers = $event->getDependentLayers();
+        $depender = $event->dependency->getDepender();
+        $dependent = $event->dependency->getDependent();
         $ruleset = $event->getResult();
 
-        foreach ($dependentLayers as $dependentLayer => $_) {
+        foreach ($event->dependentLayers as $dependentLayer => $_) {
             if ($this->skippedViolationHelper->isViolationSkipped($depender->toString(), $dependent->toString())) {
-                $ruleset->add(new SkippedViolation($dependency, $dependerLayer, $dependentLayer));
+                $ruleset->add(new SkippedViolation($event->dependency, $event->dependerLayer, $dependentLayer));
 
                 continue;
             }
 
-            $ruleset->add(new Violation($dependency, $dependerLayer, $dependentLayer));
+            $ruleset->add(new Violation($event->dependency, $event->dependerLayer, $dependentLayer));
         }
     }
 

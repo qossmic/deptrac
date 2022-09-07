@@ -4,27 +4,33 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Dependency;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
 
-/**
- * @psalm-immutable
- */
 class InheritDependency implements DependencyInterface
 {
-    private ClassLikeToken $depender;
-    private TokenInterface $dependent;
-    private AstInherit $path;
-    private DependencyInterface $originalDependency;
+    public function __construct(
+        private readonly ClassLikeToken $depender,
+        private readonly TokenInterface $dependent,
+        public readonly DependencyInterface $originalDependency,
+        public readonly AstInherit $inheritPath
+    ) {
+    }
 
-    public function __construct(ClassLikeToken $depender, TokenInterface $dependent, DependencyInterface $originalDependency, AstInherit $path)
+    public function serialize(): array
     {
-        $this->depender = $depender;
-        $this->dependent = $dependent;
-        $this->originalDependency = $originalDependency;
-        $this->path = $path;
+        $buffer = [];
+        foreach ($this->inheritPath->getPath() as $p) {
+            array_unshift($buffer, ['name' => $p->classLikeName->toString(), 'line' => $p->fileOccurrence->line]);
+        }
+
+        $buffer[] = ['name' => $this->inheritPath->classLikeName->toString(), 'line' => $this->inheritPath->fileOccurrence->line];
+        $buffer[] = ['name' => $this->originalDependency->getDependent()->toString(), 'line' => $this->originalDependency->getFileOccurrence()->line];
+
+        return $buffer;
     }
 
     public function getDepender(): ClassLikeToken
@@ -34,21 +40,11 @@ class InheritDependency implements DependencyInterface
 
     public function getFileOccurrence(): FileOccurrence
     {
-        return $this->getOriginalDependency()->getFileOccurrence();
+        return $this->originalDependency->getFileOccurrence();
     }
 
     public function getDependent(): TokenInterface
     {
         return $this->dependent;
-    }
-
-    public function getInheritPath(): AstInherit
-    {
-        return $this->path;
-    }
-
-    public function getOriginalDependency(): DependencyInterface
-    {
-        return $this->originalDependency;
     }
 }

@@ -22,26 +22,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class AnalyseCommand extends Command
 {
-    public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
-    public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
-    public const OPTION_REPORT_SKIPPED = 'report-skipped';
+    final public const OPTION_REPORT_UNCOVERED = 'report-uncovered';
+    final public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
+    final public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
     public static $defaultName = 'analyse|analyze';
     public static $defaultDescription = 'Analyses your project using the provided depfile';
 
-    private AnalyseRunner $runner;
-    private EventDispatcherInterface $dispatcher;
-    private FormatterProvider $formatterProvider;
-
     public function __construct(
-        AnalyseRunner $runner,
-        EventDispatcherInterface $dispatcher,
-        FormatterProvider $formatterProvider
+        private readonly AnalyseRunner $runner,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly FormatterProvider $formatterProvider
     ) {
-        $this->runner = $runner;
-        $this->dispatcher = $dispatcher;
-        $this->formatterProvider = $formatterProvider;
-
         parent::__construct();
     }
 
@@ -72,7 +64,7 @@ class AnalyseCommand extends Command
         $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
         /** @var ?string $formatter */
         $formatter = $input->getOption('formatter');
-        $formatter = $formatter ?? self::getDefaultFormatter();
+        $formatter ??= self::getDefaultFormatter();
 
         /** @var string|numeric|null $output */
         $output = $input->getOption('output');
@@ -87,17 +79,17 @@ class AnalyseCommand extends Command
         );
 
         $this->dispatcher->addSubscriber(new ConsoleSubscriber($symfonyOutput));
-        if ($options->showProgress()) {
+        if (!$options->noProgress) {
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
 
         try {
             $this->runner->run($options, $symfonyOutput);
-        } catch (AnalyseException $analyseException) {
-            return 1;
+        } catch (AnalyseException) {
+            return self::FAILURE;
         }
 
-        return 0;
+        return self::SUCCESS;
     }
 
     public static function getDefaultFormatter(): string

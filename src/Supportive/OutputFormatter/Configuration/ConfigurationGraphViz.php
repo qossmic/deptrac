@@ -6,14 +6,6 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter\Configuration;
 
 final class ConfigurationGraphViz
 {
-    /** @var array<string, string[]> */
-    private array $groupsLayerMap;
-
-    /** @var string[] */
-    private array $hiddenLayers;
-
-    private bool $pointToGroups;
-
     /**
      * @param array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool} $arr
      */
@@ -26,31 +18,10 @@ final class ConfigurationGraphViz
      * @param string[]                $hiddenLayers
      * @param array<string, string[]> $groupsLayerMap
      */
-    private function __construct(array $hiddenLayers, array $groupsLayerMap, bool $pointToGroups)
-    {
-        $this->groupsLayerMap = $groupsLayerMap;
-        $this->hiddenLayers = $hiddenLayers;
-        $this->pointToGroups = $pointToGroups;
-    }
-
-    /**
-     * @return array<string, string[]>
-     */
-    public function getGroupsLayerMap(): array
-    {
-        return $this->groupsLayerMap;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getHiddenLayers(): array
-    {
-        return $this->hiddenLayers;
-    }
-
-    public function getPointToGroups(): bool
-    {
-        return $this->pointToGroups;
+    private function __construct(
+        public readonly array $hiddenLayers,
+        public readonly array $groupsLayerMap,
+        public readonly bool $pointToGroups
+    ) {
     }
 }

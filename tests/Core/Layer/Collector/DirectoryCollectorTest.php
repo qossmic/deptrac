@@ -45,7 +45,7 @@ final class DirectoryCollectorTest extends TestCase
 
         $actual = $this->collector->satisfy(
             $configuration,
-            $fileReference->getClassLikeReferences()[0],
+            $fileReference->classLikeReferences[0],
             new AstMap([])
         );
 
@@ -63,7 +63,7 @@ final class DirectoryCollectorTest extends TestCase
 
         $this->collector->satisfy(
             [],
-            $fileReference->getClassLikeReferences()[0],
+            $fileReference->classLikeReferences[0],
             new AstMap([])
         );
     }
@@ -78,7 +78,7 @@ final class DirectoryCollectorTest extends TestCase
 
         $this->collector->satisfy(
             ['value' => '\\'],
-            $fileReference->getClassLikeReferences()[0],
+            $fileReference->classLikeReferences[0],
             new AstMap([])
         );
     }

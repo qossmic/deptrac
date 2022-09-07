@@ -70,7 +70,7 @@ final class ExtendsCollectorTest extends TestCase
 
         $actual = $this->collector->satisfy(
             $configuration,
-            $fooBarFileReference->getClassLikeReferences()[0],
+            $fooBarFileReference->classLikeReferences[0],
             new AstMap([$fooFileReference, $barFileReference, $bazFileReference, $fooBarFileReference, $fizTraitFileReference]),
         );
 

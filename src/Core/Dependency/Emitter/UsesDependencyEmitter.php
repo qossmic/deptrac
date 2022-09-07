@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Dependency\Emitter;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 use function array_map;
@@ -23,9 +24,7 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
     {
         $references = array_merge($astMap->getClassLikeReferences(), $astMap->getFunctionLikeReferences());
         $referencesFQDN = array_map(
-            static function ($ref) {
-                return $ref->getToken()->toString();
-            },
+            static fn ($ref) => $ref->getToken()->toString(),
             $references
         );
 
@@ -36,17 +35,16 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
         }
 
         foreach ($astMap->getFileReferences() as $fileReference) {
-            $dependencies = $fileReference->getDependencies();
-            foreach ($fileReference->getClassLikeReferences() as $astClassReference) {
-                foreach ($dependencies as $emittedDependency) {
-                    if (DependencyToken::USE === $emittedDependency->getType() &&
+            foreach ($fileReference->classLikeReferences as $astClassReference) {
+                foreach ($fileReference->dependencies as $emittedDependency) {
+                    if (DependencyTokenType::USE === $emittedDependency->type &&
                         $this->isFQDN($emittedDependency, $FQDNIndex)
                     ) {
                         $dependencyList->addDependency(
                             new Dependency(
                                 $astClassReference->getToken(),
-                                $emittedDependency->getToken(),
-                                $emittedDependency->getFileOccurrence()
+                                $emittedDependency->token,
+                                $emittedDependency->fileOccurrence
                             )
                         );
                     }
@@ -57,7 +55,7 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
 
     private function isFQDN(DependencyToken $dependency, FQDNIndexNode $FQDNIndex): bool
     {
-        $dependencyFQDN = $dependency->getToken()->toString();
+        $dependencyFQDN = $dependency->token->toString();
         $path = explode('\\', $dependencyFQDN);
         $value = $FQDNIndex->getNestedNode($path);
         if (null === $value) {

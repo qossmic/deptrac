@@ -90,7 +90,7 @@ class AstMap
             return [];
         }
 
-        foreach ($classReference->getInherits() as $dep) {
+        foreach ($classReference->inherits as $dep) {
             yield $dep;
             yield from $this->recursivelyResolveDependencies($dep);
         }
@@ -107,16 +107,15 @@ class AstMap
         ArrayObject $alreadyResolved = null,
         SplStack $pathStack = null
     ): iterable {
+        $alreadyResolved ??= new ArrayObject();
         /** @var ArrayObject<string, true> $alreadyResolved */
-        $alreadyResolved = $alreadyResolved ?? new ArrayObject();
-
         if (null === $pathStack) {
             /** @var SplStack<AstInherit> $pathStack */
             $pathStack = new SplStack();
             $pathStack->push($inheritDependency);
         }
 
-        $className = $inheritDependency->getClassLikeName()->toString();
+        $className = $inheritDependency->classLikeName->toString();
 
         if (isset($alreadyResolved[$className])) {
             $pathStack->pop();
@@ -124,13 +123,13 @@ class AstMap
             return [];
         }
 
-        $classReference = $this->getClassReferenceForToken($inheritDependency->getClassLikeName());
+        $classReference = $this->getClassReferenceForToken($inheritDependency->classLikeName);
 
         if (null === $classReference) {
             return [];
         }
 
-        foreach ($classReference->getInherits() as $inherit) {
+        foreach ($classReference->inherits as $inherit) {
             $alreadyResolved[$className] = true;
 
             /** @var AstInherit[] $path */
@@ -153,12 +152,12 @@ class AstMap
 
     private function addAstFileReference(FileReference $astFileReference): void
     {
-        $this->fileReferences[$astFileReference->getFilepath()] = $astFileReference;
+        $this->fileReferences[$astFileReference->filepath] = $astFileReference;
 
-        foreach ($astFileReference->getClassLikeReferences() as $astClassReference) {
+        foreach ($astFileReference->classLikeReferences as $astClassReference) {
             $this->addClassLike($astClassReference);
         }
-        foreach ($astFileReference->getFunctionLikeReferences() as $astFunctionReference) {
+        foreach ($astFileReference->functionLikeReferences as $astFunctionReference) {
             $this->addFunctionLike($astFunctionReference);
         }
     }

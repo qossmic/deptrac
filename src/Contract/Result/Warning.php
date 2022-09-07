@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Result;
 
+use Stringable;
+
 /**
  * @psalm-immutable
  */
-final class Warning
+final class Warning implements Stringable
 {
-    private string $message;
-
-    private function __construct(string $message)
+    private function __construct(private readonly string $message)
     {
-        $this->message = $message;
     }
 
     /**
@@ -30,7 +29,7 @@ final class Warning
         ));
     }
 
-    public function toString(): string
+    public function __toString()
     {
         return $this->message;
     }

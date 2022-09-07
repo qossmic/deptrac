@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 use function intval;
 use function trigger_deprecation;
 

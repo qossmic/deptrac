@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Dumper
 {
-    private SplFileInfo $templateFile;
+    private readonly SplFileInfo $templateFile;
 
     public function __construct(string $templateFile)
     {

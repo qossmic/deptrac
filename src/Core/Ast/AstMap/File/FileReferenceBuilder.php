@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\File;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
+use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
@@ -26,10 +27,10 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     public function useStatement(string $classLikeName, int $occursAtLine): self
     {
-        $this->dependencies[] = DependencyToken::fromType(
+        $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            FileOccurrence::fromFilepath($this->filepath, $occursAtLine),
-            DependencyToken::USE
+            new FileOccurrence($this->filepath, $occursAtLine),
+            DependencyTokenType::USE
         );
 
         return $this;

@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use InvalidArgumentException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 
 final class BoolCollector implements ConditionalCollectorInterface
 {
-    private CollectorResolverInterface $collectorResolver;
-
-    public function __construct(CollectorResolverInterface $collectorResolver)
+    public function __construct(private readonly CollectorResolverInterface $collectorResolver)
     {
-        $this->collectorResolver = $collectorResolver;
     }
 
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
@@ -25,7 +22,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         foreach ((array) $configuration['must'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
 
-            $satisfied = $collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap);
+            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference, $astMap);
             if (!$satisfied) {
                 return false;
             }
@@ -35,7 +32,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         foreach ((array) $configuration['must_not'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
 
-            $satisfied = $collectable->getCollector()->satisfy($collectable->getAttributes(), $reference, $astMap);
+            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference, $astMap);
             if ($satisfied) {
                 return false;
             }
@@ -51,10 +48,10 @@ final class BoolCollector implements ConditionalCollectorInterface
         /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
-            $collector = $collectable->getCollector();
+            $collector = $collectable->collector;
 
             if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->getAttributes())
+                && !$collector->resolvable($collectable->attributes)
             ) {
                 return false;
             }
@@ -63,10 +60,10 @@ final class BoolCollector implements ConditionalCollectorInterface
         /** @var array{type: string, args: array<string, string>} $v */
         foreach ((array) $configuration['must_not'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
-            $collector = $collectable->getCollector();
+            $collector = $collectable->collector;
 
             if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->getAttributes())
+                && !$collector->resolvable($collectable->attributes)
             ) {
                 return false;
             }

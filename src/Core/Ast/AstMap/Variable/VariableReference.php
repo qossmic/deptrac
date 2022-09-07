@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\Variable;
 
-use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 
 /**
  * @psalm-immutable
  */
 class VariableReference implements TokenReferenceInterface
 {
-    private SuperGlobalToken $tokenName;
-
-    public function __construct(SuperGlobalToken $tokenName)
+    public function __construct(private readonly SuperGlobalToken $tokenName)
     {
-        $this->tokenName = $tokenName;
     }
 
-    public function getFileReference(): ?FileReference
+    public function getFilepath(): ?string
     {
         return null;
     }

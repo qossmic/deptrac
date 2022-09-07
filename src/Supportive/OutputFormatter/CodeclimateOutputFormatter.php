@@ -28,7 +28,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     /**
      * @var array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}
      */
-    private array $config;
+    private readonly array $config;
 
     public function __construct(FormatterConfiguration $config)
     {
@@ -55,16 +55,16 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
         $formatterConfig = ConfigurationCodeclimate::fromArray($this->config);
 
         $violations = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
                 continue;
             }
 
-            if (!($outputFormatterInput->getReportSkipped()) && $rule instanceof SkippedViolation) {
+            if (!($outputFormatterInput->reportSkipped) && $rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!($outputFormatterInput->getReportUncovered()) && $rule instanceof Uncovered) {
+            if (!($outputFormatterInput->reportUncovered) && $rule instanceof Uncovered) {
                 continue;
             }
 
@@ -87,7 +87,7 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             throw new Exception(sprintf('Unable to render codeclimate output. %s', $this->jsonLastError()));
         }
 
-        $dumpJsonPath = $outputFormatterInput->getOutputPath();
+        $dumpJsonPath = $outputFormatterInput->outputPath;
         if (null !== $dumpJsonPath) {
             file_put_contents($dumpJsonPath, $json);
             $output->writeLineFormatted('<info>Codeclimate Report dumped to '.realpath($dumpJsonPath).'</info>');
@@ -168,28 +168,21 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             '%s has uncovered dependency on %s (%s)',
             $dependency->getDepender()->toString(),
             $dependency->getDependent()->toString(),
-            $violation->getLayer()
+            $violation->layer
         );
     }
 
     private function jsonLastError(): string
     {
-        switch (json_last_error()) {
-            case JSON_ERROR_NONE:
-                return 'No errors';
-            case JSON_ERROR_DEPTH:
-                return 'Maximum stack depth exceeded';
-            case JSON_ERROR_STATE_MISMATCH:
-                return 'Underflow or the modes mismatch';
-            case JSON_ERROR_CTRL_CHAR:
-                return 'Unexpected control character found';
-            case JSON_ERROR_SYNTAX:
-                return 'Syntax error, malformed JSON';
-            case JSON_ERROR_UTF8:
-                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
-            default:
-                return 'Unknown error';
-        }
+        return match (json_last_error()) {
+            JSON_ERROR_NONE => 'No errors',
+            JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
+            JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
+            JSON_ERROR_CTRL_CHAR => 'Unexpected control character found',
+            JSON_ERROR_SYNTAX => 'Syntax error, malformed JSON',
+            JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+            default => 'Unknown error',
+        };
     }
 
     /**
@@ -205,9 +198,9 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             'categories' => ['Style', 'Complexity'],
             'severity' => $severity,
             'location' => [
-                'path' => $rule->getDependency()->getFileOccurrence()->getFilepath(),
+                'path' => $rule->getDependency()->getFileOccurrence()->filepath,
                 'lines' => [
-                    'begin' => $rule->getDependency()->getFileOccurrence()->getLine(),
+                    'begin' => $rule->getDependency()->getFileOccurrence()->line,
                 ],
             ],
         ];
@@ -216,11 +209,11 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
     private function buildFingerprint(RuleInterface $rule): string
     {
         return sha1(implode(',', [
-            get_class($rule),
+            $rule::class,
             $rule->getDependency()->getDepender()->toString(),
             $rule->getDependency()->getDependent()->toString(),
-            $rule->getDependency()->getFileOccurrence()->getFilepath(),
-            $rule->getDependency()->getFileOccurrence()->getLine(),
+            $rule->getDependency()->getFileOccurrence()->filepath,
+            $rule->getDependency()->getFileOccurrence()->line,
         ]));
     }
 }

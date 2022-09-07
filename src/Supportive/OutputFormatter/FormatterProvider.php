@@ -13,11 +13,8 @@ use function get_debug_type;
 
 final class FormatterProvider implements ContainerInterface
 {
-    private ServiceLocator $formatterLocator;
-
-    public function __construct(ServiceLocator $formatterLocator)
+    public function __construct(private readonly ServiceLocator $formatterLocator)
     {
-        $this->formatterLocator = $formatterLocator;
     }
 
     public function get(string $id): OutputFormatterInterface

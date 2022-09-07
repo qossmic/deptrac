@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike;
 
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
 final class FunctionLikeToken implements TokenInterface
 {
-    private string $functionName;
-
-    private function __construct(string $functionName)
+    private function __construct(private readonly string $functionName)
     {
-        $this->functionName = $functionName;
     }
 
     public static function fromFQCN(string $functionName): self

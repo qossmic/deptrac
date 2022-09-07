@@ -13,15 +13,10 @@ use Qossmic\Deptrac\Core\InputCollector\InputCollectorInterface;
  */
 class AstMapExtractor
 {
-    private InputCollectorInterface $inputCollector;
-    private AstLoader $astLoader;
-
     private ?AstMap $astMapCache = null;
 
-    public function __construct(InputCollectorInterface $inputCollector, AstLoader $astLoader)
+    public function __construct(private readonly InputCollectorInterface $inputCollector, private readonly AstLoader $astLoader)
     {
-        $this->inputCollector = $inputCollector;
-        $this->astLoader = $astLoader;
     }
 
     public function extract(): AstMap

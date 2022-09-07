@@ -4,31 +4,29 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\Variable;
 
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
-final class SuperGlobalToken implements TokenInterface
+enum SuperGlobalToken: string implements TokenInterface
 {
-    public const ALLOWED_NAMES = [
-        'GLOBALS',
-        '_SERVER',
-        '_GET',
-        '_POST',
-        '_FILES',
-        '_COOKIE',
-        '_SESSION',
-        '_REQUEST',
-        '_ENV',
-    ];
-
-    private string $name;
-
-    public function __construct(string $name)
+    case GLOBALS = 'GLOBALS';
+    case SERVER = '_SERVER';
+    case GET = '_GET';
+    case POST = '_POST';
+    case FILES = '_FILES';
+    case COOKIE = '_COOKIE';
+    case SESSION = '_SESSION';
+    case REQUEST = '_REQUEST';
+    case ENV = '_ENV';
+    /**
+     * @return list<string>
+     */
+    public static function allowedNames(): array
     {
-        $this->name = $name;
+        return array_map(static fn (self $token): string => $token->value, self::cases());
     }
 
     public function toString(): string
     {
-        return '$'.$this->name;
+        return '$'.$this->value;
     }
 }

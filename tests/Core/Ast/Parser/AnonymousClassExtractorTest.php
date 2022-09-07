@@ -28,29 +28,29 @@ final class AnonymousClassExtractorTest extends TestCase
         $filePath = __DIR__.'/Fixtures/AnonymousClass.php';
         $astFileReference = $parser->parseFile($filePath);
 
-        $astClassReferences = $astFileReference->getClassLikeReferences();
+        $astClassReferences = $astFileReference->classLikeReferences;
 
         self::assertCount(3, $astClassReferences);
-        self::assertCount(0, $astClassReferences[0]->getDependencies());
-        self::assertCount(0, $astClassReferences[1]->getDependencies());
-        self::assertCount(2, $astClassReferences[2]->getDependencies());
+        self::assertCount(0, $astClassReferences[0]->dependencies);
+        self::assertCount(0, $astClassReferences[1]->dependencies);
+        self::assertCount(2, $astClassReferences[2]->dependencies);
 
-        $dependencies = $astClassReferences[2]->getDependencies();
+        $dependencies = $astClassReferences[2]->dependencies;
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\ClassA',
-            $dependencies[0]->getToken()->toString()
+            $dependencies[0]->token->toString()
         );
-        self::assertSame($filePath, $dependencies[0]->getFileOccurrence()->getFilepath());
-        self::assertSame(19, $dependencies[0]->getFileOccurrence()->getLine());
-        self::assertSame('anonymous_class_extends', $dependencies[0]->getType());
+        self::assertSame($filePath, $dependencies[0]->fileOccurrence->filepath);
+        self::assertSame(19, $dependencies[0]->fileOccurrence->line);
+        self::assertSame('anonymous_class_extends', $dependencies[0]->type->value);
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\InterfaceC',
-            $dependencies[1]->getToken()->toString()
+            $dependencies[1]->token->toString()
         );
-        self::assertSame($filePath, $dependencies[1]->getFileOccurrence()->getFilepath());
-        self::assertSame(19, $dependencies[1]->getFileOccurrence()->getLine());
-        self::assertSame('anonymous_class_implements', $dependencies[1]->getType());
+        self::assertSame($filePath, $dependencies[1]->fileOccurrence->filepath);
+        self::assertSame(19, $dependencies[1]->fileOccurrence->line);
+        self::assertSame('anonymous_class_implements', $dependencies[1]->type->value);
     }
 }

@@ -35,7 +35,7 @@ final class SuperglobalCollectorTest extends TestCase
     {
         $actual = $this->collector->satisfy(
             $configuration,
-            new VariableReference(new SuperGlobalToken($name)),
+            new VariableReference(SuperGlobalToken::from($name)),
             new AstMap([])
         );
 
@@ -48,7 +48,7 @@ final class SuperglobalCollectorTest extends TestCase
 
         $this->collector->satisfy(
             ['Foo' => 'a'],
-            new VariableReference(new SuperGlobalToken('_POST')),
+            new VariableReference(SuperGlobalToken::from('_POST')),
             new AstMap([])
         );
     }

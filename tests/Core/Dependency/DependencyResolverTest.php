@@ -19,8 +19,7 @@ use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\Emitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\InheritanceFlattener;
-use Qossmic\Deptrac\Supportive\DependencyInjection\Configuration;
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes;
+use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Qossmic\Deptrac\Supportive\ShouldNotHappenException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -40,12 +39,12 @@ final class DependencyResolverTest extends TestCase
         $this->flattener = $this->createMock(InheritanceFlattener::class);
 
         $this->container = new ContainerBuilder();
-        $this->container->set(EmitterTypes::CLASS_TOKEN, new ClassDependencyEmitter());
-        $this->container->set(EmitterTypes::CLASS_SUPERGLOBAL_TOKEN, new ClassSuperglobalDependencyEmitter());
-        $this->container->set(EmitterTypes::FILE_TOKEN, new FileDependencyEmitter());
-        $this->container->set(EmitterTypes::FUNCTION_TOKEN, new FunctionDependencyEmitter());
-        $this->container->set(EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN, new FunctionSuperglobalDependencyEmitter());
-        $this->container->set(EmitterTypes::USE_TOKEN, new UsesDependencyEmitter());
+        $this->container->set(EmitterType::CLASS_TOKEN->value, new ClassDependencyEmitter());
+        $this->container->set(EmitterType::CLASS_SUPERGLOBAL_TOKEN->value, new ClassSuperglobalDependencyEmitter());
+        $this->container->set(EmitterType::FILE_TOKEN->value, new FileDependencyEmitter());
+        $this->container->set(EmitterType::FUNCTION_TOKEN->value, new FunctionDependencyEmitter());
+        $this->container->set(EmitterType::FUNCTION_SUPERGLOBAL_TOKEN->value, new FunctionSuperglobalDependencyEmitter());
+        $this->container->set(EmitterType::USE_TOKEN->value, new UsesDependencyEmitter());
     }
 
     public function testResolveWithDefaultEmitters(): void
@@ -63,7 +62,10 @@ final class DependencyResolverTest extends TestCase
         $this->flattener->expects(self::once())->method('flattenDependencies');
 
         $resolver = new DependencyResolver(
-            ['types' => Configuration::DEFAULT_EMITTER_TYPES],
+            ['types' => [
+                EmitterType::CLASS_TOKEN->value,
+                EmitterType::USE_TOKEN->value,
+            ]],
             $this->flattener,
             $this->container,
             $this->dispatcher
@@ -85,7 +87,7 @@ final class DependencyResolverTest extends TestCase
         $this->flattener->expects(self::once())->method('flattenDependencies');
 
         $resolver = new DependencyResolver(
-            ['types' => [EmitterTypes::FUNCTION_TOKEN]],
+            ['types' => [EmitterType::FUNCTION_TOKEN->value]],
             $this->flattener,
             $this->container,
             $this->dispatcher

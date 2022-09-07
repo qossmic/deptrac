@@ -92,7 +92,7 @@ final class TokenResolverTest extends TestCase
     public function testResolvesSuperglobal(): void
     {
         $astMap = new AstMap([]);
-        $token = new SuperGlobalToken('_POST');
+        $token = SuperGlobalToken::from('_POST');
 
         $resolved = $this->resolver->resolve($token, $astMap);
 

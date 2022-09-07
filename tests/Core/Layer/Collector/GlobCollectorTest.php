@@ -40,7 +40,7 @@ final class GlobCollectorTest extends TestCase
 
         $actual = $this->collector->satisfy(
             $configuration,
-            $fileReference->getClassLikeReferences()[0],
+            $fileReference->classLikeReferences[0],
             new AstMap([])
         );
 

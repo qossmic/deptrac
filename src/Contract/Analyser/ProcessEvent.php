@@ -4,73 +4,24 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Analyser;
 
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\Result\Result;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Dependency\DependencyInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProcessEvent extends Event
 {
-    private DependencyInterface $dependency;
-
-    private TokenReferenceInterface $dependerReference;
-
-    private string $dependerLayer;
-
-    private TokenReferenceInterface $dependentReference;
-
-    /**
-     * @var array<string, bool>
-     */
-    private array $dependentLayers;
-
-    private Result $result;
-
     /**
      * @param array<string, bool> $dependentLayers
      */
     public function __construct(
-        DependencyInterface $dependency,
-        TokenReferenceInterface $dependerReference,
-        string $dependerLayer,
-        TokenReferenceInterface $dependentReference,
-        array $dependentLayers,
-        ?Result $result = null
+        public readonly DependencyInterface $dependency,
+        public readonly TokenReferenceInterface $dependerReference,
+        public readonly string $dependerLayer,
+        public readonly TokenReferenceInterface $dependentReference,
+        public readonly array $dependentLayers,
+        private Result $result = new Result()
     ) {
-        $this->dependency = $dependency;
-        $this->dependerReference = $dependerReference;
-        $this->dependerLayer = $dependerLayer;
-        $this->dependentReference = $dependentReference;
-        $this->dependentLayers = $dependentLayers;
-        $this->result = $result ?? new Result();
-    }
-
-    public function getDependency(): DependencyInterface
-    {
-        return $this->dependency;
-    }
-
-    public function getDependerReference(): TokenReferenceInterface
-    {
-        return $this->dependerReference;
-    }
-
-    public function getDependerLayer(): string
-    {
-        return $this->dependerLayer;
-    }
-
-    public function getDependentReference(): TokenReferenceInterface
-    {
-        return $this->dependentReference;
-    }
-
-    /**
-     * @return array<string, bool>
-     */
-    public function getDependentLayers(): array
-    {
-        return $this->dependentLayers;
     }
 
     public function getResult(): Result

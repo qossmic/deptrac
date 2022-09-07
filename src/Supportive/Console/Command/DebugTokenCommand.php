@@ -18,12 +18,8 @@ class DebugTokenCommand extends Command
     public static $defaultName = 'debug:token|debug:class-like';
     public static $defaultDescription = 'Checks which layers the provided token belongs to';
 
-    private DebugTokenRunner $runner;
-
-    public function __construct(DebugTokenRunner $runner)
+    public function __construct(private readonly DebugTokenRunner $runner)
     {
-        $this->runner = $runner;
-
         parent::__construct();
     }
 
@@ -45,6 +41,6 @@ class DebugTokenCommand extends Command
 
         $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
 
-        return 0;
+        return self::SUCCESS;
     }
 }

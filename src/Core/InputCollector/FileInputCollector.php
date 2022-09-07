@@ -21,15 +21,10 @@ final class FileInputCollector implements InputCollectorInterface
     private array $paths;
 
     /**
-     * @var string[]
-     */
-    private array $excludedFilePatterns;
-
-    /**
      * @param string[] $paths
      * @param string[] $excludedFilePatterns
      */
-    public function __construct(array $paths, array $excludedFilePatterns, string $basePath)
+    public function __construct(array $paths, private readonly array $excludedFilePatterns, string $basePath)
     {
         $basePathInfo = new SplFileInfo($basePath);
         if (!$basePathInfo->isDir() || !$basePathInfo->isReadable()) {
@@ -46,7 +41,6 @@ final class FileInputCollector implements InputCollectorInterface
             }
             $this->paths[] = Path::canonicalize($path->getPathname());
         }
-        $this->excludedFilePatterns = $excludedFilePatterns;
     }
 
     /**
@@ -72,9 +66,7 @@ final class FileInputCollector implements InputCollectorInterface
         $finder = new PathNameFilterIterator($customFilterIterator, [], $this->excludedFilePatterns);
 
         return array_map(
-            static function (SplFileInfo $fileInfo) {
-                return (string) $fileInfo->getRealPath();
-            },
+            static fn (SplFileInfo $fileInfo) => (string) $fileInfo->getRealPath(),
             iterator_to_array($finder)
         );
     }

@@ -6,15 +6,11 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter\Configuration;
 
 class FormatterConfiguration
 {
-    /** @var array<string, array<mixed>> */
-    private $config;
-
     /**
      * @param array<string, array<mixed>> $config
      */
-    public function __construct(array $config)
+    public function __construct(private readonly array $config)
     {
-        $this->config = $config;
     }
 
     /**

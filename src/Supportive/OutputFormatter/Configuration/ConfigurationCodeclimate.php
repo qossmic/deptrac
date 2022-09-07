@@ -6,9 +6,6 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter\Configuration;
 
 final class ConfigurationCodeclimate
 {
-    /** @var array{failure?: string, skipped?: string, uncovered?: string} */
-    private array $severityMap;
-
     /**
      * @param array{severity?: array{failure?: string, skipped?: string, uncovered?: string}} $array
      */
@@ -20,9 +17,8 @@ final class ConfigurationCodeclimate
     /**
      * @param array{failure?: string, skipped?: string, uncovered?: string} $severityMap
      */
-    private function __construct(array $severityMap)
+    private function __construct(private readonly array $severityMap)
     {
-        $this->severityMap = $severityMap;
     }
 
     public function getSeverity(string $key): ?string

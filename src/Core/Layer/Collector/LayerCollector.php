@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use InvalidArgumentException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use function array_key_exists;
@@ -16,16 +16,13 @@ use function trigger_deprecation;
 
 final class LayerCollector implements ConditionalCollectorInterface
 {
-    private LayerResolverInterface $resolver;
-
     /**
      * @var array<string, array<string, bool|null>>
      */
     private array $resolved = [];
 
-    public function __construct(LayerResolverInterface $layerResolver)
+    public function __construct(private readonly LayerResolverInterface $resolver)
     {
-        $this->resolver = $layerResolver;
     }
 
     public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool

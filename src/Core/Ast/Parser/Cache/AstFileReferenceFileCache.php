@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\Cache;
 
+use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -11,7 +12,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
@@ -35,18 +35,13 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 {
     /** @var array<string, array{hash: string, reference: FileReference}> */
     private array $cache;
-    private string $cacheFile;
     private bool $loaded = false;
     /** @var array<string, bool> */
     private array $parsedFiles = [];
 
-    private string $cacheVersion;
-
-    public function __construct(string $cacheFile, string $cacheVersion)
+    public function __construct(private readonly string $cacheFile, private readonly string $cacheVersion)
     {
         $this->cache = [];
-        $this->cacheFile = $cacheFile;
-        $this->cacheVersion = $cacheVersion;
     }
 
     public function get(string $filepath): ?FileReference
@@ -68,7 +63,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     {
         $this->load();
 
-        $filepath = $this->normalizeFilepath($fileReference->getFilepath());
+        $filepath = $this->normalizeFilepath($fileReference->filepath);
 
         $this->parsedFiles[$filepath] = true;
 
@@ -140,9 +135,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
 
         $cache = array_filter(
             $this->cache,
-            function (string $key): bool {
-                return isset($this->parsedFiles[$key]);
-            },
+            fn (string $key): bool => isset($this->parsedFiles[$key]),
             ARRAY_FILTER_USE_KEY
         );
 

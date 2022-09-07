@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 use function is_string;
 
 abstract class AbstractTypeCollector extends RegexCollector
@@ -21,8 +21,8 @@ abstract class AbstractTypeCollector extends RegexCollector
             return false;
         }
 
-        $isClassLike = ClassLikeType::classLike()->matches($this->getType());
-        $isSameType = $reference->getType()->matches($this->getType());
+        $isClassLike = ClassLikeType::TYPE_CLASSLIKE === $this->getType();
+        $isSameType = $reference->type === $this->getType();
 
         return ($isClassLike || $isSameType) && $reference->getToken()->match($this->getValidatedPattern($config));
     }

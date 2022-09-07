@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Result;
 
+use Stringable;
+
 /**
  * @psalm-immutable
  */
-class Error
+class Error implements Stringable
 {
-    private string $message;
-
-    public function __construct(string $message)
+    public function __construct(private readonly string $message)
     {
-        $this->message = $message;
     }
 
-    public function toString(): string
+    public function __toString()
     {
         return $this->message;
     }

@@ -45,7 +45,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\ClassNameRegexCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorProvider;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolver;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
-use Qossmic\Deptrac\Core\Layer\Collector\CollectorTypes;
+use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
 use Qossmic\Deptrac\Core\Layer\Collector\DirectoryCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\ExtendsCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\FunctionNameCollector;
@@ -71,7 +71,7 @@ use Qossmic\Deptrac\Supportive\Console\Command\DebugTokenRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugUnassignedRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\InitCommand;
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterTypes;
+use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Qossmic\Deptrac\Supportive\File\Dumper;
 use Qossmic\Deptrac\Supportive\File\YmlFileLoader;
 use Qossmic\Deptrac\Supportive\OutputFormatter\BaselineOutputFormatter;
@@ -167,25 +167,25 @@ return static function (ContainerConfigurator $container): void {
     $services->set(InheritanceFlattener::class);
     $services
         ->set(ClassDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::CLASS_TOKEN]);
+        ->tag('dependency_emitter', ['key' => EmitterType::CLASS_TOKEN->value]);
     $services
         ->set(ClassSuperglobalDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::CLASS_SUPERGLOBAL_TOKEN]);
+        ->tag('dependency_emitter', ['key' => EmitterType::CLASS_SUPERGLOBAL_TOKEN->value]);
     $services
         ->set(FileDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::FILE_TOKEN]);
+        ->tag('dependency_emitter', ['key' => EmitterType::FILE_TOKEN->value]);
     $services
         ->set(FunctionDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_TOKEN]);
+        ->tag('dependency_emitter', ['key' => EmitterType::FUNCTION_TOKEN->value]);
     $services
         ->set(FunctionCallDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_CALL]);
+        ->tag('dependency_emitter', ['key' => EmitterType::FUNCTION_CALL->value]);
     $services
         ->set(FunctionSuperglobalDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::FUNCTION_SUPERGLOBAL_TOKEN]);
+        ->tag('dependency_emitter', ['key' => EmitterType::FUNCTION_SUPERGLOBAL_TOKEN->value]);
     $services
         ->set(UsesDependencyEmitter::class)
-        ->tag('dependency_emitter', ['key' => EmitterTypes::USE_TOKEN]);
+        ->tag('dependency_emitter', ['key' => EmitterType::USE_TOKEN->value]);
 
     /*
      * Layer
@@ -207,62 +207,62 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(CollectorResolverInterface::class, CollectorResolver::class);
     $services
         ->set(AttributeCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_ATTRIBUTE]);
+        ->tag('collector', ['type' => CollectorType::TYPE_ATTRIBUTE->value]);
     $services
         ->set(BoolCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_BOOL]);
+        ->tag('collector', ['type' => CollectorType::TYPE_BOOL->value]);
     $services
         ->set(ClassCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASS->value]);
     $services
         ->set(ClassLikeCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASSLIKE])
-        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS_NAME]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASSLIKE->value])
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME->value]);
     $services
         ->set(ClassNameRegexCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_CLASS_NAME_REGEX]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME_REGEX->value]);
     $services
         ->set(DirectoryCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_DIRECTORY]);
+        ->tag('collector', ['type' => CollectorType::TYPE_DIRECTORY->value]);
     $services
         ->set(ExtendsCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_EXTENDS]);
+        ->tag('collector', ['type' => CollectorType::TYPE_EXTENDS->value]);
     $services
         ->set(FunctionNameCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_FUNCTION_NAME]);
+        ->tag('collector', ['type' => CollectorType::TYPE_FUNCTION_NAME->value]);
     $services
         ->set(GlobCollector::class)
         ->args([
             '$basePath' => param('projectDirectory'),
         ])
-        ->tag('collector', ['type' => CollectorTypes::TYPE_GLOB]);
+        ->tag('collector', ['type' => CollectorType::TYPE_GLOB->value]);
     $services
         ->set(ImplementsCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_IMPLEMENTS]);
+        ->tag('collector', ['type' => CollectorType::TYPE_IMPLEMENTS->value]);
     $services
         ->set(InheritanceLevelCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_INHERITANCE]);
+        ->tag('collector', ['type' => CollectorType::TYPE_INHERITANCE->value]);
     $services
         ->set(InterfaceCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_INTERFACE]);
+        ->tag('collector', ['type' => CollectorType::TYPE_INTERFACE->value]);
     $services
         ->set(InheritsCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_INHERITS]);
+        ->tag('collector', ['type' => CollectorType::TYPE_INHERITS->value]);
     $services
         ->set(LayerCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_LAYER]);
+        ->tag('collector', ['type' => CollectorType::TYPE_LAYER->value]);
     $services
         ->set(MethodCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_METHOD]);
+        ->tag('collector', ['type' => CollectorType::TYPE_METHOD->value]);
     $services
         ->set(SuperglobalCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_SUPERGLOBAL]);
+        ->tag('collector', ['type' => CollectorType::TYPE_SUPERGLOBAL->value]);
     $services
         ->set(TraitCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_TRAIT]);
+        ->tag('collector', ['type' => CollectorType::TYPE_TRAIT->value]);
     $services
         ->set(UsesCollector::class)
-        ->tag('collector', ['type' => CollectorTypes::TYPE_USES]);
+        ->tag('collector', ['type' => CollectorType::TYPE_USES->value]);
 
     /*
      * Analyser

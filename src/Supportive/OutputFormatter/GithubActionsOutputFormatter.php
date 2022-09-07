@@ -2,6 +2,7 @@
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
@@ -9,7 +10,6 @@ use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
-use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 
 final class GithubActionsOutputFormatter implements OutputFormatterInterface
 {
@@ -26,11 +26,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
      */
     public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
                 continue;
             }
-            if ($rule instanceof SkippedViolation && !$outputFormatterInput->getReportSkipped()) {
+            if ($rule instanceof SkippedViolation && !$outputFormatterInput->reportSkipped) {
                 continue;
             }
 
@@ -45,21 +45,21 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 $rule->getDependentLayer()
             );
 
-            if ($dependency instanceof InheritDependency) {
-                $message .= '%0A'.$this->inheritPathMessage($dependency);
+            if (count($dependency->serialize()) > 1) {
+                $message .= '%0A'.$this->multilinePathMessage($dependency);
             }
 
             $output->writeLineFormatted(sprintf(
                 '::%s file=%s,line=%s::%s',
                 $this->determineLogLevel($rule),
-                $dependency->getFileOccurrence()->getFilepath(),
-                $dependency->getFileOccurrence()->getLine(),
+                $dependency->getFileOccurrence()->filepath,
+                $dependency->getFileOccurrence()->line,
                 $message
             ));
         }
 
-        if ($outputFormatterInput->getReportUncovered() && $result->hasUncovered()) {
-            $this->printUncovered($result, $output, $outputFormatterInput->getFailOnUncovered());
+        if ($outputFormatterInput->reportUncovered && $result->hasUncovered()) {
+            $this->printUncovered($result, $output, $outputFormatterInput->failOnUncovered);
         }
 
         if ($result->hasErrors()) {
@@ -73,14 +73,11 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
 
     private function determineLogLevel(RuleInterface $rule): string
     {
-        switch (get_class($rule)) {
-            case Violation::class:
-                return 'error';
-            case SkippedViolation::class:
-                return 'warning';
-            default:
-                return 'debug';
-        }
+        return match ($rule::class) {
+            Violation::class => 'error',
+            SkippedViolation::class => 'warning',
+            default => 'debug',
+        };
     }
 
     private function printUncovered(LegacyResult $result, OutputInterface $output, bool $reportAsError): void
@@ -91,45 +88,38 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 sprintf(
                     '::%s file=%s,line=%s::%s has uncovered dependency on %s (%s)',
                     $reportAsError ? 'error' : 'warning',
-                    $dependency->getFileOccurrence()->getFilepath(),
-                    $dependency->getFileOccurrence()->getLine(),
+                    $dependency->getFileOccurrence()->filepath,
+                    $dependency->getFileOccurrence()->line,
                     $dependency->getDepender()->toString(),
                     $dependency->getDependent()->toString(),
-                    $u->getLayer()
+                    $u->layer
                 )
             );
         }
     }
 
-    private function inheritPathMessage(InheritDependency $dependency): string
+    private function multilinePathMessage(DependencyInterface $dep): string
     {
-        $buffer = [];
-        $astInherit = $dependency->getInheritPath();
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
-        }
-
-        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
-        $buffer[] = sprintf(
-            '%s::%d',
-            $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+        return implode(
+            ' ->%0A',
+            array_map(
+                static fn (array $dependency): string => sprintf('%s::%d', $dependency['name'], $dependency['line']),
+                $dep->serialize()
+            )
         );
-
-        return implode(' ->%0A', $buffer);
     }
 
     private function printErrors(LegacyResult $result, OutputInterface $output): void
     {
-        foreach ($result->errors() as $error) {
-            $output->writeLineFormatted('::error ::'.$error->toString());
+        foreach ($result->errors as $error) {
+            $output->writeLineFormatted('::error ::'.(string) $error);
         }
     }
 
     private function printWarnings(LegacyResult $result, OutputInterface $output): void
     {
-        foreach ($result->warnings() as $error) {
-            $output->writeLineFormatted('::warning ::'.$error->toString());
+        foreach ($result->warnings as $warning) {
+            $output->writeLineFormatted('::warning ::'.(string) $warning);
         }
     }
 }

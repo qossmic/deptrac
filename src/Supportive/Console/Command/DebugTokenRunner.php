@@ -15,11 +15,8 @@ use function sprintf;
  */
 final class DebugTokenRunner
 {
-    private LayerForTokenAnalyser $processor;
-
-    public function __construct(LayerForTokenAnalyser $processor)
+    public function __construct(private readonly LayerForTokenAnalyser $processor)
     {
-        $this->processor = $processor;
     }
 
     public function run(string $tokenName, TokenType $tokenType, OutputInterface $output): void

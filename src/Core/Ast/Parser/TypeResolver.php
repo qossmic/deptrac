@@ -35,7 +35,7 @@ use Throwable;
 
 class TypeResolver
 {
-    private phpDocumentorTypeResolver $typeResolver;
+    private readonly phpDocumentorTypeResolver $typeResolver;
 
     public function __construct()
     {
@@ -107,29 +107,21 @@ class TypeResolver
             return $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
         }
         if ($type instanceof UnionTypeNode || $type instanceof IntersectionTypeNode) {
-            return array_merge([], ...array_map(function (TypeNode $typeNode) use ($typeScope, $templateTypes) {
-                return $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes);
-            }, $type->types));
+            return array_merge([], ...array_map(fn (TypeNode $typeNode) => $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes), $type->types));
         }
         if ($type instanceof GenericTypeNode) {
             $preType = 'list' === $type->type->name ? [] : $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
 
-            return array_merge($preType, ...array_map(function (TypeNode $typeNode) use ($typeScope, $templateTypes) {
-                return $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes);
-            }, $type->genericTypes));
+            return array_merge($preType, ...array_map(fn (TypeNode $typeNode) => $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes), $type->genericTypes));
         }
         if ($type instanceof ArrayShapeNode) {
-            return array_merge([], ...array_map(function (ArrayShapeItemNode $itemNode) use ($typeScope, $templateTypes) {
-                return $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope, $templateTypes);
-            }, $type->items)
+            return array_merge([], ...array_map(fn (ArrayShapeItemNode $itemNode) => $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope, $templateTypes), $type->items)
             );
         }
         if ($type instanceof CallableTypeNode) {
             return array_merge(
                 $this->resolvePHPStanDocParserType($type->returnType, $typeScope, $templateTypes),
-                ...array_map(function (CallableTypeParameterNode $parameterNode) use ($typeScope, $templateTypes) {
-                    return $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope, $templateTypes);
-                }, $type->parameters)
+                ...array_map(fn (CallableTypeParameterNode $parameterNode) => $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope, $templateTypes), $type->parameters)
             );
         }
 
@@ -141,10 +133,10 @@ class TypeResolver
      */
     public function resolveString(string $type, TypeScope $nameScope): array
     {
-        $context = new Context($nameScope->getNamespace(), $nameScope->getUses());
+        $context = new Context($nameScope->namespace, $nameScope->getUses());
         try {
             $resolvedType = $this->typeResolver->resolve($type, $context);
-        } catch (Throwable $e) {
+        } catch (Throwable) {
             return [];
         }
 
@@ -152,11 +144,9 @@ class TypeResolver
     }
 
     /**
-     * @param Identifier|Name|ComplexType $type
-     *
      * @return string[]
      */
-    public function resolvePropertyType(NodeAbstract $type): array
+    public function resolvePropertyType(Identifier|Name|ComplexType $type): array
     {
         if ($type instanceof FullyQualified) {
             return [(string) $type];
@@ -166,12 +156,7 @@ class TypeResolver
         }
         if ($type instanceof UnionType || $type instanceof IntersectionType) {
             return array_merge([], ...array_map(
-                /**
-                 * @param Identifier|Name $typeNode
-                 */
-                function ($typeNode) {
-                    return $this->resolvePropertyType($typeNode);
-                },
+                fn (Identifier|Name $typeNode) => $this->resolvePropertyType($typeNode),
             $type->types));
         }
 
@@ -188,9 +173,7 @@ class TypeResolver
         }
 
         if ($resolvedType instanceof Compound) {
-            return array_merge([], ...array_map(function (Type $type) {
-                return $this->resolveReflectionType($type);
-            }, iterator_to_array($resolvedType)));
+            return array_merge([], ...array_map(fn (Type $type) => $this->resolveReflectionType($type), iterator_to_array($resolvedType)));
         }
 
         return [];

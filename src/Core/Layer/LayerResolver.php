@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer;
 
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
@@ -14,8 +14,6 @@ use function array_key_exists;
 
 class LayerResolver implements LayerResolverInterface
 {
-    private CollectorResolverInterface $collectorResolver;
-
     /**
      * @var array<string, Collectable[]>
      */
@@ -29,10 +27,8 @@ class LayerResolver implements LayerResolverInterface
     /**
      * @param array<array{name?: string, collectors: array<array<string, string|array<string, string>>>}> $layers
      */
-    public function __construct(CollectorResolverInterface $collectorResolver, array $layers)
+    public function __construct(private readonly CollectorResolverInterface $collectorResolver, array $layers)
     {
-        $this->collectorResolver = $collectorResolver;
-
         $this->initializeLayers($layers);
     }
 
@@ -47,15 +43,15 @@ class LayerResolver implements LayerResolverInterface
 
         foreach ($this->layers as $layer => $collectables) {
             foreach ($collectables as $collectable) {
-                $collector = $collectable->getCollector();
-                $attributes = $collectable->getAttributes();
+                $collector = $collectable->collector;
+                $attributes = $collectable->attributes;
                 if ($collector instanceof ConditionalCollectorInterface
                     && !$collector->resolvable($attributes)
                 ) {
                     continue;
                 }
 
-                if ($collectable->getCollector()->satisfy($attributes, $reference, $astMap)) {
+                if ($collectable->collector->satisfy($attributes, $reference, $astMap)) {
                     if (array_key_exists($layer, $this->resolved[$tokenName]) && true === $this->resolved[$tokenName][$layer]) {
                         continue;
                     }
@@ -85,14 +81,14 @@ class LayerResolver implements LayerResolverInterface
         $collectables = $this->layers[$layer];
 
         foreach ($collectables as $collectable) {
-            $collector = $collectable->getCollector();
+            $collector = $collectable->collector;
             if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->getAttributes())
+                && !$collector->resolvable($collectable->attributes)
             ) {
                 continue;
             }
 
-            if ($collector->satisfy($collectable->getAttributes(), $reference, $astMap)) {
+            if ($collector->satisfy($collectable->attributes, $reference, $astMap)) {
                 return true;
             }
         }

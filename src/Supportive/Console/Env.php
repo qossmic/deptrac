@@ -9,7 +9,7 @@ class Env
     /**
      * @return string|false Environment variable value or false if the variable does not exist
      */
-    public function get(string $name)
+    public function get(string $name): string|false
     {
         return getenv($name);
     }

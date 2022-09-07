@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\ClassLike;
 
-use Qossmic\Deptrac\Core\Ast\AstMap\TokenInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
 final class ClassLikeToken implements TokenInterface
 {
-    private string $className;
-
-    private function __construct(string $className)
+    private function __construct(private readonly string $className)
     {
-        $this->className = $className;
     }
 
     public static function fromFQCN(string $className): self

@@ -37,27 +37,24 @@ use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;
 
 class FileReferenceVisitor extends NodeVisitorAbstract
 {
-    private FileReferenceBuilder $fileReferenceBuilder;
-
     /** @var ReferenceExtractorInterface[] */
-    private array $dependencyResolvers;
+    private readonly array $dependencyResolvers;
 
     private TypeScope $currentTypeScope;
-
-    private TypeResolver $typeResolver;
-    private Lexer $lexer;
-    private PhpDocParser $docParser;
+    private readonly Lexer $lexer;
+    private readonly PhpDocParser $docParser;
 
     private ReferenceBuilder $currentReference;
 
-    public function __construct(FileReferenceBuilder $fileReferenceBuilder, TypeResolver $typeResolver, ReferenceExtractorInterface ...$dependencyResolvers)
-    {
+    public function __construct(
+        private readonly FileReferenceBuilder $fileReferenceBuilder,
+        private readonly TypeResolver $typeResolver,
+        ReferenceExtractorInterface ...$dependencyResolvers
+    ) {
         $this->currentTypeScope = new TypeScope('');
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
-        $this->fileReferenceBuilder = $fileReferenceBuilder;
         $this->dependencyResolvers = $dependencyResolvers;
-        $this->typeResolver = $typeResolver;
         $this->currentReference = $fileReferenceBuilder;
     }
 
@@ -189,7 +186,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        if ($node instanceof Node\Expr\Variable && in_array($node->name, SuperGlobalToken::ALLOWED_NAMES, true)) {
+        if ($node instanceof Node\Expr\Variable && in_array($node->name, SuperGlobalToken::allowedNames(), true)) {
             $this->currentReference->superglobal($node->name, $node->getLine());
         }
 

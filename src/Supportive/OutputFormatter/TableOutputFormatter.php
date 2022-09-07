@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
+use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\Allowed;
 use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Contract\Result\Warning;
-use Qossmic\Deptrac\Core\Dependency\InheritDependency;
 use Symfony\Component\Console\Helper\TableSeparator;
 use function count;
 
@@ -32,15 +31,15 @@ final class TableOutputFormatter implements OutputFormatterInterface
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        foreach ($result->rules() as $rule) {
+        foreach ($result->rules as $rule) {
             if ($rule instanceof Allowed) {
                 continue;
             }
 
-            if ($rule instanceof Violation || ($outputFormatterInput->getReportSkipped() && $rule instanceof SkippedViolation)) {
+            if ($rule instanceof Violation || ($outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation)) {
                 $groupedRules[$rule->getDependerLayer()][] = $rule;
-            } elseif ($outputFormatterInput->getReportUncovered() && $rule instanceof Uncovered) {
-                $groupedRules[$rule->getLayer()][] = $rule;
+            } elseif ($outputFormatterInput->reportUncovered && $rule instanceof Uncovered) {
+                $groupedRules[$rule->layer][] = $rule;
             }
         }
 
@@ -50,7 +49,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $rows = [];
             foreach ($rules as $rule) {
                 if ($rule instanceof Uncovered) {
-                    $rows[] = $this->uncoveredRow($rule, $outputFormatterInput->getFailOnUncovered());
+                    $rows[] = $this->uncoveredRow($rule, $outputFormatterInput->failOnUncovered);
                 } else {
                     $rows[] = $this->violationRow($rule);
                 }
@@ -67,15 +66,13 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $this->printWarnings($result, $output);
         }
 
-        $this->printSummary($result, $output, $outputFormatterInput->getFailOnUncovered());
+        $this->printSummary($result, $output, $outputFormatterInput->failOnUncovered);
     }
 
     /**
-     * @param Violation|SkippedViolation $rule
-     *
      * @return array{string, string}
      */
-    private function violationRow(RuleInterface $rule): array
+    private function violationRow(Violation|SkippedViolation $rule): array
     {
         $dependency = $rule->getDependency();
 
@@ -86,12 +83,12 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $rule->getDependentLayer()
         );
 
-        if ($dependency instanceof InheritDependency) {
-            $message .= "\n".$this->formatInheritPath($dependency);
+        if (count($dependency->serialize()) > 1) {
+            $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();
-        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+        $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [
             $rule instanceof SkippedViolation ? '<fg=yellow>Skipped</>' : '<fg=red>Violation</>',
@@ -99,22 +96,15 @@ final class TableOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    private function formatInheritPath(InheritDependency $dependency): string
+    private function formatMultilinePath(DependencyInterface $dep): string
     {
-        $buffer = [];
-        $astInherit = $dependency->getInheritPath();
-        foreach ($astInherit->getPath() as $p) {
-            array_unshift($buffer, sprintf('%s::%d', $p->getClassLikeName()->toString(), $p->getFileOccurrence()->getLine()));
-        }
-
-        $buffer[] = sprintf('%s::%d', $astInherit->getClassLikeName()->toString(), $astInherit->getFileOccurrence()->getLine());
-        $buffer[] = sprintf(
-            '%s::%d',
-            $dependency->getOriginalDependency()->getDependent()->toString(),
-            $dependency->getOriginalDependency()->getFileOccurrence()->getLine()
+        return implode(
+            " -> \n",
+            array_map(
+                static fn (array $dependency): string => sprintf('%s::%d', $dependency['name'], $dependency['line']),
+                $dep->serialize()
+            )
         );
-
-        return implode(" -> \n", $buffer);
     }
 
     private function printSummary(LegacyResult $result, OutputInterface $output, bool $reportUncoveredAsError): void
@@ -123,8 +113,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $skippedViolationCount = count($result->skippedViolations());
         $uncoveredCount = count($result->uncovered());
         $allowedCount = count($result->allowed());
-        $warningsCount = count($result->warnings());
-        $errorsCount = count($result->errors());
+        $warningsCount = count($result->warnings);
+        $errorsCount = count($result->errors);
 
         $uncoveredFg = $reportUncoveredAsError ? 'red' : 'yellow';
 
@@ -155,12 +145,12 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $dependency->getDependent()->toString()
         );
 
-        if ($dependency instanceof InheritDependency) {
-            $message .= "\n".$this->formatInheritPath($dependency);
+        if (count($dependency->serialize()) > 1) {
+            $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();
-        $message .= sprintf("\n%s:%d", $fileOccurrence->getFilepath(), $fileOccurrence->getLine());
+        $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [
             sprintf('<fg=%s>Uncovered</>', $reportAsError ? 'red' : 'yellow'),
@@ -173,10 +163,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $output->getStyle()->table(
             ['<fg=red>Errors</>'],
             array_map(
-                static function (Error $error) {
-                    return [$error->toString()];
-                },
-                $result->errors()
+                static fn (Error $error) => [(string) $error],
+                $result->errors
             )
         );
     }
@@ -186,10 +174,8 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $output->getStyle()->table(
             ['<fg=yellow>Warnings</>'],
             array_map(
-                static function (Warning $warning) {
-                    return [$warning->toString()];
-                },
-                $result->warnings()
+                static fn (Warning $warning) => [(string) $warning],
+                $result->warnings
             )
         );
     }
