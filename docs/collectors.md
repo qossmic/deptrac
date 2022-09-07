@@ -10,7 +10,7 @@ provided attribute. You can provide the full attribute name or a substring that
 should be matched.
 
 ```yaml
-parameters:
+deptrac:
   layers:
     - name: Entities
       collectors:
@@ -171,7 +171,7 @@ deptrac:
         - type: implements
           value: 'App\SomeInterface'
 ```
-# `interface` Collector
+## `interface` Collector
 
 The `interface` collector allows collecting only interfaces by matching their fully
 qualified name to a simplified regular expression. Any matching interface will be
@@ -263,7 +263,7 @@ deptrac:
             - _GET
 ```
 
-# `trait` Collector
+## `trait` Collector
 
 The `trait` collector allows collecting only traits by matching their fully
 qualified name to a simplified regular expression. Any matching trait will be

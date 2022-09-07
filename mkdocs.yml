@@ -10,13 +10,16 @@ docs_dir: docs
 
 nav:
   - Home: index.md
+  - Backwards Compatibility: bc_policy.md
   - Upgrade Guide: upgrade.md
   - Concepts: concepts.md
-  - Depfile: depfile.md
+  - Configuration: configuration.md
   - Collectors: collectors.md
   - Formatters: formatters.md
   - Debugging: debugging.md
-  - Contributing: contributing.md
+  - Code of Conduct: CODE_OF_CONDUCT.md
+  - Contributing: CONTRIBUTING.md
+  - Security: SECURITY.md
 
 theme:
   name: material

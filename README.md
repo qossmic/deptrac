@@ -12,13 +12,6 @@ Deptrac can be used in a CI pipeline to make sure a pull request does not
 violate any of the architectural rules you defined. With the optional Graphviz
 formatter you can visualize your layers, rules and violations.
 
-## Stability
-
-Deptrac is still in development. We follow [semantic versioning](https://semver.org/).
-You should expect breaking changes between minor versions in 0.x.
-We advise following the [upgrade guide](docs/upgrade.md) for any breaking
-changes between releases and how to address them.
-
 ## Documentation
 
 You can find the documentation in the /docs directory or visit the doc page:
@@ -39,7 +32,7 @@ deptrac package directly as a composer dependency. We update dependencies
 regularly, which might cause disruptions in your project.
 
 Once you have downloaded the phar file, you will need to create a
-[configuration file](docs/depfile.md), where you define your layers and
+[configuration file](docs/configuration.md), where you define your layers and
 communication ruleset. When you have this file, you can analyse your code by
 running the analyse command:
 
@@ -55,23 +48,23 @@ In order to run Deptrac you need at least PHP 8.1.
 You can analyse projects that require an older PHP version as long as
 [nikic/php-parser](https://github.com/nikic/PHP-Parser) can parse it.
 
-## Contribute
+## Further Documentation
 
-Deptrac is in active development. We are looking for your suggestions and help
-to make it better.
-
-Feel free to [open an issue](/issues) if you encounter bugs, have suggestions or
-would like to add a new feature to Deptrac.
-
-Please feel free to improve this documentation, fix bugs, or work on a suggested
-feature by making a pull request on GitHub. Don't hesitate to ask for support,
-if you need help at any point.
-
-The [Contribution Guide](/docs/contributing.md) in the documentation contains
-some advice for making a pull request with code changes.
-
-### Code of Conduct
-
-If you are **professional** and **polite** then everything will be alright.
-
-Please don't be inconsiderate or mean, or anything in between.
+* [Backwards Compatibility](docs/bc_policy.md) - General info on how we approach
+  backwards compatibility
+* [Upgrade Guide](docs/upgrade.md) - List of backwards breaking changes that
+  need to be addressed when upgrading Deptrac to a new version and how to do it.
+* [Core Concepts](docs/concepts.md) - Explains layers, rules and violations in
+  more details.
+* [Configuration](docs/configuration.md) - Reference for all available settings
+  in a depfile
+* [Collectors](docs/collectors.md) - Reference for which collectors are
+  available in Deptrac to define your layers.
+* [Formatters](docs/formatters.md) - Lists the different output formats
+  supported by Deptrac
+* [Debugging](docs/debugging.md) - Overview of the debug commands
+* [Code Of Conduct](docs/CODE_OF_CONDUCT.md) - Our community standards
+* [Contribute](docs/CONTRIBUTING.md) - Advice for contributing code changes,
+  e.g. how to run tests or how to build a phar file with your changes that you
+  can use to analyse your projects
+* [Security Guide](docs/SECURITY.md) - How to report security vulnerabilities

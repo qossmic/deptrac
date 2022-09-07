@@ -12,7 +12,7 @@ Deptrac can be used in a CI pipeline to make sure a pull request does not
 violate any of the architectural rules you defined. With the optional Graphviz
 formatter you can visualize your layers, rules and violations.
 
-![ModelController1](examples/ControllerServiceRepository1.png)
+![Example: Deptrac analyses Deptrac](deptrac.png)
 
 ## Requirements
 
@@ -100,9 +100,9 @@ variable Path (e.g. ``C:\Program Files (x86)\Graphviz2.38\bin``).
 
 ## Getting Started
 
-In order to get started with Deptrac you will need a configuration file, called
-*depfile*. This configuration file is written in YAML and, by default, is stored
-with the name `depfile.yaml` in your project's root directory.
+In order to get started with Deptrac you will need a configuration file.
+This configuration file is written in YAML and, by default, is stored with the
+name `deptrac.yaml` in your project's root directory.
 
 Deptrac can generate a template for you, using the `init` command.
 
@@ -114,12 +114,12 @@ The main purpose of this file is:
 
 1. Define in which directories Deptrac will search for classes and which files
    to exclude.
-1. Define your architectural layers using so-called collectors.
-1. Define a ruleset describing which layers can communicate with each other.
+2. Define your architectural layers using so-called collectors.
+3. Define a ruleset describing which layers can communicate with each other.
 
 You can find out more about the [Core Concepts](concepts.md) in the docs.
 
-### The Depfile
+### Configuration
 
 Let's have a look at the generated file:
 
@@ -165,7 +165,7 @@ Deptrac. Any file containing a class with `Controller` will be grouped in a
 layer with the same name. The same happens for classes having `Repository` and
 `Service` in their name. It is important to note that the fully qualified class
 name is used for grouping classes. That means, the collector will take the full
-namespace into account.
+namespace with class name into account.
 
 The default ruleset will then allow classes in the Controller-layer to
 communicate - i.e. use classes from - the Service layer. Classes grouped in the
@@ -173,12 +173,14 @@ Service layer may not use classes from the Controller layer, but they can use
 classes from the Repository layer. Classes inside the Repository layer may not
 use any classes from the other two layers.
 
-You can learn more about the file in the [Depfile reference](depfile.md).
+You can learn more about the file in the [Configuration reference](configuration.md).
 
 ## Run Deptrac
 
-Once you have set up the depfile you can run Deptrac to analyse your code and
-check for violations.
+Once you have set up the config file you can run Deptrac to analyse your code
+and check for violations. If you use the default configuration file, you can
+type `php deptrac.phar`, otherwise you will need to specify which command and
+config file should be used.
 
 ```bash
 php deptrac.phar
@@ -223,7 +225,7 @@ Repository layer uses a class from the Controller layer.
 The table on the bottom gives you an overview over:
 
 * how many violations were found.
-* how many violations were skipped, meaning your depfile contains exceptions.
+* how many violations were skipped, meaning your config contains exceptions.
   which will not cause Deptrac to return with an error status code, e.g. in CI,
   when these violations are found.
 * how many classes were found in the directories, that were not assigned to a
@@ -232,7 +234,7 @@ The table on the bottom gives you an overview over:
 * how many warnings where encountered, e.g. because a class is grouped in
   multiple layers.
 * how many errors were encountered, e.g. when you exclude a violation in your
-  depfile but that violation is not encountered.
+  config file but that violation is not encountered.
 
 If the output does not match your expectations please take a look at
 [the debugging commands](debugging.md) available in Deptrac.
@@ -263,15 +265,21 @@ Please don't be inconsiderate or mean, or anything in between.
 
 ## Further Documentation
 
-* [Core Concepts](concepts.md) - explains layers, rules and violations in
+* [Backwards Compatibility](bc_policy.md) - General info on how we approach
+  backwards compatibility
+* [Upgrade Guide](upgrade.md) - List of backwards breaking changes that need to
+  be addressed when upgrading Deptrac to a new version and how to do it.
+* [Core Concepts](concepts.md) - Explains layers, rules and violations in
   more details.
-* [Depfile](depfile.md) - reference for all available settings in a
-  depfile
-* [Collectors](collectors.md) - reference for which collectors are
+* [Configuration](configuration.md) - Reference for all available settings in a
+  config file
+* [Collectors](collectors.md) - Reference for which collectors are
   available in Deptrac to define your layers.
-* [Formatters](formatters.md) - lists the different output formats
+* [Formatters](formatters.md) - Lists the different output formats
   supported by Deptrac
-* [Debugging](debugging.md) - overview of the debug commands
-* [Contribute](contributing.md) - advice for contributing code changes,
+* [Debugging](debugging.md) - Overview of the debug commands
+* [Code Of Conduct](CODE_OF_CONDUCT.md) - Our community standards
+* [Contribute](CONTRIBUTING.md) - Advice for contributing code changes,
   e.g. how to run tests or how to build a phar file with your changes that you
   can use to analyse your projects
+* [Security Guide](SECURITY.md) - How to report security vulnerabilities
