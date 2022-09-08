@@ -14,13 +14,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Filesystem\Path;
 
 final class ServiceContainerBuilder
 {
     private ?SplFileInfo $configFile = null;
-
     private ?SplFileInfo $cacheFile = null;
 
     public function __construct(private readonly string $workingDirectory)
@@ -102,10 +100,7 @@ final class ServiceContainerBuilder
     private static function registerCompilerPasses(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new AddConsoleCommandPass());
-
-        $container->addCompilerPass(
-            new RegisterListenersPass(EventDispatcher::class, 'event_listener', 'event_subscriber')
-        );
+        $container->addCompilerPass(new RegisterListenersPass());
     }
 
     private static function loadServices(ContainerBuilder $container, ?SplFileInfo $cacheFile): void

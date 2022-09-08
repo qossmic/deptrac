@@ -1,3 +1,4 @@
+name: "Static analysis"
 on:
   pull_request:
   push:
@@ -5,8 +6,6 @@ on:
       - main
     tags:
       - "**"
-
-name: "Static analysis"
 
 jobs:
   coding-standards:

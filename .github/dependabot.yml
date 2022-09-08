@@ -1,5 +1,4 @@
 # https://help.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates#target-branch
-
 version: 2
 
 updates:

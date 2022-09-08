@@ -27,5 +27,5 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(CacheableFileSubscriber::class)
         ->args([service(AstFileReferenceFileCache::class)])
-        ->tag('event_subscriber');
+        ->tag('kernel.event_subscriber');
 };
