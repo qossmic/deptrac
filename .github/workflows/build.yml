@@ -1,3 +1,4 @@
+name: "Build"
 on:
   pull_request:
   push:
@@ -5,8 +6,6 @@ on:
       - main
     tags:
       - "**"
-
-name: "Build"
 
 jobs:
   build:

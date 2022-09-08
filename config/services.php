@@ -273,10 +273,10 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             '$ignoreUncoveredInternalClasses' => param('ignore_uncovered_internal_classes'),
         ])
-        ->tag('event_listener', ['priority' => 32]);
+        ->tag('kernel.event_listener', ['priority' => 32]);
     $services
         ->set(MatchingLayersHandler::class)
-        ->tag('event_listener', ['priority' => 16]);
+        ->tag('kernel.event_listener', ['priority' => 16]);
     $services
         ->set(LayerProvider::class)
         ->args([
@@ -284,14 +284,14 @@ return static function (ContainerConfigurator $container): void {
         ]);
     $services
         ->set(AllowDependencyHandler::class)
-        ->tag('event_listener', ['priority' => 4]);
+        ->tag('kernel.event_listener', ['priority' => 4]);
     $services
         ->set(ViolationHandler::class)
         ->args([
             '$skippedViolations' => param('skip_violations'),
         ])
-        ->tag('event_listener', ['method' => 'handleViolation', 'priority' => -32])
-        ->tag('event_listener', ['method' => 'handleUnmatchedSkipped']);
+        ->tag('kernel.event_listener', ['method' => 'handleViolation', 'priority' => -32])
+        ->tag('kernel.event_listener', ['method' => 'handleUnmatchedSkipped']);
     $services
         ->set(DependencyLayersAnalyser::class)
         ->args([
