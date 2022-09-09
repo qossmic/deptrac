@@ -30,7 +30,7 @@ class Dumper
         if ($filesystem->exists($target->getPathname())) {
             throw FileAlreadyExistsException::alreadyExists($target);
         }
-        if (!$target->isWritable()) {
+        if ($target->isFile() && !$target->isWritable()) {
             throw FileNotWritableException::notWritable($target);
         }
 
