@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths: ["./SkipViolations/"]
   layers:
   - name: Core

@@ -23,7 +23,7 @@ parameters:
 The `bool` collector allows combining other collectors with or without negation.
 
 ```yml
-deptrac:
+parameters:
   layers:
     - name: Asset
       collectors:
@@ -48,7 +48,7 @@ qualified name to a simplified regular expression. Any match will be
 added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Provider
       collectors:
@@ -67,7 +67,7 @@ qualified name to a simplified regular expression. Any match will be
 added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Domain
       collectors:
@@ -86,7 +86,7 @@ qualified name to a regular expression. Any matching class will be added to the
 assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Controller
       collectors:
@@ -104,7 +104,7 @@ they are declared in to a simplified regular expression. Any matching class will
 be added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Controller
       collectors:
@@ -122,7 +122,7 @@ The `extends` collector allows collecting classes extending a specified class by
 matching recursively for a fully qualified class or interface name.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:
@@ -137,7 +137,7 @@ qualified name to a simplified regular expression. Any matching function will be
 added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:
@@ -150,7 +150,7 @@ deptrac:
 The `glob` collector finds all files matching the provided glob pattern.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Repositories
       collectors:
@@ -164,7 +164,7 @@ The `implements` collector allows collecting classes implementing a specified
 interface by matching recursively for a fully qualified interface name.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:
@@ -178,7 +178,7 @@ qualified name to a simplified regular expression. Any matching interface will b
 added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Contracts
       collectors:
@@ -197,7 +197,7 @@ class, whether by implementing an interface, extending another class or by using
 a trait, by matching recursively for a fully qualified class name.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:
@@ -213,7 +213,7 @@ it is very useful to exclude classes in combination with
 the [`bool` Collector](#bool-collector):
 
 ```yml
-deptrac:
+parameters:
   layers:
     - name: SubDomain
       collectors:
@@ -236,7 +236,7 @@ The `method` collector allows collecting classes by matching their methods name
 to a regular expression. Any matching class will be added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo services
       collectors:
@@ -253,7 +253,7 @@ The `superglobal` collector allows collecting superglobal PHP variables matching
 the specified superglobal name.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:
@@ -270,7 +270,7 @@ qualified name to a simplified regular expression. Any matching trait will be
 added to the assigned layer.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Traits
       collectors:
@@ -288,7 +288,7 @@ The `uses` collector allows collecting classes using a specified trait by
 matching recursively for a fully qualified trait name.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:
@@ -311,7 +311,7 @@ If you would like to make your collector available to others, feel free to
 Any collector can also specify parameter `private:true` like this:
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - name: Foo
       collectors:

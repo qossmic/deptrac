@@ -25,7 +25,7 @@ imports:
 Deptrac can have different parts of the php file as a source for the dependency. By default, only class definitions and use statements can be the source of the dependency and superglobal variable usage is not tracked. To analyse file more fully, you can define what types of `DependencyEmmiters` you want to apply on the analysed file:
 
 ```yaml
-deptrac:
+parameters:
   analyser:
     types:
       - use
@@ -52,7 +52,7 @@ defined here, than it will not be collected and added to your layers.
 Example:
 
 ```yaml
-deptrac:
+parameters:
   exclude_files:
     - '#.*Test\.php$#'
 ```
@@ -74,7 +74,7 @@ You can group multiple layers.
 Example:
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - User Frontend
     - User Backend
@@ -104,7 +104,7 @@ the generated image.
 Example:
 
 ```yaml
-deptrac:
+parameters:
   formatters:
     graphviz:
       hidden_layers:
@@ -120,7 +120,7 @@ You can configure the codeclimate output by changing how severity is chosen.
 You can change how a severity of `failure`, `skipped`, `uncovered` violations will be treated.
 
 ```yaml
-deptrac:
+parameters:
   formatters:
     codeclimate:
       severity:
@@ -138,7 +138,7 @@ option to false.
 Example:
 
 ```yaml
-deptrac:
+parameters:
   ignore_uncovered_internal_classes: false
 ```
 
@@ -181,7 +181,7 @@ as well.
 Example:
 
 ```yaml
-deptrac:
+parameters:
   paths:
     - src/
     - vendor/
@@ -210,7 +210,7 @@ all layers it allows. In the example below, the Controller can now use classes
 from the Service and the Repository layer, not just the Service layer.
 
 ```yaml
-deptrac:
+parameters:
   ruleset:
     Controller:
       - +Service
@@ -228,7 +228,7 @@ listed violations are encountered. For more on this see
 Example:
 
 ```yaml
-deptrac:
+parameters:
   skip_violations:
     Library\LibClass:
       - Core\CoreClass
@@ -251,8 +251,6 @@ Example:
 ```yaml
 parameters:
   Project: MyProject
-
-deptrac:
   layers:
     -
       name: Foo

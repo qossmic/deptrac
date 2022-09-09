@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths: ["./ControllerServiceRepository1/"]
   exclude_files: []
   layers:

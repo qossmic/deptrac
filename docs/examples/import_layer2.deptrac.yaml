@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths:
     - ./Layer2
   layers:

@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths: ["./MethodNames1/"]
   exclude_files: []
   layers:

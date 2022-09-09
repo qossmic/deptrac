@@ -1,3 +1,7 @@
+# Upgrade 0.24
+
+Revert the deptrac: yaml prefix and use 'parameters:' instead
+
 # Upgrade from 0.20 to 0.21
 
 # Depfile (Configuration File)

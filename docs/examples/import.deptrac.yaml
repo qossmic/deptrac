@@ -3,7 +3,7 @@ imports:
   - 'import_layer2.deptrac.yaml'
   - 'import_baseline.deptrac.yaml'
 
-deptrac:
+parameters:
   layers:
     - name: Controller
       collectors:

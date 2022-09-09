@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths: ["../../tests/Core/Dependency/Emitter/Fixtures/"]
   exclude_files: []
   layers:

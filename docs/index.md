@@ -125,7 +125,7 @@ Let's have a look at the generated file:
 
 ```yaml
 # deptrac.yaml
-deptrac:
+parameters:
   paths:
     - ./src
   exclude_files:

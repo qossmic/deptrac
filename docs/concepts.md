@@ -44,7 +44,7 @@ If your application has *controllers* and *models*, Deptrac allows you to group
 them into layers.
 
 ```yaml
-deptrac:
+parameters:
   paths:
     - ./examples/ModelController
   exclude_files: ~
@@ -132,7 +132,7 @@ As a lot of architectures define some kind of *controllers*, *services* and
 We can define this using the following depfile:
 
 ```yaml
-deptrac:
+parameters:
   paths:
     - ./examples/ControllerServiceRepository1/
   exclude_files: ~
@@ -296,7 +296,7 @@ Violations can be skipped by provided list of dependencies in *skip_violations*
 configuration section:
 
 ```yaml
-deptrac:
+parameters:
   skip_violations:
     Library\LibClass:
       - Core\CoreClass

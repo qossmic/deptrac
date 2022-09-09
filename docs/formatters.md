@@ -86,7 +86,7 @@ There are 2 main use-cases for this feature:
   will then generate graphs focusing on only the relevant layers.
 
 ```yaml
-deptrac:
+parameters:
   layers:
     -
       name: Utils
@@ -117,7 +117,7 @@ layers into groups that will be rendered as sub-graphs in GraphViz output.
 The following config:
 
 ```yaml
-deptrac:
+parameters:
   layers:
     - User Frontend
     - User Backend
@@ -287,7 +287,7 @@ Supported options:
 Under `formatters.codeclimate.severity` you can define which severity string you want to assign to a given violation type. By default, deptrac uses `major` for failures, `minor` for skipped violations and `info` for uncovered dependencies.
 
 ```yaml
-deptrac:
+parameters:
   formatters:
     codeclimate:
       severity:

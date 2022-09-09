@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths:
       - /tmp/symfony
 

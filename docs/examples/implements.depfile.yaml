@@ -1,4 +1,4 @@
-deptrac:
+parameters:
   paths: ["./Implements/"]
   exclude_files: []
   layers:
