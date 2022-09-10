@@ -9,25 +9,28 @@ use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 
+/**
+ * @psalm-immutable
+ */
 class FunctionLikeReference implements TokenReferenceInterface
 {
-    private ?FileReference $fileReference = null;
-
     /**
      * @param DependencyToken[] $dependencies
      */
     public function __construct(
         private readonly FunctionLikeToken $functionName,
-        public readonly array $dependencies = []
+        public readonly array $dependencies = [],
+        private readonly ?FileReference $fileReference = null
     ) {
     }
 
     public function withFileReference(FileReference $astFileReference): self
     {
-        $instance = clone $this;
-        $instance->fileReference = $astFileReference;
-
-        return $instance;
+        return new self(
+            $this->functionName,
+            $this->dependencies,
+            $astFileReference
+        );
     }
 
     public function getFilepath(): ?string
