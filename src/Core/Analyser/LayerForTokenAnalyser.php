@@ -53,7 +53,7 @@ class LayerForTokenAnalyser
                 continue;
             }
             $token = $this->tokenResolver->resolve($reference->getToken(), $astMap);
-            $matchingLayers = array_keys($this->layerResolver->getLayersForReference($token, $astMap));
+            $matchingLayers = array_keys($this->layerResolver->getLayersForReference($token));
 
             natcasesort($matchingLayers);
 

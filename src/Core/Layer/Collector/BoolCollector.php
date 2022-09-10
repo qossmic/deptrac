@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use InvalidArgumentException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 
 final class BoolCollector implements ConditionalCollectorInterface
 {
@@ -14,7 +13,7 @@ final class BoolCollector implements ConditionalCollectorInterface
     {
     }
 
-    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         $configuration = $this->normalizeConfiguration($config);
 
@@ -22,7 +21,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         foreach ((array) $configuration['must'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
 
-            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference, $astMap);
+            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference);
             if (!$satisfied) {
                 return false;
             }
@@ -32,7 +31,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         foreach ((array) $configuration['must_not'] as $v) {
             $collectable = $this->collectorResolver->resolve($v);
 
-            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference, $astMap);
+            $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference);
             if ($satisfied) {
                 return false;
             }

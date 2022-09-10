@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
@@ -32,7 +31,7 @@ class LayerResolver implements LayerResolverInterface
         $this->initializeLayers($layers);
     }
 
-    public function getLayersForReference(TokenReferenceInterface $reference, AstMap $astMap): array
+    public function getLayersForReference(TokenReferenceInterface $reference): array
     {
         $tokenName = $reference->getToken()->toString();
         if (array_key_exists($tokenName, $this->resolved)) {
@@ -51,7 +50,7 @@ class LayerResolver implements LayerResolverInterface
                     continue;
                 }
 
-                if ($collectable->collector->satisfy($attributes, $reference, $astMap)) {
+                if ($collectable->collector->satisfy($attributes, $reference)) {
                     if (array_key_exists($layer, $this->resolved[$tokenName]) && true === $this->resolved[$tokenName][$layer]) {
                         continue;
                     }
@@ -67,7 +66,7 @@ class LayerResolver implements LayerResolverInterface
         return $this->resolved[$tokenName];
     }
 
-    public function isReferenceInLayer(string $layer, TokenReferenceInterface $reference, AstMap $astMap): bool
+    public function isReferenceInLayer(string $layer, TokenReferenceInterface $reference): bool
     {
         $tokenName = $reference->getToken()->toString();
         if (array_key_exists($tokenName, $this->resolved) && [] !== $this->resolved[$tokenName]) {
@@ -88,7 +87,7 @@ class LayerResolver implements LayerResolverInterface
                 continue;
             }
 
-            if ($collector->satisfy($collectable->attributes, $reference, $astMap)) {
+            if ($collector->satisfy($collectable->attributes, $reference)) {
                 return true;
             }
         }

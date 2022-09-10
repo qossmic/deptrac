@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use InvalidArgumentException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use function array_key_exists;
@@ -25,7 +24,7 @@ final class LayerCollector implements ConditionalCollectorInterface
     {
     }
 
-    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         if (isset($config['layer']) && !isset($config['value'])) {
             trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version');
@@ -53,7 +52,7 @@ final class LayerCollector implements ConditionalCollectorInterface
         // Set resolved for current token to null in case resolver comes back to it (circular reference)
         $this->resolved[$token][$layer] = null;
 
-        return $this->resolved[$token][$layer] = $this->resolver->isReferenceInLayer($config['value'], $reference, $astMap);
+        return $this->resolved[$token][$layer] = $this->resolver->isReferenceInLayer($config['value'], $reference);
     }
 
     public function resolvable(array $config): bool

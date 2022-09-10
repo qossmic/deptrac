@@ -92,9 +92,9 @@ final class LayerCollectorTest extends TestCase
             ->willReturn(true);
         $this->resolver
             ->method('isReferenceInLayer')
-            ->with('FooLayer', $reference, $this->isInstanceOf(AstMap::class))
-            ->willReturnCallback(function (string $layerName, ClassLikeReference $reference, AstMap $astMap) {
-                return $this->collector->satisfy(['value' => 'FooLayer'], $reference, $astMap);
+            ->with('FooLayer', $reference)
+            ->willReturnCallback(function (string $layerName, ClassLikeReference $reference) {
+                return $this->collector->satisfy(['value' => 'FooLayer'], $reference);
             });
 
         $this->expectException(CircularReferenceException::class);
@@ -103,7 +103,6 @@ final class LayerCollectorTest extends TestCase
         $this->collector->satisfy(
             ['value' => 'FooLayer'],
             $reference,
-            new AstMap([])
         );
     }
 
@@ -116,13 +115,12 @@ final class LayerCollectorTest extends TestCase
             ->willReturn(true);
         $this->resolver
             ->method('isReferenceInLayer')
-            ->with('AppLayer', $reference, $this->isInstanceOf(AstMap::class))
+            ->with('AppLayer', $reference)
             ->willReturn(true);
 
         $actual = $this->collector->satisfy(
             ['value' => 'AppLayer'],
             $reference,
-            new AstMap([])
         );
 
         self::assertTrue($actual);
@@ -137,13 +135,12 @@ final class LayerCollectorTest extends TestCase
             ->willReturn(true);
         $this->resolver
             ->method('isReferenceInLayer')
-            ->with('AppLayer', $reference, $this->isInstanceOf(AstMap::class))
+            ->with('AppLayer', $reference)
             ->willReturn(false);
 
         $actual = $this->collector->satisfy(
             ['value' => 'AppLayer'],
             $reference,
-            new AstMap([])
         );
 
         self::assertFalse($actual);

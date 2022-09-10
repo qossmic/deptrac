@@ -13,6 +13,15 @@ deptrac:
   paths:
     - ./src
 
+  analyser:
+    types:
+      - class
+      - class_superglobal
+      - file
+      - function
+      - function_superglobal
+      - function_call
+
   formatters:
     graphviz:
       pointToGroups: true

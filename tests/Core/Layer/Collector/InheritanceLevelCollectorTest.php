@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Core\Analyser\AstMapExtractor;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
@@ -13,15 +14,6 @@ use Qossmic\Deptrac\Core\Layer\Collector\InheritanceLevelCollector;
 
 final class InheritanceLevelCollectorTest extends TestCase
 {
-    private InheritanceLevelCollector $collector;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->collector = new InheritanceLevelCollector();
-    }
-
     public function dataTests(): array
     {
         return [
@@ -48,10 +40,14 @@ final class InheritanceLevelCollectorTest extends TestCase
             ->with(ClassLikeToken::fromFQCN(AstInherit::class))
             ->willReturn([$classInherit]);
 
-        $actual = $this->collector->satisfy(
+        $astMapExtractor = $this->createMock(AstMapExtractor::class);
+        $astMapExtractor->method('extract')
+            ->willReturn($astMap);
+
+        $collector = new InheritanceLevelCollector($astMapExtractor);
+        $actual = $collector->satisfy(
             ['value' => $levelConfig],
             new ClassLikeReference(ClassLikeToken::fromFQCN(AstInherit::class)),
-            $astMap,
         );
 
         self::assertSame($expected, $actual);

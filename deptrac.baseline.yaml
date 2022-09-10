@@ -1,10 +1,18 @@
 deptrac:
   skip_violations:
-    Qossmic\Deptrac\Contract\Layer\CollectorInterface:
-      - Qossmic\Deptrac\Core\Ast\AstMap\AstMap
     Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Core\Analyser\TokenType:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
+    Qossmic\Deptrac\Core\Layer\Collector\ExtendsCollector:
+      - Qossmic\Deptrac\Core\Analyser\AstMapExtractor
+    Qossmic\Deptrac\Core\Layer\Collector\ImplementsCollector:
+      - Qossmic\Deptrac\Core\Analyser\AstMapExtractor
+    Qossmic\Deptrac\Core\Layer\Collector\InheritanceLevelCollector:
+      - Qossmic\Deptrac\Core\Analyser\AstMapExtractor
+    Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector:
+      - Qossmic\Deptrac\Core\Analyser\AstMapExtractor
+    Qossmic\Deptrac\Core\Layer\Collector\UsesCollector:
+      - Qossmic\Deptrac\Core\Analyser\AstMapExtractor

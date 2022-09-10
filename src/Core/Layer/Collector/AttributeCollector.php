@@ -7,7 +7,6 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
@@ -16,7 +15,7 @@ use function str_contains;
 
 class AttributeCollector implements CollectorInterface
 {
-    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         if (!$reference instanceof FileReference
             && !$reference instanceof ClassLikeReference

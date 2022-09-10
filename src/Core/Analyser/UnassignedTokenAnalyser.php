@@ -45,8 +45,7 @@ class UnassignedTokenAnalyser
         if (in_array(TokenType::CLASS_LIKE, $this->tokenTypes, true)) {
             foreach ($astMap->getClassLikeReferences() as $classReference) {
                 $token = $this->tokenResolver->resolve($classReference->getToken(), $astMap);
-                $matchingLayers = $this->layerResolver->getLayersForReference($token, $astMap);
-                if ([] === $matchingLayers) {
+                if ([] === $this->layerResolver->getLayersForReference($token)) {
                     $unassignedTokens[] = $classReference->getToken()->toString();
                 }
             }
@@ -55,8 +54,7 @@ class UnassignedTokenAnalyser
         if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
             foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
                 $token = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
-                $matchingLayers = $this->layerResolver->getLayersForReference($token, $astMap);
-                if ([] === $matchingLayers) {
+                if ([] === $this->layerResolver->getLayersForReference($token)) {
                     $unassignedTokens[] = $functionReference->getToken()->toString();
                 }
             }
@@ -65,8 +63,7 @@ class UnassignedTokenAnalyser
         if (in_array(TokenType::FILE, $this->tokenTypes, true)) {
             foreach ($astMap->getFileReferences() as $fileReference) {
                 $token = $this->tokenResolver->resolve($fileReference->getToken(), $astMap);
-                $matchingLayers = $this->layerResolver->getLayersForReference($token, $astMap);
-                if ([] === $matchingLayers) {
+                if ([] === $this->layerResolver->getLayersForReference($token)) {
                     $unassignedTokens[] = $fileReference->getToken()->toString();
                 }
             }

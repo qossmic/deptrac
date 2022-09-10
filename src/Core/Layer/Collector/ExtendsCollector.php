@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
+use Qossmic\Deptrac\Core\Analyser\AstMapExtractor;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
@@ -14,7 +15,14 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 
 final class ExtendsCollector implements CollectorInterface
 {
-    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    private readonly AstMap $astMap;
+
+    public function __construct(private AstMapExtractor $astMapExtractor)
+    {
+        $this->astMap = $this->astMapExtractor->extract();
+    }
+
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         if (!$reference instanceof ClassLikeReference) {
             return false;
@@ -22,7 +30,7 @@ final class ExtendsCollector implements CollectorInterface
 
         $interfaceName = $this->getInterfaceName($config);
 
-        foreach ($astMap->getClassInherits($reference->getToken()) as $inherit) {
+        foreach ($this->astMap->getClassInherits($reference->getToken()) as $inherit) {
             if (AstInheritType::EXTENDS === $inherit->type && $inherit->classLikeName->equals($interfaceName)) {
                 return true;
             }
