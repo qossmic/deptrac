@@ -61,6 +61,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\InterfaceCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\MethodCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\TraitCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\UsesCollector;
@@ -285,6 +286,9 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(UsesCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_USES->value]);
+    $services
+        ->set(PhpInternalCollector::class)
+        ->tag('collector', ['type' => CollectorType::TYPE_PHP_INTERNAL->value]);
 
     /*
      * Analyser

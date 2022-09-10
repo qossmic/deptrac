@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Qossmic\Deptrac\Core\Layer\Collector;
+
+use JetBrains\PHPStormStub\PhpStormStubsMap;
+use LogicException;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
+use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
+
+class PhpInternalCollector implements CollectorInterface
+{
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
+    {
+        if ($reference instanceof FileReference || $reference instanceof VariableReference) {
+            return false;
+        }
+
+        if ($reference instanceof ClassLikeReference) {
+            $token = $reference->getToken();
+            assert($token instanceof ClassLikeToken);
+
+            return $token->match($this->getPattern($config)) && array_key_exists(
+                $token->toString(), PhpStormStubsMap::CLASSES);
+        }
+
+        if ($reference instanceof FunctionLikeReference) {
+            $token = $reference->getToken();
+            assert($token instanceof FunctionLikeToken);
+
+            return $token->match($this->getPattern($config)) && array_key_exists(
+                $token->functionName, PhpStormStubsMap::FUNCTIONS);
+        }
+
+        // future-proof catch all
+        return false;
+    }
+
+    /**
+     * @param array<string, bool|string|array<string, string>> $config
+     */
+    private function getPattern(array $config): string
+    {
+        if (!isset($config['value']) || !is_string($config['value'])) {
+            throw new LogicException('PhpInternalCollector needs configuration.');
+        }
+
+        return '/'.$config['value'].'/i';
+    }
+}

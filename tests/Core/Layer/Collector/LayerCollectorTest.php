@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
@@ -35,7 +34,6 @@ final class LayerCollectorTest extends TestCase
         $this->collector->satisfy(
             [],
             new ClassLikeReference(ClassLikeToken::fromFQCN('App\\Foo')),
-            new AstMap([])
         );
     }
 
@@ -79,7 +77,6 @@ final class LayerCollectorTest extends TestCase
         $this->collector->satisfy(
             ['value' => 'test'],
             new ClassLikeReference(ClassLikeToken::fromFQCN('App\\Foo')),
-            new AstMap([])
         );
     }
 

@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\ClassNameRegexCollector;
@@ -38,8 +37,7 @@ final class ClassNameRegexCollectorTest extends TestCase
     {
         $actual = $this->collector->satisfy(
             $configuration,
-            new ClassLikeReference(ClassLikeToken::fromFQCN($className)),
-            new AstMap([])
+            new ClassLikeReference(ClassLikeToken::fromFQCN($className))
         );
 
         self::assertSame($expected, $actual);
@@ -51,8 +49,7 @@ final class ClassNameRegexCollectorTest extends TestCase
 
         $this->collector->satisfy(
             ['Foo' => 'a'],
-            new ClassLikeReference(ClassLikeToken::fromFQCN('Foo')),
-            new AstMap([])
+            new ClassLikeReference(ClassLikeToken::fromFQCN('Foo'))
         );
     }
 
@@ -63,7 +60,6 @@ final class ClassNameRegexCollectorTest extends TestCase
         $this->collector->satisfy(
             ['regex' => '/'],
             new ClassLikeReference(ClassLikeToken::fromFQCN('Foo')),
-            new AstMap([])
         );
     }
 }

@@ -14,5 +14,7 @@ deptrac:
       - Qossmic\Deptrac\Core\Analyser\AstMapExtractor
     Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector:
       - Qossmic\Deptrac\Core\Analyser\AstMapExtractor
+    Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector:
+      - JetBrains\PHPStormStub\PhpStormStubsMap
     Qossmic\Deptrac\Core\Layer\Collector\UsesCollector:
       - Qossmic\Deptrac\Core\Analyser\AstMapExtractor

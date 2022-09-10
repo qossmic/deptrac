@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 enum CollectorType: string
 {
+    //Note: Do not try to refactor to get rid of `TYPE_*` prefix as you cannot have `case CLASS`!!!
     case TYPE_ATTRIBUTE = 'attribute';
     case TYPE_BOOL = 'bool';
     case TYPE_CLASS = 'class';
@@ -25,4 +26,5 @@ enum CollectorType: string
     case TYPE_SUPERGLOBAL = 'superglobal';
     case TYPE_TRAIT = 'trait';
     case TYPE_USES = 'uses';
+    case TYPE_PHP_INTERNAL = 'php_internal';
 }

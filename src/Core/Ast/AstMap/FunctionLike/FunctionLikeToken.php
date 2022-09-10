@@ -8,7 +8,7 @@ use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
 final class FunctionLikeToken implements TokenInterface
 {
-    private function __construct(private readonly string $functionName)
+    private function __construct(public readonly string $functionName)
     {
     }
 
