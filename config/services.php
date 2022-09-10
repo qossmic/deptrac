@@ -220,8 +220,6 @@ return static function (ContainerConfigurator $container): void {
             '$layers' => param('layers'),
         ]);
     $services->alias(LayerResolverInterface::class, LayerResolver::class);
-    $services->alias('layer_resolver.depender', LayerResolverInterface::class);
-    $services->alias('layer_resolver.dependent', LayerResolverInterface::class);
     $services
         ->set(CollectorProvider::class)
         ->args([
@@ -316,11 +314,7 @@ return static function (ContainerConfigurator $container): void {
         ])
         ->tag('kernel.event_subscriber');
     $services
-        ->set(DependencyLayersAnalyser::class)
-        ->args([
-            '$dependerLayerResolver' => service('layer_resolver.depender'),
-            '$dependentLayerResolver' => service('layer_resolver.dependent'),
-        ]);
+        ->set(DependencyLayersAnalyser::class);
     $services->set(LegacyDependencyLayersAnalyser::class);
     $services->set(TokenInLayerAnalyser::class)
         ->args([
