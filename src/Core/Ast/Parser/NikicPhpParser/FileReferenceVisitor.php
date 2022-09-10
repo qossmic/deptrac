@@ -5,19 +5,13 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser;
 
 use PhpParser\Node;
-use PhpParser\Node\Expr\Instanceof_;
-use PhpParser\Node\Expr\New_;
-use PhpParser\Node\Expr\StaticCall;
-use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
-use PhpParser\Node\Stmt\Catch_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\GroupUse;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
@@ -27,11 +21,9 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
-use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
-use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
-use Qossmic\Deptrac\Core\Ast\Parser\ReferenceExtractorInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;
 
@@ -168,90 +160,6 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         // Resolve code
-        if ($node instanceof Node\Expr\FuncCall) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->name) as $functionName) {
-                $this->currentReference->unresolvedFunctionCall($functionName, $node->getLine());
-            }
-        }
-
-        if ($node instanceof Node\Stmt\TraitUse && $this->currentReference instanceof ClassLikeReferenceBuilder) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->traits) as $classLikeName) {
-                $this->currentReference->trait($classLikeName, $node->getLine());
-            }
-        }
-
-        if ($node instanceof Instanceof_ && $node->class instanceof Name) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentReference->instanceof($classLikeName, $node->class->getLine());
-            }
-        }
-
-        if ($node instanceof Node\Expr\Variable && in_array($node->name, SuperGlobalToken::allowedNames(), true)) {
-            $this->currentReference->superglobal($node->name, $node->getLine());
-        }
-
-        if ($node instanceof New_ && $node->class instanceof Name) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentReference->newStatement($classLikeName, $node->class->getLine());
-            }
-        }
-
-        if ($node instanceof StaticPropertyFetch && $node->class instanceof Name) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentReference->staticProperty($classLikeName, $node->class->getLine());
-            }
-        }
-
-        if ($node instanceof StaticCall && $node->class instanceof Name) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $node->class) as $classLikeName) {
-                $this->currentReference->staticMethod($classLikeName, $node->class->getLine());
-            }
-        }
-
-        if ($node instanceof Catch_) {
-            foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, ...$node->types) as $classLikeName) {
-                $this->currentReference->catchStmt($classLikeName, $node->getLine());
-            }
-        }
-
-        if ($node instanceof Node\FunctionLike) {
-            foreach ($node->getAttrGroups() as $attrGroup) {
-                foreach ($attrGroup->attrs as $attribute) {
-                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
-                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
-                    }
-                }
-            }
-            foreach ($node->getParams() as $param) {
-                if (null !== $param->type) {
-                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $param->type) as $classLikeName) {
-                        $this->currentReference->parameter($classLikeName, $param->type->getLine());
-                    }
-                }
-            }
-            $returnType = $node->getReturnType();
-            if (null !== $returnType) {
-                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $returnType) as $classLikeName) {
-                    $this->currentReference->returnType($classLikeName, $returnType->getLine());
-                }
-            }
-        }
-
-        if ($node instanceof Property) {
-            foreach ($node->attrGroups as $attrGroup) {
-                foreach ($attrGroup->attrs as $attribute) {
-                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
-                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
-                    }
-                }
-            }
-            if (null !== $node->type) {
-                foreach ($this->typeResolver->resolvePropertyType($node->type) as $type) {
-                    $this->currentReference->variable($type, $node->type->getStartLine());
-                }
-            }
-        }
-
         foreach ($this->dependencyResolvers as $resolver) {
             $resolver->processNode($node, $this->currentReference, $this->currentTypeScope);
         }

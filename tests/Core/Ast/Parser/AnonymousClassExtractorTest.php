@@ -7,8 +7,8 @@ namespace Tests\Qossmic\Deptrac\Core\Ast\Parser;
 use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\Parser\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 

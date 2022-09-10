@@ -17,11 +17,16 @@ use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
 use Qossmic\Deptrac\Core\Ast\AstLoader;
-use Qossmic\Deptrac\Core\Ast\Parser\AnnotationReferenceExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\Core\Ast\Parser\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\FunctionLikeExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\StaticExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
@@ -153,6 +158,24 @@ return static function (ContainerConfigurator $container): void {
         ->tag('reference_extractors');
     $services
         ->set(ClassConstantExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(FunctionLikeExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(PropertyExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(KeywordExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(StaticExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(FunctionLikeExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(VariableExtractor::class)
         ->tag('reference_extractors');
 
     /*

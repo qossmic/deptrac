@@ -7,8 +7,9 @@ namespace Tests\Qossmic\Deptrac\Core\Ast\Parser;
 use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\Parser\AnnotationReferenceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 
@@ -23,6 +24,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
             new TypeResolver(),
             [
                 new AnnotationReferenceExtractor($typeResolver),
+                new KeywordExtractor($typeResolver),
             ]
         );
 
