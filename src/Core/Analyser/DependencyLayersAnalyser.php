@@ -20,8 +20,7 @@ class DependencyLayersAnalyser
         private readonly AstMapExtractor $astMapExtractor,
         private readonly DependencyResolver $dependencyResolver,
         private readonly TokenResolver $tokenResolver,
-        private readonly LayerResolverInterface $dependerLayerResolver,
-        private readonly LayerResolverInterface $dependentLayerResolver,
+        private readonly LayerResolverInterface $layerResolver,
         private readonly EventDispatcherInterface $eventDispatcher
     ) {
     }
@@ -38,7 +37,7 @@ class DependencyLayersAnalyser
         foreach ($dependencies->getDependenciesAndInheritDependencies() as $dependency) {
             $depender = $dependency->getDepender();
             $dependerRef = $this->tokenResolver->resolve($depender, $astMap);
-            $dependerLayers = array_keys($this->dependerLayerResolver->getLayersForReference($dependerRef));
+            $dependerLayers = array_keys($this->layerResolver->getLayersForReference($dependerRef));
 
             if (!isset($warnings[$depender->toString()]) && count($dependerLayers) > 1) {
                 $warnings[$depender->toString()] = Warning::tokenIsInMoreThanOneLayer($depender->toString(), $dependerLayers);
@@ -46,7 +45,7 @@ class DependencyLayersAnalyser
 
             $dependent = $dependency->getDependent();
             $dependentRef = $this->tokenResolver->resolve($dependent, $astMap);
-            $dependentLayers = $this->dependentLayerResolver->getLayersForReference($dependentRef);
+            $dependentLayers = $this->layerResolver->getLayersForReference($dependentRef);
 
             foreach ($dependerLayers as $dependentLayer) {
                 $event = new ProcessEvent($dependency, $dependerRef, $dependentLayer, $dependentRef, $dependentLayers, $result);
