@@ -108,6 +108,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(EventDispatcher::class);
     $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
     $services->alias(\Symfony\Component\EventDispatcher\EventDispatcherInterface::class, EventDispatcher::class);
+    $services->alias('event_dispatcher', EventDispatcher::class);
     $services
         ->set(FileInputCollector::class)
         ->args([
@@ -273,10 +274,10 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             '$ignoreUncoveredInternalClasses' => param('ignore_uncovered_internal_classes'),
         ])
-        ->tag('kernel.event_listener', ['priority' => 32]);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(MatchingLayersHandler::class)
-        ->tag('kernel.event_listener', ['priority' => 16]);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(LayerProvider::class)
         ->args([
@@ -284,14 +285,13 @@ return static function (ContainerConfigurator $container): void {
         ]);
     $services
         ->set(AllowDependencyHandler::class)
-        ->tag('kernel.event_listener', ['priority' => 4]);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(ViolationHandler::class)
         ->args([
             '$skippedViolations' => param('skip_violations'),
         ])
-        ->tag('kernel.event_listener', ['method' => 'handleViolation', 'priority' => -32])
-        ->tag('kernel.event_listener', ['method' => 'handleUnmatchedSkipped']);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(DependencyLayersAnalyser::class)
         ->args([

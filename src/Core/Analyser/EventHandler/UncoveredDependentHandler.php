@@ -8,17 +8,18 @@ use JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @internal
  */
-class UncoveredDependentHandler
+class UncoveredDependentHandler implements EventSubscriberInterface
 {
     public function __construct(private readonly bool $ignoreUncoveredInternalClasses)
     {
     }
 
-    public function __invoke(ProcessEvent $event): void
+    public function invoke(ProcessEvent $event): void
     {
         $dependent = $event->dependency->getDependent();
         $ruleset = $event->getResult();
@@ -43,5 +44,12 @@ class UncoveredDependentHandler
         $tokenString = $token->toString();
 
         return isset(PhpStormStubsMap::CLASSES[$tokenString]) || 'ReturnTypeWillChange' === $tokenString;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            ProcessEvent::class => ['invoke', 32],
+        ];
     }
 }

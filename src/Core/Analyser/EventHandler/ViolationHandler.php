@@ -9,12 +9,13 @@ use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use function sprintf;
 
 /**
  * @internal
  */
-class ViolationHandler
+class ViolationHandler implements EventSubscriberInterface
 {
     private readonly SkippedViolationHelper $skippedViolationHelper;
 
@@ -52,5 +53,13 @@ class ViolationHandler
                 $ruleset->addError(new Error(sprintf('Skipped violation "%s" for "%s" was not matched.', $classLikeNameB, $classLikeNameA)));
             }
         }
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            ProcessEvent::class => ['handleViolation', -32],
+            PostProcessEvent::class => ['handleUnmatchedSkipped'],
+        ];
     }
 }
