@@ -8,6 +8,7 @@ use Qossmic\Deptrac\Supportive\File\Exception\FileAlreadyExistsException;
 use Qossmic\Deptrac\Supportive\File\Exception\FileNotWritableException;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
+use function is_writable;
 
 class Dumper
 {
@@ -30,7 +31,7 @@ class Dumper
         if ($filesystem->exists($target->getPathname())) {
             throw FileAlreadyExistsException::alreadyExists($target);
         }
-        if (!$target->isWritable()) {
+        if (!is_writable($target->getPath())) {
             throw FileNotWritableException::notWritable($target);
         }
 
