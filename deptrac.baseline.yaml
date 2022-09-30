@@ -6,5 +6,3 @@ deptrac:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
-    Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector:
-      - JetBrains\PHPStormStub\PhpStormStubsMap

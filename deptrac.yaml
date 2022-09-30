@@ -48,9 +48,6 @@ deptrac:
       collectors:
         - type: directory
           value: src/Core/Analyser/.*
-        - type: className
-          value: ^JetBrains\\PHPStormStub\\.*
-          private: true
     - name: Ast
       collectors:
         - type: directory
