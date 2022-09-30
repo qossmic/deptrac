@@ -14,8 +14,8 @@ final class LegacyResult
 {
     /**
      * @param RuleInterface[] $rules
-     * @param Error[]         $errors
-     * @param Warning[]       $warnings
+     * @param Error[] $errors
+     * @param Warning[] $warnings
      */
     public function __construct(
         public readonly array $rules,

@@ -16,7 +16,7 @@ class ClassLikeReference implements TokenReferenceInterface
     private ?FileReference $fileReference = null;
 
     /**
-     * @param AstInherit[]      $inherits
+     * @param AstInherit[] $inherits
      * @param DependencyToken[] $dependencies
      */
     public function __construct(

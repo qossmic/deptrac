@@ -15,7 +15,7 @@ final class ConfigurationGraphViz
     }
 
     /**
-     * @param string[]                $hiddenLayers
+     * @param string[] $hiddenLayers
      * @param array<string, string[]> $groupsLayerMap
      */
     private function __construct(

@@ -24,6 +24,7 @@ return (new PhpCsFixer\Config())
             'sort_algorithm' => 'alpha',
             'imports_order' => ['class', 'function', 'const'],
         ],
+        'phpdoc_align' => ['align' => 'left'],
         'phpdoc_to_comment' => false,
         'self_static_accessor' => true,
         'static_lambda' => true,
