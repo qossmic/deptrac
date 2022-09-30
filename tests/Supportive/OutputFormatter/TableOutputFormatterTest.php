@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
@@ -43,7 +44,7 @@ class TableOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                        new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('originalA.php', 3),
                             AstInheritType::EXTENDS
@@ -104,7 +105,7 @@ class TableOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA',
                     'LayerB'
                 ),
@@ -155,7 +156,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'skipped violations' => [
             [
                 new SkippedViolation(
-                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA',
                     'LayerB'
                 ),
@@ -187,7 +188,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'skipped violations without reporting' => [
             [
                 new SkippedViolation(
-                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA',
                     'LayerB'
                 ),
@@ -214,7 +215,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'uncovered' => [
             'rules' => [
                 new Uncovered(
-                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA'
                 ),
             ],
@@ -245,7 +246,7 @@ class TableOutputFormatterTest extends TestCase
         yield 'uncovered without reporting' => [
             'rules' => [
                 new Uncovered(
-                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA'
                 ),
             ],

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Allowed;
@@ -31,13 +32,13 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         $classA = ClassLikeToken::fromFQCN('ClassA');
 
         $context = new LegacyResult([
-            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
-            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA), 'LayerA', 'LayerHidden'),
+            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerB'),
+            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerHidden'),
             new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'),
-                                         new FileOccurrence('classAB.php', 1)
+                                         new FileOccurrence('classAB.php', 1), DependencyType::PARAMETER
                           ), 'LayerA', 'LayerB'),
-            new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
-            new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
+            new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerC'),
+            new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerC'),
         ], [], []);
 
         $bufferedOutput = new BufferedOutput();
@@ -70,7 +71,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
 
         $dependency = new Dependency(
             ClassLikeToken::fromFQCN('ClassA'),
-            ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0)
+            ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0), DependencyType::PARAMETER
         );
 
         $context = new LegacyResult([
@@ -117,7 +118,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
 
         $dependency = new Dependency(
             ClassLikeToken::fromFQCN('ClassA'),
-            ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0)
+            ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0), DependencyType::PARAMETER
         );
 
         $context = new LegacyResult([

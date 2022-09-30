@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Dependency;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
@@ -22,9 +23,9 @@ final class DependencyListTest extends TestCase
         $classC = ClassLikeToken::fromFQCN('C');
 
         $dependencyResult = new DependencyList();
-        $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence('a.php', 12)));
-        $dependencyResult->addDependency($dep2 = new Dependency($classB, $classC, new FileOccurrence('b.php', 12)));
-        $dependencyResult->addDependency($dep3 = new Dependency($classA, $classC, new FileOccurrence('a.php', 12)));
+        $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence('a.php', 12), DependencyType::PARAMETER));
+        $dependencyResult->addDependency($dep2 = new Dependency($classB, $classC, new FileOccurrence('b.php', 12), DependencyType::PARAMETER));
+        $dependencyResult->addDependency($dep3 = new Dependency($classA, $classC, new FileOccurrence('a.php', 12), DependencyType::PARAMETER));
         self::assertSame([$dep1, $dep3], $dependencyResult->getDependenciesByClass($classA));
         self::assertSame([$dep2], $dependencyResult->getDependenciesByClass($classB));
         self::assertSame([], $dependencyResult->getDependenciesByClass($classC));
@@ -37,7 +38,7 @@ final class DependencyListTest extends TestCase
         $classB = ClassLikeToken::fromFQCN('B');
 
         $dependencyResult = new DependencyList();
-        $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence('a.php', 12)));
+        $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence('a.php', 12), DependencyType::PARAMETER));
         $dependencyResult->addInheritDependency($dep2 = new InheritDependency($classA, $classB, $dep1,
                                                                               new AstInherit(
                                                                                   $classB,

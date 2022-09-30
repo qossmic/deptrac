@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use function str_contains;
@@ -28,7 +28,7 @@ class AttributeCollector implements CollectorInterface
         $match = $this->getSearchedSubstring($config);
 
         foreach ($reference->dependencies as $dependency) {
-            if (DependencyTokenType::ATTRIBUTE !== $dependency->type) {
+            if (DependencyType::ATTRIBUTE !== $dependency->type) {
                 continue;
             }
 

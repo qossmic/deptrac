@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
@@ -51,7 +52,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12)
+                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -85,7 +86,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12)
+                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -119,7 +120,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassE'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 15)
+                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 15), DependencyType::PARAMETER
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -156,7 +157,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency(
                         ClassLikeToken::fromFQCN('OriginalA'),
-                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12)
+                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
                     ),
                     'LayerA',
                     'LayerB'
@@ -178,7 +179,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12)
+                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -212,7 +213,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12)
+                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -252,7 +253,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     ClassLikeToken::fromFQCN('ClassB'),
                     new Dependency(
                         ClassLikeToken::fromFQCN('OriginalA'),
-                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12)
+                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
                     ),
                     (new AstInherit(
                         ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -283,7 +284,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     ClassLikeToken::fromFQCN('ClassB'),
                     new Dependency(
                         ClassLikeToken::fromFQCN('OriginalA'),
-                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 15)
+                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 15), DependencyType::PARAMETER
                     ),
                     (new AstInherit(
                         ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -314,7 +315,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     ClassLikeToken::fromFQCN('ClassD'),
                     new Dependency(
                         ClassLikeToken::fromFQCN('OriginalA'),
-                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12)
+                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER
                     ),
                     (new AstInherit(
                         ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -342,7 +343,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
             new Uncovered(
                 new Dependency(
                     ClassLikeToken::fromFQCN('OriginalA'),
-                    ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('OriginalA.php', 12)
+                    ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('OriginalA.php', 12), DependencyType::PARAMETER
                 ),
                 'LayerA'
             ),
@@ -443,7 +444,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
         $violation = new Violation(
             new Dependency(
                 ClassLikeToken::fromFQCN('OriginalA'),
-                ClassLikeToken::fromFQCN('OriginalB'.$malformedCharacters), new FileOccurrence('ClassA.php', 12)
+                ClassLikeToken::fromFQCN('OriginalB'.$malformedCharacters), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
             ),
             'LayerA',
             'LayerB'

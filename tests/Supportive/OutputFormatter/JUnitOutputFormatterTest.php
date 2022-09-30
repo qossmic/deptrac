@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
@@ -54,7 +55,7 @@ final class JUnitOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12)),
+                        new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12), DependencyType::PARAMETER),
                         (new AstInherit(
                             $classInheritA, new FileOccurrence('foo.php', 3),
                             AstInheritType::EXTENDS
@@ -83,7 +84,7 @@ final class JUnitOutputFormatterTest extends TestCase
         yield [
             [
                 new Violation(
-                    new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12)),
+                    new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12), DependencyType::PARAMETER),
                     'LayerA',
                     'LayerB'
                 ),
@@ -102,7 +103,7 @@ final class JUnitOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12)),
+                        new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12), DependencyType::PARAMETER),
                         (new AstInherit(
                             $classInheritA, new FileOccurrence('foo.php', 3),
                             AstInheritType::EXTENDS
@@ -128,7 +129,7 @@ final class JUnitOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassC'),
                         ClassLikeToken::fromFQCN('ClassD'),
-                        new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12)),
+                        new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12), DependencyType::PARAMETER),
                         (new AstInherit(
                             $classInheritA, new FileOccurrence('foo.php', 3),
                             AstInheritType::EXTENDS
