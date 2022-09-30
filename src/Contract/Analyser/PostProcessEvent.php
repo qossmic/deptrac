@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Contract\Analyser;
 
 use Qossmic\Deptrac\Contract\Result\Result;
+use Symfony\Contracts\EventDispatcher\Event;
 
-class PostProcessEvent
+class PostProcessEvent extends Event
 {
     public function __construct(private Result $result)
     {
