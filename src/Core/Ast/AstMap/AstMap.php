@@ -98,7 +98,7 @@ class AstMap
 
     /**
      * @param ArrayObject<string, true>|null $alreadyResolved
-     * @param SplStack<AstInherit>|null      $pathStack
+     * @param SplStack<AstInherit>|null $pathStack
      *
      * @return iterable<AstInherit>
      */

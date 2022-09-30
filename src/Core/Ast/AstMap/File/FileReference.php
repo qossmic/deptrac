@@ -22,9 +22,9 @@ class FileReference implements TokenReferenceInterface
     public readonly array $functionLikeReferences;
 
     /**
-     * @param ClassLikeReference[]    $classLikeReferences
+     * @param ClassLikeReference[] $classLikeReferences
      * @param FunctionLikeReference[] $functionLikeReferences
-     * @param DependencyToken[]       $dependencies
+     * @param DependencyToken[] $dependencies
      */
     public function __construct(
         public readonly string $filepath,

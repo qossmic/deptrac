@@ -143,7 +143,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @param Node[]                            $nodes
+     * @param Node[] $nodes
      * @param array<string, array<string, int>> $layersDependOnLayers
      * @param array<string, array<string, int>> $layerViolations
      */
