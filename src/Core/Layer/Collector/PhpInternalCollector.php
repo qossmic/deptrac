@@ -9,7 +9,6 @@ use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
@@ -25,7 +24,6 @@ class PhpInternalCollector implements CollectorInterface
 
         if ($reference instanceof ClassLikeReference) {
             $token = $reference->getToken();
-            assert($token instanceof ClassLikeToken);
 
             return $token->match($this->getPattern($config)) && array_key_exists(
                 $token->toString(), PhpStormStubsMap::CLASSES);

@@ -125,7 +125,6 @@ deptrac:
       - Result
       - Layer
       - Dependency
-      - InputCollector
       - Ast
     OutputFormatter:
       - Result
@@ -135,5 +134,6 @@ deptrac:
       - Result
     Ast:
       - File
+      - InputCollector
     InputCollector:
       - File
