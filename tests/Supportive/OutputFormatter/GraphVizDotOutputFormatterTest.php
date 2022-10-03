@@ -34,8 +34,8 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA), 'LayerA', 'LayerB'),
             new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA), 'LayerA', 'LayerHidden'),
             new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'),
-                                         new FileOccurrence('classAB.php', 1)
-                          ), 'LayerA', 'LayerB'),
+                new FileOccurrence('classAB.php', 1)
+            ), 'LayerA', 'LayerB'),
             new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA), 'LayerA', 'LayerC'),
             new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA), 'LayerC'),
         ], [], []);

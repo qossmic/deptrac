@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Layer\Exception;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
+
 use function implode;
 use function sprintf;
 

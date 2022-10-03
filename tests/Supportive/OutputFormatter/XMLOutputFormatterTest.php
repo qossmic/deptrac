@@ -47,7 +47,7 @@ final class XMLOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
-                                       new FileOccurrence('ClassA.php', 12)
+                            new FileOccurrence('ClassA.php', 12)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -81,7 +81,7 @@ final class XMLOutputFormatterTest extends TestCase
             [
                 new Violation(
                     new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
-                                   new FileOccurrence('ClassA.php', 12)
+                        new FileOccurrence('ClassA.php', 12)
                     ),
                     'LayerA',
                     'LayerB'
@@ -102,7 +102,7 @@ final class XMLOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
-                                       new FileOccurrence('ClassA.php', 12)
+                            new FileOccurrence('ClassA.php', 12)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -133,7 +133,7 @@ final class XMLOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassC'),
                         ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency(ClassLikeToken::fromFQCN('OriginalA'), ClassLikeToken::fromFQCN('OriginalB'),
-                                       new FileOccurrence('ClassA.php', 12)
+                            new FileOccurrence('ClassA.php', 12)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),

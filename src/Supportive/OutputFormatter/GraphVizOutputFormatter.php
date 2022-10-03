@@ -19,6 +19,7 @@ use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\ConfigurationGraphViz;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
 use RuntimeException;
+
 use function sys_get_temp_dir;
 use function tempnam;
 

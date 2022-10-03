@@ -39,11 +39,11 @@ final class DependencyListTest extends TestCase
         $dependencyResult = new DependencyList();
         $dependencyResult->addDependency($dep1 = new Dependency($classA, $classB, new FileOccurrence('a.php', 12)));
         $dependencyResult->addInheritDependency($dep2 = new InheritDependency($classA, $classB, $dep1,
-                                                                              new AstInherit(
-                                                                                  $classB,
-                                                                                  new FileOccurrence('a.php', 12),
-                                                                                  AstInheritType::EXTENDS
-                                                                              )
+            new AstInherit(
+                $classB,
+                new FileOccurrence('a.php', 12),
+                AstInheritType::EXTENDS
+            )
         ));
         self::assertSame([$dep1, $dep2], $dependencyResult->getDependenciesAndInheritDependencies());
     }

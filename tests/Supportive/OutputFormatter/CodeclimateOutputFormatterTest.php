@@ -457,9 +457,9 @@ final class CodeclimateOutputFormatterTest extends TestCase
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
-                    false,
-                    false,
-                    false,
+                false,
+                false,
+                false,
             )
         );
     }

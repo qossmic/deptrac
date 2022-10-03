@@ -165,7 +165,7 @@ final class JUnitOutputFormatterTest extends TestCase
             new LegacyResult($rules, [], []),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
-            false, false, false)
+                false, false, false)
         );
 
         self::assertXmlFileEqualsXmlFile(
@@ -183,7 +183,7 @@ final class JUnitOutputFormatterTest extends TestCase
             ], []),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
-            false, false, false)
+                false, false, false)
         );
 
         self::assertXmlFileEqualsXmlFile(
