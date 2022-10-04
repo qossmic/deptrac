@@ -13,6 +13,15 @@ deptrac:
   paths:
     - ./src
 
+  analyser:
+    types:
+      - class
+      - class_superglobal
+      - file
+      - function
+      - function_superglobal
+      - function_call
+
   formatters:
     graphviz:
       pointToGroups: true
@@ -39,9 +48,6 @@ deptrac:
       collectors:
         - type: directory
           value: src/Core/Analyser/.*
-        - type: className
-          value: ^JetBrains\\PHPStormStub\\.*
-          private: true
     - name: Ast
       collectors:
         - type: directory
@@ -116,7 +122,6 @@ deptrac:
       - Result
       - Layer
       - Dependency
-      - InputCollector
       - Ast
     OutputFormatter:
       - Result
@@ -126,5 +131,6 @@ deptrac:
       - Result
     Ast:
       - File
+      - InputCollector
     InputCollector:
       - File

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
@@ -127,13 +126,11 @@ final class LayerResolverTest extends TestCase
         self::assertTrue($resolver->isReferenceInLayer(
             'test',
             $reference,
-            new AstMap([])
         ));
 
         self::assertFalse($resolver->isReferenceInLayer(
             'other',
             $reference,
-            new AstMap([])
         ));
     }
 
@@ -158,7 +155,7 @@ final class LayerResolverTest extends TestCase
 
         self::assertSame(
             ['test' => true],
-            $resolver->getLayersForReference($reference, new AstMap([]))
+            $resolver->getLayersForReference($reference)
         );
     }
 
@@ -183,7 +180,7 @@ final class LayerResolverTest extends TestCase
 
         self::assertSame(
             [],
-            $resolver->getLayersForReference($reference, new AstMap([]))
+            $resolver->getLayersForReference($reference)
         );
     }
 
@@ -207,7 +204,7 @@ final class LayerResolverTest extends TestCase
 
         self::assertSame(
             [],
-            $resolver->getLayersForReference($reference, new AstMap([]))
+            $resolver->getLayersForReference($reference)
         );
     }
 

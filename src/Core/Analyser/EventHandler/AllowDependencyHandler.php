@@ -10,18 +10,26 @@ use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Core\Layer\LayerProvider;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use function in_array;
 
 /**
  * @internal
  */
-class AllowDependencyHandler
+class AllowDependencyHandler implements EventSubscriberInterface
 {
     public function __construct(private readonly LayerProvider $layerProvider)
     {
     }
 
-    public function __invoke(ProcessEvent $event): void
+    public static function getSubscribedEvents()
+    {
+        return [
+            ProcessEvent::class => ['invoke', 4],
+        ];
+    }
+
+    public function invoke(ProcessEvent $event): void
     {
         $ruleset = $event->getResult();
 

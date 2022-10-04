@@ -6,7 +6,6 @@ use PhpParser\Lexer;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Qossmic\Deptrac\Core\Analyser\AstMapExtractor;
 use Qossmic\Deptrac\Core\Analyser\DependencyLayersAnalyser;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\AllowDependencyHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
@@ -17,11 +16,17 @@ use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
 use Qossmic\Deptrac\Core\Ast\AstLoader;
-use Qossmic\Deptrac\Core\Ast\Parser\AnnotationReferenceExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\AnonymousClassExtractor;
+use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\Core\Ast\Parser\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\FunctionLikeExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\StaticExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
@@ -56,6 +61,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\InterfaceCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\MethodCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\TraitCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\UsesCollector;
@@ -108,6 +114,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(EventDispatcher::class);
     $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
     $services->alias(\Symfony\Component\EventDispatcher\EventDispatcherInterface::class, EventDispatcher::class);
+    $services->alias('event_dispatcher', EventDispatcher::class);
     $services
         ->set(FileInputCollector::class)
         ->args([
@@ -153,6 +160,24 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(ClassConstantExtractor::class)
         ->tag('reference_extractors');
+    $services
+        ->set(FunctionLikeExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(PropertyExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(KeywordExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(StaticExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(FunctionLikeExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(VariableExtractor::class)
+        ->tag('reference_extractors');
 
     /*
      * Dependency
@@ -196,8 +221,6 @@ return static function (ContainerConfigurator $container): void {
             '$layers' => param('layers'),
         ]);
     $services->alias(LayerResolverInterface::class, LayerResolver::class);
-    $services->alias('layer_resolver.depender', LayerResolverInterface::class);
-    $services->alias('layer_resolver.dependent', LayerResolverInterface::class);
     $services
         ->set(CollectorProvider::class)
         ->args([
@@ -263,6 +286,9 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(UsesCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_USES->value]);
+    $services
+        ->set(PhpInternalCollector::class)
+        ->tag('collector', ['type' => CollectorType::TYPE_PHP_INTERNAL->value]);
 
     /*
      * Analyser
@@ -273,10 +299,10 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             '$ignoreUncoveredInternalClasses' => param('ignore_uncovered_internal_classes'),
         ])
-        ->tag('kernel.event_listener', ['priority' => 32]);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(MatchingLayersHandler::class)
-        ->tag('kernel.event_listener', ['priority' => 16]);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(LayerProvider::class)
         ->args([
@@ -284,20 +310,15 @@ return static function (ContainerConfigurator $container): void {
         ]);
     $services
         ->set(AllowDependencyHandler::class)
-        ->tag('kernel.event_listener', ['priority' => 4]);
+        ->tag('kernel.event_subscriber');
     $services
         ->set(ViolationHandler::class)
         ->args([
             '$skippedViolations' => param('skip_violations'),
         ])
-        ->tag('kernel.event_listener', ['method' => 'handleViolation', 'priority' => -32])
-        ->tag('kernel.event_listener', ['method' => 'handleUnmatchedSkipped']);
+        ->tag('kernel.event_subscriber');
     $services
-        ->set(DependencyLayersAnalyser::class)
-        ->args([
-            '$dependerLayerResolver' => service('layer_resolver.depender'),
-            '$dependentLayerResolver' => service('layer_resolver.dependent'),
-        ]);
+        ->set(DependencyLayersAnalyser::class);
     $services->set(LegacyDependencyLayersAnalyser::class);
     $services->set(TokenInLayerAnalyser::class)
         ->args([

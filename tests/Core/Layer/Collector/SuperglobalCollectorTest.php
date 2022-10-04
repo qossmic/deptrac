@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
@@ -35,8 +34,7 @@ final class SuperglobalCollectorTest extends TestCase
     {
         $actual = $this->collector->satisfy(
             $configuration,
-            new VariableReference(SuperGlobalToken::from($name)),
-            new AstMap([])
+            new VariableReference(SuperGlobalToken::from($name))
         );
 
         self::assertSame($expected, $actual);
@@ -48,8 +46,7 @@ final class SuperglobalCollectorTest extends TestCase
 
         $this->collector->satisfy(
             ['Foo' => 'a'],
-            new VariableReference(SuperGlobalToken::from('_POST')),
-            new AstMap([])
+            new VariableReference(SuperGlobalToken::from('_POST'))
         );
     }
 }

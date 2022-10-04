@@ -12,10 +12,11 @@ use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
-use Qossmic\Deptrac\Core\Ast\Parser\AnnotationReferenceExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\Core\Ast\Parser\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -43,6 +44,7 @@ final class AstMapGeneratorTest extends TestCase
                     new AnnotationReferenceExtractor($typeResolver),
                     new AnonymousClassExtractor(),
                     new ClassConstantExtractor(),
+                    new KeywordExtractor($typeResolver),
                 ]
             ),
             new EventDispatcher()

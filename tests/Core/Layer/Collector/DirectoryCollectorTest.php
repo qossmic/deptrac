@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\Core\Layer\Collector\DirectoryCollector;
 
@@ -46,7 +45,6 @@ final class DirectoryCollectorTest extends TestCase
         $actual = $this->collector->satisfy(
             $configuration,
             $fileReference->classLikeReferences[0],
-            new AstMap([])
         );
 
         self::assertSame($expected, $actual);
@@ -64,7 +62,6 @@ final class DirectoryCollectorTest extends TestCase
         $this->collector->satisfy(
             [],
             $fileReference->classLikeReferences[0],
-            new AstMap([])
         );
     }
 
@@ -79,7 +76,6 @@ final class DirectoryCollectorTest extends TestCase
         $this->collector->satisfy(
             ['value' => '\\'],
             $fileReference->classLikeReferences[0],
-            new AstMap([])
         );
     }
 }

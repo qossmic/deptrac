@@ -7,7 +7,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 use LogicException;
 use PhpParser\Node;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
@@ -76,7 +75,6 @@ final class MethodCollectorTest extends TestCase
         $actual = $this->collector->satisfy(
             $configuration,
             $astClassReference,
-            new AstMap([])
         );
 
         self::assertSame($expected, $actual);
@@ -93,7 +91,6 @@ final class MethodCollectorTest extends TestCase
         $actual = $this->collector->satisfy(
             ['value' => 'abc'],
             $astClassReference,
-            new AstMap([])
         );
 
         self::assertFalse($actual);
@@ -109,7 +106,6 @@ final class MethodCollectorTest extends TestCase
         $this->collector->satisfy(
             [],
             $astClassReference,
-            new AstMap([])
         );
     }
 
@@ -122,7 +118,6 @@ final class MethodCollectorTest extends TestCase
         $this->collector->satisfy(
             ['value' => '/'],
             $astClassReference,
-            new AstMap([])
         );
     }
 

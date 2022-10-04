@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser;
 
+use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
@@ -47,7 +48,7 @@ class TokenInLayerAnalyser
         if (in_array(TokenType::CLASS_LIKE, $this->tokenTypes, true)) {
             foreach ($astMap->getClassLikeReferences() as $classReference) {
                 $classToken = $this->tokenResolver->resolve($classReference->getToken(), $astMap);
-                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($classToken, $astMap))) {
+                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($classToken))) {
                     $matchingTokens[] = $classToken->getToken()
                         ->toString();
                 }
@@ -57,7 +58,7 @@ class TokenInLayerAnalyser
         if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
             foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
                 $functionToken = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
-                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($functionToken, $astMap))) {
+                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($functionToken))) {
                     $matchingTokens[] = $functionToken->getToken()
                         ->toString();
                 }
@@ -67,7 +68,7 @@ class TokenInLayerAnalyser
         if (in_array(TokenType::FILE, $this->tokenTypes, true)) {
             foreach ($astMap->getFileReferences() as $fileReference) {
                 $fileToken = $this->tokenResolver->resolve($fileReference->getToken(), $astMap);
-                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($fileToken, $astMap))) {
+                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($fileToken))) {
                     $matchingTokens[] = $fileToken->getToken()
                         ->toString();
                 }

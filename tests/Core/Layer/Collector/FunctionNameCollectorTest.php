@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\FunctionNameCollector;
@@ -39,7 +38,6 @@ final class FunctionNameCollectorTest extends TestCase
         $actual = $this->collector->satisfy(
             $configuration,
             new FunctionLikeReference(FunctionLikeToken::fromFQCN($functionName)),
-            new AstMap([])
         );
 
         self::assertSame($expected, $actual);
@@ -52,7 +50,6 @@ final class FunctionNameCollectorTest extends TestCase
         $this->collector->satisfy(
             ['Foo' => 'a'],
             new FunctionLikeReference(FunctionLikeToken::fromFQCN('Foo')),
-            new AstMap([])
         );
     }
 }

@@ -296,6 +296,20 @@ deptrac:
           value: 'App\SomeTrait'
 ```
 
+## `PHP Internal` Collector
+
+The `PHP Internal` collector collects PHP defined classes and functions
+including those loaded with PHP extensions.
+
+```yaml
+deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: php_internal
+          value: ^reset$
+```
+
 ## Custom Collectors
 
 You can create custom collectors in your project by implementing the

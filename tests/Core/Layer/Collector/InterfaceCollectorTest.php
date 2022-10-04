@@ -6,7 +6,6 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
@@ -35,7 +34,6 @@ final class InterfaceCollectorTest extends TestCase
         $stat = $this->sut->satisfy(
             $configuration,
             new ClassLikeReference(ClassLikeToken::fromFQCN($className), ClassLikeType::TYPE_INTERFACE),
-            $this->createMock(AstMap::class),
         );
 
         self::assertEquals($expected, $stat);
@@ -57,7 +55,6 @@ final class InterfaceCollectorTest extends TestCase
         $stat = $this->sut->satisfy(
             ['value' => '^Foo\\\\Bar$'],
             new ClassLikeReference(ClassLikeToken::fromFQCN('Foo\\Bar'), $classLikeType),
-            $this->createMock(AstMap::class),
         );
 
         self::assertSame($matches, $stat);
@@ -70,7 +67,6 @@ final class InterfaceCollectorTest extends TestCase
         $this->sut->satisfy(
             ['Foo' => 'a'],
             new ClassLikeReference(ClassLikeToken::fromFQCN('Foo'), ClassLikeType::TYPE_INTERFACE),
-            $this->createMock(AstMap::class),
         );
     }
 }

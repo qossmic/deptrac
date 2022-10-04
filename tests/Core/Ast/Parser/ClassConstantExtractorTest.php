@@ -8,7 +8,7 @@ use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\Core\Ast\Parser\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 

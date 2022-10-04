@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Glob;
 
@@ -19,7 +18,7 @@ final class GlobCollector extends RegexCollector
         $this->basePath = Path::normalize($basePath);
     }
 
-    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         $filepath = $reference->getFilepath();
 

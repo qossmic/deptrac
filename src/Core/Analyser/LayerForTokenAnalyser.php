@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
+use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use function array_values;
@@ -53,7 +54,7 @@ class LayerForTokenAnalyser
                 continue;
             }
             $token = $this->tokenResolver->resolve($reference->getToken(), $astMap);
-            $matchingLayers = array_keys($this->layerResolver->getLayersForReference($token, $astMap));
+            $matchingLayers = array_keys($this->layerResolver->getLayersForReference($token));
 
             natcasesort($matchingLayers);
 

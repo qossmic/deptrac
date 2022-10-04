@@ -7,19 +7,11 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
+use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector;
 
 final class InheritsCollectorTest extends TestCase
 {
-    private InheritsCollector $collector;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->collector = new InheritsCollector();
-    }
-
     public function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'App\FizTrait'], true];
@@ -68,10 +60,17 @@ final class InheritsCollectorTest extends TestCase
             ->trait('App\FizTrait', 4);
         $fooBarFileReference = $fooBarFileReferenceBuilder->build();
 
-        $actual = $this->collector->satisfy(
+        $astMap = new AstMap(
+            [$fooFileReference, $barFileReference, $bazFileReference, $fooBarFileReference, $fizTraitFileReference]
+        );
+        $astMapExtractor = $this->createMock(AstMapExtractor::class);
+        $astMapExtractor->method('extract')
+            ->willReturn($astMap);
+
+        $collector = new InheritsCollector($astMapExtractor);
+        $actual = $collector->satisfy(
             $configuration,
-            $fooBarFileReference->classLikeReferences[0],
-            new AstMap([$fooFileReference, $barFileReference, $bazFileReference, $fooBarFileReference, $fizTraitFileReference]),
+            $fooBarFileReference->classLikeReferences[0]
         );
 
         self::assertSame($expected, $actual);

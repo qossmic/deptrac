@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 
@@ -16,7 +15,7 @@ final class MethodCollector extends RegexCollector
     {
     }
 
-    public function satisfy(array $config, TokenReferenceInterface $reference, AstMap $astMap): bool
+    public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         if (!$reference instanceof ClassLikeReference) {
             return false;

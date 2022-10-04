@@ -2,15 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Analyser;
+namespace Qossmic\Deptrac\Core\Ast;
 
-use Qossmic\Deptrac\Core\Ast\AstLoader;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\InputCollector\InputCollectorInterface;
 
-/**
- * @internal
- */
 class AstMapExtractor
 {
     private ?AstMap $astMapCache = null;

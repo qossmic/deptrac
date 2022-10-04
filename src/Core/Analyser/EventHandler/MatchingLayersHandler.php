@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Analyser\EventHandler;
 
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @internal
  */
-class MatchingLayersHandler
+class MatchingLayersHandler implements EventSubscriberInterface
 {
-    public function __invoke(ProcessEvent $event): void
+    public function invoke(ProcessEvent $event): void
     {
         foreach ($event->dependentLayers as $dependeeLayer => $_) {
             if ($event->dependerLayer !== $dependeeLayer) {
@@ -22,5 +23,12 @@ class MatchingLayersHandler
         // For empty dependee layers see UncoveredDependeeHandler
 
         $event->stopPropagation();
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            ProcessEvent::class => ['invoke', 16],
+        ];
     }
 }
