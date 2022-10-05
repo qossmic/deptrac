@@ -11,6 +11,7 @@ class CollectorsConfig
 {
     private $type;
     private $value;
+    private $private;
     private $attributes;
     private $_usedProperties = [];
     private $_extraKeys;
@@ -31,12 +32,26 @@ class CollectorsConfig
     /**
      * @default null
      * @param ParamConfigurator|mixed $value
+     *
      * @return $this
      */
-    public function value($value): static
+    public function value(mixed $value): static
     {
         $this->_usedProperties['value'] = true;
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @default false
+     * @param ParamConfigurator|bool $value
+     * @return $this
+     */
+    public function private($value): static
+    {
+        $this->_usedProperties['private'] = true;
+        $this->private = $value;
 
         return $this;
     }
@@ -68,6 +83,12 @@ class CollectorsConfig
             unset($value['value']);
         }
 
+        if (array_key_exists('private', $value)) {
+            $this->_usedProperties['private'] = true;
+            $this->private = $value['private'];
+            unset($value['private']);
+        }
+
         if (array_key_exists('attributes', $value)) {
             $this->_usedProperties['attributes'] = true;
             $this->attributes = $value['attributes'];
@@ -86,6 +107,9 @@ class CollectorsConfig
         }
         if (isset($this->_usedProperties['value'])) {
             $output['value'] = $this->value;
+        }
+        if (isset($this->_usedProperties['private'])) {
+            $output['private'] = $this->private;
         }
         if (isset($this->_usedProperties['attributes'])) {
             $output['attributes'] = $this->attributes;
