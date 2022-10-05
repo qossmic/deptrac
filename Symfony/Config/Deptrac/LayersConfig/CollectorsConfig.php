@@ -10,6 +10,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator;
 class CollectorsConfig 
 {
     private $type;
+    private $value;
     private $attributes;
     private $_usedProperties = [];
     private $_extraKeys;
@@ -23,6 +24,19 @@ class CollectorsConfig
     {
         $this->_usedProperties['type'] = true;
         $this->type = $value;
+
+        return $this;
+    }
+
+    /**
+     * @default null
+     * @param ParamConfigurator|mixed $value
+     * @return $this
+     */
+    public function value($value): static
+    {
+        $this->_usedProperties['value'] = true;
+        $this->value = $value;
 
         return $this;
     }
@@ -48,6 +62,12 @@ class CollectorsConfig
             unset($value['type']);
         }
 
+        if (array_key_exists('value', $value)) {
+            $this->_usedProperties['value'] = true;
+            $this->value = $value['value'];
+            unset($value['value']);
+        }
+
         if (array_key_exists('attributes', $value)) {
             $this->_usedProperties['attributes'] = true;
             $this->attributes = $value['attributes'];
@@ -63,6 +83,9 @@ class CollectorsConfig
         $output = [];
         if (isset($this->_usedProperties['type'])) {
             $output['type'] = $this->type;
+        }
+        if (isset($this->_usedProperties['value'])) {
+            $output['value'] = $this->value;
         }
         if (isset($this->_usedProperties['attributes'])) {
             $output['attributes'] = $this->attributes;

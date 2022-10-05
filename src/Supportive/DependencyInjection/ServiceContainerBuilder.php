@@ -9,13 +9,11 @@ use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CannotLoadConfiguration;
 use SplFileInfo;
 use Symfony\Component\Config\Builder\ConfigBuilderGenerator;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\ConfigurationExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
@@ -103,7 +101,6 @@ final class ServiceContainerBuilder
         if (null !== $this->configFile) {
             self::loadConfiguration($container, $this->configFile);
         }
-
 
         $container->compile(true);
 
