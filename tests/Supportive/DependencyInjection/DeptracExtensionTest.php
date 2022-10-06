@@ -204,13 +204,14 @@ final class DeptracExtensionTest extends TestCase
 
         self::assertSame(
             [
-                'test' => [
+                0 => [
                     'name' => 'test',
                     'collectors' => [
                         [
                             'type' => 'directory',
                             'value' => 'Repository',
                             'attributes' => [],
+                            'private' => false
                         ],
                     ],
                     'attributes' => [],

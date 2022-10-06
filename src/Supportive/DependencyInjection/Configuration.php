@@ -77,7 +77,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('layers')
-                    // ->useAttributeAsKey('name', false)
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('name')
