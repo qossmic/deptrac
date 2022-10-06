@@ -5,17 +5,17 @@ use Qossmic\Deptrac\Core\Layer\Collector\DirectoryCollector;
 
 return static function (Symfony\Config\DeptracConfig $config): void {
     $config
-        ->layers('analyser')
+        ->layers()
         ->name('analyser')
         ->collectors()
-        ->type(CollectorType::TYPE_DIRECTORY->value)
+        ->type(DirectoryCollector::class)
         ->value('src/Core/Analyser/.*');
 
     $config
-        ->layers('dependency')
+        ->layers()
         ->name('dependency')
         ->collectors()
-        ->type(CollectorType::TYPE_DIRECTORY->value)
+        ->type(DirectoryCollector::class)
         ->value('src/Core/Dependency/.*');
 
     $config->ruleset('analyser', ['result', 'layer', 'dependency']);

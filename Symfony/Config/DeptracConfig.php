@@ -51,16 +51,11 @@ class DeptracConfig implements \Symfony\Component\Config\Builder\ConfigBuilderIn
         return $this;
     }
 
-    public function layers(string $name, array $value = []): \Symfony\Config\Deptrac\LayersConfig
+    public function layers(array $value = []): \Symfony\Config\Deptrac\LayersConfig
     {
-        if (!isset($this->layers[$name])) {
-            $this->_usedProperties['layers'] = true;
-            $this->layers[$name] = new \Symfony\Config\Deptrac\LayersConfig($value);
-        } elseif (1 < \func_num_args()) {
-            throw new InvalidConfigurationException('The node created by "layers()" has already been initialized. You cannot pass values the second time you call layers().');
-        }
+        $this->_usedProperties['layers'] = true;
 
-        return $this->layers[$name];
+        return $this->layers[] = new \Symfony\Config\Deptrac\LayersConfig($value);
     }
 
     /**
