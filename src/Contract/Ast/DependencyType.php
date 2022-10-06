@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\AstMap;
+namespace Qossmic\Deptrac\Contract\Ast;
 
-enum DependencyTokenType: string
+enum DependencyType: string
 {
     case USE = 'use';
+    case INHERIT = 'inherit';
     case RETURN_TYPE = 'returntype';
     case PARAMETER = 'parameter';
     case NEW = 'new';

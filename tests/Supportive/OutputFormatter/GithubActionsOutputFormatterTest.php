@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
@@ -70,7 +71,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         yield 'Simple Violation' => [
             'violations' => [
                 new Violation(
-                    new Dependency($originalA, $originalB, $originalAOccurrence),
+                    new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                     'LayerA',
                     'LayerB'
                 ),
@@ -83,7 +84,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         yield 'Skipped Violation' => [
             'violations' => [
                 new SkippedViolation(
-                    new Dependency($originalA, $originalB, $originalAOccurrence),
+                    new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                     'LayerA',
                     'LayerB'
                 ),
@@ -96,7 +97,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         yield 'Uncovered Dependency' => [
             'violations' => [
                 new Uncovered(
-                    new Dependency($originalA, $originalB, $originalAOccurrence),
+                    new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                     'LayerA'
                 ),
             ],
@@ -111,7 +112,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
                     new InheritDependency(
                         ClassLikeToken::fromFQCN('ClassA'),
                         ClassLikeToken::fromFQCN('ClassB'),
-                        new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12)),
+                        new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('originalA.php', 3),
                             AstInheritType::EXTENDS
@@ -168,7 +169,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $rules = [
             new SkippedViolation(
-                new Dependency($originalA, $originalB, $originalAOccurrence),
+                new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                 'LayerA',
                 'LayerB'
             ),
@@ -199,7 +200,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $rules = [
             new Uncovered(
-                new Dependency($originalA, $originalB, $originalAOccurrence),
+                new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                 'LayerA'
             ),
         ];

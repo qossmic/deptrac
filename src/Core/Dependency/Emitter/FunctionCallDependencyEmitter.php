@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Dependency\Emitter;
 
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\DependencyTokenType;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
@@ -34,7 +34,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
     {
         foreach ($references as $reference) {
             foreach ($reference->dependencies as $dependency) {
-                if (DependencyTokenType::UNRESOLVED_FUNCTION_CALL !== $dependency->type) {
+                if (DependencyType::UNRESOLVED_FUNCTION_CALL !== $dependency->type) {
                     continue;
                 }
 
@@ -46,7 +46,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
 
                 $dependencyList->addDependency(
                     new Dependency(
-                        $reference->getToken(), $dependency->token, $dependency->fileOccurrence
+                        $reference->getToken(), $dependency->token, $dependency->fileOccurrence, $dependency->type
                     )
                 );
             }
