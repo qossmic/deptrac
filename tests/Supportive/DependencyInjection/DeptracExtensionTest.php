@@ -211,7 +211,7 @@ final class DeptracExtensionTest extends TestCase
                             'type' => 'directory',
                             'value' => 'Repository',
                             'attributes' => [],
-                            'private' => false
+                            'private' => false,
                         ],
                     ],
                     'attributes' => [],

@@ -161,7 +161,7 @@ final class ServiceContainerBuilder
 
         $loader = new DelegatingLoader(new LoaderResolver([
             new YamlFileLoader($container, new FileLocator([$configPathInfo->getPathname()])),
-            new PhpFileLoader($container, new FileLocator([$configPathInfo->getPathname()]), generator: new ConfigBuilderGenerator('.')),
+            new PhpFileLoader($container, new FileLocator([$configPathInfo->getPathname()]), generator: new ConfigBuilderGenerator('./src/Supportive/Config/')),
         ]));
 
         try {
