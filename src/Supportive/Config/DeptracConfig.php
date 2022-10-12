@@ -8,12 +8,14 @@ use Symfony\Component\Config\Builder\ConfigBuilderInterface;
 
 final class DeptracConfig implements ConfigBuilderInterface
 {
-    private ?string $baseline = null;
     private bool $ignoreUncoveredInternalClasses = false;
     private bool $useRelativePathFromDepfile = false;
-    private array $paths = ['src'] ;
+    private array $paths = ['src'];
+
     private array $layers = [];
     private array $formatters = [];
+    private array $rulesets = [];
+    private array $analyser = [];
 
     public function baseline(string $baseline): self
     {
@@ -29,14 +31,14 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
-    public function layers(string $name): LayersConfig
+    public function layer(string $name): LayerConfig
     {
-        return $this->layers[$name] = new LayersConfig($name);
+        return $this->layers[$name] = new LayerConfig($name);
     }
 
-    public function rulesets(string $name): RulesetConfig
+    public function ruleset(LayerConfig $layerConfig): RulesetConfig
     {
-        return $this->ruleset[$name] = new RulesetConfig($name);
+        return $this->rulesets[] = new RulesetConfig($layerConfig);
     }
 
     public function toArray(): array
@@ -44,11 +46,11 @@ final class DeptracConfig implements ConfigBuilderInterface
         return [
             'paths' => $this->paths,
             'exclude_files' => [],
-            'layers' => array_map(fn (LayersConfig $layerConfig)=> $layerConfig->toArray(), $this->layers),
-            'ruleset' => array_map(fn (RulesetConfig $rulesetConfig) => $rulesetConfig(), $this->rulesets),
+            'layers' => array_map(static fn (LayerConfig $layerConfig) => $layerConfig->toArray(), $this->layers),
+            'ruleset' => array_map(static fn (RulesetConfig $rulesetConfig) => $rulesetConfig->toArray(), $this->rulesets),
             'skip_violations' => [],
-            'formatters' => [],
-            'analyser' => $this->analysers,
+            'formatters' => $this->formatters,
+            //'analyser' => $this->analyser,
             'ignore_uncovered_internal_classes' => $this->ignoreUncoveredInternalClasses,
             'use_relative_path_from_depfile' => $this->useRelativePathFromDepfile,
         ];

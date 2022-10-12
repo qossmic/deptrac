@@ -6,13 +6,31 @@ namespace Qossmic\Deptrac\Supportive\Config;
 
 final class RulesetConfig
 {
+    private array $accessableLayers = [];
+
     public function __construct(
-        public readonly string $name
+        private readonly LayerConfig $layersConfig
     ) {
+    }
+
+    public function accessesLayer(LayerConfig ...$layersConfig): self
+    {
+
+        foreach ($layersConfig as $layerConfig) {
+            $this->accessableLayers[] = $layerConfig;
+        }
+
+        return $this;
     }
 
     public function toArray(): array
     {
-        return [];
+        $data = ['name' => $this->layersConfig->__toString()];
+
+        foreach ($this->accessableLayers as $accessesLayer) {
+            $data[] = $accessesLayer->__toString() ;
+        }
+
+        return $data;
     }
 }
