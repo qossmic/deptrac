@@ -15,7 +15,6 @@ final class RulesetConfig
 
     public function accessesLayer(LayerConfig ...$layersConfig): self
     {
-
         foreach ($layersConfig as $layerConfig) {
             $this->accessableLayers[] = $layerConfig;
         }
@@ -25,12 +24,8 @@ final class RulesetConfig
 
     public function toArray(): array
     {
-        $data = ['name' => $this->layersConfig->__toString()];
+        $data = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->__toString(), $this->accessableLayers);
 
-        foreach ($this->accessableLayers as $accessesLayer) {
-            $data[] = $accessesLayer->__toString() ;
-        }
-
-        return $data;
+        return $data + ['name' => $this->layersConfig->__toString()];
     }
 }
