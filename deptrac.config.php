@@ -1,9 +1,22 @@
 <?php
 
+use Amp\Emitter;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
 use Qossmic\Deptrac\Supportive\Config\DeptracConfig;
+use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 
 return static function (DeptracConfig $config): void {
+    // analyser
+    $config->analyser(
+        EmitterType::CLASS_TOKEN,
+        EmitterType::CLASS_SUPERGLOBAL_TOKEN,
+        EmitterType::FILE_TOKEN,
+        EmitterType::FUNCTION_TOKEN,
+        EmitterType::FUNCTION_SUPERGLOBAL_TOKEN,
+        EmitterType::FUNCTION_CALL,
+    );
+
+    // layer
     $analyser = $config->layer('analyser');
     $analyser->collector(CollectorType::TYPE_DIRECTORY)->value('src/Core/Analyser/.*');
 

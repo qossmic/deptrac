@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Config;
 
+use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\Config\Builder\ConfigBuilderInterface;
 
 final class DeptracConfig implements ConfigBuilderInterface
@@ -16,6 +17,15 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $formatters = [];
     private array $rulesets = [];
     private array $analyser = [];
+
+    public function analyser(EmitterType ...$types): self
+    {
+        foreach ($types as $type) {
+            $this->analyser[] = $type->value;
+        }
+
+        return $this;
+    }
 
     public function baseline(string $baseline): self
     {
@@ -50,7 +60,7 @@ final class DeptracConfig implements ConfigBuilderInterface
             'ruleset' => array_map(static fn (RulesetConfig $rulesetConfig) => $rulesetConfig->toArray(), $this->rulesets),
             'skip_violations' => [],
             'formatters' => $this->formatters,
-            //'analyser' => $this->analyser,
+            'analyser' => ['types' => $this->analyser],
             'ignore_uncovered_internal_classes' => $this->ignoreUncoveredInternalClasses,
             'use_relative_path_from_depfile' => $this->useRelativePathFromDepfile,
         ];
