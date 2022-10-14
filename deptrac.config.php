@@ -1,12 +1,12 @@
 <?php
 
-use Amp\Emitter;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
 use Qossmic\Deptrac\Supportive\Config\DeptracConfig;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 
 return static function (DeptracConfig $config): void {
     $config->paths(['./src']);
+    $config->baseline('./deptrac.baseline.yaml');
     // analyser
     $config->analyser(
         EmitterType::CLASS_TOKEN,
