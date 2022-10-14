@@ -1,10 +1,18 @@
 <?php
 
+use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
+use Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException;
+use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
 use Qossmic\Deptrac\Supportive\Config\DeptracConfig;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function (DeptracConfig $config): void {
+return static function (DeptracConfig $config, ContainerConfigurator  $containerConfigurator): void {
+    $services = $containerConfigurator->services();
+    $services->set(IgnoreDependenciesOnContract::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
+    $services->set(IgnoreDependenciesOnShouldNotHappenException::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
+
     $config->paths(['./src']);
     $config->baseline('./deptrac.baseline.yaml');
     // analyser
