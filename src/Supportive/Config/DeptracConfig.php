@@ -9,8 +9,8 @@ use Symfony\Component\Config\Builder\ConfigBuilderInterface;
 
 final class DeptracConfig implements ConfigBuilderInterface
 {
-    private bool $ignoreUncoveredInternalClasses = false;
-    private bool $useRelativePathFromDepfile = false;
+    private bool $ignoreUncoveredInternalClasses = true;
+    private bool $useRelativePathFromDepfile = true;
     private array $paths = ['src'];
 
     private array $layers = [];
