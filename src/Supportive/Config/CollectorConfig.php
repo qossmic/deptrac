@@ -10,7 +10,9 @@ final class CollectorConfig
 {
     private ?string $value = null;
     private bool $private = false;
+    /** @var array<CollectorConfig> */
     private array $mustNot = [];
+    /** @var array<CollectorConfig> */
     private array $must = [];
 
     private function __construct(
@@ -49,6 +51,7 @@ final class CollectorConfig
         return $this;
     }
 
+    /** @return array<string, mixed> */
     public function toArray(): array
     {
         return [

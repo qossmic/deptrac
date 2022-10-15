@@ -13,12 +13,19 @@ final class DeptracConfig implements ConfigBuilderInterface
     private bool $ignoreUncoveredInternalClasses = true;
     private bool $useRelativePathFromDepfile = true;
 
+    /** @var array<string> */
     private array $paths = [];
+    /** @var array<LayerConfig> */
     private array $layers = [];
+    /** @var array<FormatterConfig> */
     private array $formatters = [];
+    /** @var array<RulesetConfig> */
     private array $rulesets = [];
+    /** @var array<string, EmitterType> */
     private array $analyser = [];
+    /** @var array<string, array<string>> */
     private array $skipViolations = [];
+    /** @var array<string> */
     private array $excludeFiles = [];
 
     public function analyser(EmitterType ...$types): self
@@ -32,16 +39,19 @@ final class DeptracConfig implements ConfigBuilderInterface
 
     public function baseline(string $baseline): self
     {
-        $baseline = Yaml::parseFile($baseline);
+        /** @var array<string, array<string, array<string>>> $baselineAsArray */
+        $baselineAsArray = Yaml::parseFile($baseline);
+        /** @var array<string, string> */
+        $skipViolations = $baselineAsArray['deptrac']['skip_violations'] ?? [];
 
-        foreach ($baseline['deptrac']['skip_violations'] ?? [] as $class => $skipViolations) {
-            $this->skipViolations[$class] = $skipViolations;
+        foreach ($skipViolations as $class => $skipViolation) {
+            $this->skipViolations[$class][] = $skipViolation;
         }
 
         return $this;
     }
 
-    public function paths(array $paths): self
+    public function paths(string ...$paths): self
     {
         $this->paths = $paths;
 
@@ -58,6 +68,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this->rulesets[] = new RulesetConfig($layerConfig);
     }
 
+    /** @return array<mixed> */
     public function toArray(): array
     {
         $config = [];
@@ -83,7 +94,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         if ([] !== $this->formatters) {
-            $config['formatters'] = $this->formatters;
+            $config['formatters'] = array_map(static fn (FormatterConfig $formatterConfig) => $formatterConfig->__toString(), $this->formatters);
         }
 
         if ([] !== $this->skipViolations) {

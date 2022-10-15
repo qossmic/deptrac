@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Supportive\Config;
 
 final class RulesetConfig
 {
+    /** @var array<LayerConfig> */
     private array $accessableLayers = [];
 
     public function __construct(
@@ -22,6 +23,7 @@ final class RulesetConfig
         return $this;
     }
 
+    /** @return array<string, string> */
     public function toArray(): array
     {
         $data = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->__toString(), $this->accessableLayers);
