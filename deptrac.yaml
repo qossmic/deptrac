@@ -113,19 +113,19 @@ deptrac:
       - File
     Dependency:
       - Ast
-    Result:
-      - Dependency
+#    Result:
+#      - Dependency
     Analyser:
-      - Result
+#      - Result
       - Layer
       - Dependency
       - Ast
     OutputFormatter:
-      - Result
+#      - Result
       - Console
       - DependencyInjection
-    Events:
-      - Result
+#    Events:
+#      - Result
     Ast:
       - File
       - InputCollector

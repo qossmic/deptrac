@@ -1,7 +1,7 @@
 <?php
 
 use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
-use Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException;
+use Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenExceeption;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
 use Qossmic\Deptrac\Supportive\Config\DeptracConfig;
@@ -13,8 +13,9 @@ return static function (DeptracConfig $config, ContainerConfigurator  $container
     $services->set(IgnoreDependenciesOnContract::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
     $services->set(IgnoreDependenciesOnShouldNotHappenException::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
 
-    $config->paths(['./src']);
+    $config->paths('./src');
     $config->baseline('./deptrac.baseline.yaml');
+
     // analyser
     $config->analyser(
         EmitterType::CLASS_TOKEN,
