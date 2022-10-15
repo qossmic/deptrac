@@ -26,6 +26,7 @@ final class RulesetConfig
     /** @return array<string, string> */
     public function toArray(): array
     {
+        /** @var array<string> */
         $data = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->__toString(), $this->accessableLayers);
 
         return $data + ['name' => $this->layersConfig->__toString()];

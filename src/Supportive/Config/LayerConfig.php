@@ -10,7 +10,7 @@ use Stringable;
 final class LayerConfig implements Stringable
 {
     /** @var array<CollectorConfig> */
-    private array $colloctors;
+    private array $colloctors = [];
 
     public function __construct(
         public readonly string $name
