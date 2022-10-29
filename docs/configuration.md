@@ -24,13 +24,20 @@ The following table shows the available config keys for Deptrac.
 <td>
 
 A list with at least one of the following supported dependency types:
-- `class` (default)<br/>analyses class definitions for everything apart from superglobal usage.
-- `class_superglobal`<br/>analyses class definitions for superglobal usage.
-- `use` (default)<br/>analyses file definitions for use statements.
-- `file`<br/>analyses file for everything apart from use statements and function/class definitions.
-- `function`<br/>analyses function definitions for everything apart from superglobal usage.
-- `function_superglobal`<br/>analyses function definitions for superglobal usage.
-- `function_call`<br/>analyses calls to custom(user-defined) functions
+<ul>
+<li><strong>class</strong> default &mdash; analyses class definitions for everything apart from superglobal usage.
+</li>
+<li><strong>class_superglobal</strong> &mdash; analyses class definitions for superglobal usage.
+</li>
+<li><strong>use</strong> default &mdash; analyses file definitions for use statements.
+</li>
+<li><strong>file</strong> &mdash; analyses file for everything apart from use statements and function/class definitions.
+</li>
+<li><strong>function</strong> &mdash; analyses function definitions for everything apart from superglobal usage.
+</li>
+<li><strong>function_superglobal</strong> &mdash; analyses function definitions for superglobal usage.
+</li>
+<li><strong>function_call</strong> &mdash; analyses calls to custom(user-defined) functions
 
 </td>
 <td>
@@ -53,7 +60,7 @@ deptrac:
 <td>
 
 List of paths where Deptrac should look for dependencies to be analysed.
-Usually, this is where your code is stored, e.g. `src/`, `app/` or `lib/` or
+Usually, this is where your code is stored, e.g. <code>src/</code>, or <code>lib/</code> or
 something similar.
 
 </td>
@@ -134,12 +141,13 @@ deptrac:
 
 Assigns a severity to each section reported by Deptrac. The following
 severity types are supported by codeclimate:
-
-- info
-- minor
-- major
-- critical
-- blocker
+<ul>
+<li>info</li>
+<li>minor</li>
+<li>major</li>
+<li>critical</li>
+<li>blocker</li>
+</ul>
 
 </td>
 <td>
@@ -160,8 +168,8 @@ deptrac:
 <td>deptrac.ignore_uncovered_internal_classes</td>
 <td>
 
-Whether PHP-internal classes like `DateTimeImmutable` should count towards
-uncovered classes, when they are not part of any layer.
+Whether PHP-internal classes like <code>DateTimeImmutable</code> should count
+towards uncovered classes, when they are not part of any layer.
 
 </td>
 <td>
@@ -177,8 +185,7 @@ deptrac:
 <td>deptrac.layers</td>
 <td>
 
-Defines your architectural layers by collecting dependencies using
-[collectors](collectors.md)
+Defines your architectural layers by collecting dependencies using collectors
 
 </td>
 <td>
@@ -202,8 +209,8 @@ deprac:
 <td>
 
 Assign communication rules by specifying which layers a layer can
-communicate with (if any). If you prepend a layer with `+` then not only this
-layer is allowed, but also all layers it allows, i.e. its transitive dependencies.
+communicate with (if any). If you prepend a layer with <code>+</code> then not
+only this layer is allowed, but also all layers it allows.
 
 </td>
 <td>
