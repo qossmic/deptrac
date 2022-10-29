@@ -19,8 +19,8 @@ look for tokens should be assigned to this layer (and yes, tokens can be
 assigned to more than one layer).
 
 If you want to ensure your application follows the MVC architecture pattern then
-you can create a depfile that makes sure a View does not directly interact with
-a Controller or that Models are independent of both Views and Controllers.
+you can create a config file that makes sure a View does not directly interact
+with a Controller or that Models are independent of both Views and Controllers.
 
 Another example for layers are bundles in Symfony applications. Each bundle
 should be independent by design. You can create layers for each bundle you have
@@ -129,9 +129,10 @@ As a lot of architectures define some kind of *controllers*, *services* and
 - *Services* may access *repositories*, but not *controllers*.
 - *Repositories* neither may access services nor *controllers*.
 
-We can define this using the following depfile:
+We can define this using the following configuration:
 
 ```yaml
+# deptrac.yaml
 deptrac:
   paths:
     - ./examples/ControllerServiceRepository1/
@@ -216,14 +217,14 @@ Typical use cases are:
 - ...
 
 Typically software has more than just one view. **It is possible to use multiple
-depfiles, to take care about different architectural views.**
+config files, to take care about different architectural views.**
 
 ### Uncovered dependencies
 
 Deptrac collects uncovered dependencies which can be reported with the
 [Console Formatter](/docs/formatters.md). By default, internal php classes will
 not be considered. This can be changed by
-adding `ignore_uncovered_internal_classes: false` to your depfile.
+adding `ignore_uncovered_internal_classes: false` to your configuration.
 
 You can use the `--fail-on-uncovered` option to let Deptrac fail when any
 uncovered dependencies are encountered.
