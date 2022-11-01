@@ -8,6 +8,7 @@ use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
+
 use function is_string;
 
 abstract class AbstractTypeCollector extends RegexCollector

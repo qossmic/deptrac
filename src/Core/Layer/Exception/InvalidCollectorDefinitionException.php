@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Core\Layer\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
+
 use function implode;
 
 final class InvalidCollectorDefinitionException extends RuntimeException implements ExceptionInterface

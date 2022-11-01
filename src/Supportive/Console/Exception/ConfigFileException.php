@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Supportive\Console\Exception;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
 use SplFileInfo;
+
 use function sprintf;
 
 final class ConfigFileException extends RuntimeException implements ExceptionInterface

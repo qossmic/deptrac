@@ -155,9 +155,13 @@ class TypeResolver
             return $this->resolvePropertyType($type->type);
         }
         if ($type instanceof UnionType || $type instanceof IntersectionType) {
-            return array_merge([], ...array_map(
-                fn (Identifier|Name $typeNode) => $this->resolvePropertyType($typeNode),
-            $type->types));
+            return array_merge(
+                [],
+                ...array_map(
+                    fn (Identifier|Name $typeNode) => $this->resolvePropertyType($typeNode),
+                    $type->types
+                )
+            );
         }
 
         return [];

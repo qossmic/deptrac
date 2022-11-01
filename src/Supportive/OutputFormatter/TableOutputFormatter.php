@@ -16,6 +16,7 @@ use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Contract\Result\Warning;
 use Symfony\Component\Console\Helper\TableSeparator;
+
 use function count;
 
 final class TableOutputFormatter implements OutputFormatterInterface

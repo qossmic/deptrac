@@ -10,6 +10,7 @@ use phpDocumentor\GraphViz\Graph;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use RuntimeException;
+
 use function base64_encode;
 use function file_get_contents;
 

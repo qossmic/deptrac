@@ -17,6 +17,7 @@ enum SuperGlobalToken: string implements TokenInterface
     case SESSION = '_SESSION';
     case REQUEST = '_REQUEST';
     case ENV = '_ENV';
+
     /**
      * @return list<string>
      */

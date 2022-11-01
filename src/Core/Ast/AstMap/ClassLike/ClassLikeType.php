@@ -12,6 +12,7 @@ enum ClassLikeType: string implements TokenInterface
     case TYPE_CLASS = 'class';
     case TYPE_INTERFACE = 'interface';
     case TYPE_TRAIT = 'trait';
+
     public function toString(): string
     {
         return $this->value;

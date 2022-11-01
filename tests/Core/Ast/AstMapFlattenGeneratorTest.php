@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Core\Ast;
 
+use LogicException;
+use PhpParser\Error;
 use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\AstFileAnalysedEvent;
+use Qossmic\Deptrac\Contract\Ast\AstFileSyntaxErrorEvent;
+use Qossmic\Deptrac\Contract\Ast\PostCreateAstMapEvent;
+use Qossmic\Deptrac\Contract\Ast\PreCreateAstMapEvent;
 use Qossmic\Deptrac\Core\Ast\AstLoader;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Symfony\Component\EventDispatcher\Debug\TraceableEventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseA;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseC;
@@ -37,19 +46,39 @@ final class AstMapFlattenGeneratorTest extends TestCase
 {
     use ArrayAssertionTrait;
 
-    private function getAstMap(string $fixture): AstMap
+    private TraceableEventDispatcher $eventDispatcher;
+    private AstLoader $astLoader;
+
+    protected function setUp(): void
     {
-        $astRunner = new AstLoader(
+        parent::setUp();
+
+        $this->eventDispatcher = new TraceableEventDispatcher(
+            new EventDispatcher(),
+            new Stopwatch()
+        );
+        $this->astLoader = new AstLoader(
             new NikicPhpParser(
                 (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
                 new AstFileReferenceInMemoryCache(),
                 new TypeResolver(),
                 []
             ),
-            new EventDispatcher()
+            $this->eventDispatcher
         );
+    }
 
-        return $astRunner->createAstMap([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php']);
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        unset($this->astLoader);
+        unset($this->eventDispatcher);
+    }
+
+    private function getAstMap(string $fixture): AstMap
+    {
+        return $this->astLoader->createAstMap([__DIR__.'/Fixtures/BasicInheritance/'.$fixture.'.php']);
     }
 
     private function getInheritedInherits(string $class, AstMap $astMap): array
@@ -66,7 +95,16 @@ final class AstMapFlattenGeneratorTest extends TestCase
 
     public function testBasicInheritance(): void
     {
+        $expectedEvents = [
+            PreCreateAstMapEvent::class,
+            AstFileAnalysedEvent::class,
+            PostCreateAstMapEvent::class,
+        ];
+
         $astMap = $this->getAstMap('FixtureBasicInheritance');
+
+        $dispatchedEvents = $this->eventDispatcher->getOrphanedEvents();
+        self::assertSame($expectedEvents, $dispatchedEvents);
 
         self::assertArrayValuesEquals(
             [],
@@ -103,7 +141,16 @@ final class AstMapFlattenGeneratorTest extends TestCase
 
     public function testBasicInheritanceInterfaces(): void
     {
+        $expectedEvents = [
+            PreCreateAstMapEvent::class,
+            AstFileAnalysedEvent::class,
+            PostCreateAstMapEvent::class,
+        ];
+
         $astMap = $this->getAstMap('FixtureBasicInheritanceInterfaces');
+
+        $dispatchedEvents = $this->eventDispatcher->getOrphanedEvents();
+        self::assertSame($expectedEvents, $dispatchedEvents);
 
         self::assertArrayValuesEquals(
             [],
@@ -140,7 +187,16 @@ final class AstMapFlattenGeneratorTest extends TestCase
 
     public function testBasicMultipleInheritanceInterfaces(): void
     {
+        $expectedEvents = [
+            PreCreateAstMapEvent::class,
+            AstFileAnalysedEvent::class,
+            PostCreateAstMapEvent::class,
+        ];
+
         $astMap = $this->getAstMap('MultipleInheritanceInterfaces');
+
+        $dispatchedEvents = $this->eventDispatcher->getOrphanedEvents();
+        self::assertSame($expectedEvents, $dispatchedEvents);
 
         self::assertArrayValuesEquals(
             [],
@@ -178,7 +234,16 @@ final class AstMapFlattenGeneratorTest extends TestCase
 
     public function testBasicMultipleInheritanceWithNoise(): void
     {
+        $expectedEvents = [
+            PreCreateAstMapEvent::class,
+            AstFileAnalysedEvent::class,
+            PostCreateAstMapEvent::class,
+        ];
+
         $astMap = $this->getAstMap('FixtureBasicInheritanceWithNoise');
+
+        $dispatchedEvents = $this->eventDispatcher->getOrphanedEvents();
+        self::assertSame($expectedEvents, $dispatchedEvents);
 
         self::assertArrayValuesEquals(
             [],
@@ -194,5 +259,44 @@ final class AstMapFlattenGeneratorTest extends TestCase
             ['Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseA::18 (Extends) (path: Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicInheritance\FixtureBasicInheritanceWithNoiseB::19 (Extends))'],
             $this->getInheritedInherits(FixtureBasicInheritanceWithNoiseC::class, $astMap)
         );
+    }
+
+    public function testSkipsErrorsAndDisptachesErrorEventAndReturnsEmptyAstMap(): void
+    {
+        $expectedEvents = [
+            PreCreateAstMapEvent::class,
+            AstFileSyntaxErrorEvent::class,
+            PostCreateAstMapEvent::class,
+        ];
+        $parser = $this->createMock(ParserInterface::class);
+        $astLoader = new AstLoader($parser, $this->eventDispatcher);
+
+        $parser
+            ->expects(self::atLeastOnce())
+            ->method('parseFile')
+            ->with(__DIR__.'/Fixtures/BasicInheritance/FixtureBasicInheritanceWithNoise.php')
+            ->willThrowException(new Error('Syntax Error'));
+
+        $astLoader->createAstMap([__DIR__.'/Fixtures/BasicInheritance/FixtureBasicInheritanceWithNoise.php']);
+
+        $dispatchedEvents = $this->eventDispatcher->getOrphanedEvents();
+        self::assertSame($expectedEvents, $dispatchedEvents);
+    }
+
+    public function testThrowsOtherExceptions(): void
+    {
+        $parser = $this->createMock(ParserInterface::class);
+        $astLoader = new AstLoader($parser, $this->eventDispatcher);
+
+        $parser
+            ->expects(self::atLeastOnce())
+            ->method('parseFile')
+            ->with(__DIR__.'/Fixtures/BasicInheritance/FixtureBasicInheritanceWithNoise.php')
+            ->willThrowException(new LogicException('Uncaught exception'));
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Uncaught exception');
+
+        $astLoader->createAstMap([__DIR__.'/Fixtures/BasicInheritance/FixtureBasicInheritanceWithNoise.php']);
     }
 }

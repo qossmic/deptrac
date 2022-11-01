@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 enum CollectorType: string
 {
-    //Note: Do not try to refactor to get rid of `TYPE_*` prefix as you cannot have `case CLASS`!!!
+    // Note: Do not try to refactor to get rid of `TYPE_*` prefix as you cannot have `case CLASS`!!!
     case TYPE_ATTRIBUTE = 'attribute';
     case TYPE_BOOL = 'bool';
     case TYPE_CLASS = 'class';

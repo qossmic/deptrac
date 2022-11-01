@@ -6,11 +6,12 @@ namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 
-enum TokenType : string
+enum TokenType: string
 {
     case CLASS_LIKE = 'class-like';
     case FUNCTION = 'function';
     case FILE = 'file';
+
     public static function tryFromEmitterType(EmitterType $emitterType): ?self
     {
         return EmitterType::CLASS_TOKEN === $emitterType ? self::CLASS_LIKE : self::tryFrom($emitterType->value);

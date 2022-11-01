@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Core\InputCollector;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\Iterator\PathFilterIterator;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -18,6 +19,7 @@ final class PathNameFilterIterator extends PathFilterIterator
     {
         /**
          * @psalm-suppress UnnecessaryVarAnnotation
+         *
          * @phpstan-var SplFileInfo $fileInfo
          */
         $fileInfo = $this->current();

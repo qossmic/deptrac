@@ -9,6 +9,7 @@ use Qossmic\Deptrac\Supportive\File\Dumper;
 use Qossmic\Deptrac\Supportive\File\Exception\FileAlreadyExistsException;
 use Qossmic\Deptrac\Supportive\File\Exception\FileNotWritableException;
 use SplFileInfo;
+
 use function file_exists;
 use function file_get_contents;
 use function is_writable;
@@ -18,6 +19,7 @@ use function sys_get_temp_dir;
 use function tempnam;
 use function uniqid;
 use function unlink;
+
 use const DIRECTORY_SEPARATOR;
 
 final class DumperTest extends TestCase
