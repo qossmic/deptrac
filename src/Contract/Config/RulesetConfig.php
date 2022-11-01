@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Supportive\Config;
+namespace Qossmic\Deptrac\Contract\Config;
 
 final class RulesetConfig
 {

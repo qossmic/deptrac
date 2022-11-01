@@ -1,10 +1,10 @@
 <?php
 
 use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
-use Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenExceeption;
+use Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Qossmic\Deptrac\Contract\Config\DeptracConfig;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
-use Qossmic\Deptrac\Supportive\Config\DeptracConfig;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
