@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.0.0](https://github.com/qossmic/deptrac/tree/1.0.0) (2022-11-01)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/0.24.0...1.0.0)
+
+**Merged pull requests:**
+
+- Upgrade dependency requirements for PHP 8.1. [\#1019](https://github.com/qossmic/deptrac/pull/1019) ([dbrumann](https://github.com/dbrumann))
+- Update dependencies [\#1018](https://github.com/qossmic/deptrac/pull/1018) ([dbrumann](https://github.com/dbrumann))
+- Doc fix: Replace markdown in table with html tags [\#1017](https://github.com/qossmic/deptrac/pull/1017) ([dbrumann](https://github.com/dbrumann))
+- Bump symfony/console from 5.4.12 to 5.4.13 [\#1000](https://github.com/qossmic/deptrac/pull/1000) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/filesystem from 5.4.12 to 5.4.13 [\#999](https://github.com/qossmic/deptrac/pull/999) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump symfony/dependency-injection from 6.1.3 to 6.1.5 [\#998](https://github.com/qossmic/deptrac/pull/998) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add DependencyType.php information into the contract [\#996](https://github.com/qossmic/deptrac/pull/996) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update cs config for left aligned phpdoc [\#995](https://github.com/qossmic/deptrac/pull/995) ([dbrumann](https://github.com/dbrumann))
+- Fix minor type mismatch in AstMap docblock [\#994](https://github.com/qossmic/deptrac/pull/994) ([dbrumann](https://github.com/dbrumann))
+- Make PostProcessEvent stoppable. [\#993](https://github.com/qossmic/deptrac/pull/993) ([dbrumann](https://github.com/dbrumann))
+- Bump phpunit/phpunit from 9.5.24 to 9.5.25 [\#991](https://github.com/qossmic/deptrac/pull/991) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump phpstan/phpstan from 1.8.5 to 1.8.6 [\#990](https://github.com/qossmic/deptrac/pull/990) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Fix init with existing file. [\#987](https://github.com/qossmic/deptrac/pull/987) ([dbrumann](https://github.com/dbrumann))
+- Update documentation [\#986](https://github.com/qossmic/deptrac/pull/986) ([dbrumann](https://github.com/dbrumann))
+- Misc fixes [\#983](https://github.com/qossmic/deptrac/pull/983) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Fix tag for event\_listener. [\#980](https://github.com/qossmic/deptrac/pull/980) ([dbrumann](https://github.com/dbrumann))
+- Update dependencies [\#976](https://github.com/qossmic/deptrac/pull/976) ([dbrumann](https://github.com/dbrumann))
+- Rector assisted update to PHP 8.1 [\#953](https://github.com/qossmic/deptrac/pull/953) ([patrickkusebauch](https://github.com/patrickkusebauch))
+- Update to php 8.1 [\#935](https://github.com/qossmic/deptrac/pull/935) ([patrickkusebauch](https://github.com/patrickkusebauch))
+
 ## [0.24.0](https://github.com/qossmic/deptrac/tree/0.24.0) (2022-08-12)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.23.0...0.24.0)
