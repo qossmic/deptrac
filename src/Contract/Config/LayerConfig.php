@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
-use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
 use Stringable;
 
 final class LayerConfig implements Stringable

@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 
 use function array_values;
 use function natcasesort;

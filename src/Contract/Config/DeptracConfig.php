@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\Config\Builder\ConfigBuilderInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -21,7 +20,7 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $formatters = [];
     /** @var array<RulesetConfig> */
     private array $rulesets = [];
-    /** @var array<string, EmitterType> */
+    /** @var array<string, \Qossmic\Deptrac\Core\Config\EmitterType> */
     private array $analyser = [];
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
@@ -45,7 +44,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         $skipViolations = $baselineAsArray['deptrac']['skip_violations'] ?? [];
 
         foreach ($skipViolations as $class => $skipViolation) {
-            $this->skipViolations[$class][] = $skipViolation;
+            $this->skipViolations[$class] = $skipViolation;
         }
 
         return $this;

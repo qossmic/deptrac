@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
-use Qossmic\Deptrac\Core\Layer\Collector\CollectorType;
-
 final class CollectorConfig
 {
     private ?string $value = null;

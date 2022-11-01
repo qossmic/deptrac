@@ -6,8 +6,8 @@ namespace Tests\Qossmic\Deptrac\Supportive\DependencyInjection;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Qossmic\Deptrac\Supportive\DependencyInjection\DeptracExtension;
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
