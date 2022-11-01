@@ -11,6 +11,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Core\Layer\LayerProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use function in_array;
 
 /**

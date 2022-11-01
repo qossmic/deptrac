@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
+
 use function array_key_exists;
 use function is_string;
 use function sprintf;

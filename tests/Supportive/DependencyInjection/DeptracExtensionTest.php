@@ -10,6 +10,7 @@ use Qossmic\Deptrac\Supportive\DependencyInjection\DeptracExtension;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+
 use function krsort;
 
 final class DeptracExtensionTest extends TestCase

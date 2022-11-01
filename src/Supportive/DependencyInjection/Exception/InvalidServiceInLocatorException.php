@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Supportive\DependencyInjection\Exception;
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
+
 use function implode;
 use function sprintf;
 

@@ -12,9 +12,11 @@ use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
+
 use function json_encode;
 use function json_last_error;
 use function sprintf;
+
 use const JSON_PRETTY_PRINT;
 
 /**
@@ -44,11 +46,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
                 continue;
             }
 
-            if (!($outputFormatterInput->reportSkipped) && $rule instanceof SkippedViolation) {
+            if (!$outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation) {
                 continue;
             }
 
-            if (!($outputFormatterInput->reportUncovered) && $rule instanceof Uncovered) {
+            if (!$outputFormatterInput->reportUncovered && $rule instanceof Uncovered) {
                 continue;
             }
 

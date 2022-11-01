@@ -11,6 +11,7 @@ use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Symfony\Component\Yaml\Yaml;
+
 use function array_values;
 use function ksort;
 use function sort;

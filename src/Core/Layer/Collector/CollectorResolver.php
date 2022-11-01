@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Core\Layer\Exception\InvalidCollectorDefinitionException;
+
 use function array_key_exists;
 use function is_string;
 

@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\InvalidServiceInLocatorException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
+
 use function array_keys;
 use function get_debug_type;
 

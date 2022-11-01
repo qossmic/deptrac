@@ -9,6 +9,7 @@ use Iterator;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\InputCollector\PathNameFilterIterator;
 use SplFileInfo;
+
 use const DIRECTORY_SEPARATOR;
 
 final class PathNameFilterIteratorTest extends TestCase

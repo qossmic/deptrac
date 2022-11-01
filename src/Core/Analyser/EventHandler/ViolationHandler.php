@@ -10,6 +10,7 @@ use Qossmic\Deptrac\Contract\Result\Error;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use function sprintf;
 
 /**

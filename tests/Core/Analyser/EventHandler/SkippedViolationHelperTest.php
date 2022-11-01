@@ -49,6 +49,12 @@ final class SkippedViolationHelperTest extends TestCase
                 ClassLikeToken::fromFQCN('DependencyClass2')->toString()
             )
         );
+        self::assertFalse(
+            $helper->isViolationSkipped(
+                ClassLikeToken::fromFQCN('DependencyClass')->toString(),
+                ClassLikeToken::fromFQCN('ClassWithOneDep')->toString()
+            )
+        );
     }
 
     public function testUnmatchedSkippedViolations(): void
