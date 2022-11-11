@@ -20,8 +20,8 @@ if (PHP_VERSION_ID < 80100) {
     }
 })();
 
-$xdebug = new XdebugHandler('DEPTRAC');
-$xdebug->check();
-unset($xdebug);
+// $xdebug = new XdebugHandler('DEPTRAC');
+// $xdebug->check();
+// unset($xdebug);
 
 (new Application())->run();

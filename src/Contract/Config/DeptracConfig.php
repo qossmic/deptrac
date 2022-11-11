@@ -14,13 +14,13 @@ final class DeptracConfig implements ConfigBuilderInterface
 
     /** @var array<string> */
     private array $paths = [];
-    /** @var array<LayerConfig> */
+    /** @var array<Layer> */
     private array $layers = [];
     /** @var array<FormatterConfig> */
     private array $formatters = [];
     /** @var array<RulesetConfig> */
     private array $rulesets = [];
-    /** @var array<string, \Qossmic\Deptrac\Core\Config\EmitterType> */
+    /** @var array<string, \Qossmic\Deptrac\Contract\Config\EmitterType> */
     private array $analyser = [];
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
@@ -40,7 +40,8 @@ final class DeptracConfig implements ConfigBuilderInterface
     {
         /** @var array<string, array<string, array<string>>> $baselineAsArray */
         $baselineAsArray = Yaml::parseFile($baseline);
-        /** @var array<string, string> */
+
+        /** @var array<string, array<string>> $skipViolations */
         $skipViolations = $baselineAsArray['deptrac']['skip_violations'] ?? [];
 
         foreach ($skipViolations as $class => $skipViolation) {
@@ -52,19 +53,29 @@ final class DeptracConfig implements ConfigBuilderInterface
 
     public function paths(string ...$paths): self
     {
-        $this->paths = $paths;
+        foreach ($paths as $path) {
+            $this->paths[] = $path;
+        }
 
         return $this;
     }
 
-    public function layer(string $name): LayerConfig
+    public function layers(Layer ...$layerConfigs): self
     {
-        return $this->layers[$name] = new LayerConfig($name);
+        foreach ($layerConfigs as $layerConfig) {
+            $this->layers[$layerConfig->name] = $layerConfig;
+        }
+
+        return $this;
     }
 
-    public function ruleset(LayerConfig $layerConfig): RulesetConfig
+    public function rulesets(RulesetConfig ...$rulesetConfigs): self
     {
-        return $this->rulesets[] = new RulesetConfig($layerConfig);
+        foreach ($rulesetConfigs as $rulesetConfig) {
+            $this->rulesets[$rulesetConfig->layersConfig->name] = $rulesetConfig;
+        }
+
+        return $this;
     }
 
     /** @return array<mixed> */
@@ -81,7 +92,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         if ([] !== $this->layers) {
-            $config['layers'] = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->toArray(), $this->layers);
+            $config['layers'] = array_map(static fn (Layer $layerConfig) => $layerConfig->toArray(), $this->layers);
         }
 
         if ([] !== $this->rulesets) {
@@ -110,4 +121,97 @@ final class DeptracConfig implements ConfigBuilderInterface
     {
         return 'deptrac';
     }
+}
+
+const ESCAPEES = [
+    '\\',
+    '\\\\',
+    '\\"',
+    '"',
+    "\x00",
+    "\x01",
+    "\x02",
+    "\x03",
+    "\x04",
+    "\x05",
+    "\x06",
+    "\x07",
+    "\x08",
+    "\x09",
+    "\x0a",
+    "\x0b",
+    "\x0c",
+    "\x0d",
+    "\x0e",
+    "\x0f",
+    "\x10",
+    "\x11",
+    "\x12",
+    "\x13",
+    "\x14",
+    "\x15",
+    "\x16",
+    "\x17",
+    "\x18",
+    "\x19",
+    "\x1a",
+    "\x1b",
+    "\x1c",
+    "\x1d",
+    "\x1e",
+    "\x1f",
+    "\x7f",
+    "\xc2\x85",
+    "\xc2\xa0",
+    "\xe2\x80\xa8",
+    "\xe2\x80\xa9",
+];
+
+const ESCAPED = [
+    '\\\\',
+    '\\"',
+    '\\\\',
+    '\\"',
+    '\\0',
+    '\\x01',
+    '\\x02',
+    '\\x03',
+    '\\x04',
+    '\\x05',
+    '\\x06',
+    '\\a',
+    '\\b',
+    '\\t',
+    '\\n',
+    '\\v',
+    '\\f',
+    '\\r',
+    '\\x0e',
+    '\\x0f',
+    '\\x10',
+    '\\x11',
+    '\\x12',
+    '\\x13',
+    '\\x14',
+    '\\x15',
+    '\\x16',
+    '\\x17',
+    '\\x18',
+    '\\x19',
+    '\\x1a',
+    '\\e',
+    '\\x1c',
+    '\\x1d',
+    '\\x1e',
+    '\\x1f',
+    '\\x7f',
+    '\\N',
+    '\\_',
+    '\\L',
+    '\\P',
+];
+
+function regex(string $regex): string
+{
+    return sprintf('%s', str_replace(ESCAPEES, ESCAPED, $regex));
 }

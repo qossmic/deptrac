@@ -6,15 +6,20 @@ namespace Qossmic\Deptrac\Contract\Config;
 
 final class RulesetConfig
 {
-    /** @var array<LayerConfig> */
+    /** @var array<Layer> */
     private array $accessableLayers = [];
 
     public function __construct(
-        private readonly LayerConfig $layersConfig
+        public readonly Layer $layersConfig
     ) {
     }
 
-    public function accessesLayer(LayerConfig ...$layersConfig): self
+    public static function layer(Layer $layerConfig): self
+    {
+        return new self($layerConfig);
+    }
+
+    public function accesses(Layer ...$layersConfig): self
     {
         foreach ($layersConfig as $layerConfig) {
             $this->accessableLayers[] = $layerConfig;
@@ -23,12 +28,11 @@ final class RulesetConfig
         return $this;
     }
 
-    /** @return array<string, string> */
+    /** @return non-empty-array<array-key, string> */
     public function toArray(): array
     {
-        /** @var array<string> */
-        $data = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->__toString(), $this->accessableLayers);
+        $data = array_map(static fn (Layer $layerConfig) => $layerConfig->name, $this->accessableLayers);
 
-        return $data + ['name' => $this->layersConfig->__toString()];
+        return $data + ['name' => $this->layersConfig->name];
     }
 }
