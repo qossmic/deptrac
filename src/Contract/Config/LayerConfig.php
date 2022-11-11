@@ -9,7 +9,7 @@ use Stringable;
 final class LayerConfig implements Stringable
 {
     /** @var array<CollectorConfig> */
-    private array $colloctors = [];
+    private array $collectors = [];
 
     public function __construct(
         public readonly string $name
@@ -18,13 +18,13 @@ final class LayerConfig implements Stringable
 
     public function collector(CollectorType $collectorType): CollectorConfig
     {
-        return $this->colloctors[] = CollectorConfig::fromType($collectorType);
+        return $this->collectors[] = CollectorConfig::fromType($collectorType);
     }
 
     /** @return array<string, mixed> */
     public function toArray(): array
     {
-        return ['name' => $this->name, 'collectors' => array_map(static fn (CollectorConfig $config) => $config->toArray(), $this->colloctors)];
+        return ['name' => $this->name, 'collectors' => array_map(static fn (CollectorConfig $config) => $config->toArray(), $this->collectors)];
     }
 
     public function __toString(): string
