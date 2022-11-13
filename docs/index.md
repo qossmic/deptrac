@@ -254,7 +254,7 @@ Please feel free to improve this documentation, fix bugs, or work on a suggested
 feature by making a pull request on GitHub. Don't hesitate to ask for support,
 if you need help at any point.
 
-The [Contribution Guide](contributing.md) in the documentation contains
+The [Contribution Guide](CONTRIBUTING.md) in the documentation contains
 some advice for making a pull request with code changes.
 
 ### Code of Conduct

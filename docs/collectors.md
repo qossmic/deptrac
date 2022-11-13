@@ -318,7 +318,7 @@ is referenced in the config file Deptrac will try to load the class in your
 project. With this you can create collectors specific for your use case.
 
 If you would like to make your collector available to others, feel free to
-[contribute](contributing.md) it by making a pull request.
+[contribute](CONTRIBUTING.md) it by making a pull request.
 
 ## Extra collector configuration
 
