@@ -21,6 +21,8 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use const PHP_EOL;
+
 final class ConsoleSubscriberTest extends TestCase
 {
     public function testSubscribedEvents(): void
@@ -48,7 +50,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
 
-        self::assertSame("Start to create an AstMap for 9999999 Files.\n", $symfonyOutput->fetch());
+        self::assertSame('Start to create an AstMap for 9999999 Files.'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnPostCreateAstMapEventWithVerboseVerbosity(): void
@@ -59,7 +61,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
-        self::assertSame("AstMap created.\n", $symfonyOutput->fetch());
+        self::assertSame('AstMap created.'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnAstFileAnalysedEventWithVerboseVerbosity(): void
@@ -70,7 +72,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onAstFileAnalysedEvent(new AstFileAnalysedEvent('foo.php'));
 
-        self::assertSame("Parsing File foo.php\n", $symfonyOutput->fetch());
+        self::assertSame('Parsing File foo.php'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnAstFileSyntaxErrorEvent(): void
@@ -83,7 +85,7 @@ final class ConsoleSubscriberTest extends TestCase
             new AstFileSyntaxErrorEvent('foo.php', 'Invalid')
         );
 
-        self::assertSame("\nSyntax Error on File foo.php\nInvalid\n\n", $symfonyOutput->fetch());
+        self::assertSame("\nSyntax Error on File foo.php\nInvalid\n".PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnPreDependencyEmit(): void
@@ -94,7 +96,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
 
-        self::assertSame("start emitting dependencies \"emitter-name\"\n", $symfonyOutput->fetch());
+        self::assertSame('start emitting dependencies "emitter-name"'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnPostDependencyEmit(): void
@@ -105,7 +107,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostDependencyEmit(new PostEmitEvent());
 
-        self::assertSame("end emitting dependencies\n", $symfonyOutput->fetch());
+        self::assertSame('end emitting dependencies'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnPreDependencyFlatten(): void
@@ -116,7 +118,7 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
 
-        self::assertSame("start flatten dependencies\n", $symfonyOutput->fetch());
+        self::assertSame('start flatten dependencies'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnPostDependencyFlatten(): void
@@ -127,6 +129,6 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber = new ConsoleSubscriber($output);
         $subscriber->onPostDependencyFlatten(new PostFlattenEvent());
 
-        self::assertSame("end flatten dependencies\n", $symfonyOutput->fetch());
+        self::assertSame('end flatten dependencies'.PHP_EOL, $symfonyOutput->fetch());
     }
 }
