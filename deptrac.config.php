@@ -8,10 +8,10 @@ use Qossmic\Deptrac\Contract\Config\Collector\ClassNameConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\DirectoryConfig;
 use Qossmic\Deptrac\Contract\Config\DeptracConfig;
 use Qossmic\Deptrac\Contract\Config\EmitterType;
+use Qossmic\Deptrac\Contract\Config\Formatter\GraphvizConfig;
 use Qossmic\Deptrac\Contract\Config\Layer;
 use Qossmic\Deptrac\Contract\Config\RulesetConfig;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
 use function Qossmic\Deptrac\Contract\Config\regex;
 
 return static function (DeptracConfig $config, ContainerConfigurator $containerConfigurator): void {
@@ -24,7 +24,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
 
     $config
         ->paths('src')
-        ->analyser(
+        ->analysers(
             EmitterType::CLASS_TOKEN,
             EmitterType::CLASS_SUPERGLOBAL_TOKEN,
             EmitterType::FILE_TOKEN,
@@ -81,7 +81,15 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             RulesetConfig::layer($outputFormatter)->accesses($console, $dependencyInjection),
             RulesetConfig::layer($ast)->accesses($file, $inputCollector),
             RulesetConfig::layer($inputCollector)->accesses($file),
-            RulesetConfig::layer($supportive),
+            RulesetConfig::layer($supportive)->accesses($file),
             RulesetConfig::layer($contract),
-        );
+        )
+        ->formatters(
+            GraphvizConfig::create()
+                ->groups('Contract', $contract)
+                ->groups('Supportive', $supportive, $file)
+                ->groups('Symfony', $console, $dependencyInjection, $outputFormatter)
+                ->groups('Core', $analyser, $ast, $dependency, $inputCollector, $layer)
+        )
+    ;
 };

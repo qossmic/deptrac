@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
+use Qossmic\Deptrac\Contract\Config\Formatter\FormatterConfigInterface;
+use Qossmic\Deptrac\Contract\Config\Formatter\FormatterInterface;
 use Symfony\Component\Config\Builder\ConfigBuilderInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -16,7 +18,7 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $paths = [];
     /** @var array<Layer> */
     private array $layers = [];
-    /** @var array<FormatterConfig> */
+    /** @var array<FormatterInterface> */
     private array $formatters = [];
     /** @var array<RulesetConfig> */
     private array $rulesets = [];
@@ -27,7 +29,7 @@ final class DeptracConfig implements ConfigBuilderInterface
     /** @var array<string> */
     private array $excludeFiles = [];
 
-    public function analyser(EmitterType ...$types): self
+    public function analysers(EmitterType ...$types): self
     {
         foreach ($types as $type) {
             $this->analyser[$type->value] = $type;
@@ -46,6 +48,15 @@ final class DeptracConfig implements ConfigBuilderInterface
 
         foreach ($skipViolations as $class => $skipViolation) {
             $this->skipViolations[$class] = $skipViolation;
+        }
+
+        return $this;
+    }
+
+    public function formatters(FormatterConfigInterface ...$formatters): self
+    {
+        foreach ($formatters as $formatter) {
+            $this->formatters[$formatter->getName()] = $formatter;
         }
 
         return $this;
@@ -104,7 +115,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         if ([] !== $this->formatters) {
-            $config['formatters'] = array_map(static fn (FormatterConfig $formatterConfig) => $formatterConfig->__toString(), $this->formatters);
+            $config['formatters'] = array_map(static fn (FormatterConfigInterface $formatterConfig) => $formatterConfig->toArray(), $this->formatters);
         }
 
         if ([] !== $this->skipViolations) {
