@@ -18,8 +18,8 @@ abstract class CollectorConfig
     public function toArray(): array
     {
         return [
-            'type' => $this->collectorType->value,
             'private' => $this->private,
+            'type' => $this->collectorType->value,
         ];
     }
 }

@@ -62,7 +62,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             ),
             $outputFormatter = Layer::withName('OutputFormatter')->collectors(
                 DirectoryConfig::public('src/Supportive/OutputFormatter/.*'),
-                ClassNameConfig::private(regex('^phpDocumentor\\\\GraphViz\\\\.*')),
+                ClassNameConfig::private(regex('^phpDocumentor\\GraphViz\\.*')),
             ),
             $file = Layer::withName('File')->collectors(
                 DirectoryConfig::public('src/Supportive/File/.*')
@@ -86,6 +86,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
         )
         ->formatters(
             GraphvizConfig::create()
+                ->pointsToGroup(true)
                 ->groups('Contract', $contract)
                 ->groups('Supportive', $supportive, $file)
                 ->groups('Symfony', $console, $dependencyInjection, $outputFormatter)

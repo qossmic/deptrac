@@ -46,8 +46,8 @@ final class BoolConfig extends CollectorConfig
     public function toArray(): array
     {
         return parent::toArray() + [
-            'must' => array_map(static fn (CollectorConfig $v) => $v->toArray(), $this->must),
             'must_not' => array_map(static fn (CollectorConfig $v) => $v->toArray(), $this->mustNot),
+            'must' => array_map(static fn (CollectorConfig $v) => $v->toArray(), $this->must),
         ];
     }
 }
