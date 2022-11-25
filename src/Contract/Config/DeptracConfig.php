@@ -70,6 +70,15 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
+    public function excludeFiles(string ...$excludeFiles): self
+    {
+        foreach ($excludeFiles as $excludeFile) {
+            $this->excludeFiles[] = $excludeFile;
+        }
+
+        return $this;
+    }
+
     public function layers(Layer ...$layerConfigs): self
     {
         foreach ($layerConfigs as $layerConfig) {
