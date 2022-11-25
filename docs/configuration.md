@@ -191,7 +191,7 @@ Defines your architectural layers by collecting dependencies using collectors
 <td>
 
 ```yaml
-deprac:
+deptrac:
   layers:
     -
       name: Controller
@@ -216,7 +216,7 @@ only this layer is allowed, but also all layers it allows.
 <td>
 
 ```yaml
-deprac:
+deptrac:
   ruleset:
     Controllers: [Services]
     Services:
@@ -239,7 +239,7 @@ failing return code.
 <td>
 
 ```yaml
-deprac:
+deptrac:
   skip_violations:
     Library\LibClass:
       - Core\CoreClass
