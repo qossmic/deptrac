@@ -7,9 +7,9 @@ namespace Qossmic\Deptrac\Contract\Config;
 abstract class ConfigurableCollectorConfig extends CollectorConfig
 {
     final protected function __construct(
-        protected readonly string $config,
-        protected readonly CollectorType $collectorType = CollectorType::TYPE_BOOL,
-        protected readonly bool $private = false,
+        protected string $config,
+        protected CollectorType $collectorType = CollectorType::TYPE_BOOL,
+        protected bool $private = false,
     ) {
     }
 

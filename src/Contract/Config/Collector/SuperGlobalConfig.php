@@ -11,8 +11,8 @@ final class SuperGlobalConfig extends CollectorConfig
      * @param string[] $config
      */
     protected function __construct(
-        protected readonly array $config,
-        protected readonly bool $private = false,
+        protected array $config,
+        protected bool $private = false,
     ) {
     }
 
