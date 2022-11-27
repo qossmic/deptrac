@@ -6,20 +6,22 @@ namespace Qossmic\Deptrac\Contract\Config;
 
 abstract class CollectorConfig
 {
-    protected function __construct(
-        protected CollectorType $collectorType = CollectorType::TYPE_BOOL,
-        protected bool $private = false,
-    ) {
+    protected bool $private = false;
+    protected CollectorType $collectorType;
+
+    public function private(): self
+    {
+        $this->private = true;
+
+        return $this;
     }
 
-    /**
-     * @return array{'type': string, 'private': bool}
-     */
+    /** @return array{'type': string, 'private': bool} */
     public function toArray(): array
     {
         return [
-            'private' => $this->private,
             'type' => $this->collectorType->value,
+            'private' => $this->private,
         ];
     }
 }

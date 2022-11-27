@@ -13,7 +13,6 @@ enum EmitterType: string
     case FUNCTION_CALL = 'function_call';
     case FUNCTION_SUPERGLOBAL_TOKEN = 'function_superglobal';
     case USE_TOKEN = 'use';
-
     /**
      * @return list<string>
      */

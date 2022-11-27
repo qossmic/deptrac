@@ -7,13 +7,5 @@ use Qossmic\Deptrac\Contract\Config\ConfigurableCollectorConfig;
 
 final class DirectoryConfig extends ConfigurableCollectorConfig
 {
-    public static function public(string $config): static
-    {
-        return new self(config: $config, collectorType: CollectorType::TYPE_DIRECTORY, private: false);
-    }
-
-    public static function private(string $config): static
-    {
-        return new self(config: $config, collectorType: CollectorType::TYPE_DIRECTORY, private: true);
-    }
+    protected CollectorType $collectorType = CollectorType::TYPE_DIRECTORY;
 }

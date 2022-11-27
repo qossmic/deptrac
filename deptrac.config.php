@@ -34,43 +34,43 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
         )
         ->layers(
             $analyser = Layer::withName('Analyser')->collectors(
-                DirectoryConfig::public('src/Core/Analyser/.*')
+                DirectoryConfig::create('src/Core/Analyser/.*')
             ),
             $ast = Layer::withName('Ast')->collectors(
-                DirectoryConfig::public('src/Core/Ast/.*'),
-                ClassNameConfig::private(regex('^PHPStan\\PhpDocParser\\.*')),
-                ClassNameConfig::private(regex('^PhpParser\\.*')),
-                ClassNameConfig::private(regex('^phpDocumentor\\Reflection\\.*'))
+                DirectoryConfig::create('src/Core/Ast/.*'),
+                ClassNameConfig::create(regex('^PHPStan\\PhpDocParser\\.*'), true),
+                ClassNameConfig::create(regex('^PhpParser\\.*'), true),
+                ClassNameConfig::create(regex('^phpDocumentor\\Reflection\\.*'), true)
             ),
             $console = Layer::withName('Console')->collectors(
-                DirectoryConfig::public('src/Supportive/Console/.*')
+                DirectoryConfig::create('src/Supportive/Console/.*')
             ),
             $dependency = Layer::withName('Dependency')->collectors(
-                DirectoryConfig::public('src/Core/Dependency/.*')
+                DirectoryConfig::create('src/Core/Dependency/.*')
             ),
             $dependencyInjection = Layer::withName('DependencyInjection')->collectors(
-                DirectoryConfig::public('src/Supportive/DependencyInjection/.*')
+                DirectoryConfig::create('src/Supportive/DependencyInjection/.*')
             ),
             $contract = Layer::withName('Contract')->collectors(
-                DirectoryConfig::public('src/Contract/.*')
+                DirectoryConfig::create('src/Contract/.*')
             ),
             $inputCollector = Layer::withName('InputCollector')->collectors(
-                DirectoryConfig::public('src/Core/InputCollector/.*')
+                DirectoryConfig::create('src/Core/InputCollector/.*')
             ),
             $layer = Layer::withName('Layer')->collectors(
-                DirectoryConfig::public('src/Core/Layer/.*')
+                DirectoryConfig::create('src/Core/Layer/.*')
             ),
             $outputFormatter = Layer::withName('OutputFormatter')->collectors(
-                DirectoryConfig::public('src/Supportive/OutputFormatter/.*'),
-                ClassNameConfig::private(regex('^phpDocumentor\\GraphViz\\.*')),
+                DirectoryConfig::create('src/Supportive/OutputFormatter/.*'),
+                ClassNameConfig::create(regex('^phpDocumentor\\GraphViz\\.*'), true),
             ),
             $file = Layer::withName('File')->collectors(
-                DirectoryConfig::public('src/Supportive/File/.*')
+                DirectoryConfig::create('src/Supportive/File/.*')
             ),
             $supportive = Layer::withName('Supportive')->collectors(
-                BoolConfig::public()
-                    ->withMustNot(DirectoryConfig::public('src/Supportive/.*/.*'))
-                    ->withMust(DirectoryConfig::public('src/Supportive/.*'))
+                BoolConfig::create()
+                    ->withMustNot(DirectoryConfig::create('src/Supportive/.*/.*'))
+                    ->withMust(DirectoryConfig::create('src/Supportive/.*'))
             ),
         )
         ->rulesets(

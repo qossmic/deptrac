@@ -7,23 +7,26 @@ use Qossmic\Deptrac\Contract\Config\CollectorType;
 
 final class SuperGlobalConfig extends CollectorConfig
 {
+    protected CollectorType $collectorType = CollectorType::TYPE_SUPERGLOBAL;
+
     /**
      * @param string[] $config
      */
-    protected function __construct(
+    private function __construct(
         protected array $config,
-        protected bool $private = false,
     ) {
     }
 
-    public static function public(string ...$config): static
+    public static function create(string ...$config): self
     {
-        return new self(config: $config);
+        return new self($config);
     }
 
-    public static function private(string ...$config): static
+    public function private(): self
     {
-        return new self(config: $config, private: true);
+        $this->private = true;
+
+        return $this;
     }
 
     /**

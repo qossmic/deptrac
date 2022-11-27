@@ -15,7 +15,7 @@ final class DeptracConfig implements ConfigBuilderInterface
 
     /** @var array<string> */
     private array $paths = [];
-    /** @var array<Layer> */
+    /** @var array<LayerConfig> */
     private array $layers = [];
     /** @var array<FormatterConfigInterface> */
     private array $formatters = [];
@@ -79,7 +79,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
-    public function layers(Layer ...$layerConfigs): self
+    public function layers(LayerConfig ...$layerConfigs): self
     {
         foreach ($layerConfigs as $layerConfig) {
             $this->layers[$layerConfig->name] = $layerConfig;
@@ -91,7 +91,7 @@ final class DeptracConfig implements ConfigBuilderInterface
     public function rulesets(RulesetConfig ...$rulesetConfigs): self
     {
         foreach ($rulesetConfigs as $rulesetConfig) {
-            $this->rulesets[$rulesetConfig->layersConfig->name] = $rulesetConfig;
+            $this->rulesets[$rulesetConfig->layerConfig->name] = $rulesetConfig;
         }
 
         return $this;
@@ -119,7 +119,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         if ([] !== $this->layers) {
-            $config['layers'] = array_map(static fn (Layer $layerConfig) => $layerConfig->toArray(), $this->layers);
+            $config['layers'] = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->toArray(), $this->layers);
         }
 
         if ([] !== $this->rulesets) {
@@ -140,97 +140,4 @@ final class DeptracConfig implements ConfigBuilderInterface
     {
         return 'deptrac';
     }
-}
-
-const ESCAPEES = [
-    '\\',
-    '\\\\',
-    '\\"',
-    '"',
-    "\x00",
-    "\x01",
-    "\x02",
-    "\x03",
-    "\x04",
-    "\x05",
-    "\x06",
-    "\x07",
-    "\x08",
-    "\x09",
-    "\x0a",
-    "\x0b",
-    "\x0c",
-    "\x0d",
-    "\x0e",
-    "\x0f",
-    "\x10",
-    "\x11",
-    "\x12",
-    "\x13",
-    "\x14",
-    "\x15",
-    "\x16",
-    "\x17",
-    "\x18",
-    "\x19",
-    "\x1a",
-    "\x1b",
-    "\x1c",
-    "\x1d",
-    "\x1e",
-    "\x1f",
-    "\x7f",
-    "\xc2\x85",
-    "\xc2\xa0",
-    "\xe2\x80\xa8",
-    "\xe2\x80\xa9",
-];
-
-const ESCAPED = [
-    '\\\\',
-    '\\"',
-    '\\\\',
-    '\\"',
-    '\\0',
-    '\\x01',
-    '\\x02',
-    '\\x03',
-    '\\x04',
-    '\\x05',
-    '\\x06',
-    '\\a',
-    '\\b',
-    '\\t',
-    '\\n',
-    '\\v',
-    '\\f',
-    '\\r',
-    '\\x0e',
-    '\\x0f',
-    '\\x10',
-    '\\x11',
-    '\\x12',
-    '\\x13',
-    '\\x14',
-    '\\x15',
-    '\\x16',
-    '\\x17',
-    '\\x18',
-    '\\x19',
-    '\\x1a',
-    '\\e',
-    '\\x1c',
-    '\\x1d',
-    '\\x1e',
-    '\\x1f',
-    '\\x7f',
-    '\\N',
-    '\\_',
-    '\\L',
-    '\\P',
-];
-
-function regex(string $regex): string
-{
-    return sprintf('%s', str_replace(ESCAPEES, ESCAPED, $regex));
 }

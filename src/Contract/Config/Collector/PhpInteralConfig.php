@@ -7,13 +7,5 @@ use Qossmic\Deptrac\Contract\Config\ConfigurableCollectorConfig;
 
 final class PhpInteralConfig extends ConfigurableCollectorConfig
 {
-    public static function public(string $config): static
-    {
-        return new self(config: $config, collectorType: CollectorType::TYPE_PHP_INTERNAL, private: false);
-    }
-
-    public static function private(string $config): static
-    {
-        return new self(config: $config, collectorType: CollectorType::TYPE_PHP_INTERNAL, private: true);
-    }
+    protected CollectorType $collectorType = CollectorType::TYPE_PHP_INTERNAL;
 }

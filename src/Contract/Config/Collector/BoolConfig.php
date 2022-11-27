@@ -7,32 +7,50 @@ use Qossmic\Deptrac\Contract\Config\CollectorType;
 
 final class BoolConfig extends CollectorConfig
 {
+    protected CollectorType $collectorType = CollectorType::TYPE_BOOL;
+
     /** @var array<CollectorConfig> */
     private array $mustNot = [];
 
     /** @var array<CollectorConfig> */
     private array $must = [];
 
-    public static function public(): self
+    private function __construct()
     {
-        return new self(collectorType: CollectorType::TYPE_BOOL, private: false);
     }
 
-    public static function private(): self
+    /**
+     * @param array<CollectorConfig> $must
+     * @param array<CollectorConfig> $mostNot
+     */
+    public static function create(array $must = [], array $mostNot = []): self
     {
-        return new self(collectorType: CollectorType::TYPE_BOOL, private: true);
+        return (new self())
+            ->must(...$must)
+            ->mustNot(...$mostNot);
     }
 
-    public function withMustNot(CollectorConfig $CollectorConfig): self
+    public function private(): self
     {
-        $this->mustNot[] = $CollectorConfig;
+        $this->private = true;
 
         return $this;
     }
 
-    public function withMust(CollectorConfig $CollectorConfig): self
+    public function mustNot(CollectorConfig ...$collectorConfigs): self
     {
-        $this->must[] = $CollectorConfig;
+        foreach ($collectorConfigs as $collectorConfig) {
+            $this->mustNot[] = $collectorConfig;
+        }
+
+        return $this;
+    }
+
+    public function must(CollectorConfig ...$collectorConfigs): self
+    {
+        foreach ($collectorConfigs as $collectorConfig) {
+            $this->must[] = $collectorConfig;
+        }
 
         return $this;
     }
@@ -45,9 +63,11 @@ final class BoolConfig extends CollectorConfig
      */
     public function toArray(): array
     {
-        return parent::toArray() + [
+        return [
             'must_not' => array_map(static fn (CollectorConfig $v) => $v->toArray(), $this->mustNot),
             'must' => array_map(static fn (CollectorConfig $v) => $v->toArray(), $this->must),
+            'private' => $this->private,
+            'type' => $this->collectorType->value,
         ];
     }
 }
