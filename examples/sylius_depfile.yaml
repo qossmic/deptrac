@@ -1,0 +1,303 @@
+deptrac:
+  paths:
+    - /tmp/c1023228a
+  exclude_files:
+    - .*test.*
+  layers:
+    - name: Component_Addressing
+      collectors:
+        - type: className
+          value: .*Component\\Addressing.*
+    - name: Component_Archetype
+      collectors:
+        - type: className
+          value: .*Component\\Archetype.*
+    - name: Component_Association
+      collectors:
+        - type: className
+          value: .*Component\\Association.*
+    - name: Component_Attribute
+      collectors:
+        - type: className
+          value: .*Component\\Attribute.*
+    - name: Component_Cart
+      collectors:
+        - type: className
+          value: .*Component\\Cart.*
+    - name: Component_Channel
+      collectors:
+        - type: className
+          value: .*Component\\Channel.*
+    - name: Component_Contact
+      collectors:
+        - type: className
+          value: .*Component\\Contact.*
+    - name: Component_Core
+      collectors:
+        - type: className
+          value: .*Component\\Core.*
+    - name: Component_Currency
+      collectors:
+        - type: className
+          value: .*Component\\Currency.*
+    - name: Component_Inventory
+      collectors:
+        - type: className
+          value: .*Component\\Inventory.*
+    - name: Component_Locale
+      collectors:
+        - type: className
+          value: .*Component\\Locale.*
+    - name: Component_Mailer
+      collectors:
+        - type: className
+          value: .*Component\\Mailer.*
+    - name: Component_Metadata
+      collectors:
+        - type: className
+          value: .*Component\\Metadata.*
+    - name: Component_Order
+      collectors:
+        - type: className
+          value: .*Component\\Order.*
+    - name: Component_Originator
+      collectors:
+        - type: className
+          value: .*Component\\Originator.*
+    - name: Component_Payment
+      collectors:
+        - type: className
+          value: .*Component\\Payment.*
+    - name: Component_Pricing
+      collectors:
+        - type: className
+          value: .*Component\\Pricingg.*
+    - name: Component_Product
+      collectors:
+        - type: className
+          value: .*Component\\Product.*
+    - name: Component_Promotion
+      collectors:
+        - type: className
+          value: .*Component\\Promotion.*
+    - name: Component_Rbac
+      collectors:
+        - type: className
+          value: .*Component\\Rbac.*
+    - name: Component_Registry
+      collectors:
+        - type: className
+          value: .*Component\\Registry.*
+    - name: Component_Report
+      collectors:
+        - type: className
+          value: .*Component\\Report.*
+    - name: Component_Resource
+      collectors:
+        - type: className
+          value: .*Component\\Resource.*
+    - name: Component_Review
+      collectors:
+        - type: className
+          value: .*Component\\Review.*
+    - name: Component_Sequence
+      collectors:
+        - type: className
+          value: .*Component\\Sequence.*
+    - name: Component_Shipping
+      collectors:
+        - type: className
+          value: .*Component\\Shipping.*
+    - name: Component_Storage
+      collectors:
+        - type: className
+          value: .*Component\\Storage.*
+    - name: Component_Taxation
+      collectors:
+        - type: className
+          value: .*Component\\Taxation.*
+    - name: Component_Taxonomy
+      collectors:
+        - type: className
+          value: .*Component\\Taxonomy.*
+    - name: Component_Translation
+      collectors:
+        - type: className
+          value: .*Component\\Translation.*
+    - name: Component_User
+      collectors:
+        - type: className
+          value: .*Component\\User.*
+    - name: Component_Variation
+      collectors:
+        - type: className
+          value: .*Component\\Variation.*
+    - name: AddressingBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\AddressingBundle.*
+    - name: AdminBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\AdminBundle.*
+    - name: ApiBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ApiBundle.*
+    - name: ArchetypeBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ArchetypeBundle.*
+    - name: AssociationBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\AssociationBundle.*
+    - name: AttributeBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\AttributeBundle.*
+    - name: CartBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\CartBundle.*
+    - name: ChannelBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ChannelBundle.*
+    - name: ContactBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ContactBundle.*
+    - name: ContentBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ContentBundle.*
+    - name: CoreBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\CoreBundle.*
+    - name: CurrencyBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\CurrencyBundle.*
+    - name: FixturesBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\FixturesBundle.*
+    - name: FlowBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\FlowBundle.*
+    - name: InstallerBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\InstallerBundle.*
+    - name: InventoryBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\InventoryBundle.*
+    - name: LocaleBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\LocaleBundle.*
+    - name: MailerBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\MailerBundle.*
+    - name: MetadataBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\MetadataBundle.*
+    - name: MoneyBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\MoneyBundle.*
+    - name: OrderBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\OrderBundle.*
+    - name: PaymentBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\PaymentBundle.*
+    - name: PayumBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\PayumBundle.*
+    - name: PricingBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\PricingBundle.*
+    - name: ProductBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ProductBundle.*
+    - name: PromotionBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\PromotionBundle.*
+    - name: RbacBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\RbacBundle.*
+    - name: ReportBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ReportBundle.*
+    - name: ResourceBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ResourceBundle.*
+    - name: ReviewBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ReviewBundle.*
+    - name: SearchBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\SearchBundle.*
+    - name: SequenceBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\SequenceBundle.*
+    - name: SettingsBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\SettingsBundle.*
+    - name: ShippingBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ShippingBundle.*
+    - name: TaxationBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\TaxationBundle.*
+    - name: TaxonomyBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\TaxonomyBundle.*
+    - name: ThemeBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\ThemeBundle.*
+    - name: TranslationBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\TranslationBundle.*
+    - name: UiBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\UiBundle.*
+    - name: UserBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\UserBundle.*
+    - name: VariationBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\VariationBundle.*
+    - name: WebBundle
+      collectors:
+        - type: className
+          value: .*Bundle\\WebBundle.*
+  ruleset: []

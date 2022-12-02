@@ -1,0 +1,10 @@
+deptrac:
+  paths: ["./Uncovered/"]
+  layers:
+    - name: Core
+      collectors:
+        - type: className
+          value: Core
+
+  ruleset:
+    Core: ~

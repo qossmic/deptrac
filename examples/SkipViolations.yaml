@@ -1,0 +1,18 @@
+deptrac:
+  paths: ["./SkipViolations/"]
+  layers:
+  - name: Core
+    collectors:
+    - type: className
+      value: Core
+  - name: Library
+    collectors:
+    - type: className
+      value: Library
+  ruleset:
+    Core:
+    - Library
+  skip_violations:
+    Library\LibClass:
+      - Core\CoreClass
+      - Core\Unmatched

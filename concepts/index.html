@@ -1,0 +1,985 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Deptrac: keep your architecture clean">
+      
+      
+      
+        <link rel="canonical" href="https://qossmic.github.io/deptrac/concepts/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Concepts - Deptrac</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#core-concepts" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Deptrac" class="md-header__button md-logo" aria-label="Deptrac" data-md-component="logo">
+      
+  <img src="../qossmic.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Deptrac
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Concepts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/qossmic/deptrac" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    qossmic/deptrac
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../bc_policy/" class="md-tabs__link">
+      Backwards Compatibility
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../upgrade/" class="md-tabs__link">
+      Upgrade Guide
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      Concepts
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../configuration/" class="md-tabs__link">
+      Configuration
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../collectors/" class="md-tabs__link">
+      Collectors
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../formatters/" class="md-tabs__link">
+      Formatters
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../debugging/" class="md-tabs__link">
+      Debugging
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../CODE_OF_CONDUCT/" class="md-tabs__link">
+      Code of Conduct
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../CONTRIBUTING/" class="md-tabs__link">
+      Contributing
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../SECURITY/" class="md-tabs__link">
+      Security
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Deptrac" class="md-nav__button md-logo" aria-label="Deptrac" data-md-component="logo">
+      
+  <img src="../qossmic.png" alt="logo">
+
+    </a>
+    Deptrac
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/qossmic/deptrac" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    qossmic/deptrac
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bc_policy/" class="md-nav__link">
+        Backwards Compatibility
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/" class="md-nav__link">
+        Upgrade Guide
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Concepts
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#layers" class="md-nav__link">
+    Layers
+  </a>
+  
+    <nav class="md-nav" aria-label="Layers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collecting-layers" class="md-nav__link">
+    Collecting Layers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ruleset-allowing-dependencies" class="md-nav__link">
+    Ruleset (Allowing Dependencies)
+  </a>
+  
+    <nav class="md-nav" aria-label="Ruleset (Allowing Dependencies)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#different-layers-and-different-views" class="md-nav__link">
+    Different Layers and Different Views
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uncovered-dependencies" class="md-nav__link">
+    Uncovered dependencies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-and-deptrac-internal-annotation" class="md-nav__link">
+    @internal and @deptrac-internal annotation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#violations" class="md-nav__link">
+    Violations
+  </a>
+  
+    <nav class="md-nav" aria-label="Violations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#skip-violations" class="md-nav__link">
+    Skip violations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../collectors/" class="md-nav__link">
+        Collectors
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formatters/" class="md-nav__link">
+        Formatters
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        Debugging
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CODE_OF_CONDUCT/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="core-concepts">Core concepts</h1>
+<p>At the heart of Deptrac are three main concepts:</p>
+<ul>
+<li><a href="#layers"><strong>Layers</strong></a> are groups of classes that you define</li>
+<li><a href="#ruleset-allowing-dependencies"><strong>Rulesets</strong></a> Describe whether which layers a
+  layer can communicate with, i.e. which classes are allowed in that layer</li>
+<li><a href="#violations"><strong>Violations</strong></a> show when a layer uses classes from another
+  layer that is forbidden by the currently configured rulesets.</li>
+</ul>
+<h2 id="layers">Layers</h2>
+<p>Deptrac allows you to group different tokens(classes, function, file usage
+outside those) into <em>layers</em>. Technically layers are nothing more than a
+collection of those tokens.</p>
+<p>Each layer has a unique name and a list of one or more collectors, which will
+look for tokens should be assigned to this layer (and yes, tokens can be
+assigned to more than one layer).</p>
+<p>If you want to ensure your application follows the MVC architecture pattern then
+you can create a config file that makes sure a View does not directly interact
+with a Controller or that Models are independent of both Views and Controllers.</p>
+<p>Another example for layers are bundles in Symfony applications. Each bundle
+should be independent by design. You can create layers for each bundle you have
+in your application and then ensure that they do not use tokens from any of the
+other bundles. This is particularly helpful when you have an application with
+many bundles as it will tell you which ones to consolidate and which ones can be
+extracted and reused.</p>
+<p>Deptrac allows you to visualize and enforce a ruleset based on such layer
+information.</p>
+<p>So you could define that every class that ends with <code>Controller</code> will be
+assigned to the <em>Controller</em> layer, and every class that has <code>\Model\</code> in its
+namespace will be added to the <em>Model</em> layer.</p>
+<p><strong>By default, all dependencies between layers are forbidden!</strong></p>
+<h3 id="collecting-layers">Collecting Layers</h3>
+<p>If your application has <em>controllers</em> and <em>models</em>, Deptrac allows you to group
+them into layers.</p>
+<pre><code class="language-yaml">deptrac:
+  paths:
+    - ./examples/ModelController
+  exclude_files: ~
+  layers:
+    -
+      name: Models
+      collectors:
+        -
+          type: className
+          value: .*MyNamespace\\Models\\.*
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          value: .*MyNamespace\\.*Controller.*
+  ruleset: [ ]
+</code></pre>
+<p>At first, lets take a closer look at the first layer (named <em>Models</em>).</p>
+<p>Here we decided that our software has some kind of layer called <em>Models</em>. You
+assign tokens to this layer with the help of <a href="../collectors/"><em>Collectors</em></a>.</p>
+<p>Collectors are responsible for taking a closer look at your code and decide if a
+token is part of a layer. By using the <code>className</code> collector you can define a
+regular expression for a class name. Every (fully qualified) class name that
+matches this regular expression becomes part of the assigned layer. In this
+example we define that every class that contains <code>MyNamespace\Models\</code> will be a
+part of the <em>Model</em> layer.</p>
+<p>Every class that matches <code>.*MyNamespace\\.*Controller.*</code> will become a part of
+the <em>Controller</em> layer.</p>
+<p>As we defined our layers, we can generate a dependency graph for the example
+configuration:
+(Make sure that <a href="/#optional-dependency-graphviz"><em>Graphviz</em></a> (dot) is
+installed on your system)</p>
+<pre><code class="language-bash">php deptrac.phar analyse --config-file=examples/ModelController1.depfile.yaml
+</code></pre>
+<p>After Deptrac has finished, an image should be opened:</p>
+<p><img alt="ModelController1" src="../examples/ModelController1.png" /></p>
+<p>On your command line Deptrac will produce this output:</p>
+<pre><code class="language-bash">Start to create an AstMap for 2 Files.
+..
+AstMap created.
+start emitting dependencies &quot;InheritanceDependencyEmitter&quot;
+start emitting dependencies &quot;BasicDependencyEmitter&quot;
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+
+Found 0 Violations
+</code></pre>
+<p>The output shows, that Deptrac is parsing 2 files and found 0 violations. By
+default, every dependency between layers is a violation. In our case there are
+(for now) no dependencies between our classes (layers). It's fine that Deptrac
+will show us two independent layers without any relationship.</p>
+<h2 id="ruleset-allowing-dependencies">Ruleset (Allowing Dependencies)</h2>
+<p>Allowed dependencies between layers are configured in a <em>ruleset</em>.</p>
+<p>By default, Deptrac will raise a violation for every dependency between layers.
+In real software you want to allow dependencies between different kinds of
+layers.</p>
+<p>As a lot of architectures define some kind of <em>controllers</em>, <em>services</em> and
+<em>repositories</em>, a natural approach for this would be to define these rules:</p>
+<ul>
+<li><em>Controllers</em> may access <em>services</em>, but not <em>repositories</em>.</li>
+<li><em>Services</em> may access <em>repositories</em>, but not <em>controllers</em>.</li>
+<li><em>Repositories</em> neither may access services nor <em>controllers</em>.</li>
+</ul>
+<p>We can define this using the following configuration:</p>
+<pre><code class="language-yaml"># deptrac.yaml
+deptrac:
+  paths:
+    - ./examples/ControllerServiceRepository1/
+  exclude_files: ~
+  layers:
+    -
+      name: Controller
+      collectors:
+        -
+          type: className
+          value: .*MyNamespace\\.*Controller.*
+    -
+      name: Repository
+      collectors:
+        -
+          type: className
+          value: .*MyNamespace\\.*Repository.*
+    -
+      name: Service
+      collectors:
+        -
+          type: className
+          value: .*MyNamespace\\.*Service.*
+  ruleset:
+    Controller:
+      - Service
+    Service:
+      - Repository
+    Repository: ~
+</code></pre>
+<p>Take a closer look at the ruleset. We allow the <em>Controller</em> layer to access
+<em>Service</em> and <em>Service</em> can access <em>Repository</em>, but <em>Repository</em> may not access
+any of the two other layers.</p>
+<p>After running Deptrac we will get this result:</p>
+<p><img alt="ModelController1" src="../examples/ControllerServiceRepository1.png" /></p>
+<pre><code class="language-bash">Start to create an AstMap for 3 Files.
+...
+AstMap created.
+start emitting dependencies &quot;InheritanceDependencyEmitter&quot;
+start emitting dependencies &quot;BasicDependencyEmitter&quot;
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+examples\MyNamespace\Repository\SomeRepository::5 must not depend on examples\MyNamespace\Controllers\SomeController (Repository on Controller)
+</code></pre>
+<p>Deptrac now finds a violation. If we take a closer look at the "SomeRepository"
+on line 5, we will see an unused use statement for a controller:</p>
+<pre><code class="language-php">namespace examples\MyNamespace\Repository;
+
+use examples\MyNamespace\Controllers\SomeController;
+
+class SomeRepository { }
+</code></pre>
+<p>If we remove the <code>use</code> statement and rerun Deptrac, the violation will
+disappear.</p>
+<h3 id="different-layers-and-different-views">Different Layers and Different Views</h3>
+<p>In the example above we defined 3 different layers (<em>controller</em>, <em>repository</em>
+and <em>service</em>). Deptrac gives architects the power to define what kind of layers
+exist.</p>
+<p>Typical use cases are:</p>
+<ul>
+<li>caring about layers in different architectures (tier, hexagonal, ddd, ...)</li>
+<li>caring about dependencies between different kinds of services (infrastructure
+  services / domain services / entities / DTOs / ...)</li>
+<li>caring about coupling to third party code like composer vendors, frameworks,
+  ...</li>
+<li>enforcing naming conventions</li>
+<li>...</li>
+</ul>
+<p>Typically software has more than just one view. <strong>It is possible to use multiple
+config files, to take care about different architectural views.</strong></p>
+<h3 id="uncovered-dependencies">Uncovered dependencies</h3>
+<p>Deptrac collects uncovered dependencies which can be reported with the
+<a href="/docs/formatters.md">Console Formatter</a>. By default, internal php classes will
+not be considered. This can be changed by
+adding <code>ignore_uncovered_internal_classes: false</code> to your configuration.</p>
+<p>You can use the <code>--fail-on-uncovered</code> option to let Deptrac fail when any
+uncovered dependencies are encountered.</p>
+<p>You can use the <code>--report-uncovered</code> option to let you know about any uncovered
+dependencies in the report that is generated by Deptrac.</p>
+<h3 id="internal-and-deptrac-internal-annotation">@internal and @deptrac-internal annotation</h3>
+<p>You can mark your classes with <code>@internal</code> or <code>@deptrac-internal</code> annotation. If you do so, the marked class cannot be referenced by any class outside its layer. This will supersede any ruleset configuration you might have defined. This way, you don't have to define 2 separate layers to distinguish between layers external API and its private implementation.</p>
+<h2 id="violations">Violations</h2>
+<p>If we have 2 layers (<em>Models</em>, <em>Controller</em>) and one layer is using the other,
+Deptrac will raise a violation by default:</p>
+<pre><code class="language-php">// see the example in examples/ModelController2
+namespace examples\MyNamespace\Controllers;
+
+use examples\MyNamespace\Models\SomeModel;
+
+class SomeController
+{
+    public function foo(SomeModel $m) {
+        return $m;
+    }
+}
+</code></pre>
+<p>After running Deptrac for this example</p>
+<pre><code class="language-bash">php deptrac.phar analyse --config-file=examples/ModelController2.depfile.yaml
+</code></pre>
+<p>we will get this output:</p>
+<pre><code class="language-bash">Start to create an AstMap for 2 Files.
+..
+AstMap created.
+start emitting dependencies &quot;InheritanceDependencyEmitter&quot;
+start emitting dependencies &quot;BasicDependencyEmitter&quot;
+end emitting dependencies
+start flatten dependencies
+end flatten dependencies
+collecting violations.
+formatting dependencies.
+examples\MyNamespace\Controllers\SomeController::5 must not depend on examples\MyNamespace\Models\SomeModel (Controller on Models)
+examples\MyNamespace\Controllers\SomeController::9 must not depend on examples\MyNamespace\Models\SomeModel (Controller on Models)
+
+Found 2 Violations
+</code></pre>
+<p><img alt="ModelController1" src="../examples/ModelController2.png" /></p>
+<p>Deptrac has found two violations because the relation from the controller to
+model layers is not allowed. The console output shows exactly the lines Deptrac
+found.</p>
+<h3 id="skip-violations">Skip violations</h3>
+<p>Deptrac integration into existing CI/CD pipeline might be difficult because of
+existing dependency violations in the code. In this case, you can skip existing
+violations to gradually improve your code and avoid possibility introduce any
+new violations.</p>
+<p>Violations can be skipped by provided list of dependencies in <em>skip_violations</em>
+configuration section:</p>
+<pre><code class="language-yaml">deptrac:
+  skip_violations:
+    Library\LibClass:
+      - Core\CoreClass
+</code></pre>
+<p><em>skip_violations</em> section contains an associative array where a
+key (<code>Library\LibClass</code>) is the name of dependant token and
+values (<code>Core\CoreClass</code>) are dependency tokens.</p>
+<p>Matched violations will be marked as skipped:</p>
+<pre><code class="language-bash">php deptrac.phar analyse --config-file=examples/SkipViolations.yaml --report-skipped
+1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+
+[SKIPPED] Library\LibClass must not depend on Core\CoreClass (Library on Core)
+/path/examples/SkipViolations/SkipViolations.php::11
+
+[ERROR] Skipped violation &quot;Core\Unmatched&quot; for &quot;Library\LibClass&quot; was not matched.
+
+Report:
+Violations: 0
+Skipped violations: 1
+Uncovered: 0
+Allowed: 1
+</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../upgrade/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Upgrade Guide" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Upgrade Guide
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../configuration/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Configuration
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>

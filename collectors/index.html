@@ -1,0 +1,1047 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Deptrac: keep your architecture clean">
+      
+      
+      
+        <link rel="canonical" href="https://qossmic.github.io/deptrac/collectors/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>Collectors - Deptrac</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#4051b5">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#collectors" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Deptrac" class="md-header__button md-logo" aria-label="Deptrac" data-md-component="logo">
+      
+  <img src="../qossmic.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Deptrac
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Collectors
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/qossmic/deptrac" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    qossmic/deptrac
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../bc_policy/" class="md-tabs__link">
+      Backwards Compatibility
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../upgrade/" class="md-tabs__link">
+      Upgrade Guide
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../concepts/" class="md-tabs__link">
+      Concepts
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../configuration/" class="md-tabs__link">
+      Configuration
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      Collectors
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../formatters/" class="md-tabs__link">
+      Formatters
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../debugging/" class="md-tabs__link">
+      Debugging
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../CODE_OF_CONDUCT/" class="md-tabs__link">
+      Code of Conduct
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../CONTRIBUTING/" class="md-tabs__link">
+      Contributing
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../SECURITY/" class="md-tabs__link">
+      Security
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Deptrac" class="md-nav__button md-logo" aria-label="Deptrac" data-md-component="logo">
+      
+  <img src="../qossmic.png" alt="logo">
+
+    </a>
+    Deptrac
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/qossmic/deptrac" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    qossmic/deptrac
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bc_policy/" class="md-nav__link">
+        Backwards Compatibility
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrade/" class="md-nav__link">
+        Upgrade Guide
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        Concepts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        Configuration
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Collectors
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Collectors
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#attribute-collector" class="md-nav__link">
+    attribute Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bool-collector" class="md-nav__link">
+    bool Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#class-collector" class="md-nav__link">
+    class Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classlike-collector" class="md-nav__link">
+    classLike Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classnameregex-collector" class="md-nav__link">
+    classNameRegex Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#directory-collector" class="md-nav__link">
+    directory Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extends-collector" class="md-nav__link">
+    extends Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functionname-collector" class="md-nav__link">
+    functionName Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#glob-collector" class="md-nav__link">
+    glob Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implements-collector" class="md-nav__link">
+    implements Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interface-collector" class="md-nav__link">
+    interface Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inherits-collector" class="md-nav__link">
+    inherits Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layer-collector" class="md-nav__link">
+    layer Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-collector" class="md-nav__link">
+    method Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#superglobal-collector" class="md-nav__link">
+    superglobal Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trait-collector" class="md-nav__link">
+    trait Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uses-collector" class="md-nav__link">
+    uses Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#php-internal-collector" class="md-nav__link">
+    PHP Internal Collector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-collectors" class="md-nav__link">
+    Custom Collectors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-collector-configuration" class="md-nav__link">
+    Extra collector configuration
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../formatters/" class="md-nav__link">
+        Formatters
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        Debugging
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CODE_OF_CONDUCT/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="collectors">Collectors</h1>
+<p>Collectors decide if a node (typically a class) is part of a layer. You can use
+multiple different collectors for a layer.</p>
+<h2 id="attribute-collector"><code>attribute</code> Collector</h2>
+<p>The <code>attribute</code> collector finds all class-likes, functions or files using the
+provided attribute. You can provide the full attribute name or a substring that
+should be matched.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Entities
+      collectors:
+        - type: attribute
+          value: Doctrine\ORM\Mapping\Entity
+</code></pre>
+<h2 id="bool-collector"><code>bool</code> Collector</h2>
+<p>The <code>bool</code> collector allows combining other collectors with or without negation.</p>
+<pre><code class="language-yml">deptrac:
+  layers:
+    - name: Asset
+      collectors:
+        - type: bool
+          must:
+            - type: classLike
+              value: .*Foo\\.*
+            - type: classLike
+              value: .*\\Asset.*
+          must_not:
+            - type: classLike
+              value: .*Assetic.*
+</code></pre>
+<p>Every class contains <code>Foo\</code> AND <code>\Asset</code> and NOT <code>Assetic</code>, will become a part
+of the <em>Asset</em> layer.</p>
+<h2 id="class-collector"><code>class</code> Collector</h2>
+<p>The <code>class</code> collector allows collecting only classes by matching their fully
+qualified name to a simplified regular expression. Any match will be
+added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Provider
+      collectors:
+        - type: class
+          value: .*Provider.*
+</code></pre>
+<p>Every class name that matches the regular expression becomes a part of the
+<em>Provider</em> layer. This collector has predefined delimiters and
+modifier: <code>/YOUR_EXPRESSION/i</code></p>
+<h2 id="classlike-collector"><code>classLike</code> Collector</h2>
+<p>The <code>classLike</code> collector allows collecting classes and anything similar to classes like interfaces, traits or enums, by matching their fully
+qualified name to a simplified regular expression. Any match will be
+added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Domain
+      collectors:
+        - type: classLike
+          value: .*Domain.*
+</code></pre>
+<p>Every classLike name that matches the regular expression becomes a part of the
+<em>domain</em> layer. This collector has predefined delimiters and
+modifier: <code>/YOUR_EXPRESSION/i</code></p>
+<h2 id="classnameregex-collector"><code>classNameRegex</code> Collector</h2>
+<p>The <code>classNameRegex</code> collector allows collecting classes by matching their fully
+qualified name to a regular expression. Any matching class will be added to the
+assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Controller
+      collectors:
+        - type: classNameRegex
+          value: '#.*Controller.*#'
+</code></pre>
+<p>Every class name that matches the regular expression becomes a part of the
+<em>controller</em> layer.</p>
+<h2 id="directory-collector"><code>directory</code> Collector</h2>
+<p>The <code>directory</code> collector allows collecting classes by matching their file path
+they are declared in to a simplified regular expression. Any matching class will
+be added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Controller
+      collectors:
+        - type: directory
+          value: src/Controller/.*
+</code></pre>
+<p>Every file path that matches the regular expression <code>src/Controller/.*</code> becomes
+a part of the <em>controller</em> layer. This collector has predefined delimiters and
+modifier: <code>#YOUR_EXPRESSION#i</code></p>
+<h2 id="extends-collector"><code>extends</code> Collector</h2>
+<p>The <code>extends</code> collector allows collecting classes extending a specified class by
+matching recursively for a fully qualified class or interface name.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: extends
+          value: 'App\SomeClass'
+</code></pre>
+<h2 id="functionname-collector"><code>functionName</code> Collector</h2>
+<p>The <code>functionName</code> collector allows collecting functions by matching their fully
+qualified name to a simplified regular expression. Any matching function will be
+added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: functionName
+          value: .*array_.*
+</code></pre>
+<h2 id="glob-collector"><code>glob</code> Collector</h2>
+<p>The <code>glob</code> collector finds all files matching the provided glob pattern.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Repositories
+      collectors:
+        - type: glob
+          value: src/Modules/**/Repository
+</code></pre>
+<h2 id="implements-collector"><code>implements</code> Collector</h2>
+<p>The <code>implements</code> collector allows collecting classes implementing a specified
+interface by matching recursively for a fully qualified interface name.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: implements
+          value: 'App\SomeInterface'
+</code></pre>
+<h2 id="interface-collector"><code>interface</code> Collector</h2>
+<p>The <code>interface</code> collector allows collecting only interfaces by matching their fully
+qualified name to a simplified regular expression. Any matching interface will be
+added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Contracts
+      collectors:
+        - type: interface
+          value: .*Contracts.*
+</code></pre>
+<p>Every interface name that matches the regular expression becomes a part of the
+<em>Interfaces</em> layer. This collector has predefined delimiters and
+modifier: <code>/YOUR_EXPRESSION/i</code></p>
+<h2 id="inherits-collector"><code>inherits</code> Collector</h2>
+<p>The <code>inherits</code> collector allows collecting classes inheriting from a specified
+class, whether by implementing an interface, extending another class or by using
+a trait, by matching recursively for a fully qualified class name.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: inherits
+          value: 'App\SomeInterface'
+</code></pre>
+<h2 id="layer-collector"><code>layer</code> Collector</h2>
+<p>This collector collects all the tokens collected by another layer. It is not
+very useful by itself (unless you want to have tokens in multiple layers), but
+it is very useful to exclude classes in combination with
+the <a href="#bool-collector"><code>bool</code> Collector</a>:</p>
+<pre><code class="language-yml">deptrac:
+  layers:
+    - name: SubDomain
+      collectors:
+        - type: directory
+          value: src/Domain/Subdomain/.*
+    - name: Domain
+      collectors:
+        - type: bool
+          must:
+            - type: directory
+              value: src/Domain/.*
+          must_not:
+            - type: layer
+              layer: SubDomain
+</code></pre>
+<h2 id="method-collector"><code>method</code> Collector</h2>
+<p>The <code>method</code> collector allows collecting classes by matching their methods name
+to a regular expression. Any matching class will be added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo services
+      collectors:
+        - type: method
+          value: .*foo
+</code></pre>
+<p>Every class having a method that matches the regular expression <code>.*foo</code>,
+e.g. <code>getFoo()</code> or <code>setFoo()</code> becomes a part of the <em>Foo services</em> layer.</p>
+<h2 id="superglobal-collector"><code>superglobal</code> Collector</h2>
+<p>The <code>superglobal</code> collector allows collecting superglobal PHP variables matching
+the specified superglobal name.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: superglobal
+          value:
+            - _POST
+            - _GET
+</code></pre>
+<h2 id="trait-collector"><code>trait</code> Collector</h2>
+<p>The <code>trait</code> collector allows collecting only traits by matching their fully
+qualified name to a simplified regular expression. Any matching trait will be
+added to the assigned layer.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Traits
+      collectors:
+        - type: trait
+          value: .*Traits.*
+</code></pre>
+<p>Every trait name that matches the regular expression becomes a part of the
+<em>traits</em> layer. This collector has predefined delimiters and
+modifier: <code>/YOUR_EXPRESSION/i</code></p>
+<h2 id="uses-collector"><code>uses</code> Collector</h2>
+<p>The <code>uses</code> collector allows collecting classes using a specified trait by
+matching recursively for a fully qualified trait name.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: uses
+          value: 'App\SomeTrait'
+</code></pre>
+<h2 id="php-internal-collector"><code>PHP Internal</code> Collector</h2>
+<p>The <code>PHP Internal</code> collector collects PHP defined classes and functions
+including those loaded with PHP extensions.</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: php_internal
+          value: ^reset$
+</code></pre>
+<h2 id="custom-collectors">Custom Collectors</h2>
+<p>You can create custom collectors in your project by implementing the
+<code>Qossmic\Deptrac\Collector\CollectorInterface</code>. As soon as an unknown collector
+is referenced in the config file Deptrac will try to load the class in your
+project. With this you can create collectors specific for your use case.</p>
+<p>If you would like to make your collector available to others, feel free to
+<a href="../CONTRIBUTING/">contribute</a> it by making a pull request.</p>
+<h2 id="extra-collector-configuration">Extra collector configuration</h2>
+<p>Any collector can also specify parameter <code>private:true</code> like this:</p>
+<pre><code class="language-yaml">deptrac:
+  layers:
+    - name: Foo
+      collectors:
+        - type: uses
+          value: 'App\SomeTrait'
+          private: true
+</code></pre>
+<p>This means that tokens collected by this specific collector can be referenced only by other tokens in the same layer. References from other layers will be considered violations, even if they would normally be allowed by configured ruleset.</p>
+<p>This can be useful at least in 2 cases:
+ - <strong>External library that should be used only by one particular layer</strong> - In this case, you might via vendor include a library that should be used only by this particular layer and nobody else.
+ - <strong>Layer that has a public API and private implementation</strong> - You might want to provide only a few classes to be available to use by other layers (public API) that call the internal implementation of the layer that on the other hand should not be available to anybody else other than the public API of the layer.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Configuration
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../formatters/" class="md-footer__link md-footer__link--next" aria-label="Next: Formatters" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Formatters
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>

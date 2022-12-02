@@ -1,0 +1,13 @@
+deptrac:
+  paths: ["../../tests/Core/Dependency/Emitter/Fixtures/"]
+  exclude_files: []
+  layers:
+    - name: Models
+      collectors:
+        - type: className
+          value: .*MyNamespace\\Models\\.*
+    - name: Controller
+      collectors:
+        - type: className
+          value: .*MyNamespace\\.*Controller.*
+  ruleset: []
