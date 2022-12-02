@@ -22,6 +22,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\FunctionCallResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\FunctionLikeExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
@@ -178,6 +179,9 @@ return static function (ContainerConfigurator $container): void {
         ->tag('reference_extractors');
     $services
         ->set(VariableExtractor::class)
+        ->tag('reference_extractors');
+    $services
+        ->set(FunctionCallResolver::class)
         ->tag('reference_extractors');
 
     /*
