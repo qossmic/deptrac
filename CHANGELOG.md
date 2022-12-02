@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/qossmic/deptrac/tree/1.0.2) (2022-12-02)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/1.0.1...1.0.2)
+
+**Merged pull requests:**
+
+- Fix missing service registration [\#1040](https://github.com/qossmic/deptrac/pull/1040) ([dbrumann](https://github.com/dbrumann))
+
 ## [1.0.1](https://github.com/qossmic/deptrac/tree/1.0.1) (2022-12-02)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/1.0.0...1.0.1)
