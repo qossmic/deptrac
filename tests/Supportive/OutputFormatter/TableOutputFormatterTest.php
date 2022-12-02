@@ -26,6 +26,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use const PHP_EOL;
+
 class TableOutputFormatterTest extends TestCase
 {
     public function testGetName(): void
@@ -342,6 +344,6 @@ class TableOutputFormatterTest extends TestCase
             )
         );
 
-        static::assertSame($expectedOutput, $bufferedOutput->fetch());
+        static::assertSame(str_replace("\n", PHP_EOL, $expectedOutput), $bufferedOutput->fetch());
     }
 }

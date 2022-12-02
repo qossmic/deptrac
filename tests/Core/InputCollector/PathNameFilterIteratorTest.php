@@ -23,7 +23,8 @@ final class PathNameFilterIteratorTest extends TestCase
 
         $values = array_map(
             static function (SplFileInfo $fileInfo) {
-                return str_replace('/', DIRECTORY_SEPARATOR, $fileInfo->getPathname());
+                // replace the DIRECTORY_SEPARATOR with / to match with the expected result
+                return str_replace(DIRECTORY_SEPARATOR, '/', $fileInfo->getPathname());
             },
             iterator_to_array($iterator, false)
         );
@@ -31,7 +32,7 @@ final class PathNameFilterIteratorTest extends TestCase
         sort($values);
         sort($resultArray);
 
-        self::assertSame($resultArray, array_values($values));
+        self::assertSame($resultArray, $values);
     }
 
     public function getTestFilterData(): array

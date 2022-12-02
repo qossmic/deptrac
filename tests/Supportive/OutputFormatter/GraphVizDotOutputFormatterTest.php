@@ -21,6 +21,9 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\GraphVizOutputDotFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Path;
+
+use const PHP_EOL;
 
 final class GraphVizDotOutputFormatterTest extends TestCase
 {
@@ -59,7 +62,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             ],
         ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertSame(sprintf('Script dumped to %s'.PHP_EOL, Path::normalize($dotFile)), Path::normalize($bufferedOutput->fetch()));
+
+        $this->replaceWindowsLineEndings($dotFile);
+
         self::assertFileEquals(__DIR__.'/data/graphviz-expected.dot', $dotFile);
 
         unlink($dotFile);
@@ -106,7 +112,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             ],
         ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertSame(sprintf('Script dumped to %s'.PHP_EOL, Path::normalize($dotFile)), Path::normalize($bufferedOutput->fetch()));
+
+        $this->replaceWindowsLineEndings($dotFile);
+
         self::assertFileEquals(__DIR__.'/data/graphviz-groups.dot', $dotFile);
 
         unlink($dotFile);
@@ -153,7 +162,10 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             ],
         ])))->finish($context, $this->createSymfonyOutput($bufferedOutput), $input);
 
-        self::assertSame(sprintf("Script dumped to %s\n", $dotFile), $bufferedOutput->fetch());
+        self::assertSame(sprintf('Script dumped to %s'.PHP_EOL, Path::normalize($dotFile)), Path::normalize($bufferedOutput->fetch()));
+
+        $this->replaceWindowsLineEndings($dotFile);
+
         self::assertFileEquals(__DIR__.'/data/graphviz-groups-point.dot', $dotFile);
 
         unlink($dotFile);
@@ -165,5 +177,13 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             $bufferedOutput,
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
+    }
+
+    private function replaceWindowsLineEndings($expectedFile): void
+    {
+        if ("\n" !== PHP_EOL) {
+            // fix line endings on windows to match with the files in git
+            file_put_contents($expectedFile, str_replace(PHP_EOL, "\n", file_get_contents($expectedFile)));
+        }
     }
 }
