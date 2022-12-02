@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.1](https://github.com/qossmic/deptrac/tree/1.0.1) (2022-12-02)
+
+[Full Changelog](https://github.com/qossmic/deptrac/compare/1.0.0...1.0.1)
+
+**Merged pull requests:**
+
+- Fix init not working in phar. [\#1039](https://github.com/qossmic/deptrac/pull/1039) ([dbrumann](https://github.com/dbrumann))
+- Fix typos in configuration reference [\#1035](https://github.com/qossmic/deptrac/pull/1035) ([jschaedl](https://github.com/jschaedl))
+- Fix unittests for windows [\#1029](https://github.com/qossmic/deptrac/pull/1029) ([maxbeckers](https://github.com/maxbeckers))
+- Fix docs: use correct case in markdown filenames [\#1026](https://github.com/qossmic/deptrac/pull/1026) ([lptn](https://github.com/lptn))
+
 ## [1.0.0](https://github.com/qossmic/deptrac/tree/1.0.0) (2022-11-01)
 
 [Full Changelog](https://github.com/qossmic/deptrac/compare/0.24.0...1.0.0)
