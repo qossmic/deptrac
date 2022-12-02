@@ -1,7 +1,8 @@
 {
   "files": [
     "config/cache.php",
-    "config/services.php"
+    "config/services.php",
+    "config/deptrac_template.yaml"
   ],
   "compression": "GZ",
   "main": "deptrac.php",
