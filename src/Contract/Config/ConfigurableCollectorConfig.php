@@ -94,8 +94,6 @@ abstract class ConfigurableCollectorConfig extends CollectorConfig
         '\\P',
     ];
 
-    protected CollectorType $collectorType;
-
     final protected function __construct(
         protected string $config,
     ) {

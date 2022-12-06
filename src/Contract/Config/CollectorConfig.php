@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Contract\Config;
 abstract class CollectorConfig
 {
     protected bool $private = false;
-    protected CollectorType $collectorType;
+    protected CollectorType $collectorType = CollectorType::TYPE_DIRECTORY;
 
     public function private(): self
     {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
-final class LayerConfig
+final class Layer
 {
     /** @var array<CollectorConfig> */
     private array $collectors = [];
@@ -17,7 +17,7 @@ final class LayerConfig
         $this->collectors(...$collectorConfig);
     }
 
-    public static function create(string $name): self
+    public static function withName(string $name): self
     {
         return new self($name);
     }

@@ -4,26 +4,26 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
-final class RulesetConfig
+final class Ruleset
 {
-    public LayerConfig $layerConfig;
+    public Layer $layerConfig;
 
-    /** @var array<LayerConfig> */
+    /** @var array<Layer> */
     private array $accessableLayers = [];
 
-    /** @param  array<LayerConfig> $layerConfigs */
-    public function __construct(LayerConfig $layerConfig, array $layerConfigs)
+    /** @param  array<Layer> $layerConfigs */
+    public function __construct(Layer $layerConfig, array $layerConfigs)
     {
         $this->layerConfig = $layerConfig;
         $this->accesses(...$layerConfigs);
     }
 
-    public static function create(LayerConfig $layerConfig): self
+    public static function forLayer(Layer $layerConfig): self
     {
         return new self($layerConfig, []);
     }
 
-    public function accesses(LayerConfig ...$layerConfigs): self
+    public function accesses(Layer ...$layerConfigs): self
     {
         foreach ($layerConfigs as $layerConfig) {
             $this->accessableLayers[] = $layerConfig;
@@ -35,7 +35,7 @@ final class RulesetConfig
     /** @return non-empty-array<array-key, string> */
     public function toArray(): array
     {
-        $data = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->name, $this->accessableLayers);
+        $data = array_map(static fn (Layer $layerConfig) => $layerConfig->name, $this->accessableLayers);
 
         return $data + ['name' => $this->layerConfig->name];
     }

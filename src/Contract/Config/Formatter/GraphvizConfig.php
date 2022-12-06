@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config\Formatter;
 
-use Qossmic\Deptrac\Contract\Config\LayerConfig;
+use Qossmic\Deptrac\Contract\Config\Layer;
 
 final class GraphvizConfig implements FormatterConfigInterface
 {
     private string $name = 'graphviz';
     private bool $pointsToGroup = false;
 
-    /** @var LayerConfig[] */
+    /** @var Layer[] */
     private array $hiddenLayers = [];
 
-    /** @var array<string, LayerConfig[]> */
+    /** @var array<string, Layer[]> */
     private array $groups = [];
 
     private function __construct()
@@ -33,7 +33,7 @@ final class GraphvizConfig implements FormatterConfigInterface
         return $this;
     }
 
-    public function hiddenLayers(LayerConfig ...$LayerConfigs): self
+    public function hiddenLayers(Layer ...$LayerConfigs): self
     {
         foreach ($LayerConfigs as $layerConfig) {
             $this->hiddenLayers[] = $layerConfig;
@@ -42,7 +42,7 @@ final class GraphvizConfig implements FormatterConfigInterface
         return $this;
     }
 
-    public function groups(string $name, LayerConfig ...$layerConfigs): self
+    public function groups(string $name, Layer ...$layerConfigs): self
     {
         foreach ($layerConfigs as $layerConfig) {
             $this->groups[$name][] = $layerConfig;
@@ -56,12 +56,12 @@ final class GraphvizConfig implements FormatterConfigInterface
         $output = [];
 
         if ([] !== $this->hiddenLayers) {
-            $output['hidden_layers'] = array_map(static fn (LayerConfig $config) => $config->name, $this->hiddenLayers);
+            $output['hidden_layers'] = array_map(static fn (Layer $config) => $config->name, $this->hiddenLayers);
         }
 
         if ([] !== $this->groups) {
             $output['groups'] = array_map(
-                static fn (array $configs) => array_map(static fn (LayerConfig $layer) => $layer->name, $configs),
+                static fn (array $configs) => array_map(static fn (Layer $layer) => $layer->name, $configs),
                 $this->groups
             );
         }

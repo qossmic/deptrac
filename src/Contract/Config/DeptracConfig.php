@@ -15,13 +15,13 @@ final class DeptracConfig implements ConfigBuilderInterface
 
     /** @var array<string> */
     private array $paths = [];
-    /** @var array<LayerConfig> */
+    /** @var array<Layer> */
     private array $layers = [];
     /** @var array<FormatterConfigInterface> */
     private array $formatters = [];
-    /** @var array<RulesetConfig> */
+    /** @var array<Ruleset> */
     private array $rulesets = [];
-    /** @var array<string, \Qossmic\Deptrac\Contract\Config\EmitterType> */
+    /** @var array<string, EmitterType> */
     private array $analyser = [];
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
@@ -79,7 +79,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
-    public function layers(LayerConfig ...$layerConfigs): self
+    public function layers(Layer ...$layerConfigs): self
     {
         foreach ($layerConfigs as $layerConfig) {
             $this->layers[$layerConfig->name] = $layerConfig;
@@ -88,7 +88,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
-    public function rulesets(RulesetConfig ...$rulesetConfigs): self
+    public function rulesets(Ruleset ...$rulesetConfigs): self
     {
         foreach ($rulesetConfigs as $rulesetConfig) {
             $this->rulesets[$rulesetConfig->layerConfig->name] = $rulesetConfig;
@@ -119,11 +119,11 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         if ([] !== $this->layers) {
-            $config['layers'] = array_map(static fn (LayerConfig $layerConfig) => $layerConfig->toArray(), $this->layers);
+            $config['layers'] = array_map(static fn (Layer $layerConfig) => $layerConfig->toArray(), $this->layers);
         }
 
         if ([] !== $this->rulesets) {
-            $config['ruleset'] = array_map(static fn (RulesetConfig $rulesetConfig) => $rulesetConfig->toArray(), $this->rulesets);
+            $config['ruleset'] = array_map(static fn (Ruleset $rulesetConfig) => $rulesetConfig->toArray(), $this->rulesets);
         }
 
         if ([] !== $this->skipViolations) {
