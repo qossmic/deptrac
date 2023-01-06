@@ -158,7 +158,7 @@ class TypeResolver
             return array_merge(
                 [],
                 ...array_map(
-                    fn (Identifier|Name $typeNode) => $this->resolvePropertyType($typeNode),
+                    fn (Identifier|Name|IntersectionType $typeNode): array => $this->resolvePropertyType($typeNode),
                     $type->types
                 )
             );

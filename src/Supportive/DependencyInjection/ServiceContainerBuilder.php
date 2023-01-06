@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
+use LogicException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException;
 use SplFileInfo;
 use Symfony\Component\Config\FileLocator;
@@ -126,11 +127,16 @@ final class ServiceContainerBuilder
 
     private static function loadConfiguration(ContainerBuilder $container, SplFileInfo $configFile): void
     {
-        $container->setParameter('depfileDirectory', $configFile->getPathInfo()->getPathname());
+        $configPathInfo = $configFile->getPathInfo();
+        if (null === $configPathInfo) {
+            throw new LogicException(sprintf('Unable to load config: Invalid or missing path.'));
+        }
+
+        $container->setParameter('depfileDirectory', $configPathInfo->getPathname());
 
         $loader = new DelegatingLoader(new LoaderResolver([
-            new YamlFileLoader($container, new FileLocator([$configFile->getPathInfo()->getPathname()])),
-            new PhpFileLoader($container, new FileLocator([$configFile->getPathInfo()->getPathname()])),
+            new YamlFileLoader($container, new FileLocator([$configPathInfo->getPathname()])),
+            new PhpFileLoader($container, new FileLocator([$configPathInfo->getPathname()])),
         ]));
 
         $loader->load($configFile->getFilename());
