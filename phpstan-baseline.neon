@@ -4,3 +4,13 @@ parameters:
 			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\AstInherit\\:\\:\\$path is assigned outside of the constructor\\.$#"
 			count: 1
 			path: src/Core/Ast/AstMap/AstInherit.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between null and SplFileInfo will always evaluate to false\\.$#"
+			count: 1
+			path: src/Supportive/DependencyInjection/ServiceContainerBuilder.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between null and SplFileInfo will always evaluate to false\\.$#"
+			count: 1
+			path: src/Supportive/OutputFormatter/GraphVizOutputImageFormatter.php
