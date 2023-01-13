@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.x-dev@">
-  <file src="src/Ast/Parser/NikicPhpParser/FileReferenceVisitor.php">
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>isset($node-&gt;namespacedName)</code>
-      <code>isset($node-&gt;namespacedName)</code>
-    </RedundantConditionGivenDocblockType>
+<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+  <file src="src/Core/Ast/Parser/Cache/AstFileReferenceFileCache.php">
+    <MissingThrowsDocblock occurrences="3">
+      <code>has</code>
+      <code>normalizeFilepath</code>
+      <code>normalizeFilepath</code>
+    </MissingThrowsDocblock>
   </file>
-  <file src="src/Ast/Parser/NikicPhpParser/NikicPhpParser.php">
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>isset($classLikeNode-&gt;namespacedName)</code>
-    </RedundantConditionGivenDocblockType>
+  <file src="src/Core/Layer/Collector/GlobCollector.php">
+    <MissingThrowsDocblock occurrences="1">
+      <code>Path::makeRelative($normalizedPath, $this-&gt;basePath)</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Core/Layer/Collector/MethodCollector.php">
+    <MissingThrowsDocblock occurrences="1">
+      <code>getNodeForClassLikeReference</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/Console/Application.php">
+    <MissingThrowsDocblock occurrences="4"/>
+  </file>
+  <file src="src/Supportive/Console/Command/AnalyseCommand.php">
+    <MissingThrowsDocblock occurrences="13">
+      <code>addOption</code>
+      <code>addOption</code>
+      <code>addOption</code>
+      <code>addOption</code>
+      <code>addOption</code>
+      <code>addOption</code>
+      <code>getOption</code>
+      <code>getOption</code>
+      <code>getOption</code>
+      <code>getOption</code>
+      <code>getOption</code>
+      <code>getOption</code>
+      <code>parent::__construct()</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/Console/Command/DebugLayerCommand.php">
+    <MissingThrowsDocblock occurrences="3">
+      <code>addArgument</code>
+      <code>getArgument</code>
+      <code>parent::__construct()</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/Console/Command/DebugTokenCommand.php">
+    <MissingThrowsDocblock occurrences="5">
+      <code>addArgument</code>
+      <code>addArgument</code>
+      <code>getArgument</code>
+      <code>getArgument</code>
+      <code>parent::__construct()</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/Console/Command/DebugUnassignedCommand.php">
+    <MissingThrowsDocblock occurrences="1">
+      <code>parent::__construct()</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/Console/Command/InitCommand.php">
+    <MissingThrowsDocblock occurrences="3">
+      <code>getOption</code>
+      <code>parent::__construct()</code>
+      <code>setName</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/DependencyInjection/Configuration.php">
+    <MissingThrowsDocblock occurrences="2">
+      <code>end</code>
+      <code>thenInvalid</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/DependencyInjection/DeptracExtension.php">
+    <MissingThrowsDocblock occurrences="2">
+      <code>getParameter</code>
+      <code>getParameter</code>
+    </MissingThrowsDocblock>
+  </file>
+  <file src="src/Supportive/DependencyInjection/ServiceContainerBuilder.php">
+    <MissingThrowsDocblock occurrences="3">
+      <code>Path::makeAbsolute($cacheFile, $this-&gt;workingDirectory)</code>
+      <code>Path::makeAbsolute($cacheFile, $this-&gt;workingDirectory)</code>
+      <code>Path::makeAbsolute($configFile, $this-&gt;workingDirectory)</code>
+    </MissingThrowsDocblock>
   </file>
 </files>

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
 use Exception;
-use LogicException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CannotLoadConfiguration;
 use SplFileInfo;
@@ -153,7 +152,7 @@ final class ServiceContainerBuilder
     {
         $configPathInfo = $configFile->getPathInfo();
         if (null === $configPathInfo) {
-            throw new LogicException(sprintf('Unable to load config: Invalid or missing path.'));
+            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), sprintf('Unable to load config: Invalid or missing path.'));
         }
 
         $container->setParameter('depfileDirectory', $configPathInfo->getPathname());
