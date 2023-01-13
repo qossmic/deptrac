@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 use function intval;
 use function trigger_deprecation;
@@ -18,6 +18,9 @@ final class InheritanceLevelCollector implements CollectorInterface
 {
     private readonly AstMap $astMap;
 
+    /**
+     * @throws \Qossmic\Deptrac\Core\InputCollector\InputException
+     */
     public function __construct(private AstMapExtractor $astMapExtractor)
     {
         $this->astMap = $this->astMapExtractor->extract();
@@ -37,7 +40,7 @@ final class InheritanceLevelCollector implements CollectorInterface
         }
 
         if (!isset($config['value']) || (0 === intval($config['value']) && 0 == $config['value'])) {
-            throw new LogicException('InheritanceLevelCollector needs inheritance depth as int.');
+            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('InheritanceLevelCollector needs inheritance depth as int.');
         }
 
         foreach ($classInherits as $classInherit) {

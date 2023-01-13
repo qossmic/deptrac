@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
+use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
 use Qossmic\Deptrac\Supportive\Console\Symfony\SymfonyOutput;
 use Symfony\Component\Console\Command\Command;
@@ -23,9 +24,16 @@ class DebugUnassignedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+        $outputStyle = new Style(new SymfonyStyle($input, $output));
+        $symfonyOutput = new SymfonyOutput($output, $outputStyle);
 
-        $this->runner->run($output);
+        try {
+            $this->runner->run($symfonyOutput);
+        } catch (AnalyseException $exception) {
+            $outputStyle->error($exception->getMessage());
+
+            return self::FAILURE;
+        }
 
         return self::SUCCESS;
     }

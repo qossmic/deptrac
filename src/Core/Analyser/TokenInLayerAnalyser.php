@@ -39,6 +39,10 @@ class TokenInLayerAnalyser
 
     /**
      * @return string[]
+     *
+     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
+     * @throws \Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException
+     * @throws \Qossmic\Deptrac\Core\InputCollector\InputException
      */
     public function findTokensInLayer(string $layer): array
     {

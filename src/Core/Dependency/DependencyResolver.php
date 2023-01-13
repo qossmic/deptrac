@@ -13,7 +13,6 @@ use Qossmic\Deptrac\Contract\Dependency\PreEmitEvent;
 use Qossmic\Deptrac\Contract\Dependency\PreFlattenEvent;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Dependency\Emitter\DependencyEmitterInterface;
-use Qossmic\Deptrac\Supportive\ShouldNotHappenException;
 
 class DependencyResolver
 {
@@ -28,6 +27,9 @@ class DependencyResolver
     ) {
     }
 
+    /**
+     * @throws InvalidEmitterConfiguration
+     */
     public function resolve(AstMap $astMap): DependencyList
     {
         $result = new DependencyList();
@@ -36,10 +38,10 @@ class DependencyResolver
             try {
                 $emitter = $this->emitterLocator->get($type);
             } catch (ContainerExceptionInterface) {
-                throw new ShouldNotHappenException();
+                throw InvalidEmitterConfiguration::couldNotLocate($type);
             }
             if (!$emitter instanceof DependencyEmitterInterface) {
-                throw new ShouldNotHappenException();
+                throw InvalidEmitterConfiguration::isNotEmitter($type, $emitter);
             }
 
             $this->eventDispatcher->dispatch(new PreEmitEvent($emitter->getName()));

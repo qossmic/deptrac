@@ -8,6 +8,8 @@ interface InputCollectorInterface
 {
     /**
      * @return string[]
+     *
+     * @throws InputException
      */
     public function collect(): array;
 }

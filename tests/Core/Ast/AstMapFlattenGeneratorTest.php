@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Ast;
 
 use LogicException;
-use PhpParser\Error;
 use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +16,7 @@ use Qossmic\Deptrac\Core\Ast\AstLoader;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\Core\Ast\Parser\CouldNotParseFileException;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
@@ -275,7 +275,7 @@ final class AstMapFlattenGeneratorTest extends TestCase
             ->expects(self::atLeastOnce())
             ->method('parseFile')
             ->with(__DIR__.'/Fixtures/BasicInheritance/FixtureBasicInheritanceWithNoise.php')
-            ->willThrowException(new Error('Syntax Error'));
+            ->willThrowException(new CouldNotParseFileException('Syntax Error'));
 
         $astLoader->createAstMap([__DIR__.'/Fixtures/BasicInheritance/FixtureBasicInheritanceWithNoise.php']);
 

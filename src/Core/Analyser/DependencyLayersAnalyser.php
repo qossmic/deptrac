@@ -27,6 +27,12 @@ class DependencyLayersAnalyser
     ) {
     }
 
+    /**
+     * @throws \Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfiguration
+     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
+     * @throws \Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException
+     * @throws \Qossmic\Deptrac\Core\InputCollector\InputException
+     */
     public function process(): Result
     {
         $astMap = $this->astMapExtractor->extract();

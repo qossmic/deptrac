@@ -15,3 +15,8 @@ parameters:
         - internal/stubs/Function_.php
         - internal/stubs/ClassLike.php
         - internal/stubs/Name.php
+    exceptions:
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true

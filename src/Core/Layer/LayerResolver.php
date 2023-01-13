@@ -26,6 +26,8 @@ class LayerResolver implements LayerResolverInterface
 
     /**
      * @param array<array{name?: string, collectors: array<array<string, string|array<string, string>>>}> $layers
+     *
+     * @throws InvalidLayerDefinitionException
      */
     public function __construct(private readonly CollectorResolverInterface $collectorResolver, array $layers)
     {
@@ -103,6 +105,8 @@ class LayerResolver implements LayerResolverInterface
 
     /**
      * @param array<array{name?: string, collectors?: array<array<string, string|array<string, string>>>}> $layers
+     *
+     * @throws InvalidLayerDefinitionException
      */
     private function initializeLayers(array $layers): void
     {

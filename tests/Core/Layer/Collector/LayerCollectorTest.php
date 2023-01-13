@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
-use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 
 final class LayerCollectorTest extends TestCase
@@ -28,7 +27,7 @@ final class LayerCollectorTest extends TestCase
 
     public function testConfig(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidLayerDefinitionException::class);
         $this->expectExceptionMessage('LayerCollector needs the layer configuration');
 
         $this->collector->satisfy(
@@ -71,7 +70,7 @@ final class LayerCollectorTest extends TestCase
             ->with('test')
             ->willReturn(false);
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidLayerDefinitionException::class);
         $this->expectExceptionMessage('Unknown layer "test" specified in collector.');
 
         $this->collector->satisfy(
@@ -94,7 +93,7 @@ final class LayerCollectorTest extends TestCase
                 return $this->collector->satisfy(['value' => 'FooLayer'], $reference);
             });
 
-        $this->expectException(CircularReferenceException::class);
+        $this->expectException(InvalidLayerDefinitionException::class);
         $this->expectExceptionMessage('Circular dependency between layers detected. Token "App\Foo" could not be resolved.');
 
         $this->collector->satisfy(

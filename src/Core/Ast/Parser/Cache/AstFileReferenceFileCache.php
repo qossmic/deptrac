@@ -16,6 +16,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
+use Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException;
 use Qossmic\Deptrac\Supportive\File\Exception\FileNotExistsException;
 use Qossmic\Deptrac\Supportive\File\FileReader;
 
@@ -49,8 +50,10 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     {
         $this->load();
 
+        /** @throws void */
         $filepath = $this->normalizeFilepath($filepath);
 
+        /** @throws void */
         if ($this->has($filepath)) {
             $this->parsedFiles[$filepath] = true;
 
@@ -64,6 +67,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     {
         $this->load();
 
+        /** @throws void */
         $filepath = $this->normalizeFilepath($fileReference->filepath);
 
         $this->parsedFiles[$filepath] = true;
@@ -84,7 +88,11 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
             return;
         }
 
-        $contents = FileReader::read($this->cacheFile);
+        try {
+            $contents = FileReader::read($this->cacheFile);
+        } catch (CouldNotReadFileException) {
+            return;
+        }
 
         /** @var ?array{version: string, payload: array<string, array{hash: string, reference: string}>} $cache */
         $cache = json_decode($contents, true);
@@ -160,6 +168,9 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
         );
     }
 
+    /**
+     * @throws FileNotExistsException
+     */
     private function has(string $filepath): bool
     {
         $this->load();
@@ -181,6 +192,9 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
         return true;
     }
 
+    /**
+     * @throws FileNotExistsException
+     */
     private function normalizeFilepath(string $filepath): string
     {
         $normalized = realpath($filepath);

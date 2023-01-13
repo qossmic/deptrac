@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -12,6 +11,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\BoolCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class BoolCollectorTest extends TestCase
 {
@@ -386,7 +386,7 @@ final class BoolCollectorTest extends TestCase
         ];
         $reference = new ClassLikeReference(ClassLikeToken::fromFQCN('App\\Foo'));
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvalidLayerDefinitionException::class);
         $this->expectExceptionMessage('"bool" collector must have a "must" or a "must_not" attribute.');
 
         $this->collector->satisfy($config, $reference);

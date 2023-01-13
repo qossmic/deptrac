@@ -26,6 +26,10 @@ class LayerForTokenAnalyser
 
     /**
      * @return array<string, string[]>
+     *
+     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
+     * @throws \Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException
+     * @throws \Qossmic\Deptrac\Core\InputCollector\InputException
      */
     public function findLayerForToken(string $tokenName, TokenType $tokenType): array
     {
@@ -42,6 +46,9 @@ class LayerForTokenAnalyser
      * @param TokenReferenceInterface[] $references
      *
      * @return array<string, string[]>
+     *
+     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
+     * @throws \Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException
      */
     private function findLayersForReferences(array $references, string $tokenName, AstMap $astMap): array
     {

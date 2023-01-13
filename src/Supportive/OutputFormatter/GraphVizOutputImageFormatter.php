@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
-use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputException;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use SplFileInfo;
@@ -26,21 +26,21 @@ final class GraphVizOutputImageFormatter extends GraphVizOutputFormatter
     {
         $dumpImagePath = $outputFormatterInput->outputPath;
         if (null === $dumpImagePath) {
-            throw new LogicException("No '--output' defined for GraphViz formatter");
+            throw OutputException::withMessage("No '--output' defined for GraphViz formatter");
         }
 
         $imageFile = (new SplFileInfo($dumpImagePath))->getPathInfo();
         if (null === $imageFile) {
-            throw new LogicException(sprintf('Unable to dump image: Invalid or missing path.'));
+            throw OutputException::withMessage('Unable to dump image: Invalid or missing path.');
         }
         if (!$imageFile->isWritable()) {
-            throw new LogicException(sprintf('Unable to dump image: Path "%s" does not exist or is not writable.', Path::canonicalize($imageFile->getPathname())));
+            throw OutputException::withMessage(sprintf('Unable to dump image: Path "%s" does not exist or is not writable.', Path::canonicalize($imageFile->getPathname())));
         }
         try {
             $graph->export($imageFile->getExtension() ?: 'png', $imageFile->getPathname());
             $output->writeLineFormatted('<info>Image dumped to '.$imageFile->getPathname().'</info>');
         } catch (Exception $exception) {
-            throw new LogicException('Unable to display output: '.$exception->getMessage());
+            throw OutputException::withMessage('Unable to display output: '.$exception->getMessage());
         }
     }
 }

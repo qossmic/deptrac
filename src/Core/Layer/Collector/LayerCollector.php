@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use InvalidArgumentException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 
 use function array_key_exists;
@@ -33,18 +32,18 @@ final class LayerCollector implements ConditionalCollectorInterface
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw new InvalidArgumentException('LayerCollector needs the layer configuration.');
+            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('LayerCollector needs the layer configuration.');
         }
         $layer = $config['value'];
 
         if (!$this->resolver->has($layer)) {
-            throw new InvalidArgumentException(sprintf('Unknown layer "%s" specified in collector.', $config['value']));
+            throw InvalidLayerDefinitionException::invalidCollectorConfiguration(sprintf('Unknown layer "%s" specified in collector.', $config['value']));
         }
         $token = $reference->getToken()->toString();
 
         if (array_key_exists($token, $this->resolved) && array_key_exists($layer, $this->resolved[$token])) {
             if (null === $this->resolved[$token][$layer]) {
-                throw CircularReferenceException::circularTokenReference($token);
+                throw InvalidLayerDefinitionException::circularTokenReference($token);
             }
 
             return $this->resolved[$token][$layer];

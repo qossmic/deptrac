@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast;
 
-use PhpParser\Error;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Contract\Ast\AstFileAnalysedEvent;
 use Qossmic\Deptrac\Contract\Ast\AstFileSyntaxErrorEvent;
 use Qossmic\Deptrac\Contract\Ast\PostCreateAstMapEvent;
 use Qossmic\Deptrac\Contract\Ast\PreCreateAstMapEvent;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
+use Qossmic\Deptrac\Core\Ast\Parser\CouldNotParseFileException;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 
 class AstLoader
@@ -35,7 +35,7 @@ class AstLoader
                 $references[] = $this->parser->parseFile($file);
 
                 $this->eventDispatcher->dispatch(new AstFileAnalysedEvent($file));
-            } catch (Error $e) {
+            } catch (CouldNotParseFileException $e) {
                 $this->eventDispatcher->dispatch(new AstFileSyntaxErrorEvent($file, $e->getMessage()));
             }
         }

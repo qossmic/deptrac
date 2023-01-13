@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\FunctionNameCollector;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class FunctionNameCollectorTest extends TestCase
 {
@@ -45,7 +45,7 @@ final class FunctionNameCollectorTest extends TestCase
 
     public function testWrongRegexParam(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidLayerDefinitionException::class);
 
         $this->collector->satisfy(
             ['Foo' => 'a'],

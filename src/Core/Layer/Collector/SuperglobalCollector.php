@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class SuperglobalCollector implements CollectorInterface
 {
@@ -24,6 +24,8 @@ final class SuperglobalCollector implements CollectorInterface
      * @param array<string, bool|string|array<string, string>> $config
      *
      * @return string[]
+     *
+     * @throws InvalidLayerDefinitionException
      */
     private function getNames(array $config): array
     {
@@ -33,7 +35,7 @@ final class SuperglobalCollector implements CollectorInterface
         }
 
         if (!isset($config['value']) || !is_array($config['value'])) {
-            throw new LogicException('SuperglobalCollector needs the names configuration.');
+            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('SuperglobalCollector needs the names configuration.');
         }
 
         return array_map(static fn ($name): string => '$'.$name, $config['value']);

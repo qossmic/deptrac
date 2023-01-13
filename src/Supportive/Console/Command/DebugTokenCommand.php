@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Core\Analyser\TokenType;
+use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
 use Qossmic\Deptrac\Supportive\Console\Symfony\SymfonyOutput;
 use Symfony\Component\Console\Command\Command;
@@ -33,13 +34,21 @@ class DebugTokenCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+        $outputStyle = new Style(new SymfonyStyle($input, $output));
+        $symfonyOutput = new SymfonyOutput($output, $outputStyle);
+
         /** @var string $tokenName */
         $tokenName = $input->getArgument('token');
         /** @var string $tokenType */
         $tokenType = $input->getArgument('type');
 
-        $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
+        try {
+            $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
+        } catch (AnalyseException $exception) {
+            $outputStyle->error($exception->getMessage());
+
+            return self::FAILURE;
+        }
 
         return self::SUCCESS;
     }

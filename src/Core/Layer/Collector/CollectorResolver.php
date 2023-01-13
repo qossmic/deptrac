@@ -18,6 +18,8 @@ final class CollectorResolver implements CollectorResolverInterface
 
     /**
      * @param array<string, string|array<string, string>> $config
+     *
+     * @throws InvalidCollectorDefinitionException
      */
     public function resolve(array $config): Collectable
     {

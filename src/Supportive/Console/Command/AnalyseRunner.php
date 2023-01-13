@@ -8,6 +8,10 @@ use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
+use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfiguration;
+use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
+use Qossmic\Deptrac\Core\InputCollector\InputException;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Throwable;
@@ -24,6 +28,9 @@ final class AnalyseRunner
     {
     }
 
+    /**
+     * @throws AnalyseException
+     */
     public function run(AnalyseOptions $options, OutputInterface $output): void
     {
         try {
@@ -43,7 +50,17 @@ final class AnalyseRunner
 
         $this->printCollectViolations($output);
 
-        $result = $this->analyser->analyse();
+        try {
+            $result = $this->analyser->analyse();
+        } catch (InvalidEmitterConfiguration $e) {
+            throw AnalyseException::invalidEmitterConfiguration($e);
+        } catch (UnrecognizedTokenException $e) {
+            throw AnalyseException::unrecognizedToken($e);
+        } catch (InvalidLayerDefinitionException $e) {
+            throw AnalyseException::invalidLayerDefinition($e);
+        } catch (InputException $e) {
+            throw AnalyseException::invalidFileInput($e);
+        }
 
         $this->printFormattingStart($output);
 

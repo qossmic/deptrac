@@ -15,10 +15,12 @@ use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
-use Qossmic\Deptrac\Supportive\ShouldNotHappenException;
 
 class TokenResolver
 {
+    /**
+     * @throws UnrecognizedTokenException
+     */
     public function resolve(TokenInterface $token, AstMap $astMap): TokenReferenceInterface
     {
         return match (true) {
@@ -26,7 +28,7 @@ class TokenResolver
             $token instanceof FunctionLikeToken => $astMap->getFunctionReferenceForToken($token) ?? new FunctionLikeReference($token),
             $token instanceof SuperGlobalToken => new VariableReference($token),
             $token instanceof FileToken => $astMap->getFileReferenceForToken($token) ?? new FileReference($token->path, [], [], []),
-            default => throw new ShouldNotHappenException()
+            default => throw UnrecognizedTokenException::cannotCreateReference($token)
         };
     }
 }

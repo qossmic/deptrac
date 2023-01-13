@@ -8,5 +8,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 
 interface ParserInterface
 {
+    /**
+     * @throws CouldNotParseFileException
+     */
     public function parseFile(string $file): FileReference;
 }

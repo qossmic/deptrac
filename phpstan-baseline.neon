@@ -6,6 +6,26 @@ parameters:
 			path: src/Core/Ast/AstMap/AstInherit.php
 
 		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Core\\\\Layer\\\\Collector\\\\MethodCollector\\:\\:satisfy\\(\\) throws checked exception Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\Parser\\\\CouldNotParseFileException but it's missing from the PHPDoc @throws tag\\.$#"
+			count: 1
+			path: src/Core/Layer/Collector/MethodCollector.php
+
+		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\DependencyInjection\\\\Configuration\\:\\:appendEmitterTypes\\(\\) throws checked exception InvalidArgumentException but it's missing from the PHPDoc @throws tag\\.$#"
+			count: 1
+			path: src/Supportive/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\DependencyInjection\\\\Configuration\\:\\:appendEmitterTypes\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag\\.$#"
+			count: 1
+			path: src/Supportive/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\DependencyInjection\\\\Configuration\\:\\:appendFormatters\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag\\.$#"
+			count: 1
+			path: src/Supportive/DependencyInjection/Configuration.php
+
+		-
 			message: "#^Strict comparison using \\=\\=\\= between null and SplFileInfo will always evaluate to false\\.$#"
 			count: 1
 			path: src/Supportive/DependencyInjection/ServiceContainerBuilder.php

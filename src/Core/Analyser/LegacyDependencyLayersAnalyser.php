@@ -17,6 +17,12 @@ class LegacyDependencyLayersAnalyser
     {
     }
 
+    /**
+     * @throws \Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfiguration
+     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
+     * @throws \Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException
+     * @throws \Qossmic\Deptrac\Core\InputCollector\InputException
+     */
     public function analyse(): LegacyResult
     {
         $ruleset = $this->decorated->process();

@@ -12,11 +12,6 @@ use function sprintf;
 
 final class CircularReferenceException extends RuntimeException implements ExceptionInterface
 {
-    public static function circularTokenReference(string $tokenName): self
-    {
-        return new self(sprintf('Circular dependency between layers detected. Token "%s" could not be resolved.', $tokenName));
-    }
-
     /**
      * @param string[] $others
      */

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Core\Layer\Collector\InterfaceCollector;
+use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class InterfaceCollectorTest extends TestCase
 {
@@ -62,7 +62,7 @@ final class InterfaceCollectorTest extends TestCase
 
     public function testWrongRegexParam(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidLayerDefinitionException::class);
 
         $this->sut->satisfy(
             ['Foo' => 'a'],

@@ -37,8 +37,11 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         if (!$container->hasParameter('projectDirectory')) {
             $projectDirectory = getcwd();
             if ($container->hasParameter('depfileDirectory')) {
+                /** @throws void */
                 $projectDirectory = $container->getParameter('depfileDirectory');
-            } elseif ($container->getParameter('workingDirectory')) {
+                /** @throws void */
+            } elseif ($container->hasParameter('workingDirectory')) {
+                /** @throws void */
                 $projectDirectory = $container->getParameter('workingDirectory');
             }
             $container->setParameter('projectDirectory', $projectDirectory);

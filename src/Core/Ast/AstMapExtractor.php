@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Ast;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\InputCollector\InputCollectorInterface;
+use Qossmic\Deptrac\Core\InputCollector\InputException;
 
 class AstMapExtractor
 {
@@ -15,6 +16,9 @@ class AstMapExtractor
     {
     }
 
+    /**
+     * @throws InputException
+     */
     public function extract(): AstMap
     {
         if (null === $this->astMapCache) {
