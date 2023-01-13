@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Qossmic\Deptrac\Supportive\File\Exception;
 
@@ -9,8 +9,8 @@ use RuntimeException;
 
 class FileNotExistsException extends RuntimeException implements ExceptionInterface
 {
-    public function __construct(string $filepath)
+    public static function fromFilePath(string $filepath): self
     {
-        parent::__construct(sprintf('"%s" is not a valid path or does not exists.', $filepath));
+        return new self(sprintf('"%s" is not a valid path or does not exists.', $filepath));
     }
 }

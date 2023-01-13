@@ -186,7 +186,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
         $normalized = realpath($filepath);
 
         if (false === $normalized) {
-            throw new FileNotExistsException($filepath);
+            throw FileNotExistsException::fromFilePath($filepath);
         }
 
         return $normalized;
