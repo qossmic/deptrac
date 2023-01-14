@@ -28,7 +28,7 @@ class DependencyResolver
     }
 
     /**
-     * @throws InvalidEmitterConfiguration
+     * @throws InvalidEmitterConfigurationException
      */
     public function resolve(AstMap $astMap): DependencyList
     {
@@ -38,10 +38,10 @@ class DependencyResolver
             try {
                 $emitter = $this->emitterLocator->get($type);
             } catch (ContainerExceptionInterface) {
-                throw InvalidEmitterConfiguration::couldNotLocate($type);
+                throw InvalidEmitterConfigurationException::couldNotLocate($type);
             }
             if (!$emitter instanceof DependencyEmitterInterface) {
-                throw InvalidEmitterConfiguration::isNotEmitter($type, $emitter);
+                throw InvalidEmitterConfigurationException::isNotEmitter($type, $emitter);
             }
 
             $this->eventDispatcher->dispatch(new PreEmitEvent($emitter->getName()));

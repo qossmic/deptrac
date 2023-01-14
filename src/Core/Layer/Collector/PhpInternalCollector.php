@@ -7,12 +7,12 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 use JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 class PhpInternalCollector implements CollectorInterface
 {
@@ -44,12 +44,12 @@ class PhpInternalCollector implements CollectorInterface
     /**
      * @param array<string, bool|string|array<string, string>> $config
      *
-     * @throws InvalidLayerDefinitionException
+     * @throws InvalidCollectorDefinitionException
      */
     private function getPattern(array $config): string
     {
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('PhpInternalCollector needs configuration.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('PhpInternalCollector needs configuration.');
         }
 
         return '/'.$config['value'].'/i';

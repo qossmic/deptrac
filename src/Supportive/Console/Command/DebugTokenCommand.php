@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Core\Analyser\TokenType;
-use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
 use Qossmic\Deptrac\Supportive\Console\Symfony\SymfonyOutput;
 use Symfony\Component\Console\Command\Command;
@@ -44,7 +43,7 @@ class DebugTokenCommand extends Command
 
         try {
             $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
-        } catch (AnalyseException $exception) {
+        } catch (CommandRunException $exception) {
             $outputStyle->error($exception->getMessage());
 
             return self::FAILURE;

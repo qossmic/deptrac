@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\Core\Layer\Collector\DirectoryCollector;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class DirectoryCollectorTest extends TestCase
 {
@@ -56,7 +56,7 @@ final class DirectoryCollectorTest extends TestCase
         $fileReferenceBuilder->newClassLike('Test', [], false);
         $fileReference = $fileReferenceBuilder->build();
 
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
         $this->expectExceptionMessage('DirectoryCollector needs the regex configuration.');
 
         $this->collector->satisfy(
@@ -71,7 +71,7 @@ final class DirectoryCollectorTest extends TestCase
         $fileReferenceBuilder->newClassLike('Test', [], false);
         $fileReference = $fileReferenceBuilder->build();
 
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
 
         $this->collector->satisfy(
             ['value' => '\\'],

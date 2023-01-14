@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Supportive\Console;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
 
-final class CannotGetCurrentWorkingDirectory extends RuntimeException implements ExceptionInterface
+final class CannotGetCurrentWorkingDirectoryException extends RuntimeException implements ExceptionInterface
 {
     public function __construct(string $message = 'Internal error.')
     {

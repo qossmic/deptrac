@@ -71,7 +71,7 @@ final class Application extends BaseApplication
     public function doRun(InputInterface $input, OutputInterface $output): int
     {
         if (false === ($currentWorkingDirectory = getcwd())) {
-            throw CannotGetCurrentWorkingDirectory::cannotGetCWD();
+            throw CannotGetCurrentWorkingDirectoryException::cannotGetCWD();
         }
 
         try {

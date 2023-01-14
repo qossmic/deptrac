@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Layer\Exception;
+namespace Qossmic\Deptrac\Contract\Layer;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
@@ -29,11 +29,6 @@ final class InvalidLayerDefinitionException extends RuntimeException implements 
     public static function layerRequired(): self
     {
         return new self('Layer configuration is empty. You need to define at least 1 layer.');
-    }
-
-    public static function invalidCollectorConfiguration(string $message): self
-    {
-        return new self($message);
     }
 
     public static function circularTokenReference(string $tokenName): self

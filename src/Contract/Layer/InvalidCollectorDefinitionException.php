@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Layer\Exception;
+namespace Qossmic\Deptrac\Contract\Layer;
 
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
-use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use RuntimeException;
 
 use function implode;
@@ -39,6 +38,11 @@ final class InvalidCollectorDefinitionException extends RuntimeException impleme
             get_debug_type($collector)
         );
 
+        return new self($message);
+    }
+
+    public static function invalidCollectorConfiguration(string $message): self
+    {
         return new self($message);
     }
 }

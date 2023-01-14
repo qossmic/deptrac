@@ -29,12 +29,13 @@ final class GraphVizOutputImageFormatter extends GraphVizOutputFormatter
             throw OutputException::withMessage("No '--output' defined for GraphViz formatter");
         }
 
-        $imageFile = (new SplFileInfo($dumpImagePath))->getPathInfo();
-        if (null === $imageFile) {
+        $imageFile = new SplFileInfo($dumpImagePath);
+        $imagePathInfo = $imageFile->getPathInfo();
+        if (null === $imagePathInfo) {
             throw OutputException::withMessage('Unable to dump image: Invalid or missing path.');
         }
-        if (!$imageFile->isWritable()) {
-            throw OutputException::withMessage(sprintf('Unable to dump image: Path "%s" does not exist or is not writable.', Path::canonicalize($imageFile->getPathname())));
+        if (!$imagePathInfo->isWritable()) {
+            throw OutputException::withMessage(sprintf('Unable to dump image: Path "%s" does not exist or is not writable.', Path::canonicalize($imagePathInfo->getPathname())));
         }
         try {
             $graph->export($imageFile->getExtension() ?: 'png', $imageFile->getPathname());

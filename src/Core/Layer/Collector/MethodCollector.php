@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class MethodCollector extends RegexCollector
 {
@@ -46,7 +46,7 @@ final class MethodCollector extends RegexCollector
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('MethodCollector needs the name configuration.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('MethodCollector needs the name configuration.');
         }
 
         return '/'.$config['value'].'/i';

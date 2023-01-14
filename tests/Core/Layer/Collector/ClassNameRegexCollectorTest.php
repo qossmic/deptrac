@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\ClassNameRegexCollector;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class ClassNameRegexCollectorTest extends TestCase
 {
@@ -45,7 +45,7 @@ final class ClassNameRegexCollectorTest extends TestCase
 
     public function testWrongRegexParam(): void
     {
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
 
         $this->collector->satisfy(
             ['Foo' => 'a'],
@@ -55,7 +55,7 @@ final class ClassNameRegexCollectorTest extends TestCase
 
     public function testInvalidRegexParam(): void
     {
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
 
         $this->collector->satisfy(
             ['regex' => '/'],

@@ -17,12 +17,16 @@ class AstMapExtractor
     }
 
     /**
-     * @throws InputException
+     * @throws AstException
      */
     public function extract(): AstMap
     {
-        if (null === $this->astMapCache) {
-            $this->astMapCache = $this->astLoader->createAstMap($this->inputCollector->collect());
+        try {
+            if (null === $this->astMapCache) {
+                $this->astMapCache = $this->astLoader->createAstMap($this->inputCollector->collect());
+            }
+        } catch (InputException $exception) {
+            throw AstException::couldNotCollectFiles($exception);
         }
 
         return $this->astMapCache;

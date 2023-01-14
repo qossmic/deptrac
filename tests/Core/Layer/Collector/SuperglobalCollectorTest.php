@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class SuperglobalCollectorTest extends TestCase
 {
@@ -42,7 +42,7 @@ final class SuperglobalCollectorTest extends TestCase
 
     public function testWrongRegexParam(): void
     {
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
 
         $this->collector->satisfy(
             ['Foo' => 'a'],

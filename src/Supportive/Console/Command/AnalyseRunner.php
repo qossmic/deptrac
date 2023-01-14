@@ -7,12 +7,8 @@ namespace Qossmic\Deptrac\Supportive\Console\Command;
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Core\Analyser\AnalyserException;
 use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
-use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfiguration;
-use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
-use Qossmic\Deptrac\Core\InputCollector\InputException;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
-use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Throwable;
 
@@ -29,7 +25,7 @@ final class AnalyseRunner
     }
 
     /**
-     * @throws AnalyseException
+     * @throws CommandRunException
      */
     public function run(AnalyseOptions $options, OutputInterface $output): void
     {
@@ -38,7 +34,7 @@ final class AnalyseRunner
         } catch (ContainerExceptionInterface) {
             $this->printFormatterNotFoundException($output, $options->formatter);
 
-            throw AnalyseException::invalidFormatter();
+            throw CommandRunException::invalidFormatter();
         }
 
         $formatterInput = new OutputFormatterInput(
@@ -52,14 +48,8 @@ final class AnalyseRunner
 
         try {
             $result = $this->analyser->analyse();
-        } catch (InvalidEmitterConfiguration $e) {
-            throw AnalyseException::invalidEmitterConfiguration($e);
-        } catch (UnrecognizedTokenException $e) {
-            throw AnalyseException::unrecognizedToken($e);
-        } catch (InvalidLayerDefinitionException $e) {
-            throw AnalyseException::invalidLayerDefinition($e);
-        } catch (InputException $e) {
-            throw AnalyseException::invalidFileInput($e);
+        } catch (AnalyserException $e) {
+            throw CommandRunException::analyserException($e);
         }
 
         $this->printFormattingStart($output);
@@ -71,13 +61,13 @@ final class AnalyseRunner
         }
 
         if ($options->failOnUncovered && $result->hasUncovered()) {
-            throw AnalyseException::finishedWithUncovered();
+            throw CommandRunException::finishedWithUncovered();
         }
         if ($result->hasViolations()) {
-            throw AnalyseException::finishedWithViolations();
+            throw CommandRunException::finishedWithViolations();
         }
         if ($result->hasErrors()) {
-            throw AnalyseException::failedWithErrors();
+            throw CommandRunException::failedWithErrors();
         }
     }
 

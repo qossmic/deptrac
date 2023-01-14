@@ -5,9 +5,6 @@ services:
   - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract
     tags:
      - { name: kernel.event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
-  - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException
-    tags:
-      - { name: kernel.event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
 
 deptrac:
   paths:

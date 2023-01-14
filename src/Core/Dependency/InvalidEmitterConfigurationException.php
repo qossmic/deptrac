@@ -8,7 +8,7 @@ use Qossmic\Deptrac\Contract\ExceptionInterface;
 use Qossmic\Deptrac\Core\Dependency\Emitter\DependencyEmitterInterface;
 use RuntimeException;
 
-class InvalidEmitterConfiguration extends RuntimeException implements ExceptionInterface
+class InvalidEmitterConfigurationException extends RuntimeException implements ExceptionInterface
 {
     public static function couldNotLocate(string $type): self
     {

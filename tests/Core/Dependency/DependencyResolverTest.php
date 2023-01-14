@@ -19,7 +19,7 @@ use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionSuperglobalDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\Emitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\InheritanceFlattener;
-use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfiguration;
+use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfigurationException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -110,7 +110,7 @@ final class DependencyResolverTest extends TestCase
             $this->dispatcher
         );
 
-        $this->expectException(InvalidEmitterConfiguration::class);
+        $this->expectException(InvalidEmitterConfigurationException::class);
 
         $resolver->resolve($astMap);
     }

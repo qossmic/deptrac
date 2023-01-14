@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 
 use function array_key_exists;
@@ -32,12 +33,12 @@ final class LayerCollector implements ConditionalCollectorInterface
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('LayerCollector needs the layer configuration.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('LayerCollector needs the layer configuration.');
         }
         $layer = $config['value'];
 
         if (!$this->resolver->has($layer)) {
-            throw InvalidLayerDefinitionException::invalidCollectorConfiguration(sprintf('Unknown layer "%s" specified in collector.', $config['value']));
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(sprintf('Unknown layer "%s" specified in collector.', $config['value']));
         }
         $token = $reference->getToken()->toString();
 

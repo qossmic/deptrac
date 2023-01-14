@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Core\Analyser\AnalyserException;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenType;
-use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
-use Qossmic\Deptrac\Core\InputCollector\InputException;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
-use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 
 use function implode;
 use function sprintf;
@@ -20,23 +17,19 @@ use function sprintf;
  */
 final class DebugTokenRunner
 {
-    public function __construct(private readonly LayerForTokenAnalyser $processor)
+    public function __construct(private readonly LayerForTokenAnalyser $analyser)
     {
     }
 
     /**
-     * @throws AnalyseException
+     * @throws CommandRunException
      */
     public function run(string $tokenName, TokenType $tokenType, OutputInterface $output): void
     {
         try {
-            $matches = $this->processor->findLayerForToken($tokenName, $tokenType);
-        } catch (UnrecognizedTokenException $e) {
-            throw AnalyseException::unrecognizedToken($e);
-        } catch (InvalidLayerDefinitionException $e) {
-            throw AnalyseException::invalidLayerDefinition($e);
-        } catch (InputException $e) {
-            throw AnalyseException::invalidFileInput($e);
+            $matches = $this->analyser->findLayerForToken($tokenName, $tokenType);
+        } catch (AnalyserException $e) {
+            throw CommandRunException::analyserException($e);
         }
 
         if ([] === $matches) {

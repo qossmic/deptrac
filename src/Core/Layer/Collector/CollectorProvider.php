@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 use function array_keys;

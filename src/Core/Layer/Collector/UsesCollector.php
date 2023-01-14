@@ -6,19 +6,20 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Core\Ast\AstException;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInheritType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 final class UsesCollector implements CollectorInterface
 {
     private readonly AstMap $astMap;
 
     /**
-     * @throws \Qossmic\Deptrac\Core\InputCollector\InputException
+     * @throws AstException
      */
     public function __construct(private AstMapExtractor $astMapExtractor)
     {
@@ -45,7 +46,7 @@ final class UsesCollector implements CollectorInterface
     /**
      * @param array<string, bool|string|array<string, string>> $config
      *
-     * @throws InvalidLayerDefinitionException
+     * @throws InvalidCollectorDefinitionException
      */
     private function getTraitName(array $config): ClassLikeToken
     {
@@ -55,7 +56,7 @@ final class UsesCollector implements CollectorInterface
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw InvalidLayerDefinitionException::invalidCollectorConfiguration('UsesCollector needs the trait name as a string.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('UsesCollector needs the trait name as a string.');
         }
 
         return ClassLikeToken::fromFQCN($config['value']);

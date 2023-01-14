@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 
 final class LayerCollectorTest extends TestCase
@@ -27,7 +28,7 @@ final class LayerCollectorTest extends TestCase
 
     public function testConfig(): void
     {
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
         $this->expectExceptionMessage('LayerCollector needs the layer configuration');
 
         $this->collector->satisfy(
@@ -70,7 +71,7 @@ final class LayerCollectorTest extends TestCase
             ->with('test')
             ->willReturn(false);
 
-        $this->expectException(InvalidLayerDefinitionException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
         $this->expectExceptionMessage('Unknown layer "test" specified in collector.');
 
         $this->collector->satisfy(
