@@ -23,9 +23,26 @@ You can analyse projects that require an older PHP version as long as
 
 ## Installation
 
-While you can install Deptrac using composer, we recommend using either the phar
-installation or PHIVE. This will ensure that Deptrac and its dependencies are
+You can install Deptrac via Composer. We recommend using the [deptrac-shim](https://github.com/qossmic/deptrac-shim) package for this.
+Alternatively, you can also use [PHIVE](#phive) or download the
+[PHAR](#phar) attached to each release on GitHub.  
+This will ensure that Deptrac and its dependencies are
 bundled together and will not interfere with any of your project's dependencies.
+
+### Composer
+
+We strongly advise against using the deptrac package directly as a composer dependency. 
+We update dependencies regularly, which might cause disruptions in your project.  
+Instead, please use the dedicated distribution repository <https://github.com/qossmic/deptrac-shim>.
+
+When you install Deptrac using the qossmic/deptrac-shim package, you will get
+the benefit of using the phar installation, but you can use it like any other
+composer dependency, i.e. you run Deptrac like this:
+
+```bash
+composer require --dev qossmic/deptrac-shim
+vendor/bin/deptrac analyse
+```
 
 ### PHAR
 
@@ -33,7 +50,7 @@ Download the latest [deptrac.phar](https://github.com/qossmic/deptrac/releases).
 
 You can run the phar file using php:
 
-```
+```bash
 php deptrac.phar analyse
 ```
 
@@ -63,20 +80,6 @@ and accept the key with fingerprint
 To upgrade Deptrac use the following command:
 
 `phive update -g qossmic/deptrac`
-
-### Composer
-
-We do not recommend installing this repository via Composer. Instead, please use
-the dedicated distribution repository https://github.com/qossmic/deptrac-shim.
-
-When you install Deptrac using the qossmic/deptrac-shim package, you will get
-the benefit of using the phar installation, but you can use it like any other
-composer dependency, i.e. you run Deptrac like this:
-
-```
-composer require qossmic/deptrac-shim
-php vendor/bin/deptrac analyse
-```
 
 ### Optional Dependency: Graphviz
 
