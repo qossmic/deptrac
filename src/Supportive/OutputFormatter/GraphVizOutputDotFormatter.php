@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
-use LogicException;
 use phpDocumentor\GraphViz\Graph;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputException;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 
@@ -23,7 +23,7 @@ final class GraphVizOutputDotFormatter extends GraphVizOutputFormatter
     {
         $dumpDotPath = $outputFormatterInput->outputPath;
         if (null === $dumpDotPath) {
-            throw new LogicException("No '--output' defined for GraphViz formatter");
+            throw OutputException::withMessage("No '--output' defined for GraphViz formatter");
         }
 
         file_put_contents($dumpDotPath, (string) $graph);

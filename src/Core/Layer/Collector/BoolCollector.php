@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use InvalidArgumentException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 
 final class BoolCollector implements ConditionalCollectorInterface
 {
@@ -75,6 +75,8 @@ final class BoolCollector implements ConditionalCollectorInterface
      * @param array<string, bool|string|array<string, string>> $configuration
      *
      * @return array<string, bool|string|array<string, string>>
+     *
+     * @throws InvalidCollectorDefinitionException
      */
     private function normalizeConfiguration(array $configuration): array
     {
@@ -87,7 +89,7 @@ final class BoolCollector implements ConditionalCollectorInterface
         }
 
         if (!$configuration['must'] && !$configuration['must_not']) {
-            throw new InvalidArgumentException('"bool" collector must have a "must" or a "must_not" attribute.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('"bool" collector must have a "must" or a "must_not" attribute.');
         }
 
         return $configuration;

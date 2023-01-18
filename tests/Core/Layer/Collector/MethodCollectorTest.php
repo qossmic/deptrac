@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use PhpParser\Node;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
@@ -100,7 +100,7 @@ final class MethodCollectorTest extends TestCase
     {
         $astClassReference = new ClassLikeReference(ClassLikeToken::fromFQCN('foo'));
 
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
         $this->expectExceptionMessage('MethodCollector needs the name configuration.');
 
         $this->collector->satisfy(
@@ -113,7 +113,7 @@ final class MethodCollectorTest extends TestCase
     {
         $astClassReference = new ClassLikeReference(ClassLikeToken::fromFQCN('foo'));
 
-        $this->expectException(LogicException::class);
+        $this->expectException(InvalidCollectorDefinitionException::class);
 
         $this->collector->satisfy(
             ['value' => '/'],

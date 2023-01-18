@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
-use Qossmic\Deptrac\Supportive\Console\Exception\InvalidLayerException;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
 use Qossmic\Deptrac\Supportive\Console\Symfony\SymfonyOutput;
 use Symfony\Component\Console\Command\Command;
@@ -40,8 +39,8 @@ class DebugLayerCommand extends Command
 
         try {
             $this->runner->run($layer, $symfonyOutput);
-        } catch (InvalidLayerException) {
-            $outputStyle->error('Layer not found.');
+        } catch (CommandRunException $exception) {
+            $outputStyle->error($exception->getMessage());
 
             return self::FAILURE;
         }

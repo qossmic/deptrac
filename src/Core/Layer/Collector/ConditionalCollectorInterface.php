@@ -10,6 +10,8 @@ interface ConditionalCollectorInterface extends CollectorInterface
 {
     /**
      * @param array<string, bool|string|array<string, string>> $config
+     *
+     * @throws \Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException
      */
     public function resolvable(array $config): bool;
 }

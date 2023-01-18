@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Layer\Exception;
+namespace Qossmic\Deptrac\Contract\Layer;
 
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
@@ -27,5 +27,22 @@ final class InvalidCollectorDefinitionException extends RuntimeException impleme
             0,
             $previous
         );
+    }
+
+    public static function unsupportedClass(string $id, mixed $collector): self
+    {
+        $message = sprintf(
+            'Type "%s" is not valid collector (expected "%s", but is "%s").',
+            $id,
+            CollectorInterface::class,
+            get_debug_type($collector)
+        );
+
+        return new self($message);
+    }
+
+    public static function invalidCollectorConfiguration(string $message): self
+    {
+        return new self($message);
     }
 }

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser;
 
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
+use Qossmic\Deptrac\Core\Ast\AstException;
 use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
+use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 
@@ -39,45 +43,57 @@ class TokenInLayerAnalyser
 
     /**
      * @return string[]
+     *
+     * @throws AnalyserException
      */
     public function findTokensInLayer(string $layer): array
     {
-        $astMap = $this->astMapExtractor->extract();
+        try {
+            $astMap = $this->astMapExtractor->extract();
 
-        $matchingTokens = [];
+            $matchingTokens = [];
 
-        if (in_array(TokenType::CLASS_LIKE, $this->tokenTypes, true)) {
-            foreach ($astMap->getClassLikeReferences() as $classReference) {
-                $classToken = $this->tokenResolver->resolve($classReference->getToken(), $astMap);
-                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($classToken))) {
-                    $matchingTokens[] = $classToken->getToken()
-                        ->toString();
+            if (in_array(TokenType::CLASS_LIKE, $this->tokenTypes, true)) {
+                foreach ($astMap->getClassLikeReferences() as $classReference) {
+                    $classToken = $this->tokenResolver->resolve($classReference->getToken(), $astMap);
+                    if (array_key_exists($layer, $this->layerResolver->getLayersForReference($classToken))) {
+                        $matchingTokens[] = $classToken->getToken()
+                            ->toString();
+                    }
                 }
             }
-        }
 
-        if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
-            foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
-                $functionToken = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
-                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($functionToken))) {
-                    $matchingTokens[] = $functionToken->getToken()
-                        ->toString();
+            if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
+                foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
+                    $functionToken = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
+                    if (array_key_exists($layer, $this->layerResolver->getLayersForReference($functionToken))) {
+                        $matchingTokens[] = $functionToken->getToken()
+                            ->toString();
+                    }
                 }
             }
-        }
 
-        if (in_array(TokenType::FILE, $this->tokenTypes, true)) {
-            foreach ($astMap->getFileReferences() as $fileReference) {
-                $fileToken = $this->tokenResolver->resolve($fileReference->getToken(), $astMap);
-                if (array_key_exists($layer, $this->layerResolver->getLayersForReference($fileToken))) {
-                    $matchingTokens[] = $fileToken->getToken()
-                        ->toString();
+            if (in_array(TokenType::FILE, $this->tokenTypes, true)) {
+                foreach ($astMap->getFileReferences() as $fileReference) {
+                    $fileToken = $this->tokenResolver->resolve($fileReference->getToken(), $astMap);
+                    if (array_key_exists($layer, $this->layerResolver->getLayersForReference($fileToken))) {
+                        $matchingTokens[] = $fileToken->getToken()
+                            ->toString();
+                    }
                 }
             }
+
+            natcasesort($matchingTokens);
+
+            return array_values($matchingTokens);
+        } catch (UnrecognizedTokenException $e) {
+            throw AnalyserException::unrecognizedToken($e);
+        } catch (InvalidLayerDefinitionException $e) {
+            throw AnalyserException::invalidLayerDefinition($e);
+        } catch (InvalidCollectorDefinitionException $e) {
+            throw AnalyserException::invalidCollectorDefinition($e);
+        } catch (AstException $e) {
+            throw AnalyserException::failedAstParsing($e);
         }
-
-        natcasesort($matchingTokens);
-
-        return array_values($matchingTokens);
     }
 }

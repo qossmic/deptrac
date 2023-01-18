@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\LayerResolver;
 
 final class LayerResolverTest extends TestCase

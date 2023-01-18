@@ -6,11 +6,10 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Psr\Container\ContainerInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
-use RuntimeException;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 use function array_keys;
-use function sprintf;
 
 final class CollectorProvider implements ContainerInterface
 {
@@ -23,14 +22,8 @@ final class CollectorProvider implements ContainerInterface
         $collector = $this->collectorLocator->get($id);
 
         if (!$collector instanceof CollectorInterface) {
-            $message = sprintf(
-                'Type "%s" is not valid collector (expected "%s", but is "%s").',
-                $id,
-                CollectorInterface::class,
-                get_debug_type($collector)
-            );
-
-            throw new RuntimeException($message);
+            $exception = InvalidCollectorDefinitionException::unsupportedClass($id, $collector);
+            throw new \Symfony\Component\DependencyInjection\Exception\RuntimeException($exception->getMessage(), 0, $exception);
         }
 
         return $collector;

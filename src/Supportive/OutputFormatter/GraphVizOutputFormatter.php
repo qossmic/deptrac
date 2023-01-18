@@ -8,6 +8,7 @@ use phpDocumentor\GraphViz\Edge;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
 use phpDocumentor\GraphViz\Node;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputException;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
@@ -18,7 +19,6 @@ use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\ConfigurationGraphViz;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
-use RuntimeException;
 
 use function sys_get_temp_dir;
 use function tempnam;
@@ -204,12 +204,13 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
 
     /**
      * @throws Exception
+     * @throws OutputException
      */
     protected function getTempImage(Graph $graph): string
     {
         $filename = tempnam(sys_get_temp_dir(), 'deptrac');
         if (false === $filename) {
-            throw new RuntimeException('Unable to create temp file for output.');
+            throw OutputException::withMessage('Unable to create temp file for output.');
         }
         $filename .= '.png';
         $graph->export('png', $filename);
@@ -222,5 +223,8 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
         return 'cluster_'.$groupName;
     }
 
+    /**
+     * @throws \Qossmic\Deptrac\Contract\OutputFormatter\OutputException
+     */
     abstract protected function output(Graph $graph, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void;
 }

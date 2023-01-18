@@ -33,13 +33,21 @@ class DebugTokenCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $symfonyOutput = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+        $outputStyle = new Style(new SymfonyStyle($input, $output));
+        $symfonyOutput = new SymfonyOutput($output, $outputStyle);
+
         /** @var string $tokenName */
         $tokenName = $input->getArgument('token');
         /** @var string $tokenType */
         $tokenType = $input->getArgument('type');
 
-        $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
+        try {
+            $this->runner->run($tokenName, TokenType::from($tokenType), $symfonyOutput);
+        } catch (CommandRunException $exception) {
+            $outputStyle->error($exception->getMessage());
+
+            return self::FAILURE;
+        }
 
         return self::SUCCESS;
     }

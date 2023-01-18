@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser;
 
+use InvalidArgumentException;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver as phpDocumentorTypeResolver;
@@ -135,6 +136,7 @@ class TypeResolver
     {
         $context = new Context($nameScope->namespace, $nameScope->getUses());
         try {
+            /** @throws InvalidArgumentException */
             $resolvedType = $this->typeResolver->resolve($type, $context);
         } catch (Throwable) {
             return [];

@@ -7,11 +7,16 @@ namespace Qossmic\Deptrac\Core\Analyser;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Contract\Analyser\PostProcessEvent;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Contract\Result\Result;
 use Qossmic\Deptrac\Contract\Result\Warning;
+use Qossmic\Deptrac\Core\Ast\AstException;
 use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 use Qossmic\Deptrac\Core\Dependency\DependencyResolver;
+use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfigurationException;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
+use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 
 use function count;
@@ -27,41 +32,59 @@ class DependencyLayersAnalyser
     ) {
     }
 
+    /**
+     * @throws AnalyserException
+     */
     public function process(): Result
     {
-        $astMap = $this->astMapExtractor->extract();
+        try {
+            $astMap = $this->astMapExtractor->extract();
 
-        $dependencies = $this->dependencyResolver->resolve($astMap);
+            $dependencies = $this->dependencyResolver->resolve($astMap);
 
-        $result = new Result();
-        $warnings = [];
+            $result = new Result();
+            $warnings = [];
 
-        foreach ($dependencies->getDependenciesAndInheritDependencies() as $dependency) {
-            $depender = $dependency->getDepender();
-            $dependerRef = $this->tokenResolver->resolve($depender, $astMap);
-            $dependerLayers = array_keys($this->layerResolver->getLayersForReference($dependerRef));
+            foreach ($dependencies->getDependenciesAndInheritDependencies() as $dependency) {
+                $depender = $dependency->getDepender();
+                $dependerRef = $this->tokenResolver->resolve($depender, $astMap);
+                $dependerLayers = array_keys($this->layerResolver->getLayersForReference($dependerRef));
 
-            if (!isset($warnings[$depender->toString()]) && count($dependerLayers) > 1) {
-                $warnings[$depender->toString()] = Warning::tokenIsInMoreThanOneLayer($depender->toString(), $dependerLayers);
+                if (!isset($warnings[$depender->toString()]) && count($dependerLayers) > 1) {
+                    $warnings[$depender->toString()] =
+                        Warning::tokenIsInMoreThanOneLayer($depender->toString(), $dependerLayers);
+                }
+
+                $dependent = $dependency->getDependent();
+                $dependentRef = $this->tokenResolver->resolve($dependent, $astMap);
+                $dependentLayers = $this->layerResolver->getLayersForReference($dependentRef);
+
+                foreach ($dependerLayers as $dependentLayer) {
+                    $event = new ProcessEvent(
+                        $dependency, $dependerRef, $dependentLayer, $dependentRef, $dependentLayers, $result
+                    );
+                    $this->eventDispatcher->dispatch($event);
+
+                    $result = $event->getResult();
+                }
             }
 
-            $dependent = $dependency->getDependent();
-            $dependentRef = $this->tokenResolver->resolve($dependent, $astMap);
-            $dependentLayers = $this->layerResolver->getLayersForReference($dependentRef);
+            $result->addWarnings($warnings);
 
-            foreach ($dependerLayers as $dependentLayer) {
-                $event = new ProcessEvent($dependency, $dependerRef, $dependentLayer, $dependentRef, $dependentLayers, $result);
-                $this->eventDispatcher->dispatch($event);
+            $event = new PostProcessEvent($result);
+            $this->eventDispatcher->dispatch($event);
 
-                $result = $event->getResult();
-            }
+            return $event->getResult();
+        } catch (InvalidEmitterConfigurationException $e) {
+            throw AnalyserException::invalidEmitterConfiguration($e);
+        } catch (UnrecognizedTokenException $e) {
+            throw AnalyserException::unrecognizedToken($e);
+        } catch (InvalidLayerDefinitionException $e) {
+            throw AnalyserException::invalidLayerDefinition($e);
+        } catch (InvalidCollectorDefinitionException $e) {
+            throw AnalyserException::invalidCollectorDefinition($e);
+        } catch (AstException $e) {
+            throw AnalyserException::failedAstParsing($e);
         }
-
-        $result->addWarnings($warnings);
-
-        $event = new PostProcessEvent($result);
-        $this->eventDispatcher->dispatch($event);
-
-        return $event->getResult();
     }
 }

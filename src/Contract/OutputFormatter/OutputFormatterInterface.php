@@ -18,6 +18,8 @@ interface OutputFormatterInterface
 
     /**
      * Renders the final result.
+     *
+     * @throws OutputException
      */
     public function finish(
         LegacyResult $result,

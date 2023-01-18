@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Core\Analyser\AnalyserException;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenType;
 
@@ -16,13 +17,20 @@ use function sprintf;
  */
 final class DebugTokenRunner
 {
-    public function __construct(private readonly LayerForTokenAnalyser $processor)
+    public function __construct(private readonly LayerForTokenAnalyser $analyser)
     {
     }
 
+    /**
+     * @throws CommandRunException
+     */
     public function run(string $tokenName, TokenType $tokenType, OutputInterface $output): void
     {
-        $matches = $this->processor->findLayerForToken($tokenName, $tokenType);
+        try {
+            $matches = $this->analyser->findLayerForToken($tokenName, $tokenType);
+        } catch (AnalyserException $e) {
+            throw CommandRunException::analyserException($e);
+        }
 
         if ([] === $matches) {
             $output->writeLineFormatted(sprintf('Could not find a token matching "%s"', $tokenName));

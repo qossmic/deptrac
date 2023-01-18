@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console;
 
 use Qossmic\Deptrac\Supportive\DependencyInjection\ServiceContainerBuilder;
-use Qossmic\Deptrac\Supportive\ShouldNotHappenException;
 use RuntimeException;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
@@ -14,6 +13,7 @@ use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 use function getcwd;
 use function in_array;
@@ -65,10 +65,13 @@ final class Application extends BaseApplication
         return $definition;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function doRun(InputInterface $input, OutputInterface $output): int
     {
         if (false === ($currentWorkingDirectory = getcwd())) {
-            throw new ShouldNotHappenException();
+            throw CannotGetCurrentWorkingDirectoryException::cannotGetCWD();
         }
 
         try {

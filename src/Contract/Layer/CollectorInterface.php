@@ -13,6 +13,9 @@ interface CollectorInterface
 {
     /**
      * @param array<string, bool|string|array<string, string>> $config
+     *
+     * @throws InvalidLayerDefinitionException
+     * @throws InvalidCollectorDefinitionException
      */
     public function satisfy(array $config, TokenReferenceInterface $reference): bool;
 }

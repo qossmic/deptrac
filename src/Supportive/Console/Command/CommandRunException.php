@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Supportive\Console\Exception;
+namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
+use Qossmic\Deptrac\Core\Analyser\AnalyserException;
 use RuntimeException;
 
-final class AnalyseException extends RuntimeException implements ExceptionInterface
+final class CommandRunException extends RuntimeException implements ExceptionInterface
 {
     public static function invalidFormatter(): self
     {
@@ -27,5 +28,10 @@ final class AnalyseException extends RuntimeException implements ExceptionInterf
     public static function failedWithErrors(): self
     {
         return new self('Analysis failed, due to an error.');
+    }
+
+    public static function analyserException(AnalyserException $e): self
+    {
+        return new self('Analysis failed.', 0, $e);
     }
 }

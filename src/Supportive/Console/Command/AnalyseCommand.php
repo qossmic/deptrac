@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Supportive\Console\Env;
-use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\Console\Subscriber\ConsoleSubscriber;
 use Qossmic\Deptrac\Supportive\Console\Subscriber\ProgressSubscriber;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
@@ -85,7 +84,7 @@ class AnalyseCommand extends Command
 
         try {
             $this->runner->run($options, $symfonyOutput);
-        } catch (AnalyseException) {
+        } catch (CommandRunException) {
             return self::FAILURE;
         }
 

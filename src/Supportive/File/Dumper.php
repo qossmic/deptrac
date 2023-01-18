@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\File;
 
 use Qossmic\Deptrac\Supportive\File\Exception\FileAlreadyExistsException;
+use Qossmic\Deptrac\Supportive\File\Exception\FileNotExistsException;
 use Qossmic\Deptrac\Supportive\File\Exception\FileNotWritableException;
+use Qossmic\Deptrac\Supportive\File\Exception\IOException;
 use SplFileInfo;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Filesystem\Exception\IOException as SymfonyIOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 use function is_writable;
@@ -23,6 +27,8 @@ class Dumper
     /**
      * @throws FileAlreadyExistsException
      * @throws FileNotWritableException
+     * @throws FileNotExistsException
+     * @throws IOException
      */
     public function dump(string $file): void
     {
@@ -36,6 +42,12 @@ class Dumper
             throw FileNotWritableException::notWritable($target);
         }
 
-        $filesystem->copy($this->templateFile->getPathname(), $target->getPathname());
+        try {
+            $filesystem->copy($this->templateFile->getPathname(), $target->getPathname());
+        } catch (FileNotFoundException) {
+            throw FileNotExistsException::fromFilePath($this->templateFile->getPathname());
+        } catch (SymfonyIOException $e) {
+            throw IOException::couldNotCopy($e->getMessage());
+        }
     }
 }

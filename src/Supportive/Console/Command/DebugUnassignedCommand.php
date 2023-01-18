@@ -23,9 +23,16 @@ class DebugUnassignedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output = new SymfonyOutput($output, new Style(new SymfonyStyle($input, $output)));
+        $outputStyle = new Style(new SymfonyStyle($input, $output));
+        $symfonyOutput = new SymfonyOutput($output, $outputStyle);
 
-        $this->runner->run($output);
+        try {
+            $this->runner->run($symfonyOutput);
+        } catch (CommandRunException $exception) {
+            $outputStyle->error($exception->getMessage());
+
+            return self::FAILURE;
+        }
 
         return self::SUCCESS;
     }

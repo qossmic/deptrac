@@ -7,8 +7,8 @@ namespace Qossmic\Deptrac\Supportive\Console\Command;
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Core\Analyser\AnalyserException;
 use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
-use Qossmic\Deptrac\Supportive\Console\Exception\AnalyseException;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Throwable;
 
@@ -24,6 +24,9 @@ final class AnalyseRunner
     {
     }
 
+    /**
+     * @throws CommandRunException
+     */
     public function run(AnalyseOptions $options, OutputInterface $output): void
     {
         try {
@@ -31,7 +34,7 @@ final class AnalyseRunner
         } catch (ContainerExceptionInterface) {
             $this->printFormatterNotFoundException($output, $options->formatter);
 
-            throw AnalyseException::invalidFormatter();
+            throw CommandRunException::invalidFormatter();
         }
 
         $formatterInput = new OutputFormatterInput(
@@ -43,7 +46,11 @@ final class AnalyseRunner
 
         $this->printCollectViolations($output);
 
-        $result = $this->analyser->analyse();
+        try {
+            $result = $this->analyser->analyse();
+        } catch (AnalyserException $e) {
+            throw CommandRunException::analyserException($e);
+        }
 
         $this->printFormattingStart($output);
 
@@ -54,13 +61,13 @@ final class AnalyseRunner
         }
 
         if ($options->failOnUncovered && $result->hasUncovered()) {
-            throw AnalyseException::finishedWithUncovered();
+            throw CommandRunException::finishedWithUncovered();
         }
         if ($result->hasViolations()) {
-            throw AnalyseException::finishedWithViolations();
+            throw CommandRunException::finishedWithViolations();
         }
         if ($result->hasErrors()) {
-            throw AnalyseException::failedWithErrors();
+            throw CommandRunException::failedWithErrors();
         }
     }
 

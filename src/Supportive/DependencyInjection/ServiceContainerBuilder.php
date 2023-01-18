@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
-use LogicException;
+use Exception;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException;
+use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CannotLoadConfiguration;
 use SplFileInfo;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;
@@ -35,6 +36,7 @@ final class ServiceContainerBuilder
         $builder = clone $this;
 
         if (Path::isRelative($configFile)) {
+            /** @throws void */
             $configFile = Path::makeAbsolute($configFile, $this->workingDirectory);
         }
 
@@ -52,6 +54,7 @@ final class ServiceContainerBuilder
         $builder = clone $this;
 
         if (Path::isRelative($cacheFile)) {
+            /** @throws void */
             $cacheFile = Path::makeAbsolute($cacheFile, $this->workingDirectory);
         }
 
@@ -69,6 +72,7 @@ final class ServiceContainerBuilder
         $builder = clone $this;
 
         if (Path::isRelative($cacheFile)) {
+            /** @throws void */
             $cacheFile = Path::makeAbsolute($cacheFile, $this->workingDirectory);
         }
 
@@ -77,6 +81,10 @@ final class ServiceContainerBuilder
         return $builder;
     }
 
+    /**
+     * @throws CacheFileException
+     * @throws CannotLoadConfiguration
+     */
     public function build(): ContainerBuilder
     {
         $container = new ContainerBuilder();
@@ -104,11 +112,19 @@ final class ServiceContainerBuilder
         $container->addCompilerPass(new RegisterListenersPass());
     }
 
+    /**
+     * @throws CacheFileException
+     * @throws CannotLoadConfiguration
+     */
     private static function loadServices(ContainerBuilder $container, ?SplFileInfo $cacheFile): void
     {
         $loader = new PhpFileLoader($container, new FileLocator([__DIR__.'/../../../config']));
 
-        $loader->load('services.php');
+        try {
+            $loader->load('services.php');
+        } catch (Exception $exception) {
+            throw CannotLoadConfiguration::fromServices('services.php', $exception->getMessage());
+        }
 
         if (!$cacheFile instanceof SplFileInfo) {
             return;
@@ -122,14 +138,21 @@ final class ServiceContainerBuilder
         }
 
         $container->setParameter('deptrac.cache_file', $cacheFile->getPathname());
-        $loader->load('cache.php');
+        try {
+            $loader->load('cache.php');
+        } catch (Exception $exception) {
+            throw CannotLoadConfiguration::fromCache('cache.php', $exception->getMessage());
+        }
     }
 
+    /**
+     * @throws CannotLoadConfiguration
+     */
     private static function loadConfiguration(ContainerBuilder $container, SplFileInfo $configFile): void
     {
         $configPathInfo = $configFile->getPathInfo();
         if (null === $configPathInfo) {
-            throw new LogicException(sprintf('Unable to load config: Invalid or missing path.'));
+            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), sprintf('Unable to load config: Invalid or missing path.'));
         }
 
         $container->setParameter('depfileDirectory', $configPathInfo->getPathname());
@@ -139,6 +162,10 @@ final class ServiceContainerBuilder
             new PhpFileLoader($container, new FileLocator([$configPathInfo->getPathname()])),
         ]));
 
-        $loader->load($configFile->getFilename());
+        try {
+            $loader->load($configFile->getFilename());
+        } catch (Exception $exception) {
+            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), $exception->getMessage());
+        }
     }
 }

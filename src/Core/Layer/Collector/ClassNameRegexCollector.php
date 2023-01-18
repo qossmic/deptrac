@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 
 final class ClassNameRegexCollector extends RegexCollector
@@ -27,7 +27,7 @@ final class ClassNameRegexCollector extends RegexCollector
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw new LogicException('ClassNameRegexCollector needs the regex configuration.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('ClassNameRegexCollector needs the regex configuration.');
         }
 
         return $config['value'];

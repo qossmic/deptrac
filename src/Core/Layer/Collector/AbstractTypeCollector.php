@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 
@@ -39,7 +39,7 @@ abstract class AbstractTypeCollector extends RegexCollector
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw new LogicException(sprintf('Collector "%s" needs the regex configuration.', $this->getType()->toString()));
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(sprintf('Collector "%s" needs the regex configuration.', $this->getType()->toString()));
         }
 
         return '/'.$config['value'].'/i';

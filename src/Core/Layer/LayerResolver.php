@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
 use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidLayerDefinitionException;
 
 use function array_key_exists;
 
@@ -26,6 +26,8 @@ class LayerResolver implements LayerResolverInterface
 
     /**
      * @param array<array{name?: string, collectors: array<array<string, string|array<string, string>>>}> $layers
+     *
+     * @throws InvalidLayerDefinitionException
      */
     public function __construct(private readonly CollectorResolverInterface $collectorResolver, array $layers)
     {
@@ -103,6 +105,8 @@ class LayerResolver implements LayerResolverInterface
 
     /**
      * @param array<array{name?: string, collectors?: array<array<string, string|array<string, string>>>}> $layers
+     *
+     * @throws InvalidLayerDefinitionException
      */
     private function initializeLayers(array $layers): void
     {

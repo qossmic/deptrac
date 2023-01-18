@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser;
 
+use PhpParser\Error;
+use PhpParser\ErrorHandler\Throwing;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Stmt\ClassLike;
@@ -15,11 +17,12 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceCacheInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\CouldNotParseFileException;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException;
 use Qossmic\Deptrac\Supportive\File\FileReader;
-use Qossmic\Deptrac\Supportive\ShouldNotHappenException;
 
 class NikicPhpParser implements ParserInterface
 {
@@ -45,16 +48,19 @@ class NikicPhpParser implements ParserInterface
 
     public function parseFile(string $file): FileReference
     {
-        if (null !== $fileReference = $this->cache->get($file)) {
-            return $fileReference;
-        }
+        try {
+            if (null !== $fileReference = $this->cache->get($file)) {
+                return $fileReference;
+            }
 
-        $fileReferenceBuilder = FileReferenceBuilder::create($file);
-        $nodes = $this->parser->parse(FileReader::read($file));
-        if (null === $nodes) {
-            throw new ShouldNotHappenException();
+            $fileReferenceBuilder = FileReferenceBuilder::create($file);
+            $fileContents = FileReader::read($file);
+            /** @throws Error */
+            $nodes = $this->parser->parse($fileContents, new Throwing());
+        } catch (Error|CouldNotReadFileException $e) {
+            throw CouldNotParseFileException::because($e->getMessage(), $e);
         }
-
+        /** @var array<Node> $nodes */
         $visitor = new FileReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->extractors);
         $this->traverser->addVisitor($visitor);
         $this->traverser->traverse($nodes);
@@ -66,6 +72,9 @@ class NikicPhpParser implements ParserInterface
         return $fileReference;
     }
 
+    /**
+     * @throws CouldNotParseFileException
+     */
     public function getNodeForClassLikeReference(ClassLikeReference $classReference): ?ClassLike
     {
         $classLikeName = $classReference->getToken()->toString();
@@ -82,11 +91,14 @@ class NikicPhpParser implements ParserInterface
 
         $findingVisitor = new FindingVisitor(static fn (Node $node): bool => $node instanceof ClassLike);
 
-        $nodes = $this->parser->parse(FileReader::read($filepath));
-        if (null === $nodes) {
-            throw new ShouldNotHappenException();
+        try {
+            $fileContents = FileReader::read($filepath);
+            /** @throws Error */
+            $nodes = $this->parser->parse($fileContents, new Throwing());
+        } catch (Error|CouldNotReadFileException $e) {
+            throw CouldNotParseFileException::because($e->getMessage(), $e);
         }
-
+        /** @var array<Node> $nodes */
         $this->traverser->addVisitor($findingVisitor);
         $this->traverser->traverse($nodes);
         $this->traverser->removeVisitor($findingVisitor);

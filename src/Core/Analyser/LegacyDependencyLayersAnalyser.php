@@ -17,6 +17,9 @@ class LegacyDependencyLayersAnalyser
     {
     }
 
+    /**
+     * @throws AnalyserException
+     */
     public function analyse(): LegacyResult
     {
         $ruleset = $this->decorated->process();

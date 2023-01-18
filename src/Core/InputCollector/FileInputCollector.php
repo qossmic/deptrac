@@ -8,6 +8,7 @@ use LogicException;
 use Qossmic\Deptrac\Supportive\File\Exception\InvalidPathException;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -23,6 +24,8 @@ final class FileInputCollector implements InputCollectorInterface
     /**
      * @param string[] $paths
      * @param string[] $excludedFilePatterns
+     *
+     * @throws InvalidPathException
      */
     public function __construct(array $paths, private readonly array $excludedFilePatterns, string $basePath)
     {
@@ -32,9 +35,12 @@ final class FileInputCollector implements InputCollectorInterface
         }
         $this->paths = [];
         foreach ($paths as $originalPath) {
-            $path = Path::isRelative($originalPath)
-                ? Path::makeAbsolute($originalPath, $basePathInfo->getPathname())
-                : $originalPath;
+            if (Path::isRelative($originalPath)) {
+                /** @throws void */
+                $path = Path::makeAbsolute($originalPath, $basePathInfo->getPathname());
+            } else {
+                $path = $originalPath;
+            }
             $path = new SplFileInfo($path);
             if (!$path->isReadable()) {
                 throw InvalidPathException::unreadablePath($path);
@@ -43,25 +49,26 @@ final class FileInputCollector implements InputCollectorInterface
         }
     }
 
-    /**
-     * @return string[]
-     */
     public function collect(): array
     {
-        if ([] === $this->paths) {
-            throw new LogicException("No 'paths' defined in the depfile.");
+        try {
+            if ([] === $this->paths) {
+                throw new LogicException("No 'paths' defined in the depfile.");
+            }
+
+            $finder = (new Finder())
+                ->in($this->paths)
+                ->name('*.php')
+                ->files()
+                ->followLinks()
+                ->ignoreUnreadableDirs()
+                ->ignoreVCS(true)
+                ->notPath($this->excludedFilePatterns);
+
+            $customFilterIterator = $finder->getIterator();
+        } catch (LogicException|DirectoryNotFoundException $exception) {
+            throw InputException::couldNotCollectFiles($exception);
         }
-
-        $finder = (new Finder())
-            ->in($this->paths)
-            ->name('*.php')
-            ->files()
-            ->followLinks()
-            ->ignoreUnreadableDirs()
-            ->ignoreVCS(true)
-            ->notPath($this->excludedFilePatterns);
-
-        $customFilterIterator = $finder->getIterator();
 
         $finder = new PathNameFilterIterator($customFilterIterator, [], $this->excludedFilePatterns);
 

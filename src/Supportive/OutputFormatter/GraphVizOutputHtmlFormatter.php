@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
-use LogicException;
 use phpDocumentor\GraphViz\Exception;
 use phpDocumentor\GraphViz\Graph;
+use Qossmic\Deptrac\Contract\OutputFormatter\OutputException;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use RuntimeException;
 
 use function base64_encode;
 use function file_get_contents;
@@ -28,14 +27,14 @@ final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
     {
         $dumpHtmlPath = $outputFormatterInput->outputPath;
         if (null === $dumpHtmlPath) {
-            throw new LogicException("No '--output' defined for GraphViz formatter");
+            throw OutputException::withMessage("No '--output' defined for GraphViz formatter");
         }
 
         try {
             $filename = $this->getTempImage($graph);
             $imageData = file_get_contents($filename);
             if (false === $imageData) {
-                throw new RuntimeException('Unable to create temp file for output.');
+                throw OutputException::withMessage('Unable to create temp file for output.');
             }
             file_put_contents(
                 $dumpHtmlPath,
@@ -43,7 +42,7 @@ final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
             );
             $output->writeLineFormatted('<info>HTML dumped to '.realpath($dumpHtmlPath).'</info>');
         } catch (Exception $exception) {
-            throw new LogicException('Unable to generate HTML file: '.$exception->getMessage());
+            throw OutputException::withMessage('Unable to generate HTML file: '.$exception->getMessage());
         } finally {
             /** @psalm-suppress RedundantCondition */
             if (isset($filename) && false !== $filename) {

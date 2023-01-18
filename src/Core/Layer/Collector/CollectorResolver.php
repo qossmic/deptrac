@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Psr\Container\ContainerExceptionInterface;
-use Qossmic\Deptrac\Core\Layer\Exception\InvalidCollectorDefinitionException;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 
 use function array_key_exists;
 use function is_string;
@@ -18,6 +18,8 @@ final class CollectorResolver implements CollectorResolverInterface
 
     /**
      * @param array<string, string|array<string, string>> $config
+     *
+     * @throws InvalidCollectorDefinitionException
      */
     public function resolve(array $config): Collectable
     {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use LogicException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Symfony\Component\Filesystem\Path;
 
 final class DirectoryCollector extends RegexCollector
@@ -32,7 +32,7 @@ final class DirectoryCollector extends RegexCollector
         }
 
         if (!isset($config['value']) || !is_string($config['value'])) {
-            throw new LogicException('DirectoryCollector needs the regex configuration.');
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('DirectoryCollector needs the regex configuration.');
         }
 
         return '#'.$config['value'].'#i';

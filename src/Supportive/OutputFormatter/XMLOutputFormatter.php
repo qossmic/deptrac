@@ -73,17 +73,24 @@ final class XMLOutputFormatter implements OutputFormatterInterface
 
     private function addRule(string $type, DOMElement $rootEntry, DOMDocument $xmlDoc, Violation|SkippedViolation $rule): void
     {
+        /** @throws void */
         $entry = $xmlDoc->createElement('entry');
+        /** @throws void */
         $entry->appendChild(new DOMAttr('type', $type));
 
+        /** @throws void */
         $entry->appendChild($xmlDoc->createElement('LayerA', $rule->getDependerLayer()));
+        /** @throws void */
         $entry->appendChild($xmlDoc->createElement('LayerB', $rule->getDependentLayer()));
 
         $dependency = $rule->getDependency();
+        /** @throws void */
         $entry->appendChild($xmlDoc->createElement('ClassA', $dependency->getDepender()->toString()));
+        /** @throws void */
         $entry->appendChild($xmlDoc->createElement('ClassB', $dependency->getDependent()->toString()));
 
         $fileOccurrence = $dependency->getFileOccurrence();
+        /** @throws void */
         $occurrence = $xmlDoc->createElement('occurrence');
         $occurrence->setAttribute('file', $fileOccurrence->filepath);
         $occurrence->setAttribute('line', (string) $fileOccurrence->line);

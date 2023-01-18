@@ -6,7 +6,9 @@ namespace Qossmic\Deptrac\Supportive\Console\Command;
 
 use Qossmic\Deptrac\Supportive\File\Dumper as ConfigurationDumper;
 use Qossmic\Deptrac\Supportive\File\Exception\FileAlreadyExistsException;
+use Qossmic\Deptrac\Supportive\File\Exception\FileNotExistsException;
 use Qossmic\Deptrac\Supportive\File\Exception\FileNotWritableException;
+use Qossmic\Deptrac\Supportive\File\Exception\IOException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +41,7 @@ class InitCommand extends Command
             $output->writeln('Depfile <info>dumped.</info>');
 
             return self::SUCCESS;
-        } catch (FileNotWritableException|FileAlreadyExistsException $fileException) {
+        } catch (FileNotWritableException|FileAlreadyExistsException|IOException|FileNotExistsException $fileException) {
             $output->writeln(sprintf('<error>%s</error>', $fileException->getMessage()));
 
             return self::FAILURE;
