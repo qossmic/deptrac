@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
+use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstException;

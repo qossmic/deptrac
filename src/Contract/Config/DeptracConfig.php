@@ -37,6 +37,10 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
+    /**
+     * @param string $baseline
+     * @return $this
+     */
     public function baseline(string $baseline): self
     {
         /** @var array<string, array<string, array<string>>> $baselineAsArray */
