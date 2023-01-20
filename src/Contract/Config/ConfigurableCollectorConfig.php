@@ -104,13 +104,6 @@ abstract class ConfigurableCollectorConfig extends CollectorConfig
         return new static(self::regex($config));
     }
 
-    public function private(): self
-    {
-        $this->private = true;
-
-        return $this;
-    }
-
     /**
      * @return array{private: bool, type: string, value: string}
      */
