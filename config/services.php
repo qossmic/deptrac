@@ -238,84 +238,65 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(CollectorResolverInterface::class, CollectorResolver::class);
     $services
         ->set(AttributeCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_ATTRIBUTE->value])
-        ->tag('collector', ['type' => AttributeCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_ATTRIBUTE->value]);
     $services
         ->set(BoolCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_BOOL->value])
-        ->tag('collector', ['type' => BoolCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_BOOL->value]);
     $services
         ->set(ClassCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_CLASS->value])
-        ->tag('collector', ['type' => ClassCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASS->value]);
     $services
         ->set(ClassLikeCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_CLASSLIKE->value])
-        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME->value])
-        ->tag('collector', ['type' => ClassLikeCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME->value]);
     $services
         ->set(ClassNameRegexCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME_REGEX->value])
-        ->tag('collector', ['type' => ClassNameRegexCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME_REGEX->value]);
     $services
         ->set(DirectoryCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_DIRECTORY->value])
-        ->tag('collector', ['type' => DirectoryCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_DIRECTORY->value]);
     $services
         ->set(ExtendsCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_EXTENDS->value])
-        ->tag('collector', ['type' => ExtendsCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_EXTENDS->value]);
     $services
         ->set(FunctionNameCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_FUNCTION_NAME->value])
-        ->tag('collector', ['type' => FunctionNameCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_FUNCTION_NAME->value]);
     $services
         ->set(GlobCollector::class)
         ->args([
             '$basePath' => param('projectDirectory'),
         ])
-        ->tag('collector', ['type' => CollectorType::TYPE_GLOB->value])
-        ->tag('collector', ['type' => GlobCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_GLOB->value]);
     $services
         ->set(ImplementsCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_IMPLEMENTS->value])
-        ->tag('collector', ['type' => ImplementsCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_IMPLEMENTS->value]);
     $services
         ->set(InheritanceLevelCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_INHERITANCE->value])
-        ->tag('collector', ['type' => InheritanceLevelCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_INHERITANCE->value]);
     $services
         ->set(InterfaceCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_INTERFACE->value])
-        ->tag('collector', ['type' => InterfaceCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_INTERFACE->value]);
     $services
         ->set(InheritsCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_INHERITS->value])
-        ->tag('collector', ['type' => InheritsCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_INHERITS->value]);
     $services
         ->set(LayerCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_LAYER->value])
-        ->tag('collector', ['type' => LayerCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_LAYER->value]);
     $services
         ->set(MethodCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_METHOD->value])
-        ->tag('collector', ['type' => MethodCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_METHOD->value]);
     $services
         ->set(SuperglobalCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_SUPERGLOBAL->value])
-        ->tag('collector', ['type' => SuperglobalCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_SUPERGLOBAL->value]);
     $services
         ->set(TraitCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_TRAIT->value])
-        ->tag('collector', ['type' => TraitCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_TRAIT->value]);
     $services
         ->set(UsesCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_USES->value])
-        ->tag('collector', ['type' => UsesCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_USES->value]);
     $services
         ->set(PhpInternalCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_PHP_INTERNAL->value])
-        ->tag('collector', ['type' => PhpInternalCollector::class]);
+        ->tag('collector', ['type' => CollectorType::TYPE_PHP_INTERNAL->value]);
 
     /*
      * Analyser

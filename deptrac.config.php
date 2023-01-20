@@ -1,7 +1,6 @@
 <?php
 
 use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
-use Internal\Qossmic\Deptrac\IgnoreDependenciesOnShouldNotHappenException;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Config\Collector\BoolConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\ClassNameConfig;
@@ -16,12 +15,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (DeptracConfig $config, ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $services->set(IgnoreDependenciesOnContract::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
-    $services->set(IgnoreDependenciesOnShouldNotHappenException::class)->tag(
-        'kernel.event_listener',
-        ['event' => ProcessEvent::class]
-    );
 
     $config
+        ->baseline('deptrac.baseline.yaml')
         ->paths('src')
         ->analysers(
             EmitterType::CLASS_TOKEN,
