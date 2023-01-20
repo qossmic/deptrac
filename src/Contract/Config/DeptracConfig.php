@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Contract\Config;
 
 use Qossmic\Deptrac\Contract\Config\Formatter\FormatterConfigInterface;
 use Symfony\Component\Config\Builder\ConfigBuilderInterface;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 final class DeptracConfig implements ConfigBuilderInterface
@@ -38,8 +39,7 @@ final class DeptracConfig implements ConfigBuilderInterface
     }
 
     /**
-     * @param string $baseline
-     * @return $this
+     * @throws ParseException
      */
     public function baseline(string $baseline): self
     {
