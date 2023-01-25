@@ -85,8 +85,8 @@ final class Application extends BaseApplication
         }
 
         /** @var string|numeric|null $configFile */
-        $configFile = $input->getParameterOption('--config-file', $currentWorkingDirectory.DIRECTORY_SEPARATOR.'deptrac.yaml');
-        $config = $input->hasParameterOption('--config-file')
+        $configFile = $input->getOption('config-file');
+        $config = $input->hasOption('config-file')
             ? (string) $configFile
             : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'deptrac.yaml';
 
