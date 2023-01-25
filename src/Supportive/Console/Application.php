@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console;
 
+use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CannotLoadConfiguration;
 use Qossmic\Deptrac\Supportive\DependencyInjection\ServiceContainerBuilder;
 use RuntimeException;
 use Symfony\Component\Console\Application as BaseApplication;
@@ -107,14 +108,21 @@ final class Application extends BaseApplication
             $factory = $factory->withCache($cache);
         }
 
-        $container = $factory->build();
+        try {
+            $container = $factory->build();
+            $commandLoader = $container->get('console.command_loader');
+            if (!$commandLoader instanceof CommandLoaderInterface) {
+                throw new RuntimeException('CommandLoader not initialized. Commands can not be registered.');
+            }
+            $this->setCommandLoader($commandLoader);
+            $this->setDefaultCommand('analyse');
+        } catch (CannotLoadConfiguration $e) {
+            if (false === $input->hasParameterOption(['--help', '-h'], true)) {
+                throw $e;
+            }
 
-        $commandLoader = $container->get('console.command_loader');
-        if (!$commandLoader instanceof CommandLoaderInterface) {
-            throw new RuntimeException('CommandLoader not initialized. Commands can not be registered.');
+            $this->setDefaultCommand('help');
         }
-        $this->setCommandLoader($commandLoader);
-        $this->setDefaultCommand('analyse');
 
         return parent::doRun($input, $output);
     }
