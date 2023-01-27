@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -42,9 +43,18 @@ final class GithubActionsOutputFormatterTest extends TestCase
     {
         $bufferedOutput = new BufferedOutput();
 
+        $resultBuilder = new AnalysisResultBuilder();
+        foreach ($rules as $rule) {
+            $resultBuilder->add($rule);
+        }
+        foreach ($errors as $error) {
+            $resultBuilder->addError($error);
+        }
+        $resultBuilder->addWarnings($warnings);
+
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, $errors, $warnings),
+            $resultBuilder->build(),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
@@ -181,7 +191,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            new OutputResult($rules, [], []),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
@@ -200,18 +210,19 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $originalB = ClassLikeToken::fromFQCN('\ACME\OriginalB');
         $originalAOccurrence = new FileOccurrence('/home/testuser/originalA.php', 12);
 
-        $rules = [
+        $analysisResult = new AnalysisResultBuilder();
+        $analysisResult->add(
             new Uncovered(
                 new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                 'LayerA'
-            ),
-        ];
+            )
+        );
 
         $bufferedOutput = new BufferedOutput();
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            $analysisResult->build(),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,

@@ -8,9 +8,8 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\Allowed;
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -27,19 +26,24 @@ final class TableOutputFormatter implements OutputFormatterInterface
     }
 
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $groupedRules = [];
-        foreach ($result->rules as $rule) {
-            if ($rule instanceof Allowed) {
-                continue;
-            }
 
-            if ($rule instanceof Violation || ($outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation)) {
+        foreach ($result->allOf(Violation::class) as $rule) {
+            $groupedRules[$rule->getDependerLayer()][] = $rule;
+        }
+
+        if ($outputFormatterInput->reportSkipped) {
+            foreach ($result->allOf(SkippedViolation::class) as $rule) {
                 $groupedRules[$rule->getDependerLayer()][] = $rule;
-            } elseif ($outputFormatterInput->reportUncovered && $rule instanceof Uncovered) {
+            }
+        }
+
+        if ($outputFormatterInput->reportUncovered) {
+            foreach ($result->allOf(Uncovered::class) as $rule) {
                 $groupedRules[$rule->layer][] = $rule;
             }
         }
@@ -108,7 +112,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function printSummary(LegacyResult $result, OutputInterface $output, bool $reportUncoveredAsError): void
+    private function printSummary(OutputResult $result, OutputInterface $output, bool $reportUncoveredAsError): void
     {
         $violationCount = count($result->violations());
         $skippedViolationCount = count($result->skippedViolations());
@@ -159,7 +163,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         ];
     }
 
-    private function printErrors(LegacyResult $result, OutputInterface $output): void
+    private function printErrors(OutputResult $result, OutputInterface $output): void
     {
         $output->getStyle()->table(
             ['<fg=red>Errors</>'],
@@ -170,7 +174,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function printWarnings(LegacyResult $result, OutputInterface $output): void
+    private function printWarnings(OutputResult $result, OutputInterface $output): void
     {
         $output->getStyle()->table(
             ['<fg=yellow>Warnings</>'],

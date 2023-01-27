@@ -6,7 +6,6 @@ namespace Qossmic\Deptrac\Contract\Analyser;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
-use Qossmic\Deptrac\Contract\Result\Result;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class ProcessEvent extends Event
@@ -20,16 +19,16 @@ class ProcessEvent extends Event
         public readonly string $dependerLayer,
         public readonly TokenReferenceInterface $dependentReference,
         public readonly array $dependentLayers,
-        private Result $result = new Result()
+        private AnalysisResultBuilder $result = new AnalysisResultBuilder()
     ) {
     }
 
-    public function getResult(): Result
+    public function getResult(): AnalysisResultBuilder
     {
         return $this->result;
     }
 
-    public function replaceResult(Result $ruleset): void
+    public function replaceResult(AnalysisResultBuilder $ruleset): void
     {
         $this->result = $ruleset;
     }

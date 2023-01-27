@@ -8,7 +8,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Core\Analyser\AnalyserException;
-use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
+use Qossmic\Deptrac\Core\Analyser\DependencyLayersAnalyser;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Throwable;
 
@@ -20,7 +20,7 @@ use function sprintf;
  */
 final class AnalyseRunner
 {
-    public function __construct(private readonly LegacyDependencyLayersAnalyser $analyser, private readonly FormatterProvider $formatterProvider)
+    public function __construct(private readonly DependencyLayersAnalyser $analyser, private readonly FormatterProvider $formatterProvider)
     {
     }
 
@@ -47,7 +47,7 @@ final class AnalyseRunner
         $this->printCollectViolations($output);
 
         try {
-            $result = $this->analyser->analyse();
+            $result = $this->analyser->process()->build();
         } catch (AnalyserException $e) {
             throw CommandRunException::analyserException($e);
         }

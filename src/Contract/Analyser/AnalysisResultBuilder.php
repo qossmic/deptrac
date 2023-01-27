@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Contract\Result;
+namespace Qossmic\Deptrac\Contract\Analyser;
+
+use Qossmic\Deptrac\Contract\Result\Error;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
+use Qossmic\Deptrac\Contract\Result\Warning;
 
 use function spl_object_id;
 
-class Result
+class AnalysisResultBuilder
 {
     /**
      * @var array<string, array<int, RuleInterface>>
@@ -41,14 +46,9 @@ class Result
         return $this->rules;
     }
 
-    /**
-     * @param class-string $type
-     *
-     * @return array<int, RuleInterface>
-     */
-    public function allOf(string $type): array
+    public function build(): OutputResult
     {
-        return $this->rules[$type] ?? [];
+        return new OutputResult($this->rules, $this->errors, $this->warnings);
     }
 
     /**
@@ -72,21 +72,6 @@ class Result
     public function warnings(): array
     {
         return $this->warnings;
-    }
-
-    public function hasWarnings(): bool
-    {
-        return [] !== $this->warnings;
-    }
-
-    /**
-     * @param Error[] $errors
-     */
-    public function addErrors(array $errors): void
-    {
-        foreach ($errors as $error) {
-            $this->addError($error);
-        }
     }
 
     public function addError(Error $error): void

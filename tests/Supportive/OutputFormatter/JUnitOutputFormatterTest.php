@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
@@ -161,9 +162,14 @@ final class JUnitOutputFormatterTest extends TestCase
      */
     public function testBasic(array $rules, string $expectedOutputFile): void
     {
+        $resultBuilder = new AnalysisResultBuilder();
+        foreach ($rules as $rule) {
+            $resultBuilder->add($rule);
+        }
+
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            $resultBuilder->build(),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
                 false, false, false)
@@ -179,7 +185,7 @@ final class JUnitOutputFormatterTest extends TestCase
     {
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            new LegacyResult([], [
+            new OutputResult([], [
                 new Error('Skipped violation "Class1" for "Class2" was not matched.'),
             ], []),
             $this->createSymfonyOutput(new BufferedOutput()),

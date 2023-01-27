@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 
@@ -26,20 +26,18 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
     }
 
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
-        foreach ($result->rules as $rule) {
-            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
-                continue;
-            }
-
-            if (!$outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation) {
-                continue;
-            }
-
+        foreach ($result->allOf(Violation::class) as $rule) {
             $this->printViolation($rule, $output);
+        }
+
+        if ($outputFormatterInput->reportSkipped) {
+            foreach ($result->allOf(SkippedViolation::class) as $rule) {
+                $this->printViolation($rule, $output);
+            }
         }
 
         if ($outputFormatterInput->reportUncovered) {
@@ -93,7 +91,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $output->writeLineFormatted($buffer);
     }
 
-    private function printSummary(LegacyResult $result, OutputInterface $output): void
+    private function printSummary(OutputResult $result, OutputInterface $output): void
     {
         $violationCount = count($result->violations());
         $skippedViolationCount = count($result->skippedViolations());
@@ -142,7 +140,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function printUncovered(LegacyResult $result, OutputInterface $output): void
+    private function printUncovered(OutputResult $result, OutputInterface $output): void
     {
         $uncovered = $result->uncovered();
         if ([] === $uncovered) {
@@ -175,7 +173,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $output->writeLineFormatted($fileOccurrence->filepath.'::'.$fileOccurrence->line);
     }
 
-    private function printErrors(LegacyResult $result, OutputInterface $output): void
+    private function printErrors(OutputResult $result, OutputInterface $output): void
     {
         $output->writeLineFormatted('');
         foreach ($result->errors as $error) {
@@ -183,7 +181,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         }
     }
 
-    private function printWarnings(LegacyResult $result, OutputInterface $output): void
+    private function printWarnings(OutputResult $result, OutputInterface $output): void
     {
         $output->writeLineFormatted('');
         foreach ($result->warnings as $warning) {

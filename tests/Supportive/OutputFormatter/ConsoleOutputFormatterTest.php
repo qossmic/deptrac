@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -204,9 +204,18 @@ final class ConsoleOutputFormatterTest extends TestCase
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
 
+        $analysisResult = new AnalysisResultBuilder();
+        foreach ($rules as $rule) {
+            $analysisResult->add($rule);
+        }
+        foreach ($errors as $error) {
+            $analysisResult->addError($error);
+        }
+        $analysisResult->addWarnings($warnings);
+
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, $errors, $warnings),
+            $analysisResult->build(),
             $output,
             new OutputFormatterInput(
                 null,
@@ -227,13 +236,13 @@ final class ConsoleOutputFormatterTest extends TestCase
     {
         $originalA = ClassLikeToken::fromFQCN('OriginalA');
         $originalB = ClassLikeToken::fromFQCN('OriginalB');
-        $rules = [
-            new SkippedViolation(
-                new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
-                'LayerA',
-                'LayerB'
-            ),
-        ];
+
+        $resultBuilder = new AnalysisResultBuilder();
+        $resultBuilder->add(new SkippedViolation(
+            new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
+            'LayerA',
+            'LayerB'
+        ));
 
         $bufferedOutput = new BufferedOutput();
         $output = new SymfonyOutput(
@@ -243,7 +252,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            $resultBuilder->build(),
             $output,
             new OutputFormatterInput(
                 null,

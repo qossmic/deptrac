@@ -11,7 +11,7 @@ use Exception;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 
@@ -33,7 +33,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
      * @throws Exception
      */
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
@@ -47,7 +47,7 @@ final class XMLOutputFormatter implements OutputFormatterInterface
     /**
      * @throws Exception
      */
-    private function createXml(LegacyResult $dependencyContext): string
+    private function createXml(OutputResult $dependencyContext): string
     {
         if (!class_exists(DOMDocument::class)) {
             throw new Exception('Unable to create xml file (php-xml needs to be installed)');

@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Result;
 
-use function array_filter;
 use function count;
 
 /**
  * @psalm-immutable
  */
-final class LegacyResult
+final class OutputResult
 {
     /**
-     * @param RuleInterface[] $rules
+     * @param array<string, array<int, RuleInterface>> $rules
      * @param Error[] $errors
      * @param Warning[] $warnings
      */
@@ -25,11 +24,35 @@ final class LegacyResult
     }
 
     /**
-     * @return Violation[]
+     * @template T of RuleInterface
+     *
+     * @param class-string<T> $type
+     *
+     * @return array<int, T>
+     */
+    public function allOf(string $type): array
+    {
+        return $this->rules[$type] ?? [];
+    }
+
+    /**
+     * @return list<RuleInterface>
+     */
+    public function allRules(): array
+    {
+        return array_reduce(
+            $this->rules,
+            static fn (array $carry, array $rules): array => array_merge($carry, array_values($rules)),
+            []
+        );
+    }
+
+    /**
+     * @return array<int, Violation>
      */
     public function violations(): array
     {
-        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof Violation);
+        return $this->allOf(Violation::class);
     }
 
     public function hasViolations(): bool
@@ -38,19 +61,19 @@ final class LegacyResult
     }
 
     /**
-     * @return SkippedViolation[]
+     * @return array<int, SkippedViolation>
      */
     public function skippedViolations(): array
     {
-        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof SkippedViolation);
+        return $this->allOf(SkippedViolation::class);
     }
 
     /**
-     * @return Uncovered[]
+     * @return array<int, Uncovered>
      */
     public function uncovered(): array
     {
-        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof Uncovered);
+        return $this->allOf(Uncovered::class);
     }
 
     public function hasUncovered(): bool
@@ -59,11 +82,11 @@ final class LegacyResult
     }
 
     /**
-     * @return Allowed[]
+     * @return array<int, Allowed>
      */
     public function allowed(): array
     {
-        return array_filter($this->rules, static fn (RuleInterface $rule) => $rule instanceof Allowed);
+        return $this->allOf(Allowed::class);
     }
 
     public function hasErrors(): bool

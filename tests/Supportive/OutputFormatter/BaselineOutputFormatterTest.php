@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -117,12 +117,17 @@ class BaselineOutputFormatterTest extends TestCase
     {
         $generatedBaselineFile = tempnam(sys_get_temp_dir(), 'deptrac_');
 
+        $analysisResult = new AnalysisResultBuilder();
+        foreach ($rules as $rule) {
+            $analysisResult->add($rule);
+        }
+
         try {
             $output = new BufferedOutput();
 
             $formatter = new BaselineOutputFormatter();
             $formatter->finish(
-                new LegacyResult($rules, [], []),
+                $analysisResult->build(),
                 $this->createSymfonyOutput($output),
                 new OutputFormatterInput($generatedBaselineFile, false, false, false)
             );

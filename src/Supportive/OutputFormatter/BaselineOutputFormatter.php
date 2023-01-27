@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Symfony\Component\Yaml\Yaml;
@@ -29,7 +29,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     }
 
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
@@ -65,13 +65,10 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     /**
      * @return array<string,array<string>>
      */
-    private function collectViolations(LegacyResult $result): array
+    private function collectViolations(OutputResult $result): array
     {
         $violations = [];
-        foreach ($result->rules as $rule) {
-            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
-                continue;
-            }
+        foreach (array_merge($result->allOf(Violation::class), $result->allOf(SkippedViolation::class)) as $rule) {
             $dependency = $rule->getDependency();
             $dependerClass = $dependency->getDepender()->toString();
             $dependentClass = $dependency->getDependent()->toString();

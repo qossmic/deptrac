@@ -12,7 +12,7 @@ use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
@@ -36,7 +36,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
      * @throws Exception
      */
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
@@ -50,7 +50,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
     /**
      * @throws Exception
      */
-    private function createXml(LegacyResult $result): string
+    private function createXml(OutputResult $result): string
     {
         if (!class_exists(DOMDocument::class)) {
             throw new Exception('Unable to create xml file (php-xml needs to be installed)');
@@ -64,7 +64,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         return (string) $xmlDoc->saveXML();
     }
 
-    private function addTestSuites(LegacyResult $result, DOMDocument $xmlDoc): void
+    private function addTestSuites(OutputResult $result, DOMDocument $xmlDoc): void
     {
         /** @throws void */
         $testSuites = $xmlDoc->createElement('testsuites');
@@ -108,11 +108,11 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $this->addTestSuite($result, $xmlDoc, $testSuites);
     }
 
-    private function addTestSuite(LegacyResult $result, DOMDocument $xmlDoc, DOMElement $testSuites): void
+    private function addTestSuite(OutputResult $result, DOMDocument $xmlDoc, DOMElement $testSuites): void
     {
         /** @var array<string, array<RuleInterface>> $layers */
         $layers = [];
-        foreach ($result->rules as $rule) {
+        foreach ($result->allRules() as $rule) {
             if ($rule instanceof CoveredRuleInterface) {
                 $layers[$rule->getDependerLayer()][] = $rule;
             } elseif ($rule instanceof Uncovered) {

@@ -6,7 +6,7 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -24,41 +24,19 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
+    public function finish(OutputResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
-        foreach ($result->rules as $rule) {
-            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation) {
-                continue;
-            }
-            if ($rule instanceof SkippedViolation && !$outputFormatterInput->reportSkipped) {
-                continue;
-            }
-
-            $dependency = $rule->getDependency();
-
-            $message = sprintf(
-                '%s%s must not depend on %s (%s on %s)',
-                $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
-                $dependency->getDepender()->toString(),
-                $dependency->getDependent()->toString(),
-                $rule->getDependerLayer(),
-                $rule->getDependentLayer()
-            );
-
-            if (count($dependency->serialize()) > 1) {
-                $message .= '%0A'.$this->multilinePathMessage($dependency);
-            }
-
-            $output->writeLineFormatted(sprintf(
-                '::%s file=%s,line=%s::%s',
-                $this->determineLogLevel($rule),
-                $dependency->getFileOccurrence()->filepath,
-                $dependency->getFileOccurrence()->line,
-                $message
-            ));
+        foreach ($result->allOf(Violation::class) as $rule) {
+            $this->printViolation($rule, $output);
         }
 
-        if ($outputFormatterInput->reportUncovered && $result->hasUncovered()) {
+        if ($outputFormatterInput->reportSkipped) {
+            foreach ($result->allOf(SkippedViolation::class) as $rule) {
+                $this->printViolation($rule, $output);
+            }
+        }
+
+        if ($outputFormatterInput->reportUncovered) {
             $this->printUncovered($result, $output, $outputFormatterInput->failOnUncovered);
         }
 
@@ -80,7 +58,7 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         };
     }
 
-    private function printUncovered(LegacyResult $result, OutputInterface $output, bool $reportAsError): void
+    private function printUncovered(OutputResult $result, OutputInterface $output, bool $reportAsError): void
     {
         foreach ($result->uncovered() as $u) {
             $dependency = $u->getDependency();
@@ -109,17 +87,47 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
         );
     }
 
-    private function printErrors(LegacyResult $result, OutputInterface $output): void
+    private function printErrors(OutputResult $result, OutputInterface $output): void
     {
         foreach ($result->errors as $error) {
             $output->writeLineFormatted('::error ::'.(string) $error);
         }
     }
 
-    private function printWarnings(LegacyResult $result, OutputInterface $output): void
+    private function printWarnings(OutputResult $result, OutputInterface $output): void
     {
         foreach ($result->warnings as $warning) {
             $output->writeLineFormatted('::warning ::'.(string) $warning);
         }
+    }
+
+    private function printViolation(Violation|SkippedViolation $rule, OutputInterface $output): void
+    {
+        $dependency = $rule->getDependency();
+
+        $message = sprintf(
+            '%s%s must not depend on %s (%s on %s)',
+            $rule instanceof SkippedViolation ? '[SKIPPED] ' : '',
+            $dependency->getDepender()
+                ->toString(),
+            $dependency->getDependent()
+                ->toString(),
+            $rule->getDependerLayer(),
+            $rule->getDependentLayer()
+        );
+
+        if (count($dependency->serialize()) > 1) {
+            $message .= '%0A'.$this->multilinePathMessage($dependency);
+        }
+
+        $output->writeLineFormatted(
+            sprintf(
+                '::%s file=%s,line=%s::%s',
+                $this->determineLogLevel($rule),
+                $dependency->getFileOccurrence()->filepath,
+                $dependency->getFileOccurrence()->line,
+                $message
+            )
+        );
     }
 }

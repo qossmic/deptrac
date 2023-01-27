@@ -6,10 +6,10 @@ namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -374,9 +374,14 @@ final class JsonOutputFormatterTest extends TestCase
     ): void {
         $bufferedOutput = new BufferedOutput();
 
+        $resultBuilder = new AnalysisResultBuilder();
+        foreach ($rules as $rule) {
+            $resultBuilder->add($rule);
+        }
+
         $formatter = new JsonOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            $resultBuilder->build(),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 __DIR__.'/data/'.self::$actual_json_report_file,
@@ -403,9 +408,14 @@ final class JsonOutputFormatterTest extends TestCase
     ): void {
         $bufferedOutput = new BufferedOutput();
 
+        $resultBuilder = new AnalysisResultBuilder();
+        foreach ($rules as $rule) {
+            $resultBuilder->add($rule);
+        }
+
         $formatter = new JsonOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            $resultBuilder->build(),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
@@ -436,11 +446,14 @@ final class JsonOutputFormatterTest extends TestCase
             'LayerB'
         );
 
+        $resultBuilder = new AnalysisResultBuilder();
+        $resultBuilder->add($violation);
+
         self::expectException(Exception::class);
         self::expectExceptionMessage('Unable to render json output. '
                                      .'Malformed UTF-8 characters, possibly incorrectly encoded');
         $formatter->finish(
-            new LegacyResult([$violation], [], []),
+            $resultBuilder->build(),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
