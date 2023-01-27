@@ -132,7 +132,7 @@ class TypeResolver
     /**
      * @return string[]
      */
-    public function resolveString(string $type, TypeScope $nameScope): array
+    protected function resolveString(string $type, TypeScope $nameScope): array
     {
         $context = new Context($nameScope->namespace, $nameScope->getUses());
         try {
