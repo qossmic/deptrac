@@ -63,7 +63,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @return array<string,array<string>>
+     * @return array<string,list<string>>
      */
     private function collectViolations(LegacyResult $result): array
     {

@@ -5,7 +5,7 @@ PHP_CS_FIXER_BIN := ./vendor/bin/php-cs-fixer
 PHPSTAN_BIN	:= ./vendor/bin/phpstan
 PSALM_BIN	:= ./vendor/bin/psalm
 PHPUNIT_BIN	:= ./vendor/bin/phpunit
-INFECTION_BIN	:= ./vendor/bin/infection
+INFECTION_BIN	:= ./vendor/bin/roave-infection-static-analysis-plugin
 
 .PHONY: build composer-install tests tests-coverage gpg php-cs-check php-cs-fix phpstan
 
@@ -38,7 +38,7 @@ psalm:
 	$(PSALM_BIN)
 
 infection: composer-install
-	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=80
+	$(INFECTION_BIN) --threads=$(shell nproc || sysctl -n hw.ncpu || 1) --test-framework-options='--testsuite=Tests' --only-covered --min-msi=85 --psalm-config=psalm.xml
 
 gpg:
 	gpg --detach-sign --armor --default-key 41DDE07547459FAECFA17813B8F640134AB1782E --output deptrac.phar.asc deptrac.phar

@@ -1,14 +1,23 @@
 {
-    "timeout": 10,
-    "source": {
-        "directories": [
-            "src"
-        ]
+  "timeout": 10,
+  "source": {
+    "directories": [
+      "src"
+    ]
+  },
+  "logs": {
+    "text": "infection.log"
+  },
+  "mutators": {
+    "@default": true,
+    "FunctionCallRemoval": {
+      "ignoreSourceCodeByRegex": [
+        "trigger_deprecation.*"
+      ]
     },
-    "logs": {
-        "text": "infection.log"
-    },
-    "mutators": {
-        "@default": true
-    }
+    "global-ignoreSourceCodeByRegex": [
+      "\\$output->writeLineFormatted.*"
+    ],
+    "CatchBlockRemoval": false
+  }
 }
