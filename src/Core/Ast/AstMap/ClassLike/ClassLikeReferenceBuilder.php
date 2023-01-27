@@ -17,7 +17,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(
+    private function __construct(
         array $tokenTemplates,
         string $filepath,
         private readonly ClassLikeToken $classLikeToken,

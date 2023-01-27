@@ -1,14 +1,19 @@
 {
-    "timeout": 10,
-    "source": {
-        "directories": [
-            "src"
-        ]
-    },
-    "logs": {
-        "text": "infection.log"
-    },
-    "mutators": {
-        "@default": true
+  "timeout": 10,
+  "source": {
+    "directories": [
+      "src"
+    ]
+  },
+  "logs": {
+    "text": "infection.log"
+  },
+  "mutators": {
+    "@default": true,
+    "FunctionCallRemoval": {
+      "ignoreSourceCodeByRegex": [
+        "trigger_deprecation.*"
+      ]
     }
+  }
 }

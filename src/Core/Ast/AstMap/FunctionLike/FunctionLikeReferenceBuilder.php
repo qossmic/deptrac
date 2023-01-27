@@ -11,7 +11,7 @@ class FunctionLikeReferenceBuilder extends ReferenceBuilder
     /**
      * @param string[] $tokenTemplates
      */
-    protected function __construct(array $tokenTemplates, string $filepath, private readonly string $functionName)
+    private function __construct(array $tokenTemplates, string $filepath, private readonly string $functionName)
     {
         parent::__construct($tokenTemplates, $filepath);
     }
