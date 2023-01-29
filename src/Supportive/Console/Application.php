@@ -10,6 +10,7 @@ use RuntimeException;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\Exception\ExceptionInterface;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -30,11 +31,20 @@ final class Application extends BaseApplication
         parent::__construct('deptrac', self::VERSION);
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     protected function getDefaultInputDefinition(): InputDefinition
     {
         $definition = parent::getDefaultInputDefinition();
 
         $definition->addOptions([
+            new InputOption(
+                '--help',
+                '-h',
+                InputOption::VALUE_NONE,
+                'Display help for the given command. When no command is given display help for the <info>analyse</info> command'
+            ),
             new InputOption(
                 '--no-cache',
                 null,
