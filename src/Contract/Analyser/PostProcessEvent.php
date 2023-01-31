@@ -8,16 +8,16 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PostProcessEvent extends Event
 {
-    public function __construct(private AnalysisResultBuilder $result)
+    public function __construct(private AnalysisResult $result)
     {
     }
 
-    public function getResult(): AnalysisResultBuilder
+    public function getResult(): AnalysisResult
     {
         return $this->result;
     }
 
-    public function replaceResult(AnalysisResultBuilder $result): void
+    public function replaceResult(AnalysisResult $result): void
     {
         $this->result = $result;
     }

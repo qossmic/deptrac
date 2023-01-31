@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Result;
 
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
+
 use function count;
 
 /**
@@ -16,11 +18,16 @@ final class OutputResult
      * @param Error[] $errors
      * @param Warning[] $warnings
      */
-    public function __construct(
+    private function __construct(
         public readonly array $rules,
         public readonly array $errors,
         public readonly array $warnings
     ) {
+    }
+
+    public static function fromAnalysisResult(AnalysisResult $analysisResult): self
+    {
+        return new self($analysisResult->rules(), $analysisResult->errors(), $analysisResult->warnings());
     }
 
     /**

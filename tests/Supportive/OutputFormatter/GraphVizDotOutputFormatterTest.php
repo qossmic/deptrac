@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Allowed;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -34,14 +35,14 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         $fileOccurrenceA = new FileOccurrence('classA.php', 0);
         $classA = ClassLikeToken::fromFQCN('ClassA');
 
-        $resultBuilder = new AnalysisResultBuilder();
-        $resultBuilder->add(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerB'));
-        $resultBuilder->add(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerHidden'));
-        $resultBuilder->add(new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'),
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerB'));
+        $analysisResult->addRule(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerHidden'));
+        $analysisResult->addRule(new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'),
             new FileOccurrence('classAB.php', 1), DependencyType::PARAMETER
         ), 'LayerA', 'LayerB'));
-        $resultBuilder->add(new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerC'));
-        $resultBuilder->add(new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerC'));
+        $analysisResult->addRule(new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerC'));
+        $analysisResult->addRule(new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerC'));
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
@@ -59,7 +60,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                 'groups' => [],
                 'point_to_groups' => false,
             ],
-        ])))->finish($resultBuilder->build(), $this->createSymfonyOutput($bufferedOutput), $input);
+        ])))->finish(OutputResult::fromAnalysisResult($analysisResult), $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf('Script dumped to %s'.PHP_EOL, Path::normalize($dotFile)), Path::normalize($bufferedOutput->fetch()));
 
@@ -79,11 +80,11 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0), DependencyType::PARAMETER
         );
 
-        $resultBuilder = new AnalysisResultBuilder();
-        $resultBuilder->add(new Allowed($dependency, 'User Frontend', 'User Backend'));
-        $resultBuilder->add(new Allowed($dependency, 'Admin', 'Admin Backend'));
-        $resultBuilder->add(new Allowed($dependency, 'User Frontend', 'Admin'));
-        $resultBuilder->add(new Allowed($dependency, 'User Backend', 'Admin'));
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(new Allowed($dependency, 'User Frontend', 'User Backend'));
+        $analysisResult->addRule(new Allowed($dependency, 'Admin', 'Admin Backend'));
+        $analysisResult->addRule(new Allowed($dependency, 'User Frontend', 'Admin'));
+        $analysisResult->addRule(new Allowed($dependency, 'User Backend', 'Admin'));
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
@@ -108,7 +109,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                 ],
                 'point_to_groups' => false,
             ],
-        ])))->finish($resultBuilder->build(), $this->createSymfonyOutput($bufferedOutput), $input);
+        ])))->finish(OutputResult::fromAnalysisResult($analysisResult), $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf('Script dumped to %s'.PHP_EOL, Path::normalize($dotFile)), Path::normalize($bufferedOutput->fetch()));
 
@@ -128,11 +129,11 @@ final class GraphVizDotOutputFormatterTest extends TestCase
             ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0), DependencyType::PARAMETER
         );
 
-        $resultBuilder = new AnalysisResultBuilder();
-        $resultBuilder->add(new Allowed($dependency, 'User Frontend', 'User Backend'));
-        $resultBuilder->add(new Allowed($dependency, 'Admin', 'Admin Backend'));
-        $resultBuilder->add(new Allowed($dependency, 'User Frontend', 'Admin'));
-        $resultBuilder->add(new Allowed($dependency, 'User Backend', 'Admin'));
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(new Allowed($dependency, 'User Frontend', 'User Backend'));
+        $analysisResult->addRule(new Allowed($dependency, 'Admin', 'Admin Backend'));
+        $analysisResult->addRule(new Allowed($dependency, 'User Frontend', 'Admin'));
+        $analysisResult->addRule(new Allowed($dependency, 'User Backend', 'Admin'));
 
         $bufferedOutput = new BufferedOutput();
         $input = new OutputFormatterInput(
@@ -157,7 +158,7 @@ final class GraphVizDotOutputFormatterTest extends TestCase
                 ],
                 'point_to_groups' => true,
             ],
-        ])))->finish($resultBuilder->build(), $this->createSymfonyOutput($bufferedOutput), $input);
+        ])))->finish(OutputResult::fromAnalysisResult($analysisResult), $this->createSymfonyOutput($bufferedOutput), $input);
 
         self::assertSame(sprintf('Script dumped to %s'.PHP_EOL, Path::normalize($dotFile)), Path::normalize($bufferedOutput->fetch()));
 

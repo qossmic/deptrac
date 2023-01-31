@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
@@ -162,14 +162,14 @@ final class JUnitOutputFormatterTest extends TestCase
      */
     public function testBasic(array $rules, string $expectedOutputFile): void
     {
-        $resultBuilder = new AnalysisResultBuilder();
+        $analysisResult = new AnalysisResult();
         foreach ($rules as $rule) {
-            $resultBuilder->add($rule);
+            $analysisResult->addRule($rule);
         }
 
         $formatter = new JUnitOutputFormatter();
         $formatter->finish(
-            $resultBuilder->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
                 false, false, false)
@@ -184,10 +184,11 @@ final class JUnitOutputFormatterTest extends TestCase
     public function testUnmatchedSkipped(): void
     {
         $formatter = new JUnitOutputFormatter();
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addError(new Error('Skipped violation "Class1" for "Class2" was not matched.'));
+
         $formatter->finish(
-            new OutputResult([], [
-                new Error('Skipped violation "Class1" for "Class2" was not matched.'),
-            ], []),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput(new BufferedOutput()),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_junit_report_file,
                 false, false, false)

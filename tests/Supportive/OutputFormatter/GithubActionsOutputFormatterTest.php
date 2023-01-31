@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
@@ -43,18 +43,18 @@ final class GithubActionsOutputFormatterTest extends TestCase
     {
         $bufferedOutput = new BufferedOutput();
 
-        $resultBuilder = new AnalysisResultBuilder();
+        $analysisResult = new AnalysisResult();
         foreach ($rules as $rule) {
-            $resultBuilder->add($rule);
+            $analysisResult->addRule($rule);
         }
         foreach ($errors as $error) {
-            $resultBuilder->addError($error);
+            $analysisResult->addError($error);
         }
-        $resultBuilder->addWarnings($warnings);
+        $analysisResult->addWarnings($warnings);
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            $resultBuilder->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
@@ -179,19 +179,20 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $originalB = ClassLikeToken::fromFQCN('\ACME\OriginalB');
         $originalAOccurrence = new FileOccurrence('/home/testuser/originalA.php', 12);
 
-        $rules = [
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(
             new SkippedViolation(
                 new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                 'LayerA',
                 'LayerB'
-            ),
-        ];
+            )
+        );
 
         $bufferedOutput = new BufferedOutput();
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            new OutputResult($rules, [], []),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
@@ -210,8 +211,8 @@ final class GithubActionsOutputFormatterTest extends TestCase
         $originalB = ClassLikeToken::fromFQCN('\ACME\OriginalB');
         $originalAOccurrence = new FileOccurrence('/home/testuser/originalA.php', 12);
 
-        $analysisResult = new AnalysisResultBuilder();
-        $analysisResult->add(
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(
             new Uncovered(
                 new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                 'LayerA'
@@ -222,7 +223,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(
-            $analysisResult->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,

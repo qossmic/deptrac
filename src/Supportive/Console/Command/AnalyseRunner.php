@@ -7,6 +7,7 @@ namespace Qossmic\Deptrac\Supportive\Console\Command;
 use Psr\Container\ContainerExceptionInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Core\Analyser\AnalyserException;
 use Qossmic\Deptrac\Core\Analyser\DependencyLayersAnalyser;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
@@ -47,7 +48,7 @@ final class AnalyseRunner
         $this->printCollectViolations($output);
 
         try {
-            $result = $this->analyser->process()->build();
+            $result = OutputResult::fromAnalysisResult($this->analyser->analyse());
         } catch (AnalyserException $e) {
             throw CommandRunException::analyserException($e);
         }

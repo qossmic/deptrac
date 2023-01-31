@@ -6,10 +6,11 @@ namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -383,16 +384,16 @@ final class CodeclimateOutputFormatterTest extends TestCase
     ): void {
         $bufferedOutput = new BufferedOutput();
 
-        $resultBuilder = new AnalysisResultBuilder();
+        $analysisResult = new AnalysisResult();
         foreach ($rules as $rule) {
-            $resultBuilder->add($rule);
+            $analysisResult->addRule($rule);
         }
 
         $formatter = new CodeclimateOutputFormatter(new FormatterConfiguration([
             'codeclimate' => $inputConfig,
         ]));
         $formatter->finish(
-            $resultBuilder->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 __DIR__.'/data/'.self::$actual_codeclimate_report_file,
@@ -424,13 +425,13 @@ final class CodeclimateOutputFormatterTest extends TestCase
             'codeclimate' => $inputConfig,
         ]));
 
-        $resultBuilder = new AnalysisResultBuilder();
+        $analysisResult = new AnalysisResult();
         foreach ($rules as $rule) {
-            $resultBuilder->add($rule);
+            $analysisResult->addRule($rule);
         }
 
         $formatter->finish(
-            $resultBuilder->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,
@@ -461,14 +462,14 @@ final class CodeclimateOutputFormatterTest extends TestCase
             'LayerB'
         );
 
-        $resultBuilder = new AnalysisResultBuilder();
-        $resultBuilder->add($violation);
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule($violation);
 
         self::expectException(Exception::class);
         self::expectExceptionMessage('Unable to render codeclimate output. '
                                      .'Malformed UTF-8 characters, possibly incorrectly encoded');
         $formatter->finish(
-            $resultBuilder->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(
                 null,

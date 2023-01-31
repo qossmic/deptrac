@@ -19,16 +19,16 @@ class ProcessEvent extends Event
         public readonly string $dependerLayer,
         public readonly TokenReferenceInterface $dependentReference,
         public readonly array $dependentLayers,
-        private AnalysisResultBuilder $result = new AnalysisResultBuilder()
+        private AnalysisResult $result = new AnalysisResult()
     ) {
     }
 
-    public function getResult(): AnalysisResultBuilder
+    public function getResult(): AnalysisResult
     {
         return $this->result;
     }
 
-    public function replaceResult(AnalysisResultBuilder $ruleset): void
+    public function replaceResult(AnalysisResult $ruleset): void
     {
         $this->result = $ruleset;
     }

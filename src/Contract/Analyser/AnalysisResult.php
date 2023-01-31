@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Contract\Analyser;
 
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\Warning;
 
 use function spl_object_id;
 
-class AnalysisResultBuilder
+class AnalysisResult
 {
     /**
      * @var array<string, array<int, RuleInterface>>
@@ -28,12 +27,12 @@ class AnalysisResultBuilder
      */
     private array $errors = [];
 
-    public function add(RuleInterface $rule): void
+    public function addRule(RuleInterface $rule): void
     {
         $this->rules[$rule::class][spl_object_id($rule)] = $rule;
     }
 
-    public function remove(RuleInterface $rule): void
+    public function removeRule(RuleInterface $rule): void
     {
         unset($this->rules[$rule::class][spl_object_id($rule)]);
     }
@@ -41,14 +40,9 @@ class AnalysisResultBuilder
     /**
      * @return array<string, array<int, RuleInterface>>
      */
-    public function all(): array
+    public function rules(): array
     {
         return $this->rules;
-    }
-
-    public function build(): OutputResult
-    {
-        return new OutputResult($this->rules, $this->errors, $this->warnings);
     }
 
     /**
@@ -85,10 +79,5 @@ class AnalysisResultBuilder
     public function errors(): array
     {
         return $this->errors;
-    }
-
-    public function hasErrors(): bool
-    {
-        return [] !== $this->errors;
     }
 }

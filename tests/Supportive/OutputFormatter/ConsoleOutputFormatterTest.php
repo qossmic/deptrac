@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Contract\Analyser\AnalysisResultBuilder;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -204,9 +205,9 @@ final class ConsoleOutputFormatterTest extends TestCase
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
 
-        $analysisResult = new AnalysisResultBuilder();
+        $analysisResult = new AnalysisResult();
         foreach ($rules as $rule) {
-            $analysisResult->add($rule);
+            $analysisResult->addRule($rule);
         }
         foreach ($errors as $error) {
             $analysisResult->addError($error);
@@ -215,7 +216,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            $analysisResult->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $output,
             new OutputFormatterInput(
                 null,
@@ -237,8 +238,8 @@ final class ConsoleOutputFormatterTest extends TestCase
         $originalA = ClassLikeToken::fromFQCN('OriginalA');
         $originalB = ClassLikeToken::fromFQCN('OriginalB');
 
-        $resultBuilder = new AnalysisResultBuilder();
-        $resultBuilder->add(new SkippedViolation(
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(new SkippedViolation(
             new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
             'LayerA',
             'LayerB'
@@ -252,7 +253,7 @@ final class ConsoleOutputFormatterTest extends TestCase
 
         $formatter = new ConsoleOutputFormatter();
         $formatter->finish(
-            $resultBuilder->build(),
+            OutputResult::fromAnalysisResult($analysisResult),
             $output,
             new OutputFormatterInput(
                 null,
