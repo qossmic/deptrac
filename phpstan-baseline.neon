@@ -9,38 +9,3 @@ parameters:
 			message: "#^Method Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\OutputResult\\:\\:allRules\\(\\) should return list\\<Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\RuleInterface\\> but returns array\\.$#"
 			count: 1
 			path: src/Contract/Result/OutputResult.php
-
-		-
-			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\AstInherit\\:\\:\\$path is assigned outside of the constructor\\.$#"
-			count: 1
-			path: src/Core/Ast/AstMap/AstInherit.php
-
-		-
-			message: "#^Method Qossmic\\\\Deptrac\\\\Core\\\\Layer\\\\Collector\\\\MethodCollector\\:\\:satisfy\\(\\) throws checked exception Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\Parser\\\\CouldNotParseFileException but it's missing from the PHPDoc @throws tag\\.$#"
-			count: 1
-			path: src/Core/Layer/Collector/MethodCollector.php
-
-		-
-			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\DependencyInjection\\\\Configuration\\:\\:appendEmitterTypes\\(\\) throws checked exception InvalidArgumentException but it's missing from the PHPDoc @throws tag\\.$#"
-			count: 1
-			path: src/Supportive/DependencyInjection/Configuration.php
-
-		-
-			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\DependencyInjection\\\\Configuration\\:\\:appendEmitterTypes\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag\\.$#"
-			count: 1
-			path: src/Supportive/DependencyInjection/Configuration.php
-
-		-
-			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\DependencyInjection\\\\Configuration\\:\\:appendFormatters\\(\\) throws checked exception RuntimeException but it's missing from the PHPDoc @throws tag\\.$#"
-			count: 1
-			path: src/Supportive/DependencyInjection/Configuration.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between null and SplFileInfo will always evaluate to false\\.$#"
-			count: 1
-			path: src/Supportive/DependencyInjection/ServiceContainerBuilder.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between null and SplFileInfo will always evaluate to false\\.$#"
-			count: 1
-			path: src/Supportive/OutputFormatter/GraphVizOutputImageFormatter.php

@@ -22,12 +22,16 @@ class AstInherit implements Stringable
      */
     private array $path;
 
+    /**
+     * @param AstInherit[] $path
+     */
     public function __construct(
         public readonly ClassLikeToken $classLikeName,
         public readonly FileOccurrence $fileOccurrence,
-        public readonly AstInheritType $type
+        public readonly AstInheritType $type,
+        array $path = []
     ) {
-        $this->path = [];
+        $this->path = $path;
     }
 
     /**
@@ -54,10 +58,6 @@ class AstInherit implements Stringable
      */
     public function withPath(array $path): self
     {
-        $self = clone $this;
-
-        $self->path = $path;
-
-        return $self;
+        return new self($this->classLikeName, $this->fileOccurrence, $this->type, $path);
     }
 }

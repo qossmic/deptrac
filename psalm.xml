@@ -17,5 +17,6 @@
     </projectFiles>
     <issueHandlers>
         <RedundantIdentityWithTrue errorLevel="suppress"/> <!-- Causes trouble with `match(true)` -->
+        <MissingThrowsDocblock errorLevel="suppress"/> <!-- PHPStan does it better with @throws void -->
     </issueHandlers>
 </psalm>

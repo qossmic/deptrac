@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser;
 
+use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
@@ -59,6 +60,8 @@ class LayerForTokenAnalyser
             throw AnalyserException::invalidCollectorDefinition($e);
         } catch (AstException $e) {
             throw AnalyserException::failedAstParsing($e);
+        } catch (CouldNotParseFileException $e) {
+            throw AnalyserException::couldNotParseFile($e);
         }
     }
 
@@ -70,6 +73,7 @@ class LayerForTokenAnalyser
      * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
      * @throws \Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException
      * @throws \Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException
+     * @throws \Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException
      */
     private function findLayersForReferences(array $references, string $tokenName, AstMap $astMap): array
     {

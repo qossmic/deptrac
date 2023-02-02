@@ -7,9 +7,6 @@ namespace Qossmic\Deptrac\Supportive\File\Exception;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
 
-/**
- * @internal
- */
 final class CouldNotReadFileException extends RuntimeException implements ExceptionInterface
 {
     public static function fromFilename(string $filename): self

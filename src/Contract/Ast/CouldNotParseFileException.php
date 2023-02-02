@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\Parser;
+namespace Qossmic\Deptrac\Contract\Ast;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;

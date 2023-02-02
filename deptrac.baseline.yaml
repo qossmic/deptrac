@@ -6,7 +6,3 @@ deptrac:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
     Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser:
       - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
-    Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceFileCache:
-      - Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException
-    Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser:
-      - Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException
