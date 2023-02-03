@@ -26,6 +26,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\ConsoleOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 final class ConsoleOutputFormatterTest extends TestCase
 {
@@ -69,7 +70,8 @@ final class ConsoleOutputFormatterTest extends TestCase
                             ])
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             [],
@@ -98,7 +100,8 @@ final class ConsoleOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             [],
