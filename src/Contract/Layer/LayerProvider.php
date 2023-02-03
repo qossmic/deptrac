@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Layer;
-
-use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
+namespace Qossmic\Deptrac\Contract\Layer;
 
 class LayerProvider
 {

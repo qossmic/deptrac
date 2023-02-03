@@ -53,11 +53,11 @@ final class TableOutputFormatter implements OutputFormatterInterface
         foreach ($groupedRules as $layer => $rules) {
             $rows = [];
             foreach ($rules as $rule) {
-                if ($rule instanceof Uncovered) {
-                    $rows[] = $this->uncoveredRow($rule, $outputFormatterInput->failOnUncovered);
-                } else {
-                    $rows[] = $this->violationRow($rule);
-                }
+                $rows[] = match (true) {
+                    $rule instanceof Uncovered => $this->uncoveredRow($rule, $outputFormatterInput->failOnUncovered),
+                    $rule instanceof Violation => $this->violationRow($rule),
+                    $rule instanceof SkippedViolation => $this->skippedViolationRow($rule),
+                };
             }
 
             $style->table(['Reason', $layer], $rows);
@@ -77,7 +77,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
     /**
      * @return array{string, string}
      */
-    private function violationRow(Violation|SkippedViolation $rule): array
+    private function skippedViolationRow(SkippedViolation $rule): array
     {
         $dependency = $rule->getDependency();
 
@@ -95,10 +95,31 @@ final class TableOutputFormatter implements OutputFormatterInterface
         $fileOccurrence = $rule->getDependency()->getFileOccurrence();
         $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
-        return [
-            $rule instanceof SkippedViolation ? '<fg=yellow>Skipped</>' : '<fg=red>Violation</>',
-            $message,
-        ];
+        return ['<fg=yellow>Skipped</>', $message];
+    }
+
+    /**
+     * @return array{string, string}
+     */
+    private function violationRow(Violation $rule): array
+    {
+        $dependency = $rule->getDependency();
+
+        $message = sprintf(
+            '<info>%s</info> must not depend on <info>%s</info>',
+            $dependency->getDepender()->toString(),
+            $dependency->getDependent()->toString(),
+        );
+        $message .= sprintf("\n%s (%s)", $rule->ruleDescription(), $rule->getDependentLayer());
+
+        if (count($dependency->serialize()) > 1) {
+            $message .= "\n".$this->formatMultilinePath($dependency);
+        }
+
+        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
+        $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
+
+        return [sprintf('<fg=red>%s</>', $rule->ruleName()), $message];
     }
 
     private function formatMultilinePath(DependencyInterface $dep): string

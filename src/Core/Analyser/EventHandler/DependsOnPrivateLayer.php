@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser\EventHandler;
 
+use Qossmic\Deptrac\Contract\Analyser\EventHelper;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Qossmic\Deptrac\Contract\Analyser\ViolationCreatingInterface;
 
 /**
  * @internal
  */
-class DependsOnPrivateLayer extends ViolationHandler
+class DependsOnPrivateLayer implements ViolationCreatingInterface
 {
+    public function __construct(private readonly EventHelper $eventHelper)
+    {
+    }
+
     public static function getSubscribedEvents()
     {
         return [
-            ProcessEvent::class => ['invoke', -4],
+            ProcessEvent::class => ['invoke', -3],
         ];
     }
 
@@ -24,9 +30,19 @@ class DependsOnPrivateLayer extends ViolationHandler
 
         foreach ($event->dependentLayers as $dependentLayer => $isPublic) {
             if ($event->dependerLayer === $dependentLayer && !$isPublic) {
-                $this->addSkippableViolation($event, $ruleset, $dependentLayer);
+                $this->eventHelper->addSkippableViolation($event, $ruleset, $dependentLayer, $this);
                 $event->stopPropagation();
             }
         }
+    }
+
+    public function ruleName(): string
+    {
+        return 'DependsOnPrivateLayer';
+    }
+
+    public function ruleDescription(): string
+    {
+        return 'You are depending on a part of a layer that was defined as private to that layer and you are not part of that layer.';
     }
 }

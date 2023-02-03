@@ -16,7 +16,7 @@ class AllowDependencyHandler implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProcessEvent::class => ['invoke', -8],
+            ProcessEvent::class => ['invoke', -100],
         ];
     }
 

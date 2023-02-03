@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Result;
 
+use Qossmic\Deptrac\Contract\Analyser\ViolationCreatingInterface;
 use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 
 /**
@@ -14,7 +15,8 @@ final class Violation implements CoveredRuleInterface
     public function __construct(
         private readonly DependencyInterface $dependency,
         private readonly string $dependerLayer,
-        private readonly string $dependentLayer
+        private readonly string $dependentLayer,
+        private readonly ViolationCreatingInterface $violationCreatingRule
     ) {
     }
 
@@ -31,5 +33,15 @@ final class Violation implements CoveredRuleInterface
     public function getDependentLayer(): string
     {
         return $this->dependentLayer;
+    }
+
+    public function ruleName(): string
+    {
+        return $this->violationCreatingRule->ruleName();
+    }
+
+    public function ruleDescription(): string
+    {
+        return $this->violationCreatingRule->ruleDescription();
     }
 }

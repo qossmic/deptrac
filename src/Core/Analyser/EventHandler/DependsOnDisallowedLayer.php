@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser\EventHandler;
 
+use Qossmic\Deptrac\Contract\Analyser\EventHelper;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Qossmic\Deptrac\Contract\Analyser\ViolationCreatingInterface;
+use Qossmic\Deptrac\Contract\Layer\CircularReferenceException;
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
 
 use function in_array;
 
 /**
  * @internal
  */
-class DependsOnDisallowedLayer extends ViolationHandler
+class DependsOnDisallowedLayer implements ViolationCreatingInterface
 {
+    public function __construct(private readonly EventHelper $eventHelper)
+    {
+    }
+
     public static function getSubscribedEvents()
     {
         return [
-            ProcessEvent::class => ['invoke', -4],
+            ProcessEvent::class => ['invoke', -1],
         ];
     }
 
@@ -27,7 +33,7 @@ class DependsOnDisallowedLayer extends ViolationHandler
         $ruleset = $event->getResult();
 
         try {
-            $allowedLayers = $this->layerProvider->getAllowedLayers($event->dependerLayer);
+            $allowedLayers = $this->eventHelper->layerProvider->getAllowedLayers($event->dependerLayer);
         } catch (CircularReferenceException $circularReferenceException) {
             $ruleset->addError(new Error($circularReferenceException->getMessage()));
             $event->stopPropagation();
@@ -37,9 +43,19 @@ class DependsOnDisallowedLayer extends ViolationHandler
 
         foreach ($event->dependentLayers as $dependentLayer => $_) {
             if (!in_array($dependentLayer, $allowedLayers, true)) {
-                $this->addSkippableViolation($event, $ruleset, $dependentLayer);
+                $this->eventHelper->addSkippableViolation($event, $ruleset, $dependentLayer, $this);
                 $event->stopPropagation();
             }
         }
+    }
+
+    public function ruleName(): string
+    {
+        return 'DependsOnDisallowedLayer';
+    }
+
+    public function ruleDescription(): string
+    {
+        return 'You are depending on token that is a part of a layer that you are not allowed to depend on.';
     }
 }
