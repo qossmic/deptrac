@@ -8,9 +8,12 @@ use PhpParser\ParserFactory;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Core\Analyser\DependencyLayersAnalyser;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\AllowDependencyHandler;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnDisallowedLayer;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnInternalToken;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnPrivateLayer;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\SkippedViolationHelper;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UncoveredDependentHandler;
-use Qossmic\Deptrac\Core\Analyser\EventHandler\ViolationHandler;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
@@ -316,11 +319,18 @@ return static function (ContainerConfigurator $container): void {
         ->set(AllowDependencyHandler::class)
         ->tag('kernel.event_subscriber');
     $services
-        ->set(ViolationHandler::class)
+        ->set(DependsOnDisallowedLayer::class)
+        ->tag('kernel.event_subscriber');
+    $services
+        ->set(DependsOnPrivateLayer::class)
+        ->tag('kernel.event_subscriber');
+    $services
+        ->set(DependsOnInternalToken::class)
+        ->tag('kernel.event_subscriber');
+    $services->set(SkippedViolationHelper::class)
         ->args([
             '$skippedViolations' => param('skip_violations'),
-        ])
-        ->tag('kernel.event_subscriber');
+        ]);
     $services
         ->set(DependencyLayersAnalyser::class);
     $services->set(TokenInLayerAnalyser::class)

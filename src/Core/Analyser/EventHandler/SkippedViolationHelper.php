@@ -19,16 +19,16 @@ final class SkippedViolationHelper
     private array $unmatchedSkippedViolation;
 
     /**
-     * @param array<string, string[]> $skippedViolation
+     * @param array<string, string[]> $skippedViolations
      */
-    public function __construct(private readonly array $skippedViolation)
+    public function __construct(private readonly array $skippedViolations)
     {
-        $this->unmatchedSkippedViolation = $skippedViolation;
+        $this->unmatchedSkippedViolation = $skippedViolations;
     }
 
     public function isViolationSkipped(string $depender, string $dependent): bool
     {
-        $matched = isset($this->skippedViolation[$depender]) && in_array($dependent, $this->skippedViolation[$depender], true);
+        $matched = isset($this->skippedViolations[$depender]) && in_array($dependent, $this->skippedViolations[$depender], true);
 
         if ($matched && false !== ($key = array_search($dependent, $this->unmatchedSkippedViolation[$depender], true))) {
             unset($this->unmatchedSkippedViolation[$depender][$key]);
