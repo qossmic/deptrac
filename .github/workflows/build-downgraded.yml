@@ -1,0 +1,48 @@
+name: "Build Downgraded"
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    tags:
+      - "**"
+
+jobs:
+  build_downgraded:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+
+      # invoke patches
+      -   uses: "ramsey/composer-install@v2"
+
+      # but no dev packages
+      -   run: composer update --no-dev
+
+      # get rector to "rector-local" directory, to avoid downgrading itself in the /vendor
+      -   run: mkdir rector-local
+      -   run: composer require rector/rector --working-dir rector-local
+
+      # downgrade to PHP 7.2
+      -   run: rector-local/vendor/bin/rector process deptrac.php src vendor --config build/rector-downgrade-php-72.php --ansi
+
+      # clear the dev files
+      -   run: rm -rf tests phpstan.neon.dist phpunit.xml.dist .gitignore .editorconfig rector-local
+
+      # prefix and scope
+      -   run: make build
+
+      - name: "Upload phar file artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: deptrac-downgraded.phar
+          path: deptrac-downgraded.phar
