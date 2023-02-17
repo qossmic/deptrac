@@ -29,7 +29,7 @@ class UncoveredDependentHandler implements EventSubscriberInterface
         }
 
         if ($dependent instanceof ClassLikeToken && !$this->ignoreUncoveredInternalClass($dependent)) {
-            $ruleset->add(new Uncovered($event->dependency, $event->dependerLayer));
+            $ruleset->addRule(new Uncovered($event->dependency, $event->dependerLayer));
         }
 
         $event->stopPropagation();

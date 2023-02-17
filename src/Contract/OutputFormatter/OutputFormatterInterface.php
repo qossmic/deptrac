@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 
 interface OutputFormatterInterface
 {
@@ -22,7 +22,7 @@ interface OutputFormatterInterface
      * @throws OutputException
      */
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void;

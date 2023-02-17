@@ -13,7 +13,7 @@ use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\RuleInterface;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -38,12 +38,12 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $layerViolations = $this->calculateViolations($result->violations());
-        $layersDependOnLayers = $this->calculateLayerDependencies($result->rules);
+        $layersDependOnLayers = $this->calculateLayerDependencies($result->allRules());
 
         $outputConfig = ConfigurationGraphViz::fromArray($this->config);
 

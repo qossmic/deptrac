@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -332,9 +333,18 @@ class TableOutputFormatterTest extends TestCase
             new Style(new SymfonyStyle($this->createMock(InputInterface::class), $bufferedOutput))
         );
 
+        $analysisResult = new AnalysisResult();
+        foreach ($rules as $rule) {
+            $analysisResult->addRule($rule);
+        }
+        foreach ($errors as $error) {
+            $analysisResult->addError($error);
+        }
+        $analysisResult->addWarnings($warnings);
+
         $formatter = new TableOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, $errors, $warnings),
+            OutputResult::fromAnalysisResult($analysisResult),
             $output,
             new OutputFormatterInput(
                 null,

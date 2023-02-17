@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Analyser;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Analyser\PostProcessEvent;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
-use Qossmic\Deptrac\Contract\Result\Result;
 use Qossmic\Deptrac\Contract\Result\Warning;
 use Qossmic\Deptrac\Core\Ast\AstException;
 use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
@@ -35,14 +35,14 @@ class DependencyLayersAnalyser
     /**
      * @throws AnalyserException
      */
-    public function process(): Result
+    public function analyse(): AnalysisResult
     {
         try {
             $astMap = $this->astMapExtractor->extract();
 
             $dependencies = $this->dependencyResolver->resolve($astMap);
 
-            $result = new Result();
+            $result = new AnalysisResult();
             $warnings = [];
 
             foreach ($dependencies->getDependenciesAndInheritDependencies() as $dependency) {

@@ -1,6 +1,16 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\OutputResult\\:\\:allOf\\(\\) should return array\\<int, T of Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\RuleInterface\\> but returns array\\<int, Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\RuleInterface\\>\\.$#"
+			count: 1
+			path: src/Contract/Result/OutputResult.php
+
+		-
+			message: "#^Method Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\OutputResult\\:\\:allRules\\(\\) should return list\\<Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\RuleInterface\\> but returns array\\.$#"
+			count: 1
+			path: src/Contract/Result/OutputResult.php
+
+		-
 			message: "#^@readonly property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\AstInherit\\:\\:\\$path is assigned outside of the constructor\\.$#"
 			count: 1
 			path: src/Core/Ast/AstMap/AstInherit.php

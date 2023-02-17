@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
@@ -172,9 +173,14 @@ final class XMLOutputFormatterTest extends TestCase
     {
         $bufferedOutput = new BufferedOutput();
 
+        $analysisResult = new AnalysisResult();
+        foreach ($rules as $rule) {
+            $analysisResult->addRule($rule);
+        }
+
         $formatter = new XMLOutputFormatter();
         $formatter->finish(
-            new LegacyResult($rules, [], []),
+            OutputResult::fromAnalysisResult($analysisResult),
             $this->createSymfonyOutput($bufferedOutput),
             new OutputFormatterInput(__DIR__.'/data/'.self::$actual_xml_report_file, false, false, false)
         );

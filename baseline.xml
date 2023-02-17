@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+  <file src="src/Contract/Result/OutputResult.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;rules[$type] ?? []</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>array&lt;int, T&gt;</code>
+    </InvalidReturnType>
+    <MixedReturnTypeCoercion occurrences="2">
+      <code>list&lt;RuleInterface&gt;</code>
+    </MixedReturnTypeCoercion>
+  </file>
   <file src="src/Core/Ast/Parser/Cache/AstFileReferenceFileCache.php">
     <MissingThrowsDocblock occurrences="3">
       <code>has</code>

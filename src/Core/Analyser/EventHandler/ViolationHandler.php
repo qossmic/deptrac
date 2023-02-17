@@ -36,12 +36,12 @@ class ViolationHandler implements EventSubscriberInterface
 
         foreach ($event->dependentLayers as $dependentLayer => $_) {
             if ($this->skippedViolationHelper->isViolationSkipped($depender->toString(), $dependent->toString())) {
-                $ruleset->add(new SkippedViolation($event->dependency, $event->dependerLayer, $dependentLayer));
+                $ruleset->addRule(new SkippedViolation($event->dependency, $event->dependerLayer, $dependentLayer));
 
                 continue;
             }
 
-            $ruleset->add(new Violation($event->dependency, $event->dependerLayer, $dependentLayer));
+            $ruleset->addRule(new Violation($event->dependency, $event->dependerLayer, $dependentLayer));
         }
     }
 

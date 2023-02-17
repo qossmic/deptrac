@@ -8,7 +8,7 @@ use Exception;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
@@ -35,36 +35,25 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      * @throws Exception
      */
     public function finish(
-        LegacyResult $result,
+        OutputResult $result,
         OutputInterface $output,
         OutputFormatterInput $outputFormatterInput
     ): void {
         $jsonArray = [];
         $violations = [];
-        foreach ($result->rules as $rule) {
-            if (!$rule instanceof Violation && !$rule instanceof SkippedViolation && !$rule instanceof Uncovered) {
-                continue;
-            }
 
-            if (!$outputFormatterInput->reportSkipped && $rule instanceof SkippedViolation) {
-                continue;
+        if ($outputFormatterInput->reportSkipped) {
+            foreach ($result->allOf(SkippedViolation::class) as $rule) {
+                $this->addSkipped($violations, $rule);
             }
-
-            if (!$outputFormatterInput->reportUncovered && $rule instanceof Uncovered) {
-                continue;
+        }
+        if ($outputFormatterInput->reportUncovered) {
+            foreach ($result->allOf(Uncovered::class) as $rule) {
+                $this->addUncovered($violations, $rule);
             }
-
-            switch (true) {
-                case $rule instanceof Violation:
-                    $this->addFailure($violations, $rule);
-                    break;
-                case $rule instanceof SkippedViolation:
-                    $this->addSkipped($violations, $rule);
-                    break;
-                case $rule instanceof Uncovered:
-                    $this->addUncovered($violations, $rule);
-                    break;
-            }
+        }
+        foreach ($result->allOf(Violation::class) as $rule) {
+            $this->addFailure($violations, $rule);
         }
 
         $jsonArray['Report'] = [

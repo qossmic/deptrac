@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UncoveredDependentHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\ViolationHandler;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
-use Qossmic\Deptrac\Core\Analyser\LegacyDependencyLayersAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
 use Qossmic\Deptrac\Core\Ast\AstLoader;
@@ -324,7 +323,6 @@ return static function (ContainerConfigurator $container): void {
         ->tag('kernel.event_subscriber');
     $services
         ->set(DependencyLayersAnalyser::class);
-    $services->set(LegacyDependencyLayersAnalyser::class);
     $services->set(TokenInLayerAnalyser::class)
         ->args([
             '$config' => param('analyser'),

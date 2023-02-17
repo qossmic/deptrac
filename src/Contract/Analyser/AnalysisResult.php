@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Contract\Result;
+namespace Qossmic\Deptrac\Contract\Analyser;
+
+use Qossmic\Deptrac\Contract\Result\Error;
+use Qossmic\Deptrac\Contract\Result\RuleInterface;
+use Qossmic\Deptrac\Contract\Result\Warning;
 
 use function spl_object_id;
 
-class Result
+class AnalysisResult
 {
     /**
      * @var array<string, array<int, RuleInterface>>
@@ -23,12 +27,12 @@ class Result
      */
     private array $errors = [];
 
-    public function add(RuleInterface $rule): void
+    public function addRule(RuleInterface $rule): void
     {
         $this->rules[$rule::class][spl_object_id($rule)] = $rule;
     }
 
-    public function remove(RuleInterface $rule): void
+    public function removeRule(RuleInterface $rule): void
     {
         unset($this->rules[$rule::class][spl_object_id($rule)]);
     }
@@ -36,19 +40,9 @@ class Result
     /**
      * @return array<string, array<int, RuleInterface>>
      */
-    public function all(): array
+    public function rules(): array
     {
         return $this->rules;
-    }
-
-    /**
-     * @param class-string $type
-     *
-     * @return array<int, RuleInterface>
-     */
-    public function allOf(string $type): array
-    {
-        return $this->rules[$type] ?? [];
     }
 
     /**
@@ -74,21 +68,6 @@ class Result
         return $this->warnings;
     }
 
-    public function hasWarnings(): bool
-    {
-        return [] !== $this->warnings;
-    }
-
-    /**
-     * @param Error[] $errors
-     */
-    public function addErrors(array $errors): void
-    {
-        foreach ($errors as $error) {
-            $this->addError($error);
-        }
-    }
-
     public function addError(Error $error): void
     {
         $this->errors[] = $error;
@@ -100,10 +79,5 @@ class Result
     public function errors(): array
     {
         return $this->errors;
-    }
-
-    public function hasErrors(): bool
-    {
-        return [] !== $this->errors;
     }
 }
