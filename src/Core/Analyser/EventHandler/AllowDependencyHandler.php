@@ -25,7 +25,7 @@ class AllowDependencyHandler implements EventSubscriberInterface
         $ruleset = $event->getResult();
 
         foreach ($event->dependentLayers as $dependentLayer => $_) {
-            $ruleset->add(new Allowed($event->dependency, $event->dependerLayer, $dependentLayer));
+            $ruleset->addRule(new Allowed($event->dependency, $event->dependerLayer, $dependentLayer));
             $event->stopPropagation();
         }
     }

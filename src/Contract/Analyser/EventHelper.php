@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Contract\Analyser;
 
 use Qossmic\Deptrac\Contract\Layer\LayerProvider;
-use Qossmic\Deptrac\Contract\Result\Result;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 
@@ -45,7 +44,7 @@ class EventHelper
         return array_filter($this->unmatchedSkippedViolation);
     }
 
-    public function addSkippableViolation(ProcessEvent $event, Result $result, string $dependentLayer, ViolationCreatingInterface $violationCreatingRule): void
+    public function addSkippableViolation(ProcessEvent $event, AnalysisResult $result, string $dependentLayer, ViolationCreatingInterface $violationCreatingRule): void
     {
         if ($this->isViolationSkipped(
             $event->dependency->getDepender()
@@ -54,9 +53,9 @@ class EventHelper
                 ->toString()
         )
         ) {
-            $result->add(new SkippedViolation($event->dependency, $event->dependerLayer, $dependentLayer));
+            $result->addRule(new SkippedViolation($event->dependency, $event->dependerLayer, $dependentLayer));
         } else {
-            $result->add(new Violation($event->dependency, $event->dependerLayer, $dependentLayer, $violationCreatingRule));
+            $result->addRule(new Violation($event->dependency, $event->dependerLayer, $dependentLayer, $violationCreatingRule));
         }
     }
 }

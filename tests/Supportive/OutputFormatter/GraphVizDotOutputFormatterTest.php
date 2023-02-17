@@ -37,11 +37,11 @@ final class GraphVizDotOutputFormatterTest extends TestCase
         $classA = ClassLikeToken::fromFQCN('ClassA');
 
         $analysisResult = new AnalysisResult();
-        $analysisResult->addRule(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerB'));
-        $analysisResult->addRule(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerHidden'));
+        $analysisResult->addRule(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerB', new DummyViolationCreatingRule()));
+        $analysisResult->addRule(new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerHidden', new DummyViolationCreatingRule()));
         $analysisResult->addRule(new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'),
             new FileOccurrence('classAB.php', 1), DependencyType::PARAMETER
-        ), 'LayerA', 'LayerB'));
+        ), 'LayerA', 'LayerB', new DummyViolationCreatingRule()));
         $analysisResult->addRule(new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerA', 'LayerC'));
         $analysisResult->addRule(new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA, DependencyType::PARAMETER), 'LayerC'));
 
