@@ -17,6 +17,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
+use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException;
 use Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException;
 use Qossmic\Deptrac\Supportive\File\Exception\FileNotExistsException;
 use Qossmic\Deptrac\Supportive\File\FileReader;
@@ -24,7 +25,6 @@ use Qossmic\Deptrac\Supportive\File\FileReader;
 use function array_filter;
 use function array_map;
 use function assert;
-use function dirname;
 use function file_exists;
 use function is_readable;
 use function is_writable;
@@ -42,7 +42,12 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     /** @var array<string, bool> */
     private array $parsedFiles = [];
 
-    public function __construct(private readonly string $cacheFile, private readonly string $cacheVersion) {}
+    public function __construct(
+        private readonly string $cacheFile,
+        private readonly string $cacheVersion
+    ) {
+        $this->cache = [];
+    }
 
     public function get(string $filepath): ?FileReference
     {
@@ -135,10 +140,17 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
         );
     }
 
+    /**
+     * @throws CacheFileException
+     */
     public function write(): void
     {
-        if (!is_writable(dirname($this->cacheFile))) {
-            return;
+        if (
+            !file_exists($this->cacheFile)
+            && !touch($this->cacheFile)
+            && !is_writable($this->cacheFile)
+        ) {
+            throw CacheFileException::notWritable($this->cacheFile);
         }
 
         $cache = array_filter(

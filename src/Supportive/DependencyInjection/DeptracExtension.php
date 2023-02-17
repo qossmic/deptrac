@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
 use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
@@ -30,8 +31,12 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('formatters', $configs['formatters'] ?? []);
         $container->setParameter('analyser', $configs['analyser']);
         $container->setParameter('ignore_uncovered_internal_classes', $configs['ignore_uncovered_internal_classes']);
+        $container->setParameter('cache_file', $configs['cache_file']);
     }
 
+    /**
+     * @throws ParameterNotFoundException
+     */
     public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('projectDirectory')) {
@@ -60,6 +65,14 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         }
         if (!$container->hasParameter('ignore_uncovered_internal_classes')) {
             $container->setParameter('ignore_uncovered_internal_classes', true);
+        }
+
+        if ($container->hasParameter('cli.cache_file')) {
+            $container->setParameter('deptrac.cache_file', $container->getParameter('cli.cache_file'));
+        } elseif ($container->hasParameter('cache_file')) {
+            $container->setParameter('deptrac.cache_file', $container->getParameter('cache_file'));
+        } else {
+            $container->setParameter('deptrac.cache_file', '.deptrac.cache');
         }
     }
 }

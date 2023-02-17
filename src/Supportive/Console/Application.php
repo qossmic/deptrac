@@ -103,9 +103,7 @@ final class Application extends BaseApplication
 
         /** @var string|numeric|null $cacheFile */
         $cacheFile = $input->getParameterOption('--cache-file', $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache');
-        $cache = $input->hasParameterOption('--cache-file')
-            ? (string) $cacheFile
-            : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache';
+        $cache = $input->hasParameterOption('--cache-file') ? (string) $cacheFile : null;
 
         $factory = new ServiceContainerBuilder($currentWorkingDirectory);
         if ($input->hasParameterOption('--clear-cache', true)) {
@@ -114,7 +112,10 @@ final class Application extends BaseApplication
         if (!in_array($input->getArgument('command'), ['init', 'list', 'help', 'completion'], true)) {
             $factory = $factory->withConfig($config);
         }
-        if (false === $input->hasParameterOption('--no-cache', true)) {
+
+        if ($input->hasParameterOption('--no-cache')) {
+            $factory = $factory->withNoCache();
+        } elseif ($cache) {
             $factory = $factory->withCache($cache);
         }
 

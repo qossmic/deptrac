@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
 use Exception;
-use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CannotLoadConfiguration;
 use SplFileInfo;
 use Symfony\Component\Config\Builder\ConfigBuilderGenerator;
@@ -23,6 +22,7 @@ final class ServiceContainerBuilder
 {
     private ?SplFileInfo $configFile = null;
     private ?SplFileInfo $cacheFile = null;
+    private bool $withCache = true;
 
     public function __construct(private readonly string $workingDirectory) {}
 
@@ -44,12 +44,16 @@ final class ServiceContainerBuilder
         return $builder;
     }
 
-    public function withCache(?string $cacheFile): self
+    public function withNoCache(): self
     {
-        if (null === $cacheFile) {
-            return $this;
-        }
+        $builder = clone $this;
+        $builder->withCache = false;
 
+        return $builder;
+    }
+
+    public function withCache(string $cacheFile): self
+    {
         $builder = clone $this;
 
         if (Path::isRelative($cacheFile)) {
@@ -81,7 +85,6 @@ final class ServiceContainerBuilder
     }
 
     /**
-     * @throws CacheFileException
      * @throws CannotLoadConfiguration
      */
     public function build(): ContainerBuilder
@@ -91,7 +94,7 @@ final class ServiceContainerBuilder
         $container->setParameter('currentWorkingDirectory', $this->workingDirectory);
 
         self::registerCompilerPasses($container);
-        self::loadServices($container, $this->cacheFile);
+        self::loadServices($container, $this->withCache, $this->cacheFile);
 
         $container->registerExtension(new DeptracExtension());
 
@@ -112,10 +115,9 @@ final class ServiceContainerBuilder
     }
 
     /**
-     * @throws CacheFileException
      * @throws CannotLoadConfiguration
      */
-    private static function loadServices(ContainerBuilder $container, ?SplFileInfo $cacheFile): void
+    private static function loadServices(ContainerBuilder $container, bool $withCache, ?SplFileInfo $cacheFile): void
     {
         $loader = new PhpFileLoader($container, new FileLocator([__DIR__.'/../../../config']));
 
@@ -125,23 +127,23 @@ final class ServiceContainerBuilder
             throw CannotLoadConfiguration::fromServices('services.php', $exception->getMessage());
         }
 
-        if (!$cacheFile instanceof SplFileInfo) {
+        if (false === $withCache) {
+            $container->setParameter('cli.cache_file', null);
+
             return;
         }
 
-        if (!file_exists($cacheFile->getPathname())
-            && !touch($cacheFile->getPathname())
-            && !is_writable($cacheFile->getPathname())
-        ) {
-            throw CacheFileException::notWritable($cacheFile);
-        }
-
-        $container->setParameter('deptrac.cache_file', $cacheFile->getPathname());
         try {
             $loader->load('cache.php');
         } catch (Exception $exception) {
             throw CannotLoadConfiguration::fromCache('cache.php', $exception->getMessage());
         }
+
+        if (!$cacheFile instanceof SplFileInfo) {
+            return;
+        }
+
+        $container->setParameter('cli.cache_file', $cacheFile->getPathname());
     }
 
     /**

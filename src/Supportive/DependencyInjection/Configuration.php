@@ -30,6 +30,7 @@ class Configuration implements ConfigurationInterface
 
         $this->appendAnalysedPaths($rootNode);
         $this->appendExcludePatterns($rootNode);
+        $this->appendCacheFile($rootNode);
         $this->appendLayers($rootNode);
         $this->appendRuleset($rootNode);
         $this->appendSkippedViolations($rootNode);
@@ -68,6 +69,16 @@ class Configuration implements ConfigurationInterface
                     ->scalarPrototype()
                         ->cannotBeEmpty()
                     ->end()
+                ->end()
+            ->end();
+    }
+
+    private function appendCacheFile(ArrayNodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->scalarNode('cache_file')
+                ->defaultValue('.deptrac.cache')
                 ->end()
             ->end();
     }
