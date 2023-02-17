@@ -7,10 +7,10 @@ namespace Qossmic\Deptrac\Core\Ast;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Contract\Ast\AstFileAnalysedEvent;
 use Qossmic\Deptrac\Contract\Ast\AstFileSyntaxErrorEvent;
+use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
 use Qossmic\Deptrac\Contract\Ast\PostCreateAstMapEvent;
 use Qossmic\Deptrac\Contract\Ast\PreCreateAstMapEvent;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
-use Qossmic\Deptrac\Core\Ast\Parser\CouldNotParseFileException;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 
 class AstLoader

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
+use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -16,6 +18,10 @@ use function is_array;
  */
 class Configuration implements ConfigurationInterface
 {
+    /**
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     */
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $builder = new TreeBuilder('deptrac');
@@ -128,6 +134,9 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @throws RuntimeException
+     */
     private function appendFormatters(ArrayNodeDefinition $node): void
     {
         $node
@@ -186,6 +195,10 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     */
     private function appendEmitterTypes(ArrayNodeDefinition $node): void
     {
         $node

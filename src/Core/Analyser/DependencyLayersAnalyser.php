@@ -8,6 +8,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Analyser\PostProcessEvent;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Contract\Result\Warning;
@@ -85,6 +86,8 @@ class DependencyLayersAnalyser
             throw AnalyserException::invalidCollectorDefinition($e);
         } catch (AstException $e) {
             throw AnalyserException::failedAstParsing($e);
+        } catch (CouldNotParseFileException $e) {
+            throw AnalyserException::couldNotParseFile($e);
         }
     }
 }

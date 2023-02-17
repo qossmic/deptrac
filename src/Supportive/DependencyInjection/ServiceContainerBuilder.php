@@ -151,6 +151,7 @@ final class ServiceContainerBuilder
     private static function loadConfiguration(ContainerBuilder $container, SplFileInfo $configFile): void
     {
         $configPathInfo = $configFile->getPathInfo();
+        /** @phpstan-ignore-next-line false positive */
         if (null === $configPathInfo) {
             throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), sprintf('Unable to load config: Invalid or missing path.'));
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser;
 
+use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
@@ -37,5 +38,10 @@ final class AnalyserException extends RuntimeException implements ExceptionInter
     public static function failedAstParsing(AstException $e): self
     {
         return new self('Failed Ast parsing.', 0, $e);
+    }
+
+    public static function couldNotParseFile(CouldNotParseFileException $e): self
+    {
+        return new self('Could not parse file.', 0, $e);
     }
 }

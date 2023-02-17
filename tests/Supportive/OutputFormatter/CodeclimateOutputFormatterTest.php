@@ -58,7 +58,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -92,7 +92,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -126,7 +126,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -185,7 +185,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -219,7 +219,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -259,7 +259,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     (new AstInherit(
                         ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                         AstInheritType::EXTENDS
-                    ))->withPath(
+                    ))->replacePath(
                         [
                             new AstInherit(
                                 ClassLikeToken::fromFQCN('ClassInheritB'), new FileOccurrence('ClassInheritA.php', 4),
@@ -290,7 +290,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     (new AstInherit(
                         ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                         AstInheritType::EXTENDS
-                    ))->withPath(
+                    ))->replacePath(
                         [
                             new AstInherit(
                                 ClassLikeToken::fromFQCN('ClassInheritB'), new FileOccurrence('ClassInheritA.php', 4),
@@ -321,7 +321,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     (new AstInherit(
                         ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                         AstInheritType::EXTENDS
-                    ))->withPath(
+                    ))->replacePath(
                         [
                             new AstInherit(
                                 ClassLikeToken::fromFQCN('ClassInheritB'), new FileOccurrence('ClassInheritA.php', 4),

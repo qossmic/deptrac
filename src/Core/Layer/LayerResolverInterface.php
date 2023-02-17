@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer;
 
+use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
@@ -15,12 +16,14 @@ interface LayerResolverInterface
      *
      * @throws InvalidLayerDefinitionException
      * @throws InvalidCollectorDefinitionException
+     * @throws CouldNotParseFileException
      */
     public function getLayersForReference(TokenReferenceInterface $reference): array;
 
     /**
      * @throws InvalidLayerDefinitionException
      * @throws InvalidCollectorDefinitionException
+     * @throws CouldNotParseFileException
      */
     public function isReferenceInLayer(string $layer, TokenReferenceInterface $reference): bool;
 

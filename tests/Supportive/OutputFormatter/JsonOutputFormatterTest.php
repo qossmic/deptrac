@@ -57,7 +57,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -91,7 +91,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -125,7 +125,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -184,7 +184,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -218,7 +218,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -259,7 +259,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -293,7 +293,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),
@@ -327,7 +327,7 @@ final class JsonOutputFormatterTest extends TestCase
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath(
+                        ))->replacePath(
                             [
                                 new AstInherit(
                                     ClassLikeToken::fromFQCN('ClassInheritB'),

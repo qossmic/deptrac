@@ -60,7 +60,7 @@ final class JUnitOutputFormatterTest extends TestCase
                         (new AstInherit(
                             $classInheritA, new FileOccurrence('foo.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath([
+                        ))->replacePath([
                             new AstInherit(
                                 $classInheritB, new FileOccurrence('foo.php', 4),
                                 AstInheritType::EXTENDS
@@ -108,7 +108,7 @@ final class JUnitOutputFormatterTest extends TestCase
                         (new AstInherit(
                             $classInheritA, new FileOccurrence('foo.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath([
+                        ))->replacePath([
                             new AstInherit(
                                 $classInheritB, new FileOccurrence('foo.php', 4),
                                 AstInheritType::EXTENDS
@@ -134,7 +134,7 @@ final class JUnitOutputFormatterTest extends TestCase
                         (new AstInherit(
                             $classInheritA, new FileOccurrence('foo.php', 3),
                             AstInheritType::EXTENDS
-                        ))->withPath([
+                        ))->replacePath([
                             new AstInherit(
                                 $classInheritB, new FileOccurrence('foo.php', 4),
                                 AstInheritType::EXTENDS

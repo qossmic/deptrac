@@ -52,7 +52,7 @@ class TableOutputFormatterTest extends TestCase
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('originalA.php', 3),
                             AstInheritType::EXTENDS
                         ))
-                            ->withPath(
+                            ->replacePath(
                                 [
                                     new AstInherit(
                                         ClassLikeToken::fromFQCN('ClassInheritB'),

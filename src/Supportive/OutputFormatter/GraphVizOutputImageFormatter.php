@@ -31,6 +31,7 @@ final class GraphVizOutputImageFormatter extends GraphVizOutputFormatter
 
         $imageFile = new SplFileInfo($dumpImagePath);
         $imagePathInfo = $imageFile->getPathInfo();
+        /** @phpstan-ignore-next-line false positive */
         if (null === $imagePathInfo) {
             throw OutputException::withMessage('Unable to dump image: Invalid or missing path.');
         }
