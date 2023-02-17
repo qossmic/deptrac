@@ -56,7 +56,7 @@ class AstInherit implements Stringable
     /**
      * @param AstInherit[] $path
      */
-    public function withPath(array $path): self
+    public function replacePath(array $path): self
     {
         return new self($this->classLikeName, $this->fileOccurrence, $this->type, $path);
     }

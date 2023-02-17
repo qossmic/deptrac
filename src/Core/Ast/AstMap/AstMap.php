@@ -134,7 +134,7 @@ class AstMap
 
             /** @var AstInherit[] $path */
             $path = iterator_to_array($pathStack);
-            yield $inherit->withPath($path);
+            yield $inherit->replacePath($path);
 
             $pathStack->push($inherit);
 

@@ -73,7 +73,7 @@ final class InheritanceFlattenerTest extends TestCase
                     ClassLikeToken::fromFQCN('classBaum'), new FileOccurrence('classGeschmückterWeihnachtsbaum.php', 3),
                     AstInheritType::EXTENDS
                 ))
-                    ->withPath([
+                    ->replacePath([
                         new AstInherit(
                             ClassLikeToken::fromFQCN('classWeihnachtsbaum'),
                             new FileOccurrence('classBaum.php', 3),
