@@ -2,20 +2,6 @@
     "name": "qossmic/deptrac",
     "description": "Deptrac is a static code analysis tool that helps to enforce rules for dependencies between software layers.",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Tim Glabisch"
-        },
-        {
-            "name": "Simon Mönch",
-            "email": "simon.moench@qossmic.com"
-        },
-        {
-            "name": "Denis Brumann",
-            "email": "denis.brumann@qossmic.com",
-            "role": "maintainer"
-        }
-    ],
     "require": {
         "php": "^7.2",
         "ext-json": "*"
@@ -26,15 +12,6 @@
     "autoload": {
         "psr-4": {
             "Qossmic\\Deptrac\\": "src/"
-        }
-    },
-    "config": {
-        "platform": {
-            "php": "8.1"
-        },
-        "sort-packages": true,
-        "allow-plugins": {
-            "infection/extension-installer": true
         }
     }
 }
