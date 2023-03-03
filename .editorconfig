@@ -13,7 +13,7 @@ trim_trailing_whitespace = true
 [*Test.php]
 trim_trailing_whitespace = false
 
-[*.xml]
+[*.{xml,json}]
 charset = utf-8
 indent_style = space
 indent_size = 4

@@ -32,22 +32,7 @@ jobs:
           coverage: none
           tools: composer
 
-      - name: Get composer cache directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composercache.outputs.dir }}
-          key: composer-${{ runner.os }}-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
-          restore-keys: |
-            composer-${{ runner.os }}-${{ matrix.php-version }}-
-            composer-${{ runner.os }}-
-            composer-
-
-      - name: "Install dependencies with composer"
-        run: make composer-install
+      - uses: "ramsey/composer-install@v2"
 
       - name: "Compile deptrac phar"
         run: make build
