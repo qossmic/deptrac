@@ -13,3 +13,6 @@ junit-report.xml
 .deptrac.cache
 .phpunit.result.cache
 infection.log
+
+# downgrade with Rector
+/rector-local

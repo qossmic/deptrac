@@ -31,7 +31,6 @@
         "symfony/event-dispatcher": "^6.0",
         "symfony/filesystem": "^6.0",
         "symfony/finder": "^6.0",
-        "symfony/options-resolver": "^6.0",
         "symfony/yaml": "^6.0"
     },
     "suggest": {
@@ -64,6 +63,7 @@
         "phpstan/phpstan": "^1.6.8",
         "phpstan/phpstan-symfony": "^1.1",
         "phpunit/phpunit": "^9.5",
+        "rector/rector": "^0.15.17",
         "roave/infection-static-analysis-plugin": "^1.28",
         "vimeo/psalm": "^4.22"
     }

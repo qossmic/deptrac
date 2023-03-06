@@ -13,7 +13,7 @@ build: tests
 	$(BOX_BIN) compile
 
 composer-install:
-	$(COMPOSER_BIN) install --no-interaction --no-progress --no-suggest --optimize-autoloader
+	$(COMPOSER_BIN) install --no-interaction --no-progress --no-suggest --optimize-autoloader --ansi
 
 tests: composer-install
 	$(PHPUNIT_BIN) -c .
