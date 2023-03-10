@@ -26,6 +26,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 use const PHP_EOL;
 
@@ -73,22 +74,24 @@ class TableOutputFormatterTest extends TestCase
                             )
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             [],
             'warnings' => [],
-            ' ----------- ------------------------------------------- 
-  Reason      LayerA                                     
- ----------- ------------------------------------------- 
-  Violation   ClassA must not depend on ClassB (LayerB)  
-              ClassInheritD::6 ->                        
-              ClassInheritC::5 ->                        
-              ClassInheritB::4 ->                        
-              ClassInheritA::3 ->                        
-              OriginalB::12                              
-              originalA.php:12                           
- ----------- ------------------------------------------- 
+            ' ----------- ---------------------------------- 
+  Reason      LayerA                            
+ ----------- ---------------------------------- 
+  DummyRule   ClassA must not depend on ClassB  
+              Why? Because! (LayerB)            
+              ClassInheritD::6 ->               
+              ClassInheritC::5 ->               
+              ClassInheritB::4 ->               
+              ClassInheritA::3 ->               
+              OriginalB::12                     
+              originalA.php:12                  
+ ----------- ---------------------------------- 
 
 
  -------------------- ----- 
@@ -110,17 +113,19 @@ class TableOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             [],
             'warnings' => [],
-            ' ----------- ------------------------------------------------- 
-  Reason      LayerA                                           
- ----------- ------------------------------------------------- 
-  Violation   OriginalA must not depend on OriginalB (LayerB)  
-              originalA.php:12                                 
- ----------- ------------------------------------------------- 
+            ' ----------- ---------------------------------------- 
+  Reason      LayerA                                  
+ ----------- ---------------------------------------- 
+  DummyRule   OriginalA must not depend on OriginalB  
+              Why? Because! (LayerB)                  
+              originalA.php:12                        
+ ----------- ---------------------------------------- 
 
 
  -------------------- ----- 

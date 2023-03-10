@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Layer\Exception;
+namespace Qossmic\Deptrac\Contract\Layer;
 
 use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;

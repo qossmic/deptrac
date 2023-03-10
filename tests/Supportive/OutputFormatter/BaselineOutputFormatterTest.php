@@ -24,6 +24,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\BaselineOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 class BaselineOutputFormatterTest extends TestCase
 {
@@ -67,7 +68,8 @@ class BaselineOutputFormatterTest extends TestCase
                             ])
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             file_get_contents(__DIR__.'/data/expected-baseline-report_1.yml'),
@@ -78,7 +80,8 @@ class BaselineOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency($originalA, $originalB, new FileOccurrence('originalA.php', 12), DependencyType::PARAMETER),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             file_get_contents(__DIR__.'/data/expected-baseline-report_2.yml'),

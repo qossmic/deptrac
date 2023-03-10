@@ -26,6 +26,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfigurat
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 final class CodeclimateOutputFormatterTest extends TestCase
 {
@@ -79,7 +80,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         )
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
                 new Violation(
                     new InheritDependency(
@@ -113,7 +115,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         )
                     ),
                     'LayerA',
-                    'LayerC'
+                    'LayerC',
+                    new DummyViolationCreatingRule()
                 ),
                 new Violation(
                     new InheritDependency(
@@ -147,7 +150,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         )
                     ),
                     'LayerA',
-                    'LayerE'
+                    'LayerE',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-codeclimate-report_1.json',
@@ -161,7 +165,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-codeclimate-report_2.json',
@@ -277,7 +282,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                     )
                 ),
                 'LayerA',
-                'LayerB'
+                'LayerB',
+                new DummyViolationCreatingRule()
             ),
             new SkippedViolation(
                 new InheritDependency(
@@ -459,7 +465,8 @@ final class CodeclimateOutputFormatterTest extends TestCase
                 ClassLikeToken::fromFQCN('OriginalB'.$malformedCharacters), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
             ),
             'LayerA',
-            'LayerB'
+            'LayerB',
+            new DummyViolationCreatingRule()
         );
 
         $analysisResult = new AnalysisResult();

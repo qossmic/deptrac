@@ -16,6 +16,6 @@ class MatchingLayersHandlerTest extends TestCase
 
         self::assertCount(1, $subscribedEvents);
         self::assertArrayHasKey(ProcessEvent::class, $subscribedEvents);
-        self::assertSame(['invoke', 16], $subscribedEvents[ProcessEvent::class]);
+        self::assertSame(['invoke', 1], $subscribedEvents[ProcessEvent::class]);
     }
 }

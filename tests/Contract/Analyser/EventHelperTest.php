@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Core\Analyser\EventHandler;
+namespace Tests\Qossmic\Deptrac\Contract\Analyser;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Analyser\EventHandler\SkippedViolationHelper;
+use Qossmic\Deptrac\Contract\Analyser\EventHelper;
+use Qossmic\Deptrac\Contract\Layer\LayerProvider;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 
-final class SkippedViolationHelperTest extends TestCase
+final class EventHelperTest extends TestCase
 {
     public function testIsViolationSkipped(): void
     {
@@ -23,7 +24,7 @@ final class SkippedViolationHelperTest extends TestCase
                 'DependencyClass2',
             ],
         ];
-        $helper = new SkippedViolationHelper($configuration);
+        $helper = new EventHelper($configuration, new LayerProvider([]));
 
         self::assertTrue(
             $helper->isViolationSkipped(
@@ -70,7 +71,7 @@ final class SkippedViolationHelperTest extends TestCase
                 'DependencyClass2',
             ],
         ];
-        $helper = new SkippedViolationHelper($configuration);
+        $helper = new EventHelper($configuration, new LayerProvider([]));
 
         self::assertTrue(
             $helper->isViolationSkipped(

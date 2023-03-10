@@ -24,6 +24,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\JUnitOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 final class JUnitOutputFormatterTest extends TestCase
 {
@@ -76,7 +77,8 @@ final class JUnitOutputFormatterTest extends TestCase
                         ])
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-junit-report_1.xml',
@@ -87,7 +89,8 @@ final class JUnitOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency($originalA, $originalB, new FileOccurrence('foo.php', 12), DependencyType::PARAMETER),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-junit-report_2.xml',
@@ -150,7 +153,8 @@ final class JUnitOutputFormatterTest extends TestCase
                         ])
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-junit-report-with-skipped-violations.xml',

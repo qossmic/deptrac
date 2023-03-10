@@ -25,14 +25,14 @@ You can analyse projects that require an older PHP version as long as
 
 You can install Deptrac via Composer. We recommend using the [deptrac-shim](https://github.com/qossmic/deptrac-shim) package for this.
 Alternatively, you can also use [PHIVE](#phive) or download the
-[PHAR](#phar) attached to each release on GitHub.  
+[PHAR](#phar) attached to each release on GitHub.
 This will ensure that Deptrac and its dependencies are
 bundled together and will not interfere with any of your project's dependencies.
 
 ### Composer
 
-We strongly advise against using the deptrac package directly as a composer dependency. 
-We update dependencies regularly, which might cause disruptions in your project.  
+We strongly advise against using the deptrac package directly as a composer dependency.
+We update dependencies regularly, which might cause disruptions in your project.
 Instead, please use the dedicated distribution repository <https://github.com/qossmic/deptrac-shim>.
 
 When you install Deptrac using the qossmic/deptrac-shim package, you will get
@@ -200,12 +200,13 @@ This can be disabled with the `--no-cache` option.
 The generated output will roughly look like this:
 
 ```bash
- ----------- --------------------------------------------------------------------------------------------------------------------------------
-  Reason      Repository
- ----------- --------------------------------------------------------------------------------------------------------------------------------
-  Violation   examples\MyNamespace\Repository\SomeRepository must not depend on examples\MyNamespace\Controllers\SomeController (Controller)
-              /Users/dbr/workspace/qossmic/deptrac/examples/ControllerServiceRepository1/SomeRepository.php:5
- ----------- --------------------------------------------------------------------------------------------------------------------------------
+ -------------------------- --------------------------------------------------------------------------------------------------------------------------------
+  Reason                     Repository
+ -------------------------- --------------------------------------------------------------------------------------------------------------------------------
+  DependsOnDisallowedLayer   examples\MyNamespace\Repository\SomeRepository must not depend on examples\MyNamespace\Controllers\SomeController
+                             You are depending on token that is a part of a layer that you are not allowed to depend on. (Controller)
+                             /Users/dbr/workspace/qossmic/deptrac/examples/ControllerServiceRepository1/SomeRepository.php:5
+ -------------------------- --------------------------------------------------------------------------------------------------------------------------------
 
 
  -------------------- -----

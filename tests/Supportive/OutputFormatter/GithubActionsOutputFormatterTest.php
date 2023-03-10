@@ -26,6 +26,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 use const PHP_EOL;
 
@@ -85,7 +86,8 @@ final class GithubActionsOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency($originalA, $originalB, $originalAOccurrence, DependencyType::PARAMETER),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'errors' => [],
@@ -148,7 +150,8 @@ final class GithubActionsOutputFormatterTest extends TestCase
                             ])
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'errors' => [],

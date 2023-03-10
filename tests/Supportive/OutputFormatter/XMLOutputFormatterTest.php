@@ -23,6 +23,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\XMLOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 final class XMLOutputFormatterTest extends TestCase
 {
@@ -73,7 +74,8 @@ final class XMLOutputFormatterTest extends TestCase
                         ])
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-xml-report_1.xml',
@@ -86,7 +88,8 @@ final class XMLOutputFormatterTest extends TestCase
                         new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
                     ),
                     'LayerA',
-                    'LayerB'
+                    'LayerB',
+                    new DummyViolationCreatingRule()
                 ),
             ],
             'expected-xml-report_2.xml',

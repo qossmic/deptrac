@@ -16,6 +16,6 @@ class AllowDependencyHandlerTest extends TestCase
 
         self::assertCount(1, $subscribedEvents);
         self::assertArrayHasKey(ProcessEvent::class, $subscribedEvents);
-        self::assertSame(['invoke', 4], $subscribedEvents[ProcessEvent::class]);
+        self::assertSame(['invoke', -100], $subscribedEvents[ProcessEvent::class]);
     }
 }

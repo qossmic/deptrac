@@ -6,27 +6,17 @@ namespace Qossmic\Deptrac\Core\Analyser\EventHandler;
 
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Result\Allowed;
-use Qossmic\Deptrac\Contract\Result\Error;
-use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Layer\Exception\CircularReferenceException;
-use Qossmic\Deptrac\Core\Layer\LayerProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
-use function in_array;
 
 /**
  * @internal
  */
 class AllowDependencyHandler implements EventSubscriberInterface
 {
-    public function __construct(private readonly LayerProvider $layerProvider)
-    {
-    }
-
     public static function getSubscribedEvents()
     {
         return [
-            ProcessEvent::class => ['invoke', 4],
+            ProcessEvent::class => ['invoke', -100],
         ];
     }
 
@@ -34,33 +24,8 @@ class AllowDependencyHandler implements EventSubscriberInterface
     {
         $ruleset = $event->getResult();
 
-        foreach ($event->dependentLayers as $dependentLayer => $isPublic) {
-            try {
-                $allowedLayers = $this->layerProvider->getAllowedLayers($event->dependerLayer);
-            } catch (CircularReferenceException $circularReferenceException) {
-                $ruleset->addError(new Error($circularReferenceException->getMessage()));
-                $event->stopPropagation();
-
-                return;
-            }
-
-            if (!$isPublic && $event->dependerLayer !== $dependentLayer) {
-                return;
-            }
-
-            if (!in_array($dependentLayer, $allowedLayers, true)) {
-                return;
-            }
-
-            if ($event->dependerLayer !== $dependentLayer
-                && $event->dependentReference instanceof ClassLikeReference
-                && $event->dependentReference->isInternal
-            ) {
-                return;
-            }
-
+        foreach ($event->dependentLayers as $dependentLayer => $_) {
             $ruleset->addRule(new Allowed($event->dependency, $event->dependerLayer, $dependentLayer));
-
             $event->stopPropagation();
         }
     }

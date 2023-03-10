@@ -11,4 +11,19 @@
       <code>list&lt;RuleInterface&gt;</code>
     </MixedReturnTypeCoercion>
   </file>
+    <file src="src/Core/Analyser/EventHandler/DependsOnDisallowedLayer.php">
+        <MissingImmutableAnnotation occurrences="1">
+            <code>DependsOnDisallowedLayer</code>
+        </MissingImmutableAnnotation>
+    </file>
+    <file src="src/Core/Analyser/EventHandler/DependsOnInternalToken.php">
+        <MissingImmutableAnnotation occurrences="1">
+            <code>DependsOnInternalToken</code>
+        </MissingImmutableAnnotation>
+    </file>
+    <file src="src/Core/Analyser/EventHandler/DependsOnPrivateLayer.php">
+        <MissingImmutableAnnotation occurrences="1">
+            <code>DependsOnPrivateLayer</code>
+        </MissingImmutableAnnotation>
+    </file>
 </files>

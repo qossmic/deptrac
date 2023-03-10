@@ -60,9 +60,9 @@ class DependencyLayersAnalyser
                 $dependentRef = $this->tokenResolver->resolve($dependent, $astMap);
                 $dependentLayers = $this->layerResolver->getLayersForReference($dependentRef);
 
-                foreach ($dependerLayers as $dependentLayer) {
+                foreach ($dependerLayers as $dependerLayer) {
                     $event = new ProcessEvent(
-                        $dependency, $dependerRef, $dependentLayer, $dependentRef, $dependentLayers, $result
+                        $dependency, $dependerRef, $dependerLayer, $dependentRef, $dependentLayers, $result
                     );
                     $this->eventDispatcher->dispatch($event);
 

@@ -28,7 +28,7 @@ class MatchingLayersHandler implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProcessEvent::class => ['invoke', 16],
+            ProcessEvent::class => ['invoke', 1],
         ];
     }
 }

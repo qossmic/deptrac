@@ -49,7 +49,7 @@ class UncoveredDependentHandler implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            ProcessEvent::class => ['invoke', 32],
+            ProcessEvent::class => ['invoke', 2],
         ];
     }
 }
