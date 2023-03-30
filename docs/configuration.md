@@ -75,7 +75,7 @@ deptrac:
 </td>
 </tr>
 <tr>
-<td>exlcude_files</td>
+<td>exclude_files</td>
 <td>
 
 A list of regular expression-patterns to determine which files to exclude,
