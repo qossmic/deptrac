@@ -1,6 +1,0 @@
-deptrac:
-  skip_violations:
-    Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceFileCache:
-      - Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException
-    Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser:
-      - Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException

@@ -1,6 +1,3 @@
-imports:
-  - deptrac.baseline.yaml
-
 services:
   - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract
     tags:

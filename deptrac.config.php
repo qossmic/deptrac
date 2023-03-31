@@ -17,7 +17,6 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
     $services->set(IgnoreDependenciesOnContract::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
 
     $config
-        ->baseline('deptrac.baseline.yaml')
         ->paths('src')
         ->analysers(
             EmitterType::CLASS_TOKEN,
