@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Analyser;
 
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
+use Qossmic\Deptrac\Contract\Config\EmitterType;
 
 enum TokenType: string
 {

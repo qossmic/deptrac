@@ -6,6 +6,7 @@ namespace Tests\Qossmic\Deptrac\Core\Dependency;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Qossmic\Deptrac\Contract\Dependency\PostEmitEvent;
 use Qossmic\Deptrac\Contract\Dependency\PostFlattenEvent;
 use Qossmic\Deptrac\Contract\Dependency\PreEmitEvent;
@@ -20,7 +21,6 @@ use Qossmic\Deptrac\Core\Dependency\Emitter\FunctionSuperglobalDependencyEmitter
 use Qossmic\Deptrac\Core\Dependency\Emitter\UsesDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\InheritanceFlattener;
 use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfigurationException;
-use Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

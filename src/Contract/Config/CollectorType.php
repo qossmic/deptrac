@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Layer\Collector;
+namespace Qossmic\Deptrac\Contract\Config;
 
 enum CollectorType: string
 {

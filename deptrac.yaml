@@ -1,6 +1,3 @@
-imports:
-  - deptrac.baseline.yaml
-
 services:
   - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract
     tags:
@@ -113,19 +110,13 @@ deptrac:
       - File
     Dependency:
       - Ast
-    Result:
-      - Dependency
     Analyser:
-      - Result
       - Layer
       - Dependency
       - Ast
     OutputFormatter:
-      - Result
       - Console
       - DependencyInjection
-    Events:
-      - Result
     Ast:
       - File
       - InputCollector

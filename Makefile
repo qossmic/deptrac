@@ -32,7 +32,7 @@ phpstan:
 	$(PHPSTAN_BIN) analyse --memory-limit=256M
 
 deptrac:
-	$(PHP_BIN) deptrac.php analyse --no-progress --ansi
+	$(PHP_BIN) deptrac.php --config-file=deptrac.config.php analyse --no-progress --ansi
 
 psalm:
 	$(PSALM_BIN)

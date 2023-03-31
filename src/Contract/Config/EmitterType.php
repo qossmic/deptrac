@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Supportive\DependencyInjection;
+namespace Qossmic\Deptrac\Contract\Config;
 
 enum EmitterType: string
 {

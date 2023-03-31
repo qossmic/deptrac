@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
 use InvalidArgumentException;
+use Qossmic\Deptrac\Contract\Config\EmitterType;
 use RuntimeException;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -91,8 +92,9 @@ class Configuration implements ConfigurationInterface
                                     ->ignoreExtraKeys(false)
                                     ->children()
                                         ->scalarNode('type')->isRequired()->end()
-                                        ->arrayNode('attributes')
-                                            ->variablePrototype()->end()
+                                        ->variableNode('value')->end()
+                                        ->booleanNode('private')->defaultFalse()->end()
+                                        ->arrayNode('attributes')->variablePrototype()->end()
                                         ->end()
                                     ->end()
                                 ->end()

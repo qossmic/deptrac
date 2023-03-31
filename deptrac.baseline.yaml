@@ -1,8 +1,0 @@
-deptrac:
-  skip_violations:
-    Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser:
-      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
-    Qossmic\Deptrac\Core\Analyser\TokenType:
-      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
-    Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser:
-      - Qossmic\Deptrac\Supportive\DependencyInjection\EmitterType
