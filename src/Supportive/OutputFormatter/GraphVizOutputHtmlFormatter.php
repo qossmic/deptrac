@@ -44,8 +44,7 @@ final class GraphVizOutputHtmlFormatter extends GraphVizOutputFormatter
         } catch (Exception $exception) {
             throw OutputException::withMessage('Unable to generate HTML file: '.$exception->getMessage());
         } finally {
-            /** @psalm-suppress RedundantCondition */
-            if (isset($filename) && false !== $filename) {
+            if (isset($filename)) {
                 unlink($filename);
             }
         }
