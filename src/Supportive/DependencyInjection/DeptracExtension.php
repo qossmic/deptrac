@@ -27,7 +27,7 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('layers', $configs['layers']);
         $container->setParameter('ruleset', $configs['ruleset']);
         $container->setParameter('skip_violations', $configs['skip_violations']);
-        $container->setParameter('formatters', $configs['formatters'] ?? []);
+        $container->setParameter('formatters', $configs['formatters'] ?? $this->createEmptyFormatterConfig());
         $container->setParameter('analyser', $configs['analyser']);
         $container->setParameter('use_relative_path_from_depfile', $configs['use_relative_path_from_depfile']);
         $container->setParameter('ignore_uncovered_internal_classes', $configs['ignore_uncovered_internal_classes']);
@@ -74,5 +74,29 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         if (!$container->hasParameter('ignore_uncovered_internal_classes')) {
             $container->setParameter('ignore_uncovered_internal_classes', true);
         }
+    }
+
+    /**
+     * @return array{
+     *     graphviz: array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool},
+     *     codeclimate: array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}
+     * }
+     */
+    private function createEmptyFormatterConfig(): array
+    {
+        return [
+            'graphviz' => [
+                'hidden_layers' => [],
+                'groups' => [],
+                'point_to_groups' => false,
+            ],
+            'codeclimate' => [
+                'severity' => [
+                    'failure' => 'major',
+                    'skipped' => 'minor',
+                    'uncovered' => 'info',
+                ],
+            ],
+        ];
     }
 }

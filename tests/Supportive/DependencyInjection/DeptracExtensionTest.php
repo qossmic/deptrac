@@ -17,6 +17,13 @@ final class DeptracExtensionTest extends TestCase
 {
     private ContainerBuilder $container;
     private DeptracExtension $extension;
+
+    /**
+     * @var array{
+     *     graphviz: array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool},
+     *     codeclimate: array{severity?: array{failure?: string, skipped?: string, uncovered?: string}}
+     * }
+     */
     private array $formatterDefaults = [
         'graphviz' => [
             'hidden_layers' => [],
