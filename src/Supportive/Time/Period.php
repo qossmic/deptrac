@@ -17,6 +17,9 @@ final class Period
     ) {
     }
 
+    /**
+     * @psalm-pure
+     */
     public static function stop(StartedPeriod $startedPeriod): self
     {
         return new self(
