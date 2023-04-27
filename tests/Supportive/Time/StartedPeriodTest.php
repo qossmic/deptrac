@@ -18,6 +18,6 @@ class StartedPeriodTest extends TestCase
         $period = StartedPeriod::start();
         $period->stop();
 
-        self::assertEqualsWithDelta($now, $period->startedAt(), 1000000.0);
+        self::assertEqualsWithDelta($now, $period->startedAt, 1000000.0);
     }
 }

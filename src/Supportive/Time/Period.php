@@ -6,18 +6,21 @@ namespace Qossmic\Deptrac\Supportive\Time;
 
 use function hrtime;
 
+/**
+ * @psalm-immutable
+ */
 final class Period
 {
     private function __construct(
-        private readonly float|int $startedAt,
-        private readonly float|int $endedAt,
+        public readonly float|int $startedAt,
+        public readonly float|int $endedAt,
     ) {
     }
 
     public static function stop(StartedPeriod $startedPeriod): self
     {
         return new self(
-            $startedPeriod->startedAt(),
+            $startedPeriod->startedAt,
             hrtime(true),
         );
     }

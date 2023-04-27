@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Time;
 
+/**
+ * @psalm-immutable
+ */
 final class StartedPeriod
 {
     private function __construct(
-        private readonly float|int $startedAt
+        public readonly float|int $startedAt
     ) {
     }
 
@@ -21,10 +24,5 @@ final class StartedPeriod
     public function stop(): Period
     {
         return Period::stop($this);
-    }
-
-    public function startedAt(): float
-    {
-        return $this->startedAt;
     }
 }
