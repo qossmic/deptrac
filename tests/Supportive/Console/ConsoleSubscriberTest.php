@@ -16,6 +16,7 @@ use Qossmic\Deptrac\Contract\Dependency\PreFlattenEvent;
 use Qossmic\Deptrac\Supportive\Console\Subscriber\ConsoleSubscriber;
 use Qossmic\Deptrac\Supportive\Console\Symfony\Style;
 use Qossmic\Deptrac\Supportive\Console\Symfony\SymfonyOutput;
+use Qossmic\Deptrac\Supportive\Time\Stopwatch;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -47,7 +48,7 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
 
         self::assertSame('Start to create an AstMap for 9999999 Files.'.PHP_EOL, $symfonyOutput->fetch());
@@ -58,10 +59,14 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
+        $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
         $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
 
-        self::assertSame('AstMap created.'.PHP_EOL, $symfonyOutput->fetch());
+        self::assertMatchesRegularExpression(
+            '/AstMap created in \d+\.\d+ sec\.'.PHP_EOL.'/',
+            $symfonyOutput->fetch()
+        );
     }
 
     public function testOnAstFileAnalysedEventWithVerboseVerbosity(): void
@@ -69,7 +74,7 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
         $subscriber->onAstFileAnalysedEvent(new AstFileAnalysedEvent('foo.php'));
 
         self::assertSame('Parsing File foo.php'.PHP_EOL, $symfonyOutput->fetch());
@@ -80,7 +85,7 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
         $subscriber->onAstFileSyntaxErrorEvent(
             new AstFileSyntaxErrorEvent('foo.php', 'Invalid')
         );
@@ -93,7 +98,7 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
         $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
 
         self::assertSame('start emitting dependencies "emitter-name"'.PHP_EOL, $symfonyOutput->fetch());
@@ -104,10 +109,14 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
+        $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
         $subscriber->onPostDependencyEmit(new PostEmitEvent());
 
-        self::assertSame('end emitting dependencies'.PHP_EOL, $symfonyOutput->fetch());
+        self::assertMatchesRegularExpression(
+            '/Dependencies emitted in \d+\.\d+ sec\.'.PHP_EOL.'/',
+            $symfonyOutput->fetch()
+        );
     }
 
     public function testOnPreDependencyFlatten(): void
@@ -115,7 +124,7 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
         $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
 
         self::assertSame('start flatten dependencies'.PHP_EOL, $symfonyOutput->fetch());
@@ -126,9 +135,13 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $subscriber = new ConsoleSubscriber($output);
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
+        $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
         $subscriber->onPostDependencyFlatten(new PostFlattenEvent());
 
-        self::assertSame('end flatten dependencies'.PHP_EOL, $symfonyOutput->fetch());
+        self::assertMatchesRegularExpression(
+            '/Dependencies flattened in \d+\.\d+ sec\.'.PHP_EOL.'/',
+            $symfonyOutput->fetch()
+        );
     }
 }
