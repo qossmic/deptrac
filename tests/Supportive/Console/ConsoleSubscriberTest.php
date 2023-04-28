@@ -59,9 +59,9 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $stopwatch  = new Stopwatch();
+        $stopwatch = new Stopwatch();
         $stopwatch->start('ast');
-        
+
         $subscriber = new ConsoleSubscriber($output, $stopwatch);
         $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
 
@@ -133,10 +133,10 @@ final class ConsoleSubscriberTest extends TestCase
     {
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
-        
-        $stopwatch  = new Stopwatch();
+
+        $stopwatch = new Stopwatch();
         $stopwatch->start('deps');
-        
+
         $subscriber = new ConsoleSubscriber($output, $stopwatch);
         $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
 
@@ -185,7 +185,7 @@ final class ConsoleSubscriberTest extends TestCase
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
         $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
 
-        $stopwatch  = new Stopwatch();
+        $stopwatch = new Stopwatch();
         $stopwatch->start('flatten');
 
         $subscriber = new ConsoleSubscriber($output, $stopwatch);
