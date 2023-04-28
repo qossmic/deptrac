@@ -44,11 +44,10 @@ class ConsoleSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /** @throws StopwatchException */
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
         if ($this->output->isVerbose()) {
-            $this->stopwatch->start('ast');
+            $this->stopwatchStart('ast');
 
             $this->output->writeLineFormatted(
                 sprintf(
@@ -59,17 +58,13 @@ class ConsoleSubscriber implements EventSubscriberInterface
         }
     }
 
-    /** @throws StopwatchException */
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
         if ($this->output->isVerbose()) {
-            $period = $this->stopwatch->stop('ast');
-
-            $this->output->writeLineFormatted(
-                sprintf(
-                    'AstMap created in %01.2f sec.',
-                    $period->toSeconds(),
-                )
+            $this->printMessageWithTime(
+                'ast',
+                '<info>AstMap created in %01.2f sec.</info>',
+                '<info>AstMap created.</info>'
             );
         }
     }
@@ -90,11 +85,10 @@ class ConsoleSubscriber implements EventSubscriberInterface
         ));
     }
 
-    /** @throws StopwatchException */
     public function onPreDependencyEmit(PreEmitEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $this->stopwatch->start('deps');
+            $this->stopwatchStart('deps');
 
             $this->output->writeLineFormatted(
                 sprintf('start emitting dependencies <info>"%s"</info>', $event->emitterName)
@@ -102,43 +96,61 @@ class ConsoleSubscriber implements EventSubscriberInterface
         }
     }
 
-    /** @throws StopwatchException */
     public function onPostDependencyEmit(PostEmitEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $period = $this->stopwatch->stop('deps');
-
-            $this->output->writeLineFormatted(
-                sprintf(
-                    '<info>Dependencies emitted in %01.2f sec.</info>',
-                    $period->toSeconds(),
-                )
+            $this->printMessageWithTime(
+                'deps',
+                '<info>Dependencies emitted in %01.f sec.</info>',
+                '<info>Dependencies emitted.</info>'
             );
         }
     }
 
-    /** @throws StopwatchException */
     public function onPreDependencyFlatten(PreFlattenEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $this->stopwatch->start('flatten');
+            $this->stopwatchStart('flatten');
 
-            $this->output->writeLineFormatted('<info>start flatten dependencies</info>');
+            $this->output->writeLineFormatted('start flatten dependencies');
         }
     }
 
-    /** @throws StopwatchException */
     public function onPostDependencyFlatten(PostFlattenEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $period = $this->stopwatch->stop('flatten');
-
-            $this->output->writeLineFormatted(
-                sprintf(
-                    '<info>Dependencies flattened in %01.f sec.</info>',
-                    $period->toSeconds(),
-                )
+            $this->printMessageWithTime(
+                'flatten',
+                '<info>Dependencies flattened in %01.f sec.</info>',
+                '<info>Dependencies flattened.</info>'
             );
+        }
+    }
+
+    /**
+     * @param non-empty-string $event
+     */
+    private function stopwatchStart(string $event): void
+    {
+        try {
+            $this->stopwatch->start($event);
+        } catch (StopwatchException) {
+        }
+    }
+
+    /**
+     * @param non-empty-string $event
+     * @param non-empty-string $messageWithTime
+     * @param non-empty-string $messageWithoutTime
+     */
+    private function printMessageWithTime(string $event, string $messageWithTime, string $messageWithoutTime): void
+    {
+        try {
+            $period = $this->stopwatch->stop($event);
+
+            $this->output->writeLineFormatted(sprintf($messageWithTime, $period->toSeconds()));
+        } catch (StopwatchException) {
+            $this->output->writeLineFormatted($messageWithoutTime);
         }
     }
 }

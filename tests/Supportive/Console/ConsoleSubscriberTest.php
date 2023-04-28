@@ -54,6 +54,31 @@ final class ConsoleSubscriberTest extends TestCase
         self::assertSame('Start to create an AstMap for 9999999 Files.'.PHP_EOL, $symfonyOutput->fetch());
     }
 
+    public function testOnPreCreateAstMapEventWithStopwatchAlreadyStartedVerboseVerbosity(): void
+    {
+        $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
+
+        $stopwatch  = new Stopwatch();
+        $stopwatch->start('ast');
+        
+        $subscriber = new ConsoleSubscriber($output, $stopwatch);
+        $subscriber->onPreCreateAstMapEvent(new PreCreateAstMapEvent(9999999));
+
+        self::assertSame('Start to create an AstMap for 9999999 Files.'.PHP_EOL, $symfonyOutput->fetch());
+    }
+
+    public function testOnPostCreateAstMapEventWithVerboseVerbosityWithNoStopwatchStarted(): void
+    {
+        $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
+
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
+        $subscriber->onPostCreateAstMapEvent(new PostCreateAstMapEvent());
+
+        self::assertSame('AstMap created.'.PHP_EOL, $symfonyOutput->fetch());
+    }
+
     public function testOnPostCreateAstMapEventWithVerboseVerbosity(): void
     {
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
@@ -104,6 +129,31 @@ final class ConsoleSubscriberTest extends TestCase
         self::assertSame('start emitting dependencies "emitter-name"'.PHP_EOL, $symfonyOutput->fetch());
     }
 
+    public function testOnPreDependencyEmitWithStopwatchAlreadyStarted(): void
+    {
+        $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
+        
+        $stopwatch  = new Stopwatch();
+        $stopwatch->start('deps');
+        
+        $subscriber = new ConsoleSubscriber($output, $stopwatch);
+        $subscriber->onPreDependencyEmit(new PreEmitEvent('emitter-name'));
+
+        self::assertSame('start emitting dependencies "emitter-name"'.PHP_EOL, $symfonyOutput->fetch());
+    }
+
+    public function testOnPostDependencyEmitWithNoStopwatchStarted(): void
+    {
+        $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
+
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
+        $subscriber->onPostDependencyEmit(new PostEmitEvent());
+
+        self::assertSame('Dependencies emitted.'.PHP_EOL, $symfonyOutput->fetch());
+    }
+
     public function testOnPostDependencyEmit(): void
     {
         $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
@@ -128,6 +178,31 @@ final class ConsoleSubscriberTest extends TestCase
         $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
 
         self::assertSame('start flatten dependencies'.PHP_EOL, $symfonyOutput->fetch());
+    }
+
+    public function testOnPreDependencyFlattenWithStopwatchStarted(): void
+    {
+        $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
+
+        $stopwatch  = new Stopwatch();
+        $stopwatch->start('flatten');
+
+        $subscriber = new ConsoleSubscriber($output, $stopwatch);
+        $subscriber->onPreDependencyFlatten(new PreFlattenEvent());
+
+        self::assertSame('start flatten dependencies'.PHP_EOL, $symfonyOutput->fetch());
+    }
+
+    public function testOnPostDependencyFlattenWithNoStopwatchStarted(): void
+    {
+        $symfonyOutput = new BufferedOutput(OutputInterface::VERBOSITY_VERBOSE);
+        $output = new SymfonyOutput($symfonyOutput, new Style(new SymfonyStyle(new ArrayInput([]), $symfonyOutput)));
+
+        $subscriber = new ConsoleSubscriber($output, new Stopwatch());
+        $subscriber->onPostDependencyFlatten(new PostFlattenEvent());
+
+        self::assertSame('Dependencies flattened.'.PHP_EOL, $symfonyOutput->fetch());
     }
 
     public function testOnPostDependencyFlatten(): void
