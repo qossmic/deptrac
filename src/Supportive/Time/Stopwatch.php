@@ -11,10 +11,6 @@ final class Stopwatch
     /** @var array<non-empty-string, StartedPeriod> */
     private array $periods = [];
 
-    public function __construct()
-    {
-    }
-
     /**
      * @param non-empty-string $event
      *
