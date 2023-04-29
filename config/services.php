@@ -18,6 +18,7 @@ use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnPrivateLayer;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UncoveredDependentHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UnmatchedSkippedViolations;
+use Qossmic\Deptrac\Core\Analyser\LayerDependenciesAnalyser;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
@@ -75,6 +76,8 @@ use Qossmic\Deptrac\Core\Layer\LayerResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\Supportive\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\AnalyseRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugDependenciesCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugDependenciesRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugLayerCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugLayerRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugTokenCommand;
@@ -346,6 +349,7 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             '$config' => param('analyser'),
         ]);
+    $services->set(LayerDependenciesAnalyser::class);
 
     /*
      * OutputFormatter
@@ -433,6 +437,13 @@ return static function (ContainerConfigurator $container): void {
         ->autowire();
     $services
         ->set(DebugUnassignedCommand::class)
+        ->autowire()
+        ->tag('console.command');
+    $services
+        ->set(DebugDependenciesRunner::class)
+        ->autowire();
+    $services
+        ->set(DebugDependenciesCommand::class)
         ->autowire()
         ->tag('console.command');
 };
