@@ -304,7 +304,7 @@ deptrac:
 ```
 
 *skip_violations* section contains an associative array where a
-key (`Library\LibClass`) is the name of dependant token and
+key (`Library\LibClass`) is the name of dependent token and
 values (`Core\CoreClass`) are dependency tokens.
 
 Matched violations will be marked as skipped:

@@ -19,6 +19,7 @@ use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UncoveredDependentHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UnmatchedSkippedViolations;
 use Qossmic\Deptrac\Core\Analyser\LayerForTokenAnalyser;
+use Qossmic\Deptrac\Core\Analyser\RulesetUsageAnalyser;
 use Qossmic\Deptrac\Core\Analyser\TokenInLayerAnalyser;
 use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
 use Qossmic\Deptrac\Core\Ast\AstLoader;
@@ -81,6 +82,8 @@ use Qossmic\Deptrac\Supportive\Console\Command\DebugTokenCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugTokenRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugUnassignedCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugUnassignedRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugUnusedCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\DebugUnusedRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\InitCommand;
 use Qossmic\Deptrac\Supportive\File\Dumper;
 use Qossmic\Deptrac\Supportive\File\YmlFileLoader;
@@ -346,6 +349,10 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             '$config' => param('analyser'),
         ]);
+    $services->set(RulesetUsageAnalyser::class)
+        ->args([
+            '$layers' => param('layers'),
+        ]);
 
     /*
      * OutputFormatter
@@ -433,6 +440,13 @@ return static function (ContainerConfigurator $container): void {
         ->autowire();
     $services
         ->set(DebugUnassignedCommand::class)
+        ->autowire()
+        ->tag('console.command');
+    $services
+        ->set(DebugUnusedRunner::class)
+        ->autowire();
+    $services
+        ->set(DebugUnusedCommand::class)
         ->autowire()
         ->tag('console.command');
 };
