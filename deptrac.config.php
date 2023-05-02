@@ -61,6 +61,9 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             $file = Layer::withName('File')->collectors(
                 DirectoryConfig::create('src/Supportive/File/.*')
             ),
+            $time = Layer::withName('Time')->collectors(
+                DirectoryConfig::create('src/Supportive/Time/.*')
+            ),
             $supportive = Layer::withName('Supportive')->collectors(
                 BoolConfig::create()
                     ->mustNot(DirectoryConfig::create('src/Supportive/.*/.*'))
@@ -69,7 +72,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
         )
         ->rulesets(
             Ruleset::forLayer($layer)->accesses($ast),
-            Ruleset::forLayer($console)->accesses($analyser, $outputFormatter, $dependencyInjection, $file),
+            Ruleset::forLayer($console)->accesses($analyser, $outputFormatter, $dependencyInjection, $file, $time),
             Ruleset::forLayer($dependency)->accesses($ast),
             Ruleset::forLayer($analyser)->accesses($layer, $dependency, $ast),
             Ruleset::forLayer($outputFormatter)->accesses($console, $dependencyInjection),

@@ -12,6 +12,7 @@ use Qossmic\Deptrac\Supportive\Console\Symfony\SymfonyOutput;
 use Qossmic\Deptrac\Supportive\OutputFormatter\FormatterProvider;
 use Qossmic\Deptrac\Supportive\OutputFormatter\GithubActionsOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
+use Qossmic\Deptrac\Supportive\Time\Stopwatch;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -77,7 +78,7 @@ class AnalyseCommand extends Command
             (bool) $input->getOption(self::OPTION_FAIL_ON_UNCOVERED)
         );
 
-        $this->dispatcher->addSubscriber(new ConsoleSubscriber($symfonyOutput));
+        $this->dispatcher->addSubscriber(new ConsoleSubscriber($symfonyOutput, new Stopwatch()));
         if (!$options->noProgress) {
             $this->dispatcher->addSubscriber(new ProgressSubscriber($symfonyOutput));
         }
