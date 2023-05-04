@@ -42,6 +42,21 @@ examples\Layer1\SomeClass
 examples\Layer1\SomeClass2
 ```
 
+## `debug:dependencies`
+
+With the `debug:dependencies`-command you can see all dependencies of your layer. You can optionally specify a target layer to get only dependencies from one layer to the other:
+
+```bash
+php deptrac.phar debug:dependencies debug:dependencies Ast InputCollector
+
+  Qossmic\Deptrac\Core\Ast\AstMapExtractor depends on Qossmic\Deptrac\Core\InputCollector\InputCollectorInterface (InputCollector)
+  .../deptrac/src/Core/Ast/AstMapExtractor.php:15
+  Qossmic\Deptrac\Core\Ast\AstMapExtractor depends on Qossmic\Deptrac\Core\InputCollector\InputException (InputCollector)
+  .../deptrac/src/Core/Ast/AstMapExtractor.php:28
+  Qossmic\Deptrac\Core\Ast\AstException depends on Qossmic\Deptrac\Core\InputCollector\InputException (InputCollector)
+  .../deptrac/src/Core/Ast/AstException.php:13
+```
+
 ## `debug:unused`
 
 With the `debug:unused`-command you list all the rulesets that are not being used (i.e. there are no dependencies being allowed by this ruleset).
