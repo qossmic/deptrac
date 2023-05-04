@@ -90,6 +90,10 @@ deptrac:
       collectors:
         - type: directory
           value: src/Supportive/File/.*
+    - name: Time
+      collectors:
+        - type: directory
+          value: src/Supportive/Time/.*
     - name: Supportive
       collectors:
         - type: bool
@@ -108,6 +112,7 @@ deptrac:
       - OutputFormatter
       - DependencyInjection
       - File
+      - Time
     Dependency:
       - Ast
     Analyser:
@@ -115,7 +120,6 @@ deptrac:
       - Dependency
       - Ast
     OutputFormatter:
-      - Console
       - DependencyInjection
     Ast:
       - File

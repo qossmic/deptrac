@@ -13,12 +13,18 @@ use Qossmic\Deptrac\Contract\Dependency\PostFlattenEvent;
 use Qossmic\Deptrac\Contract\Dependency\PreEmitEvent;
 use Qossmic\Deptrac\Contract\Dependency\PreFlattenEvent;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
+use Qossmic\Deptrac\Supportive\Time\Stopwatch;
+use Qossmic\Deptrac\Supportive\Time\StopwatchException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+use function sprintf;
 
 class ConsoleSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private readonly OutputInterface $output)
-    {
+    public function __construct(
+        private readonly OutputInterface $output,
+        private readonly Stopwatch $stopwatch,
+    ) {
     }
 
     /**
@@ -41,6 +47,8 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function onPreCreateAstMapEvent(PreCreateAstMapEvent $preCreateAstMapEvent): void
     {
         if ($this->output->isVerbose()) {
+            $this->stopwatchStart('ast');
+
             $this->output->writeLineFormatted(
                 sprintf(
                     'Start to create an AstMap for <info>%u</info> Files.',
@@ -53,7 +61,11 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function onPostCreateAstMapEvent(PostCreateAstMapEvent $postCreateAstMapEvent): void
     {
         if ($this->output->isVerbose()) {
-            $this->output->writeLineFormatted('AstMap created.');
+            $this->printMessageWithTime(
+                'ast',
+                '<info>AstMap created in %01.2f sec.</info>',
+                '<info>AstMap created.</info>'
+            );
         }
     }
 
@@ -76,6 +88,8 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function onPreDependencyEmit(PreEmitEvent $event): void
     {
         if ($this->output->isVerbose()) {
+            $this->stopwatchStart('deps');
+
             $this->output->writeLineFormatted(
                 sprintf('start emitting dependencies <info>"%s"</info>', $event->emitterName)
             );
@@ -85,21 +99,58 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function onPostDependencyEmit(PostEmitEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $this->output->writeLineFormatted('<info>end emitting dependencies</info>');
+            $this->printMessageWithTime(
+                'deps',
+                '<info>Dependencies emitted in %01.f sec.</info>',
+                '<info>Dependencies emitted.</info>'
+            );
         }
     }
 
     public function onPreDependencyFlatten(PreFlattenEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $this->output->writeLineFormatted('<info>start flatten dependencies</info>');
+            $this->stopwatchStart('flatten');
+
+            $this->output->writeLineFormatted('start flatten dependencies');
         }
     }
 
     public function onPostDependencyFlatten(PostFlattenEvent $event): void
     {
         if ($this->output->isVerbose()) {
-            $this->output->writeLineFormatted('<info>end flatten dependencies</info>');
+            $this->printMessageWithTime(
+                'flatten',
+                '<info>Dependencies flattened in %01.f sec.</info>',
+                '<info>Dependencies flattened.</info>'
+            );
+        }
+    }
+
+    /**
+     * @param non-empty-string $event
+     */
+    private function stopwatchStart(string $event): void
+    {
+        try {
+            $this->stopwatch->start($event);
+        } catch (StopwatchException) {
+        }
+    }
+
+    /**
+     * @param non-empty-string $event
+     * @param non-empty-string $messageWithTime
+     * @param non-empty-string $messageWithoutTime
+     */
+    private function printMessageWithTime(string $event, string $messageWithTime, string $messageWithoutTime): void
+    {
+        try {
+            $period = $this->stopwatch->stop($event);
+
+            $this->output->writeLineFormatted(sprintf($messageWithTime, $period->toSeconds()));
+        } catch (StopwatchException) {
+            $this->output->writeLineFormatted($messageWithoutTime);
         }
     }
 }
