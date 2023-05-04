@@ -41,3 +41,23 @@ examples\Layer1\AnotherClassLikeAController
 examples\Layer1\SomeClass
 examples\Layer1\SomeClass2
 ```
+
+## `debug:unused`
+
+With the `debug:unused`-command you list all the rulesets that are not being used (i.e. there are no dependencies being allowed by this ruleset).
+
+You can optionally specify a limit (`--limit=<int>`) of how many times can be the ruleset used to be considered unused. This is useful
+if you want to find dependencies that are barely used and may be a prime candidate to get rid of.
+
+```bash
+php deptrac.phar debug:unused --limit=10
+
+  Analyser layer is dependent Layer layer 5 times
+  Ast layer is dependent File layer 9 times
+  Ast layer is dependent InputCollector layer 3 times
+  Console layer is dependent OutputFormatter layer 4 times
+  Console layer is dependent DependencyInjection layer 2 times
+  Console layer is dependent File layer 5 times
+  InputCollector layer is dependent File layer 3 times
+  OutputFormatter layer is dependent DependencyInjection layer 1 times
+```

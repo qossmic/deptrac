@@ -120,7 +120,6 @@ deptrac:
       - Dependency
       - Ast
     OutputFormatter:
-      - Console
       - DependencyInjection
     Ast:
       - File

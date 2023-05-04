@@ -75,7 +75,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             Ruleset::forLayer($console)->accesses($analyser, $outputFormatter, $dependencyInjection, $file, $time),
             Ruleset::forLayer($dependency)->accesses($ast),
             Ruleset::forLayer($analyser)->accesses($layer, $dependency, $ast),
-            Ruleset::forLayer($outputFormatter)->accesses($console, $dependencyInjection),
+            Ruleset::forLayer($outputFormatter)->accesses($dependencyInjection),
             Ruleset::forLayer($ast)->accesses($file, $inputCollector),
             Ruleset::forLayer($inputCollector)->accesses($file),
             Ruleset::forLayer($supportive)->accesses($file),
