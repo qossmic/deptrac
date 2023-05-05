@@ -4,6 +4,7 @@ use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Config\Collector\BoolConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\ClassNameConfig;
+use Qossmic\Deptrac\Contract\Config\Collector\ComposerConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\DirectoryConfig;
 use Qossmic\Deptrac\Contract\Config\DeptracConfig;
 use Qossmic\Deptrac\Contract\Config\EmitterType;
@@ -32,9 +33,11 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             ),
             $ast = Layer::withName('Ast')->collectors(
                 DirectoryConfig::create('src/Core/Ast/.*'),
-                ClassNameConfig::create('^PHPStan\\PhpDocParser\\.*')->private(),
-                ClassNameConfig::create('^PhpParser\\.*')->private(),
-                ClassNameConfig::create('^phpDocumentor\\Reflection\\.*')->private(),
+                ComposerConfig::create('composer.json', 'composer.lock')
+                    ->addPackage('phpstan/phpdoc-parser')
+                    ->addPackage('nikic/php-parser')
+                    ->addPackage('phpdocumentor/type-resolver')
+                    ->private(),
             ),
             $console = Layer::withName('Console')->collectors(
                 DirectoryConfig::create('src/Supportive/Console/.*')
@@ -56,7 +59,8 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             ),
             $outputFormatter = Layer::withName('OutputFormatter')->collectors(
                 DirectoryConfig::create('src/Supportive/OutputFormatter/.*'),
-                ClassNameConfig::create('^phpDocumentor\\GraphViz\\.*')->private(),
+                ComposerConfig::create('composer.json', 'composer.lock')
+                    ->addPackage('phpdocumentor/graphviz')->private(),
             ),
             $file = Layer::withName('File')->collectors(
                 DirectoryConfig::create('src/Supportive/File/.*')
@@ -69,24 +73,35 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
                     ->mustNot(DirectoryConfig::create('src/Supportive/.*/.*'))
                     ->must(DirectoryConfig::create('src/Supportive/.*'))
             ),
+            $symfony = Layer::withName('Symfony')->collectors(
+                ComposerConfig::create('composer.json', 'composer.lock')
+                    ->addPackage('symfony/config')
+                    ->addPackage('symfony/console')
+                    ->addPackage('symfony/dependency-injection')
+                    ->addPackage('symfony/event-dispatcher')
+                    ->addPackage('symfony/filesystem')
+                    ->addPackage('symfony/finder')
+                    ->addPackage('symfony/yaml'),
+            ),
         )
         ->rulesets(
-            Ruleset::forLayer($layer)->accesses($ast),
-            Ruleset::forLayer($console)->accesses($analyser, $outputFormatter, $dependencyInjection, $file, $time),
+            Ruleset::forLayer($layer)->accesses($ast, $symfony),
+            Ruleset::forLayer($console)->accesses($analyser, $outputFormatter, $dependencyInjection, $file, $time, $symfony),
             Ruleset::forLayer($dependency)->accesses($ast),
-            Ruleset::forLayer($analyser)->accesses($layer, $dependency, $ast),
-            Ruleset::forLayer($outputFormatter)->accesses($dependencyInjection),
-            Ruleset::forLayer($ast)->accesses($file, $inputCollector),
-            Ruleset::forLayer($inputCollector)->accesses($file),
+            Ruleset::forLayer($analyser)->accesses($layer, $dependency, $ast, $symfony),
+            Ruleset::forLayer($outputFormatter)->accesses($dependencyInjection, $symfony),
+            Ruleset::forLayer($ast)->accesses($file, $inputCollector, $symfony),
+            Ruleset::forLayer($inputCollector)->accesses($file, $symfony),
             Ruleset::forLayer($supportive)->accesses($file),
-            Ruleset::forLayer($contract),
+            Ruleset::forLayer($contract)->accesses($symfony),
+            Ruleset::forLayer($file)->accesses($symfony),
+            Ruleset::forLayer($dependencyInjection)->accesses($symfony),
         )
         ->formatters(
             GraphvizConfig::create()
                 ->pointsToGroup(true)
                 ->groups('Contract', $contract)
-                ->groups('Supportive', $supportive, $file)
-                ->groups('Symfony', $console, $dependencyInjection, $outputFormatter)
+                ->groups('Supportive', $supportive, $file, $symfony, $console, $dependencyInjection, $outputFormatter, $time)
                 ->groups('Core', $analyser, $ast, $dependency, $inputCollector, $layer)
         );
 };
