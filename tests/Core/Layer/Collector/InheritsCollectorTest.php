@@ -19,12 +19,6 @@ final class InheritsCollectorTest extends TestCase
         yield [['value' => 'App\Baz'], true];
         yield [['value' => 'App\Foo'], true];
         yield [['value' => 'App\None'], false];
-        // Legacy attribute:
-        yield [['inherits' => 'App\FizTrait'], true];
-        yield [['inherits' => 'App\Bar'], true];
-        yield [['inherits' => 'App\Baz'], true];
-        yield [['inherits' => 'App\Foo'], true];
-        yield [['inherits' => 'App\None'], false];
     }
 
     /**

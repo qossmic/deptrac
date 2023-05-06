@@ -10,11 +10,6 @@
   },
   "mutators": {
     "@default": true,
-    "FunctionCallRemoval": {
-      "ignoreSourceCodeByRegex": [
-        "trigger_deprecation.*"
-      ]
-    },
     "global-ignoreSourceCodeByRegex": [
       "\\$output->writeLineFormatted.*"
     ],

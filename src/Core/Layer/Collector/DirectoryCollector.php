@@ -26,11 +26,6 @@ final class DirectoryCollector extends RegexCollector
 
     protected function getPattern(array $config): string
     {
-        if (isset($config['regex']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'ClassNameCollector should use the "value" key from this version');
-            $config['value'] = $config['regex'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('DirectoryCollector needs the regex configuration.');
         }

@@ -21,9 +21,9 @@ final class ExtendsCollector implements CollectorInterface
     /**
      * @throws AstException
      */
-    public function __construct(private AstMapExtractor $astMapExtractor)
+    public function __construct(AstMapExtractor $astMapExtractor)
     {
-        $this->astMap = $this->astMapExtractor->extract();
+        $this->astMap = $astMapExtractor->extract();
     }
 
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
@@ -50,11 +50,6 @@ final class ExtendsCollector implements CollectorInterface
      */
     private function getInterfaceName(array $config): ClassLikeToken
     {
-        if (isset($config['extends']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'ExtendsCollector should use the "value" key from this version');
-            $config['value'] = $config['extends'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('ExtendsCollector needs the interface or class name as a string.');
         }

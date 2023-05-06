@@ -25,9 +25,6 @@ final class FunctionNameCollectorTest extends TestCase
     {
         yield [['value' => 'a'], 'foo\bar', true];
         yield [['value' => 'a'], 'foo\bbr', false];
-        // Legacy attribute:
-        yield [['regex' => 'a'], 'foo\bar', true];
-        yield [['regex' => 'a'], 'foo\bbr', false];
     }
 
     /**

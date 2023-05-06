@@ -50,11 +50,6 @@ final class ImplementsCollector implements CollectorInterface
      */
     private function getInterfaceName(array $config): ClassLikeToken
     {
-        if (isset($config['implements']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'ImplementsCollector should use the "value" key from this version');
-            $config['value'] = $config['implements'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('ImplementsCollector needs the interface name as a string.');
         }
