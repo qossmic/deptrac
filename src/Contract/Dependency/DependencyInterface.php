@@ -8,6 +8,9 @@ use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
+/**
+ * Represents a dependency between 2 tokens (depender and dependent).
+ */
 interface DependencyInterface
 {
     public function getDepender(): TokenInterface;

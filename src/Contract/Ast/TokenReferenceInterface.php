@@ -6,6 +6,8 @@ namespace Qossmic\Deptrac\Contract\Ast;
 
 /**
  * @psalm-immutable
+ *
+ * Represents the AST-Token and its location.
  */
 interface TokenReferenceInterface
 {

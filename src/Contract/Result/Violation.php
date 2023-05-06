@@ -9,6 +9,8 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a dependency that is NOT allowed to exist given the defined rules
  */
 final class Violation implements CoveredRuleInterface
 {

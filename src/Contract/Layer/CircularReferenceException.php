@@ -10,6 +10,14 @@ use RuntimeException;
 use function implode;
 use function sprintf;
 
+/**
+ * Exception when there are circular dependencies between layers.
+ *
+ * This happens when you use the `layer` collector and depend on a layer that
+ * in turn depends back on you. To be able to resolve layers, the dependencies
+ * between them have to be a DAG(Direct Acyclic Graph), otherwise
+ * the resolution is not possible.
+ */
 final class CircularReferenceException extends RuntimeException implements ExceptionInterface
 {
     /**

@@ -10,6 +10,11 @@ use RuntimeException;
 
 use function implode;
 
+/**
+ * Fired when the configuration of a particular collector is not valid.
+ *
+ * Use this exception when writing custom collectors.
+ */
 final class InvalidCollectorDefinitionException extends RuntimeException implements ExceptionInterface
 {
     public static function missingType(): self

@@ -10,10 +10,13 @@ use Qossmic\Deptrac\Contract\Result\Warning;
 
 use function spl_object_id;
 
+/**
+ * Describes the result of a source code analysis.
+ */
 class AnalysisResult
 {
     /**
-     * @var array<string, array<int, RuleInterface>>
+     * @var array<string, array<int, RuleInterface>> Rule className -> (ruleInstanceHash -> Rule)
      */
     private array $rules = [];
 

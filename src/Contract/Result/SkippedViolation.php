@@ -8,6 +8,8 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a Violation that is being skipped by the baseline file
  */
 final class SkippedViolation implements CoveredRuleInterface
 {

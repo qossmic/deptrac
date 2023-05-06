@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
+/**
+ * Wrapper around Symfony Output.
+ */
 interface OutputInterface
 {
     public function writeFormatted(string $message): void;

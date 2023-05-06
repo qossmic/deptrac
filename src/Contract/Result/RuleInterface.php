@@ -8,6 +8,8 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a dependency
  */
 interface RuleInterface
 {

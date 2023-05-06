@@ -10,6 +10,8 @@ use function count;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a result ready for output formatting
  */
 final class OutputResult
 {

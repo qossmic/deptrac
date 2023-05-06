@@ -8,10 +8,13 @@ use Qossmic\Deptrac\Contract\Layer\LayerProvider;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 
+/**
+ * Utility class for managing adding violations that could be skipped.
+ */
 class EventHelper
 {
     /**
-     * @var array<string, string[]>
+     * @var array<string, string[]> depender layer -> list<dependent layers>
      */
     private array $unmatchedSkippedViolation;
 

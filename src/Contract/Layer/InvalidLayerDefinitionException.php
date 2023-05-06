@@ -9,6 +9,11 @@ use RuntimeException;
 
 use function sprintf;
 
+/**
+ * Fired when the configuration of a particular layer is not valid.
+ *
+ * Use this exception when writing custom collectors.
+ */
 final class InvalidLayerDefinitionException extends RuntimeException implements ExceptionInterface
 {
     public static function missingName(): self

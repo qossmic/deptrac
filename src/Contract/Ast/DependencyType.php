@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Ast;
 
+/**
+ * Specifies the type of AST dependency.
+ *
+ * You can use this information to enrich the displayed output to the user on
+ * your output formatter.
+ */
 enum DependencyType: string
 {
     case USE = 'use';
