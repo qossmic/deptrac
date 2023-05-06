@@ -4,69 +4,65 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use function count;
-use function in_array;
+use JsonException;
+use RuntimeException;
 
 class ComposerFilesParser
 {
-    /** @var array<string, mixed> */
-    private array $composerFile;
-
-    /** @var array<string, mixed> */
+    /**
+     * @var array{
+     *     packages?: array<string, array{
+     *          name: string,
+     *          autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *          autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *     }>,
+     *     packages-dev?: array<string, array{
+     *          name: string,
+     *          autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *          autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *     }>,
+     * }
+     */
     private array $lockFile;
 
-    /** @var array<string, mixed> */
+    /**
+     * @var array<string, array{
+     *     autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *     autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     * }>
+     */
     private array $lockedPackages;
 
-    public function __construct(string $composerFile, string $lockFile)
+    /**
+     * @throws RuntimeException
+     */
+    public function __construct(string $lockFile)
     {
-        $this->composerFile = json_decode(file_get_contents($composerFile), true);
-        $this->lockFile = json_decode(file_get_contents($lockFile), true);
+        $contents = file_get_contents($lockFile);
+        if (false === $contents) {
+            throw new RuntimeException('Could not load composer.lock file');
+        }
+        try {
+            /**
+             * @var array{
+             *     packages?: array<string, array{
+             *          name: string,
+             *          autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+             *          autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+             *     }>,
+             *     packages-dev?: array<string, array{
+             *          name: string,
+             *          autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+             *          autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+             *     }>,
+             * } $jsonDecode
+             */
+            $jsonDecode = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+            $this->lockFile = $jsonDecode;
+        } catch (JsonException $exception) {
+            throw new RuntimeException('Could not parse composer.lock file', 0, $exception);
+        }
         $this->lockedPackages = $this->getPackagesFromLockFile();
-    }
-
-    /**
-     * Returns an array of all namespaces declared by the current composer file.
-     *
-     * @return string[]
-     */
-    public function getNamespaces(bool $includeDev = false): array
-    {
-        return $this->extractNamespaces($this->composerFile, $includeDev);
-    }
-
-    /**
-     * Returns an array of all required namespaces including deep dependencies (dependencies of dependencies).
-     *
-     * @return string[]
-     */
-    public function getDeepRequirementNamespaces(bool $includeDev): array
-    {
-        $required = $this->getDirectDependencies($includeDev);
-        $required = $this->flattenDependencies($required, $includeDev);
-
-        return $this->autoloadableNamespacesForRequirements($required, $includeDev);
-    }
-
-    /**
-     * Returns an array of directly required package names.
-     *
-     * @return string[]
-     */
-    public function getDirectDependencies(bool $includeDev): array
-    {
-        $required = [];
-        foreach (array_keys($this->composerFile['require'] ?? []) as $packageName) {
-            $required[] = (string) $packageName;
-        }
-
-        if ($includeDev) {
-            foreach (array_keys($this->composerFile['require-dev'] ?? []) as $packageName) {
-                $required[] = (string) $packageName;
-            }
-        }
-
-        return $required;
     }
 
     /**
@@ -88,62 +84,31 @@ class ComposerFilesParser
     }
 
     /**
-     * @param mixed[] $topLevelRequirements
-     *
-     * @return mixed[]
-     */
-    private function flattenDependencies(array $topLevelRequirements, bool $includeDev): array
-    {
-        $required = [];
-        $toCheck = $topLevelRequirements;
-
-        while (count($toCheck) > 0) {
-            $packageName = array_pop($toCheck);
-            $package = $this->lockedPackages[$packageName] ?? null;
-            if (null === $package) {
-                continue;
-            }
-
-            $required[] = $packageName;
-
-            $deepRequirements = array_keys($package['require'] ?? []);
-            if ($includeDev) {
-                $deepRequirements = array_merge(
-                    $deepRequirements,
-                    array_keys($package['require-dev'] ?? [])
-                );
-            }
-
-            foreach ($deepRequirements as $name) {
-                if (!in_array($name, $required, true)) {
-                    $toCheck[] = $name;
-                }
-            }
-        }
-
-        return $required;
-    }
-
-    /**
-     * @return array<string, mixed>
+     * @return array<string, array{
+     *     autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *     autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     * }>
      */
     private function getPackagesFromLockFile(): array
     {
         $lockedPackages = [];
 
         foreach ($this->lockFile['packages'] ?? [] as $package) {
-            $lockedPackages[(string) $package['name']] = $package;
+            $lockedPackages[$package['name']] = $package;
         }
 
         foreach ($this->lockFile['packages-dev'] ?? [] as $package) {
-            $lockedPackages[(string) $package['name']] = $package;
+            $lockedPackages[$package['name']] = $package;
         }
 
         return $lockedPackages;
     }
 
     /**
-     * @param array<string, mixed> $package
+     * @param array{
+     *     autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *     autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     * } $package
      *
      * @return string[]
      */
@@ -151,18 +116,18 @@ class ComposerFilesParser
     {
         $namespaces = [];
         foreach (array_keys($package['autoload']['psr-0'] ?? []) as $namespace) {
-            $namespaces[] = (string) $namespace;
+            $namespaces[] = $namespace;
         }
         foreach (array_keys($package['autoload']['psr-4'] ?? []) as $namespace) {
-            $namespaces[] = (string) $namespace;
+            $namespaces[] = $namespace;
         }
 
         if ($includeDev) {
             foreach (array_keys($package['autoload-dev']['psr-0'] ?? []) as $namespace) {
-                $namespaces[] = (string) $namespace;
+                $namespaces[] = $namespace;
             }
             foreach (array_keys($package['autoload-dev']['psr-4'] ?? []) as $namespace) {
-                $namespaces[] = (string) $namespace;
+                $namespaces[] = $namespace;
             }
         }
 

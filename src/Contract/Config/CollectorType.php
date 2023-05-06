@@ -28,5 +28,4 @@ enum CollectorType: string
     case TYPE_USES = 'uses';
     case TYPE_PHP_INTERNAL = 'php_internal';
     case TYPE_COMPOSER = 'composer';
-
 }

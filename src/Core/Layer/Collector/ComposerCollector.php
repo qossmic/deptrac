@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
+use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
+use RuntimeException;
 
 final class ComposerCollector implements CollectorInterface
 {
@@ -28,7 +30,12 @@ final class ComposerCollector implements CollectorInterface
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('ComposerCollector needs the list of packages as string.');
         }
 
-        $composerFilesParser = new ComposerFilesParser($config['composerPath'], $config['composerLockPath']);
+        try {
+            $composerFilesParser = new ComposerFilesParser($config['composerLockPath']);
+        } catch (RuntimeException $exception) {
+            throw new CouldNotParseFileException('Could not parse composer files.', 0, $exception);
+        }
+
         $namespaces = $composerFilesParser->autoloadableNamespacesForRequirements($config['packages'], true);
         $token = $reference->getToken()->toString();
 
@@ -40,5 +47,4 @@ final class ComposerCollector implements CollectorInterface
 
         return false;
     }
-
 }
