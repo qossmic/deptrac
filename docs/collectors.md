@@ -97,6 +97,26 @@ deptrac:
 Every class name that matches the regular expression becomes a part of the
 *controller* layer.
 
+## `composer` Collector
+
+The `composer` collector allows you to define dependencies on composer `require` or `require-dev` packages that follow PSR-0 or PSR-4 autoloading convention. With this collector you can for example enforce:
+ - That your `require-dev` dependencies are only used in you non-production code (like DB migrations or SA tools)
+ - That your code does not use any transitive dependencies (dependencies on packages installed only because your `composer.json` required packages depend on them themselves)
+ - That some packages are only used in particular layers
+
+```yaml
+deptrac:
+  layers:
+    - name: Symfony
+      collectors:
+        - type: composer
+          composerPath: composer.json
+          composerLockPath: composer.lock
+          packages:
+            - symfony/config
+            - symfony/console
+```
+
 ## `directory` Collector
 
 The `directory` collector allows collecting classes by matching their file path
