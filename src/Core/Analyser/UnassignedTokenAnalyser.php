@@ -62,7 +62,7 @@ class UnassignedTokenAnalyser
             }
 
             if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
-                foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
+                foreach ($astMap->getFunctionReferences() as $functionReference) {
                     $token = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
                     if ([] === $this->layerResolver->getLayersForReference($token)) {
                         $unassignedTokens[] = $functionReference->getToken()->toString();

@@ -65,7 +65,7 @@ class TokenInLayerAnalyser
             }
 
             if (in_array(TokenType::FUNCTION, $this->tokenTypes, true)) {
-                foreach ($astMap->getFunctionLikeReferences() as $functionReference) {
+                foreach ($astMap->getFunctionReferences() as $functionReference) {
                     $functionToken = $this->tokenResolver->resolve($functionReference->getToken(), $astMap);
                     if (array_key_exists($layer, $this->layerResolver->getLayersForReference($functionToken))) {
                         $matchingTokens[] = $functionToken->getToken()

@@ -10,8 +10,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
@@ -58,21 +58,21 @@ final class TokenResolverTest extends TestCase
         self::assertSame($token->toString(), $resolved->getToken()->toString());
     }
 
-    public function testResolvesFunctionLikeNotInAstMap(): void
+    public function testResolvesFunctionNotInAstMap(): void
     {
         $astMap = new AstMap([]);
-        $token = FunctionLikeToken::fromFQCN('App\\Foo::foo');
+        $token = FunctionToken::fromFQCN('App\\Foo::foo');
 
         $resolved = $this->resolver->resolve($token, $astMap);
 
-        self::assertInstanceOf(FunctionLikeReference::class, $resolved);
+        self::assertInstanceOf(FunctionReference::class, $resolved);
         self::assertSame($token->toString(), $resolved->getToken()->toString());
     }
 
-    public function testResolvesFunctionLikeFromAstMap(): void
+    public function testResolvesFunctionFromAstMap(): void
     {
-        $token = FunctionLikeToken::fromFQCN('App\\Foo::foo');
-        $functionReference = new FunctionLikeReference($token);
+        $token = FunctionToken::fromFQCN('App\\Foo::foo');
+        $functionReference = new FunctionReference($token);
         $fileReference = new FileReference(
             'path/to/file.php',
             [],
@@ -85,7 +85,7 @@ final class TokenResolverTest extends TestCase
 
         $resolved = $this->resolver->resolve($token, $astMap);
 
-        self::assertInstanceOf(FunctionLikeReference::class, $resolved);
+        self::assertInstanceOf(FunctionReference::class, $resolved);
         self::assertSame($token->toString(), $resolved->getToken()->toString());
     }
 

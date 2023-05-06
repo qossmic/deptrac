@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 
 abstract class ReferenceBuilder
@@ -40,7 +40,7 @@ abstract class ReferenceBuilder
     public function unresolvedFunctionCall(string $functionName, int $occursAtLine): self
     {
         $this->dependencies[] = new DependencyToken(
-            FunctionLikeToken::fromFQCN($functionName),
+            FunctionToken::fromFQCN($functionName),
             new FileOccurrence($this->filepath, $occursAtLine),
             DependencyType::UNRESOLVED_FUNCTION_CALL
         );

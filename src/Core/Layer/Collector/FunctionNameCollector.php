@@ -7,18 +7,18 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 
 final class FunctionNameCollector implements CollectorInterface
 {
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
-        if (!$reference instanceof FunctionLikeReference) {
+        if (!$reference instanceof FunctionReference) {
             return false;
         }
 
-        /** @var FunctionLikeToken $tokenName */
+        /** @var FunctionToken $tokenName */
         $tokenName = $reference->getToken();
 
         return $tokenName->match($this->getPattern($config));

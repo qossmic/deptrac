@@ -12,8 +12,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
 use Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException;
@@ -112,14 +112,14 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
                         'allowed_classes' => [
                             FileReference::class,
                             ClassLikeReference::class,
-                            FunctionLikeReference::class,
+                            FunctionReference::class,
                             VariableReference::class,
                             AstInherit::class,
                             DependencyToken::class,
                             FileToken::class,
                             ClassLikeToken::class,
                             ClassLikeType::class,
-                            FunctionLikeToken::class,
+                            FunctionToken::class,
                             SuperGlobalToken::class,
                             FileOccurrence::class,
                         ],

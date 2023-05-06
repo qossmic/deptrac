@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReferenceBuilder;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
 final class FileReferenceBuilder extends ReferenceBuilder
@@ -17,7 +17,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
     /** @var ClassLikeReferenceBuilder[] */
     private array $classReferences = [];
 
-    /** @var FunctionLikeReferenceBuilder[] */
+    /** @var FunctionReferenceBuilder[] */
     private array $functionReferences = [];
 
     public static function create(string $filepath): self
@@ -83,9 +83,9 @@ final class FileReferenceBuilder extends ReferenceBuilder
     /**
      * @param string[] $templateTypes
      */
-    public function newFunction(string $functionName, array $templateTypes = []): FunctionLikeReferenceBuilder
+    public function newFunction(string $functionName, array $templateTypes = []): FunctionReferenceBuilder
     {
-        $functionReference = FunctionLikeReferenceBuilder::create($this->filepath, $functionName, $templateTypes);
+        $functionReference = FunctionReferenceBuilder::create($this->filepath, $functionName, $templateTypes);
         $this->functionReferences[] = $functionReference;
 
         return $functionReference;

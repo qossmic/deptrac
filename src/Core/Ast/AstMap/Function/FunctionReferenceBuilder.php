@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike;
+namespace Qossmic\Deptrac\Core\Ast\AstMap\Function;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
-class FunctionLikeReferenceBuilder extends ReferenceBuilder
+class FunctionReferenceBuilder extends ReferenceBuilder
 {
     /**
      * @param string[] $tokenTemplates
@@ -25,10 +25,10 @@ class FunctionLikeReferenceBuilder extends ReferenceBuilder
     }
 
     /** @internal */
-    public function build(): FunctionLikeReference
+    public function build(): FunctionReference
     {
-        return new FunctionLikeReference(
-            FunctionLikeToken::fromFQCN($this->functionName),
+        return new FunctionReference(
+            FunctionToken::fromFQCN($this->functionName),
             $this->dependencies
         );
     }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike;
+namespace Qossmic\Deptrac\Core\Ast\AstMap\Function;
 
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
-final class FunctionLikeToken implements TokenInterface
+final class FunctionToken implements TokenInterface
 {
     private function __construct(public readonly string $functionName)
     {
