@@ -15,7 +15,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (DeptracConfig $config, ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
-    $services->set(IgnoreDependenciesOnContract::class)->tag('kernel.event_listener', ['event' => ProcessEvent::class]);
+    $services->set(IgnoreDependenciesOnContract::class)
+        ->tag('kernel.event_subscriber');
 
     $config
         ->paths('src')

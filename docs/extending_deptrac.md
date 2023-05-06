@@ -3,16 +3,16 @@
 Deptrac defines its extension points by providing a set of **contract** classes
 that you can depend on for your implementation. The classes can be found in
 the `src/Contract` directory and are covered by
-the [backwards compatibility policy promise](bc_policy.md), meaning the will stay stable within major releases.
+the [backwards compatibility policy promise](bc_policy.md), meaning they will stay stable within major releases.
 
 There are several ways you can extend Deptrac:
 
-- [Output formatters](#Output Formatters) - To change how the output of
+- [Output formatters](#output-formatters) - To change how the output of
   dependency analysis is formatted. This might be useful to integrate Deptrac
   into your CI/CD pipeline.
-- [Analyser Events](#Analyser Events) - Decide whether a dependency is
+- [Analyser Events](#analyser-events) - Decide whether a dependency is
   Uncovered, Allowed, Violation or SkippedViolation.
-- [Layer collectors](#Layer collectors) - Add custom collectors for organizing your code into layers
+- [Layer collectors](#layer-collectors) - Add custom collectors for organizing your code into layers
 
 > **Note**
 > In examples where FQCN is not specified, the base
@@ -23,19 +23,18 @@ There are several ways you can extend Deptrac:
 Creating an output formatter requires creating a new class implementing
 the `OutputFormatter\OutputFormatterInterface` and
 register it
-in your `deptrac.yaml` file like this:
+in your `deptrac.config.php` file like this:
 
-```yaml
-services:
-  - class: App\DeptracExtension\MyCustomOutputFormatter
-    autowire: true
-    tags:
-      - output_formatter
+```php
+    $services = $containerConfigurator->services();
+    $services->set(\App\DeptracExtension\MyCustomOutputFormatter::class)
+        ->autowire()
+        ->tag('output_formatter');
 ```
 
 And you are done. You can call your formatter by using the `-f` or `--formatter`
 CLI flag with the name you defined
-in the `getName()`-method of your forrmatter.
+in the `getName()`-method of your formatter.
 
 ## Analyser Events
 
@@ -49,24 +48,34 @@ violations in testing-related code for example. First you create a class to proc
 this event:
 
 ```php
-class IgnoreDependenciesOnShouldNotHappenException
+namespace App\DeptracExtension;
+
+use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+
+class IgnoreDependenciesOnShouldNotHappenException extends \Symfony\Component\EventDispatcher\EventSubscriberInterface
 {
-    public function __invoke(ProcessEvent $event): void
+    public function onProcessEvent(ProcessEvent $event): void
     {
-        if ("Qossmic\Deptrac\Supportive\ShouldNotHappenException" === $event->dependentReference->getToken()->toString()) {
+        if ("Qossmic\Deptrac\Contract\ExceptionInterface" === $event->dependentReference->getToken()->toString()) {
             $event->stopPropagation();
         }
+    }
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ProcessEvent::class => 'onProcessEvent',
+        ];
     }
 }
 ```
 
-And then you register this class in your `deptrac.yaml` file:
+And then you register this class in your `deptrac.config.php` file:
 
-```yaml
-services:
-  - class: IgnoreDependenciesOnShouldNotHappenException
-    tags:
-      - { name: kernel.event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
+```php
+    $services = $containerConfigurator->services();
+    $services->set(\App\DeptracExtension\IgnoreDependenciesOnShouldNotHappenException::class)
+        ->tag('kernel.event_subscriber');
 ```
 
 You can also en masse change the whole result set by instead listening to
@@ -79,18 +88,12 @@ the `replaceResult()` method.
 
 Deptrac already comes with a comprehensive list of [collectors](collectors.md). If you
 need something more specific, you can write your own collector
-implementing `Layer\CollectorInterface` and register it in your `deptrac.yaml`
+implementing `Layer\CollectorInterface` and register it in your `deptrac.config.php`
 file:
 
-```yaml
-services:
-  - class: App\DeptracExtension\MyCustomLayerCollector
-    autowire: true
-    tags:
-      - { name: 'collector', type: '<name to use in the deptrac.yaml to invoke the collector>' }
+```php
+    $services = $containerConfigurator->services();
+    $services->set(\App\DeptracExtension\MyCustomOutputFormatter::class)
+        ->autowire()
+        ->tag('collector', ['type' => '<name to use in the deptrac.yaml to invoke the collector>']);
 ```
-
-## List of well-known user extension
-
-- [Deptrac-awesome](https://packagist.org/packages/dance-engineer/deptrac-awesome)
-    - custom commands and output formatters

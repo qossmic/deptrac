@@ -1,7 +1,7 @@
 services:
   - class: Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract
     tags:
-     - { name: kernel.event_listener, event: Qossmic\Deptrac\Contract\Analyser\ProcessEvent }
+     - { name: kernel.event_subscriber }
 
 deptrac:
   paths:
