@@ -33,7 +33,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             ),
             $ast = Layer::withName('Ast')->collectors(
                 DirectoryConfig::create('src/Core/Ast/.*'),
-                ComposerConfig::create('composer.json', 'composer.lock')
+                ComposerConfig::create()
                     ->addPackage('phpstan/phpdoc-parser')
                     ->addPackage('nikic/php-parser')
                     ->addPackage('phpdocumentor/type-resolver')
@@ -74,7 +74,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
                     ->must(DirectoryConfig::create('src/Supportive/.*'))
             ),
             $symfony = Layer::withName('Symfony')->collectors(
-                ComposerConfig::create('composer.json', 'composer.lock')
+                ComposerConfig::create()
                     ->addPackage('symfony/config')
                     ->addPackage('symfony/console')
                     ->addPackage('symfony/dependency-injection')

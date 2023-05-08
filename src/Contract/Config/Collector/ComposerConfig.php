@@ -21,7 +21,7 @@ final class ComposerConfig extends CollectorConfig
     /**
      * @param list<string> $packages
      */
-    public static function create(string $composerPath, string $composerLockPath, array $packages = []): self
+    public static function create(string $composerPath = 'composer.json', string $composerLockPath = 'composer.lock', array $packages = []): self
     {
         $result = new self($composerPath, $composerLockPath);
         foreach ($packages as $package) {
