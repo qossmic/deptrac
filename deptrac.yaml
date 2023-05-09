@@ -42,6 +42,10 @@ deptrac:
       collectors:
         - type: directory
           value: src/Core/Analyser/.*
+      allowed_dependencies:
+        - Layer
+        - Dependency
+        - Ast
     - name: Ast
       collectors:
         - type: directory
@@ -55,14 +59,25 @@ deptrac:
         - type: className
           value: ^phpDocumentor\\Reflection\\.*
           private: true
+      allowed_dependencies:
+        - File
+        - InputCollector
     - name: Console
       collectors:
         - type: directory
           value: src/Supportive/Console/.*
+      allowed_dependencies:
+        - Analyser
+        - OutputFormatter
+        - DependencyInjection
+        - File
+        - Time
     - name: Dependency
       collectors:
         - type: directory
           value: src/Core/Dependency/.*
+      allowed_dependencies:
+        - Ast
     - name: DependencyInjection
       collectors:
         - type: directory
@@ -75,10 +90,14 @@ deptrac:
       collectors:
         - type: directory
           value: src/Core/InputCollector/.*
+      allowed_dependencies:
+        - File
     - name: Layer
       collectors:
         - type: directory
           value: src/Core/Layer/.*
+      allowed_dependencies:
+        - Ast
     - name: OutputFormatter
       collectors:
         - type: directory
@@ -86,6 +105,8 @@ deptrac:
         - type: className
           value: ^phpDocumentor\\GraphViz\\.*
           private: true
+      allowed_dependencies:
+        - DependencyInjection
     - name: File
       collectors:
         - type: directory
@@ -103,26 +124,3 @@ deptrac:
           must:
             - type: directory
               value: src/Supportive/.*
-
-  ruleset:
-    Layer:
-      - Ast
-    Console:
-      - Analyser
-      - OutputFormatter
-      - DependencyInjection
-      - File
-      - Time
-    Dependency:
-      - Ast
-    Analyser:
-      - Layer
-      - Dependency
-      - Ast
-    OutputFormatter:
-      - DependencyInjection
-    Ast:
-      - File
-      - InputCollector
-    InputCollector:
-      - File

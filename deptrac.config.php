@@ -9,7 +9,6 @@ use Qossmic\Deptrac\Contract\Config\DeptracConfig;
 use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Qossmic\Deptrac\Contract\Config\Formatter\GraphvizConfig;
 use Qossmic\Deptrac\Contract\Config\Layer;
-use Qossmic\Deptrac\Contract\Config\Ruleset;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (DeptracConfig $config, ContainerConfigurator $containerConfigurator): void {
@@ -27,37 +26,57 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
             EmitterType::FUNCTION_CALL,
         )
         ->layers(
-            $analyser = Layer::withName('Analyser')->collectors(
-                DirectoryConfig::create('src/Core/Analyser/.*')
-            ),
-            $ast = Layer::withName('Ast')->collectors(
-                DirectoryConfig::create('src/Core/Ast/.*'),
-                ClassNameConfig::create('^PHPStan\\PhpDocParser\\.*')->private(),
-                ClassNameConfig::create('^PhpParser\\.*')->private(),
-                ClassNameConfig::create('^phpDocumentor\\Reflection\\.*')->private(),
-            ),
-            $console = Layer::withName('Console')->collectors(
-                DirectoryConfig::create('src/Supportive/Console/.*')
-            ),
-            $dependency = Layer::withName('Dependency')->collectors(
-                DirectoryConfig::create('src/Core/Dependency/.*')
-            ),
+            $analyser = Layer::withName('Analyser')
+                ->collectors(
+                    DirectoryConfig::create('src/Core/Analyser/.*')
+                )
+                ->allowedDependencies(['Layer', 'Dependency', 'Ast']),
+            $ast = Layer::withName('Ast')
+                ->collectors(
+                    DirectoryConfig::create('src/Core/Ast/.*'),
+                    ClassNameConfig::create('^PHPStan\\PhpDocParser\\.*')->private(),
+                    ClassNameConfig::create('^PhpParser\\.*')->private(),
+                    ClassNameConfig::create('^phpDocumentor\\Reflection\\.*')->private(),
+                )
+                ->allowedDependencies(['File', 'InputCollector']),
+            $console = Layer::withName('Console')
+                ->collectors(
+                    DirectoryConfig::create('src/Supportive/Console/.*')
+                )
+                ->allowedDependencies([
+                    'Analyser',
+                    'OutputFormatter',
+                    'DependencyInjection',
+                    'File',
+                    'Time',
+                ]),
+            $dependency = Layer::withName('Dependency')
+                ->collectors(
+                    DirectoryConfig::create('src/Core/Dependency/.*')
+                )
+                ->allowedDependencies(['Ast']),
             $dependencyInjection = Layer::withName('DependencyInjection')->collectors(
                 DirectoryConfig::create('src/Supportive/DependencyInjection/.*')
             ),
             $contract = Layer::withName('Contract')->collectors(
                 DirectoryConfig::create('src/Contract/.*')
             ),
-            $inputCollector = Layer::withName('InputCollector')->collectors(
-                DirectoryConfig::create('src/Core/InputCollector/.*')
-            ),
-            $layer = Layer::withName('Layer')->collectors(
-                DirectoryConfig::create('src/Core/Layer/.*')
-            ),
-            $outputFormatter = Layer::withName('OutputFormatter')->collectors(
-                DirectoryConfig::create('src/Supportive/OutputFormatter/.*'),
-                ClassNameConfig::create('^phpDocumentor\\GraphViz\\.*')->private(),
-            ),
+            $inputCollector = Layer::withName('InputCollector')
+                ->collectors(
+                    DirectoryConfig::create('src/Core/InputCollector/.*')
+                )
+                ->allowedDependencies(['File']),
+            $layer = Layer::withName('Layer')
+                ->collectors(
+                    DirectoryConfig::create('src/Core/Layer/.*')
+                )
+                ->allowedDependencies(['Ast']),
+            $outputFormatter = Layer::withName('OutputFormatter')
+                ->collectors(
+                    DirectoryConfig::create('src/Supportive/OutputFormatter/.*'),
+                    ClassNameConfig::create('^phpDocumentor\\GraphViz\\.*')->private(),
+                )
+                ->allowedDependencies(['DependencyInjection']),
             $file = Layer::withName('File')->collectors(
                 DirectoryConfig::create('src/Supportive/File/.*')
             ),
@@ -69,17 +88,6 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
                     ->mustNot(DirectoryConfig::create('src/Supportive/.*/.*'))
                     ->must(DirectoryConfig::create('src/Supportive/.*'))
             ),
-        )
-        ->rulesets(
-            Ruleset::forLayer($layer)->accesses($ast),
-            Ruleset::forLayer($console)->accesses($analyser, $outputFormatter, $dependencyInjection, $file, $time),
-            Ruleset::forLayer($dependency)->accesses($ast),
-            Ruleset::forLayer($analyser)->accesses($layer, $dependency, $ast),
-            Ruleset::forLayer($outputFormatter)->accesses($dependencyInjection),
-            Ruleset::forLayer($ast)->accesses($file, $inputCollector),
-            Ruleset::forLayer($inputCollector)->accesses($file),
-            Ruleset::forLayer($supportive)->accesses($file),
-            Ruleset::forLayer($contract),
         )
         ->formatters(
             GraphvizConfig::create()

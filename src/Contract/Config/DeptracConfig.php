@@ -20,8 +20,6 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $layers = [];
     /** @var array<FormatterConfigInterface> */
     private array $formatters = [];
-    /** @var array<Ruleset> */
-    private array $rulesets = [];
     /** @var array<string, EmitterType> */
     private array $analyser = [];
     /** @var array<string, array<string>> */
@@ -92,15 +90,6 @@ final class DeptracConfig implements ConfigBuilderInterface
         return $this;
     }
 
-    public function rulesets(Ruleset ...$rulesetConfigs): self
-    {
-        foreach ($rulesetConfigs as $rulesetConfig) {
-            $this->rulesets[$rulesetConfig->layerConfig->name] = $rulesetConfig;
-        }
-
-        return $this;
-    }
-
     /** @return array<mixed> */
     public function toArray(): array
     {
@@ -124,10 +113,6 @@ final class DeptracConfig implements ConfigBuilderInterface
 
         if ([] !== $this->layers) {
             $config['layers'] = array_map(static fn (Layer $layerConfig) => $layerConfig->toArray(), $this->layers);
-        }
-
-        if ([] !== $this->rulesets) {
-            $config['ruleset'] = array_map(static fn (Ruleset $rulesetConfig) => $rulesetConfig->toArray(), $this->rulesets);
         }
 
         if ([] !== $this->skipViolations) {

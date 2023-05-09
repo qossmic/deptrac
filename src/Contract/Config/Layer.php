@@ -8,12 +8,18 @@ final class Layer
 {
     /** @var array<CollectorConfig> */
     private array $collectors = [];
+    /** @var list<string> */
+    private array $allowedDependencies;
     public string $name;
 
-    /** @param  array<CollectorConfig> $collectorConfig */
-    public function __construct(string $name, array $collectorConfig = [])
+    /**
+     * @param array<CollectorConfig> $collectorConfig
+     * @param list<string> $allowedDependencies
+     */
+    public function __construct(string $name, array $collectorConfig = [], array $allowedDependencies = [])
     {
         $this->name = $name;
+        $this->allowedDependencies($allowedDependencies);
         $this->collectors(...$collectorConfig);
     }
 
@@ -31,12 +37,23 @@ final class Layer
         return $this;
     }
 
+    /**
+     * @param list<string> $allowedDependencies
+     */
+    public function allowedDependencies(array $allowedDependencies): self
+    {
+        $this->allowedDependencies = $allowedDependencies;
+
+        return $this;
+    }
+
     /** @return array<string, mixed> */
     public function toArray(): array
     {
         return [
             'name' => $this->name,
             'collectors' => array_map(static fn (CollectorConfig $config) => $config->toArray(), $this->collectors),
+            'allowed_dependencies' => $this->allowedDependencies,
         ];
     }
 }

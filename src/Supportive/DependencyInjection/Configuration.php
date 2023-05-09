@@ -102,17 +102,24 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('attributes')
                                 ->variablePrototype()->end()
                             ->end()
+                            ->arrayNode('allowed_dependencies')
+                                ->scalarPrototype()->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
             ->end();
     }
 
+    /**
+     * @deprecated Replaced by allowed_dependencies in layer configuration
+     */
     private function appendRuleset(ArrayNodeDefinition $node): void
     {
         $node
             ->children()
                 ->arrayNode('ruleset')
+                    ->setDeprecated('qossmic/deptrac', '2.0')
                     ->useAttributeAsKey('name')
                     ->arrayPrototype()
                         ->scalarPrototype()->end()
