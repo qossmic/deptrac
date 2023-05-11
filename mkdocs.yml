@@ -21,6 +21,7 @@ nav:
   - Contributing: CONTRIBUTING.md
   - Security: SECURITY.md
   - Extending Deptrac: extending_deptrac.md
+  - Blog: blog.md
 
 theme:
   name: material
