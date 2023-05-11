@@ -50,6 +50,7 @@ final class AnalyseRunner
         try {
             $result = OutputResult::fromAnalysisResult($this->analyser->analyse());
         } catch (AnalyserException $e) {
+            $this->printAnalysisException($output, $e);
             throw CommandRunException::analyserException($e);
         }
 
@@ -96,6 +97,20 @@ final class AnalyseRunner
             '',
         ]);
         $output->writeLineFormatted('');
+    }
+
+    private function printAnalysisException(OutputInterface $output, AnalyserException $exception): void
+    {
+        $exceptionMessageStack = [$exception->getMessage()];
+        $previous = $exception->getPrevious();
+        while (null !== $previous) {
+            $exceptionMessageStack[] = $previous->getMessage();
+            $previous = $previous->getPrevious();
+        }
+
+        $message = array_merge(['Analysis finished with an Exception.'], $exceptionMessageStack);
+
+        $output->getStyle()->error($message);
     }
 
     private function printFormatterNotFoundException(OutputInterface $output, string $formatterName): void

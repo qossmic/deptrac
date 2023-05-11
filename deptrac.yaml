@@ -25,10 +25,10 @@ deptrac:
         Supportive:
           - Supportive
           - File
-        Symfony:
-          - Console
+          - Time
           - DependencyInjection
           - OutputFormatter
+          - Symfony
         Core:
           - Analyser
           - Ast
@@ -46,15 +46,14 @@ deptrac:
       collectors:
         - type: directory
           value: src/Core/Ast/.*
-        - type: className
-          value: ^PHPStan\\PhpDocParser\\.*
+        - type: composer
           private: true
-        - type: className
-          value: ^PhpParser\\.*
-          private: true
-        - type: className
-          value: ^phpDocumentor\\Reflection\\.*
-          private: true
+          composerPath: composer.json
+          composerLockPath: composer.lock
+          packages:
+            - phpstan/phpdoc-parser
+            - nikic/php-parser
+            - phpdocumentor/type-resolver
     - name: Console
       collectors:
         - type: directory
@@ -83,9 +82,12 @@ deptrac:
       collectors:
         - type: directory
           value: src/Supportive/OutputFormatter/.*
-        - type: className
-          value: ^phpDocumentor\\GraphViz\\.*
+        - type: composer
           private: true
+          composerPath: composer.json
+          composerLockPath: composer.lock
+          packages:
+            - phpdocumentor/graphviz
     - name: File
       collectors:
         - type: directory
@@ -103,26 +105,51 @@ deptrac:
           must:
             - type: directory
               value: src/Supportive/.*
+    - name: Symfony
+      collectors:
+        - type: composer
+          composerPath: composer.json
+          composerLockPath: composer.lock
+          packages:
+            - symfony/config
+            - symfony/console
+            - symfony/dependency-injection
+            - symfony/event-dispatcher
+            - symfony/filesystem
+            - symfony/finder
+            - symfony/yaml
 
   ruleset:
     Layer:
       - Ast
+      - Symfony
     Console:
       - Analyser
       - OutputFormatter
       - DependencyInjection
       - File
       - Time
+      - Symfony
     Dependency:
       - Ast
     Analyser:
       - Layer
       - Dependency
       - Ast
+      - Symfony
     OutputFormatter:
       - DependencyInjection
+      - Symfony
     Ast:
       - File
       - InputCollector
+      - Symfony
     InputCollector:
       - File
+      - Symfony
+    DependencyInjection:
+      - Symfony
+    Contract:
+      - Symfony
+    File:
+      - Symfony

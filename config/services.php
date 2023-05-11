@@ -59,6 +59,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\ClassNameRegexCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorProvider;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolver;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
+use Qossmic\Deptrac\Core\Layer\Collector\ComposerCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\DirectoryCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\ExtendsCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\FunctionNameCollector;
@@ -303,6 +304,9 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(PhpInternalCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_PHP_INTERNAL->value]);
+    $services
+        ->set(ComposerCollector::class)
+        ->tag('collector', ['type' => CollectorType::TYPE_COMPOSER->value]);
 
     /*
      * Analyser
