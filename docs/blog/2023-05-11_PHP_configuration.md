@@ -1,3 +1,9 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
 # Dynamic Deptrac configuration with PHP config file
 
 May 11, 2023 - 5 min read
@@ -95,8 +101,8 @@ Last, but not least, you can also plug in any extension you write like custom co
 
 To tie it all together, you have to specify that you want deptrac to you your php config file, for example like this:
 
-```bash
-php deptrac.php -c deptrac.config.php
+```console
+$ php deptrac.php -c deptrac.config.php
 ```
 
 As you can see this feature allows you to use the full expressive power of PHP to create dynamic configuration on the fly.

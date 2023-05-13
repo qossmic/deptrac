@@ -10,18 +10,21 @@ docs_dir: docs
 
 nav:
   - Home: index.md
-  - Backwards Compatibility: bc_policy.md
+  - Documentation:
+    - Concepts: concepts.md
+    - Configuration: configuration.md
+    - Collectors: collectors.md
+    - Formatters: formatters.md
+    - Debugging: debugging.md
+    - Backwards Compatibility: bc_policy.md
+    - Extending Deptrac: extending_deptrac.md
   - Upgrade Guide: upgrade.md
-  - Concepts: concepts.md
-  - Configuration: configuration.md
-  - Collectors: collectors.md
-  - Formatters: formatters.md
-  - Debugging: debugging.md
   - Code of Conduct: CODE_OF_CONDUCT.md
   - Contributing: CONTRIBUTING.md
   - Security: SECURITY.md
-  - Extending Deptrac: extending_deptrac.md
-  - Blog: blog.md
+  - Blog:
+      - blog.md
+      - 'Dynamic Deptrac configuration with PHP config file': blog/2023-05-11_PHP_configuration.md
 
 theme:
   name: material
@@ -38,3 +41,12 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - toc.integrate
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

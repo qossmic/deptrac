@@ -22,34 +22,34 @@ https://qossmic.github.io/deptrac
 You can install Deptrac via Composer. We recommend using the
 [deptrac-shim](https://github.com/qossmic/deptrac-shim) package for this:
 
-```bash
-composer require --dev qossmic/deptrac-shim
+```console
+$ composer require --dev qossmic/deptrac-shim
 ```
 
 Alternatively, you can also use [PHIVE](docs/index.md#phive) or download the
-[PHAR](docs/index.md#phar) attached to each release on GitHub.  
-We strongly advise against using the deptrac package directly as a composer dependency. 
+[PHAR](docs/index.md#phar) attached to each release on GitHub.
+We strongly advise against using the deptrac package directly as a composer dependency.
 We update dependencies regularly, which might cause disruptions in your project.
 
 Once you have downloaded/installed deptrac, you will need to create a
 [configuration file](docs/index.md#configuration), where you define your layers and
-communication ruleset. This configuration file is written in YAML and, by default, 
+communication ruleset. This configuration file is written in YAML and, by default,
 is stored with the name `deptrac.yaml` in your project's root directory.
 
 Deptrac can generate a template for you, using the `init` command.
 
-```bash
-vendor/bin/deptrac init
+```console
+$ vendor/bin/deptrac init
 ```
 
 When you have this file, you can analyse your code by
-running the analyse command:
+running the `analyse` command:
 
-```bash
-vendor/bin/deptrac
+```console
+$ vendor/bin/deptrac
 
 # which is equivalent to
-vendor/bin/deptrac analyse --config-file=deptrac.yaml
+$ vendor/bin/deptrac analyse --config-file=deptrac.yaml
 ```
 
 In order to run Deptrac you need at least PHP 8.1.

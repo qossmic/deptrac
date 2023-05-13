@@ -84,8 +84,8 @@ configuration:
 (Make sure that [*Graphviz*](/#optional-dependency-graphviz) (dot) is
 installed on your system)
 
-```bash
-php deptrac.phar analyse --config-file=examples/ModelController1.depfile.yaml
+```console
+$ php deptrac.phar analyse --config-file=examples/ModelController1.depfile.yaml
 ```
 
 After Deptrac has finished, an image should be opened:
@@ -94,7 +94,7 @@ After Deptrac has finished, an image should be opened:
 
 On your command line Deptrac will produce this output:
 
-```bash
+```console
 Start to create an AstMap for 2 Files.
 ..
 AstMap created.
@@ -172,7 +172,7 @@ After running Deptrac we will get this result:
 
 ![ModelController1](examples/ControllerServiceRepository1.png)
 
-```bash
+```console
 Start to create an AstMap for 3 Files.
 ...
 AstMap created.
@@ -257,13 +257,13 @@ class SomeController
 
 After running Deptrac for this example
 
-```bash
-php deptrac.phar analyse --config-file=examples/ModelController2.depfile.yaml
+```console
+$ php deptrac.phar analyse --config-file=examples/ModelController2.depfile.yaml
 ```
 
 we will get this output:
 
-```bash
+```console
 Start to create an AstMap for 2 Files.
 ..
 AstMap created.
@@ -309,8 +309,8 @@ values (`Core\CoreClass`) are dependency tokens.
 
 Matched violations will be marked as skipped:
 
-```bash
-php deptrac.phar analyse --config-file=examples/SkipViolations.yaml --report-skipped
+```console
+$ php deptrac.phar analyse --config-file=examples/SkipViolations.yaml --report-skipped
 1/1 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
 [SKIPPED] Library\LibClass must not depend on Core\CoreClass (Library on Core)

@@ -232,7 +232,7 @@ very useful by itself (unless you want to have tokens in multiple layers), but
 it is very useful to exclude classes in combination with
 the [`bool` Collector](#bool-collector):
 
-```yml
+```yaml
 deptrac:
   layers:
     - name: SubDomain

@@ -25,8 +25,8 @@ your merge request can be accepted.
 You can install all tools needed for developing Deptrac using the Makefile by
 running the following command:
 
-```bash
-make composer-install
+```console
+$ make composer-install
 ```
 
 ## Pipeline
@@ -93,8 +93,8 @@ make infection
 You can build the `deptrac.phar` both to ensure it works, as well as for using
 it to analyse your existing projects to see if your changes work as expected.
 
-```bash
-make build
+```console
+$ make build
 ```
 
 This will create an executable file `deptrac.phar` in the current directory.

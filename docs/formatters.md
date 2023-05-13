@@ -4,8 +4,8 @@ Deptrac has support for different output formatters with various options.
 
 You can get a list of available formatters by running
 
-```bash
-php deptrac.php analyse --help
+```console
+$ php deptrac.php analyse --help
 ```
 
 ## Baseline Formatter
