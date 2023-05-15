@@ -39,8 +39,8 @@ When you install Deptrac using the qossmic/deptrac-shim package, you will get
 the benefit of using the phar installation, but you can use it like any other
 composer dependency, i.e. you run Deptrac like this:
 
-```bash
-composer require --dev qossmic/deptrac-shim
+```console
+$ composer require --dev qossmic/deptrac-shim
 vendor/bin/deptrac analyse
 ```
 
@@ -50,8 +50,8 @@ Download the latest [deptrac.phar](https://github.com/qossmic/deptrac/releases).
 
 You can run the phar file using php:
 
-```bash
-php deptrac.phar analyse
+```console
+$ php deptrac.phar analyse
 ```
 
 All examples in this documentation, assume you have the deptrac.phar downloaded
@@ -60,12 +60,12 @@ in your project's root directory as described above.
 Feel free to add Deptrac to your PATH (i.e. `/usr/local/bin/deptrac`) to make it
 globally available.
 
-```bash
-curl -LS https://github.com/qossmic/deptrac/releases/download/1.0.2/deptrac.phar -o deptrac.phar
+```console
+$ curl -LS https://github.com/qossmic/deptrac/releases/download/1.0.2/deptrac.phar -o deptrac.phar
 
 # optional
-sudo chmod +x deptrac.phar
-sudo mv deptrac.phar /usr/local/bin/deptrac
+$ sudo chmod +x deptrac.phar
+$ sudo mv deptrac.phar /usr/local/bin/deptrac
 ```
 
 ### PHIVE
@@ -88,12 +88,12 @@ also need the `dot` command provided by [Graphviz](http://www.graphviz.org/).
 
 Graphviz can be installed using common package managers:
 
-```bash
+```console
 # for macos + brew
-brew install graphviz
+$ brew install graphviz
 
 # for ubuntu and debian
-sudo apt-get install graphviz
+$ sudo apt-get install graphviz
 ```
 
 Graphviz is also available for
@@ -109,8 +109,8 @@ name `deptrac.yaml` in your project's root directory.
 
 Deptrac can generate a template for you, using the `init` command.
 
-```bash
-php deptrac.phar init
+```console
+$ php deptrac.phar init
 ```
 
 The main purpose of this file is:
@@ -185,11 +185,11 @@ and check for violations. If you use the default configuration file, you can
 type `php deptrac.phar`, otherwise you will need to specify which command and
 config file should be used.
 
-```bash
-php deptrac.phar
+```console
+$ php deptrac.phar
 
 # which is equivalent to
-php deptrac.phar analyse --config-file=deptrac.yaml
+$ php deptrac.phar analyse --config-file=deptrac.yaml
 ```
 
 If you run `php deptrac.phar -v` you'll get a more verbose output.
@@ -199,7 +199,7 @@ This can be disabled with the `--no-cache` option.
 
 The generated output will roughly look like this:
 
-```bash
+```console
  -------------------------- --------------------------------------------------------------------------------------------------------------------------------
   Reason                     Repository
  -------------------------- --------------------------------------------------------------------------------------------------------------------------------
