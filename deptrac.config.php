@@ -17,6 +17,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
         ->tag('kernel.event_subscriber');
 
     $config
+        ->baseline('deptrac.baseline.yaml')
         ->paths('src')
         ->analysers(
             EmitterType::CLASS_TOKEN,

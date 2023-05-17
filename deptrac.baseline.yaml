@@ -1,0 +1,4 @@
+deptrac:
+  skip_violations:
+    Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceFileCache:
+      - Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CacheFileException
