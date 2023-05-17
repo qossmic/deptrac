@@ -7,6 +7,7 @@ $finder = (new PhpCsFixer\Finder())
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
+    ->setCacheFile('./.cache/php-cs-fixer.cache')
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],

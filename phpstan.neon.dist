@@ -11,6 +11,7 @@ parameters:
     checkMissingCallableSignature: true
     level: max
     paths: [src]
+    tmpDir: ./.cache/phpstan
     stubFiles:
         - internal/stubs/Function_.php
         - internal/stubs/ClassLike.php
