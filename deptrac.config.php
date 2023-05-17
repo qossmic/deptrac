@@ -18,6 +18,7 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
 
     $config
         ->baseline('deptrac.baseline.yaml')
+        ->cacheFile('.deptrac.cache')
         ->paths('src')
         ->analysers(
             EmitterType::CLASS_TOKEN,

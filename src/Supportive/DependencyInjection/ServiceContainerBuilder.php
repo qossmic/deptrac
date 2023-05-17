@@ -24,7 +24,9 @@ final class ServiceContainerBuilder
     private ?SplFileInfo $cacheFile = null;
     private bool $withCache = true;
 
-    public function __construct(private readonly string $workingDirectory) {}
+    public function __construct(
+        private readonly string $workingDirectory
+    ) {}
 
     public function withConfig(?string $configFile): self
     {
@@ -92,13 +94,18 @@ final class ServiceContainerBuilder
         $container = new ContainerBuilder();
 
         $container->setParameter('currentWorkingDirectory', $this->workingDirectory);
+        $container->setParameter('projectDirectory', $this->workingDirectory);
 
-        self::registerCompilerPasses($container);
-        self::loadServices($container, $this->withCache, $this->cacheFile);
+        if ($this->cacheFile) {
+            $container->setParameter('cache_file', (string) $this->cacheFile);
+        }
 
+        $container->addCompilerPass(new AddConsoleCommandPass());
+        $container->addCompilerPass(new RegisterListenersPass());
         $container->registerExtension(new DeptracExtension());
 
-        $container->setParameter('projectDirectory', $this->workingDirectory);
+        self::loadServices($container, $this->withCache);
+
         if (null !== $this->configFile) {
             self::loadConfiguration($container, $this->configFile);
         }
@@ -108,16 +115,10 @@ final class ServiceContainerBuilder
         return $container;
     }
 
-    private static function registerCompilerPasses(ContainerBuilder $container): void
-    {
-        $container->addCompilerPass(new AddConsoleCommandPass());
-        $container->addCompilerPass(new RegisterListenersPass());
-    }
-
     /**
      * @throws CannotLoadConfiguration
      */
-    private static function loadServices(ContainerBuilder $container, bool $withCache, ?SplFileInfo $cacheFile): void
+    private static function loadServices(ContainerBuilder $container, bool $withCache): void
     {
         $loader = new PhpFileLoader($container, new FileLocator([__DIR__.'/../../../config']));
 
@@ -128,8 +129,6 @@ final class ServiceContainerBuilder
         }
 
         if (false === $withCache) {
-            $container->setParameter('cli.cache_file', null);
-
             return;
         }
 
@@ -138,12 +137,6 @@ final class ServiceContainerBuilder
         } catch (Exception $exception) {
             throw CannotLoadConfiguration::fromCache('cache.php', $exception->getMessage());
         }
-
-        if (!$cacheFile instanceof SplFileInfo) {
-            return;
-        }
-
-        $container->setParameter('cli.cache_file', $cacheFile->getPathname());
     }
 
     /**
@@ -152,6 +145,7 @@ final class ServiceContainerBuilder
     private static function loadConfiguration(ContainerBuilder $container, SplFileInfo $configFile): void
     {
         $configPathInfo = $configFile->getPathInfo();
+
         /** @phpstan-ignore-next-line false positive */
         if (null === $configPathInfo) {
             throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), 'Unable to load config: Invalid or missing path.');

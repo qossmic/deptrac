@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\DependencyInjection;
 
+use LogicException;
 use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
@@ -31,16 +32,23 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('formatters', $configs['formatters'] ?? []);
         $container->setParameter('analyser', $configs['analyser']);
         $container->setParameter('ignore_uncovered_internal_classes', $configs['ignore_uncovered_internal_classes']);
-        $container->setParameter('cache_file', $configs['cache_file']);
+
+        if (!$container->hasParameter('cache_file') && isset($configs['cache_file'])) {
+            $container->setParameter('cache_file', $configs['cache_file']);
+        }
     }
 
     /**
      * @throws ParameterNotFoundException
+     * @throws LogicException
      */
     public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('projectDirectory')) {
             $container->setParameter('projectDirectory', getcwd());
+        }
+        if (!$container->hasParameter('currentWorkingDirectory')) {
+            $container->setParameter('currentWorkingDirectory', getcwd());
         }
         if (!$container->hasParameter('paths')) {
             $container->setParameter('paths', []);
@@ -67,12 +75,12 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
             $container->setParameter('ignore_uncovered_internal_classes', true);
         }
 
-        if ($container->hasParameter('cli.cache_file')) {
-            $container->setParameter('deptrac.cache_file', $container->getParameter('cli.cache_file'));
-        } elseif ($container->hasParameter('cache_file')) {
-            $container->setParameter('deptrac.cache_file', $container->getParameter('cache_file'));
-        } else {
-            $container->setParameter('deptrac.cache_file', '.deptrac.cache');
+        $projectDirectory = $container->getParameter('currentWorkingDirectory');
+
+        if (!is_string($projectDirectory)) {
+            throw new LogicException('"projectDirectory" has to be a string!');
         }
+
+        $container->setParameter('cache_file', sprintf('%s/%s', $projectDirectory, '.deptrac.cache'));
     }
 }

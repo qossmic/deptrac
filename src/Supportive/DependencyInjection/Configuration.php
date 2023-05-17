@@ -75,12 +75,7 @@ class Configuration implements ConfigurationInterface
 
     private function appendCacheFile(ArrayNodeDefinition $node): void
     {
-        $node
-            ->children()
-                ->scalarNode('cache_file')
-                ->defaultValue('.deptrac.cache')
-                ->end()
-            ->end();
+        $node->children()->scalarNode('cache_file');
     }
 
     private function appendLayers(ArrayNodeDefinition $node): void

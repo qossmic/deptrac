@@ -13,6 +13,7 @@ final class DeptracConfig implements ConfigBuilderInterface
 {
     private bool $ignoreUncoveredInternalClasses = true;
 
+    private string $cacheFile = '.deptrac.cache';
     /** @var array<string> */
     private array $paths = [];
     /** @var array<Layer> */
@@ -33,6 +34,13 @@ final class DeptracConfig implements ConfigBuilderInterface
         foreach ($types as $type) {
             $this->analyser[$type->value] = $type;
         }
+
+        return $this;
+    }
+
+    public function cacheFile(string $cacheFile): self
+    {
+        $this->cacheFile = $cacheFile;
 
         return $this;
     }
@@ -134,6 +142,7 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         $config['ignore_uncovered_internal_classes'] = $this->ignoreUncoveredInternalClasses;
+        $config['cache_file'] = $this->cacheFile;
 
         return $config;
     }

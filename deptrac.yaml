@@ -10,7 +10,7 @@ deptrac:
   paths:
     - ./src
 
-  cache_file: my.deptrac.cache
+  cache_file: config.deptrac.cache
 
   analyser:
     types:

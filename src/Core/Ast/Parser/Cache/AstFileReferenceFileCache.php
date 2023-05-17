@@ -45,9 +45,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
     public function __construct(
         private readonly string $cacheFile,
         private readonly string $cacheVersion
-    ) {
-        $this->cache = [];
-    }
+    ) {}
 
     public function get(string $filepath): ?FileReference
     {

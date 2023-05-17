@@ -20,7 +20,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set(AstFileReferenceFileCache::class)
-        ->args(['%deptrac.cache_file%', Application::VERSION]);
+        ->args(['%cache_file%', Application::VERSION]);
 
     $services->alias(AstFileReferenceDeferredCacheInterface::class, AstFileReferenceFileCache::class);
     $services->alias(AstFileReferenceCacheInterface::class, AstFileReferenceDeferredCacheInterface::class);

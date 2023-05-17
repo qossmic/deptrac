@@ -38,6 +38,8 @@ final class DeptracExtensionTest extends TestCase
 
         $this->container = new ContainerBuilder();
         $this->extension = new DeptracExtension();
+
+        $this->extension->prepend($this->container);
     }
 
     public function testDefaults(): void

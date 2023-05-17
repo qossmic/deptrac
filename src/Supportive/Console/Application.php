@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Supportive\Console;
 
+use LogicException;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Exception\CannotLoadConfiguration;
 use Qossmic\Deptrac\Supportive\DependencyInjection\ServiceContainerBuilder;
 use RuntimeException;
@@ -25,6 +26,7 @@ use const DIRECTORY_SEPARATOR;
 final class Application extends BaseApplication
 {
     public const VERSION = '@git-version@';
+    private const DEFAULT_COMMAND = 'analyse';
 
     public function __construct()
     {
@@ -95,38 +97,48 @@ final class Application extends BaseApplication
             return parent::doRun($input, $output);
         }
 
+        $factory = new ServiceContainerBuilder($currentWorkingDirectory);
+
         /** @var string|numeric|null $configFile */
         $configFile = $input->getOption('config-file');
-        $config = $input->hasOption('config-file')
-            ? (string) $configFile
-            : $currentWorkingDirectory.DIRECTORY_SEPARATOR.'deptrac.yaml';
+        $config = $input->hasOption('config-file') ? (string) $configFile : null;
 
-        /** @var string|numeric|null $cacheFile */
-        $cacheFile = $input->getParameterOption('--cache-file', $currentWorkingDirectory.DIRECTORY_SEPARATOR.'.deptrac.cache');
-        $cache = $input->hasParameterOption('--cache-file') ? (string) $cacheFile : null;
-
-        $factory = new ServiceContainerBuilder($currentWorkingDirectory);
-        if ($input->hasParameterOption('--clear-cache', true)) {
-            $factory = $factory->clearCache($cache);
-        }
         if (!in_array($input->getArgument('command'), ['init', 'list', 'help', 'completion'], true)) {
             $factory = $factory->withConfig($config);
         }
 
-        if ($input->hasParameterOption('--no-cache')) {
+        /** @var string|numeric|null $cacheFile */
+        $cacheFile = $input->getParameterOption('--cache-file');
+        $cache = $input->hasParameterOption('--cache-file') ? (string) $cacheFile : null;
+
+        if ($input->hasParameterOption('--no-cache', true)) {
             $factory = $factory->withNoCache();
-        } elseif ($cache) {
+        } elseif (null !== $cache) {
             $factory = $factory->withCache($cache);
         }
 
         try {
             $container = $factory->build();
+
+            $clearCache = $input->hasParameterOption('--clear-cache', true);
+
+            if ($clearCache) {
+                $cacheDir = $container->getParameter('cache_file');
+
+                if (!is_string($cacheDir)) {
+                    throw new LogicException('"cache_file" not a string!');
+                }
+
+                @unlink($cacheDir);
+            }
+
             $commandLoader = $container->get('console.command_loader');
             if (!$commandLoader instanceof CommandLoaderInterface) {
                 throw new RuntimeException('CommandLoader not initialized. Commands can not be registered.');
             }
+
             $this->setCommandLoader($commandLoader);
-            $this->setDefaultCommand('analyse');
+            $this->setDefaultCommand(self::DEFAULT_COMMAND);
         } catch (CannotLoadConfiguration $e) {
             if (false === $input->hasParameterOption(['--help', '-h'], true)) {
                 throw $e;
