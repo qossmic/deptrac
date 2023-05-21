@@ -17,10 +17,6 @@ final class ComposerCollector implements CollectorInterface
      */
     private array $parser = [];
 
-    public function __construct()
-    {
-    }
-
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
         if (!isset($config['composerPath']) || !is_string($config['composerPath'])) {

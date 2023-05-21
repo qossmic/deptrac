@@ -154,7 +154,7 @@ final class ServiceContainerBuilder
         $configPathInfo = $configFile->getPathInfo();
         /** @phpstan-ignore-next-line false positive */
         if (null === $configPathInfo) {
-            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), sprintf('Unable to load config: Invalid or missing path.'));
+            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), 'Unable to load config: Invalid or missing path.');
         }
 
         $container->setParameter('depfileDirectory', $configPathInfo->getPathname());

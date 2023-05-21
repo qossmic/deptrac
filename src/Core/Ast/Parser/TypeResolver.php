@@ -108,21 +108,21 @@ class TypeResolver
             return $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
         }
         if ($type instanceof UnionTypeNode || $type instanceof IntersectionTypeNode) {
-            return array_merge([], ...array_map(fn (TypeNode $typeNode) => $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes), $type->types));
+            return array_merge([], ...array_map(fn (TypeNode $typeNode): array => $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes), $type->types));
         }
         if ($type instanceof GenericTypeNode) {
             $preType = 'list' === $type->type->name ? [] : $this->resolvePHPStanDocParserType($type->type, $typeScope, $templateTypes);
 
-            return array_merge($preType, ...array_map(fn (TypeNode $typeNode) => $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes), $type->genericTypes));
+            return array_merge($preType, ...array_map(fn (TypeNode $typeNode): array => $this->resolvePHPStanDocParserType($typeNode, $typeScope, $templateTypes), $type->genericTypes));
         }
         if ($type instanceof ArrayShapeNode) {
-            return array_merge([], ...array_map(fn (ArrayShapeItemNode $itemNode) => $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope, $templateTypes), $type->items)
+            return array_merge([], ...array_map(fn (ArrayShapeItemNode $itemNode): array => $this->resolvePHPStanDocParserType($itemNode->valueType, $typeScope, $templateTypes), $type->items)
             );
         }
         if ($type instanceof CallableTypeNode) {
             return array_merge(
                 $this->resolvePHPStanDocParserType($type->returnType, $typeScope, $templateTypes),
-                ...array_map(fn (CallableTypeParameterNode $parameterNode) => $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope, $templateTypes), $type->parameters)
+                ...array_map(fn (CallableTypeParameterNode $parameterNode): array => $this->resolvePHPStanDocParserType($parameterNode->type, $typeScope, $templateTypes), $type->parameters)
             );
         }
 

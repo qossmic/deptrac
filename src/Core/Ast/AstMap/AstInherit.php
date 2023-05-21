@@ -18,20 +18,14 @@ use function sprintf;
 class AstInherit implements Stringable
 {
     /**
-     * @var AstInherit[]
-     */
-    private array $path;
-
-    /**
      * @param AstInherit[] $path
      */
     public function __construct(
         public readonly ClassLikeToken $classLikeName,
         public readonly FileOccurrence $fileOccurrence,
         public readonly AstInheritType $type,
-        array $path = []
+        private readonly array $path = []
     ) {
-        $this->path = $path;
     }
 
     /**
@@ -46,7 +40,7 @@ class AstInherit implements Stringable
     {
         $description = "{$this->classLikeName->toString()}::{$this->fileOccurrence->line} ({$this->type->value})";
 
-        if (0 === count($this->path)) {
+        if ([] === $this->path) {
             return $description;
         }
 

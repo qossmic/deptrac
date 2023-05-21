@@ -68,7 +68,7 @@ final class BaselineOutputFormatter implements OutputFormatterInterface
     private function collectViolations(OutputResult $result): array
     {
         $violations = [];
-        foreach (array_merge($result->allOf(Violation::class), $result->allOf(SkippedViolation::class)) as $rule) {
+        foreach ([...$result->allOf(Violation::class), ...$result->allOf(SkippedViolation::class)] as $rule) {
             $dependency = $rule->getDependency();
             $dependerClass = $dependency->getDepender()->toString();
             $dependentClass = $dependency->getDependent()->toString();

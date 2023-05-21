@@ -37,14 +37,13 @@ use function unserialize;
 class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterface
 {
     /** @var array<string, array{hash: string, reference: FileReference}> */
-    private array $cache;
+    private array $cache = [];
     private bool $loaded = false;
     /** @var array<string, bool> */
     private array $parsedFiles = [];
 
     public function __construct(private readonly string $cacheFile, private readonly string $cacheVersion)
     {
-        $this->cache = [];
     }
 
     public function get(string $filepath): ?FileReference

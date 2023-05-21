@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Core\InputCollector;
 interface InputCollectorInterface
 {
     /**
-     * @return string[]
+     * @return list<string>
      *
      * @throws InputException
      */
