@@ -197,7 +197,7 @@ deptrac:
       name: Controller
       collectors:
         -
-          type: className
+          type: classLike
           value: .*Controller.*
 ```
 

@@ -254,8 +254,7 @@ return static function (ContainerConfigurator $container): void {
         ->tag('collector', ['type' => CollectorType::TYPE_CLASS->value]);
     $services
         ->set(ClassLikeCollector::class)
-        ->tag('collector', ['type' => CollectorType::TYPE_CLASSLIKE->value])
-        ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME->value]);
+        ->tag('collector', ['type' => CollectorType::TYPE_CLASSLIKE->value]);
     $services
         ->set(ClassNameRegexCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME_REGEX->value]);

@@ -5,19 +5,19 @@ deptrac:
   layers:
     - name: Controller
       collectors:
-        - type: className
+        - type: classLike
           value: .*Controller.*
     - name: ViewModel
       collectors:
-        - type: className
+        - type: classLike
           value: ^(.*\\viewmodel\\.*)$
     - name: Service
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\service\\.*
     - name: Business
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\business\\.*
   ruleset:
     ViewModel:

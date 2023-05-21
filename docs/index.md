@@ -138,19 +138,19 @@ deptrac:
       name: Controller
       collectors:
         -
-          type: className
+          type: classLike
           value: .*Controller.*
     -
       name: Repository
       collectors:
         -
-          type: className
+          type: classLike
           value: .*Repository.*
     -
       name: Service
       collectors:
         -
-          type: className
+          type: classLike
           value: .*Service.*
   ruleset:
     Controller:

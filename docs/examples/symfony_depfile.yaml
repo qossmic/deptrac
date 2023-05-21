@@ -10,198 +10,198 @@ deptrac:
           collectors:
               -   type: bool
                   must:
-                      -   type: className
+                      -   type: classLike
                           value: .*Asset.*
                   must_not:
-                      -   type: className
+                      -   type: classLike
                           value: .*Assetic.*
       -   name: DebugBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*DebugBundle\\.*
       -   name: FrameworkBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*FrameworkBundle\\.*
       -   name: SecurityBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*SecurityBundle\\.*
       -   name: TwigBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*TwigBundle\\.*
       -   name: WebProfilerBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*WebProfilerBundle\\.*
       -   name: BrowserKit
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\BrowserKit.*
       -   name: ClassLoader
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\ClassLoader.*
       -   name: Config
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Config.*
       -   name: Console
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Console.*
       -   name: CssSelector
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\CssSelector.*
       -   name: Debug
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Debug.*
       -   name: DependencyInjection
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\DependencyInjection.*
       -   name: DomCrawler
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\DomCrawler.*
       -   name: EventDispatcher
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\EventDispatcher.*
       -   name: ExpressionLanguage
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\ExpressionLanguage.*
       -   name: Filesystem
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Filesystem.*
       -   name: Finder
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Finder.*
       -   name: Form
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Form.*
       -   name: HttpFoundation
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\HttpFoundation.*
       -   name: HttpKernel
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\HttpKernel.*
       -   name: Intl
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Intl.*
       -   name: Ldap
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Ldap.*
       -   name: Locale
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Locale.*
       -   name: OptionsResolver
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\OptionsResolver.*
       -   name: Process
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Process.*
       -   name: PropertyAccess
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\PropertyAccess.*
       -   name: PropertyInfo
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\PropertyInfo.*
       -   name: Routing
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Routing.*
       -   name: Security
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Security.*
       -   name: Serializer
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Serializer.*
       -   name: Stopwatch
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Stopwatch.*
       -   name: Templating
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Templating.*
       -   name: Translation
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Translation.*
       -   name: Validator
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Validator.*
       -   name: VarDumper
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\VarDumper.*
       -   name: Yaml
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Component\\Yaml.*
       -   name: FrameworkBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bundle\\FrameworkBundle.*
       -   name: DebugBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bundle\\DebugBundle.*
       -   name: SecurityBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bundle\\SecurityBundle.*
       -   name: TwigBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bundle\\TwigBundle.*
       -   name: WebProfilerBundle
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bundle\\WebProfilerBundle.*
       -   name: DoctrineBridge
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bridge\\Doctrine.*
       -   name: MonologBridge
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bridge\\Monolog.*
       -   name: PhpUnitBridge
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bridge\\PhpUnit.*
       -   name: ProxyManagerBridge
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bridge\\ProxyManager.*
       -   name: SwiftmailerBridge
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bridge\\Swiftmailer.*
       -   name: TwigBridge
           collectors:
-              -   type: className
+              -   type: classLike
                   value: .*Bridge\\Twig.*
 
   ruleset:

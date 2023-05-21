@@ -1,9 +1,7 @@
 <?php
 
 use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
-use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 use Qossmic\Deptrac\Contract\Config\Collector\BoolConfig;
-use Qossmic\Deptrac\Contract\Config\Collector\ClassNameConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\ComposerConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\DirectoryConfig;
 use Qossmic\Deptrac\Contract\Config\DeptracConfig;

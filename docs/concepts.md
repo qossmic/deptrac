@@ -53,13 +53,13 @@ deptrac:
       name: Models
       collectors:
         -
-          type: className
+          type: classLike
           value: .*MyNamespace\\Models\\.*
     -
       name: Controller
       collectors:
         -
-          type: className
+          type: classLike
           value: .*MyNamespace\\.*Controller.*
   ruleset: [ ]
 ```
@@ -70,7 +70,7 @@ Here we decided that our software has some kind of layer called *Models*. You
 assign tokens to this layer with the help of [*Collectors*](collectors.md).
 
 Collectors are responsible for taking a closer look at your code and decide if a
-token is part of a layer. By using the `className` collector you can define a
+token is part of a layer. By using the `classLike` collector you can define a
 regular expression for a class name. Every (fully qualified) class name that
 matches this regular expression becomes part of the assigned layer. In this
 example we define that every class that contains `MyNamespace\Models\` will be a
@@ -142,19 +142,19 @@ deptrac:
       name: Controller
       collectors:
         -
-          type: className
+          type: classLike
           value: .*MyNamespace\\.*Controller.*
     -
       name: Repository
       collectors:
         -
-          type: className
+          type: classLike
           value: .*MyNamespace\\.*Repository.*
     -
       name: Service
       collectors:
         -
-          type: className
+          type: classLike
           value: .*MyNamespace\\.*Service.*
   ruleset:
     Controller:

@@ -92,13 +92,13 @@ deptrac:
       name: Utils
       collectors:
         -
-          type: className
+          type: classLike
           value: .*Util.*
     -
       name: Controller
       collectors:
         -
-          type: className
+          type: classLike
           value: .*Controller.*
   ruleset:
     Controller:

@@ -16,7 +16,7 @@ deptrac:
           value: ^%depfileDirectory%/%layer2%/.*
     - name: Controller
       collectors:
-        - type: className
+        - type: classLike
           value: .*Controller.*
   ruleset:
     Controller:
