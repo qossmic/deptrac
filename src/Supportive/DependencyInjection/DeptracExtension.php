@@ -35,16 +35,7 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
     public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('projectDirectory')) {
-            $projectDirectory = getcwd();
-            if ($container->hasParameter('depfileDirectory')) {
-                /** @throws void */
-                $projectDirectory = $container->getParameter('depfileDirectory');
-                /** @throws void */
-            } elseif ($container->hasParameter('workingDirectory')) {
-                /** @throws void */
-                $projectDirectory = $container->getParameter('workingDirectory');
-            }
-            $container->setParameter('projectDirectory', $projectDirectory);
+            $container->setParameter('projectDirectory', getcwd());
         }
         if (!$container->hasParameter('paths')) {
             $container->setParameter('paths', []);

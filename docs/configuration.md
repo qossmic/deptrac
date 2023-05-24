@@ -282,8 +282,7 @@ services:
 Deptrac provides parameters that can be user in your configuration.
 
 * `%currentWorkingDirectory%` The path Deptrac runs in
-* `%depfileDirectory%` The path where the configuration is stored.
-* `%projectDirectory%` usually points to `%depfileDirectory%`
+* `%projectDirectory%` The path where the configuration is stored.
 * `%deptrac.cache_file%` contains the filename and path for the cache file.
   Note: This parameter is set by `--cache-file=` and will be overwritten.
 
