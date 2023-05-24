@@ -18,11 +18,11 @@ build: tests ## Runs tests and creates the phar-binary
 
 .PHONY: composer-install
 composer-install: ## Installs dependencies
-	$(COMPOSER_BIN) install --no-interaction --no-progress --no-suggest --optimize-autoloader --ansi
+	$(COMPOSER_BIN) install --no-interaction --no-progress --optimize-autoloader --ansi
 
 .PHONY: deptrac
 deptrac: ## Analyses own architecture using the default config confile
-	$(PHP_BIN) deptrac.php --config-file=deptrac.config.php analyse --no-progress --ansi
+	$(PHP_BIN) deptrac.php --config-file=deptrac.config.php --cache-file=./.cache/deptrac.cache --no-progress --ansi
 
 #generate-changelog: ## Generates a changelog file based on changes compared to remote origin
 #	gem install github_changelog_generator
@@ -55,7 +55,7 @@ psalm: ## Performs static code analysis using psalm
 
 .PHONY: tests-coverage
 tests-coverage: composer-install ## Runs tests and generate an html coverage report
-	$(PHPUNIT_BIN) -c . --coverage-html coverage
+	XDEBUG_MODE=coverage $(PHPUNIT_BIN) -c . --coverage-html coverage
 
 .PHONY: tests
 tests: composer-install ## Runs tests followed by a very basic e2e-test

@@ -8,11 +8,10 @@ phpunit.xml
 box.json
 deptrac.version
 junit-report.xml
-.php-cs-fixer.cache
 .php-cs-fixer.php
-.deptrac.cache
-.phpunit.result.cache
 infection.log
+.cache/
+!.cache/.keep
 
 # downgrade with Rector
 /rector-local
