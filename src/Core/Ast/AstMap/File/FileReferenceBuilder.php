@@ -37,7 +37,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $templateTypes
+     * @param list<string> $templateTypes
      */
     public function newClass(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
     {
@@ -48,7 +48,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $templateTypes
+     * @param list<string> $templateTypes
      */
     public function newTrait(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
     {
@@ -59,7 +59,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $templateTypes
+     * @param list<string> $templateTypes
      */
     public function newClassLike(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
     {
@@ -70,7 +70,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $templateTypes
+     * @param list<string> $templateTypes
      */
     public function newInterface(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
     {
@@ -81,7 +81,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $templateTypes
+     * @param list<string> $templateTypes
      */
     public function newFunction(string $functionName, array $templateTypes = []): FunctionReferenceBuilder
     {

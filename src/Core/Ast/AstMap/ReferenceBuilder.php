@@ -16,7 +16,7 @@ abstract class ReferenceBuilder
     protected array $dependencies = [];
 
     /**
-     * @param string[] $tokenTemplates
+     * @param list<string> $tokenTemplates
      */
     protected function __construct(protected array $tokenTemplates, protected string $filepath)
     {
@@ -211,9 +211,8 @@ abstract class ReferenceBuilder
     public function removeTokenTemplate(string $tokenTemplate): void
     {
         $key = array_search($tokenTemplate, $this->tokenTemplates, true);
-        if (false === $key) {
-            return;
+        if (false !== $key) {
+            unset($this->tokenTemplates[$key]);
         }
-        unset($this->tokenTemplates[$key]);
     }
 }

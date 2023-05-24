@@ -12,8 +12,10 @@ class AstMapExtractor
 {
     private ?AstMap $astMapCache = null;
 
-    public function __construct(private readonly InputCollectorInterface $inputCollector, private readonly AstLoader $astLoader)
-    {
+    public function __construct(
+        private readonly InputCollectorInterface $inputCollector,
+        private readonly AstLoader $astLoader
+    ) {
     }
 
     /**
@@ -21,14 +23,16 @@ class AstMapExtractor
      */
     public function extract(): AstMap
     {
+        if (null !== $this->astMapCache) {
+            return $this->astMapCache;
+        }
+
         try {
-            if (null === $this->astMapCache) {
-                $this->astMapCache = $this->astLoader->createAstMap($this->inputCollector->collect());
-            }
+            $this->astMapCache = $this->astLoader->createAstMap($this->inputCollector->collect());
+
+            return $this->astMapCache;
         } catch (InputException $exception) {
             throw AstException::couldNotCollectFiles($exception);
         }
-
-        return $this->astMapCache;
     }
 }

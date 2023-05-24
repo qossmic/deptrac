@@ -15,7 +15,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     private array $inherits = [];
 
     /**
-     * @param string[] $tokenTemplates
+     * @param list<string> $tokenTemplates
      */
     private function __construct(
         array $tokenTemplates,
@@ -28,7 +28,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $classTemplates
+     * @param list<string> $classTemplates
      */
     public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
@@ -36,7 +36,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $classTemplates
+     * @param list<string> $classTemplates
      */
     public static function createClass(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
@@ -44,7 +44,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $classTemplates
+     * @param list<string> $classTemplates
      */
     public static function createTrait(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {
@@ -52,7 +52,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $classTemplates
+     * @param list<string> $classTemplates
      */
     public static function createInterface(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal): self
     {

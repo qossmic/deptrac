@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 class FunctionReferenceBuilder extends ReferenceBuilder
 {
     /**
-     * @param string[] $tokenTemplates
+     * @param list<string> $tokenTemplates
      */
     private function __construct(array $tokenTemplates, string $filepath, private readonly string $functionName)
     {
@@ -17,7 +17,7 @@ class FunctionReferenceBuilder extends ReferenceBuilder
     }
 
     /**
-     * @param string[] $functionTemplates
+     * @param list<string> $functionTemplates
      */
     public static function create(string $filepath, string $functionName, array $functionTemplates): self
     {
