@@ -12,6 +12,11 @@ use RuntimeException;
 
 final class ComposerCollector implements CollectorInterface
 {
+    /**
+     * @var array<string, ComposerFilesParser>
+     */
+    private array $parser = [];
+
     public function __construct()
     {
     }
@@ -31,12 +36,13 @@ final class ComposerCollector implements CollectorInterface
         }
 
         try {
-            $composerFilesParser = new ComposerFilesParser($config['composerLockPath']);
+            $this->parser[$config['composerLockPath']] ??= new ComposerFilesParser($config['composerLockPath']);
+            $parser = $this->parser[$config['composerLockPath']];
         } catch (RuntimeException $exception) {
             throw new CouldNotParseFileException('Could not parse composer files.', 0, $exception);
         }
 
-        $namespaces = $composerFilesParser->autoloadableNamespacesForRequirements($config['packages'], true);
+        $namespaces = $parser->autoloadableNamespacesForRequirements($config['packages'], true);
         $token = $reference->getToken()->toString();
 
         foreach ($namespaces as $namespace) {
