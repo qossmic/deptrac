@@ -211,7 +211,7 @@ class Configuration implements ConfigurationInterface
                             ->isRequired()
                             ->defaultValue([
                                 EmitterType::CLASS_TOKEN->value,
-                                EmitterType::USE_TOKEN->value,
+                                EmitterType::FUNCTION_TOKEN->value,
                             ])
                             ->scalarPrototype()
                                 ->beforeNormalization()

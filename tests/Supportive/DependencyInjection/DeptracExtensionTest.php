@@ -52,7 +52,7 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
         self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
-        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::USE_TOKEN->value]], $this->container->getParameter('analyser'));
+        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]], $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
     }
 
@@ -70,7 +70,7 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
         self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
-        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::USE_TOKEN->value]], $this->container->getParameter('analyser'));
+        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]], $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
     }
 
