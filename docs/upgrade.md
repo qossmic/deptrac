@@ -1,6 +1,23 @@
+# Upgrade from 1.0.2 to 2.0.0
+
+### Dropped functionality
+
+- "Old" collector configurations using specific keys for each collector no longer triggers deprecation warning and no longer work. For fixes and affected collectors, see https://github.com/qossmic/deptrac/issues/800
+- Config key `use_relative_path_from_depfile` was unused internally and has been dropped
+- Collector `className` has been dropped. It was aliased to `classLike` internally. Going forward, use `classLike` collector instead.
+- `%depfileDirectory%` config variable has been dropped. use `%projectDirectory%` instead.
+
+### Known BC breaks
+- Newly exceptions are now exposed in the contract (https://github.com/qossmic/deptrac/pull/1079)
+- Updated result generation, changing contract signature (https://github.com/qossmic/deptrac/pull/1091)
+- `CollectorInterface` can now throw new exception (https://github.com/qossmic/deptrac/pull/1103/files#diff-c8a7cf839a6a42987513abd863ee41f21222cc7ea85f17b38f6ccc6c7eba384f)
+- Changed output of `ConsoleFormatter` (https://github.com/qossmic/deptrac/pull/1105)
+- Changed default dependency emitters from `CLASS_TOKEN` + `USE_TOKEN` to `CLASS_TOKEN` + `FUNCTION_TOKEN`. You can get the old behaviour by explicitly specifying the old emitters in your config file.
+- Default command alias `analyze` has been dropped. Use `analyse` instead.
+
 # Upgrade from 0.20 to 0.21
 
-# Depfile (Configuration File)
+## Depfile (Configuration File)
 
 In order to fix an issue where the same parameter from an imported file was
 being replaced instead of merged, we needed to reinstate the semantic

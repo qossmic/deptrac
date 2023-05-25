@@ -26,7 +26,7 @@ class AnalyseCommand extends Command
     final public const OPTION_FAIL_ON_UNCOVERED = 'fail-on-uncovered';
     final public const OPTION_REPORT_SKIPPED = 'report-skipped';
 
-    public static $defaultName = 'analyse|analyze';
+    public static $defaultName = 'analyse';
     public static $defaultDescription = 'Analyses your project using the provided depfile';
 
     public function __construct(
