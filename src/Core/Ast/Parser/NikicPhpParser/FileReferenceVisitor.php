@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser;
 
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
@@ -15,6 +16,7 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
@@ -133,6 +135,8 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 }
             }
         }
+
+        $this->processClassDocs($node);
     }
 
     private function enterFunction(Node\Stmt\Function_ $node): void
@@ -226,6 +230,54 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
                 $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
                 $this->fileReferenceBuilder->useStatement($classLikeName, $use->name->getLine());
+            }
+        }
+    }
+
+    private function processClassDocs(ClassLike $node): void
+    {
+        $docComment = $node->getDocComment();
+        if (!$docComment instanceof Doc) {
+            return;
+        }
+
+        $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+        $docNode = $this->docParser->parse($tokens);
+
+        foreach ($docNode->getMethodTagValues() as $methodTagValue) {
+            $templateTypes = array_merge(
+                array_map(
+                    static fn (TemplateTagValueNode $node): string => $node->name,
+                    $methodTagValue->templateTypes
+                ),
+                $this->currentReference->getTokenTemplates()
+            );
+            foreach ($methodTagValue->parameters as $tag) {
+                if (null !== $tag->type) {
+                    $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $this->currentTypeScope, $templateTypes);
+
+                    foreach ($types as $type) {
+                        $this->currentReference->parameter($type, $docComment->getStartLine());
+                    }
+                }
+            }
+            $returnType = $methodTagValue->returnType;
+            if (null !== $returnType) {
+                $types = $this->typeResolver->resolvePHPStanDocParserType($returnType, $this->currentTypeScope, $templateTypes);
+
+                foreach ($types as $type) {
+                    $this->currentReference->returnType($type, $docComment->getStartLine());
+                }
+            }
+        }
+
+        /** @var list<PropertyTagValueNode> $propertyTags */
+        $propertyTags = array_merge($docNode->getPropertyTagValues(), $docNode->getPropertyReadTagValues(), $docNode->getPropertyWriteTagValues());
+        foreach ($propertyTags as $tag) {
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $this->currentTypeScope, $this->currentReference->getTokenTemplates());
+
+            foreach ($types as $type) {
+                $this->currentReference->variable($type, $docComment->getStartLine());
             }
         }
     }
