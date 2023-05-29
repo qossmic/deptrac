@@ -54,6 +54,7 @@ class PackageNameCollector extends RegexCollector
 
     /**
      * @return array<string>
+     *
      * @throws CouldNotParseFileException
      */
     private function getPackages(ClassLikeReference $reference): array
