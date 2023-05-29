@@ -267,6 +267,24 @@ deptrac:
 Every class having a method that matches the regular expression `.*foo`,
 e.g. `getFoo()` or `setFoo()` becomes a part of the *Foo services* layer.
 
+## `packageName` Collector
+
+The `packageName` collector allows collecting classes and anything similar to
+classes like interfaces, traits or enums, based on a `@package` annotation in
+their docblock. Any matching class-like will be added to the assigned layer.
+
+```yaml
+deptrac:
+  layers:
+    - name: FooPackages
+      collectors:
+        - type: packageName
+          value: ^Foo$
+```
+
+Every class-like with an annotation of `@package Foo` in their docblock will
+become part of the *FooPackages* layer.
+
 ## `superglobal` Collector
 
 The `superglobal` collector allows collecting superglobal PHP variables matching

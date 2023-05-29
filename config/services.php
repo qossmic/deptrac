@@ -70,6 +70,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\InterfaceCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\MethodCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\PackageNameCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\TraitCollector;
@@ -291,6 +292,9 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set(MethodCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_METHOD->value]);
+    $services
+        ->set(PackageNameCollector::class)
+        ->tag('collector', ['type' => CollectorType::TYPE_PACKAGE_NAME->value]);
     $services
         ->set(SuperglobalCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_SUPERGLOBAL->value]);

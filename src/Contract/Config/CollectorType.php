@@ -22,6 +22,7 @@ enum CollectorType: string
     case TYPE_INTERFACE = 'interface';
     case TYPE_LAYER = 'layer';
     case TYPE_METHOD = 'method';
+    case TYPE_PACKAGE_NAME = 'packageName';
     case TYPE_SUPERGLOBAL = 'superglobal';
     case TYPE_TRAIT = 'trait';
     case TYPE_USES = 'uses';
