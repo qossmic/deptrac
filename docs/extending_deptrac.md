@@ -23,13 +23,14 @@ There are several ways you can extend Deptrac:
 Creating an output formatter requires creating a new class implementing
 the `OutputFormatter\OutputFormatterInterface` and
 register it
-in your `deptrac.config.php` file like this:
+in your `deptrac.yaml` file like this:
 
-```php
-    $services = $containerConfigurator->services();
-    $services->set(\App\DeptracExtension\MyCustomOutputFormatter::class)
-        ->autowire()
-        ->tag('output_formatter');
+```yaml
+services:
+  - class: App\DeptracExtension\MyCustomOutputFormatter
+    autowire: true
+    tags:
+      - output_formatter
 ```
 
 And you are done. You can call your formatter by using the `-f` or `--formatter`
@@ -70,12 +71,13 @@ class IgnoreDependenciesOnShouldNotHappenException extends \Symfony\Component\Ev
 }
 ```
 
-And then you register this class in your `deptrac.config.php` file:
+And then you register this class in your `deptrac.yaml` file:
 
-```php
-    $services = $containerConfigurator->services();
-    $services->set(\App\DeptracExtension\IgnoreDependenciesOnShouldNotHappenException::class)
-        ->tag('kernel.event_subscriber');
+```yaml
+services:
+  - class: IgnoreDependenciesOnShouldNotHappenException
+    tags:
+      - { name: kernel.event_subscriber }
 ```
 
 You can also en masse change the whole result set by instead listening to
@@ -88,12 +90,13 @@ the `replaceResult()` method.
 
 Deptrac already comes with a comprehensive list of [collectors](collectors.md). If you
 need something more specific, you can write your own collector
-implementing `Layer\CollectorInterface` and register it in your `deptrac.config.php`
+implementing `Layer\CollectorInterface` and register it in your `deptrac.yaml`
 file:
 
-```php
-    $services = $containerConfigurator->services();
-    $services->set(\App\DeptracExtension\MyCustomOutputFormatter::class)
-        ->autowire()
-        ->tag('collector', ['type' => '<name to use in the deptrac.yaml to invoke the collector>']);
+```yaml
+services:
+  - class: App\DeptracExtension\MyCustomLayerCollector
+    autowire: true
+    tags:
+      - { name: 'collector', type: '<name to use in the CLI flag to invoke the collector>' }
 ```

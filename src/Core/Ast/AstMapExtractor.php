@@ -23,14 +23,8 @@ class AstMapExtractor
      */
     public function extract(): AstMap
     {
-        if (null !== $this->astMapCache) {
-            return $this->astMapCache;
-        }
-
         try {
-            $this->astMapCache = $this->astLoader->createAstMap($this->inputCollector->collect());
-
-            return $this->astMapCache;
+            return $this->astMapCache ??= $this->astLoader->createAstMap($this->inputCollector->collect());
         } catch (InputException $exception) {
             throw AstException::couldNotCollectFiles($exception);
         }
