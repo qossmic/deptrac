@@ -11,7 +11,7 @@ use RuntimeException;
 use function implode;
 
 /**
- * Fired when the configuration of a particular collector is not valid.
+ * Thrown when the configuration of a particular collector is not valid.
  *
  * Use this exception when writing custom collectors.
  */

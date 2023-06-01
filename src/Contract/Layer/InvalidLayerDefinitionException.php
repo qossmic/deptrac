@@ -10,7 +10,7 @@ use RuntimeException;
 use function sprintf;
 
 /**
- * Fired when the configuration of a particular layer is not valid.
+ * Thrown when the configuration of a particular layer is not valid.
  *
  * Use this exception when writing custom collectors.
  */

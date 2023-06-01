@@ -9,7 +9,7 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Event that is fired on every fined dependency.
+ * Event that is triggered on every fined dependency.
  *
  * Used to apply rules on the found dependencies.
  */

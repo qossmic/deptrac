@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Contract\Ast;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Event fired after parsing the AST of a file has been completed.
+ * Event triggered after parsing the AST of a file has been completed.
  */
 class AstFileAnalysedEvent extends Event
 {

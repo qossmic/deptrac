@@ -8,7 +8,7 @@ use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
 
 /**
- * Used when you are unable to provide output with you custom OutputFormatter.
+ * Thrown when you are unable to provide output with your custom OutputFormatter.
  */
 class OutputException extends RuntimeException implements ExceptionInterface
 {
