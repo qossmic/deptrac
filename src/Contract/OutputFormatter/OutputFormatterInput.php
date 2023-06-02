@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
-class OutputFormatterInput
+/**
+ * @psalm-immutable
+ */
+final class OutputFormatterInput
 {
     public function __construct(
         public readonly ?string $outputPath,

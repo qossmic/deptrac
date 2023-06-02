@@ -345,7 +345,9 @@ class TableOutputFormatterTest extends TestCase
         foreach ($errors as $error) {
             $analysisResult->addError($error);
         }
-        $analysisResult->addWarnings($warnings);
+        foreach ($warnings as $warning) {
+            $analysisResult->addWarning($warning);
+        }
 
         $formatter = new TableOutputFormatter();
         $formatter->finish(

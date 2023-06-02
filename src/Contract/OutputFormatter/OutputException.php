@@ -10,7 +10,7 @@ use RuntimeException;
 /**
  * Thrown when you are unable to provide output with your custom OutputFormatter.
  */
-class OutputException extends RuntimeException implements ExceptionInterface
+final class OutputException extends RuntimeException implements ExceptionInterface
 {
     public static function withMessage(string $message): self
     {

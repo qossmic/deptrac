@@ -7,9 +7,9 @@ namespace Qossmic\Deptrac\Contract\Ast;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Event triggered before the ASTMap and parsing of all files has started.
+ * Event triggered before the AST map and parsing of all files has started.
  */
-class PreCreateAstMapEvent extends Event
+final class PreCreateAstMapEvent extends Event
 {
     public function __construct(
         public readonly int $expectedFileCount

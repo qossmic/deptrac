@@ -21,7 +21,7 @@ use function sprintf;
 final class CircularReferenceException extends RuntimeException implements ExceptionInterface
 {
     /**
-     * @param string[] $others
+     * @param list<string> $others
      */
     public static function circularLayerDependency(string $layer, array $others): self
     {

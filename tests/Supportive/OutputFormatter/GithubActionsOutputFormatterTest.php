@@ -51,7 +51,9 @@ final class GithubActionsOutputFormatterTest extends TestCase
         foreach ($errors as $error) {
             $analysisResult->addError($error);
         }
-        $analysisResult->addWarnings($warnings);
+        foreach ($warnings as $warning) {
+            $analysisResult->addWarning($warning);
+        }
 
         $formatter = new GithubActionsOutputFormatter();
         $formatter->finish(

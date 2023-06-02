@@ -13,20 +13,20 @@ use function spl_object_id;
 /**
  * Describes the result of a source code analysis.
  */
-class AnalysisResult
+final class AnalysisResult
 {
     /**
-     * @var array<string, array<int, RuleInterface>> Rule className -> (ruleInstanceHash -> Rule)
+     * @var array<class-string<RuleInterface>, array<int, RuleInterface>> Rule type -> (ruleInstanceHash -> Rule)
      */
     private array $rules = [];
 
     /**
-     * @var Warning[]
+     * @var list<Warning>
      */
     private array $warnings = [];
 
     /**
-     * @var Error[]
+     * @var list<Error>
      */
     private array $errors = [];
 
@@ -41,21 +41,11 @@ class AnalysisResult
     }
 
     /**
-     * @return array<string, array<int, RuleInterface>>
+     * @return array<class-string<RuleInterface>, array<int, RuleInterface>>
      */
     public function rules(): array
     {
         return $this->rules;
-    }
-
-    /**
-     * @param Warning[] $warnings
-     */
-    public function addWarnings(array $warnings): void
-    {
-        foreach ($warnings as $warning) {
-            $this->addWarning($warning);
-        }
     }
 
     public function addWarning(Warning $warning): void
@@ -64,7 +54,7 @@ class AnalysisResult
     }
 
     /**
-     * @return Warning[]
+     * @return list<Warning>
      */
     public function warnings(): array
     {
@@ -77,7 +67,7 @@ class AnalysisResult
     }
 
     /**
-     * @return Error[]
+     * @return list<Error>
      */
     public function errors(): array
     {

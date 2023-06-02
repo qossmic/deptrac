@@ -9,14 +9,14 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Event that is triggered on every fined dependency.
+ * Event that is triggered on every found dependency.
  *
  * Used to apply rules on the found dependencies.
  */
-class ProcessEvent extends Event
+final class ProcessEvent extends Event
 {
     /**
-     * @param array<string, bool> $dependentLayers
+     * @param array<string, bool> $dependentLayers layer name and whether the dependency is public(true) or private(false)
      */
     public function __construct(
         public readonly DependencyInterface $dependency,
