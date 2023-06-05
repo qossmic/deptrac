@@ -13,7 +13,8 @@
 - `CollectorInterface` can now throw new exception (https://github.com/qossmic/deptrac/pull/1103/files#diff-c8a7cf839a6a42987513abd863ee41f21222cc7ea85f17b38f6ccc6c7eba384f)
 - Changed output of `ConsoleFormatter` (https://github.com/qossmic/deptrac/pull/1105)
 - Changed default dependency emitters from `CLASS_TOKEN` + `USE_TOKEN` to `CLASS_TOKEN` + `FUNCTION_TOKEN`. You can get the old behaviour by explicitly specifying the old emitters in your config file.
-- Default command alias `analyze` has been dropped. Use `analyse` instead.
+- Method `addWarnings` was removed from `AnalysisResult`. Use `addWarning` instead.
+- Method `isViolationSkipped` was removed from `EventHelper`. Use `addSkippableViolation` instead.
 
 # Upgrade from 0.20 to 0.21
 
