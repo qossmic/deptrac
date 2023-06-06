@@ -12,7 +12,6 @@ use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use function array_key_exists;
 use function is_string;
 use function sprintf;
-use function trigger_deprecation;
 
 final class LayerCollector implements ConditionalCollectorInterface
 {
@@ -27,11 +26,6 @@ final class LayerCollector implements ConditionalCollectorInterface
 
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
-        if (isset($config['layer']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version');
-            $config['value'] = $config['layer'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('LayerCollector needs the layer configuration.');
         }
@@ -58,12 +52,6 @@ final class LayerCollector implements ConditionalCollectorInterface
 
     public function resolvable(array $config): bool
     {
-        /** @var array{layer?: string, value?: string} $config */
-        if (isset($config['layer']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'LayerCollector should use the "value" key from this version');
-            $config['value'] = $config['layer'];
-        }
-
         /** @var array{layer?: string, value: string} $config */
         return $this->resolver->has($config['value']);
     }

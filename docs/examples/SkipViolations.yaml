@@ -3,11 +3,11 @@ deptrac:
   layers:
   - name: Core
     collectors:
-    - type: className
+    - type: classLike
       value: Core
   - name: Library
     collectors:
-    - type: className
+    - type: classLike
       value: Library
   ruleset:
     Core:

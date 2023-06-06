@@ -10,7 +10,7 @@ use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
 
 use function str_contains;
 
@@ -20,7 +20,7 @@ class AttributeCollector implements CollectorInterface
     {
         if (!$reference instanceof FileReference
             && !$reference instanceof ClassLikeReference
-            && !$reference instanceof FunctionLikeReference
+            && !$reference instanceof FunctionReference
         ) {
             return false;
         }

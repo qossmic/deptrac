@@ -11,7 +11,6 @@ enum CollectorType: string
     case TYPE_BOOL = 'bool';
     case TYPE_CLASS = 'class';
     case TYPE_CLASSLIKE = 'classLike';
-    case TYPE_CLASS_NAME = 'className';
     case TYPE_CLASS_NAME_REGEX = 'classNameRegex';
     case TYPE_DIRECTORY = 'directory';
     case TYPE_EXTENDS = 'extends';

@@ -22,13 +22,6 @@ final class SuperGlobalConfig extends CollectorConfig
         return new self($config);
     }
 
-    public function private(): self
-    {
-        $this->private = true;
-
-        return $this;
-    }
-
     /**
      * @return array{'private': bool, 'type': string, 'value': string[]}
      */
@@ -36,7 +29,7 @@ final class SuperGlobalConfig extends CollectorConfig
     {
         return [
             'private' => $this->private,
-            'type' => CollectorType::TYPE_SUPERGLOBAL->value,
+            'type' => $this->collectorType->value,
             'value' => $this->config,
         ];
     }

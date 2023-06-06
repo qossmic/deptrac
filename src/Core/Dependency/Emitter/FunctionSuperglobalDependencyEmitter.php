@@ -19,7 +19,7 @@ final class FunctionSuperglobalDependencyEmitter implements DependencyEmitterInt
     public function applyDependencies(AstMap $astMap, DependencyList $dependencyList): void
     {
         foreach ($astMap->getFileReferences() as $astFileReference) {
-            foreach ($astFileReference->functionLikeReferences as $astFunctionReference) {
+            foreach ($astFileReference->functionReferences as $astFunctionReference) {
                 foreach ($astFunctionReference->dependencies as $dependency) {
                     if (DependencyType::SUPERGLOBAL_VARIABLE !== $dependency->type) {
                         continue;

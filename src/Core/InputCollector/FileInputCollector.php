@@ -72,9 +72,9 @@ final class FileInputCollector implements InputCollectorInterface
 
         $finder = new PathNameFilterIterator($customFilterIterator, [], $this->excludedFilePatterns);
 
-        return array_map(
+        return array_values(array_map(
             static fn (SplFileInfo $fileInfo) => (string) $fileInfo->getRealPath(),
             iterator_to_array($finder)
-        );
+        ));
     }
 }

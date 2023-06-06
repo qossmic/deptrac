@@ -54,7 +54,7 @@ class LayerResolver implements LayerResolverInterface
                 }
 
                 if ($collectable->collector->satisfy($attributes, $reference)) {
-                    if (array_key_exists($layer, $this->resolved[$tokenName]) && true === $this->resolved[$tokenName][$layer]) {
+                    if (array_key_exists($layer, $this->resolved[$tokenName]) && $this->resolved[$tokenName][$layer]) {
                         continue;
                     }
                     if (array_key_exists('private', $attributes) && true === $attributes['private']) {

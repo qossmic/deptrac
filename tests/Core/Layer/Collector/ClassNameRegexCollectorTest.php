@@ -25,9 +25,6 @@ final class ClassNameRegexCollectorTest extends TestCase
     {
         yield [['value' => '/^Foo\\\\Bar$/i'], 'Foo\\Bar', true];
         yield [['value' => '/^Foo\\\\Bar$/i'], 'Foo\\Baz', false];
-        // Legacy attribute:
-        yield [['regex' => '/^Foo\\\\Bar$/i'], 'Foo\\Bar', true];
-        yield [['regex' => '/^Foo\\\\Bar$/i'], 'Foo\\Baz', false];
     }
 
     /**

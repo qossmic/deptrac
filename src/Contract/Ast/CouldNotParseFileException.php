@@ -8,7 +8,10 @@ use Qossmic\Deptrac\Contract\ExceptionInterface;
 use RuntimeException;
 use Throwable;
 
-class CouldNotParseFileException extends RuntimeException implements ExceptionInterface
+/**
+ * Exception thrown in a collector when it cannot parse a file.
+ */
+final class CouldNotParseFileException extends RuntimeException implements ExceptionInterface
 {
     public static function because(string $reason, Throwable $previous): self
     {

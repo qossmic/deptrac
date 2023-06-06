@@ -12,7 +12,6 @@ use Symfony\Component\Yaml\Yaml;
 final class DeptracConfig implements ConfigBuilderInterface
 {
     private bool $ignoreUncoveredInternalClasses = true;
-    private bool $useRelativePathFromDepfile = true;
 
     /** @var array<string> */
     private array $paths = [];
@@ -135,7 +134,6 @@ final class DeptracConfig implements ConfigBuilderInterface
         }
 
         $config['ignore_uncovered_internal_classes'] = $this->ignoreUncoveredInternalClasses;
-        $config['use_relative_path_from_depfile'] = $this->useRelativePathFromDepfile;
 
         return $config;
     }

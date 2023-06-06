@@ -29,11 +29,6 @@ final class SuperglobalCollector implements CollectorInterface
      */
     private function getNames(array $config): array
     {
-        if (isset($config['names']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'SuperglobalCollector should use the "value" key from this version');
-            $config['value'] = $config['names'];
-        }
-
         if (!isset($config['value']) || !is_array($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('SuperglobalCollector needs the names configuration.');
         }

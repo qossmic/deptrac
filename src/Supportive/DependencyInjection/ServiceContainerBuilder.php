@@ -97,7 +97,7 @@ final class ServiceContainerBuilder
 
         $container->registerExtension(new DeptracExtension());
 
-        $container->setParameter('depfileDirectory', $this->workingDirectory);
+        $container->setParameter('projectDirectory', $this->workingDirectory);
         if (null !== $this->configFile) {
             self::loadConfiguration($container, $this->configFile);
         }
@@ -154,10 +154,10 @@ final class ServiceContainerBuilder
         $configPathInfo = $configFile->getPathInfo();
         /** @phpstan-ignore-next-line false positive */
         if (null === $configPathInfo) {
-            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), sprintf('Unable to load config: Invalid or missing path.'));
+            throw CannotLoadConfiguration::fromConfig($configFile->getFilename(), 'Unable to load config: Invalid or missing path.');
         }
 
-        $container->setParameter('depfileDirectory', $configPathInfo->getPathname());
+        $container->setParameter('projectDirectory', $configPathInfo->getPathname());
 
         $loader = new DelegatingLoader(new LoaderResolver([
             new YamlFileLoader($container, new FileLocator([$configPathInfo->getPathname()])),

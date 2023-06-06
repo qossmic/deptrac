@@ -22,7 +22,7 @@ class AstLoader
     }
 
     /**
-     * @param string[] $files
+     * @param list<string> $files
      */
     public function createAstMap(array $files): AstMap
     {

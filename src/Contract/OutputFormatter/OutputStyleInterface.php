@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
 use Symfony\Component\Console\Helper\TableSeparator;
 
+/**
+ * Wrapper around Symfony OutputStyle.
+ */
 interface OutputStyleInterface
 {
     public function title(string $message): void;

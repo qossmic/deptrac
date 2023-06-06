@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Layer;
 
-class LayerProvider
+/**
+ * Provides information about layer configuration.
+ */
+final class LayerProvider
 {
     /**
-     * @param array<string, string[]> $allowedLayers
+     * @param array<string, list<string>> $allowedLayers source layer -> target layers
      */
     public function __construct(private readonly array $allowedLayers)
     {
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      *
      * @throws CircularReferenceException
      */
@@ -24,7 +27,7 @@ class LayerProvider
     }
 
     /**
-     * @param string[] $previousLayers
+     * @param list<string> $previousLayers
      *
      * @return string[]
      *

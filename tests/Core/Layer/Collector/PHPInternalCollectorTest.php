@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector;
 
 final class PHPInternalCollectorTest extends TestCase
@@ -22,9 +22,9 @@ final class PHPInternalCollectorTest extends TestCase
         yield [['value' => '^PDO'], new ClassLikeReference(ClassLikeToken::fromFQCN('PDOException')), true];
         yield [['value' => '^PFO'], new ClassLikeReference(ClassLikeToken::fromFQCN('PDOException')), false];
         yield [['value' => '.*'], new ClassLikeReference(ClassLikeToken::fromFQCN('PDOExceptionNonExistent')), false];
-        yield [['value' => '^pdo'], new FunctionLikeReference(FunctionLikeToken::fromFQCN('pdo_drivers')), true];
-        yield [['value' => '^pfo'], new FunctionLikeReference(FunctionLikeToken::fromFQCN('pdo_drivers')), false];
-        yield [['value' => '.*'], new FunctionLikeReference(FunctionLikeToken::fromFQCN('pdo_drivers_non_existent')), false];
+        yield [['value' => '^pdo'], new FunctionReference(FunctionToken::fromFQCN('pdo_drivers')), true];
+        yield [['value' => '^pfo'], new FunctionReference(FunctionToken::fromFQCN('pdo_drivers')), false];
+        yield [['value' => '.*'], new FunctionReference(FunctionToken::fromFQCN('pdo_drivers_non_existent')), false];
     }
 
     /**

@@ -29,23 +29,13 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('skip_violations', $configs['skip_violations']);
         $container->setParameter('formatters', $configs['formatters'] ?? []);
         $container->setParameter('analyser', $configs['analyser']);
-        $container->setParameter('use_relative_path_from_depfile', $configs['use_relative_path_from_depfile']);
         $container->setParameter('ignore_uncovered_internal_classes', $configs['ignore_uncovered_internal_classes']);
     }
 
     public function prepend(ContainerBuilder $container): void
     {
         if (!$container->hasParameter('projectDirectory')) {
-            $projectDirectory = getcwd();
-            if ($container->hasParameter('depfileDirectory')) {
-                /** @throws void */
-                $projectDirectory = $container->getParameter('depfileDirectory');
-                /** @throws void */
-            } elseif ($container->hasParameter('workingDirectory')) {
-                /** @throws void */
-                $projectDirectory = $container->getParameter('workingDirectory');
-            }
-            $container->setParameter('projectDirectory', $projectDirectory);
+            $container->setParameter('projectDirectory', getcwd());
         }
         if (!$container->hasParameter('paths')) {
             $container->setParameter('paths', []);
@@ -66,10 +56,7 @@ class DeptracExtension extends Extension implements PrependExtensionInterface
             $container->setParameter('formatters', []);
         }
         if (!$container->hasParameter('analyser')) {
-            $container->setParameter('analyser', ['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::USE_TOKEN->value]]);
-        }
-        if (!$container->hasParameter('use_relative_path_from_depfile')) {
-            $container->setParameter('use_relative_path_from_depfile', true);
+            $container->setParameter('analyser', ['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]]);
         }
         if (!$container->hasParameter('ignore_uncovered_internal_classes')) {
             $container->setParameter('ignore_uncovered_internal_classes', true);

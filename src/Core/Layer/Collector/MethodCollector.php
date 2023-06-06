@@ -40,11 +40,6 @@ final class MethodCollector extends RegexCollector
 
     protected function getPattern(array $config): string
     {
-        if (isset($config['name']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'MethodCollector should use the "value" key from this version');
-            $config['value'] = $config['name'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('MethodCollector needs the name configuration.');
         }

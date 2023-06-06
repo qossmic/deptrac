@@ -12,9 +12,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMapExtractor;
 
-use function intval;
-use function trigger_deprecation;
-
 final class InheritanceLevelCollector implements CollectorInterface
 {
     private readonly AstMap $astMap;
@@ -34,18 +31,13 @@ final class InheritanceLevelCollector implements CollectorInterface
         }
 
         $classInherits = $this->astMap->getClassInherits($reference->getToken());
-
-        if (isset($config['level']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'InheritanceLevelCollector should use the "value" key from this version');
-            $config['value'] = $config['level'];
-        }
-
-        if (!isset($config['value']) || (0 === intval($config['value']) && 0 == $config['value'])) {
+        if (!isset($config['value']) || !is_numeric($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('InheritanceLevelCollector needs inheritance depth as int.');
         }
 
+        $depth = (int) $config['value'];
         foreach ($classInherits as $classInherit) {
-            if (count($classInherit->getPath()) >= $config['value']) {
+            if (count($classInherit->getPath()) >= $depth) {
                 return true;
             }
         }

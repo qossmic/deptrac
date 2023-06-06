@@ -8,6 +8,8 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a dependency that is NOT covered by the current configuration.
  */
 final class Uncovered implements RuleInterface
 {

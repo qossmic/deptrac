@@ -4,10 +4,10 @@ deptrac:
   layers:
     - name: Models
       collectors:
-        - type: className
+        - type: classLike
           value: .*MyNamespace\\Models\\.*
     - name: Controller
       collectors:
-        - type: className
+        - type: classLike
           value: .*MyNamespace\\.*Controller.*
   ruleset: []

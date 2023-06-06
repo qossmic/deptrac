@@ -6,7 +6,10 @@ namespace Qossmic\Deptrac\Contract\Ast;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class AstFileSyntaxErrorEvent extends Event
+/**
+ * Event triggered when parsing the AST failed on syntax error in the PHP file.
+ */
+final class AstFileSyntaxErrorEvent extends Event
 {
     public function __construct(
         public readonly string $file,

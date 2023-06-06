@@ -29,15 +29,6 @@ abstract class AbstractTypeCollector extends RegexCollector
 
     protected function getPattern(array $config): string
     {
-        if (isset($config['regex']) && !isset($config['value'])) {
-            trigger_deprecation(
-                'qossmic/deptrac',
-                '0.20.0',
-                sprintf('Collector "%s" should use the "value" key from this version', $this->getType()->toString())
-            );
-            $config['value'] = $config['regex'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(sprintf('Collector "%s" needs the regex configuration.', $this->getType()->toString()));
         }

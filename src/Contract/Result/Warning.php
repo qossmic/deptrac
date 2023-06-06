@@ -8,10 +8,13 @@ use Stringable;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a situation that, while valid, is not recommended. This can be
+ * used to guide the end-user to a more proper solution.
  */
 final class Warning implements Stringable
 {
-    private function __construct(private readonly string $message)
+    public function __construct(private readonly string $message)
     {
     }
 

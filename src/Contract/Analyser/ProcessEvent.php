@@ -8,10 +8,15 @@ use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
-class ProcessEvent extends Event
+/**
+ * Event that is triggered on every found dependency.
+ *
+ * Used to apply rules on the found dependencies.
+ */
+final class ProcessEvent extends Event
 {
     /**
-     * @param array<string, bool> $dependentLayers
+     * @param array<string, bool> $dependentLayers layer name and whether the dependency is public(true) or private(false)
      */
     public function __construct(
         public readonly DependencyInterface $dependency,

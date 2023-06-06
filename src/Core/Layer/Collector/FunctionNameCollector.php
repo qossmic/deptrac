@@ -7,18 +7,18 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 
 final class FunctionNameCollector implements CollectorInterface
 {
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
-        if (!$reference instanceof FunctionLikeReference) {
+        if (!$reference instanceof FunctionReference) {
             return false;
         }
 
-        /** @var FunctionLikeToken $tokenName */
+        /** @var FunctionToken $tokenName */
         $tokenName = $reference->getToken();
 
         return $tokenName->match($this->getPattern($config));
@@ -31,11 +31,6 @@ final class FunctionNameCollector implements CollectorInterface
      */
     private function getPattern(array $config): string
     {
-        if (isset($config['regex']) && !isset($config['value'])) {
-            trigger_deprecation('qossmic/deptrac', '0.20.0', 'FunctionNameCollector should use the "value" key from this version');
-            $config['value'] = $config['regex'];
-        }
-
         if (!isset($config['value']) || !is_string($config['value'])) {
             throw InvalidCollectorDefinitionException::invalidCollectorConfiguration('FunctionNameCollector needs the regex configuration.');
         }

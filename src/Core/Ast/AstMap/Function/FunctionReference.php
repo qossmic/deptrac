@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike;
+namespace Qossmic\Deptrac\Core\Ast\AstMap\Function;
 
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
@@ -12,13 +12,13 @@ use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 /**
  * @psalm-immutable
  */
-class FunctionLikeReference implements TokenReferenceInterface
+class FunctionReference implements TokenReferenceInterface
 {
     /**
      * @param DependencyToken[] $dependencies
      */
     public function __construct(
-        private readonly FunctionLikeToken $functionName,
+        private readonly FunctionToken $functionName,
         public readonly array $dependencies = [],
         private readonly ?FileReference $fileReference = null
     ) {

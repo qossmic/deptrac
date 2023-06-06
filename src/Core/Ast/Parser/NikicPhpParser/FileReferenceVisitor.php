@@ -51,11 +51,10 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
-    private function templatesFromDocs(
-        Node $node
-    ): array {
+    private function templatesFromDocs(Node $node): array
+    {
         $docComment = $node->getDocComment();
         if (null === $docComment) {
             return [];
@@ -63,57 +62,18 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
         $docNode = $this->docParser->parse($tokens);
 
-        return array_map(static fn (TemplateTagValueNode $tag): string => $tag->name, $docNode->getTemplateTagValues());
+        return array_values(array_map(static fn (TemplateTagValueNode $tag): string => $tag->name, $docNode->getTemplateTagValues()));
     }
 
     public function enterNode(Node $node)
     {
-        if ($node instanceof Namespace_) {
-            $this->currentTypeScope = new TypeScope($node->name ? $node->name->toCodeString() : '');
-
-            return null;
-        }
-
-        if ($node instanceof Node\Stmt\Function_) {
-            if (isset($node->namespacedName)) {
-                $namespacedName = $node->namespacedName;
-                $name = $namespacedName->toCodeString();
-            } else {
-                $name = $node->name->toString();
-            }
-            $this->enterFunction($name, $node);
-            foreach ($node->getAttrGroups() as $attrGroup) {
-                foreach ($attrGroup->attrs as $attribute) {
-                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
-                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        if ($node instanceof ClassLike) {
-            $name = $this->getClassReferenceName($node);
-            if (null !== $name) {
-                $this->enterClassLike($name, $node);
-            }
-            foreach ($node->attrGroups as $attrGroup) {
-                foreach ($attrGroup->attrs as $attribute) {
-                    foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
-                        $this->currentReference->attribute($classLikeName, $attribute->getLine());
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        if ($node instanceof Node\FunctionLike) {
-            foreach ($this->templatesFromDocs($node) as $template) {
-                $this->currentReference->addTokenTemplate($template);
-            }
-        }
+        match (true) {
+            $node instanceof Namespace_ => $this->currentTypeScope = new TypeScope($node->name ? $node->name->toCodeString() : ''),
+            $node instanceof Node\Stmt\Function_ => $this->enterFunction($node),
+            $node instanceof ClassLike => $this->enterClassLike($node),
+            $node instanceof Node\FunctionLike => $this->enterFunctionLike($node),
+            default => null
+        };
 
         return null;
     }
@@ -126,40 +86,14 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        // Resolve current reference scope
-        if ($node instanceof Node\Stmt\Function_) {
-            $this->currentReference = $this->fileReferenceBuilder;
+        match (true) {
+            $node instanceof Node\Stmt\Function_ => $this->currentReference = $this->fileReferenceBuilder,
+            $node instanceof ClassLike && null !== $this->getClassReferenceName($node) => $this->currentReference = $this->fileReferenceBuilder,
+            $node instanceof Use_ && Use_::TYPE_NORMAL === $node->type => $this->leaveUse($node),
+            $node instanceof GroupUse => $this->leaveGroupUse($node),
+            default => null
+        };
 
-            return null;
-        }
-        if ($node instanceof ClassLike && null !== $this->getClassReferenceName($node)) {
-            $this->currentReference = $this->fileReferenceBuilder;
-
-            return null;
-        }
-
-        // Resolve current type scope
-        if ($node instanceof Use_ && Use_::TYPE_NORMAL === $node->type) {
-            foreach ($node->uses as $use) {
-                $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
-                $this->fileReferenceBuilder->useStatement($use->name->toString(), $use->name->getLine());
-            }
-
-            return null;
-        }
-        if ($node instanceof GroupUse) {
-            foreach ($node->uses as $use) {
-                if (Use_::TYPE_NORMAL === $use->type) {
-                    $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
-                    $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
-                    $this->fileReferenceBuilder->useStatement($classLikeName, $use->name->getLine());
-                }
-            }
-
-            return null;
-        }
-
-        // Resolve code
         foreach ($this->dependencyResolvers as $resolver) {
             $resolver->processNode($node, $this->currentReference, $this->currentTypeScope);
         }
@@ -167,50 +101,49 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         return null;
     }
 
-    private function enterClassLike(string $name, ClassLike $node): void
+    private function enterClassLike(ClassLike $node): void
     {
-        $isInternal = false;
-        $docComment = $node->getDocComment();
-        if (null !== $docComment) {
-            $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
-            $docNode = $this->docParser->parse($tokens);
-            $isInternal = [] !== array_merge($docNode->getTagsByName('@internal'), $docNode->getTagsByName('@deptrac-internal'));
-        }
-
-        if ($node instanceof Interface_) {
-            $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node), $isInternal);
-
-            foreach ($node->extends as $extend) {
-                $this->currentReference->implements($extend->toCodeString(), $extend->getLine());
+        $name = $this->getClassReferenceName($node);
+        if (null !== $name) {
+            $isInternal = false;
+            $docComment = $node->getDocComment();
+            if (null !== $docComment) {
+                $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+                $docNode = $this->docParser->parse($tokens);
+                $isInternal = [] !== array_merge(
+                    $docNode->getTagsByName('@internal'),
+                    $docNode->getTagsByName('@deptrac-internal')
+                );
             }
 
-            return;
+            match (true) {
+                $node instanceof Interface_ => $this->enterInterface($name, $node, $isInternal),
+                $node instanceof Class_ => $this->enterClass($name, $node, $isInternal),
+                $node instanceof Trait_ => $this->currentReference =
+                    $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node), $isInternal),
+                default => $this->currentReference =
+                    $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node), $isInternal)
+            };
         }
 
-        if ($node instanceof Class_) {
-            $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node), $isInternal);
-            if ($node->extends instanceof Name) {
-                $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
+        foreach ($node->attrGroups as $attrGroup) {
+            foreach ($attrGroup->attrs as $attribute) {
+                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute->name) as $classLikeName) {
+                    $this->currentReference->attribute($classLikeName, $attribute->getLine());
+                }
             }
-
-            foreach ($node->implements as $implement) {
-                $this->currentReference->implements($implement->toCodeString(), $implement->getLine());
-            }
-
-            return;
         }
-
-        if ($node instanceof Trait_) {
-            $this->currentReference = $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node), $isInternal);
-
-            return;
-        }
-
-        $this->currentReference = $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node), $isInternal);
     }
 
-    private function enterFunction(string $name, Node\Stmt\Function_ $node): void
+    private function enterFunction(Node\Stmt\Function_ $node): void
     {
+        if (isset($node->namespacedName)) {
+            $namespacedName = $node->namespacedName;
+            $name = $namespacedName->toCodeString();
+        } else {
+            $name = $node->name->toString();
+        }
+
         $this->currentReference = $this->fileReferenceBuilder->newFunction($name, $this->templatesFromDocs($node));
 
         foreach ($node->getParams() as $param) {
@@ -227,6 +160,14 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 $this->currentReference->returnType($classLikeName, $returnType->getLine());
             }
         }
+
+        foreach ($node->getAttrGroups() as $attrGroup) {
+            foreach ($attrGroup->attrs as $attribute) {
+                foreach ($this->typeResolver->resolvePHPParserTypes($this->currentTypeScope, $attribute) as $classLikeName) {
+                    $this->currentReference->attribute($classLikeName, $attribute->getLine());
+                }
+            }
+        }
     }
 
     private function getClassReferenceName(ClassLike $node): ?string
@@ -240,5 +181,52 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
 
         return null;
+    }
+
+    private function enterInterface(string $name, Interface_ $node, bool $isInternal): void
+    {
+        $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node), $isInternal);
+
+        foreach ($node->extends as $extend) {
+            $this->currentReference->implements($extend->toCodeString(), $extend->getLine());
+        }
+    }
+
+    private function enterClass(string $name, Class_ $node, bool $isInternal): void
+    {
+        $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node), $isInternal);
+        if ($node->extends instanceof Name) {
+            $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
+        }
+
+        foreach ($node->implements as $implement) {
+            $this->currentReference->implements($implement->toCodeString(), $implement->getLine());
+        }
+    }
+
+    private function enterFunctionLike(Node\FunctionLike $node): void
+    {
+        foreach ($this->templatesFromDocs($node) as $template) {
+            $this->currentReference->addTokenTemplate($template);
+        }
+    }
+
+    private function leaveUse(Use_ $node): void
+    {
+        foreach ($node->uses as $use) {
+            $this->currentTypeScope->addUse($use->name->toString(), $use->getAlias()->toString());
+            $this->fileReferenceBuilder->useStatement($use->name->toString(), $use->name->getLine());
+        }
+    }
+
+    private function leaveGroupUse(GroupUse $node): void
+    {
+        foreach ($node->uses as $use) {
+            if (Use_::TYPE_NORMAL === $use->type) {
+                $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
+                $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
+                $this->fileReferenceBuilder->useStatement($classLikeName, $use->name->getLine());
+            }
+        }
     }
 }

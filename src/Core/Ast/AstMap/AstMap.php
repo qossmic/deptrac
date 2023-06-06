@@ -9,8 +9,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use SplStack;
 
 class AstMap
@@ -26,7 +26,7 @@ class AstMap
     private array $fileReferences = [];
 
     /**
-     * @var array<string, FunctionLikeReference>
+     * @var array<string, FunctionReference>
      */
     private array $functionReferences = [];
 
@@ -57,9 +57,9 @@ class AstMap
     }
 
     /**
-     * @return FunctionLikeReference[]
+     * @return FunctionReference[]
      */
-    public function getFunctionLikeReferences(): array
+    public function getFunctionReferences(): array
     {
         return $this->functionReferences;
     }
@@ -69,7 +69,7 @@ class AstMap
         return $this->classReferences[$className->toString()] ?? null;
     }
 
-    public function getFunctionReferenceForToken(FunctionLikeToken $tokenName): ?FunctionLikeReference
+    public function getFunctionReferenceForToken(FunctionToken $tokenName): ?FunctionReference
     {
         return $this->functionReferences[$tokenName->toString()] ?? null;
     }
@@ -157,12 +157,12 @@ class AstMap
         foreach ($astFileReference->classLikeReferences as $astClassReference) {
             $this->addClassLike($astClassReference);
         }
-        foreach ($astFileReference->functionLikeReferences as $astFunctionReference) {
-            $this->addFunctionLike($astFunctionReference);
+        foreach ($astFileReference->functionReferences as $astFunctionReference) {
+            $this->addFunction($astFunctionReference);
         }
     }
 
-    private function addFunctionLike(FunctionLikeReference $astFunctionReference): void
+    private function addFunction(FunctionReference $astFunctionReference): void
     {
         $this->functionReferences[$astFunctionReference->getToken()->toString()] = $astFunctionReference;
     }

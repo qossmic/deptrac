@@ -108,7 +108,7 @@ final class AnalyseRunner
             $previous = $previous->getPrevious();
         }
 
-        $message = array_merge(['Analysis finished with an Exception.'], $exceptionMessageStack);
+        $message = ['Analysis finished with an Exception.', ...$exceptionMessageStack];
 
         $output->getStyle()->error($message);
     }

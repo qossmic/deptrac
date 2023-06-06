@@ -4,15 +4,15 @@ deptrac:
   layers:
     - name: Controller
       collectors:
-        - type: className
+        - type: classLike
           value: .*MyNamespace\\.*Controller.*
     - name: Repository
       collectors:
-        - type: className
+        - type: classLike
           value: .*MyNamespace\\.*Repository.*
     - name: Service
       collectors:
-        - type: className
+        - type: classLike
           value: .*MyNamespace\\.*Service.*
   ruleset:
     Controller:

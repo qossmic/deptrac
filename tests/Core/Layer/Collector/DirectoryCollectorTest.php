@@ -26,11 +26,6 @@ final class DirectoryCollectorTest extends TestCase
         yield [['value' => 'foo/layer1/.*'], 'foo/layer1/dir/bar.php', true];
         yield [['value' => 'foo/layer1/.*'], 'foo/layer2/bar.php', false];
         yield [['value' => 'foo/layer2/.*'], 'foo\\layer2\\bar.php', true];
-        // Legacy attribute:
-        yield [['regex' => 'foo/layer1/.*'], 'foo/layer1/bar.php', true];
-        yield [['regex' => 'foo/layer1/.*'], 'foo/layer1/dir/bar.php', true];
-        yield [['regex' => 'foo/layer1/.*'], 'foo/layer2/bar.php', false];
-        yield [['regex' => 'foo/layer2/.*'], 'foo\\layer2\\bar.php', true];
     }
 
     /**

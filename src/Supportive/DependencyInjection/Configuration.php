@@ -36,7 +36,6 @@ class Configuration implements ConfigurationInterface
         $this->appendFormatters($rootNode);
         $this->appendEmitterTypes($rootNode);
         $this->appendIgnoreUncoveredInternalClasses($rootNode);
-        $this->appendUseRelativePathFromDepfile($rootNode);
 
         return $builder;
     }
@@ -212,7 +211,7 @@ class Configuration implements ConfigurationInterface
                             ->isRequired()
                             ->defaultValue([
                                 EmitterType::CLASS_TOKEN->value,
-                                EmitterType::USE_TOKEN->value,
+                                EmitterType::FUNCTION_TOKEN->value,
                             ])
                             ->scalarPrototype()
                                 ->beforeNormalization()
@@ -231,16 +230,6 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->booleanNode('ignore_uncovered_internal_classes')
-                    ->defaultTrue()
-                ->end()
-            ->end();
-    }
-
-    private function appendUseRelativePathFromDepfile(ArrayNodeDefinition $node): void
-    {
-        $node
-            ->children()
-                ->booleanNode('use_relative_path_from_depfile')
                     ->defaultTrue()
                 ->end()
             ->end();

@@ -27,31 +27,31 @@ final class EventHelperTest extends TestCase
         $helper = new EventHelper($configuration, new LayerProvider([]));
 
         self::assertTrue(
-            $helper->isViolationSkipped(
+            $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithOneDep')->toString(),
                 ClassLikeToken::fromFQCN('DependencyClass')->toString()
             )
         );
         self::assertFalse(
-            $helper->isViolationSkipped(
+            $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithEmptyDeps')->toString(),
                 ClassLikeToken::fromFQCN('DependencyClass')->toString()
             )
         );
         self::assertTrue(
-            $helper->isViolationSkipped(
+            $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithMultipleDeps')->toString(),
                 ClassLikeToken::fromFQCN('DependencyClass1')->toString()
             )
         );
         self::assertTrue(
-            $helper->isViolationSkipped(
+            $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithMultipleDeps')->toString(),
                 ClassLikeToken::fromFQCN('DependencyClass2')->toString()
             )
         );
         self::assertFalse(
-            $helper->isViolationSkipped(
+            $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('DependencyClass')->toString(),
                 ClassLikeToken::fromFQCN('ClassWithOneDep')->toString()
             )
@@ -74,7 +74,7 @@ final class EventHelperTest extends TestCase
         $helper = new EventHelper($configuration, new LayerProvider([]));
 
         self::assertTrue(
-            $helper->isViolationSkipped(
+            $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithOneDep')->toString(),
                 ClassLikeToken::fromFQCN('DependencyClass')->toString()
             )

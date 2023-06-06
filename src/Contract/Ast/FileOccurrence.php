@@ -6,6 +6,8 @@ namespace Qossmic\Deptrac\Contract\Ast;
 
 /**
  * @psalm-immutable
+ *
+ * Where in the file has the dependency occurred.
  */
 final class FileOccurrence
 {

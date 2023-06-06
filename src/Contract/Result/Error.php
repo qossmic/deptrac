@@ -9,7 +9,7 @@ use Stringable;
 /**
  * @psalm-immutable
  */
-class Error implements Stringable
+final class Error implements Stringable
 {
     public function __construct(private readonly string $message)
     {

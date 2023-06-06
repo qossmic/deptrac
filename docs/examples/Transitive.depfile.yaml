@@ -4,19 +4,19 @@ deptrac:
   layers:
     - name: Foo
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Foo$
     - name: Baz
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Baz$
     - name: Bar
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Bar$
     - name: Bat
       collectors:
-        - type: className
+        - type: classLike
           value: .*\\Bat$
   ruleset:
     Foo:

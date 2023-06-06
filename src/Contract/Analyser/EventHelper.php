@@ -8,15 +8,18 @@ use Qossmic\Deptrac\Contract\Layer\LayerProvider;
 use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Violation;
 
-class EventHelper
+/**
+ * Utility class for managing adding violations that could be skipped.
+ */
+final class EventHelper
 {
     /**
-     * @var array<string, string[]>
+     * @var array<string, list<string>> depender layer -> list<dependent layers>
      */
     private array $unmatchedSkippedViolation;
 
     /**
-     * @param array<string, string[]> $skippedViolations
+     * @param array<string, list<string>> $skippedViolations
      */
     public function __construct(
         private readonly array $skippedViolations,
@@ -25,19 +28,26 @@ class EventHelper
         $this->unmatchedSkippedViolation = $skippedViolations;
     }
 
-    public function isViolationSkipped(string $depender, string $dependent): bool
+    /**
+     * @internal
+     */
+    public function shouldViolationBeSkipped(string $depender, string $dependent): bool
     {
-        $matched = isset($this->skippedViolations[$depender]) && in_array($dependent, $this->skippedViolations[$depender], true);
-
-        if ($matched && false !== ($key = array_search($dependent, $this->unmatchedSkippedViolation[$depender], true))) {
-            unset($this->unmatchedSkippedViolation[$depender][$key]);
+        if (!array_key_exists($depender, $this->skippedViolations)) {
+            return false;
+        }
+        $key = array_search($dependent, $this->unmatchedSkippedViolation[$depender], true);
+        if (false === $key) {
+            return false;
         }
 
-        return $matched;
+        unset($this->unmatchedSkippedViolation[$depender][$key]);
+
+        return true;
     }
 
     /**
-     * @return array<string, string[]>
+     * @return array<string, string[]> depender layer -> list<dependent layers>
      */
     public function unmatchedSkippedViolations(): array
     {
@@ -46,7 +56,7 @@ class EventHelper
 
     public function addSkippableViolation(ProcessEvent $event, AnalysisResult $result, string $dependentLayer, ViolationCreatingInterface $violationCreatingRule): void
     {
-        if ($this->isViolationSkipped(
+        if ($this->shouldViolationBeSkipped(
             $event->dependency->getDepender()
                 ->toString(),
             $event->dependency->getDependent()

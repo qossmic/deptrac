@@ -30,13 +30,6 @@ final class BoolConfig extends CollectorConfig
             ->mustNot(...$mostNot);
     }
 
-    public function private(): self
-    {
-        $this->private = true;
-
-        return $this;
-    }
-
     public function mustNot(CollectorConfig ...$collectorConfigs): self
     {
         foreach ($collectorConfigs as $collectorConfig) {

@@ -46,7 +46,7 @@ class LayerForTokenAnalyser
                     $astMap
                 ),
                 TokenType::FUNCTION => $this->findLayersForReferences(
-                    $astMap->getFunctionLikeReferences(),
+                    $astMap->getFunctionReferences(),
                     $tokenName,
                     $astMap
                 ),

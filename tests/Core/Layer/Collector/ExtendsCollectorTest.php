@@ -19,12 +19,6 @@ final class ExtendsCollectorTest extends TestCase
         yield [['value' => 'App\Baz'], false];
         yield [['value' => 'App\Foo'], true];
         yield [['value' => 'App\None'], false];
-        // Legacy attribute:
-        yield [['extends' => 'App\FizTrait'], false];
-        yield [['extends' => 'App\Bar'], false];
-        yield [['extends' => 'App\Baz'], false];
-        yield [['extends' => 'App\Foo'], true];
-        yield [['extends' => 'App\None'], false];
     }
 
     /**

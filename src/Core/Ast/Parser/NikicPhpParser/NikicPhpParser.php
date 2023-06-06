@@ -48,20 +48,13 @@ class NikicPhpParser implements ParserInterface
 
     public function parseFile(string $file): FileReference
     {
-        try {
-            if (null !== $fileReference = $this->cache->get($file)) {
-                return $fileReference;
-            }
-
-            $fileReferenceBuilder = FileReferenceBuilder::create($file);
-            $fileContents = FileReader::read($file);
-            /** @throws Error */
-            $nodes = $this->parser->parse($fileContents, new Throwing());
-        } catch (Error|CouldNotReadFileException $e) {
-            throw CouldNotParseFileException::because($e->getMessage(), $e);
+        if (null !== $fileReference = $this->cache->get($file)) {
+            return $fileReference;
         }
-        /** @var array<Node> $nodes */
+
+        $fileReferenceBuilder = FileReferenceBuilder::create($file);
         $visitor = new FileReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->extractors);
+        $nodes = $this->loadNodesFromFile($file);
         $this->traverser->addVisitor($visitor);
         $this->traverser->traverse($nodes);
         $this->traverser->removeVisitor($visitor);
@@ -89,22 +82,14 @@ class NikicPhpParser implements ParserInterface
             return null;
         }
 
-        $findingVisitor = new FindingVisitor(static fn (Node $node): bool => $node instanceof ClassLike);
-
-        try {
-            $fileContents = FileReader::read($filepath);
-            /** @throws Error */
-            $nodes = $this->parser->parse($fileContents, new Throwing());
-        } catch (Error|CouldNotReadFileException $e) {
-            throw CouldNotParseFileException::because($e->getMessage(), $e);
-        }
-        /** @var array<Node> $nodes */
-        $this->traverser->addVisitor($findingVisitor);
+        $visitor = new FindingVisitor(static fn (Node $node): bool => $node instanceof ClassLike);
+        $nodes = $this->loadNodesFromFile($filepath);
+        $this->traverser->addVisitor($visitor);
         $this->traverser->traverse($nodes);
-        $this->traverser->removeVisitor($findingVisitor);
+        $this->traverser->removeVisitor($visitor);
 
         /** @var ClassLike[] $classLikeNodes */
-        $classLikeNodes = $findingVisitor->getFoundNodes();
+        $classLikeNodes = $visitor->getFoundNodes();
 
         foreach ($classLikeNodes as $classLikeNode) {
             if (isset($classLikeNode->namespacedName)) {
@@ -121,5 +106,23 @@ class NikicPhpParser implements ParserInterface
 
         /** @psalm-var ?ClassLike */
         return self::$classAstMap[$classLikeName] ?? null;
+    }
+
+    /**
+     * @return array<Node>
+     *
+     * @throws CouldNotParseFileException
+     */
+    private function loadNodesFromFile(string $filepath): array
+    {
+        try {
+            $fileContents = FileReader::read($filepath);
+            /** @throws Error */
+            $nodes = $this->parser->parse($fileContents, new Throwing());
+            /** @var array<Node> $nodes */
+            return $nodes;
+        } catch (Error|CouldNotReadFileException $e) {
+            throw CouldNotParseFileException::because($e->getMessage(), $e);
+        }
     }
 }

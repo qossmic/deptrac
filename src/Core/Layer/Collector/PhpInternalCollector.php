@@ -10,8 +10,8 @@ use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
 
 class PhpInternalCollector implements CollectorInterface
@@ -29,9 +29,9 @@ class PhpInternalCollector implements CollectorInterface
                 $token->toString(), PhpStormStubsMap::CLASSES);
         }
 
-        if ($reference instanceof FunctionLikeReference) {
+        if ($reference instanceof FunctionReference) {
             $token = $reference->getToken();
-            assert($token instanceof FunctionLikeToken);
+            assert($token instanceof FunctionToken);
 
             return $token->match($this->getPattern($config)) && array_key_exists(
                 $token->functionName, PhpStormStubsMap::FUNCTIONS);

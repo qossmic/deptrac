@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
+/** @psalm-suppress PropertyNotSetInConstructor false positive */
 abstract class ConfigurableCollectorConfig extends CollectorConfig
 {
     private const ESCAPEES = [

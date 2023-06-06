@@ -17,7 +17,7 @@ final class ServiceContainerBuilderTest extends TestCase
 
         self::assertTrue($container->getParameter('ignore_uncovered_internal_classes'));
         self::assertSame(
-            ['types' => ['class', 'use']],
+            ['types' => ['class', 'function']],
             $container->getParameter('analyser')
         );
         self::assertSame(

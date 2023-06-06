@@ -10,13 +10,15 @@ use function count;
 
 /**
  * @psalm-immutable
+ *
+ * Represents a result ready for output formatting
  */
 final class OutputResult
 {
     /**
-     * @param array<string, array<int, RuleInterface>> $rules
-     * @param Error[] $errors
-     * @param Warning[] $warnings
+     * @param array<class-string<RuleInterface>, array<int, RuleInterface>> $rules
+     * @param list<Error> $errors
+     * @param list<Warning> $warnings
      */
     private function __construct(
         public readonly array $rules,
@@ -35,11 +37,11 @@ final class OutputResult
      *
      * @param class-string<T> $type
      *
-     * @return array<int, T>
+     * @return list<T>
      */
     public function allOf(string $type): array
     {
-        return $this->rules[$type] ?? [];
+        return array_key_exists($type, $this->rules) ? array_values($this->rules[$type]) : [];
     }
 
     /**
@@ -47,15 +49,18 @@ final class OutputResult
      */
     public function allRules(): array
     {
-        return array_reduce(
-            $this->rules,
-            static fn (array $carry, array $rules): array => array_merge($carry, array_values($rules)),
-            []
-        );
+        $rules = [];
+        foreach ($this->rules as $ruleArray) {
+            foreach ($ruleArray as $rule) {
+                $rules[] = $rule;
+            }
+        }
+
+        return $rules;
     }
 
     /**
-     * @return array<int, Violation>
+     * @return list<Violation>
      */
     public function violations(): array
     {
@@ -68,7 +73,7 @@ final class OutputResult
     }
 
     /**
-     * @return array<int, SkippedViolation>
+     * @return list<SkippedViolation>
      */
     public function skippedViolations(): array
     {
@@ -76,7 +81,7 @@ final class OutputResult
     }
 
     /**
-     * @return array<int, Uncovered>
+     * @return list<Uncovered>
      */
     public function uncovered(): array
     {
@@ -89,7 +94,7 @@ final class OutputResult
     }
 
     /**
-     * @return array<int, Allowed>
+     * @return list<Allowed>
      */
     public function allowed(): array
     {

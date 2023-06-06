@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\Cache;
 
+use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
@@ -12,8 +13,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
 use Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException;
@@ -36,14 +37,13 @@ use function unserialize;
 class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterface
 {
     /** @var array<string, array{hash: string, reference: FileReference}> */
-    private array $cache;
+    private array $cache = [];
     private bool $loaded = false;
     /** @var array<string, bool> */
     private array $parsedFiles = [];
 
     public function __construct(private readonly string $cacheFile, private readonly string $cacheVersion)
     {
-        $this->cache = [];
     }
 
     public function get(string $filepath): ?FileReference
@@ -112,14 +112,15 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
                         'allowed_classes' => [
                             FileReference::class,
                             ClassLikeReference::class,
-                            FunctionLikeReference::class,
+                            FunctionReference::class,
                             VariableReference::class,
                             AstInherit::class,
                             DependencyToken::class,
+                            DependencyType::class,
                             FileToken::class,
                             ClassLikeToken::class,
                             ClassLikeType::class,
-                            FunctionLikeToken::class,
+                            FunctionToken::class,
                             SuperGlobalToken::class,
                             FileOccurrence::class,
                         ],

@@ -70,7 +70,9 @@ class DependencyLayersAnalyser
                 }
             }
 
-            $result->addWarnings($warnings);
+            foreach ($warnings as $warning) {
+                $result->addWarning($warning);
+            }
 
             $event = new PostProcessEvent($result);
             $this->eventDispatcher->dispatch($event);

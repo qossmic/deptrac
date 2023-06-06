@@ -5,32 +5,32 @@ deptrac:
   layers:
     - name: AstLoader
       collectors:
-        - type: className
+        - type: classLike
           value: ^Qossmic\\Deptrac\\Ast\\AstLoader
     - name: AstMap
       collectors:
-        - type: className
+        - type: classLike
           value: ^Qossmic\\Deptrac\\Ast\\AstMap
     - name: Parser
       collectors:
-        - type: className
+        - type: classLike
           value: ^Qossmic\\Deptrac\\Ast\\Parser
     - name: PhpParser
       collectors:
         - type: bool
           must:
-            - type: className
+            - type: classLike
               value: ^PhpParser\\
           must_not:
-            - type: className
+            - type: classLike
               value: ^PhpParser\\Error$
     - name: PhpDocParser
       collectors:
-        - type: className
+        - type: classLike
           value: ^PHPStan\\PhpDocParser\\
     - name: PhpDocumentor
       collectors:
-        - type: className
+        - type: classLike
           value: ^phpDocumentor\\
 
   ruleset:

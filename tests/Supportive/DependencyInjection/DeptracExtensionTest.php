@@ -52,9 +52,8 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
         self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
-        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::USE_TOKEN->value]], $this->container->getParameter('analyser'));
+        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]], $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
-        self::assertSame(true, $this->container->getParameter('use_relative_path_from_depfile'));
     }
 
     public function testDefaultsWithEmptyRoot(): void
@@ -71,9 +70,8 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
         self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
-        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::USE_TOKEN->value]], $this->container->getParameter('analyser'));
+        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]], $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
-        self::assertSame(true, $this->container->getParameter('use_relative_path_from_depfile'));
     }
 
     public function testPathsWithMultipleElements(): void
@@ -410,19 +408,6 @@ final class DeptracExtensionTest extends TestCase
         $this->extension->load($configs, $this->container);
 
         self::assertSame(false, $this->container->getParameter('ignore_uncovered_internal_classes'));
-    }
-
-    public function testUseRelativePathFromDepfile(): void
-    {
-        $configs = [
-            'deptrac' => [
-                'use_relative_path_from_depfile' => false,
-            ],
-        ];
-
-        $this->extension->load($configs, $this->container);
-
-        self::assertSame(false, $this->container->getParameter('use_relative_path_from_depfile'));
     }
 
     public function testGraphvizFormatterWithEmptyNodes(): void

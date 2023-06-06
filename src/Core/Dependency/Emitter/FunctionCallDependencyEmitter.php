@@ -8,8 +8,8 @@ use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 
@@ -23,12 +23,12 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
     public function applyDependencies(AstMap $astMap, DependencyList $dependencyList): void
     {
         $this->createDependenciesForReferences($astMap->getClassLikeReferences(), $astMap, $dependencyList);
-        $this->createDependenciesForReferences($astMap->getFunctionLikeReferences(), $astMap, $dependencyList);
+        $this->createDependenciesForReferences($astMap->getFunctionReferences(), $astMap, $dependencyList);
         $this->createDependenciesForReferences($astMap->getFileReferences(), $astMap, $dependencyList);
     }
 
     /**
-     * @param array<FunctionLikeReference|ClassLikeReference|FileReference> $references
+     * @param array<FunctionReference|ClassLikeReference|FileReference> $references
      */
     private function createDependenciesForReferences(array $references, AstMap $astMap, DependencyList $dependencyList): void
     {
@@ -39,7 +39,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
                 }
 
                 $token = $dependency->token;
-                assert($token instanceof FunctionLikeToken);
+                assert($token instanceof FunctionToken);
                 if (null === $astMap->getFunctionReferenceForToken($token)) {
                     continue;
                 }

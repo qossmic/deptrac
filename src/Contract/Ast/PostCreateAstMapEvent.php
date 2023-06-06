@@ -6,6 +6,9 @@ namespace Qossmic\Deptrac\Contract\Ast;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class PostCreateAstMapEvent extends Event
+/**
+ * Event triggered after the AST map of all files has been created.
+ */
+final class PostCreateAstMapEvent extends Event
 {
 }

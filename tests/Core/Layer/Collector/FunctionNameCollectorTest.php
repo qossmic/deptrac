@@ -6,8 +6,8 @@ namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Layer\Collector\FunctionNameCollector;
 
 final class FunctionNameCollectorTest extends TestCase
@@ -25,9 +25,6 @@ final class FunctionNameCollectorTest extends TestCase
     {
         yield [['value' => 'a'], 'foo\bar', true];
         yield [['value' => 'a'], 'foo\bbr', false];
-        // Legacy attribute:
-        yield [['regex' => 'a'], 'foo\bar', true];
-        yield [['regex' => 'a'], 'foo\bbr', false];
     }
 
     /**
@@ -37,7 +34,7 @@ final class FunctionNameCollectorTest extends TestCase
     {
         $actual = $this->collector->satisfy(
             $configuration,
-            new FunctionLikeReference(FunctionLikeToken::fromFQCN($functionName)),
+            new FunctionReference(FunctionToken::fromFQCN($functionName)),
         );
 
         self::assertSame($expected, $actual);
@@ -49,7 +46,7 @@ final class FunctionNameCollectorTest extends TestCase
 
         $this->collector->satisfy(
             ['Foo' => 'a'],
-            new FunctionLikeReference(FunctionLikeToken::fromFQCN('Foo')),
+            new FunctionReference(FunctionToken::fromFQCN('Foo')),
         );
     }
 }

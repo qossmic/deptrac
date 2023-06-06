@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
-use Qossmic\Deptrac\Core\Ast\AstMap\FunctionLike\FunctionLikeToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 
 abstract class ReferenceBuilder
@@ -16,7 +16,7 @@ abstract class ReferenceBuilder
     protected array $dependencies = [];
 
     /**
-     * @param string[] $tokenTemplates
+     * @param list<string> $tokenTemplates
      */
     protected function __construct(protected array $tokenTemplates, protected string $filepath)
     {
@@ -40,7 +40,7 @@ abstract class ReferenceBuilder
     public function unresolvedFunctionCall(string $functionName, int $occursAtLine): self
     {
         $this->dependencies[] = new DependencyToken(
-            FunctionLikeToken::fromFQCN($functionName),
+            FunctionToken::fromFQCN($functionName),
             new FileOccurrence($this->filepath, $occursAtLine),
             DependencyType::UNRESOLVED_FUNCTION_CALL
         );
@@ -211,9 +211,8 @@ abstract class ReferenceBuilder
     public function removeTokenTemplate(string $tokenTemplate): void
     {
         $key = array_search($tokenTemplate, $this->tokenTemplates, true);
-        if (false === $key) {
-            return;
+        if (false !== $key) {
+            unset($this->tokenTemplates[$key]);
         }
-        unset($this->tokenTemplates[$key]);
     }
 }

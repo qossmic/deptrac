@@ -9,11 +9,10 @@ class TypeScope
     /**
      * @var array<string, string> alias => className
      */
-    private array $uses;
+    private array $uses = [];
 
     public function __construct(public readonly string $namespace)
     {
-        $this->uses = [];
     }
 
     public function addUse(string $className, ?string $alias): void

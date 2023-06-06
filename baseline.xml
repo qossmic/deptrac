@@ -2,28 +2,25 @@
 <files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
   <file src="src/Contract/Result/OutputResult.php">
     <InvalidReturnStatement occurrences="1">
-      <code>$this-&gt;rules[$type] ?? []</code>
+      <code>array_key_exists($type, $this-&gt;rules) ? array_values($this-&gt;rules[$type]) : []</code>
     </InvalidReturnStatement>
     <InvalidReturnType occurrences="1">
-      <code>array&lt;int, T&gt;</code>
+      <code>list&lt;T&gt;</code>
     </InvalidReturnType>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>list&lt;RuleInterface&gt;</code>
-    </MixedReturnTypeCoercion>
   </file>
-    <file src="src/Core/Analyser/EventHandler/DependsOnDisallowedLayer.php">
-        <MissingImmutableAnnotation occurrences="1">
-            <code>DependsOnDisallowedLayer</code>
-        </MissingImmutableAnnotation>
-    </file>
-    <file src="src/Core/Analyser/EventHandler/DependsOnInternalToken.php">
-        <MissingImmutableAnnotation occurrences="1">
-            <code>DependsOnInternalToken</code>
-        </MissingImmutableAnnotation>
-    </file>
-    <file src="src/Core/Analyser/EventHandler/DependsOnPrivateLayer.php">
-        <MissingImmutableAnnotation occurrences="1">
-            <code>DependsOnPrivateLayer</code>
-        </MissingImmutableAnnotation>
-    </file>
+  <file src="src/Core/Analyser/EventHandler/DependsOnDisallowedLayer.php">
+    <MissingImmutableAnnotation occurrences="1">
+      <code>DependsOnDisallowedLayer</code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="src/Core/Analyser/EventHandler/DependsOnInternalToken.php">
+    <MissingImmutableAnnotation occurrences="1">
+      <code>DependsOnInternalToken</code>
+    </MissingImmutableAnnotation>
+  </file>
+  <file src="src/Core/Analyser/EventHandler/DependsOnPrivateLayer.php">
+    <MissingImmutableAnnotation occurrences="1">
+      <code>DependsOnPrivateLayer</code>
+    </MissingImmutableAnnotation>
+  </file>
 </files>
