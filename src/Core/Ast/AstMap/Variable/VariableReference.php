@@ -12,9 +12,7 @@ use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
  */
 class VariableReference implements TokenReferenceInterface
 {
-    public function __construct(private readonly SuperGlobalToken $tokenName)
-    {
-    }
+    public function __construct(private readonly SuperGlobalToken $tokenName) {}
 
     public function getFilepath(): ?string
     {

@@ -13,9 +13,7 @@ use Qossmic\Deptrac\Contract\Analyser\ViolationCreatingInterface;
  */
 class DependsOnPrivateLayer implements ViolationCreatingInterface
 {
-    public function __construct(private readonly EventHelper $eventHelper)
-    {
-    }
+    public function __construct(private readonly EventHelper $eventHelper) {}
 
     public static function getSubscribedEvents()
     {

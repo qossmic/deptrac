@@ -14,6 +14,5 @@ final class AstFileSyntaxErrorEvent extends Event
     public function __construct(
         public readonly string $file,
         public readonly string $syntaxError
-    ) {
-    }
+    ) {}
 }

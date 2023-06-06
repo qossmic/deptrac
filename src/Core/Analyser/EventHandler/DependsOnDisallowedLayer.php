@@ -17,9 +17,7 @@ use function in_array;
  */
 class DependsOnDisallowedLayer implements ViolationCreatingInterface
 {
-    public function __construct(private readonly EventHelper $eventHelper)
-    {
-    }
+    public function __construct(private readonly EventHelper $eventHelper) {}
 
     public static function getSubscribedEvents()
     {

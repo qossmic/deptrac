@@ -18,8 +18,7 @@ final class CollectorProvider implements ContainerInterface
      */
     public function __construct(
         private readonly ServiceLocator $collectorLocator
-    ) {
-    }
+    ) {}
 
     public function get(string $id): CollectorInterface
     {

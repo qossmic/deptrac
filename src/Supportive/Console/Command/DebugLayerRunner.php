@@ -18,9 +18,7 @@ final class DebugLayerRunner
     /**
      * @param array<array{name: string, collectors: array<array<string, string|array<string, string>>>}> $layers
      */
-    public function __construct(private readonly TokenInLayerAnalyser $analyser, private readonly array $layers)
-    {
-    }
+    public function __construct(private readonly TokenInLayerAnalyser $analyser, private readonly array $layers) {}
 
     /**
      * @throws CommandRunException

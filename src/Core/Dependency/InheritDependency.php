@@ -18,8 +18,7 @@ class InheritDependency implements DependencyInterface
         private readonly TokenInterface $dependent,
         public readonly DependencyInterface $originalDependency,
         public readonly AstInherit $inheritPath
-    ) {
-    }
+    ) {}
 
     public function serialize(): array
     {

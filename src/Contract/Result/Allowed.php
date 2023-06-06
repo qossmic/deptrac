@@ -17,8 +17,7 @@ final class Allowed implements CoveredRuleInterface
         private readonly DependencyInterface $dependency,
         private readonly string $dependerLayer,
         private readonly string $dependentLayer
-    ) {
-    }
+    ) {}
 
     public function getDependency(): DependencyInterface
     {

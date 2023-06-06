@@ -29,8 +29,7 @@ class RulesetUsageAnalyser
         private readonly DependencyResolver $dependencyResolver,
         private readonly TokenResolver $tokenResolver,
         private readonly array $layers
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, array<string, int>>

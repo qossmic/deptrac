@@ -15,8 +15,7 @@ final class ComposerConfig extends CollectorConfig
     private function __construct(
         private readonly string $composerPath,
         private readonly string $composerLockPath,
-    ) {
-    }
+    ) {}
 
     /**
      * @param list<string> $packages

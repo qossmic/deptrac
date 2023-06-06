@@ -30,8 +30,7 @@ class DependencyLayersAnalyser
         private readonly TokenResolver $tokenResolver,
         private readonly LayerResolverInterface $layerResolver,
         private readonly EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+    ) {}
 
     /**
      * @throws AnalyserException

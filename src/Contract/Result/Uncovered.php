@@ -16,8 +16,7 @@ final class Uncovered implements RuleInterface
     public function __construct(
         private readonly DependencyInterface $dependency,
         public readonly string $layer
-    ) {
-    }
+    ) {}
 
     public function getDependency(): DependencyInterface
     {

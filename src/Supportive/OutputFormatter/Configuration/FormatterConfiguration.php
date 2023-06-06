@@ -9,9 +9,7 @@ class FormatterConfiguration
     /**
      * @param array<string, array<mixed>> $config
      */
-    public function __construct(private readonly array $config)
-    {
-    }
+    public function __construct(private readonly array $config) {}
 
     /**
      * @return array<mixed>

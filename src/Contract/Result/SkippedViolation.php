@@ -13,9 +13,7 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
  */
 final class SkippedViolation implements CoveredRuleInterface
 {
-    public function __construct(private readonly DependencyInterface $dependency, private readonly string $dependerLayer, private readonly string $dependentLayer)
-    {
-    }
+    public function __construct(private readonly DependencyInterface $dependency, private readonly string $dependerLayer, private readonly string $dependentLayer) {}
 
     public function getDependency(): DependencyInterface
     {

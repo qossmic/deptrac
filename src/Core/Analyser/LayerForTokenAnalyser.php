@@ -26,8 +26,7 @@ class LayerForTokenAnalyser
         private readonly AstMapExtractor $astMapExtractor,
         private readonly TokenResolver $tokenResolver,
         private readonly LayerResolverInterface $layerResolver
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, string[]>

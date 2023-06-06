@@ -23,8 +23,7 @@ class LayerDependenciesAnalyser
         private readonly TokenResolver $tokenResolver,
         private readonly DependencyResolver $dependencyResolver,
         private readonly LayerResolverInterface $layerResolver
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, list<Uncovered>>

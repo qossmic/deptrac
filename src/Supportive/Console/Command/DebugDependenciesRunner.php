@@ -14,9 +14,7 @@ use Qossmic\Deptrac\Core\Analyser\LayerDependenciesAnalyser;
  */
 final class DebugDependenciesRunner
 {
-    public function __construct(private readonly LayerDependenciesAnalyser $analyser)
-    {
-    }
+    public function __construct(private readonly LayerDependenciesAnalyser $analyser) {}
 
     /**
      * @throws CommandRunException

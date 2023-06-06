@@ -14,9 +14,7 @@ use Stringable;
  */
 final class Warning implements Stringable
 {
-    public function __construct(private readonly string $message)
-    {
-    }
+    public function __construct(private readonly string $message) {}
 
     /**
      * @param string[] $layerNames

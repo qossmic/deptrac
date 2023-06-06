@@ -9,6 +9,4 @@ use Symfony\Contracts\EventDispatcher\Event;
 /**
  * Event triggered after the AST map of all files has been created.
  */
-final class PostCreateAstMapEvent extends Event
-{
-}
+final class PostCreateAstMapEvent extends Event {}

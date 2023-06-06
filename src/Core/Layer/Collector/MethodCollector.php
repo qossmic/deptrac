@@ -11,9 +11,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 
 final class MethodCollector extends RegexCollector
 {
-    public function __construct(private readonly NikicPhpParser $astParser)
-    {
-    }
+    public function __construct(private readonly NikicPhpParser $astParser) {}
 
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {

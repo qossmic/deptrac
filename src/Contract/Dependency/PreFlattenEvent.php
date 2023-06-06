@@ -11,6 +11,4 @@ use Symfony\Contracts\EventDispatcher\Event;
  *
  * This occurs when all dependencies caused by class inheritance have been resolved.
  */
-final class PreFlattenEvent extends Event
-{
-}
+final class PreFlattenEvent extends Event {}

@@ -21,9 +21,7 @@ use function sprintf;
  */
 final class AnalyseRunner
 {
-    public function __construct(private readonly DependencyLayersAnalyser $analyser, private readonly FormatterProvider $formatterProvider)
-    {
-    }
+    public function __construct(private readonly DependencyLayersAnalyser $analyser, private readonly FormatterProvider $formatterProvider) {}
 
     /**
      * @throws CommandRunException

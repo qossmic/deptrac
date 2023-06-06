@@ -24,8 +24,7 @@ final class OutputResult
         public readonly array $rules,
         public readonly array $errors,
         public readonly array $warnings
-    ) {
-    }
+    ) {}
 
     public static function fromAnalysisResult(AnalysisResult $analysisResult): self
     {

@@ -15,8 +15,7 @@ final class DebugUnusedRunner
 {
     public function __construct(
         private readonly RulesetUsageAnalyser $analyser
-    ) {
-    }
+    ) {}
 
     /**
      * @throws CommandRunException

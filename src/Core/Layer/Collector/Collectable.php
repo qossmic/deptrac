@@ -17,6 +17,5 @@ class Collectable
     public function __construct(
         public readonly CollectorInterface $collector,
         public readonly array $attributes
-    ) {
-    }
+    ) {}
 }

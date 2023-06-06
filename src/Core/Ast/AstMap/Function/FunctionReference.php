@@ -21,8 +21,7 @@ class FunctionReference implements TokenReferenceInterface
         private readonly FunctionToken $functionName,
         public readonly array $dependencies = [],
         private readonly ?FileReference $fileReference = null
-    ) {
-    }
+    ) {}
 
     public function withFileReference(FileReference $astFileReference): self
     {

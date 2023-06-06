@@ -17,9 +17,7 @@ final class ConfigurationCodeclimate
     /**
      * @param array{failure?: string, skipped?: string, uncovered?: string} $severityMap
      */
-    private function __construct(private readonly array $severityMap)
-    {
-    }
+    private function __construct(private readonly array $severityMap) {}
 
     public function getSeverity(string $key): ?string
     {

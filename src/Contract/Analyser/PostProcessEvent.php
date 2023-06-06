@@ -14,9 +14,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 final class PostProcessEvent extends Event
 {
-    public function __construct(private AnalysisResult $result)
-    {
-    }
+    public function __construct(private AnalysisResult $result) {}
 
     public function getResult(): AnalysisResult
     {

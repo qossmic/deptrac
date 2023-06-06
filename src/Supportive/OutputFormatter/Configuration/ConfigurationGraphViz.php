@@ -22,6 +22,5 @@ final class ConfigurationGraphViz
         public readonly array $hiddenLayers,
         public readonly array $groupsLayerMap,
         public readonly bool $pointToGroups
-    ) {
-    }
+    ) {}
 }

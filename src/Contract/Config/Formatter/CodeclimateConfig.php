@@ -10,8 +10,7 @@ final class CodeclimateConfig implements FormatterConfigInterface
         private CodeclimateLevelEnum $failure,
         private CodeclimateLevelEnum $skipped,
         private CodeclimateLevelEnum $uncovered,
-    ) {
-    }
+    ) {}
 
     public static function create(
         CodeclimateLevelEnum $failure = CodeclimateLevelEnum::BLOCKER,

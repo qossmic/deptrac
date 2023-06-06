@@ -19,8 +19,7 @@ final class Violation implements CoveredRuleInterface
         private readonly string $dependerLayer,
         private readonly string $dependentLayer,
         private readonly ViolationCreatingInterface $violationCreatingRule
-    ) {
-    }
+    ) {}
 
     public function getDependency(): DependencyInterface
     {
