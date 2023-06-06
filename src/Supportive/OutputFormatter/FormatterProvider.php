@@ -14,8 +14,12 @@ use function get_debug_type;
 
 final class FormatterProvider implements ContainerInterface
 {
-    public function __construct(private readonly ServiceLocator $formatterLocator)
-    {
+    /**
+     * @param ServiceLocator<mixed> $formatterLocator
+     */
+    public function __construct(
+        private readonly ServiceLocator $formatterLocator
+    ) {
     }
 
     public function get(string $id): OutputFormatterInterface

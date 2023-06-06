@@ -13,8 +13,12 @@ use function array_keys;
 
 final class CollectorProvider implements ContainerInterface
 {
-    public function __construct(private readonly ServiceLocator $collectorLocator)
-    {
+    /**
+     * @param ServiceLocator<mixed> $collectorLocator
+     */
+    public function __construct(
+        private readonly ServiceLocator $collectorLocator
+    ) {
     }
 
     public function get(string $id): CollectorInterface
