@@ -12,9 +12,7 @@ use function is_string;
 
 final class CollectorResolver implements CollectorResolverInterface
 {
-    public function __construct(private readonly CollectorProvider $collectorProvider)
-    {
-    }
+    public function __construct(private readonly CollectorProvider $collectorProvider) {}
 
     /**
      * @param array<string, string|array<string, string>> $config

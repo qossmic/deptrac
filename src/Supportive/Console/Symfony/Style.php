@@ -12,9 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class Style implements OutputStyleInterface
 {
-    public function __construct(private readonly SymfonyStyle $symfonyStyle)
-    {
-    }
+    public function __construct(private readonly SymfonyStyle $symfonyStyle) {}
 
     public function title(string $message): void
     {

@@ -24,8 +24,7 @@ class DependencyResolver
         private readonly InheritanceFlattener $inheritanceFlattener,
         private readonly ContainerInterface $emitterLocator,
         private readonly EventDispatcherInterface $eventDispatcher
-    ) {
-    }
+    ) {}
 
     /**
      * @throws InvalidEmitterConfigurationException

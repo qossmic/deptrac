@@ -15,9 +15,7 @@ final class BoolConfig extends CollectorConfig
     /** @var array<CollectorConfig> */
     private array $must = [];
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     /**
      * @param array<CollectorConfig> $must

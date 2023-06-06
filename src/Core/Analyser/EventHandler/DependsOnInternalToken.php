@@ -14,9 +14,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
  */
 class DependsOnInternalToken implements ViolationCreatingInterface
 {
-    public function __construct(private readonly EventHelper $eventHelper)
-    {
-    }
+    public function __construct(private readonly EventHelper $eventHelper) {}
 
     public static function getSubscribedEvents()
     {

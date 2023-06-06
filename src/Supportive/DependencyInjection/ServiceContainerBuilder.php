@@ -24,9 +24,7 @@ final class ServiceContainerBuilder
     private ?SplFileInfo $configFile = null;
     private ?SplFileInfo $cacheFile = null;
 
-    public function __construct(private readonly string $workingDirectory)
-    {
-    }
+    public function __construct(private readonly string $workingDirectory) {}
 
     public function withConfig(?string $configFile): self
     {

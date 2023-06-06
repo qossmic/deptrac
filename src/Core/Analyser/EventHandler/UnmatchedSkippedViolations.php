@@ -16,9 +16,7 @@ use function sprintf;
  */
 class UnmatchedSkippedViolations implements EventSubscriberInterface
 {
-    public function __construct(private readonly EventHelper $eventHelper)
-    {
-    }
+    public function __construct(private readonly EventHelper $eventHelper) {}
 
     public function handleUnmatchedSkipped(PostProcessEvent $event): void
     {

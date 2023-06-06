@@ -97,8 +97,7 @@ abstract class ConfigurableCollectorConfig extends CollectorConfig
 
     final protected function __construct(
         protected string $config,
-    ) {
-    }
+    ) {}
 
     public static function create(string $config): self
     {

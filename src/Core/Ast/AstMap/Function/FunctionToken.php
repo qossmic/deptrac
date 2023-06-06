@@ -8,9 +8,7 @@ use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 
 final class FunctionToken implements TokenInterface
 {
-    private function __construct(public readonly string $functionName)
-    {
-    }
+    private function __construct(public readonly string $functionName) {}
 
     public static function fromFQCN(string $functionName): self
     {

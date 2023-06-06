@@ -11,8 +11,7 @@ final class StartedPeriod
 {
     private function __construct(
         public readonly float|int $startedAt
-    ) {
-    }
+    ) {}
 
     public static function start(): self
     {

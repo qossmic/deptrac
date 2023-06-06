@@ -14,8 +14,7 @@ final class SuperGlobalConfig extends CollectorConfig
      */
     private function __construct(
         protected array $config,
-    ) {
-    }
+    ) {}
 
     public static function create(string ...$config): self
     {

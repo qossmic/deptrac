@@ -17,6 +17,5 @@ class DependencyToken
         public readonly TokenInterface $token,
         public readonly FileOccurrence $fileOccurrence,
         public readonly DependencyType $type
-    ) {
-    }
+    ) {}
 }

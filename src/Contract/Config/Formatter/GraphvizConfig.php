@@ -17,9 +17,7 @@ final class GraphvizConfig implements FormatterConfigInterface
     /** @var array<string, Layer[]> */
     private array $groups = [];
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function create(): self
     {

@@ -12,6 +12,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
         'array_indentation' => true,
+        'single_line_empty_body' => true,
         'global_namespace_import' => [
             'import_constants' => true,
             'import_functions' => true,

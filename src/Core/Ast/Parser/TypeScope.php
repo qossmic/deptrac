@@ -11,9 +11,7 @@ class TypeScope
      */
     private array $uses = [];
 
-    public function __construct(public readonly string $namespace)
-    {
-    }
+    public function __construct(public readonly string $namespace) {}
 
     public function addUse(string $className, ?string $alias): void
     {

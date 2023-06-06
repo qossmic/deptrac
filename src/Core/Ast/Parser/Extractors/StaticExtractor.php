@@ -14,9 +14,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;
 
 class StaticExtractor implements ReferenceExtractorInterface
 {
-    public function __construct(private readonly TypeResolver $typeResolver)
-    {
-    }
+    public function __construct(private readonly TypeResolver $typeResolver) {}
 
     public function processNode(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void
     {

@@ -12,9 +12,7 @@ final class LayerProvider
     /**
      * @param array<string, list<string>> $allowedLayers source layer -> target layers
      */
-    public function __construct(private readonly array $allowedLayers)
-    {
-    }
+    public function __construct(private readonly array $allowedLayers) {}
 
     /**
      * @return list<string>

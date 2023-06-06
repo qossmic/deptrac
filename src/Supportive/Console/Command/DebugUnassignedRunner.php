@@ -13,9 +13,7 @@ use Qossmic\Deptrac\Core\Analyser\UnassignedTokenAnalyser;
  */
 final class DebugUnassignedRunner
 {
-    public function __construct(private readonly UnassignedTokenAnalyser $analyser)
-    {
-    }
+    public function __construct(private readonly UnassignedTokenAnalyser $analyser) {}
 
     /**
      * @throws CommandRunException

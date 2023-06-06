@@ -9,9 +9,7 @@ use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 
 final class BoolCollector implements ConditionalCollectorInterface
 {
-    public function __construct(private readonly CollectorResolverInterface $collectorResolver)
-    {
-    }
+    public function __construct(private readonly CollectorResolverInterface $collectorResolver) {}
 
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {

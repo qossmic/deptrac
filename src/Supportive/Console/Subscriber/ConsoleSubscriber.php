@@ -24,8 +24,7 @@ class ConsoleSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly OutputInterface $output,
         private readonly Stopwatch $stopwatch,
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<string, string>

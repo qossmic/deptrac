@@ -16,8 +16,7 @@ class Dependency implements DependencyInterface
         private readonly TokenInterface $dependent,
         private readonly FileOccurrence $fileOccurrence,
         private readonly DependencyType $dependencyType
-    ) {
-    }
+    ) {}
 
     public function serialize(): array
     {

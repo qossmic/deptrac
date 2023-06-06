@@ -15,9 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class UncoveredDependentHandler implements EventSubscriberInterface
 {
-    public function __construct(private readonly bool $ignoreUncoveredInternalClasses)
-    {
-    }
+    public function __construct(private readonly bool $ignoreUncoveredInternalClasses) {}
 
     public function invoke(ProcessEvent $event): void
     {

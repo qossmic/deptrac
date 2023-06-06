@@ -18,9 +18,7 @@ abstract class ReferenceBuilder
     /**
      * @param list<string> $tokenTemplates
      */
-    protected function __construct(protected array $tokenTemplates, protected string $filepath)
-    {
-    }
+    protected function __construct(protected array $tokenTemplates, protected string $filepath) {}
 
     /**
      * @return string[]

@@ -14,8 +14,7 @@ final class Period
     private function __construct(
         public readonly float|int $startedAt,
         public readonly float|int $endedAt,
-    ) {
-    }
+    ) {}
 
     /**
      * @psalm-pure

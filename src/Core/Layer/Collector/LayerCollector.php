@@ -20,9 +20,7 @@ final class LayerCollector implements ConditionalCollectorInterface
      */
     private array $resolved = [];
 
-    public function __construct(private readonly LayerResolverInterface $resolver)
-    {
-    }
+    public function __construct(private readonly LayerResolverInterface $resolver) {}
 
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
