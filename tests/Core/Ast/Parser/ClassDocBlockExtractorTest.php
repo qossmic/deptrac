@@ -29,7 +29,7 @@ final class ClassDocBlockExtractorTest extends TestCase
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
-            new TypeResolver(),
+            $typeResolver,
             [
                 new KeywordExtractor($typeResolver),
             ]

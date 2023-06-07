@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser;
 
-use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
@@ -16,6 +15,7 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
@@ -103,18 +103,30 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         return null;
     }
 
+    /**
+     * @return ?array{PhpDocNode, int} DocNode, comment start line
+     */
+    private function getDocNodeCrate(ClassLike $node): ?array
+    {
+        $docComment = $node->getDocComment();
+        if (null === $docComment) {
+            return null;
+        }
+        $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+
+        return [$this->docParser->parse($tokens), $docComment->getStartLine()];
+    }
+
     private function enterClassLike(ClassLike $node): void
     {
         $name = $this->getClassReferenceName($node);
+        $docNodeCrate = $this->getDocNodeCrate($node);
         if (null !== $name) {
             $isInternal = false;
-            $docComment = $node->getDocComment();
-            if (null !== $docComment) {
-                $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
-                $docNode = $this->docParser->parse($tokens);
+            if (null !== $docNodeCrate) {
                 $isInternal = [] !== array_merge(
-                    $docNode->getTagsByName('@internal'),
-                    $docNode->getTagsByName('@deptrac-internal')
+                    $docNodeCrate[0]->getTagsByName('@internal'),
+                    $docNodeCrate[0]->getTagsByName('@deptrac-internal')
                 );
             }
 
@@ -136,7 +148,9 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             }
         }
 
-        $this->processClassDocs($node);
+        if (null !== $docNodeCrate) {
+            $this->processClassLikeDocs($docNodeCrate);
+        }
     }
 
     private function enterFunction(Node\Stmt\Function_ $node): void
@@ -234,16 +248,12 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         }
     }
 
-    private function processClassDocs(ClassLike $node): void
+    /**
+     * @param array{PhpDocNode, int} $docNodeCrate
+     */
+    private function processClassLikeDocs(array $docNodeCrate): void
     {
-        $docComment = $node->getDocComment();
-        if (!$docComment instanceof Doc) {
-            return;
-        }
-
-        $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
-        $docNode = $this->docParser->parse($tokens);
-
+        [$docNode, $line] = $docNodeCrate;
         foreach ($docNode->getMethodTagValues() as $methodTagValue) {
             $templateTypes = array_merge(
                 array_map(
@@ -257,7 +267,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                     $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $this->currentTypeScope, $templateTypes);
 
                     foreach ($types as $type) {
-                        $this->currentReference->parameter($type, $docComment->getStartLine());
+                        $this->currentReference->parameter($type, $line);
                     }
                 }
             }
@@ -266,7 +276,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 $types = $this->typeResolver->resolvePHPStanDocParserType($returnType, $this->currentTypeScope, $templateTypes);
 
                 foreach ($types as $type) {
-                    $this->currentReference->returnType($type, $docComment->getStartLine());
+                    $this->currentReference->returnType($type, $line);
                 }
             }
         }
@@ -277,7 +287,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $this->currentTypeScope, $this->currentReference->getTokenTemplates());
 
             foreach ($types as $type) {
-                $this->currentReference->variable($type, $docComment->getStartLine());
+                $this->currentReference->variable($type, $line);
             }
         }
     }
