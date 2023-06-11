@@ -66,6 +66,7 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
             $this->classLikeToken,
             $this->classLikeType,
             $this->inherits,
+            $this->metaData,
             $this->dependencies,
             $this->isInternal
         );

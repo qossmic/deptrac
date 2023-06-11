@@ -29,6 +29,7 @@ class FunctionReferenceBuilder extends ReferenceBuilder
     {
         return new FunctionReference(
             FunctionToken::fromFQCN($this->functionName),
+            $this->metaData,
             $this->dependencies
         );
     }

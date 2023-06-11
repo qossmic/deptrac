@@ -12,4 +12,9 @@ interface TokenReferenceInterface
     public function getFilepath(): ?string;
 
     public function getToken(): TokenInterface;
+
+    /**
+     * @return TokenReferenceMetaInterface[]
+     */
+    public function getMetaData(): array;
 }

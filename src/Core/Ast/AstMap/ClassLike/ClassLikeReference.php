@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\AstMap\ClassLike;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
@@ -18,12 +19,14 @@ class ClassLikeReference implements TokenReferenceInterface
 
     /**
      * @param AstInherit[] $inherits
+     * @param TokenReferenceMetaInterface[] $metaData
      * @param DependencyToken[] $dependencies
      */
     public function __construct(
         private readonly ClassLikeToken $classLikeName,
         ClassLikeType $classLikeType = null,
         public readonly array $inherits = [],
+        public readonly array $metaData = [],
         public readonly array $dependencies = [],
         public readonly bool $isInternal = false,
         private readonly ?FileReference $fileReference = null
@@ -37,6 +40,7 @@ class ClassLikeReference implements TokenReferenceInterface
             $this->classLikeName,
             $this->type,
             $this->inherits,
+            $this->metaData,
             $this->dependencies,
             $this->isInternal,
             $astFileReference
@@ -51,5 +55,10 @@ class ClassLikeReference implements TokenReferenceInterface
     public function getToken(): ClassLikeToken
     {
         return $this->classLikeName;
+    }
+
+    public function getMetaData(): array
+    {
+        return $this->metaData;
     }
 }

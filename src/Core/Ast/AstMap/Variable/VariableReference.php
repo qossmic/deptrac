@@ -6,13 +6,20 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap\Variable;
 
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaInterface;
 
 /**
  * @psalm-immutable
  */
 class VariableReference implements TokenReferenceInterface
 {
-    public function __construct(private readonly SuperGlobalToken $tokenName) {}
+    /**
+     * @param TokenReferenceMetaInterface[] $metaData
+     */
+    public function __construct(
+        private readonly SuperGlobalToken $tokenName,
+        private readonly array $metaData = []
+    ) {}
 
     public function getFilepath(): ?string
     {
@@ -22,5 +29,10 @@ class VariableReference implements TokenReferenceInterface
     public function getToken(): TokenInterface
     {
         return $this->tokenName;
+    }
+
+    public function getMetaData(): array
+    {
+        return $this->metaData;
     }
 }

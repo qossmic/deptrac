@@ -6,6 +6,7 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap\File;
 
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
@@ -24,12 +25,14 @@ class FileReference implements TokenReferenceInterface
     /**
      * @param ClassLikeReference[] $classLikeReferences
      * @param FunctionReference[] $functionReferences
+     * @param TokenReferenceMetaInterface[] $metaData
      * @param DependencyToken[] $dependencies
      */
     public function __construct(
         public readonly string $filepath,
         array $classLikeReferences,
         array $functionReferences,
+        public readonly array $metaData,
         public readonly array $dependencies
     ) {
         /** @psalm-suppress ImpureFunctionCall */
@@ -52,5 +55,10 @@ class FileReference implements TokenReferenceInterface
     public function getToken(): TokenInterface
     {
         return new FileToken($this->filepath);
+    }
+
+    public function getMetaData(): array
+    {
+        return $this->metaData;
     }
 }

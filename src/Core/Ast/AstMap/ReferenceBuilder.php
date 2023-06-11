@@ -6,12 +6,18 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 
 abstract class ReferenceBuilder
 {
+    /**
+     * @var TokenReferenceMetaInterface[]
+     */
+    protected array $metaData = [];
+
     /** @var DependencyToken[] */
     protected array $dependencies = [];
 
@@ -26,6 +32,11 @@ abstract class ReferenceBuilder
     final public function getTokenTemplates(): array
     {
         return $this->tokenTemplates;
+    }
+
+    public function addMetaData(TokenReferenceMetaInterface $metaDataItem): void
+    {
+        $this->metaData[] = $metaDataItem;
     }
 
     /**

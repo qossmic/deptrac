@@ -103,6 +103,12 @@ final class FileReferenceBuilder extends ReferenceBuilder
             $functionReferences[] = $functionReference->build();
         }
 
-        return new FileReference($this->filepath, $classReferences, $functionReferences, $this->dependencies);
+        return new FileReference(
+            $this->filepath,
+            $classReferences,
+            $functionReferences,
+            $this->metaData,
+            $this->dependencies
+        );
     }
 }
