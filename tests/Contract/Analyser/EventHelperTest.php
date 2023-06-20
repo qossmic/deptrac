@@ -32,8 +32,7 @@ final class EventHelperTest extends TestCase
                 ClassLikeToken::fromFQCN('DependencyClass')->toString()
             )
         );
-
-        // also skipps multiple occurrences
+        // also skips multiple occurrences
         self::assertTrue(
             $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithOneDep')->toString(),
@@ -87,7 +86,7 @@ final class EventHelperTest extends TestCase
                 ClassLikeToken::fromFQCN('DependencyClass')->toString()
             )
         );
-        // also skipps multiple occurrences
+        // also skips multiple occurrences
         self::assertTrue(
             $helper->shouldViolationBeSkipped(
                 ClassLikeToken::fromFQCN('ClassWithOneDep')->toString(),

@@ -33,15 +33,16 @@ final class EventHelper
      */
     public function shouldViolationBeSkipped(string $depender, string $dependent): bool
     {
-        if (!array_key_exists($depender, $this->skippedViolations)) {
-            return false;
-        }
-        $key = array_search($dependent, $this->unmatchedSkippedViolation[$depender], true);
-        if (false === $key) {
+        $skippedViolation = $this->skippedViolations[$depender] ?? [];
+        $matched = [] !== $skippedViolation && in_array($dependent, $skippedViolation, true);
+
+        if (!$matched) {
             return false;
         }
 
-        unset($this->unmatchedSkippedViolation[$depender][$key]);
+        if (false !== ($key = array_search($dependent, $this->unmatchedSkippedViolation[$depender], true))) {
+            unset($this->unmatchedSkippedViolation[$depender][$key]);
+        }
 
         return true;
     }
