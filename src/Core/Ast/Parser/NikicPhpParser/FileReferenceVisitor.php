@@ -15,6 +15,8 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\NodeVisitorAbstract;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
@@ -101,18 +103,30 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         return null;
     }
 
+    /**
+     * @return ?array{PhpDocNode, int} DocNode, comment start line
+     */
+    private function getDocNodeCrate(ClassLike $node): ?array
+    {
+        $docComment = $node->getDocComment();
+        if (null === $docComment) {
+            return null;
+        }
+        $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+
+        return [$this->docParser->parse($tokens), $docComment->getStartLine()];
+    }
+
     private function enterClassLike(ClassLike $node): void
     {
         $name = $this->getClassReferenceName($node);
+        $docNodeCrate = $this->getDocNodeCrate($node);
         if (null !== $name) {
             $isInternal = false;
-            $docComment = $node->getDocComment();
-            if (null !== $docComment) {
-                $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
-                $docNode = $this->docParser->parse($tokens);
+            if (null !== $docNodeCrate) {
                 $isInternal = [] !== array_merge(
-                    $docNode->getTagsByName('@internal'),
-                    $docNode->getTagsByName('@deptrac-internal')
+                    $docNodeCrate[0]->getTagsByName('@internal'),
+                    $docNodeCrate[0]->getTagsByName('@deptrac-internal')
                 );
             }
 
@@ -132,6 +146,10 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                     $this->currentReference->attribute($classLikeName, $attribute->getLine());
                 }
             }
+        }
+
+        if (null !== $docNodeCrate) {
+            $this->processClassLikeDocs($docNodeCrate);
         }
     }
 
@@ -226,6 +244,50 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 $classLikeName = $node->prefix->toString().'\\'.$use->name->toString();
                 $this->currentTypeScope->addUse($classLikeName, $use->getAlias()->toString());
                 $this->fileReferenceBuilder->useStatement($classLikeName, $use->name->getLine());
+            }
+        }
+    }
+
+    /**
+     * @param array{PhpDocNode, int} $docNodeCrate
+     */
+    private function processClassLikeDocs(array $docNodeCrate): void
+    {
+        [$docNode, $line] = $docNodeCrate;
+        foreach ($docNode->getMethodTagValues() as $methodTagValue) {
+            $templateTypes = array_merge(
+                array_map(
+                    static fn (TemplateTagValueNode $node): string => $node->name,
+                    $methodTagValue->templateTypes
+                ),
+                $this->currentReference->getTokenTemplates()
+            );
+            foreach ($methodTagValue->parameters as $tag) {
+                if (null !== $tag->type) {
+                    $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $this->currentTypeScope, $templateTypes);
+
+                    foreach ($types as $type) {
+                        $this->currentReference->parameter($type, $line);
+                    }
+                }
+            }
+            $returnType = $methodTagValue->returnType;
+            if (null !== $returnType) {
+                $types = $this->typeResolver->resolvePHPStanDocParserType($returnType, $this->currentTypeScope, $templateTypes);
+
+                foreach ($types as $type) {
+                    $this->currentReference->returnType($type, $line);
+                }
+            }
+        }
+
+        /** @var list<PropertyTagValueNode> $propertyTags */
+        $propertyTags = array_merge($docNode->getPropertyTagValues(), $docNode->getPropertyReadTagValues(), $docNode->getPropertyWriteTagValues());
+        foreach ($propertyTags as $tag) {
+            $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $this->currentTypeScope, $this->currentReference->getTokenTemplates());
+
+            foreach ($types as $type) {
+                $this->currentReference->variable($type, $line);
             }
         }
     }
