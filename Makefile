@@ -22,7 +22,7 @@ composer-install: ## Installs dependencies
 
 .PHONY: deptrac
 deptrac: ## Analyses own architecture using the default config confile
-	$(PHP_BIN) deptrac.php --config-file=deptrac.config.php --cache-file=./.cache/deptrac.cache --no-progress --ansi
+	./deptrac analyse -c deptrac.config.php --cache-file=./.cache/deptrac.cache --no-progress --ansi
 
 #generate-changelog: ## Generates a changelog file based on changes compared to remote origin
 #	gem install github_changelog_generator
@@ -60,4 +60,4 @@ tests-coverage: composer-install ## Runs tests and generate an html coverage rep
 .PHONY: tests
 tests: composer-install ## Runs tests followed by a very basic e2e-test
 	$(PHPUNIT_BIN) -c .
-	$(PHP_BIN) deptrac.php analyse --config-file=docs/examples/Fixture.depfile.yaml --no-cache
+	./deptrac analyse --config-file=docs/examples/Fixture.depfile.yaml --no-cache
