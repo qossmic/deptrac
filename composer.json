@@ -16,6 +16,9 @@
             "role": "maintainer"
         }
     ],
+    "bin": [
+        "deptrac"
+    ],
     "require": {
         "php": "^8.1",
         "ext-json": "*",
