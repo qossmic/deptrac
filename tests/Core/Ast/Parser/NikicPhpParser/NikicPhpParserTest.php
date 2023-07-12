@@ -90,10 +90,10 @@ final class NikicPhpParserTest extends TestCase
 
     public function testParsePackageNames(): void
     {
-        $filterPackageNames = function (TokenReferenceMetaDatumInterface $metaDatum) {
+        $filterPackageNames = static function (TokenReferenceMetaDatumInterface $metaDatum) {
             return $metaDatum instanceof PackageName;
         };
-        
+
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
@@ -101,9 +101,9 @@ final class NikicPhpParserTest extends TestCase
             []
         );
 
-        $filePath = __DIR__ . '/Fixtures/PackageNames.php';
+        $filePath = __DIR__.'/Fixtures/PackageNames.php';
         $astFileReference = $parser->parseFile($filePath);
-        
+
         $astClassReferences = $astFileReference->classLikeReferences;
         self::assertCount(2, $astClassReferences);
 

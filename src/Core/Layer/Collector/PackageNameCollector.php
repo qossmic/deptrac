@@ -38,10 +38,11 @@ class PackageNameCollector extends RegexCollector
     {
         $packageNameMetaData = array_filter(
             $reference->getMetaData(),
-            fn (TokenReferenceMetaDatumInterface $metaData) => $metaData instanceof PackageName
+            static fn (TokenReferenceMetaDatumInterface $metaData) => $metaData instanceof PackageName
         );
+
         return array_map(
-            fn (PackageName $packageName) => $packageName->getPackageName(),
+            static fn (PackageName $packageName) => $packageName->getPackageName(),
             $packageNameMetaData
         );
     }

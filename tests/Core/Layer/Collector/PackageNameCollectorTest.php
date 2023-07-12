@@ -10,14 +10,14 @@ use Qossmic\Deptrac\Core\Layer\Collector\PackageNameCollector;
 class PackageNameCollectorTest extends TestCase
 {
     private PackageNameCollector $collector;
-    
+
     public function setUp(): void
     {
         parent::setUp();
-        
+
         $this->collector = new PackageNameCollector();
     }
-    
+
     public function dataProviderSatisfy(): iterable
     {
         yield 'matches package name with only partial name' => [
@@ -42,14 +42,14 @@ class PackageNameCollectorTest extends TestCase
      */
     public function testSatisfy(array $config, array $packageNames, bool $expected): void
     {
-        $metaData = array_map(function ($packageName) {
+        $metaData = array_map(static function ($packageName) {
             return new PackageName($packageName);
         }, $packageNames);
-        
+
         $reference = $this->createMock(TokenReferenceInterface::class);
         $reference->method('getMetaData')
             ->willReturn($metaData);
-        
+
         $this->assertSame($expected, $this->collector->satisfy($config, $reference));
     }
 }
