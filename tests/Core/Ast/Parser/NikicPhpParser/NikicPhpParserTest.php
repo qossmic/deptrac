@@ -113,5 +113,15 @@ final class NikicPhpParserTest extends TestCase
 
         $packageNames = array_filter($astClassReferences[1]->getMetaData(), $filterPackageNames);
         self::assertCount(0, $packageNames);
+
+        $astFunctionReferences = $astFileReference->functionReferences;
+        self::assertCount(2, $astFunctionReferences);
+
+        $packageNames = array_filter($astFunctionReferences[0]->getMetaData(), $filterPackageNames);
+        self::assertCount(1, $packageNames);
+        $this->assertSame('PackageB', $packageNames[0]->getPackageName());
+
+        $packageNames = array_filter($astFunctionReferences[1]->getMetaData(), $filterPackageNames);
+        self::assertCount(0, $packageNames);
     }
 }

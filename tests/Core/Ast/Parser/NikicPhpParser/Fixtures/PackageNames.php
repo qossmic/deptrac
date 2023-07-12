@@ -12,3 +12,14 @@ class PackageAClass
 class NoPackageClass
 {
 }
+
+/**
+ * @package PackageB
+ */
+function packageBFunction(): void
+{
+}
+
+function noPackageFunction(): void
+{
+}

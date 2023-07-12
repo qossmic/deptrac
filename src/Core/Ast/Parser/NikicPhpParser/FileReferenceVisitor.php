@@ -189,6 +189,19 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 }
             }
         }
+
+        $docComment = $node->getDocComment();
+        if (null !== $docComment) {
+            $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+            $docNode = $this->docParser->parse($tokens);
+            $packageNames = array_map(
+                static fn (PhpDocTagNode $docNode) => new PackageName((string) $docNode->value),
+                $docNode->getTagsByName('@package')
+            );
+            foreach ($packageNames as $packageName) {
+                $this->currentReference->addMetaDatum($packageName);
+            }
+        }
     }
 
     private function getClassReferenceName(ClassLike $node): ?string
