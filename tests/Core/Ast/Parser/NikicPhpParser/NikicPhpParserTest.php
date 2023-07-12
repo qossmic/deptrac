@@ -8,6 +8,8 @@ use PhpParser\Lexer;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaDatumInterface;
+use Qossmic\Deptrac\Core\Ast\MetaData\PackageName;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
@@ -84,5 +86,32 @@ final class NikicPhpParserTest extends TestCase
         $astFileReference = $parser->parseFile($filePath);
         $astClassReferences = $astFileReference->classLikeReferences;
         self::assertCount(0, $astClassReferences[0]->dependencies);
+    }
+
+    public function testParsePackageNames(): void
+    {
+        $filterPackageNames = function (TokenReferenceMetaDatumInterface $metaDatum) {
+            return $metaDatum instanceof PackageName;
+        };
+        
+        $parser = new NikicPhpParser(
+            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
+            new AstFileReferenceInMemoryCache(),
+            new TypeResolver(),
+            []
+        );
+
+        $filePath = __DIR__ . '/Fixtures/PackageNames.php';
+        $astFileReference = $parser->parseFile($filePath);
+        
+        $astClassReferences = $astFileReference->classLikeReferences;
+        self::assertCount(2, $astClassReferences);
+
+        $packageNames = array_filter($astClassReferences[0]->getMetaData(), $filterPackageNames);
+        self::assertCount(1, $packageNames);
+        $this->assertSame('PackageA', $packageNames[0]->getPackageName());
+
+        $packageNames = array_filter($astClassReferences[1]->getMetaData(), $filterPackageNames);
+        self::assertCount(0, $packageNames);
     }
 }

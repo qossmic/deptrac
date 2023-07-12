@@ -2,6 +2,6 @@
 
 namespace Qossmic\Deptrac\Contract\Ast;
 
-interface TokenReferenceMetaInterface
+interface TokenReferenceMetaDatumInterface
 {
 }

@@ -14,7 +14,7 @@ interface TokenReferenceInterface
     public function getToken(): TokenInterface;
 
     /**
-     * @return TokenReferenceMetaInterface[]
+     * @return TokenReferenceMetaDatumInterface[]
      */
     public function getMetaData(): array;
 }

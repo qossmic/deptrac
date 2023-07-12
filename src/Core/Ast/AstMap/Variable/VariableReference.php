@@ -6,7 +6,7 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap\Variable;
 
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
-use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaInterface;
+use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaDatumInterface;
 
 /**
  * @psalm-immutable
@@ -14,7 +14,7 @@ use Qossmic\Deptrac\Contract\Ast\TokenReferenceMetaInterface;
 class VariableReference implements TokenReferenceInterface
 {
     /**
-     * @param TokenReferenceMetaInterface[] $metaData
+     * @param TokenReferenceMetaDatumInterface[] $metaData
      */
     public function __construct(
         private readonly SuperGlobalToken $tokenName,
