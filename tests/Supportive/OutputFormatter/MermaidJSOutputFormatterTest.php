@@ -1,6 +1,6 @@
 <?php
 
-namespace Internal\Qossmic\Deptrac\Supportive\OutputFormatter;
+namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
