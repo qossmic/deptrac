@@ -9,6 +9,7 @@ use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @internal
@@ -33,26 +34,70 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
     public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
     {
         $graph = $this->parseResults($result);
+        $violations = $result->violations();
 
-        $output->writeLineFormatted('flowchart '.$this->config['direction'].';');
+        if ($outputFormatterInput->getOutputPath()) {
+            $output = new BufferedOutput();
+        }
+
+        $output->writeln('flowchart '.$this->config['direction'].';');
 
         if ([] !== $this->config['groups']) {
             foreach ($this->config['groups'] as $subGraphName => $layers) {
-                $output->writeLineFormatted('  subgraph '.$subGraphName.'Group;');
+                $output->writeln('  subgraph '.$subGraphName.'Group;');
 
                 foreach ($layers as $layer) {
-                    $output->writeLineFormatted('    '.$layer.';');
+                    $output->writeln('    '.$layer.';');
                 }
 
-                $output->writeLineFormatted('  end;');
+                $output->writeln('  end;');
+            }
+        }
+
+        $linkCount = 0;
+        $violationsLinks = [];
+        $violationGraphLinks = [];
+
+        if ([] !== $violations) {
+            foreach ($violations as $violation) {
+                if (!isset($violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()])) {
+                    $violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()] = 1;
+                } else {
+                    ++$violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()];
+                }
+            }
+
+            foreach ($violationsLinks as $dependerLayer => $layers) {
+                foreach ($layers as $dependentLayer => $count) {
+                    $output->writeln('    '.$dependerLayer.' -->|'.$count.'| '.$dependentLayer.';');
+                    $violationGraphLinks[] = $linkCount;
+                    ++$linkCount;
+                }
             }
         }
 
         if ([] !== $graph) {
             foreach ($graph as $dependerLayer => $layers) {
                 foreach ($layers as $dependentLayer => $count) {
-                    $output->writeLineFormatted('    '.$dependerLayer.' -->|'.(string) $count.'| '.$dependentLayer.';');
+                    if (!isset($violationsLinks[$dependerLayer][$dependentLayer])) {
+                        $output->writeln('    '.$dependerLayer.' -->|'.(string) $count.'| '.$dependentLayer.';');
+                        ++$linkCount;
+                    }
                 }
+            }
+        }
+
+        if ([] !== $violationGraphLinks) {
+            foreach ($violationGraphLinks as $linkNumber) {
+                $output->writeln('    linkStyle '.$linkNumber.' stroke:red,stroke-width:4px;');
+            }
+        }
+
+        if ($path = $outputFormatterInput->getOutputPath()) {
+            /** @var BufferedOutput $output */
+            $content = $output->fetch();
+            if ($content) {
+                file_put_contents($path, $content);
             }
         }
     }

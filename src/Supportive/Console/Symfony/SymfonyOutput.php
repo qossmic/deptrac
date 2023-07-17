@@ -47,4 +47,9 @@ class SymfonyOutput implements OutputInterface
     {
         return $this->symfonyOutput->isDebug();
     }
+
+    public function writeln(string $message): void
+    {
+        $this->symfonyOutput->writeln($message);
+    }
 }
