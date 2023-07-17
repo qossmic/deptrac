@@ -35,7 +35,7 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
         $graph = $this->parseResults($result);
         $violations = $result->violations();
 
-        if ($outputFormatterInput->getOutputPath()) {
+        if (null !== $outputFormatterInput->outputPath) {
             $output = new BufferedOutput();
         }
 
@@ -91,7 +91,8 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
             }
         }
 
-        if ($path = $outputFormatterInput->getOutputPath()) {
+        $path = $outputFormatterInput->outputPath;
+        if ($path) {
             /** @var BufferedOutput $output */
             $content = $output->fetch();
             if ($content) {

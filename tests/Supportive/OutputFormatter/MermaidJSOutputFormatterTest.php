@@ -41,7 +41,7 @@ class MermaidJSOutputFormatterTest extends TestCase
         $bufferedOutput = new BufferedOutput();
 
         $output = $this->createSymfonyOutput($bufferedOutput);
-        $outputFormatterInput = $this->createMock(OutputFormatterInput::class);
+        $outputFormatterInput = new OutputFormatterInput(null, true, true, false);
 
         $mermaidJSOutputFormatter = new MermaidJSOutputFormatter(new FormatterConfiguration([
             'mermaidjs' => [
