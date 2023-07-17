@@ -7,7 +7,6 @@ use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
 use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -81,7 +80,6 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
                 foreach ($layers as $dependentLayer => $count) {
                     if (!isset($violationsLinks[$dependerLayer][$dependentLayer])) {
                         $output->writeln('    '.$dependerLayer.' -->|'.(string) $count.'| '.$dependentLayer.';');
-                        ++$linkCount;
                     }
                 }
             }
@@ -109,17 +107,13 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
     {
         $graph = [];
 
-        foreach ($result->rules() as $rule) {
+        foreach ($result->allowed() as $rule) {
             if ($rule instanceof CoveredRuleInterface) {
                 if (!isset($graph[$rule->getDependerLayer()][$rule->getDependentLayer()])) {
                     $graph[$rule->getDependerLayer()][$rule->getDependentLayer()] = 1;
                 } else {
                     ++$graph[$rule->getDependerLayer()][$rule->getDependentLayer()];
                 }
-            }
-
-            if ($rule instanceof Uncovered) {
-                continue;
             }
         }
 
