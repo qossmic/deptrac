@@ -5,8 +5,7 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
-use Qossmic\Deptrac\Contract\Result\CoveredRuleInterface;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -30,8 +29,11 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
         return 'mermaidjs';
     }
 
-    public function finish(LegacyResult $result, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void
-    {
+    public function finish(
+        OutputResult $result,
+        OutputInterface $output,
+        OutputFormatterInput $outputFormatterInput
+    ): void {
         $graph = $this->parseResults($result);
         $violations = $result->violations();
 
@@ -104,17 +106,15 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
     /**
      * @return array<string, array<string, int<1, max>>>
      */
-    protected function parseResults(LegacyResult $result): array
+    protected function parseResults(OutputResult $result): array
     {
         $graph = [];
 
         foreach ($result->allowed() as $rule) {
-            if ($rule instanceof CoveredRuleInterface) {
-                if (!isset($graph[$rule->getDependerLayer()][$rule->getDependentLayer()])) {
-                    $graph[$rule->getDependerLayer()][$rule->getDependentLayer()] = 1;
-                } else {
-                    ++$graph[$rule->getDependerLayer()][$rule->getDependentLayer()];
-                }
+            if (!isset($graph[$rule->getDependerLayer()][$rule->getDependentLayer()])) {
+                $graph[$rule->getDependerLayer()][$rule->getDependentLayer()] = 1;
+            } else {
+                ++$graph[$rule->getDependerLayer()][$rule->getDependentLayer()];
             }
         }
 

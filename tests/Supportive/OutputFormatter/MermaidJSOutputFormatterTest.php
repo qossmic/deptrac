@@ -3,12 +3,12 @@
 namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
 use Qossmic\Deptrac\Contract\Result\Allowed;
-use Qossmic\Deptrac\Contract\Result\LegacyResult;
-use Qossmic\Deptrac\Contract\Result\Uncovered;
+use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
@@ -19,6 +19,7 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\MermaidJSOutputFormatter;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreatingRule;
 
 class MermaidJSOutputFormatterTest extends TestCase
 {
@@ -27,16 +28,18 @@ class MermaidJSOutputFormatterTest extends TestCase
      */
     public function testFinish(string $expected): void
     {
-        $fileOccurrenceA = new FileOccurrence('classA.php', 0);
-        $classA = ClassLikeToken::fromFQCN('ClassA');
+        $dependency = new Dependency(
+            ClassLikeToken::fromFQCN('ClassA'),
+            ClassLikeToken::fromFQCN('ClassC'), new FileOccurrence('classA.php', 0), DependencyType::PARAMETER
+        );
 
-        $context = new LegacyResult([
-            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassB'), $fileOccurrenceA, DependencyType::NEW), 'LayerA', 'LayerB'),
-            new Violation(new Dependency($classA, ClassLikeToken::fromFQCN('ClassHidden'), $fileOccurrenceA, DependencyType::NEW), 'LayerA', 'LayerHidden'),
-            new Violation(new Dependency(ClassLikeToken::fromFQCN('ClassAB'), ClassLikeToken::fromFQCN('ClassBA'), new FileOccurrence('classAB.php', 1), DependencyType::NEW), 'LayerA', 'LayerB'),
-            new Allowed(new Dependency($classA, ClassLikeToken::fromFQCN('ClassC'), $fileOccurrenceA, DependencyType::NEW), 'LayerA', 'LayerC'),
-            new Uncovered(new Dependency($classA, ClassLikeToken::fromFQCN('ClassD'), $fileOccurrenceA, DependencyType::NEW), 'LayerC'),
-        ], [], []);
+        $analysisResult = new AnalysisResult();
+        $analysisResult->addRule(new Allowed($dependency, 'LayerA', 'LayerB'));
+        $analysisResult->addRule(new Allowed($dependency, 'LayerC', 'LayerD'));
+        $analysisResult->addRule(new Allowed($dependency, 'LayerA', 'LayerC'));
+
+        $analysisResult->addRule(new Violation($dependency, 'LayerA', 'LayerC', new DummyViolationCreatingRule()));
+        $analysisResult->addRule(new Violation($dependency, 'LayerB', 'LayerC', new DummyViolationCreatingRule()));
 
         $bufferedOutput = new BufferedOutput();
 
@@ -48,17 +51,17 @@ class MermaidJSOutputFormatterTest extends TestCase
                 'direction' => 'TD',
                 'groups' => [
                     'User' => [
-                        'User Frontend',
-                        'User Backend',
+                        'LayerA',
+                        'LayerB',
                     ],
                     'Admin' => [
-                        'Admin',
-                        'Admin Backend',
+                        'LayerC',
+                        'LayerD',
                     ],
                 ],
             ],
         ]));
-        $mermaidJSOutputFormatter->finish($context, $output, $outputFormatterInput);
+        $mermaidJSOutputFormatter->finish(OutputResult::fromAnalysisResult($analysisResult), $output, $outputFormatterInput);
         $this->assertSame($expected, $bufferedOutput->fetch());
     }
 
