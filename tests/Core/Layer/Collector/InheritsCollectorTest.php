@@ -12,7 +12,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\InheritsCollector;
 
 final class InheritsCollectorTest extends TestCase
 {
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'App\FizTrait'], true];
         yield [['value' => 'App\Bar'], true];

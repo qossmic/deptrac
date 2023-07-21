@@ -20,7 +20,7 @@ final class DirectoryCollectorTest extends TestCase
         $this->collector = new DirectoryCollector();
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'foo/layer1/.*'], 'foo/layer1/bar.php', true];
         yield [['value' => 'foo/layer1/.*'], 'foo/layer1/dir/bar.php', true];

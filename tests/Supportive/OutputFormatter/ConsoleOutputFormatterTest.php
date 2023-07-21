@@ -35,7 +35,7 @@ final class ConsoleOutputFormatterTest extends TestCase
         self::assertSame('console', (new ConsoleOutputFormatter())->getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         $originalA = ClassLikeToken::fromFQCN('OriginalA');
         $originalB = ClassLikeToken::fromFQCN('OriginalB');

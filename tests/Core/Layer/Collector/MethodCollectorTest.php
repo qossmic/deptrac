@@ -27,14 +27,14 @@ final class MethodCollectorTest extends TestCase
         $this->collector = new MethodCollector($this->astParser);
     }
 
-    public function provideSatisfy(): iterable
+    public static function provideSatisfy(): iterable
     {
         yield [
             ['value' => 'abc'],
             [
-                $this->getClassMethod('abc'),
-                $this->getClassMethod('abcdef'),
-                $this->getClassMethod('xyz'),
+                self::getClassMethod('abc'),
+                self::getClassMethod('abcdef'),
+                self::getClassMethod('xyz'),
             ],
             true,
         ];
@@ -42,8 +42,8 @@ final class MethodCollectorTest extends TestCase
         yield [
             ['value' => 'abc'],
             [
-                $this->getClassMethod('abc'),
-                $this->getClassMethod('xyz'),
+                self::getClassMethod('abc'),
+                self::getClassMethod('xyz'),
             ],
             true,
         ];
@@ -51,7 +51,7 @@ final class MethodCollectorTest extends TestCase
         yield [
             ['value' => 'abc'],
             [
-                $this->getClassMethod('xyz'),
+                self::getClassMethod('xyz'),
             ],
             false,
         ];
@@ -121,7 +121,7 @@ final class MethodCollectorTest extends TestCase
         );
     }
 
-    private function getClassMethod(string $name): stdClass
+    private static function getClassMethod(string $name): stdClass
     {
         $classMethod = new stdClass();
         $classMethod->name = $name;

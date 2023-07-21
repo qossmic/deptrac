@@ -21,7 +21,7 @@ final class ClassNameRegexCollectorTest extends TestCase
         $this->collector = new ClassNameRegexCollector();
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => '/^Foo\\\\Bar$/i'], 'Foo\\Bar', true];
         yield [['value' => '/^Foo\\\\Bar$/i'], 'Foo\\Baz', false];

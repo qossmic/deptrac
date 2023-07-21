@@ -37,11 +37,17 @@ class DependsOnInternalToken implements ViolationCreatingInterface
         }
     }
 
+    /**
+     * @psalm-pure
+     */
     public function ruleName(): string
     {
         return 'DependsOnInternalToken';
     }
 
+    /**
+     * @psalm-pure
+     */
     public function ruleDescription(): string
     {
         return 'You are depending on a token that is internal to the layer and you are not part of that layer.';

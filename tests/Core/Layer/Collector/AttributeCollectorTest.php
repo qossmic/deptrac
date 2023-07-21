@@ -19,7 +19,7 @@ final class AttributeCollectorTest extends TestCase
         $this->collector = new AttributeCollector();
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield 'matches usage of attribute with only partial name' => [
             ['value' => 'MyAttribute'],

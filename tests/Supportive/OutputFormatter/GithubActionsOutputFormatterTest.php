@@ -70,7 +70,7 @@ final class GithubActionsOutputFormatterTest extends TestCase
         self::assertSame($expectedOutput, $bufferedOutput->fetch());
     }
 
-    public function finishProvider(): iterable
+    public static function finishProvider(): iterable
     {
         yield 'No Rules, No Output' => [
             'rules' => [],

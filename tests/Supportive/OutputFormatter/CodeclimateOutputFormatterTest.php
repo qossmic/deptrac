@@ -44,7 +44,7 @@ final class CodeclimateOutputFormatterTest extends TestCase
         self::assertSame('codeclimate', CodeclimateOutputFormatter::getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         yield 'Multiple violations' => [
             [
