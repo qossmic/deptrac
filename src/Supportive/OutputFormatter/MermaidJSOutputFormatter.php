@@ -42,19 +42,15 @@ final class MermaidJSOutputFormatter implements OutputFormatterInterface
         $violations = $result->violations();
         $buffer = '';
 
-        $output->writeLineFormatted(sprintf('flowchart %s;', $this->config['direction']));
         $buffer .= sprintf('flowchart %s;'.PHP_EOL, $this->config['direction']);
 
         foreach ($this->config['groups'] as $subGraphName => $layers) {
-            $output->writeLineFormatted(sprintf('  subgraph %sGroup;', $subGraphName));
             $buffer .= sprintf('  subgraph %sGroup;'.PHP_EOL, $subGraphName);
 
             foreach ($layers as $layer) {
-                $output->writeLineFormatted(sprintf('    %s;', $layer));
                 $buffer .= sprintf('    %s;'.PHP_EOL, $layer);
             }
 
-            $output->writeLineFormatted('  end;');
             $buffer .= '  end;'.PHP_EOL;
         }
 
@@ -72,7 +68,6 @@ final class MermaidJSOutputFormatter implements OutputFormatterInterface
 
         foreach ($violationsLinks as $dependerLayer => $layers) {
             foreach ($layers as $dependentLayer => $count) {
-                $output->writeLineFormatted(sprintf(self::GRAPH_NODE_FORMAT, $dependerLayer, $count, $dependentLayer));
                 $buffer .= sprintf(self::GRAPH_NODE_FORMAT.PHP_EOL, $dependerLayer, $count, $dependentLayer);
                 $violationGraphLinks[] = $linkCount;
                 ++$linkCount;
@@ -82,19 +77,19 @@ final class MermaidJSOutputFormatter implements OutputFormatterInterface
         foreach ($graph as $dependerLayer => $layers) {
             foreach ($layers as $dependentLayer => $count) {
                 if (!isset($violationsLinks[$dependerLayer][$dependentLayer])) {
-                    $output->writeLineFormatted(sprintf(self::GRAPH_NODE_FORMAT, $dependerLayer, $count, $dependentLayer));
                     $buffer .= sprintf(self::GRAPH_NODE_FORMAT.PHP_EOL, $dependerLayer, $count, $dependentLayer);
                 }
             }
         }
 
         foreach ($violationGraphLinks as $linkNumber) {
-            $output->writeLineFormatted(sprintf(self::VIOLATION_STYLE_FORMAT, $linkNumber));
             $buffer .= sprintf(self::VIOLATION_STYLE_FORMAT.PHP_EOL, $linkNumber);
         }
 
         if ($outputFormatterInput->outputPath) {
             file_put_contents($outputFormatterInput->outputPath, $buffer);
+        } else {
+            $output->writeRaw($buffer);
         }
     }
 
