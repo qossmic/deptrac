@@ -23,10 +23,7 @@ use Tests\Qossmic\Deptrac\Supportive\OutputFormatter\data\DummyViolationCreating
 
 class MermaidJSOutputFormatterTest extends TestCase
 {
-    /**
-     * @dataProvider dataForTestFinish
-     */
-    public function testFinish(string $expected): void
+    public function testFinish(): void
     {
         $dependency = new Dependency(
             ClassLikeToken::fromFQCN('ClassA'),
@@ -62,14 +59,7 @@ class MermaidJSOutputFormatterTest extends TestCase
             ],
         ]));
         $mermaidJSOutputFormatter->finish(OutputResult::fromAnalysisResult($analysisResult), $output, $outputFormatterInput);
-        $this->assertSame($expected, $bufferedOutput->fetch());
-    }
-
-    public function dataForTestFinish(): iterable
-    {
-        yield [
-            'expected' => file_get_contents(__DIR__.'/data/mermaidjs-expected.txt'),
-        ];
+        $this->assertSame(file_get_contents(__DIR__.'/data/mermaidjs-expected.txt'), $bufferedOutput->fetch());
     }
 
     private function createSymfonyOutput(BufferedOutput $bufferedOutput): SymfonyOutput

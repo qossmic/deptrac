@@ -23,6 +23,4 @@ interface OutputInterface
     public function isVerbose(): bool;
 
     public function isDebug(): bool;
-
-    public function writeln(string $message): void;
 }

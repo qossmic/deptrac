@@ -7,15 +7,17 @@ use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\Result\OutputResult;
 use Qossmic\Deptrac\Supportive\OutputFormatter\Configuration\FormatterConfiguration;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @internal
  */
-class MermaidJSOutputFormatter implements OutputFormatterInterface
+final class MermaidJSOutputFormatter implements OutputFormatterInterface
 {
     /** @var array{direction: string, groups: array<string, string[]>} */
     private array $config;
+
+    private const GRAPH_NODE_FORMAT = '    %s -->|%d| %s;';
+    private const VIOLATION_STYLE_FORMAT = '    linkStyle %d stroke:red,stroke-width:4px;';
 
     public function __construct(FormatterConfiguration $config)
     {
@@ -36,70 +38,61 @@ class MermaidJSOutputFormatter implements OutputFormatterInterface
     ): void {
         $graph = $this->parseResults($result);
         $violations = $result->violations();
+        $buffer = '';
 
-        if (null !== $outputFormatterInput->outputPath) {
-            $output = new BufferedOutput();
-        }
+        $output->writeLineFormatted(sprintf('flowchart %s;', $this->config['direction']));
+        $buffer .= sprintf('flowchart %s;'.PHP_EOL, $this->config['direction']);
 
-        $output->writeln('flowchart '.$this->config['direction'].';');
+        foreach ($this->config['groups'] as $subGraphName => $layers) {
+            $output->writeLineFormatted(sprintf('  subgraph %sGroup;', $subGraphName));
+            $buffer .= sprintf('  subgraph %sGroup;'.PHP_EOL, $subGraphName);
 
-        if ([] !== $this->config['groups']) {
-            foreach ($this->config['groups'] as $subGraphName => $layers) {
-                $output->writeln('  subgraph '.$subGraphName.'Group;');
-
-                foreach ($layers as $layer) {
-                    $output->writeln('    '.$layer.';');
-                }
-
-                $output->writeln('  end;');
+            foreach ($layers as $layer) {
+                $output->writeLineFormatted(sprintf('    %s;', $layer));
+                $buffer .= sprintf('    %s;'.PHP_EOL, $layer);
             }
+
+            $output->writeLineFormatted('  end;');
+            $buffer .= '  end;'.PHP_EOL;
         }
 
         $linkCount = 0;
         $violationsLinks = [];
         $violationGraphLinks = [];
 
-        if ([] !== $violations) {
-            foreach ($violations as $violation) {
-                if (!isset($violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()])) {
-                    $violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()] = 1;
-                } else {
-                    ++$violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()];
-                }
+        foreach ($violations as $violation) {
+            if (!isset($violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()])) {
+                $violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()] = 1;
+            } else {
+                ++$violationsLinks[$violation->getDependerLayer()][$violation->getDependentLayer()];
             }
+        }
 
-            foreach ($violationsLinks as $dependerLayer => $layers) {
-                foreach ($layers as $dependentLayer => $count) {
-                    $output->writeln('    '.$dependerLayer.' -->|'.$count.'| '.$dependentLayer.';');
-                    $violationGraphLinks[] = $linkCount;
-                    ++$linkCount;
+        foreach ($violationsLinks as $dependerLayer => $layers) {
+            foreach ($layers as $dependentLayer => $count) {
+                $output->writeLineFormatted(sprintf(self::GRAPH_NODE_FORMAT, $dependerLayer, $count, $dependentLayer));
+                $buffer .= sprintf(self::GRAPH_NODE_FORMAT.PHP_EOL, $dependerLayer, $count, $dependentLayer);
+                $violationGraphLinks[] = $linkCount;
+                ++$linkCount;
+            }
+        }
+
+        foreach ($graph as $dependerLayer => $layers) {
+            foreach ($layers as $dependentLayer => $count) {
+                if (!isset($violationsLinks[$dependerLayer][$dependentLayer])) {
+                    $output->writeLineFormatted(sprintf(self::GRAPH_NODE_FORMAT, $dependerLayer, $count, $dependentLayer));
+                    $buffer .= sprintf(self::GRAPH_NODE_FORMAT.PHP_EOL, $dependerLayer, $count, $dependentLayer);
                 }
             }
         }
 
-        if ([] !== $graph) {
-            foreach ($graph as $dependerLayer => $layers) {
-                foreach ($layers as $dependentLayer => $count) {
-                    if (!isset($violationsLinks[$dependerLayer][$dependentLayer])) {
-                        $output->writeln('    '.$dependerLayer.' -->|'.(string) $count.'| '.$dependentLayer.';');
-                    }
-                }
-            }
+        foreach ($violationGraphLinks as $linkNumber) {
+            $output->writeLineFormatted(sprintf(self::VIOLATION_STYLE_FORMAT, $linkNumber));
+            $buffer .= sprintf(self::VIOLATION_STYLE_FORMAT.PHP_EOL, $linkNumber);
         }
 
-        if ([] !== $violationGraphLinks) {
-            foreach ($violationGraphLinks as $linkNumber) {
-                $output->writeln('    linkStyle '.$linkNumber.' stroke:red,stroke-width:4px;');
-            }
-        }
-
-        $path = $outputFormatterInput->outputPath;
-        if ($path) {
-            /** @var BufferedOutput $output */
-            $content = $output->fetch();
-            if ($content) {
-                file_put_contents($path, $content);
-            }
+        if ($outputFormatterInput->outputPath) {
+            file_put_contents($outputFormatterInput->outputPath, $buffer);
         }
     }
 
