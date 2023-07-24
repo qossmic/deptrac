@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Qossmic\Deptrac\Supportive\OutputFormatter;
 
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
