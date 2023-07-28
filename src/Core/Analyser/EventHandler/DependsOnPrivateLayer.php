@@ -34,11 +34,17 @@ class DependsOnPrivateLayer implements ViolationCreatingInterface
         }
     }
 
+    /**
+     * @psalm-pure
+     */
     public function ruleName(): string
     {
         return 'DependsOnPrivateLayer';
     }
 
+    /**
+     * @psalm-pure
+     */
     public function ruleDescription(): string
     {
         return 'You are depending on a part of a layer that was defined as private to that layer and you are not part of that layer.';

@@ -42,7 +42,7 @@ final class JUnitOutputFormatterTest extends TestCase
         self::assertSame('junit', (new JUnitOutputFormatter())->getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         $originalA = ClassLikeToken::fromFQCN('OriginalA');
         $originalB = ClassLikeToken::fromFQCN('OriginalB');

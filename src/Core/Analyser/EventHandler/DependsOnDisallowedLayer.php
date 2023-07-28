@@ -47,11 +47,17 @@ class DependsOnDisallowedLayer implements ViolationCreatingInterface
         }
     }
 
+    /**
+     * @psalm-pure
+     */
     public function ruleName(): string
     {
         return 'DependsOnDisallowedLayer';
     }
 
+    /**
+     * @psalm-pure
+     */
     public function ruleDescription(): string
     {
         return 'You are depending on token that is a part of a layer that you are not allowed to depend on.';

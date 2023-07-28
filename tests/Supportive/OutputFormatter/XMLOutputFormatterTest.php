@@ -41,7 +41,7 @@ final class XMLOutputFormatterTest extends TestCase
         self::assertSame('xml', (new XMLOutputFormatter())->getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         yield [
             [

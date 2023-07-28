@@ -15,7 +15,7 @@ use Qossmic\Deptrac\Core\Layer\LayerResolver;
 
 final class LayerResolverTest extends TestCase
 {
-    public function provideInvalidLayerConfigs(): iterable
+    public static function provideInvalidLayerConfigs(): iterable
     {
         yield 'empty config' => [
             [],

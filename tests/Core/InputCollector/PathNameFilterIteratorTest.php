@@ -35,7 +35,7 @@ final class PathNameFilterIteratorTest extends TestCase
         self::assertSame($resultArray, $values);
     }
 
-    public function getTestFilterData(): array
+    public static function getTestFilterData(): array
     {
         $inner = new ArrayIterator();
 

@@ -40,7 +40,7 @@ final class BoolCollectorTest extends TestCase
         $this->collector = new BoolCollector($resolver);
     }
 
-    public function provideResolvableConfiguration(): iterable
+    public static function provideResolvableConfiguration(): iterable
     {
         yield 'must with resolvable collector' => [
             [
@@ -199,7 +199,7 @@ final class BoolCollectorTest extends TestCase
         self::assertSame($expectedOutcome, $actualOutcome);
     }
 
-    public function providesatisfiableConfiguration(): iterable
+    public static function providesatisfiableConfiguration(): iterable
     {
         yield 'must with satisfiable collector' => [
             [

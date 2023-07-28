@@ -43,7 +43,7 @@ final class JsonOutputFormatterTest extends TestCase
         self::assertSame('json', (new JsonOutputFormatter())->getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         yield 'Multiple violations' => [
             [

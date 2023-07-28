@@ -37,7 +37,7 @@ class TableOutputFormatterTest extends TestCase
         static::assertSame('table', (new TableOutputFormatter())->getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         $originalA = ClassLikeToken::fromFQCN('OriginalA');
         $originalB = ClassLikeToken::fromFQCN('OriginalB');

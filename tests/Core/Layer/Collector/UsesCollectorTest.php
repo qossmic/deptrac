@@ -12,7 +12,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\UsesCollector;
 
 final class UsesCollectorTest extends TestCase
 {
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'App\FizTrait'], true];
         yield [['value' => 'App\Bar'], false];

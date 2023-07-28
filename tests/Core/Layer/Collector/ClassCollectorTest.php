@@ -20,7 +20,7 @@ final class ClassCollectorTest extends TestCase
         $this->sut = new ClassCollector();
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => '^Foo\\\\Bar$'], 'Foo\\Bar', true];
         yield [['value' => '^Foo\\\\Bar$'], 'Foo\\Baz', false];
@@ -39,7 +39,7 @@ final class ClassCollectorTest extends TestCase
         self::assertSame($expected, $stat);
     }
 
-    public function provideTypes(): iterable
+    public static function provideTypes(): iterable
     {
         yield 'classLike' => [ClassLikeType::TYPE_CLASSLIKE, false];
         yield 'class' => [ClassLikeType::TYPE_CLASS, true];

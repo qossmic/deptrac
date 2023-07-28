@@ -39,7 +39,7 @@ final class TypeResolverTest extends TestCase
         self::assertSame($types, $resolvedTypes);
     }
 
-    public function docBlockProvider(): iterable
+    public static function docBlockProvider(): iterable
     {
         yield ['doc' => 'array<DataProviderTestSuite|TestCase>', 'types' => ['\\Test\\DataProviderTestSuite', '\\Test\\TestCase']];
         yield ['doc' => 'array<string, array<int, array<int, int|string>>>', 'types' => []];

@@ -19,7 +19,7 @@ final class ComposerCollectorTest extends TestCase
         $this->sut = new ComposerCollector();
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [
             [

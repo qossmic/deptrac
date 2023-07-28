@@ -19,7 +19,7 @@ final class GlobCollectorTest extends TestCase
         $this->collector = new GlobCollector(__DIR__);
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'foo/layer1/*'], 'foo/layer1/bar.php', true];
         yield [['value' => 'foo/*/*.php'], 'foo/layer1/bar.php', true];

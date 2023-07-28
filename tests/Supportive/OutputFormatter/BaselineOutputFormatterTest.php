@@ -33,7 +33,7 @@ class BaselineOutputFormatterTest extends TestCase
         static::assertSame('baseline', (new BaselineOutputFormatter())->getName());
     }
 
-    public function basicDataProvider(): iterable
+    public static function basicDataProvider(): iterable
     {
         $originalA = ClassLikeToken::fromFQCN('OriginalA');
         $originalB = ClassLikeToken::fromFQCN('OriginalB');
