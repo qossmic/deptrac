@@ -61,7 +61,14 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         if (null === $docComment) {
             return [];
         }
-        $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
+        $docText = $docComment->getText();
+
+        // prevent expensive parsing, when not templates involved.
+        if (!str_contains($docText, '@template')) {
+            return [];
+        }
+
+        $tokens = new TokenIterator($this->lexer->tokenize($docText));
         $docNode = $this->docParser->parse($tokens);
 
         return array_values(array_map(static fn (TemplateTagValueNode $tag): string => $tag->name, $docNode->getTemplateTagValues()));
