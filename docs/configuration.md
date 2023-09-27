@@ -78,7 +78,7 @@ deptrac:
 <td>exclude_files</td>
 <td>
 
-A list of regular expression-patterns to determine which files to exclude,
+A list of regular expression-patterns to determine which files or directories to exclude,
 e.g. test files or config
 
 </td>
