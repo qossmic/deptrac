@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use JsonException;
-use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use RuntimeException;
 
 class ComposerFilesParser
@@ -73,7 +72,7 @@ class ComposerFilesParser
      *
      * @return string[]
      *
-     * @throws InvalidCollectorDefinitionException
+     * @throws RuntimeException
      */
     public function autoloadableNamespacesForRequirements(array $requirements, bool $includeDev): array
     {
@@ -81,7 +80,7 @@ class ComposerFilesParser
 
         foreach ($requirements as $package) {
             if (!array_key_exists($package, $this->lockedPackages)) {
-                throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(sprintf('ComposerCollector got a package that doesn\'t exist: "%s"', $package));
+                throw new RuntimeException(sprintf('Could not find a "%s" package', $package));
             }
 
             $namespaces[] = $this->extractNamespaces($this->lockedPackages[$package], $includeDev);
