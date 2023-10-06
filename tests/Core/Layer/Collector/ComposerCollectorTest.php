@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer\Collector;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
@@ -52,5 +53,19 @@ final class ComposerCollectorTest extends TestCase
         );
 
         self::assertSame($expected, $stat);
+    }
+
+    public function testComposerPackageDoesNotExist(): void
+    {
+        $this->expectException(InvalidCollectorDefinitionException::class);
+
+        $this->sut->satisfy(
+            [
+                'composerPath' => __DIR__.DIRECTORY_SEPARATOR.'data/composer.json',
+                'composerLockPath' => __DIR__.DIRECTORY_SEPARATOR.'data/composer.lock',
+                'packages' => ['fake_package'],
+            ],
+            new ClassLikeReference(ClassLikeToken::fromFQCN(''), ClassLikeType::TYPE_CLASS),
+        );
     }
 }
