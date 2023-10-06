@@ -72,6 +72,8 @@ class ComposerFilesParser
      * @param string[] $requirements
      *
      * @return string[]
+     *
+     * @throws InvalidCollectorDefinitionException
      */
     public function autoloadableNamespacesForRequirements(array $requirements, bool $includeDev): array
     {
@@ -79,9 +81,7 @@ class ComposerFilesParser
 
         foreach ($requirements as $package) {
             if (!array_key_exists($package, $this->lockedPackages)) {
-                throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(
-                    sprintf('ComposerCollector got a package that doesn\'t exist: "%s"', $package)
-                );
+                throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(sprintf('ComposerCollector got a package that doesn\'t exist: "%s"', $package));
             }
 
             $namespaces[] = $this->extractNamespaces($this->lockedPackages[$package], $includeDev);
