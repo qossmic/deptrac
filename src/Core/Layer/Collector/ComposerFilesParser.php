@@ -71,12 +71,18 @@ class ComposerFilesParser
      * @param string[] $requirements
      *
      * @return string[]
+     *
+     * @throws RuntimeException
      */
     public function autoloadableNamespacesForRequirements(array $requirements, bool $includeDev): array
     {
         $namespaces = [[]];
 
         foreach ($requirements as $package) {
+            if (!array_key_exists($package, $this->lockedPackages)) {
+                throw new RuntimeException(sprintf('Could not find a "%s" package', $package));
+            }
+
             $namespaces[] = $this->extractNamespaces($this->lockedPackages[$package], $includeDev);
         }
 
