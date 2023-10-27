@@ -119,6 +119,7 @@ class NikicPhpParser implements ParserInterface
             $fileContents = FileReader::read($filepath);
             /** @throws Error */
             $nodes = $this->parser->parse($fileContents, new Throwing());
+
             /** @var array<Node> $nodes */
             return $nodes;
         } catch (Error|CouldNotReadFileException $e) {
