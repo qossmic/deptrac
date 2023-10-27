@@ -12,6 +12,4 @@ use Throwable;
  * You can use this to ensure that no exceptions go unhandled when integrating
  * with Deptrac codebase.
  */
-interface ExceptionInterface extends Throwable
-{
-}
+interface ExceptionInterface extends Throwable {}
