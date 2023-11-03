@@ -53,7 +53,7 @@ namespace App\DeptracExtension;
 
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
 
-class IgnoreDependenciesOnShouldNotHappenException extends \Symfony\Component\EventDispatcher\EventSubscriberInterface
+class IgnoreDependenciesOnShouldNotHappenException implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
 {
     public function onProcessEvent(ProcessEvent $event): void
     {
