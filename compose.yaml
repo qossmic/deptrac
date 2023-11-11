@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
     deptrac:
         build:
@@ -7,10 +5,12 @@ services:
             context: ./
         container_name: deptrac
         tty: true
-        user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
-        working_dir: /var/www/deptrac
+        userns_mode: keep-id
         volumes:
-            - ./:/var/www/deptrac
+            - ./:/var/www/deptrac:z
+            - composer-data:/var/www/deptrac/.composer
         extra_hosts:
             - host.docker.internal:${HOST_IP:-172.17.0.1}
 
+volumes:
+    composer-data:
