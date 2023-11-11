@@ -1,0 +1,46 @@
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-4.7.0
+
+# NOTE: If you generated this yaml from an unprivileged and rootless podman container on an SELinux
+# enabled system, check the podman generate kube man page for steps to follow to ensure that your pod/container
+# has the right permissions to access the volumes added.
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    bind-mount-options: /home/gennadi/Code/deptrac:z
+  creationTimestamp: "2023-10-27T15:21:22Z"
+  labels:
+    app: deptrac-pod
+  name: deptrac-pod
+spec:
+  containers:
+  - args:
+    - php
+    - -a
+    env:
+    - name: TERM
+      value: xterm
+    image: localhost/deptrac_deptrac:latest
+    name: deptrac
+    securityContext:
+      runAsGroup: 1000
+      runAsUser: 1000
+    tty: true
+    volumeMounts:
+    - mountPath: /var/www/deptrac
+      name: home-gennadi-Code-deptrac-host-0
+    - mountPath: /var/www/deptrac/.composer
+      name: deptrac_composer-data-pvc
+  hostUsers: false
+  volumes:
+  - hostPath:
+      path: /home/gennadi/Code/deptrac
+      type: Directory
+    name: home-gennadi-Code-deptrac-host-0
+  - name: deptrac_composer-data-pvc
+    persistentVolumeClaim:
+      claimName: deptrac_composer-data
