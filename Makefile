@@ -1,4 +1,4 @@
-BOX_BIN := ./vendor/bin/box
+BOX_BIN := build/box.phar
 COMPOSER_BIN := composer
 PHP_BIN := php
 PHP_CS_FIXER_BIN := ./vendor/bin/php-cs-fixer
@@ -18,7 +18,7 @@ build: tests ## Runs tests and creates the phar-binary
 
 .PHONY: composer-install
 composer-install: ## Installs dependencies
-	$(COMPOSER_BIN) install --no-interaction --no-progress --optimize-autoloader --ansi
+	$(COMPOSER_BIN) install --no-interaction --no-progress -a --ansi
 
 .PHONY: deptrac
 deptrac: ## Analyses own architecture using the default config confile
