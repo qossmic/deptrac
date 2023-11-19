@@ -18,29 +18,29 @@ metadata:
   name: deptrac-pod
 spec:
   containers:
-  - args:
-    - php
-    - -a
-    env:
-    - name: TERM
-      value: xterm
-    image: localhost/deptrac_deptrac:latest
-    name: deptrac
-    securityContext:
-      runAsGroup: 1000
-      runAsUser: 1000
-    tty: true
-    volumeMounts:
-    - mountPath: /var/www/deptrac
-      name: home-gennadi-Code-deptrac-host-0
-    - mountPath: /var/www/deptrac/.composer
-      name: deptrac_composer-data-pvc
+    - args:
+      - php
+      - -a
+      env:
+        - name: TERM
+          value: xterm
+      image: localhost/deptrac_deptrac:latest
+      name: deptrac
+      securityContext:
+        runAsGroup: 1000
+        runAsUser: 1000
+      tty: true
+      volumeMounts:
+        - mountPath: /var/www/deptrac
+          name: home-gennadi-Code-deptrac-host-0
+        - mountPath: /var/www/deptrac/.composer
+          name: deptrac_composer-data-pvc
   hostUsers: false
   volumes:
-  - hostPath:
+    - hostPath:
       path: /home/gennadi/Code/deptrac
       type: Directory
-    name: home-gennadi-Code-deptrac-host-0
-  - name: deptrac_composer-data-pvc
-    persistentVolumeClaim:
-      claimName: deptrac_composer-data
+      name: home-gennadi-Code-deptrac-host-0
+    - name: deptrac_composer-data-pvc
+      persistentVolumeClaim:
+        claimName: deptrac_composer-data
