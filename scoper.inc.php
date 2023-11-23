@@ -14,6 +14,7 @@ return [
     'finders' => [],
     'patchers' => [],
     'output-dir' => './deptrac-build/',
+    'tag-declarations-as-internal' => false,
     'exclude-files' => array_map(
         static function ($file) {
             return $file->getPathName();

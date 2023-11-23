@@ -11,4 +11,6 @@ cp deptrac.yaml deptrac-build/
 cd deptrac-build && composer dump -a --dev
 
 echo 'RUN self test'
-./deptrac -c deptrac.config.php
+./deptrac
+
+cd .. && composer install -a --dev
