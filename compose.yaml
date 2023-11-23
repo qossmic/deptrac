@@ -5,6 +5,8 @@ services:
             context: ./
         container_name: deptrac
         tty: true
+        environment:
+          - PHP_IDE_CONFIG=serverName=deptrac
         userns_mode: keep-id
         volumes:
             - ./:/var/www/deptrac:z
