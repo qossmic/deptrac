@@ -6,13 +6,14 @@ use Isolated\Symfony\Component\Finder\Finder as IsolatedFinder;
 
 $polyfillsBootstrap = IsolatedFinder::create()
     ->files()
-    ->in(__DIR__ . '/vendor/symfony/polyfill-*')
+    ->in(__DIR__.'/vendor/symfony/polyfill-*')
     ->name('*.php');
 
 return [
-    'prefix' => null,                       // string|null
-    'finders' => [],                        // Finder[]
-    'patchers' => [],                       // callable[]
+    'prefix' => 'DEPTRAC_'.time(),
+    'finders' => [],
+    'patchers' => [],
+    'output-dir' => './deptrac-build/',
     'exclude-files' => array_map(
         static function ($file) {
             return $file->getPathName();
@@ -23,7 +24,8 @@ return [
         'Qossmic\Deptrac',
         'Symfony\Polyfill',
     ],
-    'expose-global-constants' => true,   // bool
-    'expose-global-classes' => true,     // bool
-    'expose-global-functions' => true,   // bool
+    'expose-functions' => ['trigger_deprecation'],
+    'expose-global-constants' => false,
+    'expose-global-classes' => false,
+    'expose-global-functions' => false,
 ];
