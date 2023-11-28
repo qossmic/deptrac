@@ -129,18 +129,21 @@ final class ServiceContainerBuilder
             return;
         }
 
-        $dirname = $cacheFile->getPath() ?: '.';
+        if (!file_exists($cacheFile->getPathname())) {
+            $dirname = $cacheFile->getPath() ?: '.';
 
-        if ((
-            !is_dir($dirname)
-            && mkdir($dirname.'/', 0777, true)
-            && !is_dir($dirname)
-        ) || (
-            !file_exists($cacheFile->getPathname())
-            && !touch($cacheFile->getPathname())
-            && !is_writable($cacheFile->getPathname())
-        )) {
-            throw CacheFileException::notWritable($cacheFile);
+            if (!is_dir($dirname)
+                && mkdir($dirname.'/', 0777, true)
+                && !is_dir($dirname)
+            ) {
+                throw CacheFileException::notWritable($cacheFile);
+            }
+
+            if (!touch($cacheFile->getPathname())
+                && !is_writable($cacheFile->getPathname())
+            ) {
+                throw CacheFileException::notWritable($cacheFile);
+            }
         }
 
         $container->setParameter('deptrac.cache_file', $cacheFile->getPathname());
