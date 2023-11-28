@@ -129,10 +129,17 @@ final class ServiceContainerBuilder
             return;
         }
 
-        if (!file_exists($cacheFile->getPathname())
+        $dirname = $cacheFile->getPath() ?: '.';
+
+        if ((
+            !is_dir($dirname)
+            && mkdir($dirname.'/', 0777, true)
+            && !is_dir($dirname)
+        ) || (
+            !file_exists($cacheFile->getPathname())
             && !touch($cacheFile->getPathname())
             && !is_writable($cacheFile->getPathname())
-        ) {
+        )) {
             throw CacheFileException::notWritable($cacheFile);
         }
 
