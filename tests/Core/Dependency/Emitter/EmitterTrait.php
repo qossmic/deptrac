@@ -36,6 +36,7 @@ trait EmitterTrait
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
             $typeResolver,
+            [],
             [
                 new AnonymousClassExtractor(),
                 new FunctionLikeExtractor($typeResolver),

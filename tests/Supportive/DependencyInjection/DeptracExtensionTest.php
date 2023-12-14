@@ -35,6 +35,7 @@ final class DeptracExtensionTest extends TestCase
 
     private const ANALYSER_DEFAULTS = [
         'internal_tag' => null,
+        'skip_deprecated' => false,
         'types' => [
             // Unfortunately, we can't use the enum type here, see
             // https://wiki.php.net/rfc/fetch_property_in_const_expressions

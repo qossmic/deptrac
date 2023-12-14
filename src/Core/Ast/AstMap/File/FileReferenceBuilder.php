@@ -9,6 +9,7 @@ use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
+use Qossmic\Deptrac\Core\Ast\AstMap\DisabledReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 
@@ -94,6 +95,11 @@ final class FileReferenceBuilder extends ReferenceBuilder
         $this->functionReferences[] = $functionReference;
 
         return $functionReference;
+    }
+
+    public function newDisabled(): DisabledReferenceBuilder
+    {
+        return new DisabledReferenceBuilder([], $this->filepath);
     }
 
     public function build(): FileReference

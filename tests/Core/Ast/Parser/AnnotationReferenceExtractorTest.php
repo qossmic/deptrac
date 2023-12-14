@@ -22,6 +22,7 @@ final class AnnotationReferenceExtractorTest extends TestCase
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
             new TypeResolver(),
+            [],
             [
                 new AnnotationReferenceExtractor($typeResolver),
                 new KeywordExtractor($typeResolver),

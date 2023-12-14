@@ -62,6 +62,7 @@ final class AstMapFlattenGeneratorTest extends TestCase
                 (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
                 new AstFileReferenceInMemoryCache(),
                 new TypeResolver(),
+                [],
                 []
             ),
             $this->eventDispatcher

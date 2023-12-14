@@ -40,6 +40,7 @@ final class AstMapGeneratorTest extends TestCase
                 (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
                 new AstFileReferenceInMemoryCache(),
                 $typeResolver,
+                [],
                 [
                     new AnnotationReferenceExtractor($typeResolver),
                     new AnonymousClassExtractor(),

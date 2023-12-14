@@ -161,6 +161,7 @@ return static function (ContainerConfigurator $container): void {
         ->set(NikicPhpParser::class)
         ->args([
             '$extractors' => tagged_iterator('reference_extractors'),
+            '$config' => param('analyser'),
         ]);
     $services->alias(ParserInterface::class, NikicPhpParser::class);
     $services->set(TypeResolver::class);
