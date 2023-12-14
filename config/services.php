@@ -15,6 +15,7 @@ use Qossmic\Deptrac\Core\Analyser\EventHandler\AllowDependencyHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnDisallowedLayer;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnInternalToken;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\DependsOnPrivateLayer;
+use Qossmic\Deptrac\Core\Analyser\EventHandler\FromDeprecatedHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\MatchingLayersHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UncoveredDependentHandler;
 use Qossmic\Deptrac\Core\Analyser\EventHandler\UnmatchedSkippedViolations;
@@ -323,6 +324,12 @@ return static function (ContainerConfigurator $container): void {
         ->tag('kernel.event_subscriber');
     $services
         ->set(MatchingLayersHandler::class)
+        ->tag('kernel.event_subscriber');
+    $services
+        ->set(FromDeprecatedHandler::class)
+        ->args([
+            '$config' => param('analyser'),
+        ])
         ->tag('kernel.event_subscriber');
     $services
         ->set(LayerProvider::class)

@@ -21,11 +21,20 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $formatters = [];
     /** @var array<Ruleset> */
     private array $rulesets = [];
+    /** @var bool */
+    private bool $skipDeprecated = false;
     private ?AnalyserConfig $analyser = null;
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
     /** @var array<string> */
     private array $excludeFiles = [];
+
+    public function skipDeprecated(bool $skip=true): self
+    {
+        $this->skipDeprecated = $skip;
+
+        return $this;
+    }
 
     /**
      * @deprecated use analyser(AnalyserConfig::create()) instead
@@ -113,6 +122,8 @@ final class DeptracConfig implements ConfigBuilderInterface
         if ([] !== $this->paths) {
             $config['paths'] = $this->paths;
         }
+
+        $config['analyser']['skip_deprecated'] = $this->skipDeprecated;
 
         if ($this->analyser) {
             $config['analyser'] = $this->analyser->toArray();

@@ -210,6 +210,9 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('internal_tag')
                             ->defaultNull()
                             ->end()
+                        ->booleanNode('skip_deprecated')
+                            ->defaultValue(false)
+                            ->end()
                         ->arrayNode('types')
                             ->defaultValue([
                                 EmitterType::CLASS_TOKEN->value,

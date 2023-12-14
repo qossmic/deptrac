@@ -37,6 +37,21 @@ deptrac:
 </td>
 </tr>
 <tr>
+<td>analyser.skip_deprecated</td>
+<td>
+Instruct deptrac to skip violations originating from deprecated code.
+In other words, this allows deprecated code to depend on anything.
+</td>
+<td>
+
+```yaml
+deptrac:
+  analyser:
+    skip_deprecated: true
+```
+</td>
+</tr>
+<tr>
 <td>analyser.types</td>
 <td>
 
