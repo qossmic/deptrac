@@ -10,18 +10,27 @@ class FunctionReferenceBuilder extends ReferenceBuilder
 {
     /**
      * @param list<string> $tokenTemplates
+     * @param array<string,string[]> $tags
      */
-    private function __construct(array $tokenTemplates, string $filepath, private readonly string $functionName)
-    {
-        parent::__construct($tokenTemplates, $filepath);
+    private function __construct(
+        array $tokenTemplates,
+        string $filepath,
+        private readonly string $functionName,
+        private readonly array $tags
+    ) {
+        parent::__construct(
+            $tokenTemplates,
+            $filepath
+        );
     }
 
     /**
      * @param list<string> $functionTemplates
+     * @param array<string,string[]> $tags
      */
-    public static function create(string $filepath, string $functionName, array $functionTemplates): self
+    public static function create(string $filepath, string $functionName, array $functionTemplates, array $tags): self
     {
-        return new self($functionTemplates, $filepath, $functionName);
+        return new self($functionTemplates, $filepath, $functionName, $tags);
     }
 
     /** @internal */
@@ -29,7 +38,8 @@ class FunctionReferenceBuilder extends ReferenceBuilder
     {
         return new FunctionReference(
             FunctionToken::fromFQCN($this->functionName),
-            $this->dependencies
+            $this->dependencies,
+            $this->tags
         );
     }
 }

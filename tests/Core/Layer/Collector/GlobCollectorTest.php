@@ -34,7 +34,7 @@ final class GlobCollectorTest extends TestCase
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
         $fileReferenceBuilder = FileReferenceBuilder::create($filePath);
-        $fileReferenceBuilder->newClassLike('Test', [], false);
+        $fileReferenceBuilder->newClassLike('Test', [], []);
         $fileReference = $fileReferenceBuilder->build();
 
         $actual = $this->collector->satisfy(

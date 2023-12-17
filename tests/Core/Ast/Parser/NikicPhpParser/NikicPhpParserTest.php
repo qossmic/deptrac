@@ -37,13 +37,7 @@ final class NikicPhpParserTest extends TestCase
 
     public function testParseDoesNotIgnoreUsesByDefault(): void
     {
-        $typeResolver = new TypeResolver();
-        $parser = new NikicPhpParser(
-            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
-            new AstFileReferenceInMemoryCache(),
-            $typeResolver,
-            []
-        );
+        $parser = $this->getParser();
 
         $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
         self::assertCount(1, $parser->parseFile($filePath)->dependencies);
@@ -54,13 +48,7 @@ final class NikicPhpParserTest extends TestCase
      */
     public function testParseAttributes(): void
     {
-        $typeResolver = new TypeResolver();
-        $parser = new NikicPhpParser(
-            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
-            new AstFileReferenceInMemoryCache(),
-            $typeResolver,
-            []
-        );
+        $parser = $this->getParser();
 
         $filePath = __DIR__.'/Fixtures/Attributes.php';
         $astFileReference = $parser->parseFile($filePath);
@@ -84,5 +72,68 @@ final class NikicPhpParserTest extends TestCase
         $astFileReference = $parser->parseFile($filePath);
         $astClassReferences = $astFileReference->classLikeReferences;
         self::assertCount(0, $astClassReferences[0]->dependencies);
+    }
+
+    public function testParseClassDocTags(): void
+    {
+        $parser = $this->getParser();
+        $filePath = __DIR__.'/Fixtures/DocTags.php';
+        $astFileReference = $parser->parseFile($filePath);
+
+        self::assertCount(2, $astFileReference->classLikeReferences);
+        $classesByName = $this->refsByName($astFileReference->classLikeReferences);
+
+        $this->assertSame(
+            [
+                '@internal' => [''],
+                '@note' => ['Note one', 'Note two'],
+            ],
+            $classesByName['TaggedThing']->tags
+        );
+        $this->assertSame([], $classesByName['UntaggedThing']->tags);
+    }
+
+    public function testParseFunctionDocTags(): void
+    {
+        $parser = $this->getParser();
+        $filePath = __DIR__.'/Fixtures/Functions.php';
+        $astFileReference = $parser->parseFile($filePath);
+
+        self::assertCount(2, $astFileReference->functionReferences);
+        $functionsByName = $this->refsByName($astFileReference->functionReferences);
+
+        $this->assertSame(
+            ['@param' => ['string $foo', 'string $bar']],
+            $functionsByName['taggedFunction()']->tags
+        );
+        $this->assertSame([], $functionsByName['untaggedFunction()']->tags);
+    }
+
+    private function refsByName(array $refs): array
+    {
+        $refsByName = [];
+
+        foreach ($refs as $ref) {
+            $name = preg_replace('/^.*\\\\(\w+(\(\))?)$/', '$1', $ref->getToken()->toString());
+            $refsByName[$name] = $ref;
+        }
+
+        return $refsByName;
+    }
+
+    private function getParser(): NikicPhpParser
+    {
+        $typeResolver = new TypeResolver();
+        $parser = new NikicPhpParser(
+            ( new ParserFactory() )->create(
+                ParserFactory::ONLY_PHP7,
+                new Lexer()
+            ),
+            new AstFileReferenceInMemoryCache(),
+            $typeResolver,
+            []
+        );
+
+        return $parser;
     }
 }

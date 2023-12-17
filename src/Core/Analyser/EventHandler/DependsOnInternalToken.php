@@ -29,7 +29,8 @@ class DependsOnInternalToken implements ViolationCreatingInterface
         foreach ($event->dependentLayers as $dependentLayer => $_) {
             if ($event->dependerLayer !== $dependentLayer
                 && $event->dependentReference instanceof ClassLikeReference
-                && $event->dependentReference->isInternal
+                && ($event->dependentReference->hasTag('@deptrac-internal')
+                    || $event->dependentReference->hasTag('@internal'))
             ) {
                 $this->eventHelper->addSkippableViolation($event, $ruleset, $dependentLayer, $this);
                 $event->stopPropagation();

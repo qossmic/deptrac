@@ -113,7 +113,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     /**
      * @return ?array{PhpDocNode, int} DocNode, comment start line
      */
-    private function getDocNodeCrate(ClassLike $node): ?array
+    private function getDocNodeCrate(Node $node): ?array
     {
         $docComment = $node->getDocComment();
         if (null === $docComment) {
@@ -129,21 +129,19 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         $name = $this->getClassReferenceName($node);
         $docNodeCrate = $this->getDocNodeCrate($node);
         if (null !== $name) {
-            $isInternal = false;
+            $tags = [];
+
             if (null !== $docNodeCrate) {
-                $isInternal = [] !== array_merge(
-                    $docNodeCrate[0]->getTagsByName('@internal'),
-                    $docNodeCrate[0]->getTagsByName('@deptrac-internal')
-                );
+                $tags = $this->extractTags($docNodeCrate[0]);
             }
 
             match (true) {
-                $node instanceof Interface_ => $this->enterInterface($name, $node, $isInternal),
-                $node instanceof Class_ => $this->enterClass($name, $node, $isInternal),
+                $node instanceof Interface_ => $this->enterInterface($name, $node, $tags),
+                $node instanceof Class_ => $this->enterClass($name, $node, $tags),
                 $node instanceof Trait_ => $this->currentReference =
-                    $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node), $isInternal),
+                    $this->fileReferenceBuilder->newTrait($name, $this->templatesFromDocs($node), $tags),
                 default => $this->currentReference =
-                    $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node), $isInternal)
+                    $this->fileReferenceBuilder->newClassLike($name, $this->templatesFromDocs($node), $tags)
             };
         }
 
@@ -169,7 +167,14 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             $name = $node->name->toString();
         }
 
-        $this->currentReference = $this->fileReferenceBuilder->newFunction($name, $this->templatesFromDocs($node));
+        $tags = [];
+        $docNodeCrate = $this->getDocNodeCrate($node);
+
+        if (null !== $docNodeCrate) {
+            $tags = $this->extractTags($docNodeCrate[0]);
+        }
+
+        $this->currentReference = $this->fileReferenceBuilder->newFunction($name, $this->templatesFromDocs($node), $tags);
 
         foreach ($node->getParams() as $param) {
             if (null !== $param->type) {
@@ -208,18 +213,24 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         return null;
     }
 
-    private function enterInterface(string $name, Interface_ $node, bool $isInternal): void
+    /**
+     * @param array<string,string[]> $tags
+     */
+    private function enterInterface(string $name, Interface_ $node, array $tags): void
     {
-        $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node), $isInternal);
+        $this->currentReference = $this->fileReferenceBuilder->newInterface($name, $this->templatesFromDocs($node), $tags);
 
         foreach ($node->extends as $extend) {
             $this->currentReference->implements($extend->toCodeString(), $extend->getLine());
         }
     }
 
-    private function enterClass(string $name, Class_ $node, bool $isInternal): void
+    /**
+     * @param array<string,string[]> $tags
+     */
+    private function enterClass(string $name, Class_ $node, array $tags): void
     {
-        $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node), $isInternal);
+        $this->currentReference = $this->fileReferenceBuilder->newClass($name, $this->templatesFromDocs($node), $tags);
         if ($node->extends instanceof Name) {
             $this->currentReference->extends($node->extends->toCodeString(), $node->extends->getLine());
         }
@@ -297,5 +308,19 @@ class FileReferenceVisitor extends NodeVisitorAbstract
                 $this->currentReference->variable($type, $line);
             }
         }
+    }
+
+    /**
+     * @return array<string,string[]>
+     */
+    private function extractTags(PhpDocNode $doc): array
+    {
+        $tags = [];
+
+        foreach ($doc->getTags() as $tag) {
+            $tags[$tag->name][] = (string) $tag->value;
+        }
+
+        return $tags;
     }
 }

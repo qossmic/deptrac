@@ -38,10 +38,11 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
+     * @param array<string,string[]> $tags
      */
-    public function newClass(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
+    public function newClass(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
-        $classReference = ClassLikeReferenceBuilder::createClass($this->filepath, $classLikeName, $templateTypes, $isInternal);
+        $classReference = ClassLikeReferenceBuilder::createClass($this->filepath, $classLikeName, $templateTypes, $tags);
         $this->classReferences[] = $classReference;
 
         return $classReference;
@@ -49,10 +50,11 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
+     * @param array<string,string[]> $tags
      */
-    public function newTrait(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
+    public function newTrait(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
-        $classReference = ClassLikeReferenceBuilder::createTrait($this->filepath, $classLikeName, $templateTypes, $isInternal);
+        $classReference = ClassLikeReferenceBuilder::createTrait($this->filepath, $classLikeName, $templateTypes, $tags);
         $this->classReferences[] = $classReference;
 
         return $classReference;
@@ -60,10 +62,11 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
+     * @param array<string,string[]> $tags
      */
-    public function newClassLike(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
+    public function newClassLike(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
-        $classReference = ClassLikeReferenceBuilder::createClassLike($this->filepath, $classLikeName, $templateTypes, $isInternal);
+        $classReference = ClassLikeReferenceBuilder::createClassLike($this->filepath, $classLikeName, $templateTypes, $tags);
         $this->classReferences[] = $classReference;
 
         return $classReference;
@@ -71,10 +74,11 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
+     * @param array<string,string[]> $tags
      */
-    public function newInterface(string $classLikeName, array $templateTypes, bool $isInternal): ClassLikeReferenceBuilder
+    public function newInterface(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
-        $classReference = ClassLikeReferenceBuilder::createInterface($this->filepath, $classLikeName, $templateTypes, $isInternal);
+        $classReference = ClassLikeReferenceBuilder::createInterface($this->filepath, $classLikeName, $templateTypes, $tags);
         $this->classReferences[] = $classReference;
 
         return $classReference;
@@ -82,10 +86,11 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
+     * @param array<string,string[]> $tags
      */
-    public function newFunction(string $functionName, array $templateTypes = []): FunctionReferenceBuilder
+    public function newFunction(string $functionName, array $templateTypes = [], array $tags = []): FunctionReferenceBuilder
     {
-        $functionReference = FunctionReferenceBuilder::create($this->filepath, $functionName, $templateTypes);
+        $functionReference = FunctionReferenceBuilder::create($this->filepath, $functionName, $templateTypes, $tags);
         $this->functionReferences[] = $functionReference;
 
         return $functionReference;
