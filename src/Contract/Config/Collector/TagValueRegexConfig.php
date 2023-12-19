@@ -26,7 +26,6 @@ final class TagValueRegexConfig extends CollectorConfig
         return $this;
     }
 
-    /** @return array{'type': string, 'private': bool, 'tag': string, 'value': ?string} */
     public function toArray(): array
     {
         return [
