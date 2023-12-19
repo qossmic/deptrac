@@ -38,7 +38,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function newClass(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
@@ -50,7 +50,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function newTrait(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
@@ -62,7 +62,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function newClassLike(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
@@ -74,7 +74,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function newInterface(string $classLikeName, array $templateTypes, array $tags): ClassLikeReferenceBuilder
     {
@@ -86,7 +86,7 @@ final class FileReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $templateTypes
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function newFunction(string $functionName, array $templateTypes = [], array $tags = []): FunctionReferenceBuilder
     {

@@ -19,7 +19,7 @@ class FunctionReference implements TaggedTokenReferenceInterface
 
     /**
      * @param DependencyToken[] $dependencies
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function __construct(
         private readonly FunctionToken $functionName,

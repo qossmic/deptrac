@@ -214,7 +214,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     private function enterInterface(string $name, Interface_ $node, array $tags): void
     {
@@ -226,7 +226,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     private function enterClass(string $name, Class_ $node, array $tags): void
     {
@@ -311,7 +311,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @return array<string,string[]>
+     * @return array<string,list<string>>
      */
     private function extractTags(PhpDocNode $doc): array
     {

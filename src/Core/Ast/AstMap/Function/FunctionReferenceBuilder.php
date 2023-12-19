@@ -10,7 +10,7 @@ class FunctionReferenceBuilder extends ReferenceBuilder
 {
     /**
      * @param list<string> $tokenTemplates
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     private function __construct(
         array $tokenTemplates,
@@ -26,7 +26,7 @@ class FunctionReferenceBuilder extends ReferenceBuilder
 
     /**
      * @param list<string> $functionTemplates
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public static function create(string $filepath, string $functionName, array $functionTemplates, array $tags): self
     {

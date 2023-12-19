@@ -7,7 +7,7 @@ namespace Qossmic\Deptrac\Core\Ast\AstMap;
 /**
  * Helper trait for implementing TaggedTokenReferenceInterface.
  *
- * Classes that use this trait must define $this->tags as array<string,string[]>.
+ * Classes that use this trait must define $this->tags as array<string,list<string>>.
  *
  * @psalm-immutable
  */
@@ -19,7 +19,7 @@ trait TaggedReferenceTrait
     }
 
     /**
-     * @return string[]|null
+     * @return ?list<string>
      */
     public function getTagLines(string $name): ?array
     {

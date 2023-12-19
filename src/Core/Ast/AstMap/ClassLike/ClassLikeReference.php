@@ -22,7 +22,7 @@ class ClassLikeReference implements TaggedTokenReferenceInterface
     /**
      * @param AstInherit[] $inherits
      * @param DependencyToken[] $dependencies
-     * @param array<string,string[]> $tags
+     * @param array<string,list<string>> $tags
      */
     public function __construct(
         private readonly ClassLikeToken $classLikeName,
