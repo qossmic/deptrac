@@ -12,7 +12,7 @@ interface TaggedTokenReferenceInterface extends TokenReferenceInterface
     public function hasTag(string $name): bool;
 
     /**
-     * @return array<string,string[]>|null
+     * @return string[]|null
      */
     public function getTagLines(string $name): ?array;
 
