@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
-  <file src="src/Contract/Config/Collector/ComposerConfig.php">
-    <ImplementedReturnTypeMismatch>
-      <code><![CDATA[array{
-     *     composerPath: string,
-     *     composerLockPath: string,
-     *     packages: list<string>,
-     *     private: bool,
-     *     type: string}]]></code>
-    </ImplementedReturnTypeMismatch>
-  </file>
-  <file src="src/Contract/Config/Collector/SuperGlobalConfig.php">
-    <ImplementedReturnTypeMismatch>
-      <code><![CDATA[array{'private': bool, 'type': string, 'value': string[]}]]></code>
-    </ImplementedReturnTypeMismatch>
-  </file>
-  <file src="src/Contract/Config/ConfigurableCollectorConfig.php">
-    <ImplementedReturnTypeMismatch>
-      <code>array{private: bool, type: string, value: string}</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="src/Contract/Result/OutputResult.php">
     <InvalidReturnStatement>
       <code><![CDATA[array_key_exists($type, $this->rules) ? array_values($this->rules[$type]) : []]]></code>
