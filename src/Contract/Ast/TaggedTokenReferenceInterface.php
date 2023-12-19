@@ -15,6 +15,4 @@ interface TaggedTokenReferenceInterface extends TokenReferenceInterface
      * @return ?list<string>
      */
     public function getTagLines(string $name): ?array;
-
-    public function getTagText(string $name): ?string;
 }

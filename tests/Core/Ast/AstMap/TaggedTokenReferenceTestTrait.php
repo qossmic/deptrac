@@ -28,10 +28,5 @@ trait TaggedTokenReferenceTestTrait
         self::assertSame(['bar1', 'bar2'], $ref->getTagLines('@bar'), 'get @bar lines');
         self::assertnull($ref->getTagLines('foo'), 'get foo lines');
         self::assertnull($ref->getTagLines('@xyzzy'), 'get @xyzzy lines');
-
-        self::assertSame('foo1', $ref->getTagText('@foo'), 'get @foo text');
-        self::assertSame("bar1\nbar2", $ref->getTagText('@bar'), 'get @bar text');
-        self::assertnull($ref->getTagText('foo'), 'get foo text');
-        self::assertnull($ref->getTagText('@xyzzy'), 'get @xyzzy text');
     }
 }

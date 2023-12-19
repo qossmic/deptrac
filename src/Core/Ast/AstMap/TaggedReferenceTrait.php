@@ -25,14 +25,4 @@ trait TaggedReferenceTrait
     {
         return $this->tags[$name] ?? null;
     }
-
-    public function getTagText(string $name): ?string
-    {
-        $lines = $this->getTagLines($name);
-        if ($lines) {
-            return implode("\n", $lines);
-        }
-
-        return null;
-    }
 }
