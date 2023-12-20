@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
+use Qossmic\Deptrac\Contract\Ast\TaggedTokenReferenceInterface;
+
 /**
  * Helper trait for implementing TaggedTokenReferenceInterface.
  *
- * Classes that use this trait must define $this->tags as array<string,list<string>>.
- *
  * @psalm-immutable
  */
-trait TaggedReferenceTrait
+abstract class TaggedTokenReference implements TaggedTokenReferenceInterface
 {
+    /**
+     * @param array<string,list<string>> $tags
+     */
+    protected function __construct(
+        private readonly array $tags
+    ) {}
+
     public function hasTag(string $name): bool
     {
         return isset($this->tags[$name]);

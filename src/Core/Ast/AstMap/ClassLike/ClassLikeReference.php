@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\ClassLike;
 
-use Qossmic\Deptrac\Contract\Ast\TaggedTokenReferenceInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\TaggedReferenceTrait;
+use Qossmic\Deptrac\Core\Ast\AstMap\TaggedTokenReference;
 
 /**
  * @psalm-immutable
  */
-class ClassLikeReference implements TaggedTokenReferenceInterface
+class ClassLikeReference extends TaggedTokenReference
 {
-    use TaggedReferenceTrait;
-
     public readonly ClassLikeType $type;
 
     /**
@@ -32,6 +29,7 @@ class ClassLikeReference implements TaggedTokenReferenceInterface
         public readonly array $tags = [],
         private readonly ?FileReference $fileReference = null
     ) {
+        parent::__construct($tags);
         $this->type = $classLikeType ?? ClassLikeType::TYPE_CLASSLIKE;
     }
 

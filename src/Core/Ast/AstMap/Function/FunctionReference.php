@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap\Function;
 
-use Qossmic\Deptrac\Contract\Ast\TaggedTokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
 use Qossmic\Deptrac\Core\Ast\AstMap\DependencyToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReference;
-use Qossmic\Deptrac\Core\Ast\AstMap\TaggedReferenceTrait;
+use Qossmic\Deptrac\Core\Ast\AstMap\TaggedTokenReference;
 
 /**
  * @psalm-immutable
  */
-class FunctionReference implements TaggedTokenReferenceInterface
+class FunctionReference extends TaggedTokenReference
 {
-    use TaggedReferenceTrait;
-
     /**
      * @param DependencyToken[] $dependencies
      * @param array<string,list<string>> $tags
@@ -26,7 +23,9 @@ class FunctionReference implements TaggedTokenReferenceInterface
         public readonly array $dependencies = [],
         public readonly array $tags = [],
         private readonly ?FileReference $fileReference = null
-    ) {}
+    ) {
+        parent::__construct($tags);
+    }
 
     public function withFileReference(FileReference $astFileReference): self
     {

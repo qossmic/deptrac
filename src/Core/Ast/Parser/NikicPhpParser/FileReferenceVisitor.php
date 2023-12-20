@@ -167,8 +167,8 @@ class FileReferenceVisitor extends NodeVisitorAbstract
             $name = $node->name->toString();
         }
 
-        $tags = [];
         $docNodeCrate = $this->getDocNodeCrate($node);
+        $tags = [];
 
         if (null !== $docNodeCrate) {
             $tags = $this->extractTags($docNodeCrate[0]);
