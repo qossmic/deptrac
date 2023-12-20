@@ -17,7 +17,8 @@ final class DeptracExtensionTest extends TestCase
 {
     private ContainerBuilder $container;
     private DeptracExtension $extension;
-    private array $formatterDefaults = [
+
+    private const FORMATTER_DEFAULTS = [
         'graphviz' => [
             'hidden_layers' => [],
             'groups' => [],
@@ -29,6 +30,14 @@ final class DeptracExtensionTest extends TestCase
                 'skipped' => 'minor',
                 'uncovered' => 'info',
             ],
+        ],
+    ];
+
+    private const ANALYSER_DEFAULTS = [
+        'internal_tag' => null,
+        'types' => [
+            'class',
+            'function',
         ],
     ];
 
@@ -51,8 +60,8 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('layers'));
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
-        self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
-        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]], $this->container->getParameter('analyser'));
+        self::assertSame(self::FORMATTER_DEFAULTS, $this->container->getParameter('formatters'));
+        self::assertSame(self::ANALYSER_DEFAULTS, $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
     }
 
@@ -69,8 +78,8 @@ final class DeptracExtensionTest extends TestCase
         self::assertSame([], $this->container->getParameter('layers'));
         self::assertSame([], $this->container->getParameter('ruleset'));
         self::assertSame([], $this->container->getParameter('skip_violations'));
-        self::assertSame($this->formatterDefaults, $this->container->getParameter('formatters'));
-        self::assertSame(['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value]], $this->container->getParameter('analyser'));
+        self::assertSame(self::FORMATTER_DEFAULTS, $this->container->getParameter('formatters'));
+        self::assertSame(self::ANALYSER_DEFAULTS, $this->container->getParameter('analyser'));
         self::assertSame(true, $this->container->getParameter('ignore_uncovered_internal_classes'));
     }
 
@@ -307,10 +316,12 @@ final class DeptracExtensionTest extends TestCase
             ],
         ];
 
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child config "types" under "deptrac.analyser" must be configured.');
-
         $this->extension->load($configs, $this->container);
+
+        self::assertSame(
+            self::ANALYSER_DEFAULTS,
+            $this->container->getParameter('analyser')
+        );
     }
 
     public function testEmptyAnalyser(): void
@@ -321,10 +332,12 @@ final class DeptracExtensionTest extends TestCase
             ],
         ];
 
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child config "types" under "deptrac.analyser" must be configured.');
-
         $this->extension->load($configs, $this->container);
+
+        self::assertSame(
+            self::ANALYSER_DEFAULTS,
+            $this->container->getParameter('analyser')
+        );
     }
 
     public function testInvalidAnalyserTypes(): void
@@ -333,7 +346,7 @@ final class DeptracExtensionTest extends TestCase
             'deptrac' => [
                 'analyser' => [
                     'types' => ['invalid'],
-                ],
+                ] + self::ANALYSER_DEFAULTS,
             ],
         ];
 
@@ -349,14 +362,14 @@ final class DeptracExtensionTest extends TestCase
             'deptrac' => [
                 'analyser' => [
                     'types' => null,
-                ],
+                ] + self::ANALYSER_DEFAULTS,
             ],
         ];
 
         $this->extension->load($configs, $this->container);
 
         self::assertSame(
-            ['types' => []],
+            ['types' => []] + self::ANALYSER_DEFAULTS,
             $this->container->getParameter('analyser')
         );
     }
@@ -367,14 +380,14 @@ final class DeptracExtensionTest extends TestCase
             'deptrac' => [
                 'analyser' => [
                     'types' => [],
-                ],
+                ] + self::ANALYSER_DEFAULTS,
             ],
         ];
 
         $this->extension->load($configs, $this->container);
 
         self::assertSame(
-            ['types' => []],
+            ['types' => []] + self::ANALYSER_DEFAULTS,
             $this->container->getParameter('analyser')
         );
     }
@@ -385,14 +398,15 @@ final class DeptracExtensionTest extends TestCase
             'deptrac' => [
                 'analyser' => [
                     'types' => [EmitterType::CLASS_TOKEN->value, EmitterType::CLASS_TOKEN->value],
-                ],
+                ] + self::ANALYSER_DEFAULTS,
             ],
         ];
 
         $this->extension->load($configs, $this->container);
 
         self::assertSame(
-            ['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::CLASS_TOKEN->value]],
+            ['types' => [EmitterType::CLASS_TOKEN->value, EmitterType::CLASS_TOKEN->value]]
+                + self::ANALYSER_DEFAULTS,
             $this->container->getParameter('analyser')
         );
     }
@@ -422,7 +436,7 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        $expectedFormatterConfig = $this->formatterDefaults;
+        $expectedFormatterConfig = self::FORMATTER_DEFAULTS;
         $actualFormatterConfig = $this->container->getParameter('formatters');
 
         krsort($expectedFormatterConfig);
@@ -445,7 +459,7 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        $expectedFormatterConfig = $this->formatterDefaults;
+        $expectedFormatterConfig = self::FORMATTER_DEFAULTS;
         $expectedFormatterConfig['graphviz'] = [
             'point_to_groups' => true,
             'hidden_layers' => [],
@@ -474,7 +488,7 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        $expectedFormatterConfig = $this->formatterDefaults;
+        $expectedFormatterConfig = self::FORMATTER_DEFAULTS;
         $expectedFormatterConfig['graphviz'] = [
             'hidden_layers' => ['Utils'],
             'groups' => [
@@ -499,7 +513,7 @@ final class DeptracExtensionTest extends TestCase
 
         $this->extension->load($configs, $this->container);
 
-        $expectedFormatterConfig = $this->formatterDefaults;
+        $expectedFormatterConfig = self::FORMATTER_DEFAULTS;
         $actualFormatterConfig = $this->container->getParameter('formatters');
 
         krsort($expectedFormatterConfig);

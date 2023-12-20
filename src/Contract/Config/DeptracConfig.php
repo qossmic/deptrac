@@ -21,12 +21,21 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $formatters = [];
     /** @var array<Ruleset> */
     private array $rulesets = [];
+    /** @var ?string */
+    private ?string $internalTag = null;
     /** @var array<string, EmitterType> */
     private array $analyser = [];
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
     /** @var array<string> */
     private array $excludeFiles = [];
+
+    public function internalTag(?string $tag): self
+    {
+        $this->internalTag = $tag;
+
+        return $this;
+    }
 
     public function analysers(EmitterType ...$types): self
     {
@@ -108,6 +117,8 @@ final class DeptracConfig implements ConfigBuilderInterface
         if ([] !== $this->paths) {
             $config['paths'] = $this->paths;
         }
+
+        $config['analyser']['internal_tag'] = $this->internalTag;
 
         if ([] !== $this->analyser) {
             $config['analyser']['types'] = array_map(static fn (EmitterType $emitterType) => $emitterType->value, $this->analyser);

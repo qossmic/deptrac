@@ -53,41 +53,41 @@ class DependsOnInternalTokenTest extends TestCase
         return $event;
     }
 
-    public function testInvokeEnabled(): void
+    public function testInvoke(): void
     {
         $helper = new EventHelper([], new LayerProvider([]));
-        $handler = new DependsOnInternalToken($helper);
+        $handler = new DependsOnInternalToken($helper, ['internal_tag' => '@layer-internal']);
 
         $event = $this->makeEvent([], []);
         $handler->invoke($event);
 
         $this->assertFalse(
             $event->isPropagationStopped(),
-            'Propagation should continue if neither reference has the "internal" tag'
+            'Propagation should continue if neither reference has the "layer-internal" tag'
         );
 
-        $event = $this->makeEvent(['@internal' => ['']], []);
+        $event = $this->makeEvent(['@layer-internal' => ['']], []);
         $handler->invoke($event);
 
         $this->assertFalse(
             $event->isPropagationStopped(),
-            'Propagation should continue if only the depender is marked @internal'
+            'Propagation should continue if only the depender is marked @layer-internal'
         );
 
-        $event = $this->makeEvent([], ['@internal' => ['']]);
+        $event = $this->makeEvent([], ['@layer-internal' => ['']]);
         $handler->invoke($event);
 
         $this->assertTrue(
             $event->isPropagationStopped(),
-            'Propagation should be stopped if the dependent is marked @internal'
+            'Propagation should be stopped if the dependent is marked @layer-internal'
         );
 
-        $event = $this->makeEvent([], ['@internal' => ['']], 'DependerLayer');
+        $event = $this->makeEvent([], ['@layer-internal' => ['']], 'DependerLayer');
         $handler->invoke($event);
 
         $this->assertFalse(
             $event->isPropagationStopped(),
-            'Propagation should not be stopped if the dependent is marked @internal '.
+            'Propagation should not be stopped if the dependent is marked @layer-internal '.
             'but dependent is in the same layer'
         );
 
@@ -97,6 +97,28 @@ class DependsOnInternalTokenTest extends TestCase
         $this->assertTrue(
             $event->isPropagationStopped(),
             'Propagation should be stopped if the dependent is marked @deptrac-internal'
+        );
+    }
+
+    public function testDefaultInternalTag(): void
+    {
+        $helper = new EventHelper([], new LayerProvider([]));
+        $handler = new DependsOnInternalToken($helper, ['internal_tag' => null]);
+
+        $event = $this->makeEvent([], ['@internal' => ['']]);
+        $handler->invoke($event);
+
+        $this->assertFalse(
+            $event->isPropagationStopped(),
+            'The @internal tag should not be used per default'
+        );
+
+        $event = $this->makeEvent([], ['@deptrac-internal' => ['']]);
+        $handler->invoke($event);
+
+        $this->assertTrue(
+            $event->isPropagationStopped(),
+            'The @deptrac-internal tag should be used per default'
         );
     }
 }

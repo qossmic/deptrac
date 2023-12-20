@@ -340,7 +340,10 @@ return static function (ContainerConfigurator $container): void {
         ->tag('kernel.event_subscriber');
     $services
         ->set(DependsOnInternalToken::class)
-        ->tag('kernel.event_subscriber');
+        ->tag('kernel.event_subscriber')
+        ->args([
+            '$config' => param('analyser'),
+        ]);
     $services
         ->set(UnmatchedSkippedViolations::class)
         ->tag('kernel.event_subscriber');
