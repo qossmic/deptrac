@@ -24,7 +24,7 @@ The following table shows the available config keys for Deptrac.
 <td>
 Specifies a custom doc block tag which deptrac should use to identify layer-internal
 class-like structures. The tag <code>@deptrac-internal</code> will always be used
-for this purpose. This option allows an addition tag to be specified, such as
+for this purpose. This option allows an additional tag to be specified, such as
 <code>@layer-internal</code> or plain <code>@internal</code>.
 </td>
 <td>
