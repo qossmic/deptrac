@@ -22,9 +22,7 @@ final class Analyser
         $types ??= [EmitterType::CLASS_TOKEN, EmitterType::FUNCTION_TOKEN];
         $analyser->types(...$types);
 
-        if (null !== $internalTag) {
-            $analyser->internalTag($internalTag);
-        }
+        $analyser->internalTag($internalTag);
 
         return $analyser;
     }
