@@ -36,8 +36,10 @@ final class DeptracExtensionTest extends TestCase
     private const ANALYSER_DEFAULTS = [
         'internal_tag' => null,
         'types' => [
-            'class',
-            'function',
+            // Unfortunately, we can't use the enum type here, see
+            // https://wiki.php.net/rfc/fetch_property_in_const_expressions
+            'class',    // ClassLikeType::CLASS
+            'function', // ClassLikeType::FUNCTION
         ],
     ];
 

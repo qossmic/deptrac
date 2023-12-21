@@ -22,17 +22,17 @@ The following table shows the available config keys for Deptrac.
 <tr>
 <td>analyser.internal_tag</td>
 <td>
-Specifies which doc block tag deptrac should use to identify layer-internal class-like tokens.
-The default is <code>"@internal"</code>. May be set to <code>null</code> to disable.
-Note that the tag <code>@deptrac-internal</code> will always be used to identify
-layer-internal class-like tokens, even if this <code>internal_tag</code> is set to <code>null</code>.
+Specifies a custom doc block tag which deptrac should use to identify layer-internal
+class-like structures. The tag <code>@deptrac-internal</code> will always be used
+for this purpose. This option allows an addition tag to be specified, such as
+<code>@layer-internal</code> or plain <code>@internal</code>.
 </td>
 <td>
 
 ```yaml
 deptrac:
   analyser:
-    internal_tag: ~
+    internal_tag: "@layer-internal"
 ```
 </td>
 </tr>

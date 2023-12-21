@@ -42,7 +42,7 @@ class DependsOnInternalToken implements ViolationCreatingInterface
             ) {
                 $isInternal = $event->dependentReference->hasTag('@deptrac-internal');
 
-                if (!$isInternal && $this->internalTag) {
+                if (!$isInternal && $this->internalTag!==null) {
                     $isInternal = $event->dependentReference->hasTag($this->internalTag);
                 }
 
