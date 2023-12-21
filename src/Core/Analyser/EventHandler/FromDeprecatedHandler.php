@@ -33,7 +33,7 @@ class FromDeprecatedHandler implements EventSubscriberInterface
 
         $ref = $event->dependerReference;
 
-        if ($ref instanceof ClassLikeReference && ($ref->hasTag('@deprecated') ?? false)) {
+        if ($ref instanceof ClassLikeReference && $ref->hasTag('@deprecated')) {
             $event->stopPropagation();
         }
     }
