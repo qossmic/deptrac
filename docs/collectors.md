@@ -30,16 +30,19 @@ deptrac:
         - type: bool
           must:
             - type: classLike
+              value: .*\\Asset.*
+          must_any:
+            - type: classLike
               value: .*Foo\\.*
             - type: classLike
-              value: .*\\Asset.*
+              value: .*Bar\\.*
           must_not:
             - type: classLike
               value: .*Assetic.*
 ```
 
-Every class contains `Foo\` AND `\Asset` and NOT `Assetic`, will become a part
-of the *Asset* layer.
+Every class that contains `\Asset`, AND `Foo\` OR `Bar\`, AND NOT `Assetic`,
+will become a part of the *Asset* layer.
 
 ## `class` Collector
 

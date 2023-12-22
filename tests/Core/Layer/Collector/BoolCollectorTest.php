@@ -42,148 +42,111 @@ final class BoolCollectorTest extends TestCase
 
     public static function provideResolvableConfiguration(): iterable
     {
+        $true = [
+            'type' => 'custom',
+            'resolvable' => true,
+        ];
+
+        $false = [
+            'type' => 'custom',
+            'resolvable' => false,
+        ];
+
         yield 'must with resolvable collector' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
+                'must' => [$true],
             ],
             true,
         ];
 
         yield 'must with unresolvable collector' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => false,
-                    ],
-                ],
+                'must' => [$false],
+            ],
+            false,
+        ];
+
+        yield 'must_any with resolvable collector' => [
+            [
+                'must_any' => [$true],
+            ],
+            true,
+        ];
+
+        yield 'must_any with unresolvable collector' => [
+            [
+                'must_any' => [$false],
             ],
             false,
         ];
 
         yield 'must_not with resolvable collector' => [
             [
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
+                'must_not' => [$true],
             ],
             true,
         ];
 
         yield 'must_not with unresolvable collector' => [
             [
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => false,
-                    ],
-                ],
+                'must_not' => [$false],
             ],
             false,
         ];
 
         yield 'must with multiple collectors, unresolvable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'resolvable' => false,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
+                'must' => [$true, $false, $true],
+            ],
+            false,
+        ];
+
+        yield 'must_any with multiple collectors, unresolvable' => [
+            [
+                'must' => [$true, $false, $true],
             ],
             false,
         ];
 
         yield 'must_not with multiple collectors, unresolvable' => [
             [
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'resolvable' => false,
-                    ],
-                ],
+                'must_not' => [$true, $true, $false],
             ],
             false,
         ];
 
         yield 'mixed with must_not unresolvable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => false,
-                    ],
-                ],
+                'must' => [$true],
+                'must_any' => [$true],
+                'must_not' => [$false],
             ],
             false,
         ];
 
         yield 'mixed with must unresolvable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => false,
-                    ],
-                ],
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
+                'must' => [$false],
+                'must_any' => [$true],
+                'must_not' => [$true],
+            ],
+            false,
+        ];
+
+        yield 'mixed with must_any unresolvable' => [
+            [
+                'must' => [$true],
+                'must_any' => [$false],
+                'must_not' => [$true],
             ],
             false,
         ];
 
         yield 'mixed with all resolvable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'resolvable' => true,
-                    ],
-                ],
+                'must' => [$true],
+                'must_any' => [$true],
+                'must_not' => [$true],
             ],
             true,
         ];
@@ -201,148 +164,110 @@ final class BoolCollectorTest extends TestCase
 
     public static function providesatisfiableConfiguration(): iterable
     {
+        $true = [
+            'type' => 'custom',
+            'satisfy' => true,
+        ];
+        $false = [
+            'type' => 'custom',
+            'satisfy' => false,
+        ];
+
         yield 'must with satisfiable collector' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                ],
+                'must' => [$true],
             ],
             true,
         ];
 
         yield 'must with unsatisfiable collector' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                ],
+                'must' => [$false],
+            ],
+            false,
+        ];
+
+        yield 'must_any with satisfiable collector' => [
+            [
+                'must_any' => [$true],
+            ],
+            true,
+        ];
+
+        yield 'must_any with unsatisfiable collector' => [
+            [
+                'must_any' => [$false],
             ],
             false,
         ];
 
         yield 'must_not with satisfiable collector' => [
             [
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                ],
+                'must_not' => [$true],
             ],
             false,
         ];
 
         yield 'must_not with unsatisfiable collector' => [
             [
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                ],
+                'must_not' => [$false],
             ],
             true,
         ];
 
         yield 'must with multiple collectors, unsatisfiable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                ],
+                'must' => [$false, $true, $true],
             ],
             false,
         ];
 
+        yield 'must_any with multiple collectors, one satisfiable' => [
+            [
+                'must_any' => [$false, $true, $false],
+            ],
+            true,
+        ];
+
         yield 'must_not with multiple collectors, unsatisfiable' => [
             [
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                ],
+                'must_not' => [$false, $true, $false],
             ],
             false,
         ];
 
         yield 'mixed with must_not unsatisfiable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                ],
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                ],
+                'must' => [$true],
+                'must_any' => [$true],
+                'must_not' => [$true],
             ],
             false,
         ];
 
         yield 'mixed with must unsatisfiable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                ],
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                ],
+                'must' => [$false],
+                'must_any' => [$true],
+                'must_not' => [$false],
+            ],
+            false,
+        ];
+
+        yield 'mixed with must_any unsatisfiable' => [
+            [
+                'must' => [$true],
+                'must_any' => [$false],
+                'must_not' => [$false],
             ],
             false,
         ];
 
         yield 'mixed with all satisfiable' => [
             [
-                'must' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => true,
-                    ],
-                ],
-                'must_not' => [
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                    [
-                        'type' => 'custom',
-                        'satisfy' => false,
-                    ],
-                ],
+                'must' => [$true],
+                'must_any' => [$true, $false],
+                'must_not' => [$false, $false],
             ],
             true,
         ];
@@ -369,6 +294,12 @@ final class BoolCollectorTest extends TestCase
                         'satisfy' => true,
                     ],
                 ],
+                'must_any' => [
+                    [
+                        'type' => 'custom',
+                        'satisfy' => false,
+                    ],
+                ],
                 'must_not' => [
                     [
                         'type' => 'custom',
@@ -387,7 +318,21 @@ final class BoolCollectorTest extends TestCase
         $reference = new ClassLikeReference(ClassLikeToken::fromFQCN('App\\Foo'));
 
         $this->expectException(InvalidCollectorDefinitionException::class);
-        $this->expectExceptionMessage('"bool" collector must have a "must" or a "must_not" attribute.');
+        $this->expectExceptionMessage('"bool" collector must have at least one of "must", "must_any", or "must_not" attribute.');
+
+        $this->collector->satisfy($config, $reference);
+    }
+
+    public function testThrowsOnEmptyConfiguration(): void
+    {
+        $config = [
+            [],
+            true,
+        ];
+        $reference = new ClassLikeReference(ClassLikeToken::fromFQCN('App\\Foo'));
+
+        $this->expectException(InvalidCollectorDefinitionException::class);
+        $this->expectExceptionMessage('"bool" collector must have at least one of "must", "must_any", or "must_not" attribute.');
 
         $this->collector->satisfy($config, $reference);
     }
