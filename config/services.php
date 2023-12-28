@@ -78,6 +78,8 @@ use Qossmic\Deptrac\Core\Layer\LayerResolver;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use Qossmic\Deptrac\Supportive\Console\Command\AnalyseCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\AnalyseRunner;
+use Qossmic\Deptrac\Supportive\Console\Command\ChangedFilesCommand;
+use Qossmic\Deptrac\Supportive\Console\Command\ChangedFilesRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugDependenciesCommand;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugDependenciesRunner;
 use Qossmic\Deptrac\Supportive\Console\Command\DebugLayerCommand;
@@ -423,6 +425,13 @@ return static function (ContainerConfigurator $container): void {
         ->autowire();
     $services
         ->set(AnalyseCommand::class)
+        ->autowire()
+        ->tag('console.command');
+    $services
+        ->set(ChangedFilesRunner::class)
+        ->autowire();
+    $services
+        ->set(ChangedFilesCommand::class)
         ->autowire()
         ->tag('console.command');
     $services

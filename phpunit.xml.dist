@@ -4,6 +4,36 @@
     <testsuite name="Tests">
       <directory suffix="Test.php">./tests/</directory>
     </testsuite>
+      <testsuite name="Contract">
+          <directory>./tests/Contract</directory>
+      </testsuite>
+      <testsuite name="Analyser">
+          <directory>./tests/Core/Analyser</directory>
+      </testsuite>
+      <testsuite name="Ast">
+          <directory>./tests/Core/Ast</directory>
+      </testsuite>
+      <testsuite name="Dependency">
+          <directory>./tests/Core/Dependency</directory>
+      </testsuite>
+      <testsuite name="InputCollector">
+          <directory>./tests/Core/InputCollector</directory>
+      </testsuite>
+      <testsuite name="Layer">
+          <directory>./tests/Core/Layer</directory>
+      </testsuite>
+      <testsuite name="Console">
+          <directory>./tests/Supportive/Console</directory>
+      </testsuite>
+      <testsuite name="DependencyInjection">
+          <directory>./tests/Supportive/DependencyInjection</directory>
+      </testsuite>
+      <testsuite name="File">
+          <directory>./tests/Supportive/File</directory>
+      </testsuite>
+      <testsuite name="OutputFormatter">
+          <directory>./tests/Supportive/OutputFormatter</directory>
+      </testsuite>
   </testsuites>
   <coverage cacheDirectory="./.cache/phpunit"/>
   <source>
