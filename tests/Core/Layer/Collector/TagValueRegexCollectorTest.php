@@ -25,16 +25,22 @@ final class TagValueRegexCollectorTest extends TestCase
 
     public static function dataProviderSatisfy(): iterable
     {
-        yield [TagValueRegexConfig::create('@foo'), ['@foo' => ['']]];
+        yield 'match tag name, no value' => [
+            TagValueRegexConfig::create('@foo'),
+            ['@foo' => ['']]
+        ];
 
-        yield [TagValueRegexConfig::create('@foo'), ['@foo' => ['anything']]];
+        yield 'match tag name, any value' => [
+            TagValueRegexConfig::create('@foo'),
+            ['@foo' => ['anything']]
+        ];
 
-        yield [
+        yield 'match tag name and value' => [
             TagValueRegexConfig::create('@foo-bar', '/some/'),
             ['@xyz' => [''], '@foo-bar' => ['anything', 'something']],
         ];
 
-        yield [
+        yield 'match value with anchored regex' => [
             TagValueRegexConfig::create('@foo-bar')->match('!thing$!'),
             ['@xyz' => [''], '@foo-bar' => ['anything', 'something']],
         ];
@@ -55,13 +61,16 @@ final class TagValueRegexCollectorTest extends TestCase
 
     public static function dataProviderNotSatisfy(): iterable
     {
-        yield [TagValueRegexConfig::create('@foo'), ['@bar' => ['anything']]];
+        yield 'tag name mismatch' => [
+            TagValueRegexConfig::create('@foo'),
+            ['@bar' => ['anything']]
+        ];
 
-        yield [
+        yield 'value mismatch' => [
             TagValueRegexConfig::create('@foo', '/something/'),
             ['@xyz' => [''], '@foo' => ['anything', 'another thing']],
         ];
-        yield [
+        yield 'anchored regex' => [
             TagValueRegexConfig::create('@foo', '/^thing/'),
             ['@xyz' => [''], '@foo' => ['anything', 'another thing']],
         ];

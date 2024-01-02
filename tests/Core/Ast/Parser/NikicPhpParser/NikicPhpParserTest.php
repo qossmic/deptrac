@@ -37,7 +37,7 @@ final class NikicPhpParserTest extends TestCase
 
     public function testParseDoesNotIgnoreUsesByDefault(): void
     {
-        $parser = $this->getParser();
+        $parser = $this->createParser();
 
         $filePath = __DIR__.'/Fixtures/CountingUseStatements.php';
         self::assertCount(1, $parser->parseFile($filePath)->dependencies);
@@ -48,7 +48,7 @@ final class NikicPhpParserTest extends TestCase
      */
     public function testParseAttributes(): void
     {
-        $parser = $this->getParser();
+        $parser = $this->createParser();
 
         $filePath = __DIR__.'/Fixtures/Attributes.php';
         $astFileReference = $parser->parseFile($filePath);
@@ -76,7 +76,7 @@ final class NikicPhpParserTest extends TestCase
 
     public function testParseClassDocTags(): void
     {
-        $parser = $this->getParser();
+        $parser = $this->createParser();
         $filePath = __DIR__.'/Fixtures/DocTags.php';
         $astFileReference = $parser->parseFile($filePath);
 
@@ -95,7 +95,7 @@ final class NikicPhpParserTest extends TestCase
 
     public function testParseFunctionDocTags(): void
     {
-        $parser = $this->getParser();
+        $parser = $this->createParser();
         $filePath = __DIR__.'/Fixtures/Functions.php';
         $astFileReference = $parser->parseFile($filePath);
 
@@ -121,7 +121,7 @@ final class NikicPhpParserTest extends TestCase
         return $refsByName;
     }
 
-    private function getParser(): NikicPhpParser
+    private function createParser(): NikicPhpParser
     {
         $typeResolver = new TypeResolver();
         $parser = new NikicPhpParser(
