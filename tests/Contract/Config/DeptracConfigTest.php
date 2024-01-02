@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Contract\Analyser;
 
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Contract\Config\Analyser;
+use Qossmic\Deptrac\Contract\Config\AnalyserConfig;
 use Qossmic\Deptrac\Contract\Config\DeptracConfig;
 use Qossmic\Deptrac\Contract\Config\EmitterType;
 use Qossmic\Deptrac\Supportive\DependencyInjection\Configuration;
@@ -28,7 +28,7 @@ final class DeptracConfigTest extends TestCase
         $expected = [];
         yield 'empty' => [$config, $expected];
 
-        $config = (new DeptracConfig())->analyser(Analyser::create()->types(
+        $config = (new DeptracConfig())->analyser(AnalyserConfig::create()->types(
             EmitterType::FUNCTION_CALL
         ));
         $expected = [
@@ -39,7 +39,7 @@ final class DeptracConfigTest extends TestCase
         yield 'analyser types' => [$config, $expected];
 
         $config = (new DeptracConfig())->analyser(
-            Analyser::create()->internalTag('@layer-internal')
+            AnalyserConfig::create()->internalTag('@layer-internal')
         );
         $expected = [
             'analyser' => [

@@ -21,21 +21,21 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $formatters = [];
     /** @var array<Ruleset> */
     private array $rulesets = [];
-    private ?Analyser $analyser = null;
+    private ?AnalyserConfig $analyser = null;
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
     /** @var array<string> */
     private array $excludeFiles = [];
 
     /**
-     * @deprecated use analyser(Analyser::create()) instead
+     * @deprecated use analyser(AnalyserConfig::create()) instead
      */
     public function analysers(EmitterType ...$types): self
     {
-        return $this->analyser(Analyser::create($types));
+        return $this->analyser(AnalyserConfig::create($types));
     }
 
-    public function analyser(Analyser $analyser): self
+    public function analyser(AnalyserConfig $analyser): self
     {
         $this->analyser = $analyser;
 

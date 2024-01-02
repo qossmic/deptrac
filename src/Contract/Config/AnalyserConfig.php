@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Contract\Config;
 
-final class Analyser
+final class AnalyserConfig
 {
     /** @var array<string, EmitterType> */
     private array $types = [];
