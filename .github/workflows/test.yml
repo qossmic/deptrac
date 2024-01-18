@@ -45,11 +45,10 @@ jobs:
 
   infection:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
-        os: ubuntu-20.04
-        php-version: 8.1
+        os: [ubuntu-20.04]
+        php-version: [8.1]
         include:
           - os: ubuntu-20.04
             php-version: 8.2
