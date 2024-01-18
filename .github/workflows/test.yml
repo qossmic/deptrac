@@ -16,15 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04]
-        php-version: [8.1]
-        experimental: [false]
-        include:
-          - os: ubuntu-22.04
-            php-version: 8.2
-            experimental: true
-          - os: ubuntu-22.04
-            php-version: 8.3
-            experimental: true
+        php-version: [8.1, 8.2, 8.3]
 
     steps:
       - name: "Checkout"
@@ -48,12 +40,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        php-version: [8.1]
-        include:
-          - os: ubuntu-22.04
-            php-version: 8.2
-          - os: ubuntu-22.04
-            php-version: 8.3
+        php-version: [8.1, 8.2, 8.3]
 
     steps:
       - name: "Checkout"
@@ -92,15 +79,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04]
-        php-version: [8.1]
+        php-version: [8.1, 8.2, 8.3]
         experimental: [false]
-        include:
-          - os: ubuntu-22.04
-            php-version: 8.2
-            experimental: true
-          - os: ubuntu-22.04
-            php-version: 8.3
-            experimental: true
 
     steps:
       - name: "Checkout"
