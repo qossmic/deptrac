@@ -125,7 +125,7 @@ return static function (ContainerConfigurator $container): void {
      */
     $services->set(EventDispatcher::class);
     $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
-    $services->alias(\Symfony\Component\EventDispatcher\EventDispatcherInterface::class, EventDispatcher::class);
+    $services->alias(Symfony\Component\EventDispatcher\EventDispatcherInterface::class, EventDispatcher::class);
     $services->alias('event_dispatcher', EventDispatcher::class);
     $services
         ->set(FileInputCollector::class)

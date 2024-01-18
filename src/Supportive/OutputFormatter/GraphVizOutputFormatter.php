@@ -224,7 +224,7 @@ abstract class GraphVizOutputFormatter implements OutputFormatterInterface
     }
 
     /**
-     * @throws \Qossmic\Deptrac\Contract\OutputFormatter\OutputException
+     * @throws OutputException
      */
     abstract protected function output(Graph $graph, OutputInterface $output, OutputFormatterInput $outputFormatterInput): void;
 }

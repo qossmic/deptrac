@@ -69,10 +69,10 @@ class LayerForTokenAnalyser
      *
      * @return array<string, string[]>
      *
-     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
-     * @throws \Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException
-     * @throws \Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException
-     * @throws \Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException
+     * @throws UnrecognizedTokenException
+     * @throws InvalidLayerDefinitionException
+     * @throws InvalidCollectorDefinitionException
+     * @throws CouldNotParseFileException
      */
     private function findLayersForReferences(array $references, string $tokenName, AstMap $astMap): array
     {

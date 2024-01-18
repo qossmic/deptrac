@@ -60,7 +60,7 @@ class RulesetUsageAnalyser
     /**
      * @return array<string, array<string, 0>> sourceLayer -> (targetLayer -> 0)
      *
-     * @throws \Qossmic\Deptrac\Contract\Layer\CircularReferenceException
+     * @throws CircularReferenceException
      */
     private function rulesetResolution(): array
     {
@@ -84,12 +84,12 @@ class RulesetUsageAnalyser
      *
      * @return array<string, array<string, int>>
      *
-     * @throws \Qossmic\Deptrac\Core\Ast\AstException
-     * @throws \Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException
-     * @throws \Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfigurationException
-     * @throws \Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException
-     * @throws \Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException
-     * @throws \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException
+     * @throws AstException
+     * @throws CouldNotParseFileException
+     * @throws InvalidEmitterConfigurationException
+     * @throws InvalidCollectorDefinitionException
+     * @throws InvalidLayerDefinitionException
+     * @throws UnrecognizedTokenException
      */
     private function findRulesetUsages(array $rulesets): array
     {
