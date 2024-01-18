@@ -1,4 +1,4 @@
-BOX_BIN := ./vendor/bin/box
+BOX_BIN := ./build/box.phar
 COMPOSER_BIN := composer
 PHP_BIN := php
 PHP_CS_FIXER_BIN := ./vendor/bin/php-cs-fixer

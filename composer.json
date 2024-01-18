@@ -61,7 +61,6 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.4",
-        "humbug/box": "^4.1.0",
         "infection/infection": "^0.26.16",
         "phpstan/phpstan": "^1.6.8",
         "phpstan/phpstan-symfony": "^1.1",
