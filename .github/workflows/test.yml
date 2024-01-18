@@ -22,6 +22,9 @@ jobs:
           - os: ubuntu-20.04
             php-version: 8.2
             experimental: true
+          - os: ubuntu-20.04
+            php-version: 8.3
+            experimental: true
 
     steps:
       - name: "Checkout"
@@ -45,9 +48,13 @@ jobs:
 
     strategy:
       matrix:
+        os: ubuntu-20.04
+        php-version: 8.1
         include:
           - os: ubuntu-20.04
-            php-version: 8.1
+            php-version: 8.2
+          - os: ubuntu-20.04
+            php-version: 8.3
 
     steps:
       - name: "Checkout"
@@ -91,6 +98,9 @@ jobs:
         include:
           - os: ubuntu-20.04
             php-version: 8.2
+            experimental: true
+          - os: ubuntu-20.04
+            php-version: 8.3
             experimental: true
 
     steps:

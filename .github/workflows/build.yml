@@ -61,6 +61,9 @@ jobs:
           - os: ubuntu-20.04
             php-version: 8.2
             experimental: true
+          - os: ubuntu-20.04
+            php-version: 8.3
+            experimental: true
 
     steps:
       - name: "Checkout"
