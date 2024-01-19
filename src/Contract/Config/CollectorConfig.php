@@ -12,7 +12,7 @@ abstract class CollectorConfig
         $this->private = \true;
         return $this;
     }
-    /** @return array{'type': string, 'private': bool} */
+    /** @return array{'type': string, 'private': bool, ...} */
     public function toArray() : array
     {
         return ['type' => $this->collectorType->value, 'private' => $this->private];

@@ -12,8 +12,13 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
  */
 class DependsOnInternalToken implements ViolationCreatingInterface
 {
-    public function __construct(private readonly EventHelper $eventHelper)
+    private ?string $internalTag;
+    /**
+     * @param array{internal_tag:string|null, ...} $config
+     */
+    public function __construct(private readonly EventHelper $eventHelper, array $config)
     {
+        $this->internalTag = $config['internal_tag'];
     }
     public static function getSubscribedEvents()
     {
@@ -23,9 +28,15 @@ class DependsOnInternalToken implements ViolationCreatingInterface
     {
         $ruleset = $event->getResult();
         foreach ($event->dependentLayers as $dependentLayer => $_) {
-            if ($event->dependerLayer !== $dependentLayer && $event->dependentReference instanceof ClassLikeReference && $event->dependentReference->isInternal) {
-                $this->eventHelper->addSkippableViolation($event, $ruleset, $dependentLayer, $this);
-                $event->stopPropagation();
+            if ($event->dependerLayer !== $dependentLayer && $event->dependentReference instanceof ClassLikeReference) {
+                $isInternal = $event->dependentReference->hasTag('@deptrac-internal');
+                if (!$isInternal && null !== $this->internalTag) {
+                    $isInternal = $event->dependentReference->hasTag($this->internalTag);
+                }
+                if ($isInternal) {
+                    $this->eventHelper->addSkippableViolation($event, $ruleset, $dependentLayer, $this);
+                    $event->stopPropagation();
+                }
             }
         }
     }

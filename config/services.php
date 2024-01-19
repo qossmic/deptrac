@@ -73,6 +73,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\MethodCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\TagValueRegexCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\TraitCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\UsesCollector;
 use Qossmic\Deptrac\Core\Layer\LayerResolver;
@@ -174,6 +175,7 @@ return static function (ContainerConfigurator $container) : void {
     $services->set(ClassCollector::class)->tag('collector', ['type' => CollectorType::TYPE_CLASS->value]);
     $services->set(ClassLikeCollector::class)->tag('collector', ['type' => CollectorType::TYPE_CLASSLIKE->value]);
     $services->set(ClassNameRegexCollector::class)->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME_REGEX->value]);
+    $services->set(TagValueRegexCollector::class)->tag('collector', ['type' => CollectorType::TYPE_TAG_VALUE_REGEX->value]);
     $services->set(DirectoryCollector::class)->tag('collector', ['type' => CollectorType::TYPE_DIRECTORY->value]);
     $services->set(ExtendsCollector::class)->tag('collector', ['type' => CollectorType::TYPE_EXTENDS->value]);
     $services->set(FunctionNameCollector::class)->tag('collector', ['type' => CollectorType::TYPE_FUNCTION_NAME->value]);
@@ -199,7 +201,7 @@ return static function (ContainerConfigurator $container) : void {
     $services->set(AllowDependencyHandler::class)->tag('kernel.event_subscriber');
     $services->set(DependsOnDisallowedLayer::class)->tag('kernel.event_subscriber');
     $services->set(DependsOnPrivateLayer::class)->tag('kernel.event_subscriber');
-    $services->set(DependsOnInternalToken::class)->tag('kernel.event_subscriber');
+    $services->set(DependsOnInternalToken::class)->tag('kernel.event_subscriber')->args(['$config' => param('analyser')]);
     $services->set(UnmatchedSkippedViolations::class)->tag('kernel.event_subscriber');
     $services->set(EventHelper::class)->args(['$skippedViolations' => param('skip_violations')]);
     $services->set(DependencyLayersAnalyser::class);

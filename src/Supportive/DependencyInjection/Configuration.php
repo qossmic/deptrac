@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
      */
     private function appendEmitterTypes(ArrayNodeDefinition $node) : void
     {
-        $node->children()->arrayNode('analyser')->addDefaultsIfNotSet()->children()->arrayNode('types')->isRequired()->defaultValue([EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value])->scalarPrototype()->beforeNormalization()->ifNotInArray(EmitterType::values())->thenInvalid('Invalid type %s')->end()->end()->end()->end()->end()->end();
+        $node->children()->arrayNode('analyser')->addDefaultsIfNotSet()->children()->scalarNode('internal_tag')->defaultNull()->end()->arrayNode('types')->defaultValue([EmitterType::CLASS_TOKEN->value, EmitterType::FUNCTION_TOKEN->value])->scalarPrototype()->beforeNormalization()->ifNotInArray(EmitterType::values())->thenInvalid('Invalid type %s')->end()->end()->end()->end()->end()->end();
     }
     private function appendIgnoreUncoveredInternalClasses(ArrayNodeDefinition $node) : void
     {

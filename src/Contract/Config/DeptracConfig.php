@@ -18,17 +18,21 @@ final class DeptracConfig implements ConfigBuilderInterface
     private array $formatters = [];
     /** @var array<Ruleset> */
     private array $rulesets = [];
-    /** @var array<string, EmitterType> */
-    private array $analyser = [];
+    private ?\Qossmic\Deptrac\Contract\Config\AnalyserConfig $analyser = null;
     /** @var array<string, array<string>> */
     private array $skipViolations = [];
     /** @var array<string> */
     private array $excludeFiles = [];
+    /**
+     * @deprecated use analyser(AnalyserConfig::create()) instead
+     */
     public function analysers(\Qossmic\Deptrac\Contract\Config\EmitterType ...$types) : self
     {
-        foreach ($types as $type) {
-            $this->analyser[$type->value] = $type;
-        }
+        return $this->analyser(\Qossmic\Deptrac\Contract\Config\AnalyserConfig::create($types));
+    }
+    public function analyser(\Qossmic\Deptrac\Contract\Config\AnalyserConfig $analyser) : self
+    {
+        $this->analyser = $analyser;
         return $this;
     }
     /**
@@ -87,8 +91,8 @@ final class DeptracConfig implements ConfigBuilderInterface
         if ([] !== $this->paths) {
             $config['paths'] = $this->paths;
         }
-        if ([] !== $this->analyser) {
-            $config['analyser']['types'] = \array_map(static fn(\Qossmic\Deptrac\Contract\Config\EmitterType $emitterType) => $emitterType->value, $this->analyser);
+        if ($this->analyser) {
+            $config['analyser'] = $this->analyser->toArray();
         }
         if ([] !== $this->formatters) {
             $config['formatters'] = \array_map(static fn(FormatterConfigInterface $formatterConfig) => $formatterConfig->toArray(), $this->formatters);

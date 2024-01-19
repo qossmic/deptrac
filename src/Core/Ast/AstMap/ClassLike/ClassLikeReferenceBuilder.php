@@ -13,43 +13,48 @@ final class ClassLikeReferenceBuilder extends ReferenceBuilder
     private array $inherits = [];
     /**
      * @param list<string> $tokenTemplates
+     * @param array<string,list<string>> $tags
      */
-    private function __construct(array $tokenTemplates, string $filepath, private readonly \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken $classLikeToken, private readonly \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType $classLikeType, private readonly bool $isInternal)
+    private function __construct(array $tokenTemplates, string $filepath, private readonly \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken $classLikeToken, private readonly \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType $classLikeType, private readonly array $tags)
     {
         parent::__construct($tokenTemplates, $filepath);
     }
     /**
      * @param list<string> $classTemplates
+     * @param array<string,list<string>> $tags
      */
-    public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal) : self
+    public static function createClassLike(string $filepath, string $classLikeName, array $classTemplates, array $tags) : self
     {
-        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_CLASSLIKE, $isInternal);
+        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_CLASSLIKE, $tags);
     }
     /**
      * @param list<string> $classTemplates
+     * @param array<string,list<string>> $tags
      */
-    public static function createClass(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal) : self
+    public static function createClass(string $filepath, string $classLikeName, array $classTemplates, array $tags) : self
     {
-        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_CLASS, $isInternal);
+        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_CLASS, $tags);
     }
     /**
      * @param list<string> $classTemplates
+     * @param array<string,list<string>> $tags
      */
-    public static function createTrait(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal) : self
+    public static function createTrait(string $filepath, string $classLikeName, array $classTemplates, array $tags) : self
     {
-        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_TRAIT, $isInternal);
+        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_TRAIT, $tags);
     }
     /**
      * @param list<string> $classTemplates
+     * @param array<string,list<string>> $tags
      */
-    public static function createInterface(string $filepath, string $classLikeName, array $classTemplates, bool $isInternal) : self
+    public static function createInterface(string $filepath, string $classLikeName, array $classTemplates, array $tags) : self
     {
-        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_INTERFACE, $isInternal);
+        return new self($classTemplates, $filepath, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken::fromFQCN($classLikeName), \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_INTERFACE, $tags);
     }
     /** @internal */
     public function build() : \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference
     {
-        return new \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference($this->classLikeToken, $this->classLikeType, $this->inherits, $this->dependencies, $this->isInternal);
+        return new \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference($this->classLikeToken, $this->classLikeType, $this->inherits, $this->dependencies, $this->tags);
     }
     public function extends(string $classLikeName, int $occursAtLine) : self
     {
