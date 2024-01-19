@@ -28,28 +28,28 @@ final class ImplementsCollectorTest extends TestCase
     {
         $fooFileReferenceBuilder = FileReferenceBuilder::create('foo.php');
         $fooFileReferenceBuilder
-            ->newClassLike('App\Foo', [], false)
+            ->newClassLike('App\Foo', [], [])
             ->implements('App\Bar', 2);
         $fooFileReference = $fooFileReferenceBuilder->build();
 
         $barFileReferenceBuilder = FileReferenceBuilder::create('bar.php');
         $barFileReferenceBuilder
-            ->newClassLike('App\Bar', [], false)
+            ->newClassLike('App\Bar', [], [])
             ->implements('App\Baz', 2);
         $barFileReference = $barFileReferenceBuilder->build();
 
         $bazFileReferenceBuilder = FileReferenceBuilder::create('baz.php');
-        $bazFileReferenceBuilder->newClassLike('App\Baz', [], false);
+        $bazFileReferenceBuilder->newClassLike('App\Baz', [], []);
         $bazFileReference = $bazFileReferenceBuilder->build();
 
         $fizTraitFileReferenceBuilder = FileReferenceBuilder::create('fiztrait.php');
         $fizTraitFileReferenceBuilder
-            ->newClassLike('App\FizTrait', [], false);
+            ->newClassLike('App\FizTrait', [], []);
         $fizTraitFileReference = $fizTraitFileReferenceBuilder->build();
 
         $fooBarFileReferenceBuilder = FileReferenceBuilder::create('foobar.php');
         $fooBarFileReferenceBuilder
-            ->newClassLike('App\FooBar', [], false)
+            ->newClassLike('App\FooBar', [], [])
             ->extends('App\Foo', 2)
             ->trait('App\FizTrait', 4);
         $fooBarFileReference = $fooBarFileReferenceBuilder->build();

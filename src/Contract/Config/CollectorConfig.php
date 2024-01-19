@@ -16,7 +16,7 @@ abstract class CollectorConfig
         return $this;
     }
 
-    /** @return array{'type': string, 'private': bool} */
+    /** @return array{'type': string, 'private': bool, ...} */
     public function toArray(): array
     {
         return [

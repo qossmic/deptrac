@@ -97,6 +97,31 @@ deptrac:
 Every class name that matches the regular expression becomes a part of the
 *controller* layer.
 
+## `tagValueRegex` Collector
+
+The `tagValueRegex` collector allows collecting classes and functions by
+matching the name and value of any tag in their phpdoc block, such as @internal
+or @deprecated.
+
+Any matching class will be added to the assigned layer.
+
+```yaml
+deptrac:
+  layers:
+    - name: Deprecated
+      collectors:
+        - type: tagValueRegex
+          tag: '@deprecated'
+    - name: DeprecatedSinceV2
+      collectors:
+        - type: tagValueRegex
+          tag: '@deprecated'
+          value: '/^since v2/i'
+```
+All classes tagged with "@deprecated" become part of the
+*Deprecated* layer. All classes that specify that they have been
+deprecated since v2 also become part of the *DeprecatedSinceV2* layer.
+
 ## `composer` Collector
 
 The `composer` collector allows you to define dependencies on composer `require` or `require-dev` packages that follow PSR-0 or PSR-4 autoloading convention. With this collector you can for example enforce:

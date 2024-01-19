@@ -8,6 +8,7 @@ deptrac:
     - ./src
 
   analyser:
+    internal_tag: "@internal"
     types:
       - class
       - class_superglobal

@@ -72,6 +72,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\LayerCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\MethodCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\PhpInternalCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\SuperglobalCollector;
+use Qossmic\Deptrac\Core\Layer\Collector\TagValueRegexCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\TraitCollector;
 use Qossmic\Deptrac\Core\Layer\Collector\UsesCollector;
 use Qossmic\Deptrac\Core\Layer\LayerResolver;
@@ -259,6 +260,9 @@ return static function (ContainerConfigurator $container): void {
         ->set(ClassNameRegexCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_CLASS_NAME_REGEX->value]);
     $services
+        ->set(TagValueRegexCollector::class)
+        ->tag('collector', ['type' => CollectorType::TYPE_TAG_VALUE_REGEX->value]);
+    $services
         ->set(DirectoryCollector::class)
         ->tag('collector', ['type' => CollectorType::TYPE_DIRECTORY->value]);
     $services
@@ -336,7 +340,10 @@ return static function (ContainerConfigurator $container): void {
         ->tag('kernel.event_subscriber');
     $services
         ->set(DependsOnInternalToken::class)
-        ->tag('kernel.event_subscriber');
+        ->tag('kernel.event_subscriber')
+        ->args([
+            '$config' => param('analyser'),
+        ]);
     $services
         ->set(UnmatchedSkippedViolations::class)
         ->tag('kernel.event_subscriber');

@@ -41,7 +41,7 @@ final class AttributeCollectorTest extends TestCase
     public function testSatisfy(array $config, bool $expected): void
     {
         $classLikeReference = FileReferenceBuilder::create('Foo.php')
-            ->newClass('App\Foo', [], false)
+            ->newClass('App\Foo', [], [])
             ->attribute('App\MyAttribute', 2)
             ->attribute('MyAttribute', 3)
             ->build();
