@@ -10,7 +10,6 @@ on:
 jobs:
   unit-tests:
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       fail-fast: false
@@ -73,14 +72,12 @@ jobs:
 
   deptrac:
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-22.04]
         php-version: [8.1, 8.2, 8.3]
-        experimental: [false]
 
     steps:
       - name: "Checkout"
