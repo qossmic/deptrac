@@ -15,9 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          - os: ubuntu-20.04
-            php-version: 8.1
+        os: [ubuntu-22.04]
+        php-version: [8.1, 8.2, 8.3]
 
     steps:
       - name: "Checkout"
@@ -49,18 +48,12 @@ jobs:
     needs: build
 
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
-        php-version: [8.1]
-        experimental: [false]
-        include:
-          - os: ubuntu-20.04
-            php-version: 8.2
-            experimental: true
+        os: [ubuntu-22.04]
+        php-version: [8.1, 8.2, 8.3]
 
     steps:
       - name: "Checkout"
