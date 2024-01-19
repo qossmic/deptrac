@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Supportive\Time;
 
 /**
@@ -9,19 +8,15 @@ namespace Qossmic\Deptrac\Supportive\Time;
  */
 final class StartedPeriod
 {
-    private function __construct(
-        public readonly float|int $startedAt
-    ) {}
-
-    public static function start(): self
+    private function __construct(public readonly float|int $startedAt)
     {
-        return new self(
-            hrtime(true),
-        );
     }
-
-    public function stop(): Period
+    public static function start() : self
     {
-        return Period::stop($this);
+        return new self(\hrtime(\true));
+    }
+    public function stop() : \Qossmic\Deptrac\Supportive\Time\Period
+    {
+        return \Qossmic\Deptrac\Supportive\Time\Period::stop($this);
     }
 }

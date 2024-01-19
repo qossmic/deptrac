@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Contract\OutputFormatter;
 
 /**
@@ -9,10 +8,7 @@ namespace Qossmic\Deptrac\Contract\OutputFormatter;
  */
 final class OutputFormatterInput
 {
-    public function __construct(
-        public readonly ?string $outputPath,
-        public readonly bool $reportSkipped,
-        public readonly bool $reportUncovered,
-        public readonly bool $failOnUncovered
-    ) {}
+    public function __construct(public readonly ?string $outputPath, public readonly bool $reportSkipped, public readonly bool $reportUncovered, public readonly bool $failOnUncovered)
+    {
+    }
 }

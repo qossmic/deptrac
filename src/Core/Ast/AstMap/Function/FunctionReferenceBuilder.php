@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\AstMap\Function;
 
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
-
 class FunctionReferenceBuilder extends ReferenceBuilder
 {
     /**
@@ -15,21 +13,16 @@ class FunctionReferenceBuilder extends ReferenceBuilder
     {
         parent::__construct($tokenTemplates, $filepath);
     }
-
     /**
      * @param list<string> $functionTemplates
      */
-    public static function create(string $filepath, string $functionName, array $functionTemplates): self
+    public static function create(string $filepath, string $functionName, array $functionTemplates) : self
     {
         return new self($functionTemplates, $filepath, $functionName);
     }
-
     /** @internal */
-    public function build(): FunctionReference
+    public function build() : \Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference
     {
-        return new FunctionReference(
-            FunctionToken::fromFQCN($this->functionName),
-            $this->dependencies
-        );
+        return new \Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference(\Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken::fromFQCN($this->functionName), $this->dependencies);
     }
 }

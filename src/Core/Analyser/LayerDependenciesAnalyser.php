@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Analyser;
 
 use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
@@ -15,60 +14,47 @@ use Qossmic\Deptrac\Core\Dependency\InvalidEmitterConfigurationException;
 use Qossmic\Deptrac\Core\Dependency\TokenResolver;
 use Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
-
 class LayerDependenciesAnalyser
 {
-    public function __construct(
-        private readonly AstMapExtractor $astMapExtractor,
-        private readonly TokenResolver $tokenResolver,
-        private readonly DependencyResolver $dependencyResolver,
-        private readonly LayerResolverInterface $layerResolver
-    ) {}
-
+    public function __construct(private readonly AstMapExtractor $astMapExtractor, private readonly TokenResolver $tokenResolver, private readonly DependencyResolver $dependencyResolver, private readonly LayerResolverInterface $layerResolver)
+    {
+    }
     /**
      * @return array<string, list<Uncovered>>
      *
      * @throws AnalyserException
      */
-    public function getDependencies(string $layer, ?string $targetLayer): array
+    public function getDependencies(string $layer, ?string $targetLayer) : array
     {
         try {
             $result = [];
             $astMap = $this->astMapExtractor->extract();
             $dependencies = $this->dependencyResolver->resolve($astMap);
             foreach ($dependencies->getDependenciesAndInheritDependencies() as $dependency) {
-                $dependerLayerNames = $this->layerResolver->getLayersForReference(
-                    $this->tokenResolver->resolve($dependency->getDepender(), $astMap),
-                );
-                if (array_key_exists($layer, $dependerLayerNames)) {
-                    $dependentLayerNames = $this->layerResolver->getLayersForReference(
-                        $this->tokenResolver->resolve($dependency->getDependent(), $astMap),
-                    );
+                $dependerLayerNames = $this->layerResolver->getLayersForReference($this->tokenResolver->resolve($dependency->getDepender(), $astMap));
+                if (\array_key_exists($layer, $dependerLayerNames)) {
+                    $dependentLayerNames = $this->layerResolver->getLayersForReference($this->tokenResolver->resolve($dependency->getDependent(), $astMap));
                     foreach ($dependentLayerNames as $dependentLayerName => $_) {
-                        if ($layer === $dependentLayerName
-                            || (null !== $targetLayer
-                                && $targetLayer !== $dependentLayerName)
-                        ) {
+                        if ($layer === $dependentLayerName || null !== $targetLayer && $targetLayer !== $dependentLayerName) {
                             continue;
                         }
                         $result[$dependentLayerName][] = new Uncovered($dependency, $dependentLayerName);
                     }
                 }
             }
-
             return $result;
         } catch (InvalidEmitterConfigurationException $e) {
-            throw AnalyserException::invalidEmitterConfiguration($e);
+            throw \Qossmic\Deptrac\Core\Analyser\AnalyserException::invalidEmitterConfiguration($e);
         } catch (UnrecognizedTokenException $e) {
-            throw AnalyserException::unrecognizedToken($e);
+            throw \Qossmic\Deptrac\Core\Analyser\AnalyserException::unrecognizedToken($e);
         } catch (InvalidLayerDefinitionException $e) {
-            throw AnalyserException::invalidLayerDefinition($e);
+            throw \Qossmic\Deptrac\Core\Analyser\AnalyserException::invalidLayerDefinition($e);
         } catch (InvalidCollectorDefinitionException $e) {
-            throw AnalyserException::invalidCollectorDefinition($e);
+            throw \Qossmic\Deptrac\Core\Analyser\AnalyserException::invalidCollectorDefinition($e);
         } catch (AstException $e) {
-            throw AnalyserException::failedAstParsing($e);
+            throw \Qossmic\Deptrac\Core\Analyser\AnalyserException::failedAstParsing($e);
         } catch (CouldNotParseFileException $e) {
-            throw AnalyserException::couldNotParseFile($e);
+            throw \Qossmic\Deptrac\Core\Analyser\AnalyserException::couldNotParseFile($e);
         }
     }
 }

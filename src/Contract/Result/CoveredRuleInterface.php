@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Contract\Result;
 
 /**
@@ -12,9 +11,8 @@ namespace Qossmic\Deptrac\Contract\Result;
  * This does not mean that it is allowed to exist, just that it is covered.
  * In that sense it exists as a complement to `Uncovered` class
  */
-interface CoveredRuleInterface extends RuleInterface
+interface CoveredRuleInterface extends \Qossmic\Deptrac\Contract\Result\RuleInterface
 {
-    public function getDependerLayer(): string;
-
-    public function getDependentLayer(): string;
+    public function getDependerLayer() : string;
+    public function getDependentLayer() : string;
 }

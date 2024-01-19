@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
-
 interface ConditionalCollectorInterface extends CollectorInterface
 {
     /**
@@ -13,5 +11,5 @@ interface ConditionalCollectorInterface extends CollectorInterface
      *
      * @throws \Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException
      */
-    public function resolvable(array $config): bool;
+    public function resolvable(array $config) : bool;
 }

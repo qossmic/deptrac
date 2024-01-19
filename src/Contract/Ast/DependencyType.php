@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Contract\Ast;
 
 /**
@@ -10,7 +9,7 @@ namespace Qossmic\Deptrac\Contract\Ast;
  * You can use this information to enrich the displayed output to the user in
  * your output formatter.
  */
-enum DependencyType: string
+enum DependencyType : string
 {
     case USE = 'use';
     case INHERIT = 'inherit';
