@@ -1,4 +1,3 @@
-vendor/*
 coverage/*
 tools/
 .box_dump/
