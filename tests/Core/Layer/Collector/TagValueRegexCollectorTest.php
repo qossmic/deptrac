@@ -27,12 +27,12 @@ final class TagValueRegexCollectorTest extends TestCase
     {
         yield 'match tag name, no value' => [
             TagValueRegexConfig::create('@foo'),
-            ['@foo' => ['']]
+            ['@foo' => ['']],
         ];
 
         yield 'match tag name, any value' => [
             TagValueRegexConfig::create('@foo'),
-            ['@foo' => ['anything']]
+            ['@foo' => ['anything']],
         ];
 
         yield 'match tag name and value' => [
@@ -63,7 +63,7 @@ final class TagValueRegexCollectorTest extends TestCase
     {
         yield 'tag name mismatch' => [
             TagValueRegexConfig::create('@foo'),
-            ['@bar' => ['anything']]
+            ['@bar' => ['anything']],
         ];
 
         yield 'value mismatch' => [
