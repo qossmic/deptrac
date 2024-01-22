@@ -17,7 +17,7 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
 
-class DependsOnInternalTokenTest extends TestCase
+final class DependsOnInternalTokenTest extends TestCase
 {
     public function testGetSubscribedEvents(): void
     {
