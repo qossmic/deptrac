@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+<files psalm-version="5.20.0@3f284e96c9d9be6fe6b15c79416e1d1903dcfef4">
   <file src="src/Contract/Result/OutputResult.php">
     <InvalidReturnStatement>
       <code><![CDATA[array_key_exists($type, $this->rules) ? array_values($this->rules[$type]) : []]]></code>
@@ -7,6 +7,27 @@
     <InvalidReturnType>
       <code><![CDATA[list<T>]]></code>
     </InvalidReturnType>
+  </file>
+  <file src="src/Core/Ast/AstMap/ClassLike/ClassLikeToken.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Ast/AstMap/Function/FunctionToken.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Ast/Parser/TypeScope.php">
+    <RiskyTruthyFalsyComparison>
+      <code>$alias</code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/Core/Layer/Collector/BoolCollector.php">
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[!$configuration['must']]]></code>
+      <code><![CDATA[!$configuration['must_not']]]></code>
+    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/Core/Layer/Collector/ComposerFilesParser.php">
     <InvalidReturnStatement>
@@ -18,5 +39,35 @@
      *     autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
      * }>]]></code>
     </InvalidReturnType>
+  </file>
+  <file src="src/Core/Layer/Collector/DirectoryCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$validatedPattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/GlobCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$validatedPattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/MethodCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/RegexCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/TagValueRegexCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Supportive/Console/Command/DebugLayerRunner.php">
+    <RiskyTruthyFalsyComparison>
+      <code>$layer</code>
+    </RiskyTruthyFalsyComparison>
   </file>
 </files>
