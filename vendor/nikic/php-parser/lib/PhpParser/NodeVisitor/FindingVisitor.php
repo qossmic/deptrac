@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser\NodeVisitor;
+namespace DEPTRAC_202402\PhpParser\NodeVisitor;
 
-use DEPTRAC_202401\PhpParser\Node;
-use DEPTRAC_202401\PhpParser\NodeVisitorAbstract;
+use DEPTRAC_202402\PhpParser\Node;
+use DEPTRAC_202402\PhpParser\NodeVisitorAbstract;
 /**
  * This visitor can be used to find and collect all nodes satisfying some criterion determined by
  * a filter callback.

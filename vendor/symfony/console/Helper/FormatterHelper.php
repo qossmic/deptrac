@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Console\Helper;
+namespace DEPTRAC_202402\Symfony\Component\Console\Helper;
 
-use DEPTRAC_202401\Symfony\Component\Console\Formatter\OutputFormatter;
+use DEPTRAC_202402\Symfony\Component\Console\Formatter\OutputFormatter;
 /**
  * The Formatter class provides helpers to format messages.
  *

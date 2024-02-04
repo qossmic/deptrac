@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * Compresses the given data string using LZF encoding.

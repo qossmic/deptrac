@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\VarExporter\Internal;
+namespace DEPTRAC_202402\Symfony\Component\VarExporter\Internal;
 
-use DEPTRAC_202401\Symfony\Component\VarExporter\Exception\ClassNotFoundException;
-use DEPTRAC_202401\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
+use DEPTRAC_202402\Symfony\Component\VarExporter\Exception\ClassNotFoundException;
+use DEPTRAC_202402\Symfony\Component\VarExporter\Exception\NotInstantiableTypeException;
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *

@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Console;
+namespace DEPTRAC_202402\Symfony\Component\Console;
 
-use DEPTRAC_202401\Symfony\Component\Console\Output\AnsiColorMode;
+use DEPTRAC_202402\Symfony\Component\Console\Output\AnsiColorMode;
 class Terminal
 {
     public const DEFAULT_COLOR_MODE = AnsiColorMode::Ansi4;

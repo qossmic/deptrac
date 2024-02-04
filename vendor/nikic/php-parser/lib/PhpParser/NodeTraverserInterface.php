@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser;
+namespace DEPTRAC_202402\PhpParser;
 
 interface NodeTraverserInterface
 {

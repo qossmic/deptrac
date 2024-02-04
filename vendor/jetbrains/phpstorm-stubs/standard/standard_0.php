@@ -1,15 +1,15 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of standard v.5.3.2-0.dotdeb.1
-use DEPTRAC_202401\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202401\JetBrains\PhpStorm\ExpectedValues;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\ExpectedValues;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 class __PHP_Incomplete_Class
 {
     /**
@@ -17,7 +17,7 @@ class __PHP_Incomplete_Class
      */
     public $__PHP_Incomplete_Class_Name;
 }
-\class_alias('DEPTRAC_202401\\__PHP_Incomplete_Class', '__PHP_Incomplete_Class', \false);
+\class_alias('DEPTRAC_202402\\__PHP_Incomplete_Class', '__PHP_Incomplete_Class', \false);
 class php_user_filter
 {
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
@@ -88,7 +88,7 @@ class php_user_filter
     {
     }
 }
-\class_alias('DEPTRAC_202401\\php_user_filter', 'php_user_filter', \false);
+\class_alias('DEPTRAC_202402\\php_user_filter', 'php_user_filter', \false);
 /**
  * Instances of Directory are created by calling the dir() function, not by the new operator.
  */
@@ -149,7 +149,7 @@ class Directory
 /**
  * Instances of Directory are created by calling the dir() function, not by the new operator.
  */
-\class_alias('DEPTRAC_202401\\Directory', 'Directory', \false);
+\class_alias('DEPTRAC_202402\\Directory', 'Directory', \false);
 /**
  * Returns the value of a constant
  * @link https://php.net/manual/en/function.constant.php

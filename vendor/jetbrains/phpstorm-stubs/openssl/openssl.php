@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of openssl v.
-use DEPTRAC_202401\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 /**
  * Frees a private key
  * @link https://php.net/manual/en/function.openssl-pkey-free.php
@@ -1360,7 +1360,7 @@ final class OpenSSLCertificate
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\OpenSSLCertificate', 'OpenSSLCertificate', \false);
+\class_alias('DEPTRAC_202402\\OpenSSLCertificate', 'OpenSSLCertificate', \false);
 /**
  * @since 8.0
  */
@@ -1377,7 +1377,7 @@ final class OpenSSLCertificateSigningRequest
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\OpenSSLCertificateSigningRequest', 'OpenSSLCertificateSigningRequest', \false);
+\class_alias('DEPTRAC_202402\\OpenSSLCertificateSigningRequest', 'OpenSSLCertificateSigningRequest', \false);
 /**
  * @since 8.0
  */
@@ -1394,4 +1394,4 @@ final class OpenSSLAsymmetricKey
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\OpenSSLAsymmetricKey', 'OpenSSLAsymmetricKey', \false);
+\class_alias('DEPTRAC_202402\\OpenSSLAsymmetricKey', 'OpenSSLAsymmetricKey', \false);

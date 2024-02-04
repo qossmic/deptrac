@@ -10,11 +10,11 @@
  *
  */
 declare (strict_types=1);
-namespace DEPTRAC_202401\phpDocumentor\Reflection\PseudoTypes;
+namespace DEPTRAC_202402\phpDocumentor\Reflection\PseudoTypes;
 
-use DEPTRAC_202401\phpDocumentor\Reflection\PseudoType;
-use DEPTRAC_202401\phpDocumentor\Reflection\Type;
-use DEPTRAC_202401\phpDocumentor\Reflection\Types\Integer;
+use DEPTRAC_202402\phpDocumentor\Reflection\PseudoType;
+use DEPTRAC_202402\phpDocumentor\Reflection\Type;
+use DEPTRAC_202402\phpDocumentor\Reflection\Types\Integer;
 /** @psalm-immutable */
 final class IntegerValue implements PseudoType
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401\parallel\Events\Event;
+namespace DEPTRAC_202402\parallel\Events\Event;
 
 final class Type
 {

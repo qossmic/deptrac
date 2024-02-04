@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser\NodeVisitor;
+namespace DEPTRAC_202402\PhpParser\NodeVisitor;
 
-use DEPTRAC_202401\PhpParser\Node;
-use DEPTRAC_202401\PhpParser\NodeVisitorAbstract;
+use DEPTRAC_202402\PhpParser\Node;
+use DEPTRAC_202402\PhpParser\NodeVisitorAbstract;
 /**
  * Visitor that connects a child node to its parent node
  * as well as its sibling nodes.

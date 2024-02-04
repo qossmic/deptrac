@@ -8,14 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Console\Helper;
+namespace DEPTRAC_202402\Symfony\Component\Console\Helper;
 
-use DEPTRAC_202401\Symfony\Component\Console\Cursor;
-use DEPTRAC_202401\Symfony\Component\Console\Exception\LogicException;
-use DEPTRAC_202401\Symfony\Component\Console\Output\ConsoleOutputInterface;
-use DEPTRAC_202401\Symfony\Component\Console\Output\ConsoleSectionOutput;
-use DEPTRAC_202401\Symfony\Component\Console\Output\OutputInterface;
-use DEPTRAC_202401\Symfony\Component\Console\Terminal;
+use DEPTRAC_202402\Symfony\Component\Console\Cursor;
+use DEPTRAC_202402\Symfony\Component\Console\Exception\LogicException;
+use DEPTRAC_202402\Symfony\Component\Console\Output\ConsoleOutputInterface;
+use DEPTRAC_202402\Symfony\Component\Console\Output\ConsoleSectionOutput;
+use DEPTRAC_202402\Symfony\Component\Console\Output\OutputInterface;
+use DEPTRAC_202402\Symfony\Component\Console\Terminal;
 /**
  * The ProgressBar provides helpers to display progress output.
  *

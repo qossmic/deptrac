@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PHPStan\PhpDocParser\Ast;
+namespace DEPTRAC_202402\PHPStan\PhpDocParser\Ast;
 
 use function array_key_exists;
 trait NodeAttributes

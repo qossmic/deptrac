@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * @link https://php.net/manual/en/gearman.constants.php
@@ -1775,7 +1775,7 @@ class GearmanClient
 /**
  * Class: GearmanClient
  */
-\class_alias('DEPTRAC_202401\\GearmanClient', 'GearmanClient', \false);
+\class_alias('DEPTRAC_202402\\GearmanClient', 'GearmanClient', \false);
 /**
  * Class: GearmanTask
  */
@@ -1902,7 +1902,7 @@ class GearmanTask
 /**
  * Class: GearmanTask
  */
-\class_alias('DEPTRAC_202401\\GearmanTask', 'GearmanTask', \false);
+\class_alias('DEPTRAC_202402\\GearmanTask', 'GearmanTask', \false);
 /**
  * Class: GearmanWorker
  */
@@ -2122,7 +2122,7 @@ class GearmanWorker
 /**
  * Class: GearmanWorker
  */
-\class_alias('DEPTRAC_202401\\GearmanWorker', 'GearmanWorker', \false);
+\class_alias('DEPTRAC_202402\\GearmanWorker', 'GearmanWorker', \false);
 /**
  * Class: GearmanJob
  */
@@ -2264,7 +2264,7 @@ class GearmanJob
 /**
  * Class: GearmanJob
  */
-\class_alias('DEPTRAC_202401\\GearmanJob', 'GearmanJob', \false);
+\class_alias('DEPTRAC_202402\\GearmanJob', 'GearmanJob', \false);
 /**
  * Class: GearmanException
  */
@@ -2274,4 +2274,4 @@ class GearmanException extends \Exception
 /**
  * Class: GearmanException
  */
-\class_alias('DEPTRAC_202401\\GearmanException', 'GearmanException', \false);
+\class_alias('DEPTRAC_202402\\GearmanException', 'GearmanException', \false);

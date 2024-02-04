@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401\Parle;
+namespace DEPTRAC_202402\Parle;
 
 use Exception;
 use Throwable;

@@ -9,11 +9,11 @@ declare (strict_types=1);
  *
  * @link https://phpdoc.org
  */
-namespace DEPTRAC_202401\phpDocumentor\Reflection\PseudoTypes;
+namespace DEPTRAC_202402\phpDocumentor\Reflection\PseudoTypes;
 
-use DEPTRAC_202401\phpDocumentor\Reflection\PseudoType;
-use DEPTRAC_202401\phpDocumentor\Reflection\Type;
-use DEPTRAC_202401\phpDocumentor\Reflection\Types\Boolean;
+use DEPTRAC_202402\phpDocumentor\Reflection\PseudoType;
+use DEPTRAC_202402\phpDocumentor\Reflection\Type;
+use DEPTRAC_202402\phpDocumentor\Reflection\Types\Boolean;
 use function class_alias;
 /**
  * Value Object representing the PseudoType 'False', which is a Boolean type.
@@ -31,4 +31,4 @@ final class False_ extends Boolean implements PseudoType
         return 'false';
     }
 }
-class_alias(False_::class, 'DEPTRAC_202401\\phpDocumentor\\Reflection\\Types\\False_', \false);
+class_alias(False_::class, 'DEPTRAC_202402\\phpDocumentor\\Reflection\\Types\\False_', \false);

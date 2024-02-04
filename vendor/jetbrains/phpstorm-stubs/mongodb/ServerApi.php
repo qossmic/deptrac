@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401\MongoDB\Driver;
+namespace DEPTRAC_202402\MongoDB\Driver;
 
 final class ServerApi implements \MongoDB\BSON\Serializable, \Serializable
 {

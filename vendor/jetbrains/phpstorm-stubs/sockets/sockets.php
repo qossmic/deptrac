@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of sockets v.
-use DEPTRAC_202401\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 /**
  * (PHP 7 &gt;= 7.2.0)<br/>
  * Get array with contents of getaddrinfo about the given hostname.
@@ -2235,7 +2235,7 @@ final class Socket
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\Socket', 'Socket', \false);
+\class_alias('DEPTRAC_202402\\Socket', 'Socket', \false);
 /**
  * @since 8.0
  */
@@ -2252,4 +2252,4 @@ final class AddressInfo
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\AddressInfo', 'AddressInfo', \false);
+\class_alias('DEPTRAC_202402\\AddressInfo', 'AddressInfo', \false);

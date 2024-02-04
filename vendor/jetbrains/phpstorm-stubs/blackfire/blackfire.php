@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * Blackfire extension stubs.
@@ -158,4 +158,4 @@ final class BlackfireProbe
  * Blackfire extension stubs.
  * @link https://blackfire.io
  */
-\class_alias('DEPTRAC_202401\\BlackfireProbe', 'BlackfireProbe', \false);
+\class_alias('DEPTRAC_202402\\BlackfireProbe', 'BlackfireProbe', \false);

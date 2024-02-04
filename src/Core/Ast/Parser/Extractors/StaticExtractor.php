@@ -3,10 +3,10 @@
 declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\Parser\Extractors;
 
-use DEPTRAC_202401\PhpParser\Node;
-use DEPTRAC_202401\PhpParser\Node\Expr\StaticCall;
-use DEPTRAC_202401\PhpParser\Node\Expr\StaticPropertyFetch;
-use DEPTRAC_202401\PhpParser\Node\Name;
+use DEPTRAC_202402\PhpParser\Node;
+use DEPTRAC_202402\PhpParser\Node\Expr\StaticCall;
+use DEPTRAC_202402\PhpParser\Node\Expr\StaticPropertyFetch;
+use DEPTRAC_202402\PhpParser\Node\Name;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;

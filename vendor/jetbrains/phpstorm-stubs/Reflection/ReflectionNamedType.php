@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * @since 7.1
  */
@@ -38,4 +38,4 @@ class ReflectionNamedType extends \ReflectionType
 /**
  * @since 7.1
  */
-\class_alias('DEPTRAC_202401\\ReflectionNamedType', 'ReflectionNamedType', \false);
+\class_alias('DEPTRAC_202402\\ReflectionNamedType', 'ReflectionNamedType', \false);

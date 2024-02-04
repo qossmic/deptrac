@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\Swoole\Timer;
+namespace DEPTRAC_202402\Swoole\Timer;
 
 /**
  * @see https://www.php.net/ArrayIterator

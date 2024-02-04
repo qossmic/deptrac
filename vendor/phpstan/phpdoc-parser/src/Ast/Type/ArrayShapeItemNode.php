@@ -1,11 +1,11 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PHPStan\PhpDocParser\Ast\Type;
+namespace DEPTRAC_202402\PHPStan\PhpDocParser\Ast\Type;
 
-use DEPTRAC_202401\PHPStan\PhpDocParser\Ast\ConstExpr\ConstExprIntegerNode;
-use DEPTRAC_202401\PHPStan\PhpDocParser\Ast\ConstExpr\ConstExprStringNode;
-use DEPTRAC_202401\PHPStan\PhpDocParser\Ast\NodeAttributes;
+use DEPTRAC_202402\PHPStan\PhpDocParser\Ast\ConstExpr\ConstExprIntegerNode;
+use DEPTRAC_202402\PHPStan\PhpDocParser\Ast\ConstExpr\ConstExprStringNode;
+use DEPTRAC_202402\PHPStan\PhpDocParser\Ast\NodeAttributes;
 use function sprintf;
 class ArrayShapeItemNode implements TypeNode
 {

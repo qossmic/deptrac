@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of exif v.1.4 $Id$
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
 /**
  * Reads the EXIF headers from JPEG or TIFF
  * @link https://php.net/manual/en/function.exif-read-data.php

@@ -3,7 +3,7 @@
 declare (strict_types=1);
 namespace Qossmic\Deptrac\Contract\Ast;
 
-use DEPTRAC_202401\Symfony\Contracts\EventDispatcher\Event;
+use DEPTRAC_202402\Symfony\Contracts\EventDispatcher\Event;
 /**
  * Event triggered after the AST map of all files has been created.
  */

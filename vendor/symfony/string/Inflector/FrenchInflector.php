@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\String\Inflector;
+namespace DEPTRAC_202402\Symfony\Component\String\Inflector;
 
 /**
  * French inflector.
@@ -50,8 +50,8 @@ final class FrenchInflector implements InflectorInterface
         // Invariable words
         ['/^(cinquante|soixante|mille)$/i', '\\1'],
         // French titles
-        ['/^(mon|ma)(sieur|dame|demoiselle|seigneur)$/', 'DEPTRAC_202401\\mes\\2s'],
-        ['/^(Mon|Ma)(sieur|dame|demoiselle|seigneur)$/', 'DEPTRAC_202401\\Mes\\2s'],
+        ['/^(mon|ma)(sieur|dame|demoiselle|seigneur)$/', 'DEPTRAC_202402\\mes\\2s'],
+        ['/^(Mon|Ma)(sieur|dame|demoiselle|seigneur)$/', 'DEPTRAC_202402\\Mes\\2s'],
     ];
     /**
      * A list of all rules for singularize.
@@ -77,10 +77,10 @@ final class FrenchInflector implements InflectorInterface
         // Les mots finissant par "ou" prennent un "s" sauf bijou, caillou, chou, genou, hibou, joujou, pou
         ['/(bij|caill|ch|gen|hib|jouj|p)oux$/i', '\\1ou'],
         // French titles
-        ['/^mes(dame|demoiselle)s$/', 'DEPTRAC_202401\\ma\\1'],
-        ['/^Mes(dame|demoiselle)s$/', 'DEPTRAC_202401\\Ma\\1'],
-        ['/^mes(sieur|seigneur)s$/', 'DEPTRAC_202401\\mon\\1'],
-        ['/^Mes(sieur|seigneur)s$/', 'DEPTRAC_202401\\Mon\\1'],
+        ['/^mes(dame|demoiselle)s$/', 'DEPTRAC_202402\\ma\\1'],
+        ['/^Mes(dame|demoiselle)s$/', 'DEPTRAC_202402\\Ma\\1'],
+        ['/^mes(sieur|seigneur)s$/', 'DEPTRAC_202402\\mon\\1'],
+        ['/^Mes(sieur|seigneur)s$/', 'DEPTRAC_202402\\Mon\\1'],
         // Default rule
         ['/s$/i', ''],
     ];

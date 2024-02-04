@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // The Event class
-use DEPTRAC_202401\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * Event.
  * Event class represents and event firing on a file descriptor being ready to read from or write to; a file descriptor becoming ready to read from or write to(edge-triggered I/O only); a timeout expiring; a signal occurring; a user-triggered event.
@@ -235,7 +235,7 @@ final class Event
  *
  * @see https://php.net/manual/en/class.event.php
  */
-\class_alias('DEPTRAC_202401\\Event', 'Event', \false);
+\class_alias('DEPTRAC_202402\\Event', 'Event', \false);
 //  The EventBase class
 /**
  * EventBase.
@@ -439,7 +439,7 @@ final class EventBase
  *
  * @see https://php.net/manual/en/class.eventbase.php
  */
-\class_alias('DEPTRAC_202401\\EventBase', 'EventBase', \false);
+\class_alias('DEPTRAC_202402\\EventBase', 'EventBase', \false);
 // The EventBuffer class
 /**
  * EventBuffer.
@@ -760,7 +760,7 @@ class EventBuffer
  *
  * @see https://php.net/manual/en/class.eventbuffer.php
  */
-\class_alias('DEPTRAC_202401\\EventBuffer', 'EventBuffer', \false);
+\class_alias('DEPTRAC_202402\\EventBuffer', 'EventBuffer', \false);
 // The EventBufferEvent class
 /**
  * EventBufferEvent.
@@ -1192,7 +1192,7 @@ final class EventBufferEvent
  *
  * @see https://php.net/manual/en/class.eventbufferevent.php
  */
-\class_alias('DEPTRAC_202401\\EventBufferEvent', 'EventBufferEvent', \false);
+\class_alias('DEPTRAC_202402\\EventBufferEvent', 'EventBufferEvent', \false);
 // The EventConfig class
 /**
  * EventConfig.
@@ -1278,7 +1278,7 @@ final class EventConfig
  *
  * @see https://secure.php.net/manual/en/class.eventconfig.php
  */
-\class_alias('DEPTRAC_202401\\EventConfig', 'EventConfig', \false);
+\class_alias('DEPTRAC_202402\\EventConfig', 'EventConfig', \false);
 // The EventDnsBase class
 /**
  * EventDnsBase.
@@ -1418,7 +1418,7 @@ final class EventDnsBase
  *
  * @see https://secure.php.net/manual/en/class.eventdnsbase.php
  */
-\class_alias('DEPTRAC_202401\\EventDnsBase', 'EventDnsBase', \false);
+\class_alias('DEPTRAC_202402\\EventDnsBase', 'EventDnsBase', \false);
 // The EventHttp class
 /**
  * EventHttp.
@@ -1575,7 +1575,7 @@ final class EventHttp
  *
  * @see https://secure.php.net/manual/en/class.eventhttp.php
  */
-\class_alias('DEPTRAC_202401\\EventHttp', 'EventHttp', \false);
+\class_alias('DEPTRAC_202402\\EventHttp', 'EventHttp', \false);
 // The EventHttpConnection class
 /**
  * EventHttpConnection.
@@ -1731,7 +1731,7 @@ class EventHttpConnection
  *
  * @see https://secure.php.net/manual/en/class.eventhttpconnection.php
  */
-\class_alias('DEPTRAC_202401\\EventHttpConnection', 'EventHttpConnection', \false);
+\class_alias('DEPTRAC_202402\\EventHttpConnection', 'EventHttpConnection', \false);
 // The EventHttpRequest class
 class EventHttpRequest
 {
@@ -1829,7 +1829,7 @@ class EventHttpRequest
     }
 }
 // The EventHttpRequest class
-\class_alias('DEPTRAC_202401\\EventHttpRequest', 'EventHttpRequest', \false);
+\class_alias('DEPTRAC_202402\\EventHttpRequest', 'EventHttpRequest', \false);
 //  The EventListener class
 /**
  * EventListener.
@@ -1952,7 +1952,7 @@ final class EventListener
  *
  * @see https://secure.php.net/manual/en/class.eventlistener.php
  */
-\class_alias('DEPTRAC_202401\\EventListener', 'EventListener', \false);
+\class_alias('DEPTRAC_202402\\EventListener', 'EventListener', \false);
 //  The EventSslContext class
 /**
  * EventSslContext.
@@ -2044,7 +2044,7 @@ final class EventSslContext
  *
  * @see https://secure.php.net/manual/en/class.eventsslcontext.php
  */
-\class_alias('DEPTRAC_202401\\EventSslContext', 'EventSslContext', \false);
+\class_alias('DEPTRAC_202402\\EventSslContext', 'EventSslContext', \false);
 // The EventUtil class
 /**
  * EventUtil.
@@ -2188,4 +2188,4 @@ final class EventUtil
  *
  * @see https://secure.php.net/manual/en/class.eventutil.php
  */
-\class_alias('DEPTRAC_202401\\EventUtil', 'EventUtil', \false);
+\class_alias('DEPTRAC_202402\\EventUtil', 'EventUtil', \false);

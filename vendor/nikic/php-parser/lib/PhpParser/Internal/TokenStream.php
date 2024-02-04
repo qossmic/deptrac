@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser\Internal;
+namespace DEPTRAC_202402\PhpParser\Internal;
 
 /**
  * Provides operations on token streams, for use by pretty printer.

@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser\Node\Stmt;
+namespace DEPTRAC_202402\PhpParser\Node\Stmt;
 
-use DEPTRAC_202401\PhpParser\Node;
-use DEPTRAC_202401\PhpParser\Node\AttributeGroup;
+use DEPTRAC_202402\PhpParser\Node;
+use DEPTRAC_202402\PhpParser\Node\AttributeGroup;
 class EnumCase extends Node\Stmt
 {
     /** @var Node\Identifier Enum case name */

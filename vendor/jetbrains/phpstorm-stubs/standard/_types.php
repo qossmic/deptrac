@@ -1,8 +1,8 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 /**
  * Creates an array.
  * @link https://php.net/manual/en/function.array.php
@@ -254,12 +254,12 @@ final class Generator implements \Iterator
  *
  * @template-implements Iterator<TKey, TYield>
  */
-\class_alias('DEPTRAC_202401\\Generator', 'Generator', \false);
+\class_alias('DEPTRAC_202402\\Generator', 'Generator', \false);
 class ClosedGeneratorException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202401\\ClosedGeneratorException', 'ClosedGeneratorException', \false);
-namespace DEPTRAC_202401\___PHPSTORM_HELPERS;
+\class_alias('DEPTRAC_202402\\ClosedGeneratorException', 'ClosedGeneratorException', \false);
+namespace DEPTRAC_202402\___PHPSTORM_HELPERS;
 
 class PS_UNRESERVE_PREFIX_this
 {

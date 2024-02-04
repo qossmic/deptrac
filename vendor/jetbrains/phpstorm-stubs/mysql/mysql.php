@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of mysql v.1.0
 // @deprecated 5.5 entire extension is deprecated in favor of mysqli
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
 /**
  * Open a connection to a MySQL Server
  * @link https://php.net/manual/en/function.mysql-connect.php

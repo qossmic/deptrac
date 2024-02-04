@@ -1,8 +1,8 @@
 <?php
 
-namespace DEPTRAC_202401\Parle;
+namespace DEPTRAC_202402\Parle;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
 /**
  * Single state lexer class.
  *

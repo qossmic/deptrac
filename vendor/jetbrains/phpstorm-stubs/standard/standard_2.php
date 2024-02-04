@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\ReturnTypeContract as TypeContract;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\ReturnTypeContract as TypeContract;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * Query language and locale information
  * @link https://php.net/manual/en/function.nl-langinfo.php

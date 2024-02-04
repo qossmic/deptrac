@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of soap v.
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * The SoapClient class provides a client for SOAP 1.1, SOAP 1.2 servers. It can be used in WSDL
  * or non-WSDL mode.
@@ -474,7 +474,7 @@ class SoapClient
  * or non-WSDL mode.
  * @link https://php.net/manual/en/class.soapclient.php
  */
-\class_alias('DEPTRAC_202401\\SoapClient', 'SoapClient', \false);
+\class_alias('DEPTRAC_202402\\SoapClient', 'SoapClient', \false);
 /**
  * A class representing a variable or object for use with SOAP services.
  * @link https://php.net/manual/en/class.soapvar.php
@@ -569,7 +569,7 @@ class SoapVar
  * A class representing a variable or object for use with SOAP services.
  * @link https://php.net/manual/en/class.soapvar.php
  */
-\class_alias('DEPTRAC_202401\\SoapVar', 'SoapVar', \false);
+\class_alias('DEPTRAC_202402\\SoapVar', 'SoapVar', \false);
 /**
  * The SoapServer class provides a server for the SOAP 1.1 and SOAP 1.2 protocols. It can be used with or without a WSDL service description.
  * @link https://php.net/manual/en/class.soapserver.php
@@ -806,7 +806,7 @@ class SoapServer
  * The SoapServer class provides a server for the SOAP 1.1 and SOAP 1.2 protocols. It can be used with or without a WSDL service description.
  * @link https://php.net/manual/en/class.soapserver.php
  */
-\class_alias('DEPTRAC_202401\\SoapServer', 'SoapServer', \false);
+\class_alias('DEPTRAC_202402\\SoapServer', 'SoapServer', \false);
 /**
  * Represents a SOAP fault.
  * @link https://php.net/manual/en/class.soapfault.php
@@ -924,7 +924,7 @@ class SoapFault extends \Exception
  * Represents a SOAP fault.
  * @link https://php.net/manual/en/class.soapfault.php
  */
-\class_alias('DEPTRAC_202401\\SoapFault', 'SoapFault', \false);
+\class_alias('DEPTRAC_202402\\SoapFault', 'SoapFault', \false);
 /**
  * Represents parameter to a SOAP call.
  * @link https://php.net/manual/en/class.soapparam.php
@@ -979,7 +979,7 @@ class SoapParam
  * Represents parameter to a SOAP call.
  * @link https://php.net/manual/en/class.soapparam.php
  */
-\class_alias('DEPTRAC_202401\\SoapParam', 'SoapParam', \false);
+\class_alias('DEPTRAC_202402\\SoapParam', 'SoapParam', \false);
 /**
  * Represents a SOAP header.
  * @link https://php.net/manual/en/class.soapheader.php
@@ -1063,7 +1063,7 @@ class SoapHeader
  * Represents a SOAP header.
  * @link https://php.net/manual/en/class.soapheader.php
  */
-\class_alias('DEPTRAC_202401\\SoapHeader', 'SoapHeader', \false);
+\class_alias('DEPTRAC_202402\\SoapHeader', 'SoapHeader', \false);
 /**
  * Set whether to use the SOAP error handler
  * @link https://php.net/manual/en/function.use-soap-error-handler.php

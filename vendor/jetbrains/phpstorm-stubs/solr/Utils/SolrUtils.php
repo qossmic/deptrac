@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * Helper autocomplete for php solr extension.
@@ -94,4 +94,4 @@ abstract class SolrUtils
  * Also contains method for escaping query strings and parsing XML responses.
  * @link https://php.net/manual/en/class.solrutils.php
  */
-\class_alias('DEPTRAC_202401\\SolrUtils', 'SolrUtils', \false);
+\class_alias('DEPTRAC_202402\\SolrUtils', 'SolrUtils', \false);

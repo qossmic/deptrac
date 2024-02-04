@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
 /**
  * The reflection class.
  *
@@ -44,4 +44,4 @@ class Reflection
  *
  * @link https://php.net/manual/en/class.reflection.php
  */
-\class_alias('DEPTRAC_202401\\Reflection', 'Reflection', \false);
+\class_alias('DEPTRAC_202402\\Reflection', 'Reflection', \false);

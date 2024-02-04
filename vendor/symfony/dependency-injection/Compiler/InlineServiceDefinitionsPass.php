@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\DependencyInjection\Compiler;
+namespace DEPTRAC_202402\Symfony\Component\DependencyInjection\Compiler;
 
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\ContainerBuilder;
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\Definition;
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\Reference;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\Argument\ArgumentInterface;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\ContainerBuilder;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\Definition;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\Reference;
 /**
  * Inline service definitions where this is possible.
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 \define('MESSAGEPACK_OPT_PHPONLY', -1001);
 /**
@@ -67,7 +67,7 @@ class MessagePack
     {
     }
 }
-\class_alias('DEPTRAC_202401\\MessagePack', 'MessagePack', \false);
+\class_alias('DEPTRAC_202402\\MessagePack', 'MessagePack', \false);
 class MessagePackUnpacker
 {
     /**
@@ -102,4 +102,4 @@ class MessagePackUnpacker
     {
     }
 }
-\class_alias('DEPTRAC_202401\\MessagePackUnpacker', 'MessagePackUnpacker', \false);
+\class_alias('DEPTRAC_202402\\MessagePackUnpacker', 'MessagePackUnpacker', \false);

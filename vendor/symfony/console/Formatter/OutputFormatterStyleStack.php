@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Console\Formatter;
+namespace DEPTRAC_202402\Symfony\Component\Console\Formatter;
 
-use DEPTRAC_202401\Symfony\Component\Console\Exception\InvalidArgumentException;
-use DEPTRAC_202401\Symfony\Contracts\Service\ResetInterface;
+use DEPTRAC_202402\Symfony\Component\Console\Exception\InvalidArgumentException;
+use DEPTRAC_202402\Symfony\Contracts\Service\ResetInterface;
 /**
  * @author Jean-François Simon <contact@jfsimon.fr>
  */

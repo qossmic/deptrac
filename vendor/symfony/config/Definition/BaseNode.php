@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Config\Definition;
+namespace DEPTRAC_202402\Symfony\Component\Config\Definition;
 
-use DEPTRAC_202401\Symfony\Component\Config\Definition\Exception\Exception;
-use DEPTRAC_202401\Symfony\Component\Config\Definition\Exception\ForbiddenOverwriteException;
-use DEPTRAC_202401\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use DEPTRAC_202401\Symfony\Component\Config\Definition\Exception\InvalidTypeException;
-use DEPTRAC_202401\Symfony\Component\Config\Definition\Exception\UnsetKeyException;
+use DEPTRAC_202402\Symfony\Component\Config\Definition\Exception\Exception;
+use DEPTRAC_202402\Symfony\Component\Config\Definition\Exception\ForbiddenOverwriteException;
+use DEPTRAC_202402\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use DEPTRAC_202402\Symfony\Component\Config\Definition\Exception\InvalidTypeException;
+use DEPTRAC_202402\Symfony\Component\Config\Definition\Exception\UnsetKeyException;
 /**
  * The base node class.
  *

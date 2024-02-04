@@ -1,9 +1,9 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser;
+namespace DEPTRAC_202402\PhpParser;
 
-use DEPTRAC_202401\PhpParser\Parser\Tokens;
+use DEPTRAC_202402\PhpParser\Parser\Tokens;
 class Lexer
 {
     protected $code;
@@ -435,12 +435,12 @@ class Lexer
             }
         }
         // HHVM uses a special token for numbers that overflow to double
-        if (\defined('DEPTRAC_202401\\T_ONUMBER')) {
-            $tokenMap[\DEPTRAC_202401\T_ONUMBER] = Tokens::T_DNUMBER;
+        if (\defined('DEPTRAC_202402\\T_ONUMBER')) {
+            $tokenMap[\DEPTRAC_202402\T_ONUMBER] = Tokens::T_DNUMBER;
         }
         // HHVM also has a separate token for the __COMPILER_HALT_OFFSET__ constant
-        if (\defined('DEPTRAC_202401\\T_COMPILER_HALT_OFFSET')) {
-            $tokenMap[\DEPTRAC_202401\T_COMPILER_HALT_OFFSET] = Tokens::T_STRING;
+        if (\defined('DEPTRAC_202402\\T_COMPILER_HALT_OFFSET')) {
+            $tokenMap[\DEPTRAC_202402\T_COMPILER_HALT_OFFSET] = Tokens::T_STRING;
         }
         // Assign tokens for which we define compatibility constants, as token_name() does not know them.
         $tokenMap[\T_FN] = Tokens::T_FN;

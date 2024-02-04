@@ -1,14 +1,14 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * @since 5.6
  */
-use DEPTRAC_202401\JetBrains\PhpStorm\ExpectedValues;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\ExpectedValues;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 \define("ARRAY_FILTER_USE_BOTH", 1);
 /**
  * @since 5.6
@@ -869,7 +869,7 @@ class AssertionError extends \Error
  * @link https://php.net/manual/en/class.assertionerror.php
  * @since 7.0
  */
-\class_alias('DEPTRAC_202401\\AssertionError', 'AssertionError', \false);
+\class_alias('DEPTRAC_202402\\AssertionError', 'AssertionError', \false);
 /**
  * Set/get the various assert flags
  * @link https://php.net/manual/en/function.assert-options.php

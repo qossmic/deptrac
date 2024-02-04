@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401\RdKafka;
+namespace DEPTRAC_202402\RdKafka;
 
 use RdKafka\Metadata\Collection;
 use RdKafka\Metadata\Topic;

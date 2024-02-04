@@ -1,8 +1,8 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * @since 8.0
  */
@@ -21,4 +21,4 @@ class ReflectionUnionType extends \ReflectionType
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\ReflectionUnionType', 'ReflectionUnionType', \false);
+\class_alias('DEPTRAC_202402\\ReflectionUnionType', 'ReflectionUnionType', \false);

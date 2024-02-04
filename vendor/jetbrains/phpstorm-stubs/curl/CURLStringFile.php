@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * @since 8.1
@@ -17,4 +17,4 @@ class CURLStringFile
 /**
  * @since 8.1
  */
-\class_alias('DEPTRAC_202401\\CURLStringFile', 'CURLStringFile', \false);
+\class_alias('DEPTRAC_202402\\CURLStringFile', 'CURLStringFile', \false);

@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser;
+namespace DEPTRAC_202402\PhpParser;
 
-use DEPTRAC_202401\PhpParser\Lexer\Emulative;
-use DEPTRAC_202401\PhpParser\Parser\Php7;
+use DEPTRAC_202402\PhpParser\Lexer\Emulative;
+use DEPTRAC_202402\PhpParser\Parser\Php7;
 class ParserFactory
 {
     const PREFER_PHP7 = 1;

@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202401\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * The <b>ReflectionProperty</b> class reports information about a classes
  * properties.
@@ -361,4 +361,4 @@ class ReflectionProperty implements \Reflector
  *
  * @link https://php.net/manual/en/class.reflectionproperty.php
  */
-\class_alias('DEPTRAC_202401\\ReflectionProperty', 'ReflectionProperty', \false);
+\class_alias('DEPTRAC_202402\\ReflectionProperty', 'ReflectionProperty', \false);

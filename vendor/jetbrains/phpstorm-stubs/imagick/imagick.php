@@ -1,31 +1,31 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of imagick v.3.4.3
-use DEPTRAC_202401\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 class ImagickException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202401\\ImagickException', 'ImagickException', \false);
+\class_alias('DEPTRAC_202402\\ImagickException', 'ImagickException', \false);
 class ImagickDrawException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202401\\ImagickDrawException', 'ImagickDrawException', \false);
+\class_alias('DEPTRAC_202402\\ImagickDrawException', 'ImagickDrawException', \false);
 class ImagickPixelIteratorException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202401\\ImagickPixelIteratorException', 'ImagickPixelIteratorException', \false);
+\class_alias('DEPTRAC_202402\\ImagickPixelIteratorException', 'ImagickPixelIteratorException', \false);
 class ImagickPixelException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202401\\ImagickPixelException', 'ImagickPixelException', \false);
+\class_alias('DEPTRAC_202402\\ImagickPixelException', 'ImagickPixelException', \false);
 class ImagickKernelException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202401\\ImagickKernelException', 'ImagickKernelException', \false);
+\class_alias('DEPTRAC_202402\\ImagickKernelException', 'ImagickKernelException', \false);
 /**
  * @method Imagick clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the Imagick object
  * @link https://php.net/manual/en/class.imagick.php
@@ -5628,7 +5628,7 @@ class Imagick implements \Iterator, \Countable
  * @method Imagick clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the Imagick object
  * @link https://php.net/manual/en/class.imagick.php
  */
-\class_alias('DEPTRAC_202401\\Imagick', 'Imagick', \false);
+\class_alias('DEPTRAC_202402\\Imagick', 'Imagick', \false);
 /**
  * @method ImagickDraw clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the specified ImagickDraw object
  * @link https://php.net/manual/en/class.imagickdraw.php
@@ -7329,7 +7329,7 @@ class ImagickDraw
  * @method ImagickDraw clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the specified ImagickDraw object
  * @link https://php.net/manual/en/class.imagickdraw.php
  */
-\class_alias('DEPTRAC_202401\\ImagickDraw', 'ImagickDraw', \false);
+\class_alias('DEPTRAC_202402\\ImagickDraw', 'ImagickDraw', \false);
 /**
  * @link https://php.net/manual/en/class.imagickpixeliterator.php
  */
@@ -7547,7 +7547,7 @@ class ImagickPixelIterator implements \Iterator
 /**
  * @link https://php.net/manual/en/class.imagickpixeliterator.php
  */
-\class_alias('DEPTRAC_202401\\ImagickPixelIterator', 'ImagickPixelIterator', \false);
+\class_alias('DEPTRAC_202402\\ImagickPixelIterator', 'ImagickPixelIterator', \false);
 /**
  * @method clone()
  * @link https://php.net/manual/en/class.imagickpixel.php
@@ -7819,7 +7819,7 @@ class ImagickPixel
  * @method clone()
  * @link https://php.net/manual/en/class.imagickpixel.php
  */
-\class_alias('DEPTRAC_202401\\ImagickPixel', 'ImagickPixel', \false);
+\class_alias('DEPTRAC_202402\\ImagickPixel', 'ImagickPixel', \false);
 // End of imagick v.3.2.0RC1
 // Start of Imagick v3.3.0RC1
 /**
@@ -7914,4 +7914,4 @@ class ImagickKernel
 /**
  * @link https://php.net/manual/en/class.imagickkernel.php
  */
-\class_alias('DEPTRAC_202401\\ImagickKernel', 'ImagickKernel', \false);
+\class_alias('DEPTRAC_202402\\ImagickKernel', 'ImagickKernel', \false);

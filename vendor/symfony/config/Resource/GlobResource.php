@@ -8,10 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Config\Resource;
+namespace DEPTRAC_202402\Symfony\Component\Config\Resource;
 
-use DEPTRAC_202401\Symfony\Component\Finder\Finder;
-use DEPTRAC_202401\Symfony\Component\Finder\Glob;
+use DEPTRAC_202402\Symfony\Component\Finder\Finder;
+use DEPTRAC_202402\Symfony\Component\Finder\Glob;
 /**
  * GlobResource represents a set of resources stored on the filesystem.
  *

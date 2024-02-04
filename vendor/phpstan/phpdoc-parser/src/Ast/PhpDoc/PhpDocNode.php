@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PHPStan\PhpDocParser\Ast\PhpDoc;
+namespace DEPTRAC_202402\PHPStan\PhpDocParser\Ast\PhpDoc;
 
-use DEPTRAC_202401\PHPStan\PhpDocParser\Ast\Node;
-use DEPTRAC_202401\PHPStan\PhpDocParser\Ast\NodeAttributes;
+use DEPTRAC_202402\PHPStan\PhpDocParser\Ast\Node;
+use DEPTRAC_202402\PHPStan\PhpDocParser\Ast\NodeAttributes;
 use function array_column;
 use function array_filter;
 use function array_map;

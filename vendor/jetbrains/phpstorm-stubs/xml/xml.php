@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of xml v.
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * Create an XML parser
  * @link https://php.net/manual/en/function.xml-parser-create.php
@@ -583,5 +583,5 @@ final class XMLParser
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202401\\XMLParser', 'XMLParser', \false);
+\class_alias('DEPTRAC_202402\\XMLParser', 'XMLParser', \false);
 // End of xml v.

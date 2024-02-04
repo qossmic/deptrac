@@ -5,7 +5,7 @@
  * https://pecl.php.net/package/xlswriter
  * https://www.php.net/manual/en/book.xlswriter.php
  */
-namespace DEPTRAC_202401\Vtiful\Kernel;
+namespace DEPTRAC_202402\Vtiful\Kernel;
 
 /**
  * Class Excel

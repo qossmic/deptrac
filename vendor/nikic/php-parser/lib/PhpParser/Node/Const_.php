@@ -1,9 +1,9 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401\PhpParser\Node;
+namespace DEPTRAC_202402\PhpParser\Node;
 
-use DEPTRAC_202401\PhpParser\NodeAbstract;
+use DEPTRAC_202402\PhpParser\NodeAbstract;
 class Const_ extends NodeAbstract
 {
     /** @var Identifier Name */

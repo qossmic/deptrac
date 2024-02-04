@@ -6,9 +6,9 @@ namespace Qossmic\Deptrac\Core\InputCollector;
 use LogicException;
 use Qossmic\Deptrac\Supportive\File\Exception\InvalidPathException;
 use SplFileInfo;
-use DEPTRAC_202401\Symfony\Component\Filesystem\Path;
-use DEPTRAC_202401\Symfony\Component\Finder\Exception\DirectoryNotFoundException;
-use DEPTRAC_202401\Symfony\Component\Finder\Finder;
+use DEPTRAC_202402\Symfony\Component\Filesystem\Path;
+use DEPTRAC_202402\Symfony\Component\Finder\Exception\DirectoryNotFoundException;
+use DEPTRAC_202402\Symfony\Component\Finder\Finder;
 /**
  * @internal
  */

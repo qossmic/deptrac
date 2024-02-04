@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * Helper autocomplete for php solr extension.
@@ -183,4 +183,4 @@ abstract class SolrParams implements \Serializable
  * This class represents a a collection of name-value pairs sent to the Solr server during a request.
  * @link https://php.net/manual/en/class.solrparams.php
  */
-\class_alias('DEPTRAC_202401\\SolrParams', 'SolrParams', \false);
+\class_alias('DEPTRAC_202402\\SolrParams', 'SolrParams', \false);

@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Console\Completion;
+namespace DEPTRAC_202402\Symfony\Component\Console\Completion;
 
-use DEPTRAC_202401\Symfony\Component\Console\Exception\RuntimeException;
-use DEPTRAC_202401\Symfony\Component\Console\Input\ArgvInput;
-use DEPTRAC_202401\Symfony\Component\Console\Input\InputDefinition;
-use DEPTRAC_202401\Symfony\Component\Console\Input\InputOption;
+use DEPTRAC_202402\Symfony\Component\Console\Exception\RuntimeException;
+use DEPTRAC_202402\Symfony\Component\Console\Input\ArgvInput;
+use DEPTRAC_202402\Symfony\Component\Console\Input\InputDefinition;
+use DEPTRAC_202402\Symfony\Component\Console\Input\InputOption;
 /**
  * An input specialized for shell completion.
  *

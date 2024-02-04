@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\EventDispatcher\Debug;
+namespace DEPTRAC_202402\Symfony\Component\EventDispatcher\Debug;
 
-use DEPTRAC_202401\Psr\EventDispatcher\StoppableEventInterface;
-use DEPTRAC_202401\Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use DEPTRAC_202401\Symfony\Component\Stopwatch\Stopwatch;
-use DEPTRAC_202401\Symfony\Component\VarDumper\Caster\ClassStub;
+use DEPTRAC_202402\Psr\EventDispatcher\StoppableEventInterface;
+use DEPTRAC_202402\Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use DEPTRAC_202402\Symfony\Component\Stopwatch\Stopwatch;
+use DEPTRAC_202402\Symfony\Component\VarDumper\Caster\ClassStub;
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */

@@ -9,19 +9,19 @@ declare (strict_types=1);
  *
  * @link      http://phpdoc.org
  */
-namespace DEPTRAC_202401\phpDocumentor\GraphViz\PHPStan;
+namespace DEPTRAC_202402\phpDocumentor\GraphViz\PHPStan;
 
 use InvalidArgumentException;
-use DEPTRAC_202401\phpDocumentor\GraphViz\Edge;
-use DEPTRAC_202401\phpDocumentor\GraphViz\Graph;
-use DEPTRAC_202401\phpDocumentor\GraphViz\Node;
-use DEPTRAC_202401\PHPStan\Reflection\ClassReflection;
-use DEPTRAC_202401\PHPStan\Reflection\MethodReflection;
-use DEPTRAC_202401\PHPStan\Reflection\MethodsClassReflectionExtension;
-use DEPTRAC_202401\PHPStan\Type\BooleanType;
-use DEPTRAC_202401\PHPStan\Type\FloatType;
-use DEPTRAC_202401\PHPStan\Type\StringType;
-use DEPTRAC_202401\PHPStan\Type\Type;
+use DEPTRAC_202402\phpDocumentor\GraphViz\Edge;
+use DEPTRAC_202402\phpDocumentor\GraphViz\Graph;
+use DEPTRAC_202402\phpDocumentor\GraphViz\Node;
+use DEPTRAC_202402\PHPStan\Reflection\ClassReflection;
+use DEPTRAC_202402\PHPStan\Reflection\MethodReflection;
+use DEPTRAC_202402\PHPStan\Reflection\MethodsClassReflectionExtension;
+use DEPTRAC_202402\PHPStan\Type\BooleanType;
+use DEPTRAC_202402\PHPStan\Type\FloatType;
+use DEPTRAC_202402\PHPStan\Type\StringType;
+use DEPTRAC_202402\PHPStan\Type\Type;
 use RuntimeException;
 use SimpleXMLElement;
 use function array_key_exists;

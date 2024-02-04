@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\Console;
+namespace DEPTRAC_202402\Symfony\Component\Console;
 
-use DEPTRAC_202401\Symfony\Component\Console\Event\ConsoleCommandEvent;
-use DEPTRAC_202401\Symfony\Component\Console\Event\ConsoleErrorEvent;
-use DEPTRAC_202401\Symfony\Component\Console\Event\ConsoleSignalEvent;
-use DEPTRAC_202401\Symfony\Component\Console\Event\ConsoleTerminateEvent;
+use DEPTRAC_202402\Symfony\Component\Console\Event\ConsoleCommandEvent;
+use DEPTRAC_202402\Symfony\Component\Console\Event\ConsoleErrorEvent;
+use DEPTRAC_202402\Symfony\Component\Console\Event\ConsoleSignalEvent;
+use DEPTRAC_202402\Symfony\Component\Console\Event\ConsoleTerminateEvent;
 /**
  * Contains all events dispatched by an Application.
  *

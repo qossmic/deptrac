@@ -8,12 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202401\Symfony\Component\DependencyInjection\Compiler;
+namespace DEPTRAC_202402\Symfony\Component\DependencyInjection\Compiler;
 
-use DEPTRAC_202401\Psr\Container\ContainerInterface;
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\Definition;
-use DEPTRAC_202401\Symfony\Component\DependencyInjection\Reference;
-use DEPTRAC_202401\Symfony\Contracts\Service\ServiceProviderInterface;
+use DEPTRAC_202402\Psr\Container\ContainerInterface;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\Definition;
+use DEPTRAC_202402\Symfony\Component\DependencyInjection\Reference;
+use DEPTRAC_202402\Symfony\Contracts\Service\ServiceProviderInterface;
 /**
  * Compiler pass to inject their service locator to service subscribers.
  *

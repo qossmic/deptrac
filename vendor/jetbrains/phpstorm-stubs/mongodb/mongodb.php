@@ -11,9 +11,9 @@
  * Userland PHP libraries that depend on this extension may provide higher level APIs, such as query builders, individual command helper methods, and GridFS. Application developers should consider using this extension in conjunction with the » MongoDB PHP library, which implements the same higher level APIs found in MongoDB drivers for other languages. This separation of concerns allows the driver to focus on essential features for which an extension implementation is paramount for performance.
  * @link https://php.net/manual/en/set.mongodb.php
  */
-namespace DEPTRAC_202401\MongoDB;
+namespace DEPTRAC_202402\MongoDB;
 
-namespace DEPTRAC_202401\MongoDB\Driver;
+namespace DEPTRAC_202402\MongoDB\Driver;
 
 use MongoDB\BSON\Serializable;
 use MongoDB\Driver\Exception\AuthenticationException;
@@ -1502,7 +1502,7 @@ final class ClientEncryption
     {
     }
 }
-namespace DEPTRAC_202401\MongoDB\Driver\Exception;
+namespace DEPTRAC_202402\MongoDB\Driver\Exception;
 
 use MongoDB\Driver\WriteResult;
 use Throwable;
@@ -1667,7 +1667,7 @@ class EncryptionException extends RuntimeException implements Exception
 /**
  * @link https://secure.php.net/manual/en/mongodb.monitoring.php
  */
-namespace DEPTRAC_202401\MongoDB\Driver\Monitoring;
+namespace DEPTRAC_202402\MongoDB\Driver\Monitoring;
 
 /**
  * Registers a new monitoring event subscriber with the driver.
@@ -1989,11 +1989,11 @@ class CommandStartedEvent
 /**
  * @link https://php.net/manual/en/book.bson.php
  */
-namespace DEPTRAC_202401\MongoDB\BSON;
+namespace DEPTRAC_202402\MongoDB\BSON;
 
 use DateTime;
 use DateTimeInterface;
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
 use JsonSerializable;
 use MongoDB\Driver\Exception\InvalidArgumentException;
 use MongoDB\Driver\Exception\UnexpectedValueException;
@@ -3081,7 +3081,7 @@ interface JavascriptInterface
      */
     public function __toString();
 }
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 \define('MONGODB_VERSION', '1.10.0');
 \define('MONGODB_STABILITY', 'stable');

@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 \class_alias(\Swoole\Coroutine\Channel::class, Co\Channel::class);
 \class_alias(\Swoole\Coroutine\Client::class, Co\Client::class);

@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * sync PECL extension stubs v.0.1
@@ -67,7 +67,7 @@ class SyncMutex
  *
  * @link https://php.net/manual/en/class.syncmutex.php
  */
-\class_alias('DEPTRAC_202401\\SyncMutex', 'SyncMutex', \false);
+\class_alias('DEPTRAC_202402\\SyncMutex', 'SyncMutex', \false);
 /**
  * SyncSemaphore
  *
@@ -127,7 +127,7 @@ class SyncSemaphore
  *
  * @link https://php.net/manual/en/class.syncsemaphore.php
  */
-\class_alias('DEPTRAC_202401\\SyncSemaphore', 'SyncSemaphore', \false);
+\class_alias('DEPTRAC_202402\\SyncSemaphore', 'SyncSemaphore', \false);
 /**
  * SyncEvent
  *
@@ -197,7 +197,7 @@ class SyncEvent
  *
  * @link https://php.net/manual/en/class.syncevent.php
  */
-\class_alias('DEPTRAC_202401\\SyncEvent', 'SyncEvent', \false);
+\class_alias('DEPTRAC_202402\\SyncEvent', 'SyncEvent', \false);
 /**
  * SyncReaderWriter
  *
@@ -280,7 +280,7 @@ class SyncReaderWriter
  *
  * @link https://php.net/manual/en/class.syncreaderwriter.php
  */
-\class_alias('DEPTRAC_202401\\SyncReaderWriter', 'SyncReaderWriter', \false);
+\class_alias('DEPTRAC_202402\\SyncReaderWriter', 'SyncReaderWriter', \false);
 /**
  * SyncSharedMemory
  *
@@ -366,4 +366,4 @@ class SyncSharedMemory
  * @since 1.1.0
  * @link https://php.net/manual/en/class.syncsharedmemory.php
  */
-\class_alias('DEPTRAC_202401\\SyncSharedMemory', 'SyncSharedMemory', \false);
+\class_alias('DEPTRAC_202402\\SyncSharedMemory', 'SyncSharedMemory', \false);

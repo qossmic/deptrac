@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 /**
  * @link https://github.com/kjdev/php-ext-snappy#function--snappy_compress

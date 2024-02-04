@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
 // Start of enchant v.1.1.0
-use DEPTRAC_202401\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
 /**
  * (PHP 5 &gt;= 5.3.0, PECL enchant &gt;= 0.1.0 )<br/>
  * create a new broker object capable of requesting
@@ -346,9 +346,9 @@ function enchant_dict_quick_check($dict, $word, ?array &$suggestions = null)
 final class EnchantBroker
 {
 }
-\class_alias('DEPTRAC_202401\\EnchantBroker', 'EnchantBroker', \false);
+\class_alias('DEPTRAC_202402\\EnchantBroker', 'EnchantBroker', \false);
 final class EnchantDictionary
 {
 }
-\class_alias('DEPTRAC_202401\\EnchantDictionary', 'EnchantDictionary', \false);
+\class_alias('DEPTRAC_202402\\EnchantDictionary', 'EnchantDictionary', \false);
 // End of enchant v.1.1.0

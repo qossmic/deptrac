@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202401;
+namespace DEPTRAC_202402;
 
-use DEPTRAC_202401\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202401\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202401\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202401\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
 /**
  * @since 5.5
  */
@@ -143,7 +143,7 @@ interface DateTimeInterface
 /**
  * @since 5.5
  */
-\class_alias('DEPTRAC_202401\\DateTimeInterface', 'DateTimeInterface', \false);
+\class_alias('DEPTRAC_202402\\DateTimeInterface', 'DateTimeInterface', \false);
 /**
  * @since 5.5
  */
@@ -415,7 +415,7 @@ class DateTimeImmutable implements \DateTimeInterface
 /**
  * @since 5.5
  */
-\class_alias('DEPTRAC_202401\\DateTimeImmutable', 'DateTimeImmutable', \false);
+\class_alias('DEPTRAC_202402\\DateTimeImmutable', 'DateTimeImmutable', \false);
 /**
  * Representation of date and time.
  * @link https://php.net/manual/en/class.datetime.php
@@ -711,7 +711,7 @@ class DateTime implements \DateTimeInterface
  * Representation of date and time.
  * @link https://php.net/manual/en/class.datetime.php
  */
-\class_alias('DEPTRAC_202401\\DateTime', 'DateTime', \false);
+\class_alias('DEPTRAC_202402\\DateTime', 'DateTime', \false);
 /**
  * Representation of time zone
  * @link https://php.net/manual/en/class.datetimezone.php
@@ -823,7 +823,7 @@ class DateTimeZone
  * Representation of time zone
  * @link https://php.net/manual/en/class.datetimezone.php
  */
-\class_alias('DEPTRAC_202401\\DateTimeZone', 'DateTimeZone', \false);
+\class_alias('DEPTRAC_202402\\DateTimeZone', 'DateTimeZone', \false);
 /**
  * Representation of date interval. A date interval stores either a fixed amount of
  * time (in years, months, days, hours etc) or a relative time string in the format
@@ -929,7 +929,7 @@ class DateInterval
  * that DateTime's constructor supports.
  * @link https://php.net/manual/en/class.dateinterval.php
  */
-\class_alias('DEPTRAC_202401\\DateInterval', 'DateInterval', \false);
+\class_alias('DEPTRAC_202402\\DateInterval', 'DateInterval', \false);
 /**
  * Representation of date period.
  * @link https://php.net/manual/en/class.dateperiod.php
@@ -1091,4 +1091,4 @@ class DatePeriod implements \IteratorAggregate
  * @template TEnd of ?DateTimeInterface
  * @implements \IteratorAggregate<int, TDate>
  */
-\class_alias('DEPTRAC_202401\\DatePeriod', 'DatePeriod', \false);
+\class_alias('DEPTRAC_202402\\DatePeriod', 'DatePeriod', \false);
