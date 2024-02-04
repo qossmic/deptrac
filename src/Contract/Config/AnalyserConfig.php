@@ -15,7 +15,7 @@ final class AnalyserConfig
     private function __construct() {}
 
     /** @param ?array<array-key,EmitterType> $types */
-    public static function create(array $types = null, string $internalTag = null): self
+    public static function create(?array $types = null, ?string $internalTag = null): self
     {
         $analyser = new self();
 
