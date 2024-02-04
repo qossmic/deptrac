@@ -23,7 +23,7 @@ class ClassLikeReference extends TaggedTokenReference
      */
     public function __construct(
         private readonly ClassLikeToken $classLikeName,
-        ClassLikeType $classLikeType = null,
+        ?ClassLikeType $classLikeType = null,
         public readonly array $inherits = [],
         public readonly array $dependencies = [],
         public readonly array $tags = [],
