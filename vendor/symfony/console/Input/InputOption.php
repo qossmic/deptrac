@@ -57,7 +57,7 @@ class InputOption
      *
      * @throws InvalidArgumentException If option mode is invalid or incompatible
      */
-    public function __construct(string $name, string|array $shortcut = null, int $mode = null, string $description = '', string|bool|int|float|array $default = null, array|\Closure $suggestedValues = [])
+    public function __construct(string $name, string|array|null $shortcut = null, ?int $mode = null, string $description = '', string|bool|int|float|array|null $default = null, array|\Closure $suggestedValues = [])
     {
         if (\str_starts_with($name, '--')) {
             $name = \substr($name, 2);
@@ -65,7 +65,7 @@ class InputOption
         if (empty($name)) {
             throw new InvalidArgumentException('An option name cannot be empty.');
         }
-        if (empty($shortcut)) {
+        if ('' === $shortcut || [] === $shortcut) {
             $shortcut = null;
         }
         if (null !== $shortcut) {
@@ -73,9 +73,9 @@ class InputOption
                 $shortcut = \implode('|', $shortcut);
             }
             $shortcuts = \preg_split('{(\\|)-?}', \ltrim($shortcut, '-'));
-            $shortcuts = \array_filter($shortcuts);
+            $shortcuts = \array_filter($shortcuts, 'strlen');
             $shortcut = \implode('|', $shortcuts);
-            if (empty($shortcut)) {
+            if ('' === $shortcut) {
                 throw new InvalidArgumentException('An option shortcut cannot be empty.');
             }
         }
@@ -157,7 +157,7 @@ class InputOption
     /**
      * @return void
      */
-    public function setDefault(string|bool|int|float|array $default = null)
+    public function setDefault(string|bool|int|float|array|null $default = null)
     {
         if (1 > \func_num_args()) {
             \DEPTRAC_202402\trigger_deprecation('symfony/console', '6.2', 'Calling "%s()" without any arguments is deprecated, pass null explicitly instead.', __METHOD__);

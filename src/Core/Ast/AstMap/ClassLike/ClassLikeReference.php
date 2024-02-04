@@ -18,7 +18,7 @@ class ClassLikeReference extends TaggedTokenReference
      * @param DependencyToken[] $dependencies
      * @param array<string,list<string>> $tags
      */
-    public function __construct(private readonly \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken $classLikeName, \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType $classLikeType = null, public readonly array $inherits = [], public readonly array $dependencies = [], public readonly array $tags = [], private readonly ?FileReference $fileReference = null)
+    public function __construct(private readonly \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken $classLikeName, ?\Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType $classLikeType = null, public readonly array $inherits = [], public readonly array $dependencies = [], public readonly array $tags = [], private readonly ?FileReference $fileReference = null)
     {
         parent::__construct($tags);
         $this->type = $classLikeType ?? \Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeType::TYPE_CLASSLIKE;

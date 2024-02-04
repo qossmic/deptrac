@@ -93,7 +93,7 @@ class Command
      *
      * @throws LogicException When the command name is empty
      */
-    public function __construct(string $name = null)
+    public function __construct(?string $name = null)
     {
         $this->definition = new InputDefinition();
         if (null === $name && null !== ($name = static::getDefaultName())) {
@@ -126,7 +126,7 @@ class Command
     /**
      * @return void
      */
-    public function setApplication(Application $application = null)
+    public function setApplication(?Application $application = null)
     {
         if (1 > \func_num_args()) {
             \DEPTRAC_202402\trigger_deprecation('symfony/console', '6.2', 'Calling "%s()" without any arguments is deprecated, pass null explicitly instead.', __METHOD__);
@@ -403,7 +403,7 @@ class Command
      *
      * @throws InvalidArgumentException When argument mode is not valid
      */
-    public function addArgument(string $name, int $mode = null, string $description = '', mixed $default = null) : static
+    public function addArgument(string $name, ?int $mode = null, string $description = '', mixed $default = null) : static
     {
         $suggestedValues = 5 <= \func_num_args() ? \func_get_arg(4) : [];
         if (!\is_array($suggestedValues) && !$suggestedValues instanceof \Closure) {
@@ -425,7 +425,7 @@ class Command
      *
      * @throws InvalidArgumentException If option mode is invalid or incompatible
      */
-    public function addOption(string $name, string|array $shortcut = null, int $mode = null, string $description = '', mixed $default = null) : static
+    public function addOption(string $name, string|array|null $shortcut = null, ?int $mode = null, string $description = '', mixed $default = null) : static
     {
         $suggestedValues = 6 <= \func_num_args() ? \func_get_arg(5) : [];
         if (!\is_array($suggestedValues) && !$suggestedValues instanceof \Closure) {

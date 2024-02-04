@@ -80,11 +80,11 @@ interface StyleInterface
     /**
      * Asks a question.
      */
-    public function ask(string $question, string $default = null, callable $validator = null) : mixed;
+    public function ask(string $question, ?string $default = null, ?callable $validator = null) : mixed;
     /**
      * Asks a question with the user input hidden.
      */
-    public function askHidden(string $question, callable $validator = null) : mixed;
+    public function askHidden(string $question, ?callable $validator = null) : mixed;
     /**
      * Asks for confirmation.
      */

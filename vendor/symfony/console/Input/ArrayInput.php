@@ -24,7 +24,7 @@ use DEPTRAC_202402\Symfony\Component\Console\Exception\InvalidOptionException;
 class ArrayInput extends Input
 {
     private array $parameters;
-    public function __construct(array $parameters, InputDefinition $definition = null)
+    public function __construct(array $parameters, ?InputDefinition $definition = null)
     {
         $this->parameters = $parameters;
         parent::__construct($definition);

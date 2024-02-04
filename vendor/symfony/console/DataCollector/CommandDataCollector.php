@@ -25,7 +25,7 @@ use DEPTRAC_202402\Symfony\Component\VarDumper\Cloner\Data;
  */
 final class CommandDataCollector extends DataCollector
 {
-    public function collect(Request $request, Response $response, \Throwable $exception = null) : void
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null) : void
     {
         if (!$request instanceof CliRequest) {
             return;

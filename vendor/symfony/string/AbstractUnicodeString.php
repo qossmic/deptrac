@@ -164,7 +164,7 @@ abstract class AbstractUnicodeString extends AbstractString
         }
         return $str;
     }
-    public function join(array $strings, string $lastGlue = null) : static
+    public function join(array $strings, ?string $lastGlue = null) : static
     {
         $str = clone $this;
         $tail = null !== $lastGlue && 1 < \count($strings) ? $lastGlue . \array_pop($strings) : '';

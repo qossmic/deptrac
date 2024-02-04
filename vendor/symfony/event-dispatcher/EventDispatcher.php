@@ -38,7 +38,7 @@ class EventDispatcher implements EventDispatcherInterface
             $this->optimized = [];
         }
     }
-    public function dispatch(object $event, string $eventName = null) : object
+    public function dispatch(object $event, ?string $eventName = null) : object
     {
         $eventName ??= $event::class;
         if (isset($this->optimized)) {
@@ -51,7 +51,7 @@ class EventDispatcher implements EventDispatcherInterface
         }
         return $event;
     }
-    public function getListeners(string $eventName = null) : array
+    public function getListeners(?string $eventName = null) : array
     {
         if (null !== $eventName) {
             if (empty($this->listeners[$eventName])) {
@@ -91,7 +91,7 @@ class EventDispatcher implements EventDispatcherInterface
         }
         return null;
     }
-    public function hasListeners(string $eventName = null) : bool
+    public function hasListeners(?string $eventName = null) : bool
     {
         if (null !== $eventName) {
             return !empty($this->listeners[$eventName]);

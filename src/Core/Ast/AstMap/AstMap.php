@@ -87,7 +87,7 @@ class AstMap
      *
      * @return iterable<AstInherit>
      */
-    private function recursivelyResolveDependencies(\Qossmic\Deptrac\Core\Ast\AstMap\AstInherit $inheritDependency, ArrayObject $alreadyResolved = null, SplStack $pathStack = null) : iterable
+    private function recursivelyResolveDependencies(\Qossmic\Deptrac\Core\Ast\AstMap\AstInherit $inheritDependency, ?ArrayObject $alreadyResolved = null, ?SplStack $pathStack = null) : iterable
     {
         $alreadyResolved ??= new ArrayObject();
         /** @var ArrayObject<string, true> $alreadyResolved */

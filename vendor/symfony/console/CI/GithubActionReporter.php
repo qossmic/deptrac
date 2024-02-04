@@ -40,7 +40,7 @@ class GithubActionReporter
      *
      * @see https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
      */
-    public function error(string $message, string $file = null, int $line = null, int $col = null) : void
+    public function error(string $message, ?string $file = null, ?int $line = null, ?int $col = null) : void
     {
         $this->log('error', $message, $file, $line, $col);
     }
@@ -49,7 +49,7 @@ class GithubActionReporter
      *
      * @see https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-a-warning-message
      */
-    public function warning(string $message, string $file = null, int $line = null, int $col = null) : void
+    public function warning(string $message, ?string $file = null, ?int $line = null, ?int $col = null) : void
     {
         $this->log('warning', $message, $file, $line, $col);
     }
@@ -58,11 +58,11 @@ class GithubActionReporter
      *
      * @see https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-a-debug-message
      */
-    public function debug(string $message, string $file = null, int $line = null, int $col = null) : void
+    public function debug(string $message, ?string $file = null, ?int $line = null, ?int $col = null) : void
     {
         $this->log('debug', $message, $file, $line, $col);
     }
-    private function log(string $type, string $message, string $file = null, int $line = null, int $col = null) : void
+    private function log(string $type, string $message, ?string $file = null, ?int $line = null, ?int $col = null) : void
     {
         // Some values must be encoded.
         $message = \strtr($message, self::ESCAPED_DATA);

@@ -122,6 +122,8 @@ final class EnglishInflector implements InflectorInterface
         // Third entry: Whether the suffix may succeed a vowel
         // Fourth entry: Whether the suffix may succeed a consonant
         // Fifth entry: plural suffix, normal
+        // axes (axis)
+        ['sixa', 4, \false, \false, 'axes'],
         // criterion (criteria)
         ['airetirc', 8, \false, \false, 'criterion'],
         // nebulae (nebula)
@@ -270,6 +272,8 @@ final class EnglishInflector implements InflectorInterface
         'seiceps',
         // traffic
         'ciffart',
+        // aircraft
+        'tfarcria',
     ];
     public function singularize(string $plural) : array
     {

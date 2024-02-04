@@ -306,7 +306,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     {
         return '' === $this->string;
     }
-    public abstract function join(array $strings, string $lastGlue = null) : static;
+    public abstract function join(array $strings, ?string $lastGlue = null) : static;
     public function jsonSerialize() : string
     {
         return $this->string;
@@ -337,13 +337,13 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
     public abstract function replace(string $from, string $to) : static;
     public abstract function replaceMatches(string $fromRegexp, string|callable $to) : static;
     public abstract function reverse() : static;
-    public abstract function slice(int $start = 0, int $length = null) : static;
+    public abstract function slice(int $start = 0, ?int $length = null) : static;
     public abstract function snake() : static;
-    public abstract function splice(string $replacement, int $start = 0, int $length = null) : static;
+    public abstract function splice(string $replacement, int $start = 0, ?int $length = null) : static;
     /**
      * @return static[]
      */
-    public function split(string $delimiter, int $limit = null, int $flags = null) : array
+    public function split(string $delimiter, ?int $limit = null, ?int $flags = null) : array
     {
         if (null === $flags) {
             throw new \TypeError('Split behavior when $flags is null must be implemented by child classes.');
@@ -389,7 +389,7 @@ abstract class AbstractString implements \Stringable, \JsonSerializable
         return \false;
     }
     public abstract function title(bool $allWords = \false) : static;
-    public function toByteString(string $toEncoding = null) : ByteString
+    public function toByteString(?string $toEncoding = null) : ByteString
     {
         $b = new ByteString();
         $toEncoding = \in_array($toEncoding, ['utf8', 'utf-8', 'UTF8'], \true) ? 'UTF-8' : $toEncoding;

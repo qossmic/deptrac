@@ -13,7 +13,7 @@ final class AnalyserConfig
     {
     }
     /** @param ?array<array-key,EmitterType> $types */
-    public static function create(array $types = null, string $internalTag = null) : self
+    public static function create(?array $types = null, ?string $internalTag = null) : self
     {
         $analyser = new self();
         $types ??= [\Qossmic\Deptrac\Contract\Config\EmitterType::CLASS_TOKEN, \Qossmic\Deptrac\Contract\Config\EmitterType::FUNCTION_TOKEN];

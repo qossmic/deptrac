@@ -148,7 +148,7 @@ class UnicodeString extends AbstractUnicodeString
         $i = $this->ignoreCase ? \grapheme_strripos($string, $needle, $offset) : \grapheme_strrpos($string, $needle, $offset);
         return \false === $i ? null : $i;
     }
-    public function join(array $strings, string $lastGlue = null) : static
+    public function join(array $strings, ?string $lastGlue = null) : static
     {
         $str = parent::join($strings, $lastGlue);
         \normalizer_is_normalized($str->string) ?: ($str->string = \normalizer_normalize($str->string));
@@ -214,13 +214,13 @@ class UnicodeString extends AbstractUnicodeString
         \normalizer_is_normalized($str->string) ?: ($str->string = \normalizer_normalize($str->string));
         return $str;
     }
-    public function slice(int $start = 0, int $length = null) : static
+    public function slice(int $start = 0, ?int $length = null) : static
     {
         $str = clone $this;
         $str->string = (string) \grapheme_substr($this->string, $start, $length ?? 2147483647);
         return $str;
     }
-    public function splice(string $replacement, int $start = 0, int $length = null) : static
+    public function splice(string $replacement, int $start = 0, ?int $length = null) : static
     {
         $str = clone $this;
         $start = $start ? \strlen(\grapheme_substr($this->string, 0, $start)) : 0;
@@ -235,7 +235,7 @@ class UnicodeString extends AbstractUnicodeString
         $str->string = $string;
         return $str;
     }
-    public function split(string $delimiter, int $limit = null, int $flags = null) : array
+    public function split(string $delimiter, ?int $limit = null, ?int $flags = null) : array
     {
         if (1 > ($limit ??= 2147483647)) {
             throw new InvalidArgumentException('Split limit must be a positive integer.');
