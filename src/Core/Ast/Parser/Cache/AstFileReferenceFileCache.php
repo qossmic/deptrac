@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\Cache;
 
+use Qossmic\Deptrac\Contract\Ast\DependencyContext;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
@@ -121,6 +122,7 @@ class AstFileReferenceFileCache implements AstFileReferenceDeferredCacheInterfac
                             FunctionToken::class,
                             SuperGlobalToken::class,
                             FileOccurrence::class,
+                            DependencyContext::class,
                         ],
                     ]
                 );
