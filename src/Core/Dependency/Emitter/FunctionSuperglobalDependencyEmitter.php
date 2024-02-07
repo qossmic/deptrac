@@ -21,15 +21,14 @@ final class FunctionSuperglobalDependencyEmitter implements DependencyEmitterInt
         foreach ($astMap->getFileReferences() as $astFileReference) {
             foreach ($astFileReference->functionReferences as $astFunctionReference) {
                 foreach ($astFunctionReference->dependencies as $dependency) {
-                    if (DependencyType::SUPERGLOBAL_VARIABLE !== $dependency->type) {
+                    if (DependencyType::SUPERGLOBAL_VARIABLE !== $dependency->context->dependencyType) {
                         continue;
                     }
                     $dependencyList->addDependency(
                         new Dependency(
                             $astFunctionReference->getToken(),
                             $dependency->token,
-                            $dependency->fileOccurrence,
-                            $dependency->type
+                            $dependency->context,
                         )
                     );
                 }

@@ -194,7 +194,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $message = sprintf(
             '%s:%d must not depend on %s (%s on %s)',
             $dependency->getDepender()->toString(),
-            $dependency->getFileOccurrence()->line,
+            $dependency->getContext()->fileOccurrence->line,
             $dependency->getDependent()->toString(),
             $violation->getDependerLayer(),
             $violation->getDependentLayer()
@@ -224,7 +224,7 @@ final class JUnitOutputFormatter implements OutputFormatterInterface
         $message = sprintf(
             '%s:%d has uncovered dependency on %s (%s)',
             $dependency->getDepender()->toString(),
-            $dependency->getFileOccurrence()->line,
+            $dependency->getContext()->fileOccurrence->line,
             $dependency->getDependent()->toString(),
             $rule->layer
         );

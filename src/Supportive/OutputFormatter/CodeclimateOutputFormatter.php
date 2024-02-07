@@ -189,9 +189,9 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             'categories' => ['Style', 'Complexity'],
             'severity' => $severity,
             'location' => [
-                'path' => $rule->getDependency()->getFileOccurrence()->filepath,
+                'path' => $rule->getDependency()->getContext()->fileOccurrence->filepath,
                 'lines' => [
-                    'begin' => $rule->getDependency()->getFileOccurrence()->line,
+                    'begin' => $rule->getDependency()->getContext()->fileOccurrence->line,
                 ],
             ],
         ];
@@ -203,8 +203,8 @@ final class CodeclimateOutputFormatter implements OutputFormatterInterface
             $rule::class,
             $rule->getDependency()->getDepender()->toString(),
             $rule->getDependency()->getDependent()->toString(),
-            $rule->getDependency()->getFileOccurrence()->filepath,
-            $rule->getDependency()->getFileOccurrence()->line,
+            $rule->getDependency()->getContext()->fileOccurrence->filepath,
+            $rule->getDependency()->getContext()->fileOccurrence->line,
         ]));
     }
 }

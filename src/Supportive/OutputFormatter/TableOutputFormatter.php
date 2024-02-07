@@ -92,7 +92,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
-        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
+        $fileOccurrence = $rule->getDependency()->getContext()->fileOccurrence;
         $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return ['<fg=yellow>Skipped</>', $message];
@@ -116,7 +116,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
-        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
+        $fileOccurrence = $rule->getDependency()->getContext()->fileOccurrence;
         $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [sprintf('<fg=red>%s</>', $rule->ruleName()), $message];
@@ -175,7 +175,7 @@ final class TableOutputFormatter implements OutputFormatterInterface
             $message .= "\n".$this->formatMultilinePath($dependency);
         }
 
-        $fileOccurrence = $rule->getDependency()->getFileOccurrence();
+        $fileOccurrence = $rule->getDependency()->getContext()->fileOccurrence;
         $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [

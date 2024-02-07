@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Dependency\Emitter;
 
+use Qossmic\Deptrac\Contract\Ast\DependencyContext;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Dependency\Dependency;
@@ -22,10 +23,10 @@ final class ClassDependencyEmitter implements DependencyEmitterInterface
             $classLikeName = $classReference->getToken();
 
             foreach ($classReference->dependencies as $dependency) {
-                if (DependencyType::SUPERGLOBAL_VARIABLE === $dependency->type) {
+                if (DependencyType::SUPERGLOBAL_VARIABLE === $dependency->context->dependencyType) {
                     continue;
                 }
-                if (DependencyType::UNRESOLVED_FUNCTION_CALL === $dependency->type) {
+                if (DependencyType::UNRESOLVED_FUNCTION_CALL === $dependency->context->dependencyType) {
                     continue;
                 }
 
@@ -33,8 +34,7 @@ final class ClassDependencyEmitter implements DependencyEmitterInterface
                     new Dependency(
                         $classLikeName,
                         $dependency->token,
-                        $dependency->fileOccurrence,
-                        $dependency->type
+                        $dependency->context,
                     )
                 );
             }
@@ -44,8 +44,7 @@ final class ClassDependencyEmitter implements DependencyEmitterInterface
                     new Dependency(
                         $classLikeName,
                         $inherit->classLikeName,
-                        $inherit->fileOccurrence,
-                        DependencyType::INHERIT
+                        new DependencyContext($inherit->fileOccurrence, DependencyType::INHERIT),
                     )
                 );
             }

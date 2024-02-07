@@ -39,8 +39,8 @@ final class ClassConstantExtractorTest extends TestCase
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\ClassA',
             $dependencies[0]->token->toString()
         );
-        self::assertSame($filePath, $dependencies[0]->fileOccurrence->filepath);
-        self::assertSame(15, $dependencies[0]->fileOccurrence->line);
-        self::assertSame('const', $dependencies[0]->type->value);
+        self::assertSame($filePath, $dependencies[0]->context->fileOccurrence->filepath);
+        self::assertSame(15, $dependencies[0]->context->fileOccurrence->line);
+        self::assertSame('const', $dependencies[0]->context->dependencyType->value);
     }
 }

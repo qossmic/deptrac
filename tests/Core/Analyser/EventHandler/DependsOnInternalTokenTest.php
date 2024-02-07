@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
 use Qossmic\Deptrac\Contract\Analyser\EventHelper;
 use Qossmic\Deptrac\Contract\Analyser\ProcessEvent;
+use Qossmic\Deptrac\Contract\Ast\DependencyContext;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\Layer\LayerProvider;
@@ -38,8 +39,8 @@ final class DependsOnInternalTokenTest extends TestCase
             new Dependency(
                 $dependerToken,
                 $dependentToken,
-                new FileOccurrence('test', 1),
-                DependencyType::STATIC_METHOD
+                new DependencyContext(new FileOccurrence('test', 1),
+                    DependencyType::STATIC_METHOD)
             ),
             new ClassLikeReference($dependerToken, ClassLikeType::TYPE_CLASS,
                 [], [], $dependerTags),

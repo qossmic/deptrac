@@ -50,7 +50,7 @@ final class DebugDependenciesRunner
             $rule->layer
         );
 
-        $fileOccurrence = $dependency->getFileOccurrence();
+        $fileOccurrence = $dependency->getContext()->fileOccurrence;
         $message .= sprintf("\n%s:%d", $fileOccurrence->filepath, $fileOccurrence->line);
 
         return [$message];

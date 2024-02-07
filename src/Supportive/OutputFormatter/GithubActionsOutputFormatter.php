@@ -66,8 +66,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
                 sprintf(
                     '::%s file=%s,line=%s::%s has uncovered dependency on %s (%s)',
                     $reportAsError ? 'error' : 'warning',
-                    $dependency->getFileOccurrence()->filepath,
-                    $dependency->getFileOccurrence()->line,
+                    $dependency->getContext()->fileOccurrence->filepath,
+                    $dependency->getContext()->fileOccurrence->line,
                     $dependency->getDepender()->toString(),
                     $dependency->getDependent()->toString(),
                     $u->layer
@@ -124,8 +124,8 @@ final class GithubActionsOutputFormatter implements OutputFormatterInterface
             sprintf(
                 '::%s file=%s,line=%s::%s',
                 $this->determineLogLevel($rule),
-                $dependency->getFileOccurrence()->filepath,
-                $dependency->getFileOccurrence()->line,
+                $dependency->getContext()->fileOccurrence->filepath,
+                $dependency->getContext()->fileOccurrence->line,
                 $message
             )
         );

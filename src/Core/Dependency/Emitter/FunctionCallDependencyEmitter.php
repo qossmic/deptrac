@@ -34,7 +34,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
     {
         foreach ($references as $reference) {
             foreach ($reference->dependencies as $dependency) {
-                if (DependencyType::UNRESOLVED_FUNCTION_CALL !== $dependency->type) {
+                if (DependencyType::UNRESOLVED_FUNCTION_CALL !== $dependency->context->dependencyType) {
                     continue;
                 }
 
@@ -46,7 +46,7 @@ final class FunctionCallDependencyEmitter implements DependencyEmitterInterface
 
                 $dependencyList->addDependency(
                     new Dependency(
-                        $reference->getToken(), $dependency->token, $dependency->fileOccurrence, $dependency->type
+                        $reference->getToken(), $dependency->token, $dependency->context
                     )
                 );
             }

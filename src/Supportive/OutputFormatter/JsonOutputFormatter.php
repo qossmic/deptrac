@@ -92,11 +92,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      */
     private function addFailure(array &$violationsArray, Violation $violation): void
     {
-        $className = $violation->getDependency()->getFileOccurrence()->filepath;
+        $className = $violation->getDependency()->getContext()->fileOccurrence->filepath;
 
         $violationsArray[$className]['messages'][] = [
             'message' => $this->getFailureMessage($violation),
-            'line' => $violation->getDependency()->getFileOccurrence()->line,
+            'line' => $violation->getDependency()->getContext()->fileOccurrence->line,
             'type' => 'error',
         ];
     }
@@ -119,11 +119,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      */
     private function addSkipped(array &$violationsArray, SkippedViolation $violation): void
     {
-        $className = $violation->getDependency()->getFileOccurrence()->filepath;
+        $className = $violation->getDependency()->getContext()->fileOccurrence->filepath;
 
         $violationsArray[$className]['messages'][] = [
             'message' => $this->getWarningMessage($violation),
-            'line' => $violation->getDependency()->getFileOccurrence()->line,
+            'line' => $violation->getDependency()->getContext()->fileOccurrence->line,
             'type' => 'warning',
         ];
     }
@@ -146,11 +146,11 @@ final class JsonOutputFormatter implements OutputFormatterInterface
      */
     private function addUncovered(array &$violationsArray, Uncovered $violation): void
     {
-        $className = $violation->getDependency()->getFileOccurrence()->filepath;
+        $className = $violation->getDependency()->getContext()->fileOccurrence->filepath;
 
         $violationsArray[$className]['messages'][] = [
             'message' => $this->getUncoveredMessage($violation),
-            'line' => $violation->getDependency()->getFileOccurrence()->line,
+            'line' => $violation->getDependency()->getContext()->fileOccurrence->line,
             'type' => 'warning',
         ];
     }

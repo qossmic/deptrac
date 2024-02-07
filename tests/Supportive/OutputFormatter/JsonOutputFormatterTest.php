@@ -7,6 +7,7 @@ namespace Tests\Qossmic\Deptrac\Supportive\OutputFormatter;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Analyser\AnalysisResult;
+use Qossmic\Deptrac\Contract\Ast\DependencyContext;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputFormatterInput;
@@ -53,7 +54,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -88,7 +89,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -123,7 +124,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassE'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 15), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassC.php', 15), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -161,7 +162,7 @@ final class JsonOutputFormatterTest extends TestCase
                 new Violation(
                     new Dependency(
                         ClassLikeToken::fromFQCN('OriginalA'),
-                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
+                        ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER)
                     ),
                     'LayerA',
                     'LayerB',
@@ -184,7 +185,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -218,7 +219,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -259,7 +260,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -294,7 +295,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassB'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassA.php', 15), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassA.php', 15), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -328,7 +329,7 @@ final class JsonOutputFormatterTest extends TestCase
                         ClassLikeToken::fromFQCN('ClassD'),
                         new Dependency(
                             ClassLikeToken::fromFQCN('OriginalA'),
-                            ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER
+                            ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('ClassC.php', 12), DependencyType::PARAMETER)
                         ),
                         (new AstInherit(
                             ClassLikeToken::fromFQCN('ClassInheritA'), new FileOccurrence('ClassA.php', 3),
@@ -359,7 +360,7 @@ final class JsonOutputFormatterTest extends TestCase
                 new Uncovered(
                     new Dependency(
                         ClassLikeToken::fromFQCN('OriginalA'),
-                        ClassLikeToken::fromFQCN('OriginalB'), new FileOccurrence('OriginalA.php', 12), DependencyType::PARAMETER
+                        ClassLikeToken::fromFQCN('OriginalB'), new DependencyContext(new FileOccurrence('OriginalA.php', 12), DependencyType::PARAMETER)
                     ),
                     'LayerA'
                 ),
@@ -447,7 +448,7 @@ final class JsonOutputFormatterTest extends TestCase
         $violation = new Violation(
             new Dependency(
                 ClassLikeToken::fromFQCN('OriginalA'),
-                ClassLikeToken::fromFQCN('OriginalB'.$malformedCharacters), new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER
+                ClassLikeToken::fromFQCN('OriginalB'.$malformedCharacters), new DependencyContext(new FileOccurrence('ClassA.php', 12), DependencyType::PARAMETER)
             ),
             'LayerA',
             'LayerB',

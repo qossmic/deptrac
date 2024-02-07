@@ -38,15 +38,14 @@ final class UsesDependencyEmitter implements DependencyEmitterInterface
         foreach ($astMap->getFileReferences() as $fileReference) {
             foreach ($fileReference->classLikeReferences as $astClassReference) {
                 foreach ($fileReference->dependencies as $emittedDependency) {
-                    if (DependencyType::USE === $emittedDependency->type
+                    if (DependencyType::USE === $emittedDependency->context->dependencyType
                         && $this->isFQDN($emittedDependency, $FQDNIndex)
                     ) {
                         $dependencyList->addDependency(
                             new Dependency(
                                 $astClassReference->getToken(),
                                 $emittedDependency->token,
-                                $emittedDependency->fileOccurrence,
-                                $emittedDependency->type
+                                $emittedDependency->context,
                             )
                         );
                     }

@@ -41,16 +41,16 @@ final class AnonymousClassExtractorTest extends TestCase
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\ClassA',
             $dependencies[0]->token->toString()
         );
-        self::assertSame($filePath, $dependencies[0]->fileOccurrence->filepath);
-        self::assertSame(19, $dependencies[0]->fileOccurrence->line);
-        self::assertSame('anonymous_class_extends', $dependencies[0]->type->value);
+        self::assertSame($filePath, $dependencies[0]->context->fileOccurrence->filepath);
+        self::assertSame(19, $dependencies[0]->context->fileOccurrence->line);
+        self::assertSame('anonymous_class_extends', $dependencies[0]->context->dependencyType->value);
 
         self::assertSame(
             'Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\InterfaceC',
             $dependencies[1]->token->toString()
         );
-        self::assertSame($filePath, $dependencies[1]->fileOccurrence->filepath);
-        self::assertSame(19, $dependencies[1]->fileOccurrence->line);
-        self::assertSame('anonymous_class_implements', $dependencies[1]->type->value);
+        self::assertSame($filePath, $dependencies[1]->context->fileOccurrence->filepath);
+        self::assertSame(19, $dependencies[1]->context->fileOccurrence->line);
+        self::assertSame('anonymous_class_implements', $dependencies[1]->context->dependencyType->value);
     }
 }

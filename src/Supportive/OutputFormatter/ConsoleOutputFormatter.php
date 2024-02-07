@@ -71,7 +71,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                 $rule->getDependentLayer()
             )
         );
-        $this->printFileOccurrence($output, $dependency->getFileOccurrence());
+        $this->printFileOccurrence($output, $dependency->getContext()->fileOccurrence);
 
         if (count($dependency->serialize()) > 1) {
             $this->printMultilinePath($output, $dependency);
@@ -160,7 +160,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
                     $u->layer
                 )
             );
-            $this->printFileOccurrence($output, $dependency->getFileOccurrence());
+            $this->printFileOccurrence($output, $dependency->getContext()->fileOccurrence);
 
             if (count($dependency->serialize()) > 1) {
                 $this->printMultilinePath($output, $dependency);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Dependency;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Ast\DependencyContext;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstInherit;
@@ -24,13 +25,14 @@ final class InheritDependencyTest extends TestCase
         $dependency = new InheritDependency(
             $classLikeNameA,
             $classLikeNameB,
-            $dep = new Dependency($classLikeNameA, $classLikeNameB, $fileOccurrence, DependencyType::PARAMETER),
+            $dep = new Dependency($classLikeNameA, $classLikeNameB, new DependencyContext(
+                $fileOccurrence, DependencyType::PARAMETER)),
             $astInherit = new AstInherit($classLikeNameB, $fileOccurrence, AstInheritType::EXTENDS)
         );
 
         self::assertSame($classLikeNameA, $dependency->getDepender());
         self::assertSame($classLikeNameB, $dependency->getDependent());
-        self::assertSame(1, $dependency->getFileOccurrence()->line);
+        self::assertSame(1, $dependency->getContext()->fileOccurrence->line);
         self::assertSame($dep, $dependency->originalDependency);
         self::assertSame($astInherit, $dependency->inheritPath);
     }

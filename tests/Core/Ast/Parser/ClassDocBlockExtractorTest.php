@@ -44,7 +44,7 @@ final class ClassDocBlockExtractorTest extends TestCase
 
         foreach ($dependencies as $key => $dependency) {
             self::assertSame(self::EXPECTED[$key][0], $dependency->token->toString());
-            self::assertSame(self::EXPECTED[$key][1], $dependency->type);
+            self::assertSame(self::EXPECTED[$key][1], $dependency->context->dependencyType);
         }
     }
 }

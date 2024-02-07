@@ -55,7 +55,7 @@ trait EmitterTrait
             static function (DependencyInterface $d) {
                 return sprintf('%s:%d on %s',
                     $d->getDepender()->toString(),
-                    $d->getFileOccurrence()->line,
+                    $d->getContext()->fileOccurrence->line,
                     $d->getDependent()->toString()
                 );
             },

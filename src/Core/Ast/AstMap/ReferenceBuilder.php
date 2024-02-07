@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\AstMap;
 
+use Qossmic\Deptrac\Contract\Ast\DependencyContext;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Contract\Ast\FileOccurrence;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
@@ -28,6 +29,11 @@ abstract class ReferenceBuilder
         return $this->tokenTemplates;
     }
 
+    protected function createContext(int $occursAtLine, DependencyType $type): DependencyContext
+    {
+        return new DependencyContext(new FileOccurrence($this->filepath, $occursAtLine), $type);
+    }
+
     /**
      * Unqualified function and constant names inside a namespace cannot be
      * statically resolved. Inside a namespace Foo, a call to strlen() may
@@ -39,8 +45,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             FunctionToken::fromFQCN($functionName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::UNRESOLVED_FUNCTION_CALL
+            $this->createContext($occursAtLine, DependencyType::UNRESOLVED_FUNCTION_CALL),
         );
 
         return $this;
@@ -50,8 +55,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::VARIABLE
+            $this->createContext($occursAtLine, DependencyType::VARIABLE),
         );
 
         return $this;
@@ -61,8 +65,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             SuperGlobalToken::from($superglobalName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::SUPERGLOBAL_VARIABLE
+            $this->createContext($occursAtLine, DependencyType::SUPERGLOBAL_VARIABLE),
         );
     }
 
@@ -70,8 +73,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::RETURN_TYPE
+            $this->createContext($occursAtLine, DependencyType::RETURN_TYPE),
         );
 
         return $this;
@@ -81,8 +83,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::THROW
+            $this->createContext($occursAtLine, DependencyType::THROW),
         );
 
         return $this;
@@ -92,8 +93,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::ANONYMOUS_CLASS_EXTENDS
+            $this->createContext($occursAtLine, DependencyType::ANONYMOUS_CLASS_EXTENDS),
         );
     }
 
@@ -101,8 +101,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::ANONYMOUS_CLASS_TRAIT
+            $this->createContext($occursAtLine, DependencyType::ANONYMOUS_CLASS_TRAIT),
         );
     }
 
@@ -110,8 +109,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::CONST
+            $this->createContext($occursAtLine, DependencyType::CONST),
         );
     }
 
@@ -119,8 +117,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::ANONYMOUS_CLASS_IMPLEMENTS
+            $this->createContext($occursAtLine, DependencyType::ANONYMOUS_CLASS_IMPLEMENTS),
         );
     }
 
@@ -128,8 +125,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::PARAMETER
+            $this->createContext($occursAtLine, DependencyType::PARAMETER),
         );
 
         return $this;
@@ -139,8 +135,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::ATTRIBUTE
+            $this->createContext($occursAtLine, DependencyType::ATTRIBUTE),
         );
 
         return $this;
@@ -150,8 +145,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::INSTANCEOF
+            $this->createContext($occursAtLine, DependencyType::INSTANCEOF),
         );
 
         return $this;
@@ -161,8 +155,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::NEW
+            $this->createContext($occursAtLine, DependencyType::NEW),
         );
 
         return $this;
@@ -172,8 +165,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::STATIC_PROPERTY
+            $this->createContext($occursAtLine, DependencyType::STATIC_PROPERTY),
         );
 
         return $this;
@@ -183,8 +175,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::STATIC_METHOD
+            $this->createContext($occursAtLine, DependencyType::STATIC_METHOD),
         );
 
         return $this;
@@ -194,8 +185,7 @@ abstract class ReferenceBuilder
     {
         $this->dependencies[] = new DependencyToken(
             ClassLikeToken::fromFQCN($classLikeName),
-            new FileOccurrence($this->filepath, $occursAtLine),
-            DependencyType::CATCH
+            $this->createContext($occursAtLine, DependencyType::CATCH),
         );
 
         return $this;
