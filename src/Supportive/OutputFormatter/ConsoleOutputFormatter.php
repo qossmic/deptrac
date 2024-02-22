@@ -170,7 +170,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     private function printFileOccurrence(OutputInterface $output, FileOccurrence $fileOccurrence): void
     {
-        $output->writeLineFormatted($fileOccurrence->filepath.'::'.$fileOccurrence->line);
+        $output->writeLineFormatted($fileOccurrence->filepath.':'.$fileOccurrence->line);
     }
 
     private function printErrors(OutputResult $result, OutputInterface $output): void
