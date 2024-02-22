@@ -79,11 +79,11 @@ final class ConsoleOutputFormatterTest extends TestCase
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
                 originalA.php:12
-                ClassInheritD::6 ->
-                ClassInheritC::5 ->
-                ClassInheritB::4 ->
-                ClassInheritA::3 ->
-                OriginalB::12
+                ClassInheritD:6 ->
+                ClassInheritC:5 ->
+                ClassInheritB:4 ->
+                ClassInheritA:3 ->
+                OriginalB:12
 
                 Report:
                 Violations: 1

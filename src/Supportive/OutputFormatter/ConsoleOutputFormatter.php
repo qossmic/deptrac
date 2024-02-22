@@ -83,7 +83,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $buffer = implode(
             " -> \n",
             array_map(
-                static fn (array $dependency): string => sprintf("\t%s::%d", $dependency['name'], $dependency['line']),
+                static fn (array $dependency): string => sprintf("\t%s:%d", $dependency['name'], $dependency['line']),
                 $dep->serialize()
             )
         );
