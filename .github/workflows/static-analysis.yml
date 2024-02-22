@@ -107,3 +107,32 @@ jobs:
 
       - name: Psalm
         run: make psalm
+
+
+  static-code-analysis-composer-dependency-analyser:
+    name: "Static Code Analysis by composer-dependency-analyser"
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            php-version: 8.1
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml, ctype, iconv
+          coverage: none
+          tools: composer
+
+      - uses: "ramsey/composer-install@v2"
+
+      - name: composer-dependency-analyser
+        run: make composer-dependency-analyser

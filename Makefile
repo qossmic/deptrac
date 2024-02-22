@@ -1,5 +1,6 @@
 BOX_BIN := ./build/box.phar
 COMPOSER_BIN := composer
+COMPOSER_DEPENDENCY_ANALYSER_BIN := ./vendor/bin/composer-dependency-analyser
 PHP_BIN := php
 PHP_CS_FIXER_BIN := ./vendor/bin/php-cs-fixer
 PHPSTAN_BIN	:= ./vendor/bin/phpstan
@@ -19,6 +20,10 @@ build: tests ## Runs tests and creates the phar-binary
 .PHONY: composer-install
 composer-install: ## Installs dependencies
 	$(COMPOSER_BIN) install --no-interaction --no-progress --optimize-autoloader --ansi
+
+.PHONY: composer-dependency-analyser
+composer-dependency-analyser: ## Performs static code analysis using composer-dependency-analyser
+	$(COMPOSER_DEPENDENCY_ANALYSER_BIN)
 
 .PHONY: deptrac
 deptrac: ## Analyses own architecture using the default config confile
