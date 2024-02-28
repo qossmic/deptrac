@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Qossmic\Deptrac\Contract\Analyser;
+namespace Tests\Qossmic\Deptrac\Contract\Config;
 
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Config\AnalyserConfig;

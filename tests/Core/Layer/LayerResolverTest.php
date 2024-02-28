@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Qossmic\Deptrac\Core\Layer;
 
 use PHPUnit\Framework\TestCase;
+use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
-use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
 use Qossmic\Deptrac\Core\Layer\LayerResolver;
 
 final class LayerResolverTest extends TestCase
@@ -115,7 +115,6 @@ final class LayerResolverTest extends TestCase
                     'collectors' => [
                         [
                             'type' => 'custom',
-                            'resolvable' => true,
                             'satisfy' => true,
                         ],
                     ],
@@ -145,7 +144,6 @@ final class LayerResolverTest extends TestCase
                     'collectors' => [
                         [
                             'type' => 'custom',
-                            'resolvable' => true,
                             'satisfy' => true,
                         ],
                     ],
@@ -170,32 +168,7 @@ final class LayerResolverTest extends TestCase
                     'collectors' => [
                         [
                             'type' => 'custom',
-                            'resolvable' => true,
                             'satisfy' => false,
-                        ],
-                    ],
-                ],
-            ]
-        );
-
-        self::assertSame(
-            [],
-            $resolver->getLayersForReference($reference)
-        );
-    }
-
-    public function testGetLayersForReferenceWhenCollectorIsNotResolvable(): void
-    {
-        $reference = new ClassLikeReference(ClassLikeToken::fromFQCN('foo'));
-        $resolver = new LayerResolver(
-            $this->buildCollectorResolverWithFakeCollector(),
-            [
-                [
-                    'name' => 'test',
-                    'collectors' => [
-                        [
-                            'type' => 'custom',
-                            'resolvable' => false,
                         ],
                     ],
                 ],
@@ -210,11 +183,7 @@ final class LayerResolverTest extends TestCase
 
     private function buildCollectorResolverWithFakeCollector(): CollectorResolverInterface
     {
-        $collector = $this->createMock(ConditionalCollectorInterface::class);
-        $collector
-            ->method('resolvable')
-            ->with($this->callback(static fn (array $config): bool => 'custom' === $config['type']))
-            ->willReturnCallback(static fn (array $config): bool => (bool) $config['resolvable'] ?? false);
+        $collector = $this->createMock(CollectorInterface::class);
         $collector
             ->method('satisfy')
             ->with($this->callback(static fn (array $config): bool => 'custom' === $config['type']))

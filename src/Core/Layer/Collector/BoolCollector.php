@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 
-final class BoolCollector implements ConditionalCollectorInterface
+final class BoolCollector implements CollectorInterface
 {
     public function __construct(private readonly CollectorResolverInterface $collectorResolver) {}
 
@@ -31,37 +32,6 @@ final class BoolCollector implements ConditionalCollectorInterface
 
             $satisfied = $collectable->collector->satisfy($collectable->attributes, $reference);
             if ($satisfied) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public function resolvable(array $config): bool
-    {
-        $configuration = $this->normalizeConfiguration($config);
-
-        /** @var array{type: string, args: array<string, string>} $v */
-        foreach ((array) $configuration['must'] as $v) {
-            $collectable = $this->collectorResolver->resolve($v);
-            $collector = $collectable->collector;
-
-            if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->attributes)
-            ) {
-                return false;
-            }
-        }
-
-        /** @var array{type: string, args: array<string, string>} $v */
-        foreach ((array) $configuration['must_not'] as $v) {
-            $collectable = $this->collectorResolver->resolve($v);
-            $collector = $collectable->collector;
-
-            if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->attributes)
-            ) {
                 return false;
             }
         }
