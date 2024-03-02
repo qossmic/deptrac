@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use stdClass;
 use TypeError;
 

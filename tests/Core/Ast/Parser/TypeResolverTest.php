@@ -9,8 +9,8 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPUnit\Framework\TestCase;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
 final class TypeResolverTest extends TestCase
 {

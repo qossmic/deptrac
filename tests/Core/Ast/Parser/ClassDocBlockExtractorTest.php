@@ -11,7 +11,7 @@ use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 
 final class ClassDocBlockExtractorTest extends TestCase
 {

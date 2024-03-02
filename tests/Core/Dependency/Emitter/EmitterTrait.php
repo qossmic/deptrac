@@ -17,7 +17,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\StaticExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 use Qossmic\Deptrac\Core\Dependency\Emitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;

@@ -20,7 +20,6 @@ use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceCacheInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 use Qossmic\Deptrac\Supportive\File\Exception\CouldNotReadFileException;
 use Qossmic\Deptrac\Supportive\File\FileReader;
 

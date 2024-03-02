@@ -26,8 +26,6 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\Core\Ast\AstMap\File\FileReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;
 
 class FileReferenceVisitor extends NodeVisitorAbstract
 {
@@ -104,7 +102,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
         };
 
         foreach ($this->dependencyResolvers as $resolver) {
-            $resolver->processNode($node, $this->currentReference, $this->currentTypeScope);
+            $resolver->processNodeWithClassicScope($node, $this->currentReference, $this->currentTypeScope);
         }
 
         return null;

@@ -37,8 +37,10 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\StaticExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanParser;
 use Qossmic\Deptrac\Core\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Core\Dependency\Emitter\ClassDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
@@ -121,6 +123,10 @@ return static function (ContainerConfigurator $container): void {
         ->defaults()
         ->autowire();
 
+    $services
+        ->set(PhpStanContainerDecorator::class)
+        ->args(['$paths' => param('paths')]);
+
     /*
      * Utilities
      */
@@ -162,10 +168,18 @@ return static function (ContainerConfigurator $container): void {
         ->args([
             '$extractors' => tagged_iterator('reference_extractors'),
         ]);
-    $services->alias(ParserInterface::class, NikicPhpParser::class);
+    $services
+        ->set(PhpStanParser::class)
+        ->args([
+            '$extractors' => tagged_iterator('reference_extractors'),
+        ]);
+    $services->alias(ParserInterface::class, PhpStanParser::class);
     $services->set(TypeResolver::class);
     $services
         ->set(AnnotationReferenceExtractor::class)
+        ->args([
+            '$phpStanContainer' => service(PhpStanContainerDecorator::class)
+               ])
         ->tag('reference_extractors');
     $services
         ->set(AnonymousClassExtractor::class)

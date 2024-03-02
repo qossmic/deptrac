@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Qossmic\Deptrac\Core\Ast\Parser;
+namespace Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser;
 
 use InvalidArgumentException;
 use phpDocumentor\Reflection\FqsenResolver;

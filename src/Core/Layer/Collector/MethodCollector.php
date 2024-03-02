@@ -7,11 +7,11 @@ namespace Qossmic\Deptrac\Core\Layer\Collector;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeReference;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 
 final class MethodCollector extends RegexCollector
 {
-    public function __construct(private readonly NikicPhpParser $astParser) {}
+    public function __construct(private readonly ParserInterface $parser) {}
 
     public function satisfy(array $config, TokenReferenceInterface $reference): bool
     {
@@ -21,7 +21,7 @@ final class MethodCollector extends RegexCollector
 
         $pattern = $this->getValidatedPattern($config);
 
-        $classLike = $this->astParser->getNodeForClassLikeReference($reference);
+        $classLike = $this->parser->getNodeForClassLikeReference($reference);
 
         if (null === $classLike) {
             return false;

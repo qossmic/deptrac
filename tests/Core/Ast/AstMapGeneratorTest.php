@@ -18,7 +18,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassC;
