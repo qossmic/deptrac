@@ -17,7 +17,11 @@ final class MermaidJSOutputFormatter implements OutputFormatterInterface
 {
     /** @var array{direction: string, groups: array<string, string[]>} */
     private array $config;
+    private const GRAPH_TYPE = 'flowchart %s;';
 
+    private const GRAPH_END = '  end;';
+    private const SUBGRAPH = '  subgraph %sGroup;';
+    private const LAYER = '    %s;';
     private const GRAPH_NODE_FORMAT = '    %s -->|%d| %s;';
     private const VIOLATION_STYLE_FORMAT = '    linkStyle %d stroke:red,stroke-width:4px;';
 
@@ -42,16 +46,16 @@ final class MermaidJSOutputFormatter implements OutputFormatterInterface
         $violations = $result->violations();
         $buffer = '';
 
-        $buffer .= sprintf('flowchart %s;'.PHP_EOL, $this->config['direction']);
+        $buffer .= sprintf(self::GRAPH_TYPE.PHP_EOL, $this->config['direction']);
 
         foreach ($this->config['groups'] as $subGraphName => $layers) {
-            $buffer .= sprintf('  subgraph %sGroup;'.PHP_EOL, $subGraphName);
+            $buffer .= sprintf(self::SUBGRAPH.PHP_EOL, $subGraphName);
 
             foreach ($layers as $layer) {
-                $buffer .= sprintf('    %s;'.PHP_EOL, $layer);
+                $buffer .= sprintf(self::LAYER.PHP_EOL, $layer);
             }
 
-            $buffer .= '  end;'.PHP_EOL;
+            $buffer .= self::GRAPH_END.PHP_EOL;
         }
 
         $linkCount = 0;
