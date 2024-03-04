@@ -1,26 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.30.0@d0bc6e25d89f649e4f36a534f330f8bb4643dd69">
+<files psalm-version="5.20.0@3f284e96c9d9be6fe6b15c79416e1d1903dcfef4">
   <file src="src/Contract/Result/OutputResult.php">
-    <InvalidReturnStatement occurrences="1">
-      <code>array_key_exists($type, $this-&gt;rules) ? array_values($this-&gt;rules[$type]) : []</code>
+    <InvalidReturnStatement>
+      <code><![CDATA[array_key_exists($type, $this->rules) ? array_values($this->rules[$type]) : []]]></code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>list&lt;T&gt;</code>
+    <InvalidReturnType>
+      <code><![CDATA[list<T>]]></code>
     </InvalidReturnType>
   </file>
-  <file src="src/Core/Analyser/EventHandler/DependsOnDisallowedLayer.php">
-    <MissingImmutableAnnotation occurrences="1">
-      <code>DependsOnDisallowedLayer</code>
-    </MissingImmutableAnnotation>
+  <file src="src/Core/Ast/AstMap/ClassLike/ClassLikeToken.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
   </file>
-  <file src="src/Core/Analyser/EventHandler/DependsOnInternalToken.php">
-    <MissingImmutableAnnotation occurrences="1">
-      <code>DependsOnInternalToken</code>
-    </MissingImmutableAnnotation>
+  <file src="src/Core/Ast/AstMap/Function/FunctionToken.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
   </file>
-  <file src="src/Core/Analyser/EventHandler/DependsOnPrivateLayer.php">
-    <MissingImmutableAnnotation occurrences="1">
-      <code>DependsOnPrivateLayer</code>
-    </MissingImmutableAnnotation>
+  <file src="src/Core/Ast/Parser/TypeScope.php">
+    <RiskyTruthyFalsyComparison>
+      <code>$alias</code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/Core/Layer/Collector/BoolCollector.php">
+    <RiskyTruthyFalsyComparison>
+      <code><![CDATA[!$configuration['must']]]></code>
+      <code><![CDATA[!$configuration['must_not']]]></code>
+    </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/Core/Layer/Collector/ComposerFilesParser.php">
+    <InvalidReturnStatement>
+      <code>$lockedPackages</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType>
+      <code><![CDATA[array<string, array{
+     *     autoload?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     *     autoload-dev?: array{'psr-0'?: array<string, string>, 'psr-4'?: array<string, string>},
+     * }>]]></code>
+    </InvalidReturnType>
+  </file>
+  <file src="src/Core/Layer/Collector/DirectoryCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$validatedPattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/GlobCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$validatedPattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/MethodCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/RegexCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Core/Layer/Collector/TagValueRegexCollector.php">
+    <ArgumentTypeCoercion>
+      <code>$pattern</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Supportive/Console/Command/DebugLayerRunner.php">
+    <RiskyTruthyFalsyComparison>
+      <code>$layer</code>
+    </RiskyTruthyFalsyComparison>
   </file>
 </files>

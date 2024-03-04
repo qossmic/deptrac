@@ -38,7 +38,12 @@ final class ComposerCollector implements CollectorInterface
             throw new CouldNotParseFileException('Could not parse composer files.', 0, $exception);
         }
 
-        $namespaces = $parser->autoloadableNamespacesForRequirements($config['packages'], true);
+        try {
+            $namespaces = $parser->autoloadableNamespacesForRequirements($config['packages'], true);
+        } catch (RuntimeException $e) {
+            throw InvalidCollectorDefinitionException::invalidCollectorConfiguration(sprintf('ComposerCollector has a non-existent package defined. %s', $e->getMessage()));
+        }
+
         $token = $reference->getToken()->toString();
 
         foreach ($namespaces as $namespace) {

@@ -21,7 +21,7 @@ final class FunctionNameCollectorTest extends TestCase
         $this->collector = new FunctionNameCollector();
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'a'], 'foo\bar', true];
         yield [['value' => 'a'], 'foo\bbr', false];

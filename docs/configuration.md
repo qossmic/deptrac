@@ -20,6 +20,23 @@ The following table shows the available config keys for Deptrac.
 </thead>
 <tbody>
 <tr>
+<td>analyser.internal_tag</td>
+<td>
+Specifies a custom doc block tag which deptrac should use to identify layer-internal
+class-like structures. The tag <code>@deptrac-internal</code> will always be used
+for this purpose. This option allows an additional tag to be specified, such as
+<code>@layer-internal</code> or plain <code>@internal</code>.
+</td>
+<td>
+
+```yaml
+deptrac:
+  analyser:
+    internal_tag: "@layer-internal"
+```
+</td>
+</tr>
+<tr>
 <td>analyser.types</td>
 <td>
 
@@ -78,7 +95,7 @@ deptrac:
 <td>exclude_files</td>
 <td>
 
-A list of regular expression-patterns to determine which files to exclude,
+A list of regular expression-patterns to determine which files or directories to exclude,
 e.g. test files or config
 
 </td>

@@ -7,11 +7,11 @@ namespace Qossmic\Deptrac\Supportive\OutputFormatter\Configuration;
 final class ConfigurationGraphViz
 {
     /**
-     * @param array{hidden_layers: string[], groups: array<string, string[]>, point_to_groups: bool} $arr
+     * @param array{hidden_layers?: string[], groups?: array<string, string[]>, point_to_groups?: bool} $arr
      */
     public static function fromArray(array $arr): self
     {
-        return new self($arr['hidden_layers'], $arr['groups'], $arr['point_to_groups']);
+        return new self($arr['hidden_layers'] ?? [], $arr['groups'] ?? [], $arr['point_to_groups'] ?? false);
     }
 
     /**

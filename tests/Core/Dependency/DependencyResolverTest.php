@@ -51,13 +51,13 @@ final class DependencyResolverTest extends TestCase
     {
         $astMap = new AstMap([]);
 
-        $this->dispatcher->method('dispatch')->withConsecutive(
-            [new PreEmitEvent('ClassDependencyEmitter')],
-            [new PostEmitEvent()],
-            [new PreEmitEvent('UsesDependencyEmitter')],
-            [new PostEmitEvent()],
-            [new PreFlattenEvent()],
-            [new PostFlattenEvent()]
+        $this->dispatcher->method('dispatch')->willReturnOnConsecutiveCalls(
+            new PreEmitEvent('ClassDependencyEmitter'),
+            new PostEmitEvent(),
+            new PreEmitEvent('UsesDependencyEmitter'),
+            new PostEmitEvent(),
+            new PreFlattenEvent(),
+            new PostFlattenEvent()
         );
         $this->flattener->expects(self::once())->method('flattenDependencies');
 
@@ -78,11 +78,11 @@ final class DependencyResolverTest extends TestCase
     {
         $astMap = new AstMap([]);
 
-        $this->dispatcher->method('dispatch')->withConsecutive(
-            [new PreEmitEvent('FunctionDependencyEmitter')],
-            [new PostEmitEvent()],
-            [new PreFlattenEvent()],
-            [new PostFlattenEvent()]
+        $this->dispatcher->method('dispatch')->willReturnOnConsecutiveCalls(
+            new PreEmitEvent('FunctionDependencyEmitter'),
+            new PostEmitEvent(),
+            new PreFlattenEvent(),
+            new PostFlattenEvent()
         );
         $this->flattener->expects(self::once())->method('flattenDependencies');
 

@@ -222,8 +222,10 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('analyser')
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->scalarNode('internal_tag')
+                            ->defaultNull()
+                            ->end()
                         ->arrayNode('types')
-                            ->isRequired()
                             ->defaultValue([
                                 EmitterType::CLASS_TOKEN->value,
                                 EmitterType::FUNCTION_TOKEN->value,

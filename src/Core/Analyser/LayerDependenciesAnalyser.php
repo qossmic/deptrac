@@ -28,7 +28,7 @@ class LayerDependenciesAnalyser
     /**
      * @return array<string, list<Uncovered>>
      *
-     * @throws \Qossmic\Deptrac\Core\Analyser\AnalyserException
+     * @throws AnalyserException
      */
     public function getDependencies(string $layer, ?string $targetLayer): array
     {

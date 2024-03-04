@@ -14,7 +14,7 @@ use Qossmic\Deptrac\Core\Layer\Collector\InheritanceLevelCollector;
 
 final class InheritanceLevelCollectorTest extends TestCase
 {
-    public function dataTests(): array
+    public static function dataTests(): array
     {
         return [
             [1, 1, true],

@@ -1,6 +1,7 @@
 <?php
 
 use Internal\Qossmic\Deptrac\IgnoreDependenciesOnContract;
+use Qossmic\Deptrac\Contract\Config\AnalyserConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\BoolConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\ComposerConfig;
 use Qossmic\Deptrac\Contract\Config\Collector\DirectoryConfig;
@@ -18,13 +19,17 @@ return static function (DeptracConfig $config, ContainerConfigurator $containerC
 
     $config
         ->paths('src')
-        ->analysers(
-            EmitterType::CLASS_TOKEN,
-            EmitterType::CLASS_SUPERGLOBAL_TOKEN,
-            EmitterType::FILE_TOKEN,
-            EmitterType::FUNCTION_TOKEN,
-            EmitterType::FUNCTION_SUPERGLOBAL_TOKEN,
-            EmitterType::FUNCTION_CALL,
+        ->analyser(
+            AnalyserConfig::create()
+                ->internalTag( '@internal' )
+                ->types(
+                    EmitterType::CLASS_TOKEN,
+                    EmitterType::CLASS_SUPERGLOBAL_TOKEN,
+                    EmitterType::FILE_TOKEN,
+                    EmitterType::FUNCTION_TOKEN,
+                    EmitterType::FUNCTION_SUPERGLOBAL_TOKEN,
+                    EmitterType::FUNCTION_CALL
+                )
         )
         ->layers(
             $analyser = Layer::withName('Analyser')->collectors(

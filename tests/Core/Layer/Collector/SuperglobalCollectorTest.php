@@ -21,7 +21,7 @@ final class SuperglobalCollectorTest extends TestCase
         $this->collector = new SuperglobalCollector();
     }
 
-    public function provideSatisfy(): iterable
+    public static function provideSatisfy(): iterable
     {
         yield [['value' => ['_GET', '_SESSION']], '_GET', true];
         yield [['value' => ['_COOKIE']], '_POST', false];

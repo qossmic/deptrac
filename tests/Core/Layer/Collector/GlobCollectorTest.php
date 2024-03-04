@@ -19,7 +19,7 @@ final class GlobCollectorTest extends TestCase
         $this->collector = new GlobCollector(__DIR__);
     }
 
-    public function dataProviderSatisfy(): iterable
+    public static function dataProviderSatisfy(): iterable
     {
         yield [['value' => 'foo/layer1/*'], 'foo/layer1/bar.php', true];
         yield [['value' => 'foo/*/*.php'], 'foo/layer1/bar.php', true];
@@ -34,7 +34,7 @@ final class GlobCollectorTest extends TestCase
     public function testSatisfy(array $configuration, string $filePath, bool $expected): void
     {
         $fileReferenceBuilder = FileReferenceBuilder::create($filePath);
-        $fileReferenceBuilder->newClassLike('Test', [], false);
+        $fileReferenceBuilder->newClassLike('Test', [], []);
         $fileReference = $fileReferenceBuilder->build();
 
         $actual = $this->collector->satisfy(

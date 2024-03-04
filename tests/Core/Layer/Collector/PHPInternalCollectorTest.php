@@ -17,7 +17,7 @@ final class PHPInternalCollectorTest extends TestCase
     /**
      * @return iterable<array{array{value:string}, TokenReferenceInterface, bool}>
      */
-    public function provideSatisfy(): iterable
+    public static function provideSatisfy(): iterable
     {
         yield [['value' => '^PDO'], new ClassLikeReference(ClassLikeToken::fromFQCN('PDOException')), true];
         yield [['value' => '^PFO'], new ClassLikeReference(ClassLikeToken::fromFQCN('PDOException')), false];
