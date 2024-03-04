@@ -17,6 +17,8 @@ use Qossmic\Deptrac\Core\Ast\AstLoader;
 use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\InterfaceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
@@ -61,8 +63,10 @@ final class AstMapFlattenGeneratorTest extends TestCase
             new NikicPhpParser(
                 (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
                 new AstFileReferenceInMemoryCache(),
-                new TypeResolver(),
-                []
+                [
+                    new ClassExtractor(),
+                    new InterfaceExtractor(),
+                ]
             ),
             $this->eventDispatcher
         );

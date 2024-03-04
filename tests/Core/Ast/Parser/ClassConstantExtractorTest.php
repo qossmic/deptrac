@@ -19,7 +19,6 @@ final class ClassConstantExtractorTest extends TestCase
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
-            new TypeResolver(),
             [
                 new ClassConstantExtractor(),
             ]

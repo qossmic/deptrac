@@ -38,7 +38,6 @@ class NikicPhpParser implements ParserInterface
     public function __construct(
         private readonly Parser $parser,
         private readonly AstFileReferenceCacheInterface $cache,
-        private readonly TypeResolver $typeResolver,
         private readonly iterable $extractors
     ) {
         $this->traverser = new NodeTraverser();
@@ -52,7 +51,7 @@ class NikicPhpParser implements ParserInterface
         }
 
         $fileReferenceBuilder = FileReferenceBuilder::create($file);
-        $visitor = new FileReferenceVisitor($fileReferenceBuilder, $this->typeResolver, ...$this->extractors);
+        $visitor = new FileReferenceVisitor($fileReferenceBuilder, ...$this->extractors);
         $nodes = $this->loadNodesFromFile($file);
         $this->traverser->addVisitor($visitor);
         $this->traverser->traverse($nodes);

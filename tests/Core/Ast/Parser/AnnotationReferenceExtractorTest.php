@@ -12,6 +12,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 
 final class AnnotationReferenceExtractorTest extends TestCase
 {
@@ -21,9 +22,8 @@ final class AnnotationReferenceExtractorTest extends TestCase
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
-            new TypeResolver(),
             [
-                new AnnotationReferenceExtractor($typeResolver),
+                new AnnotationReferenceExtractor($this->createMock(PhpStanContainerDecorator::class), $typeResolver),
                 new KeywordExtractor($typeResolver),
             ]
         );

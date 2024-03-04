@@ -10,11 +10,13 @@ use Qossmic\Deptrac\Contract\Dependency\DependencyInterface;
 use Qossmic\Deptrac\Core\Ast\AstLoader;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\FunctionCallResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\FunctionLikeExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\StaticExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
@@ -35,7 +37,6 @@ trait EmitterTrait
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
-            $typeResolver,
             [
                 new AnonymousClassExtractor(),
                 new FunctionLikeExtractor($typeResolver),
@@ -44,6 +45,8 @@ trait EmitterTrait
                 new StaticExtractor($typeResolver),
                 new FunctionCallResolver($typeResolver),
                 new VariableExtractor(),
+                new ClassExtractor(),
+                new UseExtractor(),
             ]
         );
         $astMap = (new AstLoader($parser, new EventDispatcher()))->createAstMap($files);

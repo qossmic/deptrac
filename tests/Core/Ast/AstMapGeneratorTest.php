@@ -16,9 +16,13 @@ use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\GroupUseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassC;
@@ -39,12 +43,14 @@ final class AstMapGeneratorTest extends TestCase
             new NikicPhpParser(
                 (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
                 new AstFileReferenceInMemoryCache(),
-                $typeResolver,
                 [
-                    new AnnotationReferenceExtractor($typeResolver),
+                    new AnnotationReferenceExtractor($this->createMock(PhpStanContainerDecorator::class), $typeResolver),
                     new AnonymousClassExtractor(),
                     new ClassConstantExtractor(),
                     new KeywordExtractor($typeResolver),
+                    new ClassExtractor(),
+                    new UseExtractor(),
+                    new GroupUseExtractor(),
                 ]
             ),
             new EventDispatcher()

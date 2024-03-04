@@ -10,8 +10,11 @@ use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassLikeExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use stdClass;
 use TypeError;
 
@@ -24,7 +27,6 @@ final class NikicPhpParserTest extends TestCase
         $this->parser = new NikicPhpParser(
             $this->createMock(Parser::class),
             new AstFileReferenceInMemoryCache(),
-            $this->createMock(TypeResolver::class),
             []
         );
     }
@@ -67,8 +69,7 @@ final class NikicPhpParserTest extends TestCase
                 new Lexer()
             ),
             new AstFileReferenceInMemoryCache(),
-            $typeResolver,
-            [new AnnotationReferenceExtractor($typeResolver)]
+            [new AnnotationReferenceExtractor($this->createMock(PhpStanContainerDecorator::class), $typeResolver)]
         );
 
         $filePath = __DIR__.'/Fixtures/TemplateTypes.php';
@@ -133,8 +134,10 @@ final class NikicPhpParserTest extends TestCase
                 new Lexer()
             ),
             new AstFileReferenceInMemoryCache(),
-            $typeResolver,
-            []
+            [
+                new UseExtractor(),
+                new ClassLikeExtractor($typeResolver),
+            ]
         );
 
         return $parser;
