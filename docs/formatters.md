@@ -141,6 +141,12 @@ Will produce the following graph:
 #### Pointing to groups instead of nodes
 With `formatters.graphviz.pointToGroups` set to `true`, when you have a node inside a groups with the same name as the group itself, edges pointing to that node will point to the group instead. This might be useful for example if you want to provide a "public API" for a module defined by a group.
 
+## MermaidJS Formatter
+
+The MermaidJS formatter is a console formatter, which generates a mermaid.js compatible graph definition. It can be activated with `--formatter=mermaidjs`.
+With the -o option you can specify the output file.
+
+
 ## JSON Formatter
 
 By default, Json formatter dumps information to *STDOUT*. It can be activated
