@@ -6,8 +6,6 @@ namespace Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser;
 
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\NodeTraverser;
-use PHPStan\Analyser\Scope;
-use PHPStan\Analyser\ScopeContext;
 use PHPStan\Parser\Parser;
 use PHPStan\Parser\ParserErrorsException;
 use Qossmic\Deptrac\Contract\Ast\CouldNotParseFileException;
@@ -42,7 +40,7 @@ class PhpStanParser implements ParserInterface
         }
 
         try {
-            $scopeFactory       = $this->phpStanContainer->createScopeFactory();
+            $scopeFactory = $this->phpStanContainer->createScopeFactory();
             $reflectionProvider = $this->phpStanContainer->createReflectionProvider();
 
             $fileReferenceBuilder = FileReferenceBuilder::create($file);
@@ -58,9 +56,6 @@ class PhpStanParser implements ParserInterface
         }
     }
 
-    /**
-     * @throws CouldNotParseFileException
-     */
     public function getNodeForClassLikeReference(ClassLikeReference $classReference): ?ClassLike
     {
         return null;

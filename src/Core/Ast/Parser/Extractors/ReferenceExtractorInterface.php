@@ -9,9 +9,23 @@ use PHPStan\Analyser\Scope;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
+/**
+ * @template T of Node
+ */
 interface ReferenceExtractorInterface
 {
-    public function processNodeWithClassicScope(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void;
-    public function processNodeWithPhpStanScope(Node $node, ReferenceBuilder $referenceBuilder, Scope $scope): void;
+    /**
+     * @return class-string<T>
+     */
+    public function getNodeType(): string;
 
+    /**
+     * @param T $node
+     */
+    public function processNodeWithClassicScope(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void;
+
+    /**
+     * @param T $node
+     */
+    public function processNodeWithPhpStanScope(Node $node, ReferenceBuilder $referenceBuilder, Scope $scope): void;
 }

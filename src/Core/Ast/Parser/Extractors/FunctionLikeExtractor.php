@@ -10,16 +10,15 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
+/**
+ * @implements ReferenceExtractorInterface<Node\FunctionLike>
+ */
 class FunctionLikeExtractor implements ReferenceExtractorInterface
 {
     public function __construct(private readonly TypeResolver $typeResolver) {}
 
     public function processNodeWithClassicScope(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof Node\FunctionLike) {
-            return;
-        }
-
         foreach ($node->getAttrGroups() as $attrGroup) {
             foreach ($attrGroup->attrs as $attribute) {
                 foreach ($this->typeResolver->resolvePHPParserTypes($typeScope, $attribute->name) as $classLikeName) {
@@ -44,10 +43,6 @@ class FunctionLikeExtractor implements ReferenceExtractorInterface
 
     public function processNodeWithPhpStanScope(Node $node, ReferenceBuilder $referenceBuilder, Scope $scope): void
     {
-        if (!$node instanceof Node\FunctionLike) {
-            return;
-        }
-
         foreach ($node->getAttrGroups() as $attrGroup) {
             foreach ($attrGroup->attrs as $attribute) {
                 $referenceBuilder->attribute($scope->resolveName($attribute->name), $attribute->getLine());
@@ -63,5 +58,10 @@ class FunctionLikeExtractor implements ReferenceExtractorInterface
         if ($returnType instanceof Node\Name) {
             $referenceBuilder->returnType($scope->resolveName($returnType), $returnType->getLine());
         }
+    }
+
+    public function getNodeType(): string
+    {
+        return Node\FunctionLike::class;
     }
 }

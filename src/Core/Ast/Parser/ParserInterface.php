@@ -20,5 +20,4 @@ interface ParserInterface
      * @throws CouldNotParseFileException
      */
     public function getNodeForClassLikeReference(ClassLikeReference $classReference): ?ClassLike;
-
 }

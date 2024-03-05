@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser;
 
-use PhpParser\Lexer;
 use PHPStan\Analyser\NodeScopeResolver;
 use PHPStan\Analyser\ScopeFactory;
 use PHPStan\DependencyInjection\Container;
@@ -20,14 +19,14 @@ class PhpStanContainerDecorator
     private Container $container;
 
     /**
-     * @param  list<string>  $paths
+     * @param list<string> $paths
      */
-    public function __construct(array $paths)
+    public function __construct(string $basePath, array $paths)
     {
-        $factory = new ContainerFactory(getcwd());
-        $this->container =  $factory->create(sys_get_temp_dir(), [
-            __DIR__ . '/config/better-infer.neon',
-            __DIR__ . '/config/parser.neon',
+        $factory = new ContainerFactory($basePath);
+        $this->container = $factory->create(sys_get_temp_dir(), [
+            __DIR__.'/config/config.neon',
+            __DIR__.'/config/parser.neon',
         ], $paths);
     }
 
@@ -37,14 +36,6 @@ class PhpStanContainerDecorator
     public function createReflectionProvider(): ReflectionProvider
     {
         return $this->container->getByType(ReflectionProvider::class);
-    }
-
-    /**
-     * @api
-     */
-    public function createEmulativeLexer(): Lexer
-    {
-        return $this->container->getService('currentPhpVersionLexer');
     }
 
     /**
@@ -75,6 +66,7 @@ class PhpStanContainerDecorator
      * @template TObject as Object
      *
      * @param class-string<TObject> $type
+     *
      * @return TObject
      */
     public function getByType(string $type): object
@@ -105,6 +97,4 @@ class PhpStanContainerDecorator
     {
         return $this->container->getByType(TypeNodeResolver::class);
     }
-
-
 }

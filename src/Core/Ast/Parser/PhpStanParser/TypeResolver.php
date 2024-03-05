@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser;
 
+use Error;
 use PhpParser\Node\ComplexType;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\IntersectionType;
@@ -14,13 +15,12 @@ use PHPStan\Analyser\Scope;
 
 class TypeResolver
 {
-
     /**
      * @return list<string>
      */
     public static function resolveComplexType(ComplexType|Name|Identifier|null $type, Scope $scope): array
     {
-        if ($type === null) {
+        if (null === $type) {
             return [];
         }
 
@@ -28,9 +28,8 @@ class TypeResolver
             $type instanceof Name => [$scope->resolveName($type)],
             $type instanceof Identifier => [],
             $type instanceof NullableType => self::resolveComplexType($type->type, $scope),
-            $type instanceof IntersectionType, $type instanceof UnionType => array_merge(...array_map(fn($type): array => self::resolveComplexType($type, $scope), $type->types)),
-            default => throw new \Error(get_class($type)),
+            $type instanceof IntersectionType, $type instanceof UnionType => array_merge(...array_map(static fn ($type): array => self::resolveComplexType($type, $scope), $type->types)),
+            default => throw new Error(get_class($type)),
         };
     }
-
 }

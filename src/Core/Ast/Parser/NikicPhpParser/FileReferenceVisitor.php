@@ -85,7 +85,9 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     public function leaveNode(Node $node)
     {
         foreach ($this->dependencyResolvers as $resolver) {
-            $resolver->processNodeWithClassicScope($node, $this->currentReference, $this->currentTypeScope);
+            if ($node instanceof ($resolver->getNodeType())) {
+                $resolver->processNodeWithClassicScope($node, $this->currentReference, $this->currentTypeScope);
+            }
         }
 
         if ($node instanceof Node\FunctionLike) {
@@ -172,7 +174,7 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
         $tags = [];
         foreach ($docNodeCrate->getTags() as $tag) {
-            $tags[$tag->name][] = (string)$tag->value;
+            $tags[$tag->name][] = (string) $tag->value;
         }
 
         return $tags;

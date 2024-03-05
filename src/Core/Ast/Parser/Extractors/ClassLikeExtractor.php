@@ -19,6 +19,9 @@ use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
+/**
+ * @implements ReferenceExtractorInterface<ClassLike>
+ */
 class ClassLikeExtractor implements ReferenceExtractorInterface
 {
     private readonly Lexer $lexer;
@@ -33,10 +36,6 @@ class ClassLikeExtractor implements ReferenceExtractorInterface
 
     public function processNodeWithClassicScope(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof ClassLike) {
-            return;
-        }
-
         foreach ($node->attrGroups as $attrGroup) {
             foreach ($attrGroup->attrs as $attribute) {
                 foreach ($this->typeResolver->resolvePHPParserTypes($typeScope, $attribute->name) as $classLikeName) {
@@ -89,11 +88,15 @@ class ClassLikeExtractor implements ReferenceExtractorInterface
                 $referenceBuilder->variable($type, $node->getStartLine());
             }
         }
-
     }
 
     public function processNodeWithPhpStanScope(Node $node, ReferenceBuilder $referenceBuilder, Scope $scope): void
     {
-        //TODO: @Incomplete (Patrick Kusebauch @ 04.03.24)
+        // TODO: @Incomplete (Patrick Kusebauch @ 04.03.24)
+    }
+
+    public function getNodeType(): string
+    {
+        return ClassLike::class;
     }
 }

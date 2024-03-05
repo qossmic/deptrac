@@ -11,11 +11,14 @@ use PHPStan\Analyser\Scope;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
+/**
+ * @implements ReferenceExtractorInterface<Class_>
+ */
 class AnonymousClassExtractor implements ReferenceExtractorInterface
 {
     public function processNodeWithClassicScope(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void
     {
-        if (!$node instanceof Class_ || null !== $node->name) {
+        if (null !== $node->name) {
             return;
         }
 
@@ -36,7 +39,7 @@ class AnonymousClassExtractor implements ReferenceExtractorInterface
 
     public function processNodeWithPhpStanScope(Node $node, ReferenceBuilder $referenceBuilder, Scope $scope): void
     {
-        if (!$node instanceof Class_ || null !== $node->name) {
+        if (null !== $node->name) {
             return;
         }
 
@@ -53,5 +56,10 @@ class AnonymousClassExtractor implements ReferenceExtractorInterface
                 $referenceBuilder->anonymousClassTrait($trait->toCodeString(), $trait->getLine());
             }
         }
+    }
+
+    public function getNodeType(): string
+    {
+        return Class_::class;
     }
 }
