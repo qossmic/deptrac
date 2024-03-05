@@ -90,7 +90,7 @@ final class MermaidJSOutputFormatter implements OutputFormatterInterface
             $buffer .= sprintf(self::VIOLATION_STYLE_FORMAT.PHP_EOL, $linkNumber);
         }
 
-        if ($outputFormatterInput->outputPath) {
+        if ($outputFormatterInput->outputPath !== null) {
             file_put_contents($outputFormatterInput->outputPath, $buffer);
         } else {
             $output->writeRaw($buffer);
