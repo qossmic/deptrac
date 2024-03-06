@@ -16,7 +16,7 @@ use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
 /**
@@ -28,7 +28,7 @@ class ClassLikeExtractor implements ReferenceExtractorInterface
     private readonly PhpDocParser $docParser;
 
     public function __construct(
-        private readonly TypeResolver $typeResolver
+        private readonly NikicTypeResolver $typeResolver
     ) {
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());

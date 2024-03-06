@@ -22,7 +22,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\TraitUseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 use Qossmic\Deptrac\Core\Dependency\Emitter\DependencyEmitterInterface;
@@ -37,7 +37,7 @@ trait EmitterTrait
     {
         $files = (array) $files;
 
-        $typeResolver = new TypeResolver();
+        $typeResolver = new NikicTypeResolver();
         $phpStanConstructorDecorator = new PhpStanContainerDecorator('', []);
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),

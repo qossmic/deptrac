@@ -45,7 +45,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\TraitUseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanParser;
@@ -185,7 +185,7 @@ return static function (ContainerConfigurator $container): void {
             '$extractors' => tagged_iterator('reference_extractors'),
         ]);
     $services->alias(ParserInterface::class, PhpStanParser::class);
-    $services->set(TypeResolver::class);
+    $services->set(NikicTypeResolver::class);
     $services
         ->set(AnonymousClassExtractor::class)
         ->tag('reference_extractors');

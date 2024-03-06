@@ -8,7 +8,7 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Catch_;
 use PHPStan\Analyser\Scope;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 
 /**
@@ -16,7 +16,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
  */
 class CatchExtractor implements ReferenceExtractorInterface
 {
-    public function __construct(private readonly TypeResolver $typeResolver) {}
+    public function __construct(private readonly NikicTypeResolver $typeResolver) {}
 
     public function processNodeWithClassicScope(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void
     {

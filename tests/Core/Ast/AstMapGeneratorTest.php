@@ -20,7 +20,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\GroupUseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\TraitUseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassC;
@@ -36,7 +36,7 @@ final class AstMapGeneratorTest extends TestCase
 
     private function getAstMap(string $fixture): AstMap
     {
-        $typeResolver = new TypeResolver();
+        $typeResolver = new NikicTypeResolver();
         $astRunner = new AstLoader(
             new NikicPhpParser(
                 (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),

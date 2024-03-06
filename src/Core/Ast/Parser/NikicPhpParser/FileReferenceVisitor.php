@@ -26,7 +26,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface;
 
 class FileReferenceVisitor extends NodeVisitorAbstract
 {
-    /** @var ReferenceExtractorInterface[] */
+    /** @var ReferenceExtractorInterface<\PhpParser\Node>[] */
     private readonly array $dependencyResolvers;
 
     private TypeScope $currentTypeScope;
@@ -35,6 +35,9 @@ class FileReferenceVisitor extends NodeVisitorAbstract
 
     private ReferenceBuilder $currentReference;
 
+    /**
+     * @param ReferenceExtractorInterface<\PhpParser\Node> ...$dependencyResolvers
+     */
     public function __construct(
         private readonly FileReferenceBuilder $fileReferenceBuilder,
         ReferenceExtractorInterface ...$dependencyResolvers

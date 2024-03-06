@@ -15,7 +15,7 @@ use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 
@@ -29,7 +29,7 @@ class ClassMethodExtractor implements ReferenceExtractorInterface
 
     public function __construct(
         private readonly PhpStanContainerDecorator $phpStanContainer,
-        private readonly TypeResolver $typeResolver
+        private readonly NikicTypeResolver $typeResolver
     ) {
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
@@ -86,15 +86,19 @@ class ClassMethodExtractor implements ReferenceExtractorInterface
 
         $fileTypeMapper = $this->phpStanContainer->createFileTypeMapper();
         $function = $scope->getFunction();
+
+        $classReflection = $scope->getClassReflection();
+        assert(null !== $classReflection);
+
         $resolvedPhpDoc = $fileTypeMapper->getResolvedPhpDoc(
             $scope->getFile(),
-            $scope->isInClass() ? $scope->getClassReflection()->getName() : null,
-            $scope->isInTrait() ? $scope->getTraitReflection()->getName() : null,
-            null !== $function ? $function->getName() : null,
+            $classReflection->getName(),
+            $scope->getTraitReflection()?->getName(),
+            $function?->getName(),
             $docComment->getText(),
         );
 
-        $methodVariant = $scope->getClassReflection()
+        $methodVariant = $classReflection
             ->getMethod($node->name->name, $scope)
             ->getVariants()[0];
 

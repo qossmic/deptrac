@@ -21,13 +21,16 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface;
 
 class FileReferenceVisitor extends NodeVisitorAbstract
 {
-    /** @var ReferenceExtractorInterface[] */
+    /** @var ReferenceExtractorInterface<\PhpParser\Node>[] */
     private readonly array $dependencyResolvers;
 
     private ReferenceBuilder $currentReference;
 
     private Scope $scope;
 
+    /**
+     * @param ReferenceExtractorInterface<\PhpParser\Node> ...$dependencyResolvers
+     */
     public function __construct(
         private readonly FileReferenceBuilder $fileReferenceBuilder,
         private readonly ScopeFactory $scopeFactory,
@@ -71,17 +74,16 @@ class FileReferenceVisitor extends NodeVisitorAbstract
     private function enterClassLike(ClassLike $node): void
     {
         $name = $this->getReferenceName($node);
+        assert(null !== $name);
         $context = ScopeContext::create($this->file)->enterClass($this->reflectionProvider->getClass($name));
         $this->scope = $this->scopeFactory->create($context);
 
-        if (null !== $name) {
-            $this->currentReference = match (true) {
-                $node instanceof Interface_ => $this->fileReferenceBuilder->newInterface($name, [], []),
-                $node instanceof Class_ => $this->fileReferenceBuilder->newClass($name, [], []),
-                $node instanceof Trait_ => $this->fileReferenceBuilder->newTrait($name, [], []),
-                default => $this->fileReferenceBuilder->newClassLike($name, [], [])
-            };
-        }
+        $this->currentReference = match (true) {
+            $node instanceof Interface_ => $this->fileReferenceBuilder->newInterface($name, [], []),
+            $node instanceof Class_ => $this->fileReferenceBuilder->newClass($name, [], []),
+            $node instanceof Trait_ => $this->fileReferenceBuilder->newTrait($name, [], []),
+            default => $this->fileReferenceBuilder->newClassLike($name, [], [])
+        };
     }
 
     private function enterFunction(Node\Stmt\Function_ $node): void

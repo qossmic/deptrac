@@ -1,9 +1,29 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Property Qossmic\\\\Deptrac\\\\Contract\\\\Analyser\\\\EventHelper\\:\\:\\$unmatchedSkippedViolation \\(array\\<string, list\\<string\\>\\>\\) does not accept array\\<string, array\\<int\\<0, max\\>, string\\>\\>\\.$#"
+			count: 1
+			path: src/Contract/Analyser/EventHelper.php
+
+		-
 			message: "#^Method Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\OutputResult\\:\\:allOf\\(\\) should return list\\<T of Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\RuleInterface\\> but returns list\\<Qossmic\\\\Deptrac\\\\Contract\\\\Result\\\\RuleInterface\\>\\.$#"
 			count: 1
 			path: src/Contract/Result/OutputResult.php
+
+		-
+			message: "#^Parameter \\#1 \\$array \\(list\\<string\\>\\) of array_values is already a list, call has no effect\\.$#"
+			count: 1
+			path: src/Core/Analyser/LayerForTokenAnalyser.php
+
+		-
+			message: "#^Parameter \\#1 \\$array \\(list\\<string\\>\\) of array_values is already a list, call has no effect\\.$#"
+			count: 1
+			path: src/Core/Analyser/TokenInLayerAnalyser.php
+
+		-
+			message: "#^Parameter \\#1 \\$array \\(list\\<string\\>\\) of array_values is already a list, call has no effect\\.$#"
+			count: 1
+			path: src/Core/Analyser/UnassignedTokenAnalyser.php
 
 		-
 			message: "#^Method Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\ReferenceBuilder\\:\\:superglobal\\(\\) throws checked exception TypeError but it's missing from the PHPDoc @throws tag\\.$#"
@@ -14,6 +34,21 @@ parameters:
 			message: "#^Method Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\ReferenceBuilder\\:\\:superglobal\\(\\) throws checked exception ValueError but it's missing from the PHPDoc @throws tag\\.$#"
 			count: 1
 			path: src/Core/Ast/AstMap/ReferenceBuilder.php
+
+		-
+			message: "#^Property Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\ReferenceBuilder\\:\\:\\$tokenTemplates \\(list\\<string\\>\\) does not accept array\\<int\\<0, max\\>, string\\>\\.$#"
+			count: 1
+			path: src/Core/Ast/AstMap/ReferenceBuilder.php
+
+		-
+			message: "#^Calling PHPStan\\\\Analyser\\\\ScopeContext\\:\\:enterClass\\(\\) is not covered by backward compatibility promise\\. The method might change in a minor PHPStan version\\.$#"
+			count: 1
+			path: src/Core/Ast/Parser/PhpStanParser/FileReferenceVisitor.php
+
+		-
+			message: "#^Although PHPStan\\\\Parser\\\\Parser is covered by backward compatibility promise, this instanceof assumption might break because it's not guaranteed to always stay the same\\.$#"
+			count: 1
+			path: src/Core/Ast/Parser/PhpStanParser/PhpStanContainerDecorator.php
 
 		-
 			message: "#^Method Qossmic\\\\Deptrac\\\\Supportive\\\\Console\\\\Command\\\\DebugTokenCommand\\:\\:execute\\(\\) throws checked exception TypeError but it's missing from the PHPDoc @throws tag\\.$#"

@@ -15,7 +15,7 @@ use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeScope;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 
@@ -33,7 +33,7 @@ class VariableExtractor implements ReferenceExtractorInterface
 
     public function __construct(
         private readonly PhpStanContainerDecorator $phpStanContainer,
-        private readonly TypeResolver $typeResolver
+        private readonly NikicTypeResolver $typeResolver
     ) {
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());

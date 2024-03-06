@@ -33,7 +33,7 @@ class NikicPhpParser implements ParserInterface
     private readonly NodeTraverser $traverser;
 
     /**
-     * @param ReferenceExtractorInterface[] $extractors
+     * @param ReferenceExtractorInterface<\PhpParser\Node>[] $extractors
      */
     public function __construct(
         private readonly Parser $parser,

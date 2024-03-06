@@ -10,9 +10,8 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Contract\Ast\DependencyType;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassLikeExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 
 final class ClassDocBlockExtractorTest extends TestCase
 {
@@ -26,12 +25,11 @@ final class ClassDocBlockExtractorTest extends TestCase
 
     public function testMethodResolving(): void
     {
-        $typeResolver = new TypeResolver();
+        $typeResolver = new NikicTypeResolver();
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
             [
-                new KeywordExtractor($typeResolver),
                 new ClassLikeExtractor($typeResolver),
             ]
         );

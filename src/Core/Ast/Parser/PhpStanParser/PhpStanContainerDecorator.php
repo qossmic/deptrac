@@ -43,7 +43,10 @@ class PhpStanContainerDecorator
      */
     public function createPHPStanParser(): Parser
     {
-        return $this->container->getService('currentPhpVersionRichParser');
+        $service = $this->container->getService('currentPhpVersionRichParser');
+        assert($service instanceof Parser);
+
+        return $service;
     }
 
     /**

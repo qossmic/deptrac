@@ -34,7 +34,7 @@ use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use Throwable;
 
-class TypeResolver
+class NikicTypeResolver
 {
     private readonly phpDocumentorTypeResolver $typeResolver;
 

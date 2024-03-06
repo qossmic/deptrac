@@ -8,23 +8,28 @@ use PhpParser\Lexer;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnnotationReferenceExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\KeywordExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassMethodExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\NewExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
+use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\TypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 
 final class AnnotationReferenceExtractorTest extends TestCase
 {
     public function testPropertyDependencyResolving(): void
     {
-        $typeResolver = new TypeResolver();
+        $typeResolver = new NikicTypeResolver();
+        $phpStanContainer = $this->createMock(PhpStanContainerDecorator::class);
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
             [
-                new AnnotationReferenceExtractor($this->createMock(PhpStanContainerDecorator::class), $typeResolver),
-                new KeywordExtractor($typeResolver),
+                new PropertyExtractor($phpStanContainer, $typeResolver),
+                new VariableExtractor($phpStanContainer, $typeResolver),
+                new ClassMethodExtractor($phpStanContainer, $typeResolver),
+                new NewExtractor($typeResolver),
             ]
         );
 
