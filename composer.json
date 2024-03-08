@@ -23,7 +23,7 @@
         "php": "^8.1",
         "ext-json": "*",
         "composer/xdebug-handler": "^3.0",
-        "jetbrains/phpstorm-stubs": "^2022.2",
+        "jetbrains/phpstorm-stubs": "^2022.2|^2023.1",
         "nikic/php-parser": "^4.18",
         "phpdocumentor/graphviz": "^2.1",
         "phpdocumentor/type-resolver": "^1.6",
