@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8727bffe952d8c919310a9e34aa7ba1c",
+    "content-hash": "fab959ad0fa0f77878c55de4cc81b8a4",
     "packages": [
         {
             "name": "composer/pcre",
@@ -192,16 +192,16 @@
         },
         {
             "name": "jetbrains/phpstorm-stubs",
-            "version": "v2022.3",
+            "version": "v2023.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "6b568c153cea002dc6fad96285c3063d07cab18d"
+                "reference": "99d8bcab934ae5362f33660b1cd4b8c4d617c40b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/6b568c153cea002dc6fad96285c3063d07cab18d",
-                "reference": "6b568c153cea002dc6fad96285c3063d07cab18d",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/99d8bcab934ae5362f33660b1cd4b8c4d617c40b",
+                "reference": "99d8bcab934ae5362f33660b1cd4b8c4d617c40b",
                 "shasum": ""
             },
             "require-dev": {
@@ -209,7 +209,7 @@
                 "nikic/php-parser": "@stable",
                 "php": "^8.0",
                 "phpdocumentor/reflection-docblock": "@stable",
-                "phpunit/phpunit": "@stable"
+                "phpunit/phpunit": "^9.6"
             },
             "type": "library",
             "autoload": {
@@ -234,9 +234,9 @@
                 "type"
             ],
             "support": {
-                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/v2022.3"
+                "source": "https://github.com/JetBrains/phpstorm-stubs/tree/v2023.3"
             },
-            "time": "2022-10-17T09:21:37+00:00"
+            "time": "2023-11-01T18:52:29+00:00"
         },
         {
             "name": "nikic/php-parser",
