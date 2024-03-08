@@ -83,7 +83,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
         $buffer = implode(
             " -> \n",
             array_map(
-                static fn (array $dependency): string => sprintf("\t%s::%d", $dependency['name'], $dependency['line']),
+                static fn (array $dependency): string => sprintf("\t%s:%d", $dependency['name'], $dependency['line']),
                 $dep->serialize()
             )
         );
@@ -170,7 +170,7 @@ final class ConsoleOutputFormatter implements OutputFormatterInterface
 
     private function printFileOccurrence(OutputInterface $output, FileOccurrence $fileOccurrence): void
     {
-        $output->writeLineFormatted($fileOccurrence->filepath.'::'.$fileOccurrence->line);
+        $output->writeLineFormatted($fileOccurrence->filepath.':'.$fileOccurrence->line);
     }
 
     private function printErrors(OutputResult $result, OutputInterface $output): void

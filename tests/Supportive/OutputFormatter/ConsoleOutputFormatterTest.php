@@ -78,12 +78,12 @@ final class ConsoleOutputFormatterTest extends TestCase
             'warnings' => [],
             '
                 ClassA must not depend on ClassB (LayerA on LayerB)
-                originalA.php::12
-                ClassInheritD::6 ->
-                ClassInheritC::5 ->
-                ClassInheritB::4 ->
-                ClassInheritA::3 ->
-                OriginalB::12
+                originalA.php:12
+                ClassInheritD:6 ->
+                ClassInheritC:5 ->
+                ClassInheritB:4 ->
+                ClassInheritA:3 ->
+                OriginalB:12
 
                 Report:
                 Violations: 1
@@ -108,7 +108,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             'warnings' => [],
             '
                 OriginalA must not depend on OriginalB (LayerA on LayerB)
-                originalA.php::12
+                originalA.php:12
 
                 Report:
                 Violations: 1
@@ -147,7 +147,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             [],
             'warnings' => [],
             '[SKIPPED] OriginalA must not depend on OriginalB (LayerA on LayerB)
-            originalA.php::12
+            originalA.php:12
 
             Report:
             Violations: 0
@@ -171,7 +171,7 @@ final class ConsoleOutputFormatterTest extends TestCase
             '
                 Uncovered dependencies:
                 OriginalA has uncovered dependency on OriginalB (LayerA)
-                originalA.php::12
+                originalA.php:12
                 Report:
                 Violations: 0
                 Skipped violations: 0
