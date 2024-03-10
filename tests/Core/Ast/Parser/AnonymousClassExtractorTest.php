@@ -10,19 +10,39 @@ use PHPUnit\Framework\TestCase;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
+use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanParser;
 
 final class AnonymousClassExtractorTest extends TestCase
 {
-    public function testPropertyDependencyResolving(): void
+    /**
+     * @return list<array{ParserInterface}>
+     */
+    public static function createParser(): array
     {
-        $parser = new NikicPhpParser(
-            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
-            new AstFileReferenceInMemoryCache(),
-            [
-                new AnonymousClassExtractor(),
-            ]
+        $phpStanContainer = new PhpStanContainerDecorator('', []);
+        $cache      = new AstFileReferenceInMemoryCache();
+        $extractors = [
+            new AnonymousClassExtractor(),
+        ];
+        $nikicPhpParser     = new NikicPhpParser(
+            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
         );
+        $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);
 
+
+        return [
+            'Nikic Parser' => [$nikicPhpParser],
+            'PHPStan Parser' => [$phpstanParser],
+        ];
+    }
+
+    /**
+     * @dataProvider createParser
+     */
+    public function testPropertyDependencyResolving(ParserInterface $parser): void
+    {
         $filePath = __DIR__.'/Fixtures/AnonymousClass.php';
         $astFileReference = $parser->parseFile($filePath);
 

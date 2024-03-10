@@ -24,6 +24,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanTypeResolver;
 use Qossmic\Deptrac\Core\Dependency\DependencyList;
 use Qossmic\Deptrac\Core\Dependency\Emitter\DependencyEmitterInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -37,24 +38,25 @@ trait EmitterTrait
     {
         $files = (array) $files;
 
-        $typeResolver = new NikicTypeResolver();
+        $nikicTypeResolver = new NikicTypeResolver();
+        $phpstanTypeResolver = new PhpStanTypeResolver();
         $phpStanConstructorDecorator = new PhpStanContainerDecorator('', []);
         $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
             new AstFileReferenceInMemoryCache(),
             [
                 new AnonymousClassExtractor(),
-                new FunctionLikeExtractor($typeResolver),
-                new PropertyExtractor($phpStanConstructorDecorator, $typeResolver),
-                new FunctionCallExtractor($typeResolver),
-                new VariableExtractor($phpStanConstructorDecorator, $typeResolver),
+                new FunctionLikeExtractor($nikicTypeResolver, $phpstanTypeResolver),
+                new PropertyExtractor($phpStanConstructorDecorator, $nikicTypeResolver),
+                new FunctionCallExtractor($nikicTypeResolver, $phpstanTypeResolver),
+                new VariableExtractor($phpStanConstructorDecorator, $nikicTypeResolver),
                 new ClassExtractor(),
                 new UseExtractor(),
-                new InstanceofExtractor($typeResolver),
-                new StaticCallExtractor($typeResolver),
-                new StaticPropertyFetchExtractor($typeResolver),
-                new NewExtractor($typeResolver),
-                new TraitUseExtractor($typeResolver),
+                new InstanceofExtractor($nikicTypeResolver),
+                new StaticCallExtractor($nikicTypeResolver),
+                new StaticPropertyFetchExtractor($nikicTypeResolver),
+                new NewExtractor($nikicTypeResolver),
+                new TraitUseExtractor($nikicTypeResolver),
             ]
         );
         $astMap = (new AstLoader($parser, new EventDispatcher()))->createAstMap($files);

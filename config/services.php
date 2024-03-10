@@ -49,6 +49,7 @@ use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanParser;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanTypeResolver;
 use Qossmic\Deptrac\Core\Dependency\DependencyResolver;
 use Qossmic\Deptrac\Core\Dependency\Emitter\ClassDependencyEmitter;
 use Qossmic\Deptrac\Core\Dependency\Emitter\ClassSuperglobalDependencyEmitter;
@@ -186,6 +187,7 @@ return static function (ContainerConfigurator $container): void {
         ]);
     $services->alias(ParserInterface::class, PhpStanParser::class);
     $services->set(NikicTypeResolver::class);
+    $services->set(PhpStanTypeResolver::class);
     $services
         ->set(AnonymousClassExtractor::class)
         ->tag('reference_extractors');

@@ -12,6 +12,9 @@ use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassLikeExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
+use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
+use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanParser;
 
 final class ClassDocBlockExtractorTest extends TestCase
 {
@@ -23,17 +26,11 @@ final class ClassDocBlockExtractorTest extends TestCase
         ['Tests\Qossmic\Deptrac\Core\Ast\Parser\Fixtures\ClassDocBlockDependencyBrother', DependencyType::VARIABLE],
     ];
 
-    public function testMethodResolving(): void
+    /**
+     * @dataProvider createParser
+     */
+    public function testMethodResolving(ParserInterface $parser): void
     {
-        $typeResolver = new NikicTypeResolver();
-        $parser = new NikicPhpParser(
-            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()),
-            new AstFileReferenceInMemoryCache(),
-            [
-                new ClassLikeExtractor($typeResolver),
-            ]
-        );
-
         $filePath = __DIR__.'/Fixtures/ClassDocBlockDependency.php';
         $astFileReference = $parser->parseFile($filePath);
 
@@ -45,5 +42,27 @@ final class ClassDocBlockExtractorTest extends TestCase
             self::assertSame(self::EXPECTED[$key][0], $dependency->token->toString());
             self::assertSame(self::EXPECTED[$key][1], $dependency->type);
         }
+    }
+
+    /**
+     * @return list<array{ParserInterface}>
+     */
+    public static function createParser(): array
+    {
+        $typeResolver = new NikicTypeResolver();
+        $phpStanContainer = new PhpStanContainerDecorator('', []);
+        $extractors   = [
+            new ClassLikeExtractor($typeResolver),
+        ];
+        $cache        = new AstFileReferenceInMemoryCache();
+        $parser       = new NikicPhpParser(
+            (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
+        );
+        $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);
+
+        return [
+            'Nikic Parser' => [$parser],
+            'PHPStan Parser' => [$phpstanParser],
+        ];
     }
 }
