@@ -51,11 +51,11 @@ final class ClassDocBlockExtractorTest extends TestCase
     {
         $typeResolver = new NikicTypeResolver();
         $phpStanContainer = new PhpStanContainerDecorator('', []);
-        $extractors   = [
+        $extractors = [
             new ClassLikeExtractor($typeResolver),
         ];
-        $cache        = new AstFileReferenceInMemoryCache();
-        $parser       = new NikicPhpParser(
+        $cache = new AstFileReferenceInMemoryCache();
+        $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
         );
         $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);

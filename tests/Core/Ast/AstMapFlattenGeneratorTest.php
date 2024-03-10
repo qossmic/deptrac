@@ -18,13 +18,8 @@ use Qossmic\Deptrac\Core\Ast\AstMap\AstMap;
 use Qossmic\Deptrac\Core\Ast\AstMap\ClassLike\ClassLikeToken;
 use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassMethodExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\InterfaceExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\NewExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
-use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanParser;
@@ -76,16 +71,16 @@ final class AstMapFlattenGeneratorTest extends TestCase
     public static function createParser(): array
     {
         $phpStanContainer = new PhpStanContainerDecorator('', []);
-        $extractors       = [
+        $extractors = [
             new ClassExtractor(),
             new InterfaceExtractor(),
         ];
-        $cache            = new AstFileReferenceInMemoryCache();
-        $parser           = new NikicPhpParser(
+        $cache = new AstFileReferenceInMemoryCache();
+        $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
         );
 
-        $phpstanParser    = new PhpStanParser($phpStanContainer, $cache, $extractors);
+        $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);
 
         return [
             'Nikic Parser' => [$parser],

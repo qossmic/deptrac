@@ -80,11 +80,9 @@ class VariableExtractor implements ReferenceExtractorInterface
             $function = $scope->getFunction();
             $resolvedPhpDoc = $fileTypeMapper->getResolvedPhpDoc(
                 $scope->getFile(),
-                $scope->isInClass() ? $scope->getClassReflection()
-                    ->getName() : null,
-                $scope->isInTrait() ? $scope->getTraitReflection()
-                    ->getName() : null,
-                null !== $function ? $function->getName() : null,
+                $scope->getClassReflection()?->getName(),
+                $scope->getTraitReflection()?->getName(),
+                $function?->getName(),
                 $docComment->getText(),
             );
 

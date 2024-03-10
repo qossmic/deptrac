@@ -16,17 +16,12 @@ use Qossmic\Deptrac\Core\Ast\Parser\Cache\AstFileReferenceInMemoryCache;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\AnonymousClassExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassConstantExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\ClassMethodExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\GroupUseExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\NewExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\PropertyExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\TraitUseExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\Extractors\UseExtractor;
-use Qossmic\Deptrac\Core\Ast\Parser\Extractors\VariableExtractor;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicPhpParser;
 use Qossmic\Deptrac\Core\Ast\Parser\NikicPhpParser\NikicTypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\ParserInterface;
-use Qossmic\Deptrac\Core\Ast\Parser\PhpStanParser\PhpStanContainerDecorator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassB;
 use Tests\Qossmic\Deptrac\Core\Ast\Fixtures\BasicDependency\BasicDependencyClassC;
@@ -56,8 +51,9 @@ final class AstMapGeneratorTest extends TestCase
                 new TraitUseExtractor($typeResolver),
             ]
         );
+
         return [
-            'Nikic Parser' => [$parser]
+            'Nikic Parser' => [$parser],
         ];
     }
 
@@ -145,7 +141,7 @@ final class AstMapGeneratorTest extends TestCase
 
     private function getAstMap(ParserInterface $parser, string $fixture): AstMap
     {
-        $astRunner    = new AstLoader(
+        $astRunner = new AstLoader(
             $parser,
             new EventDispatcher()
         );

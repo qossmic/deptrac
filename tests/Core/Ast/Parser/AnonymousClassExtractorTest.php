@@ -22,15 +22,14 @@ final class AnonymousClassExtractorTest extends TestCase
     public static function createParser(): array
     {
         $phpStanContainer = new PhpStanContainerDecorator('', []);
-        $cache      = new AstFileReferenceInMemoryCache();
+        $cache = new AstFileReferenceInMemoryCache();
         $extractors = [
             new AnonymousClassExtractor(),
         ];
-        $nikicPhpParser     = new NikicPhpParser(
+        $nikicPhpParser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
         );
         $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);
-
 
         return [
             'Nikic Parser' => [$nikicPhpParser],

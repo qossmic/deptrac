@@ -46,14 +46,14 @@ final class ClassConstantExtractorTest extends TestCase
     public static function createParser(): array
     {
         $phpStanContainer = new PhpStanContainerDecorator('', []);
-        $extractors       = [
+        $extractors = [
             new ClassConstantExtractor(),
         ];
-        $cache            = new AstFileReferenceInMemoryCache();
-        $parser           = new NikicPhpParser(
+        $cache = new AstFileReferenceInMemoryCache();
+        $parser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
         );
-        $phpstanParser    = new PhpStanParser($phpStanContainer, $cache, $extractors);
+        $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);
 
         return [
             'Nikic Parser' => [$parser],

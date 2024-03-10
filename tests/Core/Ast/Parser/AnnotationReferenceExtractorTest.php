@@ -89,19 +89,19 @@ final class AnnotationReferenceExtractorTest extends TestCase
      */
     public static function createParser(): array
     {
-        $typeResolver     = new NikicTypeResolver();
+        $typeResolver = new NikicTypeResolver();
         $phpStanContainer = new PhpStanContainerDecorator('', []);
-        $cache            = new AstFileReferenceInMemoryCache();
-        $extractors       = [
+        $cache = new AstFileReferenceInMemoryCache();
+        $extractors = [
             new PropertyExtractor($phpStanContainer, $typeResolver),
             new VariableExtractor($phpStanContainer, $typeResolver),
             new ClassMethodExtractor($phpStanContainer, $typeResolver),
             new NewExtractor($typeResolver),
         ];
-        $nikicPhpParser   = new NikicPhpParser(
+        $nikicPhpParser = new NikicPhpParser(
             (new ParserFactory())->create(ParserFactory::ONLY_PHP7, new Lexer()), $cache, $extractors
         );
-        
+
         $phpstanParser = new PhpStanParser($phpStanContainer, $cache, $extractors);
 
         return [

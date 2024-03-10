@@ -11,21 +11,6 @@ parameters:
 			path: src/Contract/Result/OutputResult.php
 
 		-
-			message: "#^Parameter \\#1 \\$array \\(list\\<string\\>\\) of array_values is already a list, call has no effect\\.$#"
-			count: 1
-			path: src/Core/Analyser/LayerForTokenAnalyser.php
-
-		-
-			message: "#^Parameter \\#1 \\$array \\(list\\<string\\>\\) of array_values is already a list, call has no effect\\.$#"
-			count: 1
-			path: src/Core/Analyser/TokenInLayerAnalyser.php
-
-		-
-			message: "#^Parameter \\#1 \\$array \\(list\\<string\\>\\) of array_values is already a list, call has no effect\\.$#"
-			count: 1
-			path: src/Core/Analyser/UnassignedTokenAnalyser.php
-
-		-
 			message: "#^Method Qossmic\\\\Deptrac\\\\Core\\\\Ast\\\\AstMap\\\\ReferenceBuilder\\:\\:superglobal\\(\\) throws checked exception TypeError but it's missing from the PHPDoc @throws tag\\.$#"
 			count: 1
 			path: src/Core/Ast/AstMap/ReferenceBuilder.php

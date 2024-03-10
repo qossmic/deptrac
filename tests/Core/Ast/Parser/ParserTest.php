@@ -123,13 +123,13 @@ final class ParserTest extends TestCase
         $typeResolver = new NikicTypeResolver();
         $phpStanContainer = new PhpStanContainerDecorator('', []);
 
-        $cache          = new AstFileReferenceInMemoryCache();
-        $extractors     = [
+        $cache = new AstFileReferenceInMemoryCache();
+        $extractors = [
             new UseExtractor(),
             new ClassLikeExtractor($typeResolver),
         ];
         $nikicPhpParser = new NikicPhpParser(
-               (new ParserFactory())->create(
+            (new ParserFactory())->create(
                 ParserFactory::ONLY_PHP7,
                 new Lexer()
             ), $cache, $extractors
