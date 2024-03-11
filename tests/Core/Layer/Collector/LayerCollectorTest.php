@@ -37,32 +37,6 @@ final class LayerCollectorTest extends TestCase
         );
     }
 
-    public function testResolvable(): void
-    {
-        $this->resolver
-            ->expects($this->once())
-            ->method('has')
-            ->with('test')
-            ->willReturn(true);
-
-        $actual = $this->collector->resolvable(['value' => 'test']);
-
-        self::assertSame(true, $actual);
-    }
-
-    public function testUnrsolvable(): void
-    {
-        $this->resolver
-            ->expects($this->once())
-            ->method('has')
-            ->with('test')
-            ->willReturn(false);
-
-        $actual = $this->collector->resolvable(['value' => 'test']);
-
-        self::assertSame(false, $actual);
-    }
-
     public function testSatisfyWithUnknownLayer(): void
     {
         $this->resolver

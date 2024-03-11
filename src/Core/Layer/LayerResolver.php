@@ -8,7 +8,6 @@ use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\Collector\Collectable;
 use Qossmic\Deptrac\Core\Layer\Collector\CollectorResolverInterface;
-use Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface;
 
 use function array_key_exists;
 
@@ -45,13 +44,7 @@ class LayerResolver implements LayerResolverInterface
 
         foreach ($this->layers as $layer => $collectables) {
             foreach ($collectables as $collectable) {
-                $collector = $collectable->collector;
                 $attributes = $collectable->attributes;
-                if ($collector instanceof ConditionalCollectorInterface
-                    && !$collector->resolvable($attributes)
-                ) {
-                    continue;
-                }
 
                 if ($collectable->collector->satisfy($attributes, $reference)) {
                     if (array_key_exists($layer, $this->resolved[$tokenName]) && $this->resolved[$tokenName][$layer]) {
@@ -83,14 +76,7 @@ class LayerResolver implements LayerResolverInterface
         $collectables = $this->layers[$layer];
 
         foreach ($collectables as $collectable) {
-            $collector = $collectable->collector;
-            if ($collector instanceof ConditionalCollectorInterface
-                && !$collector->resolvable($collectable->attributes)
-            ) {
-                continue;
-            }
-
-            if ($collector->satisfy($collectable->attributes, $reference)) {
+            if ($collectable->collector->satisfy($collectable->attributes, $reference)) {
                 return true;
             }
         }
