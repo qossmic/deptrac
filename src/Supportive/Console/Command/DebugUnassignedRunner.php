@@ -19,8 +19,6 @@ final class DebugUnassignedRunner
      * @return bool are there any unassigned tokens?
      *
      * @throws CommandRunException
-     *
-     * @return bool are there any unassigned tokens?
      */
     public function run(OutputInterface $output): bool
     {
