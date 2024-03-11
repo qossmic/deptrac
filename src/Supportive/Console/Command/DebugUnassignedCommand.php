@@ -29,12 +29,12 @@ class DebugUnassignedCommand extends Command
 
         try {
             $result = $this->runner->run($symfonyOutput);
+
             return $result ? self::EXIT_WITH_UNASSIGNED_TOKENS : self::SUCCESS;
         } catch (CommandRunException $exception) {
             $outputStyle->error($exception->getMessage());
 
             return self::FAILURE;
         }
-
     }
 }

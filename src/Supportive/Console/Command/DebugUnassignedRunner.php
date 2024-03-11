@@ -16,6 +16,8 @@ final class DebugUnassignedRunner
     public function __construct(private readonly UnassignedTokenAnalyser $analyser) {}
 
     /**
+     * @return bool are there any unassigned tokens?
+     *
      * @throws CommandRunException
      *
      * @return bool are there any unassigned tokens?
