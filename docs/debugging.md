@@ -42,6 +42,10 @@ examples\Layer1\SomeClass
 examples\Layer1\SomeClass2
 ```
 
+This command exist with the return code 2 when it ran successfully, but there
+were some tokens in the output. You can use this information in your CI
+pipelines.
+
 ## `debug:dependencies`
 
 With the `debug:dependencies`-command you can see all dependencies of your layer. You can optionally specify a target layer to get only dependencies from one layer to the other:

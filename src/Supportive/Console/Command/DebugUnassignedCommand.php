@@ -15,6 +15,7 @@ class DebugUnassignedCommand extends Command
 {
     public static $defaultName = 'debug:unassigned';
     public static $defaultDescription = 'Lists tokens that are not assigned to any layer';
+    public const EXIT_WITH_UNASSIGNED_TOKENS = 2;
 
     public function __construct(private readonly DebugUnassignedRunner $runner)
     {
@@ -27,13 +28,13 @@ class DebugUnassignedCommand extends Command
         $symfonyOutput = new SymfonyOutput($output, $outputStyle);
 
         try {
-            $this->runner->run($symfonyOutput);
+            $result = $this->runner->run($symfonyOutput);
+
+            return $result ? self::EXIT_WITH_UNASSIGNED_TOKENS : self::SUCCESS;
         } catch (CommandRunException $exception) {
             $outputStyle->error($exception->getMessage());
 
             return self::FAILURE;
         }
-
-        return self::SUCCESS;
     }
 }
