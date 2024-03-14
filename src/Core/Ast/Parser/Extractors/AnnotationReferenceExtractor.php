@@ -1,86 +1,63 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Ast\Parser\Extractors;
 
-use PhpParser\Comment\Doc;
-use PhpParser\Node;
-use PhpParser\Node\Expr\Variable;
-use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Node\Stmt\Property;
-use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
-use PHPStan\PhpDocParser\Lexer\Lexer;
-use PHPStan\PhpDocParser\Parser\ConstExprParser;
-use PHPStan\PhpDocParser\Parser\PhpDocParser;
-use PHPStan\PhpDocParser\Parser\TokenIterator;
-use PHPStan\PhpDocParser\Parser\TypeParser;
+use DEPTRAC_202403\PhpParser\Comment\Doc;
+use DEPTRAC_202403\PhpParser\Node;
+use DEPTRAC_202403\PhpParser\Node\Expr\Variable;
+use DEPTRAC_202403\PhpParser\Node\Stmt\ClassMethod;
+use DEPTRAC_202403\PhpParser\Node\Stmt\Property;
+use DEPTRAC_202403\PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
+use DEPTRAC_202403\PHPStan\PhpDocParser\Lexer\Lexer;
+use DEPTRAC_202403\PHPStan\PhpDocParser\Parser\ConstExprParser;
+use DEPTRAC_202403\PHPStan\PhpDocParser\Parser\PhpDocParser;
+use DEPTRAC_202403\PHPStan\PhpDocParser\Parser\TokenIterator;
+use DEPTRAC_202403\PHPStan\PhpDocParser\Parser\TypeParser;
 use Qossmic\Deptrac\Core\Ast\AstMap\ReferenceBuilder;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeResolver;
 use Qossmic\Deptrac\Core\Ast\Parser\TypeScope;
-
-class AnnotationReferenceExtractor implements ReferenceExtractorInterface
+class AnnotationReferenceExtractor implements \Qossmic\Deptrac\Core\Ast\Parser\Extractors\ReferenceExtractorInterface
 {
     private readonly Lexer $lexer;
     private readonly PhpDocParser $docParser;
-
     public function __construct(private readonly TypeResolver $typeResolver)
     {
         $this->lexer = new Lexer();
         $this->docParser = new PhpDocParser(new TypeParser(), new ConstExprParser());
     }
-
-    public function processNode(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope): void
+    public function processNode(Node $node, ReferenceBuilder $referenceBuilder, TypeScope $typeScope) : void
     {
-        if (!$node instanceof Property
-            && !$node instanceof Variable
-            && !$node instanceof ClassMethod
-        ) {
+        if (!$node instanceof Property && !$node instanceof Variable && !$node instanceof ClassMethod) {
             return;
         }
-
         $docComment = $node->getDocComment();
         if (!$docComment instanceof Doc) {
             return;
         }
-
         $tokens = new TokenIterator($this->lexer->tokenize($docComment->getText()));
         $docNode = $this->docParser->parse($tokens);
-        $templateTypes = array_merge(
-            array_map(
-                static fn (TemplateTagValueNode $node): string => $node->name,
-                $docNode->getTemplateTagValues()
-            ),
-            $referenceBuilder->getTokenTemplates()
-        );
-
+        $templateTypes = \array_merge(\array_map(static fn(TemplateTagValueNode $node): string => $node->name, $docNode->getTemplateTagValues()), $referenceBuilder->getTokenTemplates());
         foreach ($docNode->getVarTagValues() as $tag) {
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
-
             foreach ($types as $type) {
                 $referenceBuilder->variable($type, $docComment->getStartLine());
             }
         }
-
         foreach ($docNode->getParamTagValues() as $tag) {
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
-
             foreach ($types as $type) {
                 $referenceBuilder->parameter($type, $docComment->getStartLine());
             }
         }
-
         foreach ($docNode->getReturnTagValues() as $tag) {
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
-
             foreach ($types as $type) {
                 $referenceBuilder->returnType($type, $docComment->getStartLine());
             }
         }
-
         foreach ($docNode->getThrowsTagValues() as $tag) {
             $types = $this->typeResolver->resolvePHPStanDocParserType($tag->type, $typeScope, $templateTypes);
-
             foreach ($types as $type) {
                 $referenceBuilder->throwStatement($type, $docComment->getStartLine());
             }

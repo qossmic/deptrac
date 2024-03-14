@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Contract\Ast;
 
 /**
@@ -9,5 +8,5 @@ namespace Qossmic\Deptrac\Contract\Ast;
  */
 interface TokenInterface
 {
-    public function toString(): string;
+    public function toString() : string;
 }

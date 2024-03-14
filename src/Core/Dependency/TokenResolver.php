@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Dependency;
 
 use Qossmic\Deptrac\Contract\Ast\TokenInterface;
@@ -15,20 +14,19 @@ use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionReference;
 use Qossmic\Deptrac\Core\Ast\AstMap\Function\FunctionToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\SuperGlobalToken;
 use Qossmic\Deptrac\Core\Ast\AstMap\Variable\VariableReference;
-
 class TokenResolver
 {
     /**
      * @throws UnrecognizedTokenException
      */
-    public function resolve(TokenInterface $token, AstMap $astMap): TokenReferenceInterface
+    public function resolve(TokenInterface $token, AstMap $astMap) : TokenReferenceInterface
     {
-        return match (true) {
+        return match (\true) {
             $token instanceof ClassLikeToken => $astMap->getClassReferenceForToken($token) ?? new ClassLikeReference($token),
             $token instanceof FunctionToken => $astMap->getFunctionReferenceForToken($token) ?? new FunctionReference($token),
             $token instanceof SuperGlobalToken => new VariableReference($token),
             $token instanceof FileToken => $astMap->getFileReferenceForToken($token) ?? new FileReference($token->path, [], [], []),
-            default => throw UnrecognizedTokenException::cannotCreateReference($token)
+            default => throw \Qossmic\Deptrac\Core\Dependency\UnrecognizedTokenException::cannotCreateReference($token),
         };
     }
 }

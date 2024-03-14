@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Qossmic\Deptrac\Contract\Ast;
 
 /**
@@ -9,7 +8,6 @@ namespace Qossmic\Deptrac\Contract\Ast;
  */
 interface TokenReferenceInterface
 {
-    public function getFilepath(): ?string;
-
-    public function getToken(): TokenInterface;
+    public function getFilepath() : ?string;
+    public function getToken() : \Qossmic\Deptrac\Contract\Ast\TokenInterface;
 }
