@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of zip v.1.14.0
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 /**
  * A file archive, compressed with Zip.
  * @link https://php.net/manual/en/class.ziparchive.php
@@ -537,9 +537,9 @@ class ZipArchive implements \Countable
      * <b>ZipArchive::OVERWRITE</b>
      * </p>
      *
-     * @return int|true <i>Error codes</i>
+     * @return int|bool <i>Error codes</i>
      * <p>
-     * Returns <b>TRUE</b> on success or the error code.
+     * Returns <b>TRUE</b> on success, <b>FALSE</b> or the error code on error.
      * </p>
      * <p>
      * <b>ZipArchive::ER_EXISTS</b>
@@ -935,7 +935,7 @@ class ZipArchive implements \Countable
      * ignoring any changes made.
      * <b>ZipArchive::FL_NOCASE</b>
      * </p>
-     * @return array|false an array containing the entry details or <b>FALSE</b> on failure.
+     * @return array{name: string, index: int, crc: int, size: int, mtime: int, comp_size: int, comp_method: int, encryption_method: int}|false an array containing the entry details or <b>FALSE</b> on failure.
      */
     public function statName(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = null)
     {
@@ -952,7 +952,7 @@ class ZipArchive implements \Countable
      * information about the original file in the archive,
      * ignoring any changes made.
      * </p>
-     * @return array|false an array containing the entry details or <b>FALSE</b> on failure.
+     * @return array{name: string, index: int, crc: int, size: int, mtime: int, comp_size: int, comp_method: int, encryption_method: int}|false an array containing the entry details or <b>FALSE</b> on failure.
      */
     public function statIndex(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $index, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = null)
     {
@@ -1178,7 +1178,7 @@ class ZipArchive implements \Countable
  * A file archive, compressed with Zip.
  * @link https://php.net/manual/en/class.ziparchive.php
  */
-\class_alias('DEPTRAC_202402\\ZipArchive', 'ZipArchive', \false);
+\class_alias('DEPTRAC_202403\\ZipArchive', 'ZipArchive', \false);
 /**
  * (PHP 4 &gt;= 4.1.0, PHP 5 &gt;= 5.2.0, PECL zip &gt;= 1.0.0)<br/>
  * Open a ZIP file archive

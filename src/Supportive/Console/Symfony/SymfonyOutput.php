@@ -5,7 +5,7 @@ namespace Qossmic\Deptrac\Supportive\Console\Symfony;
 
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputInterface;
 use Qossmic\Deptrac\Contract\OutputFormatter\OutputStyleInterface;
-use DEPTRAC_202402\Symfony\Component\Console\Output\OutputInterface as SymfonyOutputInterface;
+use DEPTRAC_202403\Symfony\Component\Console\Output\OutputInterface as SymfonyOutputInterface;
 /**
  * @internal
  */

@@ -15,9 +15,11 @@ final class DebugUnassignedRunner
     {
     }
     /**
+     * @return bool are there any unassigned tokens?
+     *
      * @throws CommandRunException
      */
-    public function run(OutputInterface $output) : void
+    public function run(OutputInterface $output) : bool
     {
         try {
             $unassignedTokens = $this->analyser->findUnassignedTokens();
@@ -26,8 +28,9 @@ final class DebugUnassignedRunner
         }
         if ([] === $unassignedTokens) {
             $output->writeLineFormatted('There are no unassigned tokens.');
-            return;
+            return \false;
         }
         $output->writeLineFormatted($unassignedTokens);
+        return \true;
     }
 }

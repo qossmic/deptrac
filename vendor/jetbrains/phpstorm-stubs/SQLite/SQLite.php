@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of SQLite v.2.0-dev
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * @link https://php.net/manual/en/ref.sqlite.php
  */
@@ -247,7 +247,7 @@ class SQLiteDatabase
 /**
  * @link https://php.net/manual/en/ref.sqlite.php
  */
-\class_alias('DEPTRAC_202402\\SQLiteDatabase', 'SQLiteDatabase', \false);
+\class_alias('DEPTRAC_202403\\SQLiteDatabase', 'SQLiteDatabase', \false);
 /**
  * @link https://php.net/manual/en/ref.sqlite.php
  */
@@ -500,7 +500,7 @@ final class SQLiteResult implements \Iterator, \Countable
 /**
  * @link https://php.net/manual/en/ref.sqlite.php
  */
-\class_alias('DEPTRAC_202402\\SQLiteResult', 'SQLiteResult', \false);
+\class_alias('DEPTRAC_202403\\SQLiteResult', 'SQLiteResult', \false);
 /**
  * Represents an unbuffered SQLite result set. Unbuffered results sets are sequential, forward-seeking only.
  * @link https://php.net/manual/en/ref.sqlite.php
@@ -570,7 +570,7 @@ final class SQLiteUnbuffered
  * Represents an unbuffered SQLite result set. Unbuffered results sets are sequential, forward-seeking only.
  * @link https://php.net/manual/en/ref.sqlite.php
  */
-\class_alias('DEPTRAC_202402\\SQLiteUnbuffered', 'SQLiteUnbuffered', \false);
+\class_alias('DEPTRAC_202403\\SQLiteUnbuffered', 'SQLiteUnbuffered', \false);
 final class SQLiteException extends \RuntimeException
 {
     protected $message;
@@ -608,7 +608,7 @@ final class SQLiteException extends \RuntimeException
     {
     }
 }
-\class_alias('DEPTRAC_202402\\SQLiteException', 'SQLiteException', \false);
+\class_alias('DEPTRAC_202403\\SQLiteException', 'SQLiteException', \false);
 /**
  * (PHP 5, PECL sqlite &gt;= 1.0.0)<br/>
  * Opens a SQLite database and create the database if it does not exist
@@ -1465,10 +1465,3 @@ function sqlite_fetch_column_types($dbhandle, $table_name, $result_type = null)
  * @link https://php.net/manual/en/sqlite.constants.php
  */
 \define('SQLITE_DONE', 101);
-/**
- * Specifies that a function created with {@see SQLite3::createFunction()} is deterministic,
- * i.e. it always returns the same result given the same inputs within a single SQL statement.
- * @since 7.1.4
- * @link https://php.net/manual/en/sqlite.constants.php
- */
-\define('SQLITE3_DETERMINISTIC', 2048);

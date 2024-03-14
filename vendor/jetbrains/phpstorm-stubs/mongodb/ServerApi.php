@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402\MongoDB\Driver;
+namespace DEPTRAC_202403\MongoDB\Driver;
 
 final class ServerApi implements \MongoDB\BSON\Serializable, \Serializable
 {
@@ -11,13 +11,13 @@ final class ServerApi implements \MongoDB\BSON\Serializable, \Serializable
     public static function __set_state(array $properties)
     {
     }
-    public final function unserialize(string $serialized)
+    public final function unserialize(string $data) : void
     {
     }
-    public final function serialize()
+    public final function serialize() : string
     {
     }
-    public final function bsonSerialize()
+    public final function bsonSerialize() : array|object
     {
     }
 }

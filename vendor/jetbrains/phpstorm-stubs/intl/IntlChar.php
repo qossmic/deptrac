@@ -1,11 +1,11 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * <p>IntlChar provides access to a number of utility methods that can be used to access information about Unicode characters.</p>
  * <p>The methods and constants adhere closely to the names and behavior used by the underlying ICU library.</p>
@@ -900,7 +900,8 @@ class IntlChar
      * @since 7.0
      */
     #[TentativeType]
-    public static function enumCharNames(#[LanguageLevelTypeAware(['8.0' => 'int|string'], default: '')] $start, #[LanguageLevelTypeAware(['8.0' => 'int|string'], default: '')] $end, #[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $type = \IntlChar::UNICODE_CHAR_NAME) : ?bool
+    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: 'bool|null')]
+    public static function enumCharNames(#[LanguageLevelTypeAware(['8.0' => 'int|string'], default: '')] $start, #[LanguageLevelTypeAware(['8.0' => 'int|string'], default: '')] $end, #[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $type = \IntlChar::UNICODE_CHAR_NAME)
     {
     }
     /**
@@ -1511,4 +1512,4 @@ class IntlChar
  * <p>The methods and constants adhere closely to the names and behavior used by the underlying ICU library.</p>
  * @since 7.0
  */
-\class_alias('DEPTRAC_202402\\IntlChar', 'IntlChar', \false);
+\class_alias('DEPTRAC_202403\\IntlChar', 'IntlChar', \false);

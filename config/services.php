@@ -1,12 +1,12 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\PhpParser\Lexer;
-use DEPTRAC_202402\PhpParser\Parser;
-use DEPTRAC_202402\PhpParser\ParserFactory;
-use DEPTRAC_202402\Psr\EventDispatcher\EventDispatcherInterface;
+use DEPTRAC_202403\PhpParser\Lexer;
+use DEPTRAC_202403\PhpParser\Parser;
+use DEPTRAC_202403\PhpParser\ParserFactory;
+use DEPTRAC_202403\Psr\EventDispatcher\EventDispatcherInterface;
 use Qossmic\Deptrac\Contract\Analyser\EventHelper;
 use Qossmic\Deptrac\Contract\Config\CollectorType;
 use Qossmic\Deptrac\Contract\Config\EmitterType;
@@ -107,12 +107,12 @@ use Qossmic\Deptrac\Supportive\OutputFormatter\JsonOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\JUnitOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\TableOutputFormatter;
 use Qossmic\Deptrac\Supportive\OutputFormatter\XMLOutputFormatter;
-use DEPTRAC_202402\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use DEPTRAC_202402\Symfony\Component\EventDispatcher\EventDispatcher;
-use function DEPTRAC_202402\Symfony\Component\DependencyInjection\Loader\Configurator\param;
-use function DEPTRAC_202402\Symfony\Component\DependencyInjection\Loader\Configurator\service;
-use function DEPTRAC_202402\Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
-use function DEPTRAC_202402\Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
+use DEPTRAC_202403\Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use DEPTRAC_202403\Symfony\Component\EventDispatcher\EventDispatcher;
+use function DEPTRAC_202403\Symfony\Component\DependencyInjection\Loader\Configurator\param;
+use function DEPTRAC_202403\Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use function DEPTRAC_202403\Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
+use function DEPTRAC_202403\Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
 return static function (ContainerConfigurator $container) : void {
     $services = $container->services();
     $services->defaults()->autowire();

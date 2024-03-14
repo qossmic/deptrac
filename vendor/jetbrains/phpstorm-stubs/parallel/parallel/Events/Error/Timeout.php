@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402\parallel\Events\Error;
+namespace DEPTRAC_202403\parallel\Events\Error;
 
 use parallel\Events\Error;
 class Timeout extends Error

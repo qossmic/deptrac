@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Open Internet or Unix domain socket connection
  * @link https://php.net/manual/en/function.fsockopen.php
@@ -359,10 +359,9 @@ function getcwd() : string|false
  * not specified, the last link opened by opendir
  * is assumed.
  * </p>
- * @return null|false
  * @see https://bugs.php.net/bug.php?id=75485
  */
-function rewinddir($dir_handle) : null|false
+function rewinddir($dir_handle) : void
 {
 }
 /**

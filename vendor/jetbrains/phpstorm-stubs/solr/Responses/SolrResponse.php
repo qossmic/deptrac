@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * Helper autocomplete for php solr extension.
@@ -178,4 +178,4 @@ abstract class SolrResponse
  * This class represents a response from the Solr server.
  * @link https://php.net/manual/en/class.solrresponse.php
  */
-\class_alias('DEPTRAC_202402\\SolrResponse', 'SolrResponse', \false);
+\class_alias('DEPTRAC_202403\\SolrResponse', 'SolrResponse', \false);

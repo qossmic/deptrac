@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * @since 8.1
@@ -13,10 +13,10 @@ final class ReflectionFiber
     public function getFiber() : \Fiber
     {
     }
-    public function getExecutingFile() : string
+    public function getExecutingFile() : ?string
     {
     }
-    public function getExecutingLine() : int
+    public function getExecutingLine() : ?int
     {
     }
     public function getCallable() : callable
@@ -29,4 +29,4 @@ final class ReflectionFiber
 /**
  * @since 8.1
  */
-\class_alias('DEPTRAC_202402\\ReflectionFiber', 'ReflectionFiber', \false);
+\class_alias('DEPTRAC_202403\\ReflectionFiber', 'ReflectionFiber', \false);

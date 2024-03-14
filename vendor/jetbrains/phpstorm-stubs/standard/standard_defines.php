@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of standard v.5.3.1-0.dotdeb.1
 \define('CONNECTION_ABORTED', 1);
@@ -764,7 +764,7 @@ namespace DEPTRAC_202402;
  * not be bound to the actual resource you requested.
  * If the requested resource is network based, this flag will cause the
  * opener to block until the whole contents have been downloaded.
- * @link https://php.net/manual/en/internals2.ze1.streams.constants.php
+ * @link https://www.php.net/manual/en/stream.constants.php
  */
 \define('STREAM_MUST_SEEK', 16);
 \define('STREAM_URL_STAT_LINK', 1);
@@ -1107,6 +1107,7 @@ namespace DEPTRAC_202402;
 \define("MT_RAND_MT19937", 0);
 /**
  * @since 7.1
+ * @deprecated 8.3
  */
 \define("MT_RAND_PHP", 1);
 /**

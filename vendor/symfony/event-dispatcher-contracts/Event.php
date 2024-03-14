@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace DEPTRAC_202402\Symfony\Contracts\EventDispatcher;
+namespace DEPTRAC_202403\Symfony\Contracts\EventDispatcher;
 
-use DEPTRAC_202402\Psr\EventDispatcher\StoppableEventInterface;
+use DEPTRAC_202403\Psr\EventDispatcher\StoppableEventInterface;
 /**
  * Event is the base class for classes containing event data.
  *

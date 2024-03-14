@@ -1,11 +1,11 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * The ReflectionType class reports information about a function's parameters.
  *
@@ -75,4 +75,4 @@ abstract class ReflectionType implements \Stringable
  * @link https://www.php.net/manual/en/class.reflectiontype.php
  * @since 7.0
  */
-\class_alias('DEPTRAC_202402\\ReflectionType', 'ReflectionType', \false);
+\class_alias('DEPTRAC_202403\\ReflectionType', 'ReflectionType', \false);

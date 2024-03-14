@@ -1,11 +1,11 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of SPL v.0.2
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
 /**
  * Exception that represents error in the program logic. This kind of
  * exception should lead directly to a fix in your code.
@@ -19,7 +19,7 @@ class LogicException extends \Exception
  * exception should lead directly to a fix in your code.
  * @link https://php.net/manual/en/class.logicexception.php
  */
-\class_alias('DEPTRAC_202402\\LogicException', 'LogicException', \false);
+\class_alias('DEPTRAC_202403\\LogicException', 'LogicException', \false);
 /**
  * Exception thrown if a callback refers to an undefined function or if some
  * arguments are missing.
@@ -33,7 +33,7 @@ class BadFunctionCallException extends \LogicException
  * arguments are missing.
  * @link https://php.net/manual/en/class.badfunctioncallexception.php
  */
-\class_alias('DEPTRAC_202402\\BadFunctionCallException', 'BadFunctionCallException', \false);
+\class_alias('DEPTRAC_202403\\BadFunctionCallException', 'BadFunctionCallException', \false);
 /**
  * Exception thrown if a callback refers to an undefined method or if some
  * arguments are missing.
@@ -47,7 +47,7 @@ class BadMethodCallException extends \BadFunctionCallException
  * arguments are missing.
  * @link https://php.net/manual/en/class.badmethodcallexception.php
  */
-\class_alias('DEPTRAC_202402\\BadMethodCallException', 'BadMethodCallException', \false);
+\class_alias('DEPTRAC_202403\\BadMethodCallException', 'BadMethodCallException', \false);
 /**
  * Exception thrown if a value does not adhere to a defined valid data domain.
  * @link https://php.net/manual/en/class.domainexception.php
@@ -59,7 +59,7 @@ class DomainException extends \LogicException
  * Exception thrown if a value does not adhere to a defined valid data domain.
  * @link https://php.net/manual/en/class.domainexception.php
  */
-\class_alias('DEPTRAC_202402\\DomainException', 'DomainException', \false);
+\class_alias('DEPTRAC_202403\\DomainException', 'DomainException', \false);
 /**
  * Exception thrown if an argument is not of the expected type.
  * @link https://php.net/manual/en/class.invalidargumentexception.php
@@ -71,7 +71,7 @@ class InvalidArgumentException extends \LogicException
  * Exception thrown if an argument is not of the expected type.
  * @link https://php.net/manual/en/class.invalidargumentexception.php
  */
-\class_alias('DEPTRAC_202402\\InvalidArgumentException', 'InvalidArgumentException', \false);
+\class_alias('DEPTRAC_202403\\InvalidArgumentException', 'InvalidArgumentException', \false);
 /**
  * Exception thrown if a length is invalid.
  * @link https://php.net/manual/en/class.lengthexception.php
@@ -83,7 +83,7 @@ class LengthException extends \LogicException
  * Exception thrown if a length is invalid.
  * @link https://php.net/manual/en/class.lengthexception.php
  */
-\class_alias('DEPTRAC_202402\\LengthException', 'LengthException', \false);
+\class_alias('DEPTRAC_202403\\LengthException', 'LengthException', \false);
 /**
  * Exception thrown when an illegal index was requested. This represents
  * errors that should be detected at compile time.
@@ -97,7 +97,7 @@ class OutOfRangeException extends \LogicException
  * errors that should be detected at compile time.
  * @link https://php.net/manual/en/class.outofrangeexception.php
  */
-\class_alias('DEPTRAC_202402\\OutOfRangeException', 'OutOfRangeException', \false);
+\class_alias('DEPTRAC_202403\\OutOfRangeException', 'OutOfRangeException', \false);
 /**
  * Exception thrown if an error which can only be found on runtime occurs.
  * @link https://php.net/manual/en/class.runtimeexception.php
@@ -109,7 +109,7 @@ class RuntimeException extends \Exception
  * Exception thrown if an error which can only be found on runtime occurs.
  * @link https://php.net/manual/en/class.runtimeexception.php
  */
-\class_alias('DEPTRAC_202402\\RuntimeException', 'RuntimeException', \false);
+\class_alias('DEPTRAC_202403\\RuntimeException', 'RuntimeException', \false);
 /**
  * Exception thrown if a value is not a valid key. This represents errors
  * that cannot be detected at compile time.
@@ -123,7 +123,7 @@ class OutOfBoundsException extends \RuntimeException
  * that cannot be detected at compile time.
  * @link https://php.net/manual/en/class.outofboundsexception.php
  */
-\class_alias('DEPTRAC_202402\\OutOfBoundsException', 'OutOfBoundsException', \false);
+\class_alias('DEPTRAC_202403\\OutOfBoundsException', 'OutOfBoundsException', \false);
 /**
  * Exception thrown when adding an element to a full container.
  * @link https://php.net/manual/en/class.overflowexception.php
@@ -135,7 +135,7 @@ class OverflowException extends \RuntimeException
  * Exception thrown when adding an element to a full container.
  * @link https://php.net/manual/en/class.overflowexception.php
  */
-\class_alias('DEPTRAC_202402\\OverflowException', 'OverflowException', \false);
+\class_alias('DEPTRAC_202403\\OverflowException', 'OverflowException', \false);
 /**
  * Exception thrown to indicate range errors during program execution.
  * Normally this means there was an arithmetic error other than
@@ -153,7 +153,7 @@ class RangeException extends \RuntimeException
  * <b>DomainException</b>.
  * @link https://php.net/manual/en/class.rangeexception.php
  */
-\class_alias('DEPTRAC_202402\\RangeException', 'RangeException', \false);
+\class_alias('DEPTRAC_202403\\RangeException', 'RangeException', \false);
 /**
  * Exception thrown when performing an invalid operation on an empty container, such as removing an element.
  * @link https://php.net/manual/en/class.underflowexception.php
@@ -165,7 +165,7 @@ class UnderflowException extends \RuntimeException
  * Exception thrown when performing an invalid operation on an empty container, such as removing an element.
  * @link https://php.net/manual/en/class.underflowexception.php
  */
-\class_alias('DEPTRAC_202402\\UnderflowException', 'UnderflowException', \false);
+\class_alias('DEPTRAC_202403\\UnderflowException', 'UnderflowException', \false);
 /**
  * Exception thrown if a value does not match with a set of values. Typically
  * this happens when a function calls another function and expects the return
@@ -183,7 +183,7 @@ class UnexpectedValueException extends \RuntimeException
  * related errors.
  * @link https://php.net/manual/en/class.unexpectedvalueexception.php
  */
-\class_alias('DEPTRAC_202402\\UnexpectedValueException', 'UnexpectedValueException', \false);
+\class_alias('DEPTRAC_202403\\UnexpectedValueException', 'UnexpectedValueException', \false);
 /**
  * The EmptyIterator class for an empty iterator.
  * @link https://secure.php.net/manual/en/class.emptyiterator.php
@@ -242,7 +242,7 @@ class EmptyIterator implements \Iterator
  * The EmptyIterator class for an empty iterator.
  * @link https://secure.php.net/manual/en/class.emptyiterator.php
  */
-\class_alias('DEPTRAC_202402\\EmptyIterator', 'EmptyIterator', \false);
+\class_alias('DEPTRAC_202403\\EmptyIterator', 'EmptyIterator', \false);
 /**
  * Filtered iterator using the callback to determine which items are accepted or rejected.
  * @link https://secure.php.net/manual/en/class.callbackfilteriterator.php
@@ -278,7 +278,7 @@ class CallbackFilterIterator extends \FilterIterator
  * @link https://secure.php.net/manual/en/class.callbackfilteriterator.php
  * @since 5.4
  */
-\class_alias('DEPTRAC_202402\\CallbackFilterIterator', 'CallbackFilterIterator', \false);
+\class_alias('DEPTRAC_202403\\CallbackFilterIterator', 'CallbackFilterIterator', \false);
 /**
  * (PHP 5 >= 5.4.0)<br>
  * RecursiveCallbackFilterIterator from a RecursiveIterator
@@ -322,7 +322,7 @@ class RecursiveCallbackFilterIterator extends \CallbackFilterIterator implements
  * @link https://secure.php.net/manual/en/class.recursivecallbackfilteriterator.php
  * @since 5.4
  */
-\class_alias('DEPTRAC_202402\\RecursiveCallbackFilterIterator', 'RecursiveCallbackFilterIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveCallbackFilterIterator', 'RecursiveCallbackFilterIterator', \false);
 /**
  * Classes implementing <b>RecursiveIterator</b> can be used to iterate
  * over iterators recursively.
@@ -350,7 +350,7 @@ interface RecursiveIterator extends \Iterator
  * over iterators recursively.
  * @link https://php.net/manual/en/class.recursiveiterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveIterator', 'RecursiveIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveIterator', 'RecursiveIterator', \false);
 /**
  * Can be used to iterate through recursive iterators.
  * @link https://php.net/manual/en/class.recursiveiteratoriterator.php
@@ -547,7 +547,7 @@ class RecursiveIteratorIterator implements \OuterIterator
  * Can be used to iterate through recursive iterators.
  * @link https://php.net/manual/en/class.recursiveiteratoriterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveIteratorIterator', 'RecursiveIteratorIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveIteratorIterator', 'RecursiveIteratorIterator', \false);
 /**
  * Classes implementing <b>OuterIterator</b> can be used to iterate
  * over iterators.
@@ -568,7 +568,7 @@ interface OuterIterator extends \Iterator
  * over iterators.
  * @link https://php.net/manual/en/class.outeriterator.php
  */
-\class_alias('DEPTRAC_202402\\OuterIterator', 'OuterIterator', \false);
+\class_alias('DEPTRAC_202403\\OuterIterator', 'OuterIterator', \false);
 /**
  * This iterator wrapper allows the conversion of anything that is
  * Traversable into an Iterator.
@@ -586,7 +586,7 @@ class IteratorIterator implements \OuterIterator
      * @param Traversable $iterator
      * @param string|null $class [optional]
      */
-    public function __construct(\Traversable $iterator, #[PhpStormStubsElementAvailable(from: '8.0')] ?string $class = '')
+    public function __construct(\Traversable $iterator, #[PhpStormStubsElementAvailable(from: '8.0')] ?string $class = null)
     {
     }
     /**
@@ -653,7 +653,7 @@ class IteratorIterator implements \OuterIterator
  * misuse, otherwise expect exceptions or fatal errors.
  * @link https://php.net/manual/en/class.iteratoriterator.php
  */
-\class_alias('DEPTRAC_202402\\IteratorIterator', 'IteratorIterator', \false);
+\class_alias('DEPTRAC_202403\\IteratorIterator', 'IteratorIterator', \false);
 /**
  * This abstract iterator filters out unwanted values. This class should be extended to
  * implement custom iterator filters. The <b>FilterIterator::accept</b>
@@ -734,7 +734,7 @@ abstract class FilterIterator extends \IteratorIterator
  * must be implemented in the subclass.
  * @link https://php.net/manual/en/class.filteriterator.php
  */
-\class_alias('DEPTRAC_202402\\FilterIterator', 'FilterIterator', \false);
+\class_alias('DEPTRAC_202403\\FilterIterator', 'FilterIterator', \false);
 /**
  * This abstract iterator filters out unwanted values for a <b>RecursiveIterator</b>.
  * This class should be extended to implement custom filters.
@@ -776,7 +776,7 @@ abstract class RecursiveFilterIterator extends \FilterIterator implements \Recur
  * The <b>RecursiveFilterIterator::accept</b> must be implemented in the subclass.
  * @link https://php.net/manual/en/class.recursivefilteriterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveFilterIterator', 'RecursiveFilterIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveFilterIterator', 'RecursiveFilterIterator', \false);
 /**
  * This extended FilterIterator allows a recursive iteration using RecursiveIteratorIterator that only shows those elements which have children.
  * @link https://php.net/manual/en/class.parentiterator.php
@@ -821,7 +821,7 @@ class ParentIterator extends \RecursiveFilterIterator
  * This extended FilterIterator allows a recursive iteration using RecursiveIteratorIterator that only shows those elements which have children.
  * @link https://php.net/manual/en/class.parentiterator.php
  */
-\class_alias('DEPTRAC_202402\\ParentIterator', 'ParentIterator', \false);
+\class_alias('DEPTRAC_202403\\ParentIterator', 'ParentIterator', \false);
 /**
  * The Seekable iterator.
  * @link https://php.net/manual/en/class.seekableiterator.php
@@ -843,7 +843,7 @@ interface SeekableIterator extends \Iterator
  * The Seekable iterator.
  * @link https://php.net/manual/en/class.seekableiterator.php
  */
-\class_alias('DEPTRAC_202402\\SeekableIterator', 'SeekableIterator', \false);
+\class_alias('DEPTRAC_202403\\SeekableIterator', 'SeekableIterator', \false);
 /**
  * The <b>LimitIterator</b> class allows iteration over
  * a limited subset of items in an <b>Iterator</b>.
@@ -939,7 +939,7 @@ class LimitIterator extends \IteratorIterator
  * a limited subset of items in an <b>Iterator</b>.
  * @link https://php.net/manual/en/class.limititerator.php
  */
-\class_alias('DEPTRAC_202402\\LimitIterator', 'LimitIterator', \false);
+\class_alias('DEPTRAC_202403\\LimitIterator', 'LimitIterator', \false);
 /**
  * This object supports cached iteration over another iterator.
  * @link https://php.net/manual/en/class.cachingiterator.php
@@ -1141,7 +1141,7 @@ class CachingIterator extends \IteratorIterator implements \ArrayAccess, \Counta
  * This object supports cached iteration over another iterator.
  * @link https://php.net/manual/en/class.cachingiterator.php
  */
-\class_alias('DEPTRAC_202402\\CachingIterator', 'CachingIterator', \false);
+\class_alias('DEPTRAC_202403\\CachingIterator', 'CachingIterator', \false);
 /**
  * ...
  * @link https://php.net/manual/en/class.recursivecachingiterator.php
@@ -1154,7 +1154,7 @@ class RecursiveCachingIterator extends \CachingIterator implements \RecursiveIte
      * @param Iterator $iterator The iterator to cache.
      * @param int $flags [optional] A bitmask of flags. See CachingIterator class constants for details.
      */
-    public function __construct(\Iterator $iterator, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = self::CALL_TOSTRING)
+    public function __construct(\Iterator $iterator, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \CachingIterator::CALL_TOSTRING)
     {
     }
     /**
@@ -1180,7 +1180,7 @@ class RecursiveCachingIterator extends \CachingIterator implements \RecursiveIte
  * ...
  * @link https://php.net/manual/en/class.recursivecachingiterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveCachingIterator', 'RecursiveCachingIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveCachingIterator', 'RecursiveCachingIterator', \false);
 /**
  * This iterator cannot be rewinded.
  * @link https://php.net/manual/en/class.norewinditerator.php
@@ -1253,7 +1253,7 @@ class NoRewindIterator extends \IteratorIterator
  * This iterator cannot be rewinded.
  * @link https://php.net/manual/en/class.norewinditerator.php
  */
-\class_alias('DEPTRAC_202402\\NoRewindIterator', 'NoRewindIterator', \false);
+\class_alias('DEPTRAC_202403\\NoRewindIterator', 'NoRewindIterator', \false);
 /**
  * An Iterator that iterates over several iterators one after the other.
  * @link https://php.net/manual/en/class.appenditerator.php
@@ -1354,7 +1354,7 @@ class AppendIterator extends \IteratorIterator
  * An Iterator that iterates over several iterators one after the other.
  * @link https://php.net/manual/en/class.appenditerator.php
  */
-\class_alias('DEPTRAC_202402\\AppendIterator', 'AppendIterator', \false);
+\class_alias('DEPTRAC_202403\\AppendIterator', 'AppendIterator', \false);
 /**
  * The <b>InfiniteIterator</b> allows one to
  * infinitely iterate over an iterator without having to manually
@@ -1387,7 +1387,7 @@ class InfiniteIterator extends \IteratorIterator
  * rewind the iterator upon reaching its end.
  * @link https://php.net/manual/en/class.infiniteiterator.php
  */
-\class_alias('DEPTRAC_202402\\InfiniteIterator', 'InfiniteIterator', \false);
+\class_alias('DEPTRAC_202403\\InfiniteIterator', 'InfiniteIterator', \false);
 /**
  * This iterator can be used to filter another iterator based on a regular expression.
  * @link https://php.net/manual/en/class.regexiterator.php
@@ -1581,7 +1581,7 @@ class RegexIterator extends \FilterIterator
  * This iterator can be used to filter another iterator based on a regular expression.
  * @link https://php.net/manual/en/class.regexiterator.php
  */
-\class_alias('DEPTRAC_202402\\RegexIterator', 'RegexIterator', \false);
+\class_alias('DEPTRAC_202403\\RegexIterator', 'RegexIterator', \false);
 /**
  * This recursive iterator can filter another recursive iterator via a regular expression.
  * @link https://php.net/manual/en/class.recursiveregexiterator.php
@@ -1597,7 +1597,7 @@ class RecursiveRegexIterator extends \RegexIterator implements \RecursiveIterato
      * @param int $flags [optional] Special flags, see RegexIterator::setFlags() for a list of available flags.
      * @param int $pregFlags [optional] The regular expression flags. These flags depend on the operation mode parameter
      */
-    public function __construct(\RecursiveIterator $iterator, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $pattern, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = self::MATCH, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $pregFlags = 0)
+    public function __construct(\RecursiveIterator $iterator, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $pattern, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = \RegexIterator::MATCH, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $pregFlags = 0)
     {
     }
     /**
@@ -1623,7 +1623,7 @@ class RecursiveRegexIterator extends \RegexIterator implements \RecursiveIterato
  * This recursive iterator can filter another recursive iterator via a regular expression.
  * @link https://php.net/manual/en/class.recursiveregexiterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveRegexIterator', 'RecursiveRegexIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveRegexIterator', 'RecursiveRegexIterator', \false);
 /**
  * Allows iterating over a <b>RecursiveIterator</b> to generate an ASCII graphic tree.
  * @link https://php.net/manual/en/class.recursivetreeiterator.php
@@ -1646,7 +1646,7 @@ class RecursiveTreeIterator extends \RecursiveIteratorIterator
      * @param int $cachingIteratorFlags [optional] Flags to affect the behavior of the {@see RecursiveCachingIterator} used internally.
      * @param int $mode [optional] Flags to affect the behavior of the {@see RecursiveIteratorIterator} used internally.
      */
-    public function __construct($iterator, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = self::BYPASS_KEY, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $cachingIteratorFlags = \CachingIterator::CATCH_GET_CHILD, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = self::SELF_FIRST)
+    public function __construct($iterator, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = self::BYPASS_KEY, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $cachingIteratorFlags = \CachingIterator::CATCH_GET_CHILD, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode = \RecursiveIteratorIterator::SELF_FIRST)
     {
     }
     /**
@@ -1801,10 +1801,14 @@ class RecursiveTreeIterator extends \RecursiveIteratorIterator
  * Allows iterating over a <b>RecursiveIterator</b> to generate an ASCII graphic tree.
  * @link https://php.net/manual/en/class.recursivetreeiterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveTreeIterator', 'RecursiveTreeIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveTreeIterator', 'RecursiveTreeIterator', \false);
 /**
  * This class allows objects to work as arrays.
  * @link https://php.net/manual/en/class.arrayobject.php
+ * @template TKey
+ * @template TValue
+ * @template-implements IteratorAggregate<TKey, TValue>
+ * @template-implements ArrayAccess<TKey, TValue>
  */
 class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \Countable
 {
@@ -1819,9 +1823,9 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Construct a new array object
      * @link https://php.net/manual/en/arrayobject.construct.php
-     * @param array|object $array The input parameter accepts an array or an Object.
+     * @param array<TValue>|object $array The input parameter accepts an array or an Object.
      * @param int $flags Flags to control the behaviour of the ArrayObject object.
-     * @param string $iteratorClass Specify the class that will be used for iteration of the ArrayObject object. ArrayIterator is the default class used.
+     * @param class-string<ArrayIterator> $iteratorClass Specify the class that will be used for iteration of the ArrayObject object. ArrayIterator is the default class used.
      */
     public function __construct(#[LanguageLevelTypeAware(['8.0' => 'object|array'], default: '')] $array = [], #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $iteratorClass = "ArrayIterator")
     {
@@ -1829,7 +1833,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Returns whether the requested index exists
      * @link https://php.net/manual/en/arrayobject.offsetexists.php
-     * @param int|string $key <p>
+     * @param TKey $key <p>
      * The index being checked.
      * </p>
      * @return bool true if the requested index exists, otherwise false
@@ -1841,7 +1845,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Returns the value at the specified index
      * @link https://php.net/manual/en/arrayobject.offsetget.php
-     * @param int|string $key <p>
+     * @param TKey $key <p>
      * The index with the value.
      * </p>
      * @return mixed|false The value at the specified index or false.
@@ -1853,10 +1857,10 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Sets the value at the specified index to newval
      * @link https://php.net/manual/en/arrayobject.offsetset.php
-     * @param int|string $key <p>
+     * @param TKey $key <p>
      * The index being set.
      * </p>
-     * @param mixed $value <p>
+     * @param TValue $value <p>
      * The new value for the <i>index</i>.
      * </p>
      * @return void
@@ -1868,7 +1872,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Unsets the value at the specified index
      * @link https://php.net/manual/en/arrayobject.offsetunset.php
-     * @param int|string $key <p>
+     * @param TKey $key <p>
      * The index being unset.
      * </p>
      * @return void
@@ -1880,7 +1884,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Appends the value
      * @link https://php.net/manual/en/arrayobject.append.php
-     * @param mixed $value <p>
+     * @param TValue $value <p>
      * The value being appended.
      * </p>
      * @return void
@@ -1892,7 +1896,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Creates a copy of the ArrayObject.
      * @link https://php.net/manual/en/arrayobject.getarraycopy.php
-     * @return array a copy of the array. When the <b>ArrayObject</b> refers to an object
+     * @return array<TValue> a copy of the array. When the <b>ArrayObject</b> refers to an object
      * an array of the public properties of that object will be returned.
      */
     #[TentativeType]
@@ -1960,27 +1964,25 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Sort the entries by value
      * @link https://php.net/manual/en/arrayobject.asort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR)
     {
     }
     /**
      * Sort the entries by key
      * @link https://php.net/manual/en/arrayobject.ksort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR)
     {
     }
     /**
      * Sort the entries with a user-defined comparison function and maintain key association
      * @link https://php.net/manual/en/arrayobject.uasort.php
-     * @param callable $callback <p>
+     * @param callable(TValue, TValue):int $callback <p>
      * Function <i>cmp_function</i> should accept two
      * parameters which will be filled by pairs of entries.
      * The comparison function must return an integer less than, equal
@@ -1988,16 +1990,16 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
      * be respectively less than, equal to, or greater than the
      * second.
      * </p>
-     * @return bool
      */
     #[TentativeType]
-    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback)
     {
     }
     /**
      * Sort the entries by keys using a user-defined comparison function
      * @link https://php.net/manual/en/arrayobject.uksort.php
-     * @param callable $callback <p>
+     * @param callable(TValue, TValue):int $callback <p>
      * The callback comparison function.
      * </p>
      * <p>
@@ -2008,28 +2010,28 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
      * be respectively less than, equal to, or greater than the
      * second.
      * </p>
-     * @return bool
      */
     #[TentativeType]
-    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback)
     {
     }
     /**
      * Sort entries using a "natural order" algorithm
      * @link https://php.net/manual/en/arrayobject.natsort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natsort() : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natsort()
     {
     }
     /**
      * Sort an array using a case insensitive "natural order" algorithm
      * @link https://php.net/manual/en/arrayobject.natcasesort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natcasesort() : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natcasesort()
     {
     }
     /**
@@ -2080,7 +2082,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Create a new iterator from an ArrayObject instance
      * @link https://php.net/manual/en/arrayobject.getiterator.php
-     * @return ArrayIterator An iterator from an <b>ArrayObject</b>.
+     * @return ArrayIterator<TKey, TValue> An iterator from an <b>ArrayObject</b>.
      */
     #[TentativeType]
     public function getIterator() : \Iterator
@@ -2101,7 +2103,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Sets the iterator classname for the ArrayObject.
      * @link https://php.net/manual/en/arrayobject.setiteratorclass.php
-     * @param string $iteratorClass <p>
+     * @param class-string<ArrayIterator> $iteratorClass <p>
      * The classname of the array iterator to use when iterating over this object.
      * </p>
      * @return void
@@ -2113,7 +2115,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
     /**
      * Gets the iterator classname for the ArrayObject.
      * @link https://php.net/manual/en/arrayobject.getiteratorclass.php
-     * @return string the iterator class name that is used to iterate over this object.
+     * @return class-string<ArrayIterator> the iterator class name that is used to iterate over this object.
      */
     #[TentativeType]
     public function getIteratorClass() : string
@@ -2123,8 +2125,12 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
 /**
  * This class allows objects to work as arrays.
  * @link https://php.net/manual/en/class.arrayobject.php
+ * @template TKey
+ * @template TValue
+ * @template-implements IteratorAggregate<TKey, TValue>
+ * @template-implements ArrayAccess<TKey, TValue>
  */
-\class_alias('DEPTRAC_202402\\ArrayObject', 'ArrayObject', \false);
+\class_alias('DEPTRAC_202403\\ArrayObject', 'ArrayObject', \false);
 /**
  * This iterator allows to unset and modify values and keys while iterating
  * over Arrays and Objects.
@@ -2254,21 +2260,19 @@ class ArrayIterator implements \SeekableIterator, \ArrayAccess, \Serializable, \
     /**
      * Sort array by values
      * @link https://php.net/manual/en/arrayiterator.asort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function asort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR)
     {
     }
     /**
      * Sort array by keys
      * @link https://php.net/manual/en/arrayiterator.ksort.php
-     * @param int $flags [optional]
-     * @return bool
      */
     #[TentativeType]
-    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function ksort(#[PhpStormStubsElementAvailable(from: '8.0')] int $flags = \SORT_REGULAR)
     {
     }
     /**
@@ -2277,10 +2281,10 @@ class ArrayIterator implements \SeekableIterator, \ArrayAccess, \Serializable, \
      * @param callable $callback <p>
      * The compare function used for the sort.
      * </p>
-     * @return void
      */
     #[TentativeType]
-    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uasort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback)
     {
     }
     /**
@@ -2289,28 +2293,28 @@ class ArrayIterator implements \SeekableIterator, \ArrayAccess, \Serializable, \
      * @param callable $callback <p>
      * The compare function used for the sort.
      * </p>
-     * @return void
      */
     #[TentativeType]
-    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function uksort(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback)
     {
     }
     /**
      * Sort an array naturally
      * @link https://php.net/manual/en/arrayiterator.natsort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natsort() : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natsort()
     {
     }
     /**
      * Sort an array naturally, case insensitive
      * @link https://php.net/manual/en/arrayiterator.natcasesort.php
-     * @return bool
      */
     #[TentativeType]
-    public function natcasesort() : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function natcasesort()
     {
     }
     /**
@@ -2421,7 +2425,7 @@ class ArrayIterator implements \SeekableIterator, \ArrayAccess, \Serializable, \
  * over Arrays and Objects.
  * @link https://php.net/manual/en/class.arrayiterator.php
  */
-\class_alias('DEPTRAC_202402\\ArrayIterator', 'ArrayIterator', \false);
+\class_alias('DEPTRAC_202403\\ArrayIterator', 'ArrayIterator', \false);
 /**
  * This iterator allows to unset and modify values and keys while iterating over Arrays and Objects
  * in the same way as the ArrayIterator. Additionally it is possible to iterate
@@ -2457,4 +2461,4 @@ class RecursiveArrayIterator extends \ArrayIterator implements \RecursiveIterato
  * over the current iterator entry.
  * @link https://php.net/manual/en/class.recursivearrayiterator.php
  */
-\class_alias('DEPTRAC_202402\\RecursiveArrayIterator', 'RecursiveArrayIterator', \false);
+\class_alias('DEPTRAC_202403\\RecursiveArrayIterator', 'RecursiveArrayIterator', \false);

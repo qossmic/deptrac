@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * The <b>ReflectionMethod</b> class reports
  * information about a method.
@@ -309,6 +309,12 @@ class ReflectionMethod extends \ReflectionFunctionAbstract
     public function hasPrototype() : bool
     {
     }
+    /**
+     * @since 8.3
+     */
+    public static function createFromMethodName(string $method) : static
+    {
+    }
 }
 /**
  * The <b>ReflectionMethod</b> class reports
@@ -316,4 +322,4 @@ class ReflectionMethod extends \ReflectionFunctionAbstract
  *
  * @link https://php.net/manual/en/class.reflectionmethod.php
  */
-\class_alias('DEPTRAC_202402\\ReflectionMethod', 'ReflectionMethod', \false);
+\class_alias('DEPTRAC_202403\\ReflectionMethod', 'ReflectionMethod', \false);

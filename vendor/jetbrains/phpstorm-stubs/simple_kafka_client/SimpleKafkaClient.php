@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 use SimpleKafkaClient\Exception;
 use SimpleKafkaClient\Metadata;
@@ -68,4 +68,4 @@ abstract class SimpleKafkaClient
     {
     }
 }
-\class_alias('DEPTRAC_202402\\SimpleKafkaClient', 'SimpleKafkaClient', \false);
+\class_alias('DEPTRAC_202403\\SimpleKafkaClient', 'SimpleKafkaClient', \false);

@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * @template T of object
  * The <b>ReflectionClass</b> class reports information about a class.
@@ -294,7 +294,7 @@ class ReflectionClass implements \Reflector
      */
     #[Pure]
     #[TentativeType]
-    public function getReflectionConstants(#[PhpStormStubsElementAvailable(from: '8.0')] ?int $filter = \ReflectionClassConstant::IS_PUBLIC | \ReflectionClassConstant::IS_PROTECTED | \ReflectionClassConstant::IS_PRIVATE) : array
+    public function getReflectionConstants(#[PhpStormStubsElementAvailable(from: '8.0')] ?int $filter = null) : array
     {
     }
     /**
@@ -318,7 +318,7 @@ class ReflectionClass implements \Reflector
      */
     #[Pure]
     #[TentativeType]
-    public function getConstants(#[PhpStormStubsElementAvailable(from: '8.0')] ?int $filter = \ReflectionClassConstant::IS_PUBLIC | \ReflectionClassConstant::IS_PROTECTED | \ReflectionClassConstant::IS_PRIVATE) : array
+    public function getConstants(#[PhpStormStubsElementAvailable(from: '8.0')] ?int $filter = null) : array
     {
     }
     /**
@@ -563,7 +563,8 @@ class ReflectionClass implements \Reflector
      */
     #[Pure]
     #[TentativeType]
-    public function getStaticProperties() : ?array
+    #[LanguageLevelTypeAware(['8.3' => 'array'], default: 'array|null')]
+    public function getStaticProperties()
     {
     }
     /**
@@ -571,14 +572,14 @@ class ReflectionClass implements \Reflector
      *
      * @link https://php.net/manual/en/reflectionclass.getstaticpropertyvalue.php
      * @param string $name The name of the static property for which to return a value.
-     * @param mixed $default A default value to return in case the class does
+     * @param mixed $default [optional] A default value to return in case the class does
      * not declare a static property with the given name. If the property does
      * not exist and this argument is omitted, a {@see ReflectionException} is thrown.
      * @return mixed The value of the static property.
      */
     #[Pure]
     #[TentativeType]
-    public function getStaticPropertyValue(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $default = null) : mixed
+    public function getStaticPropertyValue(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $default) : mixed
     {
     }
     /**
@@ -743,4 +744,4 @@ class ReflectionClass implements \Reflector
  *
  * @link https://php.net/manual/en/class.reflectionclass.php
  */
-\class_alias('DEPTRAC_202402\\ReflectionClass', 'ReflectionClass', \false);
+\class_alias('DEPTRAC_202403\\ReflectionClass', 'ReflectionClass', \false);

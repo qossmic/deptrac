@@ -1,12 +1,18 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of sqlite3 v.0.7-dev
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+/**
+ * @since 8.3
+ */
+class SQLite3Exception extends \Exception
+{
+}
 /**
  * A class that interfaces SQLite 3 databases.
  * @link https://php.net/manual/en/class.sqlite3.php
@@ -71,7 +77,7 @@ class SQLite3
      * @return void No value is returned.
      */
     #[TentativeType]
-    public function open(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = null) : void
+    public function open(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = '') : void
     {
     }
     /**
@@ -351,7 +357,7 @@ class SQLite3
      * SQLite database.
      * </p>
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = null)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = '')
     {
     }
     /**
@@ -395,7 +401,7 @@ class SQLite3
  * A class that interfaces SQLite 3 databases.
  * @link https://php.net/manual/en/class.sqlite3.php
  */
-\class_alias('DEPTRAC_202402\\SQLite3', 'SQLite3', \false);
+\class_alias('DEPTRAC_202403\\SQLite3', 'SQLite3', \false);
 /**
  * A class that handles prepared statements for the SQLite 3 extension.
  * @link https://php.net/manual/en/class.sqlite3stmt.php
@@ -526,7 +532,7 @@ class SQLite3Stmt
  * A class that handles prepared statements for the SQLite 3 extension.
  * @link https://php.net/manual/en/class.sqlite3stmt.php
  */
-\class_alias('DEPTRAC_202402\\SQLite3Stmt', 'SQLite3Stmt', \false);
+\class_alias('DEPTRAC_202403\\SQLite3Stmt', 'SQLite3Stmt', \false);
 /**
  * A class that handles result sets for the SQLite 3 extension.
  * @link https://php.net/manual/en/class.sqlite3result.php
@@ -616,7 +622,7 @@ class SQLite3Result
  * A class that handles result sets for the SQLite 3 extension.
  * @link https://php.net/manual/en/class.sqlite3result.php
  */
-\class_alias('DEPTRAC_202402\\SQLite3Result', 'SQLite3Result', \false);
+\class_alias('DEPTRAC_202403\\SQLite3Result', 'SQLite3Result', \false);
 /**
  * Specifies that the <b>Sqlite3Result::fetchArray</b>
  * method shall return an array indexed by column name as returned in the
@@ -679,4 +685,11 @@ class SQLite3Result
  * @link https://php.net/manual/en/sqlite3.constants.php
  */
 \define('SQLITE3_OPEN_CREATE', 4);
+/**
+ * Specifies that a function created with {@see SQLite3::createFunction()} is deterministic,
+ * i.e. it always returns the same result given the same inputs within a single SQL statement.
+ * @since 7.1.4
+ * @link https://php.net/manual/en/sqlite.constants.php
+ */
+\define('SQLITE3_DETERMINISTIC', 2048);
 // End of sqlite3 v.0.7-dev

@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 class CURLFile
 {
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
@@ -23,7 +23,7 @@ class CURLFile
      * @param string $posted_filename [optional] <p>Name of the file.</p>
      * @since 5.5
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $mime_type = '', #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $posted_filename = '')
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $mime_type = null, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $posted_filename = null)
     {
     }
     /**
@@ -88,7 +88,7 @@ class CURLFile
     {
     }
 }
-\class_alias('DEPTRAC_202402\\CURLFile', 'CURLFile', \false);
+\class_alias('DEPTRAC_202403\\CURLFile', 'CURLFile', \false);
 /**
  * Initialize a cURL session
  * @link https://php.net/manual/en/function.curl-init.php
@@ -2613,7 +2613,7 @@ function curl_close(#[LanguageLevelTypeAware(['8.0' => 'CurlHandle'], default: '
 /**
  * Returns a new cURL multi handle
  * @link https://php.net/manual/en/function.curl-multi-init.php
- * @return resource|CurlMultiHandle|false a cURL multi handle resource on success, false on failure.
+ * @return resource|CurlMultiHandle a cURL multi handle resource or object depends on the php version
  */
 #[LanguageLevelTypeAware(['8.0' => 'CurlMultiHandle'], default: 'resource')]
 function curl_multi_init() : \CurlMultiHandle
@@ -2847,7 +2847,7 @@ final class CurlHandle
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\CurlHandle', 'CurlHandle', \false);
+\class_alias('DEPTRAC_202403\\CurlHandle', 'CurlHandle', \false);
 /**
  * @since 8.0
  */
@@ -2864,7 +2864,7 @@ final class CurlMultiHandle
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\CurlMultiHandle', 'CurlMultiHandle', \false);
+\class_alias('DEPTRAC_202403\\CurlMultiHandle', 'CurlMultiHandle', \false);
 /**
  * @since 8.0
  */
@@ -2881,4 +2881,4 @@ final class CurlShareHandle
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\CurlShareHandle', 'CurlShareHandle', \false);
+\class_alias('DEPTRAC_202403\\CurlShareHandle', 'CurlShareHandle', \false);

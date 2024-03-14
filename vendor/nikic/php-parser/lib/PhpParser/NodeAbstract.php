@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202402\PhpParser;
+namespace DEPTRAC_202403\PhpParser;
 
 abstract class NodeAbstract implements Node, \JsonSerializable
 {

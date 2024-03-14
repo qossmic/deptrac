@@ -1,13 +1,13 @@
 <?php
 
 /** @link https://github.com/krakjoe/pcov/blob/develop/README.md */
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 \define('pcov\\all', 0);
 \define('pcov\\inclusive', 1);
 \define('pcov\\exclusive', 2);
 \define('pcov\\version', '1.0.6');
-namespace DEPTRAC_202402\pcov;
+namespace DEPTRAC_202403\pcov;
 
 /**
  * (PHP &gt;= 7.0, PECL pcov &gt;= 1.0.0)<br/>

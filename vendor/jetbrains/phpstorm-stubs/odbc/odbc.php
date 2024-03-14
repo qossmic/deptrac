@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of odbc v.1.0
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 /**
  * Toggle autocommit behaviour
  * @link https://php.net/manual/en/function.odbc-autocommit.php
@@ -131,7 +131,7 @@ function odbc_commit($connection_id)
  * @param string $password <p>
  * The password.
  * </p>
- * @param int $cursor_type [optional] <p>
+ * @param int $cursor_option [optional] <p>
  * This sets the type of cursor to be used
  * for this connection. This parameter is not normally needed, but
  * can be useful for working around problems with some ODBC drivers.
@@ -142,7 +142,7 @@ function odbc_commit($connection_id)
  * </p>
  * @return resource|false an ODBC connection or (<b>FALSE</b>) on error.
  */
-function odbc_connect($dsn, $user, $password, $cursor_type = null)
+function odbc_connect($dsn, $user, $password, $cursor_option = \SQL_CUR_USE_DRIVER)
 {
 }
 /**
@@ -176,10 +176,10 @@ function odbc_data_source($connection_id, $fetch_type)
 /**
  * Execute a prepared statement
  * @link https://php.net/manual/en/function.odbc-execute.php
- * @param resource $result_id <p>
+ * @param resource $statement <p>
  * The result id resource, from <b>odbc_prepare</b>.
  * </p>
- * @param array $parameters_array [optional] <p>
+ * @param array $params [optional] <p>
  * Parameters in <i>parameter_array</i> will be
  * substituted for placeholders in the prepared statement in order.
  * Elements of this array will be converted to strings by calling this
@@ -199,7 +199,7 @@ function odbc_data_source($connection_id, $fetch_type)
  * executing the query directly with <b>odbc_exec</b>).
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function odbc_execute($result_id, array $parameters_array = null)
+function odbc_execute($statement, array $params = [])
 {
 }
 /**
@@ -254,31 +254,31 @@ function odbc_exec($connection_id, $query_string, #[PhpStormStubsElementAvailabl
 /**
  * Fetch a result row as an associative array
  * @link https://php.net/manual/en/function.odbc-fetch-array.php
- * @param resource $result <p>
+ * @param resource $statement <p>
  * The result resource from <b>odbc_exec</b>.
  * </p>
- * @param int $rownumber [optional] <p>
+ * @param int $row [optional] <p>
  * Optionally choose which row number to retrieve.
  * </p>
  * @return array|false an array that corresponds to the fetched row, or <b>FALSE</b> if there
  * are no more rows.
  */
-function odbc_fetch_array($result, $rownumber = null)
+function odbc_fetch_array($statement, $row = -1)
 {
 }
 /**
  * Fetch a result row as an object
  * @link https://php.net/manual/en/function.odbc-fetch-object.php
- * @param resource $result <p>
+ * @param resource $statement <p>
  * The result resource from <b>odbc_exec</b>.
  * </p>
- * @param int $rownumber [optional] <p>
+ * @param int $row [optional] <p>
  * Optionally choose which row number to retrieve.
  * </p>
  * @return object|false an object that corresponds to the fetched row, or <b>FALSE</b> if there
  * are no more rows.
  */
-function odbc_fetch_object($result, $rownumber = null)
+function odbc_fetch_object($statement, $row = -1)
 {
 }
 /**
@@ -310,22 +310,22 @@ function odbc_fetch_row($result_id, $row_number = null)
 /**
  * Fetch one result row into array
  * @link https://php.net/manual/en/function.odbc-fetch-into.php
- * @param resource $result_id <p>
+ * @param resource $statement <p>
  * The result resource.
  * </p>
- * @param array &$result_array <p>
+ * @param array &$array <p>
  * The result array
  * that can be of any type since it will be converted to type
  * array. The array will contain the column values starting at array
  * index 0.
  * </p>
- * @param int $rownumber [optional] <p>
+ * @param int $row [optional] <p>
  * The row number.
  * </p>
  * @return int the number of columns in the result;
  * <b>FALSE</b> on error.
  */
-function odbc_fetch_into($result_id, array &$result_array, $rownumber = null)
+function odbc_fetch_into($statement, array &$array, $row = 0)
 {
 }
 /**
@@ -413,7 +413,7 @@ function odbc_free_result($result_id)
 /**
  * Retrieves information about data types supported by the data source
  * @link https://php.net/manual/en/function.odbc-gettypeinfo.php
- * @param resource $connection_id <p>The ODBC connection identifier,
+ * @param resource $odbc <p>The ODBC connection identifier,
  * see <b>odbc_connect</b> for details.</p>
  * @param int $data_type [optional] <p>
  * The data type, which can be used to restrict the information to a
@@ -443,7 +443,7 @@ function odbc_free_result($result_id)
  * The result set is ordered by DATA_TYPE and TYPE_NAME.
  * </p>
  */
-function odbc_gettypeinfo($connection_id, $data_type = null)
+function odbc_gettypeinfo($odbc, $data_type = 0)
 {
 }
 /**
@@ -502,11 +502,11 @@ function odbc_num_rows($result_id)
  * @param string $dsn
  * @param string $user
  * @param string $password
- * @param int $cursor_type [optional]
+ * @param int $cursor_option [optional]
  * @return resource|false an ODBC connection id or 0 (<b>FALSE</b>) on
  * error.
  */
-function odbc_pconnect($dsn, $user, $password, $cursor_type = null)
+function odbc_pconnect($dsn, $user, $password, $cursor_option = \SQL_CUR_USE_DRIVER)
 {
 }
 /**
@@ -543,7 +543,7 @@ function odbc_result($result_id, $field)
 /**
  * Print result as HTML table
  * @link https://php.net/manual/en/function.odbc-result-all.php
- * @param resource $result_id <p>
+ * @param resource $statement <p>
  * The result identifier.
  * </p>
  * @param string $format [optional] <p>
@@ -552,7 +552,7 @@ function odbc_result($result_id, $field)
  * @return int|false the number of rows in the result or <b>FALSE</b> on error.
  * @deprecated 8.1
  */
-function odbc_result_all($result_id, $format = null)
+function odbc_result_all($statement, $format = '')
 {
 }
 /**
@@ -869,8 +869,13 @@ function odbc_foreignkeys($connection_id, $pk_qualifier, $pk_owner, $pk_table, $
 /**
  * Get the list of procedures stored in a specific data source
  * @link https://php.net/manual/en/function.odbc-procedures.php
- * @param resource $connection_id <p>The ODBC connection identifier,
+ * @param resource $odbc <p>The ODBC connection identifier,
  * see <b>odbc_connect</b> for details.</p>
+ * @param string|null $catalog <p>The catalog ('qualifier' in ODBC 2 parlance).</p>
+ * @param string|null $schema <p>The schema ('owner' in ODBC 2 parlance). This parameter accepts the
+ *  following search patterns: % to match zero or more characters, and _ to match a single character.</p>
+ * @param string|null $procedure <p>The proc. This parameter accepts the following search patterns:
+ *  % to match zero or more characters, and _ to match a single character.</p>
  * @return resource|false <p>an ODBC
  * result identifier containing the information or <b>FALSE</b> on failure.
  * </p>
@@ -886,14 +891,21 @@ function odbc_foreignkeys($connection_id, $pk_qualifier, $pk_owner, $pk_table, $
  * PROCEDURE_TYPE
  * </p>
  */
-function odbc_procedures($connection_id)
+function odbc_procedures($odbc, $catalog = null, $schema = null, $procedure = null)
 {
 }
 /**
  * Retrieve information about parameters to procedures
  * @link https://php.net/manual/en/function.odbc-procedurecolumns.php
- * @param resource $connection_id <p>The ODBC connection identifier,
+ * @param resource $odbc <p>The ODBC connection identifier,
  * see <b>odbc_connect</b> for details.</p>
+ * @param string|null $catalog <p>The catalog ('qualifier' in ODBC 2 parlance).</p>
+ * @param string|null $schema <p>The schema ('owner' in ODBC 2 parlance). This parameter accepts the
+ * following search patterns: % to match zero or more characters, and _ to match a single character.</p>
+ * @param string|null $procedure <p>The proc. This parameter accepts the following search patterns:
+ * % to match zero or more characters, and _ to match a single character.</p>
+ * @param string|null $column <p>The column. This parameter accepts the following search patterns:
+ * % to match zero or more characters, and _ to match a single character.</p>
  * @return resource|false <p>the list of input and output parameters, as well as the
  * columns that make up the result set for the specified procedures.
  * Returns an ODBC result identifier or <b>FALSE</b> on failure.
@@ -915,7 +927,7 @@ function odbc_procedures($connection_id)
  * REMARKS
  * </p>
  */
-function odbc_procedurecolumns($connection_id)
+function odbc_procedurecolumns($odbc, $catalog = null, $schema = null, $procedure = null, $column = null)
 {
 }
 /**

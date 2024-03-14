@@ -1,31 +1,31 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of imagick v.3.4.3
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 class ImagickException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202402\\ImagickException', 'ImagickException', \false);
+\class_alias('DEPTRAC_202403\\ImagickException', 'ImagickException', \false);
 class ImagickDrawException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202402\\ImagickDrawException', 'ImagickDrawException', \false);
+\class_alias('DEPTRAC_202403\\ImagickDrawException', 'ImagickDrawException', \false);
 class ImagickPixelIteratorException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202402\\ImagickPixelIteratorException', 'ImagickPixelIteratorException', \false);
+\class_alias('DEPTRAC_202403\\ImagickPixelIteratorException', 'ImagickPixelIteratorException', \false);
 class ImagickPixelException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202402\\ImagickPixelException', 'ImagickPixelException', \false);
+\class_alias('DEPTRAC_202403\\ImagickPixelException', 'ImagickPixelException', \false);
 class ImagickKernelException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202402\\ImagickKernelException', 'ImagickKernelException', \false);
+\class_alias('DEPTRAC_202403\\ImagickKernelException', 'ImagickKernelException', \false);
 /**
  * @method Imagick clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the Imagick object
  * @link https://php.net/manual/en/class.imagick.php
@@ -2057,7 +2057,7 @@ class Imagick implements \Iterator, \Countable
      * If legacy is true, the calculations are done with the small rounding bug that existed in Imagick before 3.4.0.<br>
      * If false, the calculations should produce the same results as ImageMagick CLI does.
      * @link https://php.net/manual/en/imagick.scaleimage.php
-     * @param int $cols
+     * @param int $columns
      * @param int $rows
      * @param bool $bestfit [optional] The behavior of the parameter bestfit changed in Imagick 3.0.0. Before this version given dimensions 400x400 an image of dimensions 200x150 would be left untouched. In Imagick 3.0.0 and later the image would be scaled up to size 400x300 as this is the "best fit" for the given dimensions. If bestfit parameter is used both width and height must be given.
      * @param bool $legacy [optional] Added since 3.4.0. Default value FALSE
@@ -2065,7 +2065,7 @@ class Imagick implements \Iterator, \Countable
      * @throws ImagickException Throws ImagickException on error
      * @since 2.0.0
      */
-    public function scaleImage($cols, $rows, $bestfit = \false, $legacy = \false)
+    public function scaleImage($columns, $rows, $bestfit = \false, $legacy = \false)
     {
     }
     /**
@@ -5628,7 +5628,7 @@ class Imagick implements \Iterator, \Countable
  * @method Imagick clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the Imagick object
  * @link https://php.net/manual/en/class.imagick.php
  */
-\class_alias('DEPTRAC_202402\\Imagick', 'Imagick', \false);
+\class_alias('DEPTRAC_202403\\Imagick', 'Imagick', \false);
 /**
  * @method ImagickDraw clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the specified ImagickDraw object
  * @link https://php.net/manual/en/class.imagickdraw.php
@@ -7329,7 +7329,7 @@ class ImagickDraw
  * @method ImagickDraw clone() (PECL imagick 2.0.0)<br/>Makes an exact copy of the specified ImagickDraw object
  * @link https://php.net/manual/en/class.imagickdraw.php
  */
-\class_alias('DEPTRAC_202402\\ImagickDraw', 'ImagickDraw', \false);
+\class_alias('DEPTRAC_202403\\ImagickDraw', 'ImagickDraw', \false);
 /**
  * @link https://php.net/manual/en/class.imagickpixeliterator.php
  */
@@ -7547,7 +7547,7 @@ class ImagickPixelIterator implements \Iterator
 /**
  * @link https://php.net/manual/en/class.imagickpixeliterator.php
  */
-\class_alias('DEPTRAC_202402\\ImagickPixelIterator', 'ImagickPixelIterator', \false);
+\class_alias('DEPTRAC_202403\\ImagickPixelIterator', 'ImagickPixelIterator', \false);
 /**
  * @method clone()
  * @link https://php.net/manual/en/class.imagickpixel.php
@@ -7819,7 +7819,7 @@ class ImagickPixel
  * @method clone()
  * @link https://php.net/manual/en/class.imagickpixel.php
  */
-\class_alias('DEPTRAC_202402\\ImagickPixel', 'ImagickPixel', \false);
+\class_alias('DEPTRAC_202403\\ImagickPixel', 'ImagickPixel', \false);
 // End of imagick v.3.2.0RC1
 // Start of Imagick v3.3.0RC1
 /**
@@ -7852,9 +7852,9 @@ class ImagickKernel
      * Create a kernel from a builtin in kernel. See https://www.imagemagick.org/Usage/morphology/#kernel for examples.<br>
      * Currently the 'rotation' symbols are not supported. Example: $diamondKernel = ImagickKernel::fromBuiltIn(\Imagick::KERNEL_DIAMOND, "2");
      * @link https://php.net/manual/en/imagickkernel.frombuiltin.php
-     * @param string $kernelType The type of kernel to build e.g. \Imagick::KERNEL_DIAMOND
+     * @param int $kernelType The type of kernel to build e.g. \Imagick::KERNEL_DIAMOND
      * @param string $kernelString A string that describes the parameters e.g. "4,2.5"
-     * @return void
+     * @return ImagickKernel
      * @since 3.3.0
      */
     public static function fromBuiltin($kernelType, $kernelString)
@@ -7914,4 +7914,4 @@ class ImagickKernel
 /**
  * @link https://php.net/manual/en/class.imagickkernel.php
  */
-\class_alias('DEPTRAC_202402\\ImagickKernel', 'ImagickKernel', \false);
+\class_alias('DEPTRAC_202403\\ImagickKernel', 'ImagickKernel', \false);

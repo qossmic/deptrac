@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of Core v.5.3.6-13ubuntu3.2
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Gets the version of the current Zend engine
  * @link https://php.net/manual/en/function.zend-version.php
@@ -180,6 +180,18 @@ function str_contains(string $haystack, string $needle) : bool
 {
 }
 /**
+ * @since 8.3
+ */
+function str_decrement(string $string) : string
+{
+}
+/**
+ * @since 8.3
+ */
+function str_increment(string $string) : string
+{
+}
+/**
  * Return the current key and value pair from an array and advance the array cursor
  * @link https://php.net/manual/en/function.each.php
  * @param array|ArrayObject &$array <p>
@@ -341,7 +353,7 @@ function error_reporting(?int $error_level) : int
  * It is possible to define resource constants,
  * however it is not recommended and may cause unpredictable behavior.
  * </p>
- * @param bool $case_insensitive <p>
+ * @param bool $case_insensitive [optional] <p>
  * If set to true, the constant will be defined case-insensitive.
  * The default behavior is case-sensitive; i.e.
  * CONSTANT and Constant represent
@@ -353,7 +365,7 @@ function error_reporting(?int $error_level) : int
  * </p>
  * @return bool true on success or false on failure.
  */
-function define(string $constant_name, #[LanguageLevelTypeAware(['8.1' => 'mixed'], default: 'null|array|bool|int|float|string')] $value, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] bool $case_insensitive, #[PhpStormStubsElementAvailable(from: '7.0')] #[Deprecated(since: 7.3)] bool $case_insensitive = \false) : bool
+function define(string $constant_name, #[LanguageLevelTypeAware(['8.1' => 'mixed'], default: 'null|array|bool|int|float|string')] $value, #[Deprecated(since: "7.3")] bool $case_insensitive = \false) : bool
 {
 }
 /**

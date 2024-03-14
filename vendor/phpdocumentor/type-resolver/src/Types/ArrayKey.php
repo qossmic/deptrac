@@ -9,10 +9,10 @@ declare (strict_types=1);
  *
  * @link      http://phpdoc.org
  */
-namespace DEPTRAC_202402\phpDocumentor\Reflection\Types;
+namespace DEPTRAC_202403\phpDocumentor\Reflection\Types;
 
-use DEPTRAC_202402\phpDocumentor\Reflection\PseudoType;
-use DEPTRAC_202402\phpDocumentor\Reflection\Type;
+use DEPTRAC_202403\phpDocumentor\Reflection\PseudoType;
+use DEPTRAC_202403\phpDocumentor\Reflection\Type;
 /**
  * Value Object representing a array-key Type.
  *

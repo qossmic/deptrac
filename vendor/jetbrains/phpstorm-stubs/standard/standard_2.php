@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\ReturnTypeContract as TypeContract;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\ReturnTypeContract as TypeContract;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Query language and locale information
  * @link https://php.net/manual/en/function.nl-langinfo.php
@@ -300,7 +300,7 @@ function str_pad(string $string, int $length, string $pad_string = " ", int $pad
  * @see rtrim()
  */
 #[Pure]
-function chop(string $string, string $characters) : string
+function chop(string $string, string $characters = " \n\r\t\v\x00") : string
 {
 }
 /**

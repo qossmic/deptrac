@@ -1,11 +1,11 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * Show diagnostic information
  */
-function xdebug_info(string $category = '')
+function xdebug_info(string $category = 'null')
 {
 }
 /**

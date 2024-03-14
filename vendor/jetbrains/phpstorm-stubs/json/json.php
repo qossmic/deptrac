@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of json v.1.3.1
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Objects implementing JsonSerializable
  * can customize their JSON representation when encoded with
@@ -31,7 +31,7 @@ interface JsonSerializable
  * @link https://php.net/manual/en/class.jsonserializable.php
  * @since 5.4
  */
-\class_alias('DEPTRAC_202402\\JsonSerializable', 'JsonSerializable', \false);
+\class_alias('DEPTRAC_202403\\JsonSerializable', 'JsonSerializable', \false);
 class JsonIncrementalParser
 {
     public const JSON_PARSER_SUCCESS = 0;
@@ -71,7 +71,7 @@ class JsonIncrementalParser
     {
     }
 }
-\class_alias('DEPTRAC_202402\\JsonIncrementalParser', 'JsonIncrementalParser', \false);
+\class_alias('DEPTRAC_202403\\JsonIncrementalParser', 'JsonIncrementalParser', \false);
 /**
  * (PHP 5 &gt;= 5.2.0, PECL json &gt;= 1.2.0)<br/>
  * Returns the JSON representation of a value
@@ -251,6 +251,12 @@ function json_last_error() : int
  */
 #[Pure]
 function json_last_error_msg() : string
+{
+}
+/**
+ * @since 8.3
+ */
+function json_validate(string $json, int $depth = 512, int $flags = 0) : bool
 {
 }
 /**
@@ -468,5 +474,5 @@ class JsonException extends \Exception
  * @since 7.3
  * @link https://wiki.php.net/rfc/json_throw_on_error
  */
-\class_alias('DEPTRAC_202402\\JsonException', 'JsonException', \false);
+\class_alias('DEPTRAC_202403\\JsonException', 'JsonException', \false);
 // End of json v.1.3.1

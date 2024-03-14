@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of openssl v.
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 /**
  * Frees a private key
  * @link https://php.net/manual/en/function.openssl-pkey-free.php
@@ -900,7 +900,7 @@ function openssl_pkcs7_sign(string $input_filename, string $output_filename, #[L
  * @link https://php.net/manual/en/function.openssl-pkcs7-encrypt.php
  * @param string $input_filename
  * @param string $output_filename
- * @param OpenSSLCertificate|string|resource $certificate <p>
+ * @param OpenSSLCertificate|array|string|resource $certificate <p>
  * Either a lone X.509 certificate, or an array of X.509 certificates.
  * </p>
  * @param array|null $headers <p>
@@ -922,7 +922,7 @@ function openssl_pkcs7_sign(string $input_filename, string $output_filename, #[L
  * </p>
  * @return bool true on success or false on failure.
  */
-function openssl_pkcs7_encrypt(string $input_filename, string $output_filename, $certificate, ?array $headers, int $flags = 0, int $cipher_algo = \OPENSSL_CIPHER_AES_128_CBC) : bool
+function openssl_pkcs7_encrypt(string $input_filename, string $output_filename, #[LanguageLevelTypeAware(["8.0" => "OpenSSLCertificate|array|string"], default: "resource|array|string")] $certificate, ?array $headers, int $flags = 0, int $cipher_algo = \OPENSSL_CIPHER_AES_128_CBC) : bool
 {
 }
 /**
@@ -1068,7 +1068,7 @@ function openssl_pkey_derive($public_key, #[LanguageLevelTypeAware(['8.0' => 'Op
  * </p>
  * @return string|false the generated string of bytes on success, or false on failure.
  */
-#[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
+#[LanguageLevelTypeAware(["7.4" => "string"], default: "string|false")]
 function openssl_random_pseudo_bytes(int $length, &$strong_result)
 {
 }
@@ -1267,6 +1267,10 @@ function openssl_cms_read(string $input_filename, &$certificates) : bool
  */
 \define('PKCS7_BINARY', 128);
 /**
+ * @since 8.3
+ */
+\define('DEPTRAC_202403\\PKCS7_NOOLDMIMETYPE', 1024);
+/**
  * Don't try and verify the signatures on a message
  * @link https://php.net/manual/en/openssl.constants.php
  */
@@ -1345,6 +1349,10 @@ function openssl_cms_read(string $input_filename, &$certificates) : bool
 \define('OPENSSL_ENCODING_PEM', 2);
 \define('OPENSSL_DEFAULT_STREAM_CIPHERS', "ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:" . "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:" . "DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:" . "ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:" . "ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:" . "DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:" . "AES256-GCM-SHA384:AES128:AES256:HIGH:!SSLv2:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!RC4:!ADH");
 /**
+ * @since 8.3
+ */
+\define('DEPTRAC_202403\\OPENSSL_CMS_OLDMIMETYPE', 1024);
+/**
  * @since 8.0
  */
 final class OpenSSLCertificate
@@ -1360,7 +1368,7 @@ final class OpenSSLCertificate
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\OpenSSLCertificate', 'OpenSSLCertificate', \false);
+\class_alias('DEPTRAC_202403\\OpenSSLCertificate', 'OpenSSLCertificate', \false);
 /**
  * @since 8.0
  */
@@ -1377,7 +1385,7 @@ final class OpenSSLCertificateSigningRequest
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\OpenSSLCertificateSigningRequest', 'OpenSSLCertificateSigningRequest', \false);
+\class_alias('DEPTRAC_202403\\OpenSSLCertificateSigningRequest', 'OpenSSLCertificateSigningRequest', \false);
 /**
  * @since 8.0
  */
@@ -1394,4 +1402,4 @@ final class OpenSSLAsymmetricKey
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\OpenSSLAsymmetricKey', 'OpenSSLAsymmetricKey', \false);
+\class_alias('DEPTRAC_202403\\OpenSSLAsymmetricKey', 'OpenSSLAsymmetricKey', \false);

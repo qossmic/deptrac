@@ -1,10 +1,10 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202402\PhpParser\Node\Scalar;
+namespace DEPTRAC_202403\PhpParser\Node\Scalar;
 
-use DEPTRAC_202402\PhpParser\Error;
-use DEPTRAC_202402\PhpParser\Node\Scalar;
+use DEPTRAC_202403\PhpParser\Error;
+use DEPTRAC_202403\PhpParser\Node\Scalar;
 class LNumber extends Scalar
 {
     /* For use in "kind" attribute */

@@ -1,14 +1,14 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 //20120405 AG synced to official docs
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Language;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Language;
 /**
  * The DOMNode class
  * @link https://php.net/manual/en/class.domnode.php
@@ -128,6 +128,8 @@ class DOMNode
      */
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $textContent;
+    public bool $isConnected;
+    public ?\DOMElement $parentElement;
     /**
      * Adds a new child before a reference node
      * @link https://php.net/manual/en/domnode.insertbefore.php
@@ -239,6 +241,7 @@ class DOMNode
     }
     /**
      * @param DOMNode $other
+     * @removed 8.0
      */
     public function compareDocumentPosition(\DOMNode $other)
     {
@@ -286,7 +289,7 @@ class DOMNode
      * @param string|null $prefix <p>
      * The prefix of the namespace.
      * </p>
-     * @return string The namespace URI of the node.
+     * @return string|null The namespace URI of the node.
      */
     #[PhpStormStubsElementAvailable(from: '8.0')]
     #[TentativeType]
@@ -296,42 +299,29 @@ class DOMNode
     /**
      * Gets the namespace URI of the node based on the prefix
      * @link https://php.net/manual/en/domnode.lookupnamespaceuri.php
-     * @param string $prefix <p>
+     * @param string|null $prefix <p>
      * The prefix of the namespace.
      * </p>
-     * @return string The namespace URI of the node.
+     * @return string|null The namespace URI of the node.
      */
     #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')]
     public function lookupNamespaceUri($prefix)
     {
     }
     /**
-     * @param DOMNode $arg
+     * @param DOMNode|null $arg
      * @return bool
      */
-    public function isEqualNode(\DOMNode $arg)
+    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: '')]
+    public function isEqualNode(#[LanguageLevelTypeAware(['8.3' => 'DOMNode|null'], default: 'DOMNode')] $otherNode)
     {
     }
-    /**
-     * @param $feature
-     * @param $version
-     * @return mixed
-     */
     public function getFeature($feature, $version)
     {
     }
-    /**
-     * @param $key
-     * @param $data
-     * @param $handler
-     */
     public function setUserData($key, $data, $handler)
     {
     }
-    /**
-     * @param $key
-     * @return mixed
-     */
     public function getUserData($key)
     {
     }
@@ -379,12 +369,36 @@ class DOMNode
     public function C14NFile(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $uri, #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $exclusive = \false, #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $withComments = \false, #[LanguageLevelTypeAware(['8.0' => 'array|null'], default: 'array')] $xpath = null, #[LanguageLevelTypeAware(['8.0' => 'array|null'], default: 'array')] $nsPrefixes = null) : int|false
     {
     }
+    /**
+     * @since 8.3
+     */
+    public function contains(\DOMNode|\DOMNameSpaceNode|null $other) : bool
+    {
+    }
+    /**
+     * @since 8.3
+     */
+    public function getRootNode(?array $options = null) : \DOMNode
+    {
+    }
+    /**
+     * @since 8.1
+     */
+    public function __sleep() : array
+    {
+    }
+    /**
+     * @since 8.1
+     */
+    public function __wakeup() : void
+    {
+    }
 }
 /**
  * The DOMNode class
  * @link https://php.net/manual/en/class.domnode.php
  */
-\class_alias('DEPTRAC_202402\\DOMNode', 'DOMNode', \false);
+\class_alias('DEPTRAC_202403\\DOMNode', 'DOMNode', \false);
 /**
  * DOM operations raise exceptions under particular circumstances, i.e.,
  * when an operation is impossible to perform for logical reasons.
@@ -403,7 +417,7 @@ final class DOMException extends \Exception
  * when an operation is impossible to perform for logical reasons.
  * @link https://php.net/manual/en/class.domexception.php
  */
-\class_alias('DEPTRAC_202402\\DOMException', 'DOMException', \false);
+\class_alias('DEPTRAC_202403\\DOMException', 'DOMException', \false);
 class DOMStringList
 {
     /**
@@ -414,7 +428,7 @@ class DOMStringList
     {
     }
 }
-\class_alias('DEPTRAC_202402\\DOMStringList', 'DOMStringList', \false);
+\class_alias('DEPTRAC_202403\\DOMStringList', 'DOMStringList', \false);
 /**
  * @link https://php.net/manual/en/ref.dom.php
  * @removed 8.0
@@ -440,7 +454,7 @@ class DOMNameList
  * @link https://php.net/manual/en/ref.dom.php
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMNameList', 'DOMNameList', \false);
+\class_alias('DEPTRAC_202403\\DOMNameList', 'DOMNameList', \false);
 /**
  * @removed 8.0
  */
@@ -457,7 +471,7 @@ class DOMImplementationList
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMImplementationList', 'DOMImplementationList', \false);
+\class_alias('DEPTRAC_202403\\DOMImplementationList', 'DOMImplementationList', \false);
 /**
  * @removed 8.0
  */
@@ -481,7 +495,7 @@ class DOMImplementationSource
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMImplementationSource', 'DOMImplementationSource', \false);
+\class_alias('DEPTRAC_202403\\DOMImplementationSource', 'DOMImplementationSource', \false);
 /**
  * The DOMImplementation interface provides a number
  * of methods for performing operations that are independent of any
@@ -563,7 +577,7 @@ class DOMImplementation
  * particular instance of the document object model.
  * @link https://php.net/manual/en/class.domimplementation.php
  */
-\class_alias('DEPTRAC_202402\\DOMImplementation', 'DOMImplementation', \false);
+\class_alias('DEPTRAC_202403\\DOMImplementation', 'DOMImplementation', \false);
 class DOMNameSpaceNode
 {
     #[LanguageLevelTypeAware(['8.1' => 'DOMNode|null'], default: '')]
@@ -582,8 +596,22 @@ class DOMNameSpaceNode
     public $nodeValue;
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $nodeName;
+    public ?\DOMElement $parentElement;
+    public bool $isConnected;
+    /**
+     * @since 8.1
+     */
+    public function __sleep() : array
+    {
+    }
+    /**
+     * @since 8.1
+     */
+    public function __wakeup() : void
+    {
+    }
 }
-\class_alias('DEPTRAC_202402\\DOMNameSpaceNode', 'DOMNameSpaceNode', \false);
+\class_alias('DEPTRAC_202403\\DOMNameSpaceNode', 'DOMNameSpaceNode', \false);
 /**
  * The DOMDocumentFragment class
  * @link https://php.net/manual/en/class.domdocumentfragment.php
@@ -623,12 +651,19 @@ class DOMDocumentFragment extends \DOMNode implements \DOMParentNode
     public function prepend(...$nodes) : void
     {
     }
+    /**
+     * @since 8.3
+     * {@inheritDoc}
+     */
+    public function replaceChildren(...$nodes) : void
+    {
+    }
 }
 /**
  * The DOMDocumentFragment class
  * @link https://php.net/manual/en/class.domdocumentfragment.php
  */
-\class_alias('DEPTRAC_202402\\DOMDocumentFragment', 'DOMDocumentFragment', \false);
+\class_alias('DEPTRAC_202403\\DOMDocumentFragment', 'DOMDocumentFragment', \false);
 /**
  * The DOMDocument class represents an entire HTML or XML
  * document; serves as the root of the document tree.
@@ -857,7 +892,7 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * </p>
      * @return DOMProcessingInstruction|false The new DOMProcessingInstruction or false if an error occurred.
      */
-    public function createProcessingInstruction(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $target, #[PhpStormStubsElementAvailable(from: '5.3', to: '7.3')] $data, #[PhpStormStubsElementAvailable(from: '7.4')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data = null)
+    public function createProcessingInstruction(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $target, #[PhpStormStubsElementAvailable(from: '5.3', to: '7.3')] $data, #[PhpStormStubsElementAvailable(from: '7.4')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data = '')
     {
     }
     /**
@@ -983,9 +1018,8 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
     public function getElementById(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $elementId) : ?\DOMElement
     {
     }
-    /**
-     * @param DOMNode $node
-     */
+    #[TentativeType]
+    #[LanguageLevelTypeAware(['8.3' => 'DOMNode|false'], default: '')]
     public function adoptNode(\DOMNode $node)
     {
     }
@@ -999,6 +1033,13 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * {@inheritDoc}
      */
     public function prepend(...$nodes) : void
+    {
+    }
+    /**
+     * @since 8.3
+     * {@inheritDoc}
+     */
+    public function replaceChildren(...$nodes) : void
     {
     }
     /**
@@ -1028,11 +1069,13 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * Bitwise OR
      * of the libxml option constants.
      * </p>
-     * @return DOMDocument|bool true on success or false on failure. If called statically, returns a
+     * @return DOMDocument|bool true on success or false on failure. Prior to PHP 8.3 if called statically, returns a
      * DOMDocument and issues E_STRICT
      * warning.
      */
-    public function load(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = null)
+    #[TentativeType]
+    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: 'DOMDocument|bool')]
+    public function load(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = 0)
     {
     }
     /**
@@ -1059,11 +1102,13 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * Bitwise OR
      * of the libxml option constants.
      * </p>
-     * @return DOMDocument|bool true on success or false on failure. If called statically, returns a
+     * @return DOMDocument|bool true on success or false on failure. Prior to PHP 8.3 if called statically, returns a
      * DOMDocument and issues E_STRICT
      * warning.
      */
-    public function loadXML(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $source, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = null)
+    #[TentativeType]
+    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: 'DOMDocument|bool')]
+    public function loadXML(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $source, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = 0)
     {
     }
     /**
@@ -1079,7 +1124,7 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * @return string|false the XML, or false if an error occurred.
      */
     #[TentativeType]
-    public function saveXML(?\DOMNode $node = null, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = null) : string|false
+    public function saveXML(?\DOMNode $node = null, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = 0) : string|false
     {
     }
     /**
@@ -1111,7 +1156,7 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * @return int|false the number of XIncludes in the document.
      */
     #[TentativeType]
-    public function xinclude(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = null) : int|false
+    public function xinclude(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = 0) : int|false
     {
     }
     /**
@@ -1124,10 +1169,12 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * Since PHP 5.4.0 and Libxml 2.6.0, you may also
      * use the options parameter to specify additional Libxml parameters.
      * </p>
-     * @return DOMDocument|bool true on success or false on failure. If called statically, returns a
+     * @return DOMDocument|bool true on success or false on failure. Prior to PHP 8.3 if called statically, returns a
      * DOMDocument and issues E_STRICT
      * warning.
      */
+    #[TentativeType]
+    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: 'DOMDocument|bool')]
     public function loadHTML(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $source, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = 0)
     {
     }
@@ -1141,10 +1188,12 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
      * Since PHP 5.4.0 and Libxml 2.6.0, you may also
      * use the options parameter to specify additional Libxml parameters.
      * </p>
-     * @return DOMDocument|bool true on success or false on failure. If called statically, returns a
+     * @return DOMDocument|bool true on success or false on failure. Prior to PHP 8.3 if called statically, returns a
      * DOMDocument and issues E_STRICT
      * warning.
      */
+    #[TentativeType]
+    #[LanguageLevelTypeAware(['8.3' => 'bool'], default: 'DOMDocument|bool')]
     public function loadHTMLFile(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $options = 0)
     {
     }
@@ -1245,7 +1294,7 @@ class DOMDocument extends \DOMNode implements \DOMParentNode
  * document; serves as the root of the document tree.
  * @link https://php.net/manual/en/class.domdocument.php
  */
-\class_alias('DEPTRAC_202402\\DOMDocument', 'DOMDocument', \false);
+\class_alias('DEPTRAC_202403\\DOMDocument', 'DOMDocument', \false);
 /**
  * The DOMNodeList class
  * @link https://php.net/manual/en/class.domnodelist.php
@@ -1294,7 +1343,7 @@ class DOMNodeList implements \IteratorAggregate, \Countable
  * The DOMNodeList class
  * @link https://php.net/manual/en/class.domnodelist.php
  */
-\class_alias('DEPTRAC_202402\\DOMNodeList', 'DOMNodeList', \false);
+\class_alias('DEPTRAC_202403\\DOMNodeList', 'DOMNodeList', \false);
 /**
  * The DOMNamedNodeMap class
  * @link https://php.net/manual/en/class.domnamednodemap.php
@@ -1391,7 +1440,7 @@ class DOMNamedNodeMap implements \IteratorAggregate, \Countable
  * @link https://php.net/manual/en/class.domnamednodemap.php
  * @property-read int $length The number of nodes in the map. The range of valid child node indices is 0 to length - 1 inclusive.
  */
-\class_alias('DEPTRAC_202402\\DOMNamedNodeMap', 'DOMNamedNodeMap', \false);
+\class_alias('DEPTRAC_202403\\DOMNamedNodeMap', 'DOMNamedNodeMap', \false);
 /**
  * The DOMCharacterData class represents nodes with character data.
  * No nodes directly correspond to this class, but other nodes do inherit from it.
@@ -1439,10 +1488,10 @@ class DOMCharacterData extends \DOMNode implements \DOMChildNode
      * @param string $data <p>
      * The string to append.
      * </p>
-     * @return void
      */
     #[TentativeType]
-    public function appendData(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function appendData(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data)
     {
     }
     /**
@@ -1527,7 +1576,7 @@ class DOMCharacterData extends \DOMNode implements \DOMChildNode
  * No nodes directly correspond to this class, but other nodes do inherit from it.
  * @link https://php.net/manual/en/class.domcharacterdata.php
  */
-\class_alias('DEPTRAC_202402\\DOMCharacterData', 'DOMCharacterData', \false);
+\class_alias('DEPTRAC_202403\\DOMCharacterData', 'DOMCharacterData', \false);
 /**
  * The DOMAttr interface represents an attribute in an DOMElement object.
  * @link https://php.net/manual/en/class.domattr.php
@@ -1598,7 +1647,7 @@ class DOMAttr extends \DOMNode
  * The DOMAttr interface represents an attribute in an DOMElement object.
  * @link https://php.net/manual/en/class.domattr.php
  */
-\class_alias('DEPTRAC_202402\\DOMAttr', 'DOMAttr', \false);
+\class_alias('DEPTRAC_202403\\DOMAttr', 'DOMAttr', \false);
 /**
  * The DOMElement class
  * @link https://php.net/manual/en/class.domelement.php
@@ -1636,6 +1685,13 @@ class DOMElement extends \DOMNode implements \DOMParentNode, \DOMChildNode
      */
     public $nextSibling;
     /**
+     * @var DOMNamedNodeMap
+     * A <classname>DOMNamedNodeMap</classname> containing the attributes of this node (if it is a <classname>DOMElement</classname>) or NULL otherwise.
+     * @link https://php.net/manual/en/class.domnode.php#domnode.props.attributes
+     */
+    #[LanguageLevelTypeAware(['8.1' => 'DOMNamedNodeMap'], default: '')]
+    public $attributes;
+    /**
      * @var bool
      * Not implemented yet, always return NULL
      * @link https://php.net/manual/en/class.domelement.php#domelement.props.schematypeinfo
@@ -1659,6 +1715,8 @@ class DOMElement extends \DOMNode implements \DOMParentNode, \DOMChildNode
     public $previousElementSibling;
     #[LanguageLevelTypeAware(['8.1' => 'DOMElement|null'], default: '')]
     public $nextElementSibling;
+    public string $id;
+    public string $className;
     /**
      * Returns value of attribute
      * @link https://php.net/manual/en/domelement.getattribute.php
@@ -1951,6 +2009,13 @@ class DOMElement extends \DOMNode implements \DOMParentNode, \DOMChildNode
     {
     }
     /**
+     * @since 8.3
+     * {@inheritDoc}
+     */
+    public function replaceChildren(...$nodes) : void
+    {
+    }
+    /**
      * Creates a new DOMElement object
      * @link https://php.net/manual/en/domelement.construct.php
      * @param string $qualifiedName The tag name of the element. When also passing in namespaceURI, the element name may take a prefix to be associated with the URI.
@@ -1958,7 +2023,31 @@ class DOMElement extends \DOMNode implements \DOMParentNode, \DOMChildNode
      * @param string $namespace [optional] A namespace URI to create the element within a specific namespace.
      * @throws DOMException If invalid $qualifiedName
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $qualifiedName, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $value = null, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $namespace = null)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $qualifiedName, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $value = null, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $namespace = '')
+    {
+    }
+    /**
+     * @since 8.3
+     */
+    public function getAttributeNames() : array
+    {
+    }
+    /**
+     * @since 8.3
+     */
+    public function toggleAttribute(string $qualifiedName, ?bool $force = null) : bool
+    {
+    }
+    /**
+     * @since 8.3
+     */
+    public function insertAdjacentElement(string $where, \DOMElement $element) : ?\DOMElement
+    {
+    }
+    /**
+     * @since 8.3
+     */
+    public function insertAdjacentText(string $where, string $data) : void
     {
     }
 }
@@ -1966,7 +2055,7 @@ class DOMElement extends \DOMNode implements \DOMParentNode, \DOMChildNode
  * The DOMElement class
  * @link https://php.net/manual/en/class.domelement.php
  */
-\class_alias('DEPTRAC_202402\\DOMElement', 'DOMElement', \false);
+\class_alias('DEPTRAC_202403\\DOMElement', 'DOMElement', \false);
 /**
  * The DOMText class inherits from <classname>DOMCharacterData</classname> and represents the textual content of
  * a <classname>DOMElement</classname> or <classname>DOMAttr</classname>.
@@ -2016,7 +2105,7 @@ class DOMText extends \DOMCharacterData
      * @link https://php.net/manual/en/domtext.construct.php
      * @param string $data [optional] The value of the text node. If not supplied an empty text node is created.
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data = '')
     {
     }
 }
@@ -2025,7 +2114,7 @@ class DOMText extends \DOMCharacterData
  * a <classname>DOMElement</classname> or <classname>DOMAttr</classname>.
  * @link https://php.net/manual/en/class.domtext.php
  */
-\class_alias('DEPTRAC_202402\\DOMText', 'DOMText', \false);
+\class_alias('DEPTRAC_202403\\DOMText', 'DOMText', \false);
 /**
  * The DOMComment class represents comment nodes,
  * characters delimited by lt;!-- and --&gt;.
@@ -2038,7 +2127,7 @@ class DOMComment extends \DOMCharacterData
      * @link https://php.net/manual/en/domcomment.construct.php
      * @param string $data [optional] The value of the comment
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $data = '')
     {
     }
 }
@@ -2047,7 +2136,7 @@ class DOMComment extends \DOMCharacterData
  * characters delimited by lt;!-- and --&gt;.
  * @link https://php.net/manual/en/class.domcomment.php
  */
-\class_alias('DEPTRAC_202402\\DOMComment', 'DOMComment', \false);
+\class_alias('DEPTRAC_202403\\DOMComment', 'DOMComment', \false);
 /**
  * @removed 8.0
  */
@@ -2057,7 +2146,7 @@ class DOMTypeinfo
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMTypeinfo', 'DOMTypeinfo', \false);
+\class_alias('DEPTRAC_202403\\DOMTypeinfo', 'DOMTypeinfo', \false);
 /**
  * @removed 8.0
  */
@@ -2070,7 +2159,7 @@ class DOMUserDataHandler
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMUserDataHandler', 'DOMUserDataHandler', \false);
+\class_alias('DEPTRAC_202403\\DOMUserDataHandler', 'DOMUserDataHandler', \false);
 /**
  * @removed 8.0
  */
@@ -2080,7 +2169,7 @@ class DOMDomError
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMDomError', 'DOMDomError', \false);
+\class_alias('DEPTRAC_202403\\DOMDomError', 'DOMDomError', \false);
 /**
  * @removed 8.0
  */
@@ -2096,7 +2185,7 @@ class DOMErrorHandler
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMErrorHandler', 'DOMErrorHandler', \false);
+\class_alias('DEPTRAC_202403\\DOMErrorHandler', 'DOMErrorHandler', \false);
 /**
  * @removed 8.0
  */
@@ -2106,7 +2195,7 @@ class DOMLocator
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMLocator', 'DOMLocator', \false);
+\class_alias('DEPTRAC_202403\\DOMLocator', 'DOMLocator', \false);
 /**
  * @removed 8.0
  */
@@ -2136,7 +2225,7 @@ class DOMConfiguration
 /**
  * @removed 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMConfiguration', 'DOMConfiguration', \false);
+\class_alias('DEPTRAC_202403\\DOMConfiguration', 'DOMConfiguration', \false);
 /**
  * The DOMCdataSection inherits from DOMText for textural representation of CData constructs.
  * @link https://secure.php.net/manual/en/class.domcdatasection.php
@@ -2156,7 +2245,7 @@ class DOMCdataSection extends \DOMText
  * The DOMCdataSection inherits from DOMText for textural representation of CData constructs.
  * @link https://secure.php.net/manual/en/class.domcdatasection.php
  */
-\class_alias('DEPTRAC_202402\\DOMCdataSection', 'DOMCdataSection', \false);
+\class_alias('DEPTRAC_202403\\DOMCdataSection', 'DOMCdataSection', \false);
 /**
  * The DOMDocumentType class
  * @link https://php.net/manual/en/class.domdocumenttype.php
@@ -2210,7 +2299,7 @@ class DOMDocumentType extends \DOMNode
  * The DOMDocumentType class
  * @link https://php.net/manual/en/class.domdocumenttype.php
  */
-\class_alias('DEPTRAC_202402\\DOMDocumentType', 'DOMDocumentType', \false);
+\class_alias('DEPTRAC_202403\\DOMDocumentType', 'DOMDocumentType', \false);
 /**
  * The DOMNotation class
  * @link https://php.net/manual/en/class.domnotation.php
@@ -2236,7 +2325,7 @@ class DOMNotation extends \DOMNode
  * The DOMNotation class
  * @link https://php.net/manual/en/class.domnotation.php
  */
-\class_alias('DEPTRAC_202402\\DOMNotation', 'DOMNotation', \false);
+\class_alias('DEPTRAC_202403\\DOMNotation', 'DOMNotation', \false);
 /**
  * The DOMEntity class represents a known entity, either parsed or unparsed, in an XML document.
  * @link https://php.net/manual/en/class.domentity.php
@@ -2294,7 +2383,7 @@ class DOMEntity extends \DOMNode
  * The DOMEntity class represents a known entity, either parsed or unparsed, in an XML document.
  * @link https://php.net/manual/en/class.domentity.php
  */
-\class_alias('DEPTRAC_202402\\DOMEntity', 'DOMEntity', \false);
+\class_alias('DEPTRAC_202403\\DOMEntity', 'DOMEntity', \false);
 /**
  * Extends DOMNode.
  * @link https://php.net/manual/en/class.domentityreference.php
@@ -2314,7 +2403,7 @@ class DOMEntityReference extends \DOMNode
  * Extends DOMNode.
  * @link https://php.net/manual/en/class.domentityreference.php
  */
-\class_alias('DEPTRAC_202402\\DOMEntityReference', 'DOMEntityReference', \false);
+\class_alias('DEPTRAC_202403\\DOMEntityReference', 'DOMEntityReference', \false);
 /**
  * The DOMProcessingInstruction class
  * @link https://php.net/manual/en/class.domprocessinginstruction.php
@@ -2337,7 +2426,7 @@ class DOMProcessingInstruction extends \DOMNode
      * @param string $name The tag name of the processing instruction.
      * @param string $value [optional] The value of the processing instruction.
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $value)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $value = '')
     {
     }
 }
@@ -2345,7 +2434,7 @@ class DOMProcessingInstruction extends \DOMNode
  * The DOMProcessingInstruction class
  * @link https://php.net/manual/en/class.domprocessinginstruction.php
  */
-\class_alias('DEPTRAC_202402\\DOMProcessingInstruction', 'DOMProcessingInstruction', \false);
+\class_alias('DEPTRAC_202403\\DOMProcessingInstruction', 'DOMProcessingInstruction', \false);
 class DOMStringExtend
 {
     /**
@@ -2361,7 +2450,7 @@ class DOMStringExtend
     {
     }
 }
-\class_alias('DEPTRAC_202402\\DOMStringExtend', 'DOMStringExtend', \false);
+\class_alias('DEPTRAC_202403\\DOMStringExtend', 'DOMStringExtend', \false);
 /**
  * The DOMXPath class (supports XPath 1.0)
  * @link https://php.net/manual/en/class.domxpath.php
@@ -2465,7 +2554,7 @@ class DOMXPath
  * The DOMXPath class (supports XPath 1.0)
  * @link https://php.net/manual/en/class.domxpath.php
  */
-\class_alias('DEPTRAC_202402\\DOMXPath', 'DOMXPath', \false);
+\class_alias('DEPTRAC_202403\\DOMXPath', 'DOMXPath', \false);
 /**
  * @property-read DOMElement|null $firstElementChild
  * @property-read DOMElement|null $lastElementChild
@@ -2493,6 +2582,10 @@ interface DOMParentNode
      * @since 8.0
      */
     public function prepend(...$nodes) : void;
+    /**
+     * @since 8.3
+     */
+    public function replaceChildren(...$nodes) : void;
 }
 /**
  * @property-read DOMElement|null $firstElementChild
@@ -2501,7 +2594,7 @@ interface DOMParentNode
  *
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMParentNode', 'DOMParentNode', \false);
+\class_alias('DEPTRAC_202403\\DOMParentNode', 'DOMParentNode', \false);
 /**
  * @property-read DOMElement|null $previousElementSibling
  * @property-read DOMElement|null $nextElementSibling
@@ -2549,4 +2642,4 @@ interface DOMChildNode
  *
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\DOMChildNode', 'DOMChildNode', \false);
+\class_alias('DEPTRAC_202403\\DOMChildNode', 'DOMChildNode', \false);

@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of memcached v.3.1.5
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
 /**
  * Represents a connection to a set of memcached servers.
  * @link https://php.net/manual/en/class.memcached.php
@@ -1452,6 +1452,15 @@ class Memcached
     {
     }
     /**
+     * (PECL memcached &gt;= 3.2.0)<br/>
+     * Check if the given key is valid.
+     * @param string $key
+     * @return bool
+     */
+    public function checkKey($key)
+    {
+    }
+    /**
      * Flush and send buffered commands
      * @link https://github.com/php-memcached-dev/php-memcached/blob/v3.1.5/php_memcached.c
      * @return bool
@@ -1516,13 +1525,13 @@ class Memcached
  * Represents a connection to a set of memcached servers.
  * @link https://php.net/manual/en/class.memcached.php
  */
-\class_alias('DEPTRAC_202402\\Memcached', 'Memcached', \false);
+\class_alias('DEPTRAC_202403\\Memcached', 'Memcached', \false);
 /**
  * @link https://php.net/manual/en/class.memcachedexception.php
  */
 class MemcachedException extends \RuntimeException
 {
-    #[\DEPTRAC_202402\JetBrains\PhpStorm\Pure]
+    #[\DEPTRAC_202403\JetBrains\PhpStorm\Pure]
     public function __construct($errmsg = "", $errcode = 0)
     {
     }
@@ -1530,5 +1539,5 @@ class MemcachedException extends \RuntimeException
 /**
  * @link https://php.net/manual/en/class.memcachedexception.php
  */
-\class_alias('DEPTRAC_202402\\MemcachedException', 'MemcachedException', \false);
+\class_alias('DEPTRAC_202403\\MemcachedException', 'MemcachedException', \false);
 // End of memcached v.3.1.5

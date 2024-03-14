@@ -1,19 +1,19 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of fileinfo v.1.0.5
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 class finfo
 {
     /**
      * @param int $flags [optional]
      * @param string $magic_database [optional]
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $magic_database)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $magic_database)
     {
     }
     /**
@@ -80,7 +80,7 @@ class finfo
     {
     }
 }
-\class_alias('DEPTRAC_202402\\finfo', 'finfo', \false);
+\class_alias('DEPTRAC_202403\\finfo', 'finfo', \false);
 /**
  * (PHP &gt;= 5.3.0, PECL fileinfo &gt;= 0.1.0)<br/>
  * Create a new fileinfo resource

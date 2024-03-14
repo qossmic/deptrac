@@ -1,9 +1,9 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202402\PhpParser\Node;
+namespace DEPTRAC_202403\PhpParser\Node;
 
-use DEPTRAC_202402\PhpParser\NodeAbstract;
+use DEPTRAC_202403\PhpParser\NodeAbstract;
 /**
  * Represents a non-namespaced name. Namespaced names are represented using Name nodes.
  */

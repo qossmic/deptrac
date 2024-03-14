@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of sockets v.
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 /**
  * (PHP 7 &gt;= 7.2.0)<br/>
  * Get array with contents of getaddrinfo about the given hostname.
@@ -1414,6 +1414,12 @@ function socket_wsaprotocol_info_import($info_id)
 function socket_wsaprotocol_info_release($info_id)
 {
 }
+/**
+ * @since 8.3
+ */
+function socket_atmark(\Socket $socket) : bool
+{
+}
 \define('AF_UNIX', 1);
 \define('AF_INET', 2);
 /**
@@ -1472,7 +1478,11 @@ function socket_wsaprotocol_info_release($info_id)
 \define('SO_TYPE', 3);
 \define('SO_ERROR', 4);
 \define('SO_BINDTODEVICE', 25);
+\define('DEPTRAC_202403\\SO_ATTACH_REUSEPORT_CBPF', 51);
+\define('DEPTRAC_202403\\SO_DETACH_FILTER', 27);
+\define('DEPTRAC_202403\\SO_DETACH_BPF', 27);
 \define('SOL_SOCKET', 1);
+\define('DEPTRAC_202403\\SOL_UDPLITE', 136);
 \define('SOMAXCONN', 128);
 /**
  * @since 8.1
@@ -1570,6 +1580,14 @@ function socket_wsaprotocol_info_release($info_id)
  */
 \define('IPV6_MULTICAST_LOOP', 19);
 \define('IPV6_V6ONLY', 26);
+\define('DEPTRAC_202403\\IP_BIND_ADDRESS_NO_PORT', 24);
+\define('DEPTRAC_202403\\IP_MTU_DISCOVER', 10);
+\define('DEPTRAC_202403\\IP_PMTUDISC_DO', 2);
+\define('DEPTRAC_202403\\IP_PMTUDISC_DONT', 0);
+\define('DEPTRAC_202403\\IP_PMTUDISC_WANT', 1);
+\define('DEPTRAC_202403\\IP_PMTUDISC_PROBE', 3);
+\define('DEPTRAC_202403\\IP_PMTUDISC_INTERFACE', 4);
+\define('DEPTRAC_202403\\IP_PMTUDISC_OMIT', 5);
 /**
  * Operation not permitted.
  * @link https://php.net/manual/en/sockets.constants.php
@@ -1669,7 +1687,7 @@ function socket_wsaprotocol_info_release($info_id)
  * File table overflow.
  * @link https://php.net/manual/en/sockets.constants.php
  */
-\define('SOCKET_ENFILE', 24);
+\define('SOCKET_ENFILE', 23);
 /**
  * Too many open files.
  * @link https://php.net/manual/en/sockets.constants.php
@@ -1986,7 +2004,7 @@ function socket_wsaprotocol_info_release($info_id)
  * Connection reset by peer.
  * @link https://php.net/manual/en/sockets.constants.php
  */
-\define('SOCKET_ECONNRESET', 103);
+\define('SOCKET_ECONNRESET', 104);
 /**
  * No buffer space available.
  * @link https://php.net/manual/en/sockets.constants.php
@@ -2208,6 +2226,14 @@ function socket_wsaprotocol_info_release($info_id)
  */
 \define('TCP_KEEPCNT', 6);
 /**
+ * @since 8.3
+ */
+\define('DEPTRAC_202403\\TCP_QUICKACK', 12);
+/**
+ * @since 8.3
+ */
+\define('DEPTRAC_202403\\TCP_REPAIR', 19);
+/**
  * Socket_set_option for the socket_send* functions.
  * It avoids copy b/w userland and kernel for both TCP and UDP protocols.
  * @since 8.2
@@ -2235,7 +2261,7 @@ final class Socket
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\Socket', 'Socket', \false);
+\class_alias('DEPTRAC_202403\\Socket', 'Socket', \false);
 /**
  * @since 8.0
  */
@@ -2252,4 +2278,4 @@ final class AddressInfo
 /**
  * @since 8.0
  */
-\class_alias('DEPTRAC_202402\\AddressInfo', 'AddressInfo', \false);
+\class_alias('DEPTRAC_202403\\AddressInfo', 'AddressInfo', \false);

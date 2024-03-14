@@ -1,8 +1,8 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 /**
  * Creates an array.
  * @link https://php.net/manual/en/function.array.php
@@ -157,14 +157,14 @@ function PS_UNRESERVE_PREFIX_eval($code)
 {
 }
 /**
- * @template TKey of array-key
- * @template TSend
- * @template TReturn
- * @template TYield
- *
  * Generator objects are returned from generators, cannot be instantiated via new.
  * @link https://secure.php.net/manual/en/class.generator.php
  * @link https://wiki.php.net/rfc/generators
+ *
+ * @template-covariant TKey
+ * @template-covariant TYield
+ * @template TSend
+ * @template-covariant TReturn
  *
  * @template-implements Iterator<TKey, TYield>
  */
@@ -243,23 +243,23 @@ final class Generator implements \Iterator
     }
 }
 /**
- * @template TKey of array-key
- * @template TSend
- * @template TReturn
- * @template TYield
- *
  * Generator objects are returned from generators, cannot be instantiated via new.
  * @link https://secure.php.net/manual/en/class.generator.php
  * @link https://wiki.php.net/rfc/generators
  *
+ * @template-covariant TKey
+ * @template-covariant TYield
+ * @template TSend
+ * @template-covariant TReturn
+ *
  * @template-implements Iterator<TKey, TYield>
  */
-\class_alias('DEPTRAC_202402\\Generator', 'Generator', \false);
+\class_alias('DEPTRAC_202403\\Generator', 'Generator', \false);
 class ClosedGeneratorException extends \Exception
 {
 }
-\class_alias('DEPTRAC_202402\\ClosedGeneratorException', 'ClosedGeneratorException', \false);
-namespace DEPTRAC_202402\___PHPSTORM_HELPERS;
+\class_alias('DEPTRAC_202403\\ClosedGeneratorException', 'ClosedGeneratorException', \false);
+namespace DEPTRAC_202403\___PHPSTORM_HELPERS;
 
 class PS_UNRESERVE_PREFIX_this
 {

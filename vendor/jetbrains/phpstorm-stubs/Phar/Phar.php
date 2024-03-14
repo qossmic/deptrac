@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of Phar v.2.0.1
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
 /**
  * The PharException class provides a phar-specific exception class
  * for try/catch blocks.
@@ -20,7 +20,7 @@ class PharException extends \Exception
  * for try/catch blocks.
  * @link https://php.net/manual/en/class.pharexception.php
  */
-\class_alias('DEPTRAC_202402\\PharException', 'PharException', \false);
+\class_alias('DEPTRAC_202403\\PharException', 'PharException', \false);
 /**
  * The Phar class provides a high-level interface to accessing and creating
  * phar archives.
@@ -62,7 +62,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
      * @throws BadMethodCallException If called twice.
      * @throws UnexpectedValueException If the phar archive can't be opened.
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $alias = null, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $fileformat = null)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $alias = null, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $fileformat = null)
     {
     }
     public function __destruct()
@@ -132,7 +132,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
      * filesystem.
      */
     #[TentativeType]
-    public function buildFromDirectory(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $directory, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $pattern = null) : array
+    public function buildFromDirectory(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $directory, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $pattern = '') : array
     {
     }
     /**
@@ -250,7 +250,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
      * exception on failure.
      */
     #[TentativeType]
-    public function convertToExecutable(#[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $format = 9021976, #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $compression = 9021976, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null) : ?\Phar
+    public function convertToExecutable(#[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $format = null, #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $compression = null, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null) : ?\Phar
     {
     }
     /**
@@ -283,7 +283,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
      * exception on failure.
      */
     #[TentativeType]
-    public function convertToData(#[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $format = 9021976, #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $compression = 9021976, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null) : ?\PharData
+    public function convertToData(#[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $format = null, #[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $compression = null, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $extension = null) : ?\PharData
     {
     }
     /**
@@ -619,7 +619,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
      * </p>
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
-    public function setStub($stub, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $length = -1)
+    public function setStub($stub, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $length)
     {
     }
     /**
@@ -904,7 +904,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
      * </p>
      * @return void No value is returned.
      */
-    public static final function webPhar(?string $alias = null, ?string $index = "index.php", #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: 'string')] $fileNotFoundScript = null, array $mimeTypes = null, ?callable $rewrite = null) : void
+    public static final function webPhar(?string $alias = null, ?string $index = null, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: 'string')] $fileNotFoundScript = null, array $mimeTypes = [], ?callable $rewrite = null) : void
     {
     }
     /**
@@ -989,7 +989,7 @@ class Phar extends \RecursiveDirectoryIterator implements \RecursiveIterator, \S
  * phar archives.
  * @link https://php.net/manual/en/class.phar.php
  */
-\class_alias('DEPTRAC_202402\\Phar', 'Phar', \false);
+\class_alias('DEPTRAC_202403\\Phar', 'Phar', \false);
 /**
  * The PharData class provides a high-level interface to accessing and creating
  * non-executable tar and zip archives. Because these archives do not contain
@@ -1021,7 +1021,7 @@ class PharData extends \Phar
      * available within the <b>Phar</b> class.
      * </p>
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $alias = null, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $format = \Phar::TAR)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::UNIX_PATHS, #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $alias = null, #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $format = 0)
     {
     }
     /**
@@ -1151,7 +1151,7 @@ class PharData extends \Phar
  * phar.readonly php.ini setting is 1.
  * @link https://php.net/manual/en/class.phardata.php
  */
-\class_alias('DEPTRAC_202402\\PharData', 'PharData', \false);
+\class_alias('DEPTRAC_202403\\PharData', 'PharData', \false);
 /**
  * The PharFileInfo class provides a high-level interface to the contents
  * and attributes of a single file within a phar archive.
@@ -1289,7 +1289,7 @@ class PharFileInfo extends \SplFileInfo
      * @return bool <b>TRUE</b> if the file is compressed within the Phar archive, <b>FALSE</b> if not.
      */
     #[TentativeType]
-    public function isCompressed(#[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $compression = 9021976) : bool
+    public function isCompressed(#[LanguageLevelTypeAware(['8.0' => 'int|null'], default: '')] $compression = null) : bool
     {
     }
     /**
@@ -1321,5 +1321,5 @@ class PharFileInfo extends \SplFileInfo
  * and attributes of a single file within a phar archive.
  * @link https://php.net/manual/en/class.pharfileinfo.php
  */
-\class_alias('DEPTRAC_202402\\PharFileInfo', 'PharFileInfo', \false);
+\class_alias('DEPTRAC_202403\\PharFileInfo', 'PharFileInfo', \false);
 // End of Phar v.2.0.1

@@ -1,17 +1,17 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * Stubs for AMQP
  * https://pecl.php.net/package/amqp
  * https://github.com/pdezwart/php-amqp
  */
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
 /**
  * Passing in this constant as a flag will forcefully disable all other flags.
  * Use this if you want to temporarily disable the amqp.auto_ack ini setting.
  */
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
 \define('AMQP_NOPARAM', 0);
 /**
  * Passing in this constant as a flag to proper methods will forcefully ignore all other flags.
@@ -104,7 +104,7 @@ use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
 /**
  * The error number of OS socket timeout.
  */
-\define('AMQP_OS_SOCKET_TIMEOUT_ERRNO', 536870923);
+\define('AMQP_OS_SOCKET_TIMEOUT_ERRNO', 536870947);
 /**
  * The maximum number of channels that can be open on a connection.
  */
@@ -257,7 +257,7 @@ class AMQPBasicProperties
 /**
  * stub class representing AMQPBasicProperties from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPBasicProperties', 'AMQPBasicProperties', \false);
+\class_alias('DEPTRAC_202403\\AMQPBasicProperties', 'AMQPBasicProperties', \false);
 /**
  * stub class representing AMQPChannel from pecl-amqp
  */
@@ -558,7 +558,7 @@ class AMQPChannel
 /**
  * stub class representing AMQPChannel from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPChannel', 'AMQPChannel', \false);
+\class_alias('DEPTRAC_202403\\AMQPChannel', 'AMQPChannel', \false);
 /**
  * stub class representing AMQPChannelException from pecl-amqp
  */
@@ -568,7 +568,7 @@ class AMQPChannelException extends \AMQPException
 /**
  * stub class representing AMQPChannelException from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPChannelException', 'AMQPChannelException', \false);
+\class_alias('DEPTRAC_202403\\AMQPChannelException', 'AMQPChannelException', \false);
 /**
  * stub class representing AMQPConnection from pecl-amqp
  */
@@ -1008,26 +1008,11 @@ class AMQPConnection
     public function getSaslMethod()
     {
     }
-    /**
-     * Return the connection name
-     * @return string|null
-     */
-    public function getConnectionName()
-    {
-    }
-    /**
-     * Set the connection name
-     * @param string $connection_name
-     * @return void
-     */
-    public function setConnectionName($connection_name)
-    {
-    }
 }
 /**
  * stub class representing AMQPConnection from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPConnection', 'AMQPConnection', \false);
+\class_alias('DEPTRAC_202403\\AMQPConnection', 'AMQPConnection', \false);
 /**
  * stub class representing AMQPConnectionException from pecl-amqp
  */
@@ -1037,7 +1022,7 @@ class AMQPConnectionException extends \AMQPException
 /**
  * stub class representing AMQPConnectionException from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPConnectionException', 'AMQPConnectionException', \false);
+\class_alias('DEPTRAC_202403\\AMQPConnectionException', 'AMQPConnectionException', \false);
 /**
  * stub class representing AMQPDecimal from pecl-amqp
  */
@@ -1068,7 +1053,7 @@ final class AMQPDecimal
 /**
  * stub class representing AMQPDecimal from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPDecimal', 'AMQPDecimal', \false);
+\class_alias('DEPTRAC_202403\\AMQPDecimal', 'AMQPDecimal', \false);
 /**
  * stub class representing AMQPEnvelope from pecl-amqp
  */
@@ -1104,7 +1089,7 @@ class AMQPEnvelope extends \AMQPBasicProperties
     /**
      * Get the delivery tag of the message.
      *
-     * @return string The delivery tag of the message.
+     * @return int The delivery tag of the message.
      */
     public function getDeliveryTag()
     {
@@ -1155,7 +1140,7 @@ class AMQPEnvelope extends \AMQPBasicProperties
 /**
  * stub class representing AMQPEnvelope from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPEnvelope', 'AMQPEnvelope', \false);
+\class_alias('DEPTRAC_202403\\AMQPEnvelope', 'AMQPEnvelope', \false);
 /**
  * stub class representing AMQPEnvelopeException from pecl-amqp
  */
@@ -1169,7 +1154,7 @@ class AMQPEnvelopeException extends \AMQPException
 /**
  * stub class representing AMQPEnvelopeException from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPEnvelopeException', 'AMQPEnvelopeException', \false);
+\class_alias('DEPTRAC_202403\\AMQPEnvelopeException', 'AMQPEnvelopeException', \false);
 /**
  * stub class representing AMQPException from pecl-amqp
  */
@@ -1179,7 +1164,7 @@ class AMQPException extends \Exception
 /**
  * stub class representing AMQPException from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPException', 'AMQPException', \false);
+\class_alias('DEPTRAC_202403\\AMQPException', 'AMQPException', \false);
 /**
  * stub class representing AMQPExchange from pecl-amqp
  */
@@ -1369,7 +1354,7 @@ class AMQPExchange
     /**
      * Set the flags on an exchange.
      *
-     * @param int $flags A bitmask of flags. This call currently only
+     * @param int|null $flags A bitmask of flags. This call currently only
      *                       considers the following flags:
      *                       AMQP_DURABLE, AMQP_PASSIVE
      *                       (and AMQP_DURABLE, if librabbitmq version >= 0.5.3)
@@ -1418,23 +1403,11 @@ class AMQPExchange
     public function getConnection()
     {
     }
-    /**
-     * Declare a new exchange on the broker.
-     * @return int
-     * @throws AMQPExchangeException
-     * @throws AMQPChannelException
-     * @throws AMQPConnectionException
-     * @see AMQPExchange::declareExchange()
-     */
-    #[Deprecated]
-    public function declare()
-    {
-    }
 }
 /**
  * stub class representing AMQPExchange from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPExchange', 'AMQPExchange', \false);
+\class_alias('DEPTRAC_202403\\AMQPExchange', 'AMQPExchange', \false);
 /**
  * stub class representing AMQPExchangeException from pecl-amqp
  */
@@ -1444,7 +1417,7 @@ class AMQPExchangeException extends \AMQPException
 /**
  * stub class representing AMQPExchangeException from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPExchangeException', 'AMQPExchangeException', \false);
+\class_alias('DEPTRAC_202403\\AMQPExchangeException', 'AMQPExchangeException', \false);
 /**
  * stub class representing AMQPQueue from pecl-amqp
  */
@@ -1457,7 +1430,7 @@ class AMQPQueue
      * without the AMQP_AUTOACK flag through AMQPQueue::get() or
      * AMQPQueue::consume()
      *
-     * @param string  $delivery_tag The message delivery tag of which to
+     * @param int $delivery_tag The message delivery tag of which to
      *                              acknowledge receipt.
      * @param int $flags        The only valid flag that can be passed is
      *                              AMQP_MULTIPLE.
@@ -1665,7 +1638,7 @@ class AMQPQueue
      * behavior of calling this method while connected to any other broker is
      * undefined.
      *
-     * @param string  $delivery_tag Delivery tag of last message to reject.
+     * @param int $delivery_tag Delivery tag of last message to reject.
      * @param int $flags        AMQP_REQUEUE to requeue the message(s),
      *                              AMQP_MULTIPLE to nack all previous
      *                              unacked messages as well.
@@ -1687,7 +1660,7 @@ class AMQPQueue
      * AMQPQueue::consume() and AMQPQueue::get() and using the AMQP_AUTOACK
      * flag are not eligible.
      *
-     * @param string  $delivery_tag Delivery tag of the message to reject.
+     * @param int $delivery_tag Delivery tag of the message to reject.
      * @param int $flags        AMQP_REQUEUE to requeue the message(s).
      *
      * @throws AMQPChannelException    If the channel is not open.
@@ -1805,22 +1778,11 @@ class AMQPQueue
     public function getConsumerTag()
     {
     }
-    /**
-     * Declare a new queue
-     * @return int
-     * @throws AMQPChannelException
-     * @throws AMQPConnectionException
-     * @see AMQPQueue::declareQueue()
-     */
-    #[Deprecated]
-    public function declare()
-    {
-    }
 }
 /**
  * stub class representing AMQPQueue from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPQueue', 'AMQPQueue', \false);
+\class_alias('DEPTRAC_202403\\AMQPQueue', 'AMQPQueue', \false);
 /**
  * stub class representing AMQPQueueException from pecl-amqp
  */
@@ -1830,7 +1792,7 @@ class AMQPQueueException extends \AMQPException
 /**
  * stub class representing AMQPQueueException from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPQueueException', 'AMQPQueueException', \false);
+\class_alias('DEPTRAC_202403\\AMQPQueueException', 'AMQPQueueException', \false);
 /**
  * stub class representing AMQPTimestamp from pecl-amqp
  */
@@ -1858,7 +1820,7 @@ final class AMQPTimestamp
 /**
  * stub class representing AMQPTimestamp from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPTimestamp', 'AMQPTimestamp', \false);
+\class_alias('DEPTRAC_202403\\AMQPTimestamp', 'AMQPTimestamp', \false);
 /**
  * stub class representing AMQPExchangeValue from pecl-amqp
  */
@@ -1868,14 +1830,4 @@ class AMQPExchangeValue extends \AMQPException
 /**
  * stub class representing AMQPExchangeValue from pecl-amqp
  */
-\class_alias('DEPTRAC_202402\\AMQPExchangeValue', 'AMQPExchangeValue', \false);
-/**
- * stub class representing AMQPExchangeValue from pecl-amqp
- */
-class AMQPValueException extends \AMQPException
-{
-}
-/**
- * stub class representing AMQPExchangeValue from pecl-amqp
- */
-\class_alias('DEPTRAC_202402\\AMQPValueException', 'AMQPValueException', \false);
+\class_alias('DEPTRAC_202403\\AMQPExchangeValue', 'AMQPExchangeValue', \false);

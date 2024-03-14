@@ -1,10 +1,11 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of posix v.
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Send a signal to a process
  * @link https://php.net/manual/en/function.posix-kill.php
@@ -705,7 +706,7 @@ function posix_getpwuid(int $user_id) : array|false
  * </table>
  */
 #[Pure]
-function posix_getrlimit() : array|false
+function posix_getrlimit(#[PhpStormStubsElementAvailable(from: '8.3')] ?int $resource = null) : array|false
 {
 }
 /**
@@ -753,6 +754,18 @@ function posix_strerror(int $error_code) : string
  */
 #[Pure]
 function posix_initgroups(string $username, int $group_id) : bool
+{
+}
+/**
+ * @since 8.3
+ */
+function posix_sysconf(int $conf_id) : int
+{
+}
+/**
+ * @since 8.3
+ */
+function posix_eaccess(string $filename, int $flags = 0) : bool
 {
 }
 /**
@@ -895,4 +908,18 @@ function posix_initgroups(string $username, int $group_id) : bool
  * @link https://php.net/manual/en/posix.constants.setrlimit.php
  */
 \define('POSIX_RLIMIT_INFINITY', 9223372036854775807);
+\define('DEPTRAC_202403\\POSIX_SC_ARG_MAX', 0);
+\define('DEPTRAC_202403\\POSIX_SC_PAGESIZE', 30);
+\define('DEPTRAC_202403\\POSIX_SC_NPROCESSORS_CONF', 83);
+\define('DEPTRAC_202403\\POSIX_SC_NPROCESSORS_ONLN', 84);
+\define('DEPTRAC_202403\\POSIX_PC_LINK_MAX', 0);
+\define('DEPTRAC_202403\\POSIX_PC_MAX_CANON', 1);
+\define('DEPTRAC_202403\\POSIX_PC_MAX_INPUT', 2);
+\define('DEPTRAC_202403\\POSIX_PC_NAME_MAX', 3);
+\define('DEPTRAC_202403\\POSIX_PC_PATH_MAX', 4);
+\define('DEPTRAC_202403\\POSIX_PC_PIPE_BUF', 5);
+\define('DEPTRAC_202403\\POSIX_PC_CHOWN_RESTRICTED', 6);
+\define('DEPTRAC_202403\\POSIX_PC_NO_TRUNC', 7);
+\define('DEPTRAC_202403\\POSIX_PC_ALLOC_SIZE_MIN', 18);
+\define('DEPTRAC_202403\\POSIX_PC_SYMLINK_MAX', 19);
 // End of posix v.

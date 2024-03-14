@@ -1,8 +1,8 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 /**
  * @link https://php.net/manual/en/class.reflectionenum.php
  * @since 8.1
@@ -26,7 +26,7 @@ class ReflectionEnum extends \ReflectionClass
     {
     }
     /**
-     * @return ReflectionEnumPureCase|ReflectionEnumBackedCase
+     * @return ReflectionEnumUnitCase|ReflectionEnumBackedCase
      * @throws ReflectionException If no found single reflection object for the corresponding case
      */
     public function getCase(string $name) : \ReflectionEnumUnitCase
@@ -50,4 +50,4 @@ class ReflectionEnum extends \ReflectionClass
  * @link https://php.net/manual/en/class.reflectionenum.php
  * @since 8.1
  */
-\class_alias('DEPTRAC_202402\\ReflectionEnum', 'ReflectionEnum', \false);
+\class_alias('DEPTRAC_202403\\ReflectionEnum', 'ReflectionEnum', \false);

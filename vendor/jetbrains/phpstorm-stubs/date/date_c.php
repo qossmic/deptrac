@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * @since 5.5
  */
@@ -143,7 +143,7 @@ interface DateTimeInterface
 /**
  * @since 5.5
  */
-\class_alias('DEPTRAC_202402\\DateTimeInterface', 'DateTimeInterface', \false);
+\class_alias('DEPTRAC_202403\\DateTimeInterface', 'DateTimeInterface', \false);
 /**
  * @since 5.5
  */
@@ -174,6 +174,7 @@ class DateTimeImmutable implements \DateTimeInterface
      * Adds an amount of days, months, years, hours, minutes and seconds
      * @param DateInterval $interval
      * @return static
+     * @link https://secure.php.net/manual/en/datetimeimmutable.add.php
      */
     #[TentativeType]
     public function add(\DateInterval $interval) : \DateTimeImmutable
@@ -415,7 +416,7 @@ class DateTimeImmutable implements \DateTimeInterface
 /**
  * @since 5.5
  */
-\class_alias('DEPTRAC_202402\\DateTimeImmutable', 'DateTimeImmutable', \false);
+\class_alias('DEPTRAC_202403\\DateTimeImmutable', 'DateTimeImmutable', \false);
 /**
  * Representation of date and time.
  * @link https://php.net/manual/en/class.datetime.php
@@ -711,7 +712,7 @@ class DateTime implements \DateTimeInterface
  * Representation of date and time.
  * @link https://php.net/manual/en/class.datetime.php
  */
-\class_alias('DEPTRAC_202402\\DateTime', 'DateTime', \false);
+\class_alias('DEPTRAC_202403\\DateTime', 'DateTime', \false);
 /**
  * Representation of time zone
  * @link https://php.net/manual/en/class.datetimezone.php
@@ -735,6 +736,7 @@ class DateTimeZone
     /**
      * @param string $timezone
      * @link https://php.net/manual/en/datetimezone.construct.php
+     * @throws Exception Emits Exception in case of an error.
      */
     public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $timezone)
     {
@@ -776,12 +778,12 @@ class DateTimeZone
      * @link https://php.net/manual/en/datetimezone.gettransitions.php
      */
     #[TentativeType]
-    public function getTransitions(#[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $timestampBegin, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $timestampEnd, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $timestampBegin = null, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $timestampEnd = null) : array|false
+    public function getTransitions(#[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $timestampBegin, #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $timestampEnd, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $timestampBegin = \PHP_INT_MIN, #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $timestampEnd = \PHP_INT_MAX) : array|false
     {
     }
     /**
      * Returns associative array containing dst, offset and the timezone name
-     * @return array
+     * @return array<string, list<array{dst: bool, offset: int, timezone_id: string|null}>>
      * @link https://php.net/manual/en/datetimezone.listabbreviations.php
      */
     #[TentativeType]
@@ -823,7 +825,7 @@ class DateTimeZone
  * Representation of time zone
  * @link https://php.net/manual/en/class.datetimezone.php
  */
-\class_alias('DEPTRAC_202402\\DateTimeZone', 'DateTimeZone', \false);
+\class_alias('DEPTRAC_202403\\DateTimeZone', 'DateTimeZone', \false);
 /**
  * Representation of date interval. A date interval stores either a fixed amount of
  * time (in years, months, days, hours etc) or a relative time string in the format
@@ -929,7 +931,7 @@ class DateInterval
  * that DateTime's constructor supports.
  * @link https://php.net/manual/en/class.dateinterval.php
  */
-\class_alias('DEPTRAC_202402\\DateInterval', 'DateInterval', \false);
+\class_alias('DEPTRAC_202403\\DateInterval', 'DateInterval', \false);
 /**
  * Representation of date period.
  * @link https://php.net/manual/en/class.dateperiod.php
@@ -1083,6 +1085,12 @@ class DatePeriod implements \IteratorAggregate
     public function __unserialize(array $data) : void
     {
     }
+    /**
+     * @since 8.3
+     */
+    public static function createFromISO8601String(string $specification, int $options = 0) : static
+    {
+    }
 }
 /**
  * Representation of date period.
@@ -1091,4 +1099,58 @@ class DatePeriod implements \IteratorAggregate
  * @template TEnd of ?DateTimeInterface
  * @implements \IteratorAggregate<int, TDate>
  */
-\class_alias('DEPTRAC_202402\\DatePeriod', 'DatePeriod', \false);
+\class_alias('DEPTRAC_202403\\DatePeriod', 'DatePeriod', \false);
+/**
+ * @since 8.3
+ */
+class DateError extends \Error
+{
+}
+/**
+ * @since 8.3
+ */
+class DateObjectError extends DateError
+{
+}
+/**
+ * @since 8.3
+ */
+class DateRangeError extends DateError
+{
+}
+/**
+ * @since 8.3
+ */
+class DateException extends \Exception
+{
+}
+/**
+ * @since 8.3
+ */
+class DateInvalidTimeZoneException extends DateException
+{
+}
+/**
+ * @since 8.3
+ */
+class DateInvalidOperationException extends DateException
+{
+}
+/**
+ * @since 8.3
+ */
+class DateMalformedStringException extends DateException
+{
+}
+/**
+ * @since 8.3
+ */
+class DateMalformedIntervalStringException extends DateException
+{
+}
+/**
+ * @since 8.3
+ */
+class DateMalformedPeriodStringException extends DateException
+{
+}

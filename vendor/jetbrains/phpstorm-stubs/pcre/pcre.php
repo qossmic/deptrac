@@ -1,11 +1,11 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of pcre v.
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Perform a regular expression match
  * @link https://php.net/manual/en/function.preg-match.php
@@ -614,7 +614,7 @@ function preg_last_error_msg() : string
 /**
  * @since 7.3
  */
-\define('PCRE_VERSION_MINOR', 40);
+\define('PCRE_VERSION_MINOR', 42);
 /**
  * @since 7.3
  */

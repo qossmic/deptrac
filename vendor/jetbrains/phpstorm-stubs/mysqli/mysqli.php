@@ -1,16 +1,16 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * Start of mysqli extension stubs v.0.1
  * @link https://php.net/manual/en/book.mysqli.php
  */
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
 /**
  * mysqli_sql_exception
  */
@@ -39,7 +39,7 @@ final class mysqli_sql_exception extends \RuntimeException
 /**
  * mysqli_sql_exception
  */
-\class_alias('DEPTRAC_202402\\mysqli_sql_exception', 'mysqli_sql_exception', \false);
+\class_alias('DEPTRAC_202403\\mysqli_sql_exception', 'mysqli_sql_exception', \false);
 /**
  * MySQLi Driver.
  * @link https://php.net/manual/en/class.mysqli-driver.php
@@ -80,7 +80,7 @@ final class mysqli_driver
  * MySQLi Driver.
  * @link https://php.net/manual/en/class.mysqli-driver.php
  */
-\class_alias('DEPTRAC_202402\\mysqli_driver', 'mysqli_driver', \false);
+\class_alias('DEPTRAC_202403\\mysqli_driver', 'mysqli_driver', \false);
 /**
  * Represents a connection between PHP and a MySQL database.
  * @link https://php.net/manual/en/class.mysqli.php
@@ -158,7 +158,7 @@ class mysqli
     #[LanguageLevelTypeAware(['8.1' => 'string'], default: '')]
     public $sqlstate;
     /**
-     * @var string
+     * @var int
      */
     #[LanguageLevelTypeAware(['8.1' => 'int'], default: '')]
     public $protocol_version;
@@ -668,7 +668,7 @@ class mysqli
      * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function real_connect(?string $hostname = null, ?string $username = null, ?string $password = null, ?string $database = null, ?int $port = null, ?string $socket = null, int $flags = null) : bool
+    public function real_connect(?string $hostname = null, ?string $username = null, ?string $password = null, ?string $database = null, ?int $port = null, ?string $socket = null, int $flags = 0) : bool
     {
     }
     /**
@@ -911,7 +911,7 @@ class mysqli
  * Represents a connection between PHP and a MySQL database.
  * @link https://php.net/manual/en/class.mysqli.php
  */
-\class_alias('DEPTRAC_202402\\mysqli', 'mysqli', \false);
+\class_alias('DEPTRAC_202403\\mysqli', 'mysqli', \false);
 /**
  * Represents one or more MySQL warnings.
  * @link https://php.net/manual/en/class.mysqli-warning.php
@@ -962,7 +962,7 @@ final class mysqli_warning
  * Represents one or more MySQL warnings.
  * @link https://php.net/manual/en/class.mysqli-warning.php
  */
-\class_alias('DEPTRAC_202402\\mysqli_warning', 'mysqli_warning', \false);
+\class_alias('DEPTRAC_202403\\mysqli_warning', 'mysqli_warning', \false);
 /**
  * Represents the result set obtained from a query against the database.
  * Implements Traversable since 5.4
@@ -1303,7 +1303,7 @@ class mysqli_result implements \IteratorAggregate
      * are no more rows in the result set, or false on failure.
      */
     #[TentativeType]
-    public function fetch_object(string $class = 'stdClass', array $constructor_args = null) : object|false|null
+    public function fetch_object(string $class = 'stdClass', array $constructor_args = []) : object|false|null
     {
     }
     /**
@@ -1338,10 +1338,10 @@ class mysqli_result implements \IteratorAggregate
      * The field number. This value must be in the range from
      * 0 to number of fields - 1.
      * </p>
-     * @return bool true on success or false on failure.
      */
     #[TentativeType]
-    public function field_seek(int $index) : bool
+    #[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+    public function field_seek(int $index)
     {
     }
     /**
@@ -1366,7 +1366,7 @@ class mysqli_result implements \IteratorAggregate
  * Implements Traversable since 5.4
  * @link https://php.net/manual/en/class.mysqli-result.php
  */
-\class_alias('DEPTRAC_202402\\mysqli_result', 'mysqli_result', \false);
+\class_alias('DEPTRAC_202403\\mysqli_result', 'mysqli_result', \false);
 /**
  * Represents a prepared statement.
  * @link https://php.net/manual/en/class.mysqli-stmt.php
@@ -1728,7 +1728,7 @@ class mysqli_stmt
  * Represents a prepared statement.
  * @link https://php.net/manual/en/class.mysqli-stmt.php
  */
-\class_alias('DEPTRAC_202402\\mysqli_stmt', 'mysqli_stmt', \false);
+\class_alias('DEPTRAC_202403\\mysqli_stmt', 'mysqli_stmt', \false);
 /**
  * Gets the number of affected rows in a previous MySQL operation
  * @link https://secure.php.net/manual/en/mysqli.affected-rows.php
@@ -2074,9 +2074,9 @@ function mysqli_field_count(\mysqli $mysql) : int
  * @param mysqli_result $result A mysqli_result object returned by mysqli_query(),
  * mysqli_store_result(), mysqli_use_result() or mysqli_stmt_get_result().
  * @param int $index The field number. This value must be in the range from 0 to number of fields - 1.
- * @return bool
  */
-function mysqli_field_seek(\mysqli_result $result, int $index) : bool
+#[LanguageLevelTypeAware(['8.3' => 'true'], default: 'bool')]
+function mysqli_field_seek(\mysqli_result $result, int $index)
 {
 }
 /**

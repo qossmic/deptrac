@@ -1,12 +1,12 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Get the last occurred error
  * @link https://php.net/manual/en/function.error-get-last.php
@@ -254,12 +254,12 @@ function debug_zval_dump(#[PhpStormStubsElementAvailable(from: '8.0')] mixed $va
  * to true, print_r will return its output, instead of
  * printing it (which it does by default).
  * </p>
- * @return string|true If given a string, integer or float,
+ * @return string|bool If given a string, integer or float,
  * the value itself will be printed. If given an array, values
  * will be presented in a format that shows keys and elements. Similar
  * notation is used for objects.
  */
-function print_r(mixed $value, bool $return = \false) : string|true
+function print_r(mixed $value, bool $return = \false) : string|bool
 {
 }
 /**
@@ -403,7 +403,7 @@ function highlight_string(string $string, bool $return = \false) : string|bool
  * Otherwise the nanoseconds are returned as integer (64bit platforms) or float (32bit platforms).
  */
 #[Pure(\true)]
-function hrtime(#[PhpStormStubsElementAvailable(from: '7.3', to: '7.4')] bool $as_number, #[PhpStormStubsElementAvailable(from: '8.0')] bool $as_number = \false) : array|int|float|false
+function hrtime(bool $as_number = \false) : array|int|float|false
 {
 }
 /**

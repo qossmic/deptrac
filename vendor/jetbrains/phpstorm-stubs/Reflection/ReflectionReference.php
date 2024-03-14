@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * The ReflectionReference class provides information about a reference.
  *
@@ -26,7 +26,7 @@ class ReflectionReference
      * @link https://php.net/manual/en/reflectionreference.fromarrayelement.php
      * @param array $array The array which contains the potential reference.
      * @param int|string $key The key; either an integer or a string.
-     * @return self|null
+     * @return ReflectionReference|null
      */
     public static function fromArrayElement(array $array, #[LanguageLevelTypeAware(['8.0' => 'string|int'], default: '')] $key) : ?\ReflectionReference
     {
@@ -58,4 +58,4 @@ class ReflectionReference
  * @link https://www.php.net/manual/en/class.reflectionreference.php
  * @since 7.4
  */
-\class_alias('DEPTRAC_202402\\ReflectionReference', 'ReflectionReference', \false);
+\class_alias('DEPTRAC_202403\\ReflectionReference', 'ReflectionReference', \false);

@@ -4,13 +4,14 @@ declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
+use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;
 use Qossmic\Deptrac\Contract\Layer\InvalidLayerDefinitionException;
 use Qossmic\Deptrac\Core\Layer\LayerResolverInterface;
 use function array_key_exists;
 use function is_string;
 use function sprintf;
-final class LayerCollector implements \Qossmic\Deptrac\Core\Layer\Collector\ConditionalCollectorInterface
+final class LayerCollector implements CollectorInterface
 {
     /**
      * @var array<string, array<string, bool|null>>
@@ -38,10 +39,5 @@ final class LayerCollector implements \Qossmic\Deptrac\Core\Layer\Collector\Cond
         // Set resolved for current token to null in case resolver comes back to it (circular reference)
         $this->resolved[$token][$layer] = null;
         return $this->resolved[$token][$layer] = $this->resolver->isReferenceInLayer($config['value'], $reference);
-    }
-    public function resolvable(array $config) : bool
-    {
-        /** @var array{layer?: string, value: string} $config */
-        return $this->resolver->has($config['value']);
     }
 }

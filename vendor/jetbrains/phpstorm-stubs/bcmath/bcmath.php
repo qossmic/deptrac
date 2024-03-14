@@ -1,10 +1,10 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Add two arbitrary precision numbers
  * @link https://php.net/manual/en/function.bcadd.php
@@ -111,7 +111,7 @@ function bcdiv(string $num1, string $num2, ?int $scale = 0) : ?string
  */
 #[Pure]
 #[PhpStormStubsElementAvailable('8.0')]
-function bcdiv(string $num1, string $num2, ?int $scale = 0) : string
+function bcdiv(string $num1, string $num2, ?int $scale = null) : string
 {
 }
 /**
@@ -157,7 +157,7 @@ function bcmod(string $num1, string $num2, ?int $scale = 0) : ?string
  */
 #[Pure]
 #[PhpStormStubsElementAvailable('8.0')]
-function bcmod(string $num1, string $num2, ?int $scale = 0) : string
+function bcmod(string $num1, string $num2, ?int $scale = null) : string
 {
 }
 /**

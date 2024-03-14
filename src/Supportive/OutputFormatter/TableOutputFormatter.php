@@ -13,7 +13,7 @@ use Qossmic\Deptrac\Contract\Result\SkippedViolation;
 use Qossmic\Deptrac\Contract\Result\Uncovered;
 use Qossmic\Deptrac\Contract\Result\Violation;
 use Qossmic\Deptrac\Contract\Result\Warning;
-use DEPTRAC_202402\Symfony\Component\Console\Helper\TableSeparator;
+use DEPTRAC_202403\Symfony\Component\Console\Helper\TableSeparator;
 use function count;
 final class TableOutputFormatter implements OutputFormatterInterface
 {

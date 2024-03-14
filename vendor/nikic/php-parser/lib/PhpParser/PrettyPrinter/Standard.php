@@ -1,18 +1,18 @@
 <?php
 
 declare (strict_types=1);
-namespace DEPTRAC_202402\PhpParser\PrettyPrinter;
+namespace DEPTRAC_202403\PhpParser\PrettyPrinter;
 
-use DEPTRAC_202402\PhpParser\Node;
-use DEPTRAC_202402\PhpParser\Node\Expr;
-use DEPTRAC_202402\PhpParser\Node\Expr\AssignOp;
-use DEPTRAC_202402\PhpParser\Node\Expr\BinaryOp;
-use DEPTRAC_202402\PhpParser\Node\Expr\Cast;
-use DEPTRAC_202402\PhpParser\Node\Name;
-use DEPTRAC_202402\PhpParser\Node\Scalar;
-use DEPTRAC_202402\PhpParser\Node\Scalar\MagicConst;
-use DEPTRAC_202402\PhpParser\Node\Stmt;
-use DEPTRAC_202402\PhpParser\PrettyPrinterAbstract;
+use DEPTRAC_202403\PhpParser\Node;
+use DEPTRAC_202403\PhpParser\Node\Expr;
+use DEPTRAC_202403\PhpParser\Node\Expr\AssignOp;
+use DEPTRAC_202403\PhpParser\Node\Expr\BinaryOp;
+use DEPTRAC_202403\PhpParser\Node\Expr\Cast;
+use DEPTRAC_202403\PhpParser\Node\Name;
+use DEPTRAC_202403\PhpParser\Node\Scalar;
+use DEPTRAC_202403\PhpParser\Node\Scalar\MagicConst;
+use DEPTRAC_202403\PhpParser\Node\Stmt;
+use DEPTRAC_202403\PhpParser\PrettyPrinterAbstract;
 class Standard extends PrettyPrinterAbstract
 {
     // Special nodes

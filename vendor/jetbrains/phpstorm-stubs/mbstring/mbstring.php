@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of mbstring v.
-use DEPTRAC_202402\JetBrains\PhpStorm\ArrayShape;
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\ArrayShape;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Perform case folding on a string
  * @link https://php.net/manual/en/function.mb-convert-case.php
@@ -811,7 +811,7 @@ function mb_convert_kana(string $string, string $mode = 'KV', ?string $encoding)
  * @return string A converted version of the string represented in ASCII.
  */
 #[Pure]
-function mb_encode_mimeheader(string $string, ?string $charset, ?string $transfer_encoding, string $newline = "\n", int $indent = 0) : string
+function mb_encode_mimeheader(string $string, ?string $charset, ?string $transfer_encoding, string $newline = "\r\n", int $indent = 0) : string
 {
 }
 /**
@@ -1458,6 +1458,12 @@ function mbereg_search_setpos($position)
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
 function mb_str_split(string $string, int $length = 1, ?string $encoding)
+{
+}
+/**
+ * @since 8.3
+ */
+function mb_str_pad(string $string, int $length, string $pad_string = " ", int $pad_type = \STR_PAD_RIGHT, ?string $encoding = null) : string
 {
 }
 /**

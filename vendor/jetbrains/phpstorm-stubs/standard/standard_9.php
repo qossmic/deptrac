@@ -1,14 +1,15 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * @since 5.6
  */
-use DEPTRAC_202402\JetBrains\PhpStorm\ExpectedValues;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\ExpectedValues;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 \define("ARRAY_FILTER_USE_BOTH", 1);
 /**
  * @since 5.6
@@ -104,7 +105,6 @@ function array_count_values(array $array) : array
 {
 }
 /**
- * (PHP 5 &gt;=5.5.0)<br/>
  * Return the values from a single column in the input array
  * @link https://secure.php.net/manual/en/function.array-column.php
  * @param array $array <p>A multi-dimensional array (record set) from which to pull a column of values.</p>
@@ -869,7 +869,7 @@ class AssertionError extends \Error
  * @link https://php.net/manual/en/class.assertionerror.php
  * @since 7.0
  */
-\class_alias('DEPTRAC_202402\\AssertionError', 'AssertionError', \false);
+\class_alias('DEPTRAC_202403\\AssertionError', 'AssertionError', \false);
 /**
  * Set/get the various assert flags
  * @link https://php.net/manual/en/function.assert-options.php
@@ -922,6 +922,7 @@ class AssertionError extends \Error
  * </p>
  * @return mixed The original setting of any option.
  */
+#[Deprecated(since: "8.3")]
 function assert_options(int $option, mixed $value) : mixed
 {
 }

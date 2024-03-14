@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of mailparse v.
 /**
@@ -119,7 +119,7 @@ function mailparse_msg_get_part_data($mimemail)
  * A valid MIME resource.
  * </p>
  * @param string $mimesection
- * @return resource
+ * @return resource|false
  */
 function mailparse_msg_get_part($mimemail, $mimesection)
 {

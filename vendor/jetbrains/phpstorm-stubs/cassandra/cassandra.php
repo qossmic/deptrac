@@ -24,7 +24,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * The main entry point to the PHP Driver for Apache Cassandra.
@@ -423,13 +423,13 @@ final class Cassandra
  * Use Cassandra::ssl() to build SSL options instance.
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/class.Cassandra/
  */
-\class_alias('DEPTRAC_202402\\Cassandra', 'Cassandra', \false);
+\class_alias('DEPTRAC_202403\\Cassandra', 'Cassandra', \false);
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/
  */
-namespace DEPTRAC_202402\Cassandra;
+namespace DEPTRAC_202403\Cassandra;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
 /**
  * A PHP representation of a column
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/interface.Column/
@@ -758,21 +758,21 @@ interface Table
     /**
      * Returns the partition key columns of the table
      *
-     * @return array A list of of Column instances
+     * @return array A list of Column instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/interface.Table/#method-partitionKey
      */
     public function partitionKey();
     /**
      * Returns both the partition and clustering key columns of the table
      *
-     * @return array A list of of Column instances
+     * @return array A list of Column instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/interface.Table/#method-primaryKey
      */
     public function primaryKey();
     /**
      * Returns the clustering key columns of the table
      *
-     * @return array A list of of Column instances
+     * @return array A list of Column instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/interface.Table/#method-clusteringKey
      */
     public function clusteringKey();
@@ -1140,7 +1140,7 @@ interface Keyspace
      *
      * @param string $name Materialized view name
      *
-     * @return \Cassandra\MaterizedView|null A materialized view or null
+     * @return \Cassandra\MaterializedView|null A materialized view or null
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/interface.Keyspace/#method-materializedView
      */
     public function materializedView($name);
@@ -2365,7 +2365,7 @@ final class DefaultMaterializedView extends MaterializedView
     /**
      * Returns the partition key columns of the view
      *
-     * @return array A list of of Column instances
+     * @return array A list of Column instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultMaterializedView/#method-partitionKey
      */
     public function partitionKey()
@@ -2374,7 +2374,7 @@ final class DefaultMaterializedView extends MaterializedView
     /**
      * Returns both the partition and clustering key columns of the view
      *
-     * @return array A list of of Column instances
+     * @return array A list of Column instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultMaterializedView/#method-primaryKey
      */
     public function primaryKey()
@@ -2383,7 +2383,7 @@ final class DefaultMaterializedView extends MaterializedView
     /**
      * Returns the clustering key columns of the view
      *
-     * @return array A list of of Column instances
+     * @return array A list of Column instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultMaterializedView/#method-clusteringKey
      */
     public function clusteringKey()
@@ -3455,21 +3455,21 @@ abstract class MaterializedView implements Table
     /**
      * Returns the partition key columns of the view
      *
-     * @return array A list of of `Column` instances
+     * @return array A list of `Column` instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.MaterializedView/#method-partitionKey
      */
     public abstract function partitionKey();
     /**
      * Returns both the partition and clustering key columns of the view
      *
-     * @return array A list of of `Column` instances
+     * @return array A list of `Column` instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.MaterializedView/#method-primaryKey
      */
     public abstract function primaryKey();
     /**
      * Returns the clustering key columns of the view
      *
-     * @return array A list of of `Column` instances
+     * @return array A list of `Column` instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.MaterializedView/#method-clusteringKey
      */
     public abstract function clusteringKey();
@@ -4511,7 +4511,7 @@ final class DefaultKeyspace implements Keyspace
      *
      * @param string $name Materialized view name
      *
-     * @return \Cassandra\MaterizedView|null A materialized view or null
+     * @return \Cassandra\MaterializedView|null A materialized view or null
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultKeyspace/#method-materializedView
      */
     public function materializedView($name)
@@ -5009,7 +5009,7 @@ final class DefaultTable implements Table
     /**
      * Returns the partition key columns of the table
      *
-     * @return array A list of of `Column` instance
+     * @return array A list of `Column` instance
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultTable/#method-partitionKey
      */
     public function partitionKey()
@@ -5018,7 +5018,7 @@ final class DefaultTable implements Table
     /**
      * Returns both the partition and clustering key columns of the table
      *
-     * @return array A list of of `Column` instance
+     * @return array A list of `Column` instance
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultTable/#method-primaryKey
      */
     public function primaryKey()
@@ -5027,7 +5027,7 @@ final class DefaultTable implements Table
     /**
      * Returns the clustering key columns of the table
      *
-     * @return array A list of of `Column` instances
+     * @return array A list of `Column` instances
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultTable/#method-clusteringKey
      */
     public function clusteringKey()
@@ -5065,7 +5065,7 @@ final class DefaultTable implements Table
      *
      * @param string $name Materialized view name
      *
-     * @return \Cassandra\MaterizedView|null A materialized view or null
+     * @return \Cassandra\MaterializedView|null A materialized view or null
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/class.DefaultTable/#method-materializedView
      */
     public function materializedView($name)
@@ -5431,7 +5431,7 @@ final class UserTypeValue implements Value, \Countable, \Iterator
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Cluster/
  */
-namespace DEPTRAC_202402\Cassandra\Cluster;
+namespace DEPTRAC_202403\Cassandra\Cluster;
 
 /**
  * Cluster builder allows fluent configuration of the cluster instance.
@@ -5752,7 +5752,7 @@ final class Builder
     /**
      * Configures the retry policy.
      *
-     * @param \Cassandra\Cluster\RetryPolicy $policy the retry policy to use.
+     * @param \Cassandra\RetryPolicy $policy the retry policy to use.
      *
      * @return \Cassandra\Cluster\Builder self
      * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Cluster/class.Builder/#method-withRetryPolicy
@@ -5842,7 +5842,7 @@ final class Builder
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/TimestampGenerator/
  */
-namespace DEPTRAC_202402\Cassandra\TimestampGenerator;
+namespace DEPTRAC_202403\Cassandra\TimestampGenerator;
 
 /**
  * A timestamp generator that allows the server-side to assign timestamps.
@@ -5867,7 +5867,7 @@ final class Monotonic implements \Cassandra\TimestampGenerator
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/RetryPolicy/
  */
-namespace DEPTRAC_202402\Cassandra\RetryPolicy;
+namespace DEPTRAC_202403\Cassandra\RetryPolicy;
 
 /**
  * The default retry policy. This policy retries a query, using the
@@ -5935,7 +5935,7 @@ final class Logging implements \Cassandra\RetryPolicy
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Type/
  */
-namespace DEPTRAC_202402\Cassandra\Type;
+namespace DEPTRAC_202403\Cassandra\Type;
 
 /**
  * A class that represents the tuple type. The tuple type is able to represent
@@ -6339,7 +6339,7 @@ final class Scalar extends \Cassandra\Type
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/SSLOptions/
  */
-namespace DEPTRAC_202402\Cassandra\SSLOptions;
+namespace DEPTRAC_202403\Cassandra\SSLOptions;
 
 /**
  * SSLOptions builder allows fluent configuration of ssl options.
@@ -6420,9 +6420,9 @@ final class Builder
 /**
  * @link https://docs.datastax.com/en/developer/php-driver/latest/api/Cassandra/Exception/
  */
-namespace DEPTRAC_202402\Cassandra\Exception;
+namespace DEPTRAC_202403\Cassandra\Exception;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * ConfigurationException is raised when query is syntactically correct but
  * invalid because of some configuration issue.

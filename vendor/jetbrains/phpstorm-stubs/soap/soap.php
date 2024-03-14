@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 // Start of soap v.
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * The SoapClient class provides a client for SOAP 1.1, SOAP 1.2 servers. It can be used in WSDL
  * or non-WSDL mode.
@@ -267,7 +267,7 @@ class SoapClient
      * @throws SoapFault A SoapFault exception will be thrown if the wsdl URI cannot be loaded.
      * @since 5.0.1
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $wsdl, array $options = null)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $wsdl, array $options = [])
     {
     }
     /**
@@ -320,7 +320,12 @@ class SoapClient
      * </p>
      * <p>
      * On error, if the SoapClient object was constructed with the exceptions
-     * option set to <b>FALSE</b>, a SoapFault object will be returned.
+     * option set to <b>FALSE</b>, a SoapFault object will be returned. If this
+     * option is not set, or is set to <b>TRUE</b>, then a SoapFault object will
+     * be thrown as an exception.
+     * @throws SoapFault A SoapFault exception will be thrown if an error occurs
+     * and the SoapClient was constructed with the exceptions option not set, or
+     * set to <b>TRUE</b>.
      * @since 5.0.1
      */
     #[TentativeType]
@@ -450,7 +455,7 @@ class SoapClient
      * @since 5.0.1
      */
     #[TentativeType]
-    public function __setLocation(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $location = '') : ?string
+    public function __setLocation(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $location = null) : ?string
     {
     }
     /**
@@ -474,7 +479,7 @@ class SoapClient
  * or non-WSDL mode.
  * @link https://php.net/manual/en/class.soapclient.php
  */
-\class_alias('DEPTRAC_202402\\SoapClient', 'SoapClient', \false);
+\class_alias('DEPTRAC_202403\\SoapClient', 'SoapClient', \false);
 /**
  * A class representing a variable or object for use with SOAP services.
  * @link https://php.net/manual/en/class.soapvar.php
@@ -534,7 +539,7 @@ class SoapVar
      * </p>
      * @since 5.0.1
      */
-    public function __construct(#[LanguageLevelTypeAware(["8.0" => 'mixed'], default: '')] $data, #[LanguageLevelTypeAware(["7.1" => "int|null"], default: "int")] $encoding, #[LanguageLevelTypeAware(["8.0" => "string|null"], default: "string")] $typeName, #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $typeNamespace = '', #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $nodeName = '', #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $nodeNamespace = '')
+    public function __construct(#[LanguageLevelTypeAware(["8.0" => 'mixed'], default: '')] $data, #[LanguageLevelTypeAware(["7.1" => "int|null"], default: "int")] $encoding, #[LanguageLevelTypeAware(["8.0" => "string|null"], default: "string")] $typeName, #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $typeNamespace = null, #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $nodeName = null, #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $nodeNamespace = null)
     {
     }
     /**
@@ -569,7 +574,7 @@ class SoapVar
  * A class representing a variable or object for use with SOAP services.
  * @link https://php.net/manual/en/class.soapvar.php
  */
-\class_alias('DEPTRAC_202402\\SoapVar', 'SoapVar', \false);
+\class_alias('DEPTRAC_202403\\SoapVar', 'SoapVar', \false);
 /**
  * The SoapServer class provides a server for the SOAP 1.1 and SOAP 1.2 protocols. It can be used with or without a WSDL service description.
  * @link https://php.net/manual/en/class.soapserver.php
@@ -616,7 +621,7 @@ class SoapServer
      * </p>
      * @since 5.0.1
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $wsdl, array $options = null)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $wsdl, array $options = [])
     {
     }
     /**
@@ -785,7 +790,7 @@ class SoapServer
      * @since 5.0.1
      */
     #[TentativeType]
-    public function fault(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $code, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $string, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $actor = null, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $details = null, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name = null) : void
+    public function fault(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $code, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $string, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $actor = '', #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $details = null, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name = '') : void
     {
     }
     /**
@@ -806,7 +811,7 @@ class SoapServer
  * The SoapServer class provides a server for the SOAP 1.1 and SOAP 1.2 protocols. It can be used with or without a WSDL service description.
  * @link https://php.net/manual/en/class.soapserver.php
  */
-\class_alias('DEPTRAC_202402\\SoapServer', 'SoapServer', \false);
+\class_alias('DEPTRAC_202403\\SoapServer', 'SoapServer', \false);
 /**
  * Represents a SOAP fault.
  * @link https://php.net/manual/en/class.soapfault.php
@@ -924,7 +929,7 @@ class SoapFault extends \Exception
  * Represents a SOAP fault.
  * @link https://php.net/manual/en/class.soapfault.php
  */
-\class_alias('DEPTRAC_202402\\SoapFault', 'SoapFault', \false);
+\class_alias('DEPTRAC_202403\\SoapFault', 'SoapFault', \false);
 /**
  * Represents parameter to a SOAP call.
  * @link https://php.net/manual/en/class.soapparam.php
@@ -979,7 +984,7 @@ class SoapParam
  * Represents parameter to a SOAP call.
  * @link https://php.net/manual/en/class.soapparam.php
  */
-\class_alias('DEPTRAC_202402\\SoapParam', 'SoapParam', \false);
+\class_alias('DEPTRAC_202403\\SoapParam', 'SoapParam', \false);
 /**
  * Represents a SOAP header.
  * @link https://php.net/manual/en/class.soapheader.php
@@ -1031,7 +1036,7 @@ class SoapHeader
      * </p>
      * @since 5.0.1
      */
-    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $namespace, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $data = null, #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $mustUnderstand = \false, #[LanguageLevelTypeAware(['8.0' => 'string|int|null'], default: '')] $actor = null)
+    public function __construct(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $namespace, #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $data, #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $mustUnderstand = \false, #[LanguageLevelTypeAware(['8.0' => 'string|int|null'], default: '')] $actor = null)
     {
     }
     /**
@@ -1063,7 +1068,7 @@ class SoapHeader
  * Represents a SOAP header.
  * @link https://php.net/manual/en/class.soapheader.php
  */
-\class_alias('DEPTRAC_202402\\SoapHeader', 'SoapHeader', \false);
+\class_alias('DEPTRAC_202403\\SoapHeader', 'SoapHeader', \false);
 /**
  * Set whether to use the SOAP error handler
  * @link https://php.net/manual/en/function.use-soap-error-handler.php

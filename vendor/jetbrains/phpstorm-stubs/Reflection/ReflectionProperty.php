@@ -1,13 +1,13 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Immutable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
-use DEPTRAC_202402\JetBrains\PhpStorm\Internal\TentativeType;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Immutable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
+use DEPTRAC_202403\JetBrains\PhpStorm\Internal\TentativeType;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * The <b>ReflectionProperty</b> class reports information about a classes
  * properties.
@@ -126,11 +126,11 @@ class ReflectionProperty implements \Reflector
      * @param mixed $objectOrValue If the property is non-static an object must
      * be provided to change the property on. If the property is static this
      * parameter is left out and only $value needs to be provided.
-     * @param mixed $value The new value.
+     * @param mixed $value [optional] The new value.
      * @return void No value is returned.
      */
     #[TentativeType]
-    public function setValue(#[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $objectOrValue, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $value = null) : void
+    public function setValue(#[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $objectOrValue, #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $value) : void
     {
     }
     /**
@@ -361,4 +361,4 @@ class ReflectionProperty implements \Reflector
  *
  * @link https://php.net/manual/en/class.reflectionproperty.php
  */
-\class_alias('DEPTRAC_202402\\ReflectionProperty', 'ReflectionProperty', \false);
+\class_alias('DEPTRAC_202403\\ReflectionProperty', 'ReflectionProperty', \false);

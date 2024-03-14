@@ -3,7 +3,7 @@
 declare (strict_types=1);
 namespace Qossmic\Deptrac\Core\Layer\Collector;
 
-use DEPTRAC_202402\JetBrains\PHPStormStub\PhpStormStubsMap;
+use DEPTRAC_202403\JetBrains\PHPStormStub\PhpStormStubsMap;
 use Qossmic\Deptrac\Contract\Ast\TokenReferenceInterface;
 use Qossmic\Deptrac\Contract\Layer\CollectorInterface;
 use Qossmic\Deptrac\Contract\Layer\InvalidCollectorDefinitionException;

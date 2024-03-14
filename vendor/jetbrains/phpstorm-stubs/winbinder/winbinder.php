@@ -1,6 +1,6 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
 /**
  * Stub file - DO NOT INCLUDE! = For PHPStorm to analyse.

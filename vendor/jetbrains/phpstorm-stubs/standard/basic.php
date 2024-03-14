@@ -1,9 +1,9 @@
 <?php
 
-namespace DEPTRAC_202402;
+namespace DEPTRAC_202403;
 
-use DEPTRAC_202402\JetBrains\PhpStorm\Deprecated;
-use DEPTRAC_202402\JetBrains\PhpStorm\Pure;
+use DEPTRAC_202403\JetBrains\PhpStorm\Deprecated;
+use DEPTRAC_202403\JetBrains\PhpStorm\Pure;
 /**
  * Loads a php extension at runtime
  * @param string $extension_filename <p>
@@ -86,7 +86,7 @@ function is_iterable(mixed $value) : bool
  * @deprecated 8.2 Consider to use {@link mb_convert_encoding}, {@link UConverter::transcode()} or {@link iconv()}
  */
 #[Pure]
-#[Deprecated(replacement: "mb_convert_encoding(%parameter0%, 'UTF-8')", since: "8.2")]
+#[Deprecated(replacement: "mb_convert_encoding(%parameter0%, 'UTF-8', 'ISO-8859-1')", since: "8.2")]
 function utf8_encode(string $string) : string
 {
 }
@@ -101,7 +101,7 @@ function utf8_encode(string $string) : string
  * @deprecated 8.2 Consider to use {@link mb_convert_encoding}, {@link UConverter::transcode()} or {@link iconv()}
  */
 #[Pure]
-#[Deprecated(replacement: "mb_convert_encoding(%parameter0%, 'ISO-8859-1')", since: "8.2")]
+#[Deprecated(replacement: "mb_convert_encoding(%parameter0%, 'ISO-8859-1', 'UTF-8')", since: "8.2")]
 function utf8_decode(string $string) : string
 {
 }
