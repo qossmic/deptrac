@@ -22,8 +22,8 @@ https://qossmic.github.io/deptrac
 You can install Deptrac via Composer. We recommend using the
 [deptrac-shim](https://github.com/qossmic/deptrac-shim) package for this:
 
-```Shell
-composer require --dev qossmic/deptrac-shim
+```console
+$ composer require --dev qossmic/deptrac-shim
 ```
 
 Alternatively, you can also use [PHIVE](docs/index.md#phive) or download the
