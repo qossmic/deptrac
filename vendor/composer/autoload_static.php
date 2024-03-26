@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6c71dbb01532e776e76022ebedab3922
+class ComposerStaticInit7397250acf5d9caa56ffff0ef9bdf8e3
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -1102,6 +1102,7 @@ class ComposerStaticInit6c71dbb01532e776e76022ebedab3922
         'Qossmic\\Deptrac\\Contract\\Ast\\AstFileAnalysedEvent' => __DIR__ . '/../..' . '/src/Contract/Ast/AstFileAnalysedEvent.php',
         'Qossmic\\Deptrac\\Contract\\Ast\\AstFileSyntaxErrorEvent' => __DIR__ . '/../..' . '/src/Contract/Ast/AstFileSyntaxErrorEvent.php',
         'Qossmic\\Deptrac\\Contract\\Ast\\CouldNotParseFileException' => __DIR__ . '/../..' . '/src/Contract/Ast/CouldNotParseFileException.php',
+        'Qossmic\\Deptrac\\Contract\\Ast\\DependencyContext' => __DIR__ . '/../..' . '/src/Contract/Ast/DependencyContext.php',
         'Qossmic\\Deptrac\\Contract\\Ast\\DependencyType' => __DIR__ . '/../..' . '/src/Contract/Ast/DependencyType.php',
         'Qossmic\\Deptrac\\Contract\\Ast\\FileOccurrence' => __DIR__ . '/../..' . '/src/Contract/Ast/FileOccurrence.php',
         'Qossmic\\Deptrac\\Contract\\Ast\\PostCreateAstMapEvent' => __DIR__ . '/../..' . '/src/Contract/Ast/PostCreateAstMapEvent.php',
@@ -1139,6 +1140,7 @@ class ComposerStaticInit6c71dbb01532e776e76022ebedab3922
         'Qossmic\\Deptrac\\Contract\\Config\\Formatter\\CodeclimateConfig' => __DIR__ . '/../..' . '/src/Contract/Config/Formatter/CodeclimateConfig.php',
         'Qossmic\\Deptrac\\Contract\\Config\\Formatter\\FormatterConfigInterface' => __DIR__ . '/../..' . '/src/Contract/Config/Formatter/FormatterConfigInterface.php',
         'Qossmic\\Deptrac\\Contract\\Config\\Formatter\\GraphvizConfig' => __DIR__ . '/../..' . '/src/Contract/Config/Formatter/GraphvizConfig.php',
+        'Qossmic\\Deptrac\\Contract\\Config\\Formatter\\MermaidJsConfig' => __DIR__ . '/../..' . '/src/Contract/Config/Formatter/MermaidJsConfig.php',
         'Qossmic\\Deptrac\\Contract\\Config\\Layer' => __DIR__ . '/../..' . '/src/Contract/Config/Layer.php',
         'Qossmic\\Deptrac\\Contract\\Config\\Ruleset' => __DIR__ . '/../..' . '/src/Contract/Config/Ruleset.php',
         'Qossmic\\Deptrac\\Contract\\Dependency\\DependencyInterface' => __DIR__ . '/../..' . '/src/Contract/Dependency/DependencyInterface.php',
@@ -1278,6 +1280,8 @@ class ComposerStaticInit6c71dbb01532e776e76022ebedab3922
         'Qossmic\\Deptrac\\Supportive\\Console\\Command\\AnalyseCommand' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/AnalyseCommand.php',
         'Qossmic\\Deptrac\\Supportive\\Console\\Command\\AnalyseOptions' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/AnalyseOptions.php',
         'Qossmic\\Deptrac\\Supportive\\Console\\Command\\AnalyseRunner' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/AnalyseRunner.php',
+        'Qossmic\\Deptrac\\Supportive\\Console\\Command\\ChangedFilesCommand' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/ChangedFilesCommand.php',
+        'Qossmic\\Deptrac\\Supportive\\Console\\Command\\ChangedFilesRunner' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/ChangedFilesRunner.php',
         'Qossmic\\Deptrac\\Supportive\\Console\\Command\\CommandRunException' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/CommandRunException.php',
         'Qossmic\\Deptrac\\Supportive\\Console\\Command\\DebugDependenciesCommand' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/DebugDependenciesCommand.php',
         'Qossmic\\Deptrac\\Supportive\\Console\\Command\\DebugDependenciesRunner' => __DIR__ . '/../..' . '/src/Supportive/Console/Command/DebugDependenciesRunner.php',
@@ -1327,6 +1331,7 @@ class ComposerStaticInit6c71dbb01532e776e76022ebedab3922
         'Qossmic\\Deptrac\\Supportive\\OutputFormatter\\GraphVizOutputImageFormatter' => __DIR__ . '/../..' . '/src/Supportive/OutputFormatter/GraphVizOutputImageFormatter.php',
         'Qossmic\\Deptrac\\Supportive\\OutputFormatter\\JUnitOutputFormatter' => __DIR__ . '/../..' . '/src/Supportive/OutputFormatter/JUnitOutputFormatter.php',
         'Qossmic\\Deptrac\\Supportive\\OutputFormatter\\JsonOutputFormatter' => __DIR__ . '/../..' . '/src/Supportive/OutputFormatter/JsonOutputFormatter.php',
+        'Qossmic\\Deptrac\\Supportive\\OutputFormatter\\MermaidJSOutputFormatter' => __DIR__ . '/../..' . '/src/Supportive/OutputFormatter/MermaidJSOutputFormatter.php',
         'Qossmic\\Deptrac\\Supportive\\OutputFormatter\\TableOutputFormatter' => __DIR__ . '/../..' . '/src/Supportive/OutputFormatter/TableOutputFormatter.php',
         'Qossmic\\Deptrac\\Supportive\\OutputFormatter\\XMLOutputFormatter' => __DIR__ . '/../..' . '/src/Supportive/OutputFormatter/XMLOutputFormatter.php',
         'Qossmic\\Deptrac\\Supportive\\Time\\Period' => __DIR__ . '/../..' . '/src/Supportive/Time/Period.php',
@@ -1342,9 +1347,9 @@ class ComposerStaticInit6c71dbb01532e776e76022ebedab3922
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6c71dbb01532e776e76022ebedab3922::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6c71dbb01532e776e76022ebedab3922::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit6c71dbb01532e776e76022ebedab3922::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7397250acf5d9caa56ffff0ef9bdf8e3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7397250acf5d9caa56ffff0ef9bdf8e3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7397250acf5d9caa56ffff0ef9bdf8e3::$classMap;
 
         }, null, ClassLoader::class);
     }
